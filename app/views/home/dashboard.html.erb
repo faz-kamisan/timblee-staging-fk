@@ -1,0 +1,6 @@
+HI <%= current_user.try(:email) %>
+<% if current_user %>
+  <a href='#'><%= link_to 'Logout', destroy_user_session_path, method: :delete %></a>
+<% else %>
+  <%= link_to 'Login', new_user_session_path %>
+<% end %>
