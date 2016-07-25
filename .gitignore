@@ -31,3 +31,4 @@ public/system
 Dockerfile
 .powrc
 logfile
+dump.rdb
