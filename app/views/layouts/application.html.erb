@@ -6,17 +6,27 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
-      <div class="flash">
-        <% flash.each do |type, message| %>
-          <% if message.present? %>
-            <div class="message <%= type %>">
-              <span><%= message %></span>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
-<%= yield %>
+
+<body style='margin-left:50px;'>
+  <%= current_user.try(:email) %>
+  <% if current_user %>
+    <div class='row'>
+      <a href='#'><%= link_to 'Logout', destroy_user_session_path, method: :delete %></a>
+    </div>
+  <% else %>
+    <%= link_to 'Login', new_user_session_path %>
+  <% end %>
+  <%= link_to 'Home', root_path %>
+  <div class="flash">
+    <% flash.each do |type, message| %>
+      <% if message.present? %>
+        <div class="message <%= type %>">
+          <span><%= message %></span>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <%= yield %>
 
 </body>
 </html>
