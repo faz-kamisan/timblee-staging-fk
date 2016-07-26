@@ -1,6 +1,25 @@
 HI <%= current_user.try(:email) %>
 <% if current_user %>
-  <a href='#'><%= link_to 'Logout', destroy_user_session_path, method: :delete %></a>
+  <div class='row'>
+    <a href='#'><%= link_to 'Logout', destroy_user_session_path, method: :delete %></a>
+  </div>
+  <div class='row'>
+    <div class='col-md-2' style='border: 1px solid black;'>
+      <h3>Folders</h3>
+      <div class='folders-listing'>
+        <% current_user.business.folders.each do |folder| %>
+          <div data-id=<%= folder.id %>>
+            <%= folder.name %> 
+            <%= link_to 'x', folder_path(folder), method: :delete, remote: true %>
+          </div>
+        <% end %>
+      </div>
+      <%= form_for Folder.new, remote: true do |f| %>
+        <%= f.text_field :name, placeholder: 'Name' %>
+        <%= f.submit 'Create' %>
+      <% end %>
+    </div>
+  </div>
 <% else %>
   <%= link_to 'Login', new_user_session_path %>
 <% end %>

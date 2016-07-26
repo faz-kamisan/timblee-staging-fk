@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get  'home/dashboard'
   root 'home#dashboard'
   resources :users
+  resources :folders
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
