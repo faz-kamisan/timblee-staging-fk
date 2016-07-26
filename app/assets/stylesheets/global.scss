@@ -1,0 +1,122 @@
+/* Global Styles */
+body {
+  background: $pageBackground;
+  font-family: "proxima-nova",sans-serif;
+  min-width: 1300px;
+}
+
+.p-0 {
+  padding: 0;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.m-b-10 {
+  margin-bottom: 10px;
+}
+
+.p-r-0 {
+  padding-right: 0;
+}
+
+.strong {
+  font-weight: 700;
+}
+
+.form-control::-webkit-input-placeholder {
+  color: $placeHolder;
+  opacity: 1;
+  font-size: 14px;
+}
+
+.form-control::-moz-placeholder {
+  color: $placeHolder;
+  opacity: 1;
+  font-size: 14px;
+}
+
+.form-control:-ms-input-placeholder {
+  color: $placeHolder;
+  opacity: 1;
+  font-size: 14px;
+}
+
+.form-control:-moz-placeholder {
+  color: $placeHolder;
+  opacity: 1;
+  font-size: 14px;
+}
+
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+  color: $primaryBlack;
+  font-weight: 700;
+}
+
+.form-control {
+  height: 48px;
+  border-color: $primaryGreyLight;
+  @include box-shadow(0, 0, 0, $transparent);
+  color: $primaryFormColor;
+  padding: 6px 15px;
+  &:focus {
+    @include box-shadow(0, 0, 0, $transparent);
+    border-color: $primaryPink;
+  }
+}
+
+input[type="password"] {
+  color: $password;
+  font-size: 30px;
+}
+
+.btn {
+  height: 48px;
+}
+
+.btn-pink {
+  background: $transparent;
+  border: 1px solid $primaryPink;
+  color: $primaryPink;
+  text-transform: uppercase;
+  font-size: 14px;
+  line-height: 20px;
+  &:hover {
+    background: $primaryPink;
+    color: $primaryWhite;
+  }
+}
+
+.link {
+  color: $primaryLink;
+  text-decoration: underline;
+  font-weight: 700;
+  &:hover {
+    color: $primaryPink;
+  }
+}
+
+.link-regular {
+  font-size: 12px;
+  color: $primaryLink;
+  text-decoration: none;
+  &:hover {
+    color: $primaryPink;
+    text-decoration: none;
+  }
+}
+
+.main {
+  min-width: 1300px;
+}
+
+/* Classes */
+.hide-me {
+  display: none;
+}

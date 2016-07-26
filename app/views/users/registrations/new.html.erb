@@ -1,29 +1,41 @@
-<h2>Sign up</h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+<!-- Sign Up Page -->
+<main class="main">
+  <section class="user-entry">
+    <div class="panel">
+      <div class="panel-body text-center">
+        <div class="logo">
+          <%= image_tag('Timblee-icon.svg', class: 'logo-inner') %>
+        </div>
+        <h1 class="modal-heading">
+          Try Timblee free for 30 days and create beautiful <br> visual sitemaps for your web projects.
+        </h1>
+        <p class="small">
+          No credit card required. Invite unlimited team <br> members to try it out with you.
+        </p>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'user-form' }) do |f| %>
+          <%= devise_error_messages! %>
+          <div class="form-group">
+            <%= f.text_field :full_name, placeholder: 'Your name', class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.email_field :email, placeholder: 'Your work email', class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Choose a password' %>
+          </div>
+          <div class="form-group">
+            <%= f.submit "Sign up for free", class: 'btn btn-pink btn-block' %>
+          </div>
+        <% end %>
+        <p class="go-to-login">
+          Already signed up?
+          <%- if controller_name != 'sessions' %>
+            <%= link_to "Log in here.", new_session_path(resource_name), class: 'link' %><br />
+          <% end -%>
+        </p>
+        <p class="go-to-terms">By signing up, you agree to our plain English <a href="#" class="link">terms</a>.</p>
+      </div>
+    </div>
+  </section>
+</main>
+<!-- Sign Up Page -->

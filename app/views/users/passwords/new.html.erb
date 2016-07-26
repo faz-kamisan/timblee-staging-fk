@@ -1,16 +1,41 @@
-<h2>Forgot your password?</h2>
-
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+<!-- Forget Password -->
+<main class="main">
+  <section class="user-entry">
+    <div class="panel">
+      <div class="panel-body text-center">
+        <div class="logo">
+          <%= image_tag('Timblee-icon.svg', class: 'logo-inner') %>
+        </div>
+        <h1 class="modal-heading">
+          Forgot your password?
+        </h1>
+        <p class="small">
+          We do it all the time.
+        </p>
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: 'user-form' }) do |f| %>
+          <%= devise_error_messages! %>
+          <div class="form-group">
+            <%= f.email_field :email, class: 'form-control', placeholder: 'Your email' %>
+          </div>
+          <div class="form-group m-b-10">
+            <%= f.submit "get my password reset link", class: 'btn btn-pink btn-block' %>
+          </div>
+          <div class="row recover">
+            <div class="col-md-6 text-left p-r-0">
+              <%- if controller_name != 'sessions' %>
+                <%= link_to "Remembered it suddenly?", new_session_path(resource_name), class: 'link-regular' %>
+              <% end -%>
+              <a href="#" class="link-regular"></a>
+            </div>
+            <div class="col-md-6 text-right">
+              <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+                <%= link_to "Don't have a login?", new_registration_path(resource_name), class: 'link-regular' %>
+              <% end -%>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+</main>
+<!-- Forget Password -->

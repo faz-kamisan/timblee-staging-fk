@@ -1,0 +1,74 @@
+.user-entry {
+  padding: 100px 0;
+  .logo {
+    padding-top: 18px;
+  }
+  .logo-inner {
+    width: 47px;
+  }
+  .panel {
+    @include border-radius(10px);
+    @include box-shadow(1px, 1px, 2px, rgba(106, 113, 127, .2));
+    margin: 0 auto;
+    width: 620px;
+  }
+  .modal-heading {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 5px;
+  }
+  .small {
+    color: $primaryGrey;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .user-form {
+    padding: 15px 145px 0 145px;
+  }
+  .go-to-login {
+    margin-bottom: 2px;
+  }
+  .go-to-login,
+  .go-to-terms,
+  .send-again {
+    color: $primaryLink;
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .go-to-terms {
+    margin-bottom: 15px;
+  }
+  .recover {
+    padding-bottom: 30px;
+  }
+  .send-again {
+    margin-bottom: 0;
+    padding-bottom: 21px;
+  }
+}
+
+.error-message {
+  @extend .hide-me;
+}
+
+.form-error {
+  .form-control {
+    border-color: $primaryError;
+    &:focus {
+      border-color: $primaryError;
+    }
+  }
+  .error-message {
+    text-align: left;
+    display: block;
+    padding: 5px 0 7px 0;
+    color: $primaryError;
+    font-size: 10px;
+    line-height: 16px;
+    letter-spacing: .1px;
+    a {
+      color: $primaryError;
+      text-decoration: underline;
+    }
+  }
+}
