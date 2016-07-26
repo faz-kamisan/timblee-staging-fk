@@ -25,6 +25,7 @@ gem 'devise', '~> 3.5.10'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'pg', '~> 0.18.4'
 gem 'sidekiq', '~> 4.1.1'
+gem 'devise_invitable', '~> 1.6.0'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
