@@ -1,0 +1,204 @@
+.small-font {
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.user-dashboard {
+  .folders {
+    width: 320px;
+    margin-right: 90px;
+  }
+  .sitemap-cards {
+    width: 705px;
+    .row {
+      margin: 0 -10px;
+    }
+    .site-map-container {
+      margin-bottom: 30px;
+      padding: 0 10px;
+    }
+  }
+  .site-card {
+    height: 230px;
+    background: $primaryWhite;
+    @include border-radius(6px);
+    padding: 15px;
+    @include box-shadow(1px, 1px, 2px, rgba(106, 113, 127, .2));
+    display: block;
+    position: relative;
+    overflow: hidden;
+  }
+  h1 {
+    font-weight: 400;
+    margin-top: 0;
+  }
+  .card-name {
+    font-size: 18px;
+    line-height: 24px;
+    margin: 0;
+    padding: 45px 0 5px 0;
+    font-weight: 400;
+  }
+  .updated,
+  .version {
+    font-size: 10px;
+    line-height: 16px;
+    margin: 0 0 2px 0;
+    color: $primaryLabel;
+  }
+  .actions {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    border-top: solid 1px #dbdddf;
+    padding: 15px;
+  }
+  .card-users {
+    padding: 0;
+    li {
+      list-style: none;
+      float: left;
+      + li {
+        margin-left: 5px;
+      }
+    }
+    img {
+      width: 28px;
+      height: 28px;
+      @include border-radius(50%);
+    }
+  }
+  .more-options {
+    position: absolute;
+    bottom: 16px;
+    right: 15px;
+    z-index: 1;
+    img {
+      width: 28px;
+    }
+  }
+  .actions-overlay {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    height: 100%;
+    background: $primaryWhite;
+    @include border-radius(6px);
+    z-index: 2;
+    @include animate(.25s);
+    padding: 15px;
+    opacity: 0;
+    &.animate-top {
+      top: 0;
+      opacity: 1;
+    }
+    .action {
+      font-size: 12px;
+      line-height: 18px;
+      color: $primaryGrey;
+      &:hover {
+        color: $primaryPink;
+      }
+    }
+    .action-icon {
+      width: 28px;
+      margin: -1px 6px 0 0;
+    }
+    li + li {
+      margin-top: 17px;
+    }
+  }
+  .other-users {
+    position: absolute;
+    left: 115px;
+    top: 20px;
+    @extend .small-font;
+    color: $primaryLabel;
+  }
+  .close-action-overlay {
+    position: absolute;
+    right: 15px;
+    bottom: 16px;
+    img {
+      width: 28px;
+    }
+  }
+  .point {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    @include border-radius(50%);
+    background: $primaryLabel;
+    right: 20px;
+    top: 15px;
+  }
+}
+
+.folders-list {
+  .folder-icon {
+    width: 26px;
+    margin: -1px 8px 0 0;
+  }
+  .folder-items {
+    width: 25px;
+    text-align: right;
+    display: inline-block;
+    float: right;
+  }
+  .folder-name {
+    width: 211px;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+  }
+  .folder-info {
+    padding: 10px;
+    &.active {
+      background: $primaryWhite;
+      border: solid 1px #f0f1f3;
+      @include border-radius(6px);
+      a {
+        color: $primaryGrey;
+      }
+    }
+    &.active-delete {
+     a {
+        color: $primaryGrey;
+      } 
+    }
+  }
+  a {
+    font-size: 14px;
+    line-height: 26px;
+    color: $primaryLabel;
+    &:hover {
+      color: $primaryGrey;
+    }
+  }
+}
+
+.new-folder {
+  padding: 0 10px 5px 10px;
+  .form-control {
+    background: $primaryWhite;
+    border: 1px dashed #b0b3bb;
+    height: 39px;
+  }
+}
+
+.delete-folder {
+  width: 0;
+  display: inline-block;
+  visibility: hidden;
+  @include animate(.35s);
+  margin-left: -3px;
+  &.open {
+    width: 18px;
+    visibility: visible;
+  }
+}
