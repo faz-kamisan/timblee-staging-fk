@@ -1,4 +1,10 @@
 /* Global Styles */
+*:focus,
+*:active,
+*:visited {
+  outline: none!important;
+}
+
 body {
   background: $pageBackground;
   font-family: "proxima-nova",sans-serif;
@@ -21,8 +27,20 @@ body {
   padding-right: 0;
 }
 
+.p-t-40 {
+  padding-top: 40px;
+}
+
+.p-t-50 {
+  padding-top: 50px;
+}
+
 .strong {
   font-weight: 700;
+}
+
+.container {
+  width: 1145px;
 }
 
 .form-control::-webkit-input-placeholder {
@@ -57,6 +75,23 @@ h5, .h5,
 h6, .h6 {
   color: $primaryBlack;
   font-weight: 700;
+}
+
+h1 {
+  font-size: 24px;
+  line-height: 30px;
+  color: $primaryBlack;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .form-control {
