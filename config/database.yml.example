@@ -1,0 +1,24 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username:  ##
+  password:  ##
+  host: <%= ENV['DATABASE_HOST'] || '127.0.0.1' %>
+  port: <%= ENV['DATABASE_PORT'] || '5432' %>
+
+development:
+  <<: *default
+  database: timblee_development
+
+staging:
+  <<: *default
+  database: timblee_staging
+
+production:
+  <<: *default
+  database: timblee_production
+
+test:
+  <<: *default
+  database: timblee_test

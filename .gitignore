@@ -16,5 +16,19 @@
 !/log/.keep
 /tmp
 
-config/database.yml
-config/secrets.yml
+.byebug_history
+.bundle
+log/*.log
+tmp/
+.DS_Store
+config/*.yml
+config/*.pem
+public/assets
+coverage
+public/system
+.ruby-version
+.ruby-gemset
+Dockerfile
+.powrc
+logfile
+dump.rdb

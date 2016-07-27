@@ -1,0 +1,26 @@
+/* Header */
+.main-header {
+  height: 95px;
+  background: $primaryWhite;
+  padding: 34px;
+  min-width: 1300px;
+}
+
+#navigation {
+  margin-top: 3px;
+  .nav-item {
+    float: left;
+    list-style: none;
+    + .nav-item {
+      margin-left: 50px;
+    }
+    a {
+      color: #646464;
+      text-decoration: none;
+      font-size: 16px;
+      &:hover {
+        color: $primaryPink;
+      }
+    }
+  }
+}
