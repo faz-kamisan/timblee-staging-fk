@@ -54,10 +54,14 @@
       border-color: $primaryError;
     }
   }
+  + .error-message {
+    display: block;
+  }
 }
+
 .error-message {
   text-align: left;
-  display: block;
+  display: none;
   padding: 5px 0 7px 0;
   color: $primaryError;
   font-size: 10px;
