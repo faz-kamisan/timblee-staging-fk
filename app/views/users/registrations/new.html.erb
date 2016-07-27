@@ -13,15 +13,17 @@
           No credit card required. Invite unlimited team <br> members to try it out with you.
         </p>
         <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'user-form' }) do |f| %>
-          <%= devise_error_messages! %>
           <div class="form-group">
             <%= f.text_field :full_name, placeholder: 'Your name', class: 'form-control' %>
+            <span class='error-message'><%= f.object.errors[:full_name].join(',') %></span>
           </div>
           <div class="form-group">
             <%= f.email_field :email, placeholder: 'Your work email', class: 'form-control' %>
+            <span class='error-message'><%= f.object.errors[:email].join(',') %></span>
           </div>
           <div class="form-group">
             <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Choose a password' %>
+           <span class='error-message'><%= f.object.errors[:password].join(',') %></span>
           </div>
           <div class="form-group">
             <%= f.submit "Sign up for free", class: 'btn btn-pink btn-block' %>
@@ -29,9 +31,7 @@
         <% end %>
         <p class="go-to-login">
           Already signed up?
-          <%- if controller_name != 'sessions' %>
-            <%= link_to "Log in here.", new_session_path(resource_name), class: 'link' %><br />
-          <% end -%>
+          <%= link_to "Log in here.", new_session_path(resource_name), class: 'link' %><br />
         </p>
         <p class="go-to-terms">By signing up, you agree to our plain English <a href="#" class="link">terms</a>.</p>
       </div>

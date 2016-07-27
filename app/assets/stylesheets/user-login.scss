@@ -47,28 +47,24 @@
   }
 }
 
-.error-message {
-  @extend .hide-me;
-}
-
-.form-error {
+.field_with_errors {
   .form-control {
     border-color: $primaryError;
     &:focus {
       border-color: $primaryError;
     }
   }
-  .error-message {
-    text-align: left;
-    display: block;
-    padding: 5px 0 7px 0;
+}
+.error-message {
+  text-align: left;
+  display: block;
+  padding: 5px 0 7px 0;
+  color: $primaryError;
+  font-size: 10px;
+  line-height: 16px;
+  letter-spacing: .1px;
+  a {
     color: $primaryError;
-    font-size: 10px;
-    line-height: 16px;
-    letter-spacing: .1px;
-    a {
-      color: $primaryError;
-      text-decoration: underline;
-    }
+    text-decoration: underline;
   }
 }

@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
 
   before_create :create_business, unless: :business
 
+  validates :full_name, presence: true
+
   private
     def create_business
       business = Business.create(owner_id: self.id)
