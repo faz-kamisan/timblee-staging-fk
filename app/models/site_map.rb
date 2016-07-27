@@ -7,4 +7,8 @@ class SiteMap < ActiveRecord::Base
 
   validates :business, presence: true
   validates :name, uniqueness: { scope: :business_id }
+
+  def updated_at_formatted
+    updated_at.strftime('%b %d, %Y')
+  end
 end
