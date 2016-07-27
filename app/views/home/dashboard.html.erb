@@ -7,9 +7,12 @@
     <div class='col-md-2' style='border: 1px solid black;'>
       <h3>Folders</h3>
       <div class='folders-listing'>
+        <div>
+            <span class='folder-name'>All Sitemaps</span>
+        </div>
         <% current_user.business.folders.each do |folder| %>
           <div data-id=<%= folder.id %>>
-            <%= folder.name %> 
+            <span class='folder-name'><%= folder.name %></span>
             <%= link_to 'x', folder_path(folder), method: :delete, remote: true %>
           </div>
         <% end %>
@@ -18,6 +21,16 @@
         <%= f.text_field :name, placeholder: 'Name' %>
         <%= f.submit 'Create' %>
       <% end %>
+    </div>
+    <div class='col-md-10' style='border: 1px solid black;'>
+      <h3>SiteMaps</h3>
+      <div class='sitemaps-listing'>
+        <% current_user.all_site_maps.each do |site_map| %>
+          <div data-id=<%= site_map.id %> data-folder-id=<%= site_map.folder_id %> class='site-map-container'>
+            <%= site_map.name %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 
