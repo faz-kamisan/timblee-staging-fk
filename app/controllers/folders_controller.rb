@@ -14,6 +14,15 @@ class FoldersController < ApplicationController
     @folder.destroy
   end
 
+  def update
+    if @folder.update(folder_params)
+      flash.now[:notice] = 'Folder updated successfully'
+    else
+      flash.now[:error] = 'Couldn\'t update folder'
+    end
+    head :ok
+  end
+
   private
     def fetch_folder
       unless @folder = current_user.business.folders.find_by(id: params[:id])

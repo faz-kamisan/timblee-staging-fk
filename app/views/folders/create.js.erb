@@ -1,3 +1,4 @@
-var $newFolderDiv = $('<div>', { text: '<%= @folder.name %>', 'data-id': <%= @folder.id %> })
-$newFolderDiv.append($('<a>', { text: ' x', href: '<%= "/folders/#{@folder.id}" %>', rel: 'nofollow', 'data-remote': true, 'data-method': 'delete' }))
-$('.folders-listing').append($newFolderDiv)
+<% if(@folder.persisted?) %>
+  $('.folders-list').append('<%= folder_line_item(@folder) %>')
+<% end %>
+$('.folder-name-field').val('')
