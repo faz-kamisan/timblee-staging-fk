@@ -10,3 +10,9 @@
   -moz-border-radius    : $radius;
   -webkit-border-radius : $radius;
 }
+
+@mixin animate($duration) {
+  transition: $duration;
+  -moz-transition: $duration;
+  -webkit-transition: $duration;
+}
