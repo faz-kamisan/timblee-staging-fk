@@ -1,0 +1,8 @@
+<li class="folder-info"  data-id=<%= folder.id %>>
+  <%= link_to(image_tag('cross.png'), folder_path(folder), method: :delete, remote: true, class: "delete-folder") %>
+  <a href="javascript:void(0);">
+    <%= image_tag('more-icon.png', class: 'folder-icon') %>
+    <span class="folder-name"><%= folder.name %></span>
+    <span class="folder-items"><%= folder.site_maps.count %></span>
+  </a>
+</li>

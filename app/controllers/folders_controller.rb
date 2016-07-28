@@ -5,6 +5,7 @@ class FoldersController < ApplicationController
     @folder = current_user.business.folders.build(folder_params)
     if @folder.save
       flash.now[:notice] = 'Folder created successfully'
+      @folders = current_user.business.folders.order(:name)
     else
       flash.now[:error] = 'Couldn\'t create folder'
     end
