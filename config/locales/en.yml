@@ -22,3 +22,11 @@ en:
       destroy:
         success: SiteMap destroyed successfully
         failure: Couldn't delete sitemap
+
+  activerecord:
+      errors:
+        models:
+          user:
+            attributes:
+              email:
+                invalid: "Looks like your email is incorrect"
