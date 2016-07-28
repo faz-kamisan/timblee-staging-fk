@@ -1,27 +1,4 @@
 <% if current_user %>
-  <!-- Header -->
-  <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
-  <header class="main-header">
-    <div class="row">
-      <div class="col-xs-6">
-        <div class="row">
-          <div class="col-xs-3">
-            <a href="javascript:void(0);">
-              <%= image_tag('Timblee-logo.svg', class: 'logo-main') %>
-            </a>    
-          </div>
-          <div class="col-xs-9">
-            <ul id="navigation" class="clearfix p-0 m-0">
-              <li class="nav-item"><a href="javascript:void(0);">Home</a></li>
-              <li class="nav-item"><a href="javascript:void(0);">Progress</a></li>
-              <li class="nav-item"><a href="javascript:void(0);">Jump to</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-  <!-- Header -->
   <section class="user-dashboard p-t-50">
     <div class="container">
       <div class="row">
