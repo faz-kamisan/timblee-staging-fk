@@ -12,3 +12,4 @@ class SiteMap < ActiveRecord::Base
     updated_at.strftime('%b %d, %Y')
   end
 end
+
