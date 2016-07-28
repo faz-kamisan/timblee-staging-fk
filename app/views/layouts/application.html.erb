@@ -7,12 +7,9 @@
   <%= csrf_meta_tags %>
 </head>
 
-<body style='margin-left:50px;'>
+<body>
   <% if current_user %>
 
-    <div class='row'>
-      <a href='#'><%= link_to 'Logout', destroy_user_session_path, method: :delete %></a>
-    </div>
   <!-- Header -->
   <header class="main-header">
     <div class="row">
@@ -32,6 +29,31 @@
               <li class="nav-item"><a href="javascript:void(0);">Jump to</a></li>
             </ul>
           </div>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="user-dropdown pull-right text-right">
+          Jonathan
+          <ul class="p-0 m-0 user-settings">
+            <li>
+              <a href="javascript:void(0)">Settings</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Ask us anything</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Gift someone a 60 day trial</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Request a feature</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Join our early adopters program</a>
+            </li>
+            <li>
+              <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
