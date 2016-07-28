@@ -10,6 +10,7 @@ gem 'devise', '~> 3.5.10'
 gem 'pg', '~> 0.18.4'
 gem 'sidekiq', '~> 4.1.1'
 gem 'devise_invitable', '~> 1.6.0'
+gem 'non-stupid-digest-assets', '~> 1.0.8'
 
 group :development, :test do
   gem 'byebug', '~> 9.0.5'
@@ -23,5 +24,7 @@ group :development do
   gem 'capistrano-bundler', '~> 1.1.4', require: false
   gem 'capistrano-passenger', '~> 0.2.0'
   gem 'capistrano-sidekiq', '~> 0.5.4'
+  gem 'bullet', '~> 5.2.0'
+  gem 'quiet_assets', '~> 1.1.0'
 end
 

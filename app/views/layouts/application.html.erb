@@ -42,15 +42,8 @@
   <% else %>
     <%= link_to 'Login', new_user_session_path %>
   <% end %>
-  <div class="flash">
-    <% flash.each do |type, message| %>
-      <% if message.present? %>
-        <div class="message <%= type %>">
-          <span><%= message %></span>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
+
+  <%= render 'shared/flash_message.html.erb' %>
   <%= yield %>
 
 </body>
