@@ -1,5 +1,4 @@
 class FoldersController < ApplicationController
-  before_filter :authenticate_user!, only: [:create]
   before_filter :fetch_folder, only: [:destroy, :update]
 
   def create
