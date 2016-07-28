@@ -113,6 +113,7 @@ input[type="password"] {
 
 .btn {
   height: 48px;
+  line-height: 37px;
 }
 
 .btn-pink {
@@ -149,6 +150,73 @@ input[type="password"] {
 
 .main {
   min-width: 1300px;
+}
+
+.modal-backdrop {
+  background: $primaryWhite;
+  &.in {
+    opacity: .85;
+  }
+}
+
+.modal-dialog {
+  width: 620px;
+}
+
+.modal-content {
+  @include box-shadow(0, 0, 0, $transparent);
+  border: 1px solid $primaryLabel;
+  @include border-radius(10px);
+}
+
+.modal-header {
+  border-bottom: 1px solid $primaryLabel;
+}
+
+.modal-title {
+  font-size: 18px;
+  line-height: 24px;
+  padding: 30px 0 15px 0;
+}
+
+.modal-body {
+  background: $pageBackground;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 37px 20px 50px 20px;
+  .btn {
+    height: 38px;
+    line-height: 27px;
+    min-width: 140px;
+    display: inline-block;
+  }
+  .btn-last {
+    margin-left: 20px;
+  }
+}
+
+.modal-message {
+  font-size: 14px;
+  line-height: 20px;
+  color: $primaryBlack;
+}
+
+.btn-red {
+  background: $primaryRed;
+  color: $primaryWhite;
+  &:hover {
+    color: $primaryWhite;
+    background: darken($primaryRed, 10%);
+  }
+}
+
+.btn-transparent {
+  background: $transparent;
+  color: $primaryBlack;
+  border: 1px solid $primaryBlack;
+  &:hover {
+    background: $primaryWhite;
+  }
 }
 
 /* Classes */
