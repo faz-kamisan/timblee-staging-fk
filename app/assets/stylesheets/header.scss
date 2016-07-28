@@ -28,3 +28,44 @@
     }
   }
 }
+
+.user-dropdown {
+  position: relative;
+  font-size: 18px;
+  line-height: 26px;
+  color: #535353;
+  padding-bottom: 25px;
+  .user-settings {
+    position: absolute;
+    min-width: 295px;
+    background: $primaryWhite;
+    @include box-shadow(0, 0, 3px, rgba(0, 0, 0, 0.35));
+    top: 30px;
+    right: -22px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    z-index: 1;
+    visibility: hidden;
+    opacity: 0;
+    @include animate(.35s);
+    a {
+      display: block;
+      height: 82px;
+      padding: 30px;
+      color: #535353;
+      font-size: 14px;
+      line-height: 20px;
+      text-align: left;
+    }
+    li + li {
+      border-top: solid 1px #eeeeee;
+    }
+  }
+  &:hover {
+    .user-settings {
+      visibility: visible;
+      opacity: 1;
+      top: 42px;
+    }
+  }
+}
