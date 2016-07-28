@@ -5,7 +5,7 @@
         <aside class="folders col-xs-3 p-0">
           <%= form_for Folder.new, remote: true, html: { class: 'new-folder' } do |f| %>
             <div class="form-group">
-            <%= f.text_field :name, class: "form-control folder-name-field", placeholder: "+ New Folder" %>
+            <%= f.text_field :name, class: "form-control new-folder-name-field", placeholder: "+ New Folder" %>
             </div>
           <% end %>
           <ul class="folders-list p-0 m-0">
@@ -13,19 +13,19 @@
               <a href="javascript:void(0);" class="delete-folder">
                 <%= image_tag('cross.png') %>
               </a>
-              <a href="javascript:void(0);">
+              <a href="javascript:void(0);" class='folder-info-block' data-name='All Sitemaps'>
                 <%= image_tag('more-icon.png', class: 'folder-icon') %>
                 <span class="folder-name">All sitemaps</span>
                 <span class="folder-items"><%= current_user.all_site_maps.count %></span>
               </a>
             </li>
             <div class='dynamic-folders-list'>
-              <%= render partial: 'folder', collection: current_user.business.folders %>
+              <%= render partial: 'folder', collection: current_user.business.folders.order(:name) %>
             </div>
           </ul>
         </aside>
         <div class="sitemap-cards col-xs-9 p-0">
-          <h1>All Sitemaps</h1>
+          <h1 class='folder-heading'>All Sitemaps</h1>
           <div class="row p-t-40">
             <div class="col-xs-4 site-map-container new-site-map">
               <a href="javascript:void(0);" class="site-card" data-toggle= 'modal' data-target= '#create_site_map_modal'>
