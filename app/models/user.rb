@@ -1,11 +1,10 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :invitable, :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+
+  devise :invitable, :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
+
   belongs_to :business
-  has_many :folders, dependent: :destroy
-  has_many :site_map_invites
+
+  has_many :site_map_invites, dependent: :destroy
   has_many :shared_site_maps, through: :site_map_invites, source: :site_map
 
   before_create :create_business, unless: :business
@@ -17,8 +16,8 @@ class User < ActiveRecord::Base
   end
 
   private
-    def create_business
-      business = Business.create(owner_id: self.id)
-      self.business_id = business.id
-    end
+
+  def add_business
+    build_business(owner_id: self.id)
+  end
 end

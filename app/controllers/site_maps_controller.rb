@@ -1,15 +1,14 @@
 class SiteMapsController < ApplicationController
-  before_filter :authenticate_user!, only: [:create]
   before_filter :fetch_site_map, only: [:destroy, :show]
 
   def create
     @site_map = current_user.business.site_maps.build(site_map_params)
     @site_map.business = current_business
     if @site_map.save
-      flash[:notice] = 'site_map created successfully'
+      flash[:notice] = t('.success', scope: :flash)
         redirect_to site_map_path(@site_map)
     else
-      flash[:error] = 'Couldn\'t create site_map'
+      flash[:error] = t('.failure', scope: :flash)
         redirect_to root_path
     end
   end
@@ -19,13 +18,17 @@ class SiteMapsController < ApplicationController
   end
 
   def destroy
-    @site_map.destroy
+    if @site_map.destroy
+      flash.now[:notice] = t('.success', scope: :flash)
+    else
+      flash.now[:error] = t('.failure', scope: :flash)
+    end
   end
 
   private
     def fetch_site_map
       unless @site_map = current_business.site_maps.find_by(id: params[:id])
-        redirect_to root_path, notice: 'Can\'t find site_map'
+        redirect_to root_path, error: t('not_found', scope: [:flash, :site_maps])
       end
     end
     def site_map_params

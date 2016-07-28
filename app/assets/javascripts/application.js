@@ -13,5 +13,3 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap.min
-//= folder_filter
-//= require_tree .
