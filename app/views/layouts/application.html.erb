@@ -59,13 +59,10 @@
     </div>
   </header>
   <!-- Header -->
-
-
-  <% else %>
-    <%= link_to 'Login', new_user_session_path %>
   <% end %>
-
-  <%= render 'shared/flash_message.html.erb' %>
+    <div class= 'flash-message'>
+      <%= render 'shared/flash_message.html.erb' %>
+    </div>
   <%= yield %>
 
 </body>
