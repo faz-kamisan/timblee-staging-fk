@@ -6,17 +6,52 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
-      <div class="flash">
-        <% flash.each do |type, message| %>
-          <% if message.present? %>
-            <div class="message <%= type %>">
-              <span><%= message %></span>
-            </div>
-          <% end %>
-        <% end %>
+
+<body style='margin-left:50px;'>
+  <% if current_user %>
+
+    <div class='row'>
+      <a href='#'><%= link_to 'Logout', destroy_user_session_path, method: :delete %></a>
+    </div>
+  <!-- Header -->
+  <header class="main-header">
+    <div class="row">
+      <div class="col-xs-6">
+        <div class="row">
+          <div class="col-xs-3">
+            <a href="javascript:void(0);">
+              <%= image_tag('Timblee-logo.svg', class: 'logo-main') %>
+            </a>
+          </div>
+          <div class="col-xs-9">
+            <ul id="navigation" class="clearfix p-0 m-0">
+              <li class="nav-item">
+                <%= link_to 'Home', root_path %>
+              </li>
+              <li class="nav-item"><a href="javascript:void(0);">Progress</a></li>
+              <li class="nav-item"><a href="javascript:void(0);">Jump to</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
-<%= yield %>
+    </div>
+  </header>
+  <!-- Header -->
+
+
+  <% else %>
+    <%= link_to 'Login', new_user_session_path %>
+  <% end %>
+  <div class="flash">
+    <% flash.each do |type, message| %>
+      <% if message.present? %>
+        <div class="message <%= type %>">
+          <span><%= message %></span>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <%= yield %>
 
 </body>
 </html>
