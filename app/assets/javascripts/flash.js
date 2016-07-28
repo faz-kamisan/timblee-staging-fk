@@ -1,19 +1,21 @@
 var Flash = function(options) {
   this.flashMessage = options.flashMessage;
   this.closeBtn = options.closeBtn;
+  this.flashDiv = options.flashDiv;
 };
 
 Flash.prototype.closeMessage = function() {
   var _this = this;
-  this.closeBtn.on('click', function() {
-    $(this).closest(_this.flashMessage).remove();
+  this.flashDiv.on("click", _this.closeBtn, function() {
+    $(this).html('');
   });
 };
 
 $(function() {
   var options = {
-    flashMessage : $('.message'),
-    closeBtn : $('.flash .close')
+    flashMessage : $('.flash'),
+    flashDiv: $('.flash-message'),
+    closeBtn : $('.close')
   },
   flash = new Flash(options);
   flash.closeMessage();
