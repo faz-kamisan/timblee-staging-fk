@@ -1,0 +1,52 @@
+<div class="col-xs-4 site-map-container" data-id=<%= site_map.id %> data-folder-id=<%= site_map.folder_id %>>
+  <div class="site-card">
+    <a href="javascript:void(0);" class="point"></a>
+    <h2 class="card-name"><%= site_map.name %></h2>
+    <p class="updated">Last updated <%= site_map.updated_at_formatted %></p>
+    <p class="version">Version 1.0</p>
+    <div class="actions">
+      <ul class="card-users clearfix">
+        <li>
+          <%= image_tag('card-user.jpg') %>
+        </li>
+        <li>
+          <%= image_tag('card-user.jpg') %>
+        </li>
+        <li>
+          <%= image_tag('card-user.jpg') %>
+        </li>
+      </ul>
+      <span class="other-users">+12</span>
+    </div>
+    <a href="javascript:void(0);" class="more-options">
+      <%= image_tag('more-icon.png') %>
+    </a>
+    <div class="actions-overlay">
+      <ul class="p-0 m-0">
+        <li>
+          <%= image_tag('more-icon.png', class: 'action-icon') %>
+          <a href="javascript:void(0);" class="action">Dulpicate</a>
+        </li>
+        <li>
+          <%= image_tag('more-icon.png', class: 'action-icon') %>
+          <a href="javascript:void(0);" class="action">Rename</a>
+        </li>
+        <li>
+          <%= image_tag('more-icon.png', class: 'action-icon') %>
+          <a href="javascript:void(0);" class="action">Invite a team member</a>
+        </li>
+        <li>
+          <%= image_tag('more-icon.png', class: 'action-icon') %>
+          <a href="javascript:void(0);" class="action">Share</a>
+        </li>
+        <li>
+          <%= image_tag('more-icon.png', class: 'action-icon') %>
+          <%= link_to 'Delete', site_map_path(site_map), method: :delete, remote: true, class: 'action' %>
+        </li>
+      </ul>
+      <a href="javascript:void(0);" class="close-action-overlay">
+        <%= image_tag('more-icon.png') %>
+      </a>
+    </div>
+  </div>
+</div>

@@ -11,14 +11,21 @@ Folders.prototype.bindEvents = function() {
     _this.filterSiteMaps($this.data('id'));
     _this.setActiveFolder($this)
   });
+  this.folderList.on('mouseenter', '.folder-info', function() {
+    if(!$(this).hasClass('all-site-map-folder')) {
+      $(this).find('.delete-folder').addClass('open');
+    }
+  });
+  this.folderList.on('mouseleave', '.folder-info', function() {
+    $(this).find('.delete-folder').removeClass('open');
+  });
 };
 
 Folders.prototype.setActiveFolder = function(obj) {
-  $('.delete-folder').removeClass('open');
   $('.folder-info').removeClass('active-delete');
   obj.addClass('active-delete');
   if(!obj.hasClass('all-site-map-folder')) {
-    obj.find('.delete-folder').addClass('open');
+    // obj.find('.delete-folder').addClass('open');
   }
 }
 
