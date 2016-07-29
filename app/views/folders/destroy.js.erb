@@ -1,2 +1,8 @@
 $("div.flash-message").html("<%==j render partial: 'shared/flash_message' %>");
-$('li.folder-info[data-id=<%= @folder.id %>]').remove();
+
+<% if @destroyed %>
+  $('li.folder-info[data-id=<%= @folder.id %>]').remove();
+  $('div.site-map-container[data-folder-id=<%= @folder.id %>]').remove();
+  $('.all-site-map-folder').find('.folder-info-block').click()
+<% end %>
+

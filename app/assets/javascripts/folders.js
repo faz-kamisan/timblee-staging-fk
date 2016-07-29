@@ -69,7 +69,7 @@ Folders.prototype.sendFolderDeletionRequest = function(id) {
 
 Folders.prototype.setActiveFolder = function(obj) {
   $('.folder-info').removeClass('active-delete');
-  obj.addClass('active-delete');
+  obj.parent('.folder-info').addClass('active-delete');
 }
 
 Folders.prototype.configureDeletionModal = function(obj) {

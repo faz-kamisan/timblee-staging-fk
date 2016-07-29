@@ -18,5 +18,14 @@ $(function() {
     closeBtn : $('.close')
   },
   flash = new Flash(options);
+  $('body').on('DOMNodeInserted', '.flash', function () {
+    var $this = $(this)
+    window.setTimeout(function() {
+      $this.remove();
+    }, 5000)
+  });
+  window.setTimeout(function() {
+    $('.flash').remove();
+  }, 5000)
   flash.closeMessage();
 });
