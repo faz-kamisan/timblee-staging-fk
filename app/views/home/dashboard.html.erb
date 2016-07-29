@@ -16,11 +16,11 @@
               <a href="javascript:void(0);" class='folder-info-block' data-name='All Sitemaps'>
                 <%= image_tag('more-icon.png', class: 'folder-icon') %>
                 <span class="folder-name">All sitemaps</span>
-                <span class="folder-items"><%= current_user.all_site_maps.count %></span>
+                <span class="folder-items"><%= @site_maps.count %></span>
               </a>
             </li>
             <div class='dynamic-folders-list'>
-              <%= render partial: 'folder', collection: current_user.business.folders.order(:name) %>
+              <%= render partial: 'folder', collection: @folders %>
             </div>
           </ul>
         </aside>
@@ -33,7 +33,7 @@
               </a>
             </div>
             <div class='site_maps-listing'>
-              <%= render partial: 'site_map', collection: current_user.all_site_maps %>
+              <%= render partial: 'site_map', collection: @site_maps %>
             </div>
           </div>
         </div>

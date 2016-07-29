@@ -2,7 +2,7 @@ class SiteMapsController < ApplicationController
   before_filter :fetch_site_map, only: [:destroy, :show]
 
   def create
-    @site_map = current_user.business.site_maps.build(site_map_params)
+    @site_map = current_business.site_maps.build(site_map_params)
     @site_map.business = current_business
     if @site_map.save
       flash[:notice] = t('.success', scope: :flash)

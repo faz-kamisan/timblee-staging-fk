@@ -2,13 +2,13 @@ class FoldersController < ApplicationController
   before_filter :fetch_folder, only: [:destroy, :update]
 
   def create
-    @folder = current_user.business.folders.build(folder_params)
+    @folder = current_business.folders.build(folder_params)
     if @folder.save
       flash.now[:notice] = t('.success', scope: :flash)
     else
       flash.now[:error] = t('.failure', scope: :flash)
     end
-    @folders = current_user.business.folders.order(:name)
+    @folders = current_business.folders.order(:name)
   end
 
   def destroy
@@ -25,7 +25,7 @@ class FoldersController < ApplicationController
     else
       flash.now[:error] = t('.failure', scope: :flash)
     end
-    @folders = current_user.business.folders.order(:name)
+    @folders = current_business.folders.order(:name)
   end
 
   private
@@ -35,7 +35,7 @@ class FoldersController < ApplicationController
     end
 
     def fetch_folder
-      unless @folder = current_user.business.folders.find_by(id: params[:id])
+      unless @folder = current_business.folders.find_by(id: params[:id])
         redirect_to root_path, t('not_found', scope: [:flash, :folders])
       end
     end
