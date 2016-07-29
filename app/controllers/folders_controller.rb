@@ -13,8 +13,10 @@ class FoldersController < ApplicationController
 
   def destroy
     if @folder.destroy
+      @destroyed = true
       flash.now[:notice] = t('.success', scope: :flash)
     else
+      @destroyed = false
       flash.now[:error] = t('.failure', scope: :flash)
     end
   end

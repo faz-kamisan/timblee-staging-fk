@@ -25,6 +25,6 @@ group :development do
   gem 'capistrano-passenger', '~> 0.2.0'
   gem 'capistrano-sidekiq', '~> 0.5.4'
   gem 'bullet', '~> 5.2.0'
-  gem 'quiet_assets', '~> 1.1.0'
+  # gem 'quiet_assets', '~> 1.1.0'
 end
 

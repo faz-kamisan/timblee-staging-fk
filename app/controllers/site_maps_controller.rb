@@ -32,6 +32,6 @@ class SiteMapsController < ApplicationController
       end
     end
     def site_map_params
-      params.require(:site_map).permit(:name)
+      params.require(:site_map).permit(:name, :folder_id)
     end
 end

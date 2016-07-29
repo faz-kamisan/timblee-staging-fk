@@ -72,3 +72,12 @@
     text-decoration: underline;
   }
 }
+
+.login-error-message {
+  text-align: center;
+  display: block;
+}
+
+.error-message.add-top-padding {
+  padding: 13px 0 0px 0;
+}

@@ -109,8 +109,6 @@ GEM
     orm_adapter (0.5.0)
     pg (0.18.4)
     pkg-config (1.1.7)
-    quiet_assets (1.1.0)
-      railties (>= 3.1, < 5.0)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -207,7 +205,6 @@ DEPENDENCIES
   letter_opener (~> 1.4.1)
   non-stupid-digest-assets (~> 1.0.8)
   pg (~> 0.18.4)
-  quiet_assets (~> 1.1.0)
   rails (= 4.2.6)
   sass-rails (~> 5.0)
   sidekiq (~> 4.1.1)

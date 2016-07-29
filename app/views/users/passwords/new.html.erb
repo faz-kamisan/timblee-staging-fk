@@ -15,7 +15,7 @@
         <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: 'user-form' }) do |f| %>
           <div class="form-group">
             <%= f.email_field :email, class: 'form-control', placeholder: 'Your email' %>
-            <span class='error-message'><%= f.object.errors[:email].join(',') %></span>
+            <span class='error-message add-top-padding'><%= f.object.errors[:email].join(',').html_safe %></span>
 
           </div>
           <div class="form-group m-b-10">
@@ -26,7 +26,6 @@
               <%- if controller_name != 'sessions' %>
                 <%= link_to "Remembered it suddenly?", new_session_path(resource_name), class: 'link-regular' %>
               <% end -%>
-              <a href="#" class="link-regular"></a>
             </div>
             <div class="col-md-6 text-right">
               <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
