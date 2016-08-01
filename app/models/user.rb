@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  devise :invitable, :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
+  devise :invitable, :database_authenticatable, :async, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   belongs_to :business, autosave: true
 
@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :shared_site_maps, through: :site_map_invites, source: :site_map
 
   after_create :add_business, unless: :business_id
+  after_create :set_confirmation_instructions_to_be_sent
 
   validates :full_name, presence: true
 
@@ -21,4 +22,11 @@ class User < ActiveRecord::Base
       new_business = create_business!(owner_id: self.id)
       self.update(business_id: business.id)
     end
+
+    def set_confirmation_instructions_to_be_sent
+      UserConfirmationMailWorker.perform_at(2.days.from_now, self.id)
+      UserConfirmationMailWorker.perform_at(5.days.from_now, self.id)
+      UserConfirmationMailWorker.perform_at(10.days.from_now, self.id)
+    end
+
 end
