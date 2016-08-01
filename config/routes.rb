@@ -15,6 +15,6 @@ Rails.application.routes.draw do
   get  'home/dashboard'
 
   devise_scope :user do
-    root to: "devise/sessions#new"
+    root to: "home#dashboard"
   end
 end
