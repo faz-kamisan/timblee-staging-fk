@@ -14,7 +14,6 @@ class SiteMapsController < ApplicationController
   end
 
   def show
-
   end
 
   def destroy
@@ -28,7 +27,8 @@ class SiteMapsController < ApplicationController
   private
     def fetch_site_map
       unless @site_map = current_business.site_maps.find_by(id: params[:id])
-        redirect_to root_path, error: t('not_found', scope: [:flash, :site_maps])
+        flash.now[:alert] = 'SiteMap Not Found'
+        render 'shared/resource_not_found.js.erb'
       end
     end
     def site_map_params

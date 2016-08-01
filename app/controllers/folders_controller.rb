@@ -38,7 +38,8 @@ class FoldersController < ApplicationController
 
     def fetch_folder
       unless @folder = current_business.folders.find_by(id: params[:id])
-        redirect_to root_path, t('not_found', scope: [:flash, :folders])
+        flash.now[:alert] = 'Folder Not Found'
+        render 'shared/resource_not_found.js.erb'
       end
     end
 
