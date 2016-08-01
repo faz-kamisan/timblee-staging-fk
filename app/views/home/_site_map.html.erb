@@ -1,7 +1,7 @@
 <div class="col-xs-4 site-map-container" data-id=<%= site_map.id %> data-folder-id=<%= site_map.folder_id %>>
   <div class="site-card">
     <a href="javascript:void(0);" class="point"></a>
-    <h2 class="card-name"><%= site_map.name.truncate(50) %></h2>
+    <h2 class="card-name"><%= site_map.name.truncate(40) %></h2>
     <p class="updated">Last updated <%= site_map.updated_at_formatted %></p>
     <p class="version">Version 1.0</p>
     <div class="actions">
