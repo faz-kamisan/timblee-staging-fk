@@ -24,9 +24,8 @@ class User < ActiveRecord::Base
     end
 
     def set_confirmation_instructions_to_be_sent
-      UserConfirmationMailWorker.perform_at(2.days.from_now, self.id)
+      UserConfirmationMailWorker.perform_at(1.days.from_now, self.id)
       UserConfirmationMailWorker.perform_at(5.days.from_now, self.id)
       UserConfirmationMailWorker.perform_at(10.days.from_now, self.id)
     end
-
 end
