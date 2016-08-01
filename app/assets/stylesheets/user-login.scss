@@ -1,5 +1,15 @@
 .user-entry {
   padding: 100px 0;
+  &.modal {
+    padding-top: 0;
+    padding-bottom: 0;
+    .modal-message {
+      color: $primaryGrey;
+    }
+    .modal-title {
+      padding-bottom: 5px;
+    }
+  }
   .logo {
     padding-top: 18px;
   }
