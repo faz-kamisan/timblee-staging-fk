@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   validates :full_name, presence: true
 
   def all_site_maps
-    (business.site_maps + shared_site_maps).sort_by(&:name)
+    (business.site_maps + shared_site_maps).sort_by {|site_map| site_map.name.capitalize }
   end
 
   private
