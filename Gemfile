@@ -7,9 +7,10 @@ gem 'uglifier', '>= 1.3.0'
 gem 'therubyracer', '~> 0.12.2' , platforms: :ruby
 gem 'jquery-rails', '~> 4.1.1'
 gem 'devise', '~> 3.5.10'
+gem 'devise_invitable', '~> 1.6.0'
+gem "devise-async"
 gem 'pg', '~> 0.18.4'
 gem 'sidekiq', '~> 4.1.1'
-gem 'devise_invitable', '~> 1.6.0'
 gem 'non-stupid-digest-assets', '~> 1.0.8'
 
 group :development, :test do

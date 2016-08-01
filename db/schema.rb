@@ -95,8 +95,8 @@ ActiveRecord::Schema.define(version: 20160801065829) do
     t.string   "invited_by_type"
     t.integer  "invitations_count",      default: 0
     t.string   "confirmation_token"
-    t.time     "confirmed_at"
-    t.time     "confirmation_sent_at"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
   end
 

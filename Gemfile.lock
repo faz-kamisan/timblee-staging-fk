@@ -71,6 +71,8 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    devise-async (0.10.2)
+      devise (>= 3.2, < 4.0)
     devise_invitable (1.6.0)
       actionmailer (>= 3.2.6)
       devise (>= 3.2.0)
@@ -200,6 +202,7 @@ DEPENDENCIES
   capistrano-rails (~> 1.1.6)
   capistrano-sidekiq (~> 0.5.4)
   devise (~> 3.5.10)
+  devise-async
   devise_invitable (~> 1.6.0)
   jquery-rails (~> 4.1.1)
   letter_opener (~> 1.4.1)
