@@ -1,0 +1,75 @@
+<div class='container'>
+  <div class='header'>
+    <h2>Settings</h2>
+  </div>
+  <div class='settings-content'>
+    <div class='row user-setting-row'>
+      <div class='col-md-9'>
+        <div class='setting-heading'>
+          YOUR NAME
+        </div>
+        <div class='setting-value'>
+          <%= current_user.full_name %>
+          <input type='text' class='form-control hidden' value=<%= 'current_user.full_name' %>>
+        </div>
+      </div>
+      <div class='col-md-3'>
+        <button class='btn btn-normal'>Edit</button>
+      </div>
+    </div>
+    <div class='row user-setting-row'>
+      <div class='col-md-9'>
+        <div class='setting-heading'>
+          YOUR EMAIL
+        </div>
+        <div class='setting-value'>
+          <%= current_user.email %>
+          <input type='text' class='form-control hidden' value=<%= 'current_user.email' %>>
+        </div>
+      </div>
+      <div class='col-md-3'>
+        <button class='btn btn-normal'>Edit</button>
+      </div>
+    </div>
+    <div class='row user-setting-row'>
+      <div class='col-md-9'>
+        <div class='setting-heading'>
+          YOUR PASSWORD
+        </div>
+        <div class='setting-value'>
+          ********
+          <input type='text' class='form-control hidden' placeholder='********'>
+        </div>
+      </div>
+      <div class='col-md-3'>
+        <button class='btn btn-normal'>Edit</button>
+      </div>
+    </div>
+    <div class='row user-setting-row'>
+      <div class='col-md-9'>
+        <div class='setting-heading'>
+          Mail
+        </div>
+        <div class='setting-value'>
+          <%= current_user.email %>
+        </div>
+      </div>
+      <div class='col-md-3'>
+        <button class='btn btn-normal'>Edit</button>
+      </div>
+    </div>
+    <div class='row user-setting-row'>
+      <div class='col-md-9'>
+        <div class='setting-heading'>
+          Mail
+        </div>
+        <div class='setting-value'>
+          <%= current_user.email %>
+        </div>
+      </div>
+      <div class='col-md-3'>
+        <button class='btn btn-normal'>Edit</button>
+      </div>
+    </div>
+  </div>
+</div>

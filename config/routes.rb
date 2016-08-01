@@ -6,7 +6,12 @@ Rails.application.routes.draw do
       passwords: 'users/passwords'
     }
 
-  resources :users
+  resources :users do
+    collection do
+      get 'settings'
+    end
+  end
+
   resources :folders
   resources :site_maps
 

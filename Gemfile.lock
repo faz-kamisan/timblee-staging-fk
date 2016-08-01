@@ -61,6 +61,11 @@ GEM
     capistrano-sidekiq (0.5.4)
       capistrano
       sidekiq (>= 3.4)
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
     concurrent-ruby (1.0.2)
     connection_pool (2.2.0)
     debug_inspector (0.0.2)
@@ -201,6 +206,7 @@ DEPENDENCIES
   capistrano-passenger (~> 0.2.0)
   capistrano-rails (~> 1.1.6)
   capistrano-sidekiq (~> 0.5.4)
+  carrierwave (~> 0.10.0)
   devise (~> 3.5.10)
   devise-async
   devise_invitable (~> 1.6.0)
