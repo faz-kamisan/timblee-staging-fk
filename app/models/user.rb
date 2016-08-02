@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :site_map_invites, dependent: :destroy
   has_many :shared_site_maps, through: :site_map_invites, source: :site_map
 
-  before_create :create_business, unless: :business
+  before_create :add_business, unless: :business
 
   validates :full_name, presence: true
 
