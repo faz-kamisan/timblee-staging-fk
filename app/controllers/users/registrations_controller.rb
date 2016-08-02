@@ -6,7 +6,12 @@ before_filter :configure_account_update_params, only: [:update]
   def update
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
-    debugger
+    if !resource.confirmed?
+      clean_up_passwords resource
+      flash.now[:notice] = 'Need to verify email before updating'
+      render 'users/settings'
+      return
+    end
     resource_updated = resource.update_without_password(account_update_params)
     yield resource if block_given?
     if resource_updated

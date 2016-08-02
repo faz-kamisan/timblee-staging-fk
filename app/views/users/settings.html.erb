@@ -47,7 +47,9 @@
             <div class="col-xs-6 text-right edit-info">
               <div class="edit">
                 <a href="javascript:void(0);" class="btn btn-grey btn-edit">Edit</a>
-                <a href="javascript:void(0);" class="resend">Resend verification email</a>
+                <% if !current_user.confirmed? || current_user.pending_reconfirmation? %>
+                  <%= link_to 'Resend verification email', user_confirmation_path(user: { email: current_user.unconfirmed_email || current_user.email }), method: :post, class: 'resend' %>
+                <% end %>
               </div>
               <div class="save">
                 <button type="submit" class="btn btn-pink">Save</button>
