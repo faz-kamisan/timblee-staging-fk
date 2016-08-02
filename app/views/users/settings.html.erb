@@ -112,7 +112,7 @@
           </div>
           <div class="col-xs-3">
             <div class="wrapper clearfix">
-              <input type="checkbox" name="toggle" id="toggle" checked="">
+              <input type="checkbox" name="toggle" id="toggle" class='email-notification-checkbox' <%= 'checked' if current_user.notify_by_email %>>
               <label for="toggle" class="pull-right"></label>
             </div>
           </div>

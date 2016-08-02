@@ -2,6 +2,7 @@ var EditFields = function(options) {
   this.editBtn = options.editBtn;
   this.cancelBtn = options.cancelBtn;
   this.settingsForm = options.settingsForm;
+  this.emailNotificationCheckbox = options.emailNotificationCheckbox;
   this.save = options.save;
   this.edit = options.edit;
   this.editableInput = options.editableInput;
@@ -35,6 +36,14 @@ EditFields.prototype.hideEdit = function() {
 EditFields.prototype.bindEvents = function() {
   this.showEdit();
   this.hideEdit();
+  this.emailNotificationCheckbox.on('change', function() {
+    $.ajax({
+      method: 'put',
+      url: '/users/',
+      data: { user: { notify_by_email: this.checked } },
+      dataType: 'script'
+    });
+  })
 };
 
 $(function() {
@@ -42,6 +51,7 @@ $(function() {
     editBtn : $('.btn-edit'),
     cancelBtn : $('.btn-cancel'),
     settingsForm : $('.settings-form'),
+    emailNotificationCheckbox: $('.email-notification-checkbox'),
     save : $('.save'),
     edit : $('.edit'),
     editableInput : $('.editable-input'),

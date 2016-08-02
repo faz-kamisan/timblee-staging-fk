@@ -28,7 +28,7 @@ class SiteMapsController < ApplicationController
     def fetch_site_map
       unless @site_map = current_business.site_maps.find_by(id: params[:id])
         flash.now[:alert] = 'SiteMap Not Found'
-        render 'shared/resource_not_found.js.erb'
+        render 'shared/show_flash.js.erb'
       end
     end
     def site_map_params
