@@ -1,17 +1,11 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-before_filter :configure_sign_up_params, only: [:create]
-before_filter :configure_account_update_params, only: [:update]
-
+  before_filter :configure_sign_up_params, only: [:create]
+  before_filter :check_user_is_confirmed, only: [:update]
+  before_filter :configure_account_update_params, only: [:update]
   # PUT /resource
   def update
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
-    if !resource.confirmed?
-      clean_up_passwords resource
-      flash.now[:notice] = 'Need to verify email before updating'
-      render 'users/settings'
-      return
-    end
     resource_updated = resource.update_without_password(account_update_params)
     yield resource if block_given?
     if resource_updated
@@ -24,7 +18,7 @@ before_filter :configure_account_update_params, only: [:update]
       respond_with resource, location: after_update_path_for(resource)
     else
       clean_up_passwords resource
-      render 'users/settings'
+      redirect_to settings_users_path, alert: 'Could Not Update Account'
     end
   end
 

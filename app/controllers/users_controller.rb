@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+
+  before_filter :check_user_is_confirmed, only: [:update_password]
+
   def settings
   end
 
@@ -7,7 +10,7 @@ class UsersController < ApplicationController
         sign_in current_user, :bypass => true
         redirect_to settings_users_path, notice: 'Password Updated'
       else
-        render 'users/settings'
+        redirect_to settings_users_path, alert: 'Could Not Update Password'
       end
   end
 

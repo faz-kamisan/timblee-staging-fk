@@ -15,4 +15,11 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource)
     new_user_session_path
   end
+
+  def check_user_is_confirmed
+    if !resource.confirmed?
+      clean_up_passwords resource
+      redirect_to settings_users_path, alert: 'Need to verify email before updating'
+    end
+  end
 end
