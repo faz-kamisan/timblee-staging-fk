@@ -8,9 +8,9 @@ class User < ActiveRecord::Base
   has_many :shared_site_maps, through: :site_map_invites, source: :site_map
   # mount_uploader :avatar, AvatarUploader
 
-  before_create :create_business, unless: :business
   after_create :set_confirmation_instructions_to_be_sent
 
+  before_create :add_business, unless: :business
 
   validates :full_name, presence: true
   # validate :minimum_image_size
