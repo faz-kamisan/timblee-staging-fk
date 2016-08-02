@@ -1,0 +1,237 @@
+<section class="settings">
+  <!-- Settings -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#my-info" aria-controls="my-info" role="tab" data-toggle="tab">My info</a></li>
+    <li role="presentation"><a href="#team" aria-controls="team" role="tab" data-toggle="tab">Team</a></li>
+    <li role="presentation"><a href="#personalization" aria-controls="personalization" role="tab" data-toggle="tab">Personalization</a></li>
+    <li role="presentation"><a href="#billing" aria-controls="billing" role="tab" data-toggle="tab">Billing</a></li>
+  </ul>
+
+  <!-- Settings Tab Content -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="my-info">
+
+      <form class="settings-form">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-xs-6">
+              <label>Your name</label>
+              <input type="text" value="John Longbottom" disabled="" class="editable-input">
+            </div>
+            <div class="col-xs-6 text-right edit-info">
+              <div class="edit">
+                <a href="javascript:void(0);" class="btn btn-grey btn-edit">Edit</a>
+              </div>
+              <div class="save">
+                <button type="submit" class="btn btn-pink">Save</button>
+                <a href="javascript:void(0);" class="btn btn-grey btn-cancel">Cancel</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <form class="settings-form">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-xs-6">
+              <label>Your email</label>
+              <input type="text" value="john@mycompany.com" disabled="" class="editable-input">
+            </div>
+            <div class="col-xs-6 text-right edit-info">
+              <div class="edit">
+                <a href="javascript:void(0);" class="btn btn-grey btn-edit">Edit</a>
+                <a href="javascript:void(0);" class="resend">Resend verification email</a>
+              </div>
+              <div class="save">
+                <button type="submit" class="btn btn-pink">Save</button>
+                <a href="javascript:void(0);" class="btn btn-grey btn-cancel">Cancel</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <form class="settings-form">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-xs-6">
+              <label>Your password</label>
+              <input type="password" value="abcd#0" disabled="" class="editable-input">
+            </div>
+            <div class="col-xs-6 text-right edit-info">
+              <div class="edit">
+                <a href="javascript:void(0);" class="btn btn-grey btn-edit">Edit</a>
+              </div>
+              <div class="save">
+                <button type="submit" class="btn btn-pink">Save</button>
+                <a href="javascript:void(0);" class="btn btn-grey btn-cancel">Cancel</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <form class="settings-form">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-xs-9">
+              <label>Your image</label>
+              <div class="clearfix m-t-15">
+                <%= image_tag('profile-image.png', class: 'profile-image pull-left') %>
+                <div class="right-text pull-right">
+                  <p class="pull-right">Helps you better collaborate with clients &amp; co-workers by making your notifications and comments more personal since it will include your image. We highly recommend it.</p>                 
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-3 text-right edit-info">
+              <div class="edit">
+                <a href="javascript:void(0);" class="btn btn-grey">Edit</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="notification">
+        <label>Notification</label>
+        <div class="row">
+          <div class="col-xs-9">
+            <h4>Email notifications</h4>
+            <p>We'll email you when someone comments on a sitemap you're part of. Comments added in a 10 minute period are grouped into one email. If you switch this off, you'll see notifications only when you log in.</p>
+          </div>
+          <div class="col-xs-3">
+            <div class="wrapper clearfix">
+              <input type="checkbox" name="toggle" id="toggle" checked="">
+              <label for="toggle" class="pull-right"></label>
+            </div>
+          </div>
+        </div>        
+      </div>
+
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="team">
+
+      <form class="settings-form">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-xs-9">
+              <div class="clearfix">
+                <%= image_tag('profile-image.png', class: 'profile-image pull-left') %>
+                <div class="right-text pull-right">
+                  <h3 class="team-member-name">Invite a team member to Timblee</h3>
+                  <span class="active-since">Each new user is US $12 per month. You'll be billed pro-rata for this billing period once you invite them.</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-3 text-right edit-info">
+              <div class="edit">
+                <a href="javascript:void(0);" class="btn btn-pink">Invite</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <form class="settings-form">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-xs-9">
+              <div class="clearfix">
+                <%= image_tag('profile-image.png', class: 'profile-image pull-left') %>
+                <div class="right-text pull-right">
+                  <h3 class="team-member-name">Janine Tourella</h3>
+                  <span class="active-since">Active user since 5 December 2015</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-3 text-right edit-info">
+              <div class="edit">
+                <a href="javascript:void(0);" class="btn btn-grey">Edit</a>
+                <a href="#delete-user-modal" data-toggle="modal" class="link-regular btn-regular">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <form class="settings-form">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-xs-9">
+              <div class="clearfix">
+                <%= image_tag('profile-image.png', class: 'profile-image pull-left') %>
+                <div class="right-text pull-right">
+                  <h3 class="team-member-name">Jimmy McNulty</h3>
+                  <span class="active-since">Active user since 6 April 2016</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-3 text-right edit-info">
+              <div class="edit">
+                <a href="javascript:void(0);" class="btn btn-grey">Edit</a>
+                <a href="#delete-user-modal" data-toggle="modal" class="link-regular btn-regular">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <form class="settings-form last">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-xs-9">
+              <div class="clearfix">
+                <%= image_tag('avatar_5.svg', class: 'profile-image pull-left') %>
+                <div class="right-text pull-right">
+                  <h3 class="team-member-name">Ruby Stratos</h3>
+                  <span class="active-since">Active user since 5 November 2016</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-3 text-right edit-info">
+              <div class="edit">
+                <a href="javascript:void(0);" class="btn btn-grey">Edit</a>
+                <a href="#delete-user-modal" data-toggle="modal" class="link-regular btn-regular">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="personalization">
+      
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="billing">
+      
+    </div>
+
+  </div>
+</section>
+
+<!-- Delete User Modal -->
+<div class="modal fade" id="delete-user-modal" tabindex="-1" role="dialog" aria-labelledby="delete-user-modalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Delete user</h4>
+        <p class="modal-message">You're about to delete a user from your account.</p>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <div class="folder-name-to-delete">
+          </div>
+        </div>
+        <div class="modal-button text-center">
+          <a href="#" class="btn btn-red" id='confirm-delete-folder-btn'>Delete user</a>
+          <a href="#" data-dismiss="modal" class="btn btn-transparent btn-last">Cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
