@@ -14,6 +14,8 @@ gem 'non-stupid-digest-assets', '~> 1.0.8'
 
 group :development, :test do
   gem 'byebug', '~> 9.0.5'
+  gem 'rspec-rails', '~> 3.5'
+
 end
 
 group :development do
@@ -28,3 +30,13 @@ group :development do
   # gem 'quiet_assets', '~> 1.1.0'
 end
 
+
+group :test do
+  gem 'shoulda-matchers',          '~> 2.8'
+  gem 'shoulda-callback-matchers', '~> 1.1'
+  gem 'factory_girl_rails',        '~> 4.5.0'
+  gem 'faker',                     '~> 1.6.6'
+  gem 'fakeweb',                   '~> 1.3'
+  gem 'database_cleaner',          '~> 1.5.3'
+  gem 'simplecov',                                 require: false
+end

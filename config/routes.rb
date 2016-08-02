@@ -10,8 +10,6 @@ Rails.application.routes.draw do
   resources :folders
   resources :site_maps
 
-  resources :folders
-
   get  'home/dashboard'
 
   devise_scope :user do
