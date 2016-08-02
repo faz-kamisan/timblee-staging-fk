@@ -9,6 +9,11 @@
         <h1 class="modal-heading">
           Reset your password
         </h1>
+        <% if resource.errors[:reset_password_token].present? %>
+          <div class='field_with_errors'>
+            <span class='error-message login-error-message'>Reset password token is invalid.</span>
+          </div>
+        <% end %>
         <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: 'user-form' }) do |f| %>
           <%= f.hidden_field :reset_password_token %>
           <div class="form-group">

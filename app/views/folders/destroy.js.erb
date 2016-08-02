@@ -1,2 +1,9 @@
-$("div.flash").html("<%==j render partial: 'shared/flash_message' %>");
-$('li.folder-info[data-id=<%= @folder.id %>]').remove();
+$("div.flash-message").html("<%==j render partial: 'shared/flash_message' %>");
+
+<% if @destroyed %>
+  $('.all-site-map-folder .folder-items').html('<%= current_user.business.folders.count %>')
+  $('li.folder-info[data-id=<%= @folder.id %>]').remove();
+  $('div.site-map-container[data-folder-id=<%= @folder.id %>]').remove();
+  $('.all-site-map-folder').find('.folder-info-block').click()
+<% end %>
+

@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock '3.4.0'
+lock '3.4.1'
 
 set :application, 'timblee'
 set :repo_url, 'git@github.com:TimbleeApp/web-app.git'
@@ -24,6 +24,7 @@ set :user, 'deploy'
 # set :pty, true
 
 # Default value for :linked_files is []
+set :linked_dirs, fetch(:linked_dirs, []).push('tmp/pids', 'tmp/sockets', 'log', 'public/assets', 'public/system')
 set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
 
 set :ssh_options, {

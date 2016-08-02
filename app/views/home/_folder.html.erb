@@ -1,8 +1,12 @@
-<li class="folder-info"  data-id=<%= folder.id %>>
-  <%= link_to(image_tag('cross.png'), folder_path(folder), method: :delete, remote: true, class: "delete-folder") %>
-  <a href="javascript:void(0);">
+<li class="folder-info"  data-id=<%= folder.id %> data-name='<%= folder.name %>' data-site-map-count=<%= folder.site_maps.count %>>
+  <!-- <%#= link_to(image_tag('cross.png'), folder_path(folder), method: :delete, remote: true, class: "delete-folder") %> -->
+  <a class='delete-folder'><%= image_tag('cross.png') %></a>
+  <a href="javascript:void(0);" class='folder-info-block' data-name='<%= folder.name %>'>
     <%= image_tag('more-icon.png', class: 'folder-icon') %>
-    <span class="folder-name"><%= folder.name %></span>
+    <span class="folder-name">
+      <span class='folder-name-text'><%= folder.name %></span>
+      <input type='text' class='form-control folder-name-field hidden' data-id=<%= folder.id %> data-name='<%= folder.name %>' value='<%= folder.name %>'>
+    </span>
     <span class="folder-items"><%= folder.site_maps.count %></span>
   </a>
 </li>

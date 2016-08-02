@@ -14,6 +14,7 @@
           <%= form_for SiteMap.new do |f| %>
             <div class='form-group'>
               <%= f.label :name %>*<br />
+              <%= f.hidden_field :folder_id, class: 'sitemap-hidden-folder-id' %>
               <%= f.text_field :name, autofocus: true, required: true %>
               <span class='help-inline alert-danger'><%= f.object.errors[:name].join(',') %></span>
             </div>

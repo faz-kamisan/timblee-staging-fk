@@ -1,5 +1,5 @@
-$("div.flash").html("<%==j render partial: 'shared/flash_message' %>");
+$("div.flash-message").html("<%==j render partial: 'shared/flash_message' %>");
 <% if(@folder.persisted?) %>
   $('.dynamic-folders-list').html("<%= escape_javascript(render partial: 'home/folder', collection: @folders) %>")
 <% end %>
-$('.folder-name-field').val('')
+$('.new-folder-name-field').val('')

@@ -38,6 +38,7 @@
     margin: 0;
     padding: 45px 0 5px 0;
     font-weight: 400;
+    word-break: break-all;
   }
   .updated,
   .version {
@@ -155,6 +156,9 @@
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: middle;
+    .folder-name-field {
+      height: 30px;
+    }
   }
   .folder-info {
     padding: 10px;
@@ -169,7 +173,7 @@
     &.active-delete {
      a {
         color: $primaryGrey;
-      } 
+      }
     }
   }
   a {

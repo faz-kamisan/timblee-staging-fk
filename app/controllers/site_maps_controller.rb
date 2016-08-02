@@ -2,7 +2,7 @@ class SiteMapsController < ApplicationController
   before_filter :fetch_site_map, only: [:destroy, :show]
 
   def create
-    @site_map = current_user.business.site_maps.build(site_map_params)
+    @site_map = current_business.site_maps.build(site_map_params)
     @site_map.business = current_business
     if @site_map.save
       flash[:notice] = t('.success', scope: :flash)
@@ -14,7 +14,6 @@ class SiteMapsController < ApplicationController
   end
 
   def show
-
   end
 
   def destroy
@@ -28,10 +27,11 @@ class SiteMapsController < ApplicationController
   private
     def fetch_site_map
       unless @site_map = current_business.site_maps.find_by(id: params[:id])
-        redirect_to root_path, error: t('not_found', scope: [:flash, :site_maps])
+        flash.now[:alert] = 'SiteMap Not Found'
+        render 'shared/resource_not_found.js.erb'
       end
     end
     def site_map_params
-      params.require(:site_map).permit(:name)
+      params.require(:site_map).permit(:name, :folder_id)
     end
 end
