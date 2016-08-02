@@ -11,12 +11,12 @@
   <div class="tab-content">
     <!-- My Info Tab -->
     <div role="tabpanel" class="tab-pane active" id="my-info">
-      <form class="settings-form">
+      <%= form_for current_user, url: registration_path(current_user), html: { class: 'settings-form' } do |f| %>
         <div class="form-group">
           <div class="row">
             <div class="col-xs-6">
               <label>Your name</label>
-              <input type="text" value="<%= current_user.full_name %>" disabled="" class="editable-input">
+              <%= f.text_field :full_name, disabled: true, class: 'editable-input' %>
             </div>
             <div class="col-xs-6 text-right edit-info">
               <div class="edit">
@@ -29,14 +29,20 @@
             </div>
           </div>
         </div>
-      </form>
+      <% end %>
 
-      <form class="settings-form">
+      <%= form_for current_user, url: registration_path(current_user), html: { class: 'settings-form' } do |f| %>
         <div class="form-group">
           <div class="row">
             <div class="col-xs-6">
               <label>Your email</label>
-              <input type="text" value="<%= current_user.email %>" disabled="" class="editable-input">
+              <%= f.text_field :email, disabled: true, class: 'editable-input' %>
+              <% unless current_user.confirmed? %>
+                <span>(You need to verify this email)</span>
+              <% end %>
+              <% if current_user.pending_reconfirmation? %>
+                <div>Currently waiting confirmation for: <%= current_user.unconfirmed_email %></div>
+              <% end %>
             </div>
             <div class="col-xs-6 text-right edit-info">
               <div class="edit">
@@ -50,14 +56,14 @@
             </div>
           </div>
         </div>
-      </form>
+      <% end %>
 
-      <form class="settings-form">
+      <%= form_for current_user, url: update_password_users_path, html: { class: 'settings-form', method: :patch } do |f| %>
         <div class="form-group">
           <div class="row">
             <div class="col-xs-6">
               <label>Your password</label>
-              <input type="password" value="" disabled="" class="editable-input" placeholder='********'>
+              <%= f.password_field :password, disabled: true, class: 'editable-input', placeholder: '********' %>
             </div>
             <div class="col-xs-6 text-right edit-info">
               <div class="edit">
@@ -70,7 +76,7 @@
             </div>
           </div>
         </div>
-      </form>
+      <% end %>
 
       <!-- Static Avatar For Now -->
       <form class="settings-form">
@@ -216,4 +222,4 @@
   </div>
 </section>
 
-<% render 'delete_user_modal' %>
+<% render 'users/delete_user_modal' %>
