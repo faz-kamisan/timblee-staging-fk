@@ -14,4 +14,5 @@ Devise.setup do |config|
   config.scoped_views = true
   config.sign_out_via = :delete
   config.allow_unconfirmed_access_for = 12.days
+  config.invited_by_class_name = 'User'
 end

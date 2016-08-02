@@ -136,78 +136,58 @@
             </div>
             <div class="col-xs-3 text-right edit-info">
               <div class="edit">
-                <a href="javascript:void(0);" class="btn btn-pink">Invite</a>
+                <a href="javascript:void(0);" class="btn btn-pink new-invitation-link">Invite</a>
               </div>
             </div>
           </div>
         </div>
       </form>
-
-      <form class="settings-form">
-        <div class="form-group">
-          <div class="row">
-            <div class="col-xs-9">
-              <div class="clearfix">
-                <%= image_tag('profile-image.png', class: 'profile-image pull-left') %>
-                <div class="right-text pull-right">
-                  <h3 class="team-member-name">Janine Tourella</h3>
-                  <span class="active-since">Active user since 5 December 2015</span>
+      <% current_business.users.each_with_index do |user, index|%>
+        <form class="settings-form <%= 'last' if (index + 1) == current_business.users.count %>" >
+          <div class="form-group">
+            <% if user.active? %>
+              <div class="row">
+                <div class="col-xs-9">
+                  <div class="clearfix">
+                    <%= image_tag('profile-image.png', class: 'profile-image pull-left') %>
+                    <div class="right-text pull-right">
+                      <h3 class="team-member-name"><%= user.full_name.titleize %></h3>
+                      <span class="active-since">Active user since <%= pretty_time(user.invitation_accepted_at || user.created_at) %></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-3 text-right edit-info">
+                  <div class="edit">
+                    <a href="javascript:void(0);" class="btn btn-grey">Edit</a>
+                    <a href="#delete-user-modal" data-toggle="modal" class="link-regular btn-regular">Delete</a>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-xs-3 text-right edit-info">
-              <div class="edit">
-                <a href="javascript:void(0);" class="btn btn-grey">Edit</a>
-                <a href="#delete-user-modal" data-toggle="modal" class="link-regular btn-regular">Delete</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
-
-      <form class="settings-form">
-        <div class="form-group">
-          <div class="row">
-            <div class="col-xs-9">
-              <div class="clearfix">
-                <%= image_tag('profile-image.png', class: 'profile-image pull-left') %>
-                <div class="right-text pull-right">
-                  <h3 class="team-member-name">Jimmy McNulty</h3>
-                  <span class="active-since">Active user since 6 April 2016</span>
+            <% else %>
+              <div class="row">
+                <div class="col-xs-9">
+                  <div class="clearfix">
+                    <%= image_tag('profile-image.png', class: 'profile-image pull-left') %>
+                    <div class="right-text pull-right">
+                      <h3 class="team-member-name"><%= user.email %></h3>
+                      <span class="active-since">Invited_on <%= pretty_time(user.invitation_created_at) %>Hasn't accepted yet</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-3 text-right edit-info">
+                  <div class="edit">
+                    <a href="javascript:void(0);" class="btn btn-grey">Edit</a>
+                    <a href="javascript:void(0);" class="btn btn-grey">Invite Again</a>
+                    <a href="#delete-user-modal" data-toggle="modal" class="link-regular btn-regular">Revoke Invite</a>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-xs-3 text-right edit-info">
-              <div class="edit">
-                <a href="javascript:void(0);" class="btn btn-grey">Edit</a>
-                <a href="#delete-user-modal" data-toggle="modal" class="link-regular btn-regular">Delete</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
+            <% end %>
 
-      <form class="settings-form last">
-        <div class="form-group">
-          <div class="row">
-            <div class="col-xs-9">
-              <div class="clearfix">
-                <%= image_tag('avatar_5.svg', class: 'profile-image pull-left') %>
-                <div class="right-text pull-right">
-                  <h3 class="team-member-name">Ruby Stratos</h3>
-                  <span class="active-since">Active user since 5 November 2016</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-xs-3 text-right edit-info">
-              <div class="edit">
-                <a href="javascript:void(0);" class="btn btn-grey">Edit</a>
-                <a href="#delete-user-modal" data-toggle="modal" class="link-regular btn-regular">Delete</a>
-              </div>
-            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      <% end %>
+
 
     </div>
 
@@ -222,3 +202,7 @@
   </div>
 </section>
 <% render 'users/delete_user_modal' %>
+
+<%= render 'users/send_invitation_modal' %>
+<%= javascript_include_tag('invitation_modal') %>
+
