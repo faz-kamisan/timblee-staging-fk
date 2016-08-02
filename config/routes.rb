@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :folders
 
   get  'home/dashboard'
+  get  'home/settings'
 
   devise_scope :user do
     root to: "home#dashboard"

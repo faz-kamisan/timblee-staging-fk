@@ -14,3 +14,4 @@
 //= require jquery_ujs
 //= require bootstrap.min
 //= require flash
+//= require editFields
