@@ -17,7 +17,7 @@ before_filter :load_user, only: [:re_invite, :revoke]
 
     invalid_emails = emails - valid_emails
     set_notice(valid_emails, invalid_emails)
-    redirect_to home_dashboard_path
+    redirect_to settings_users_path
   end
 
   def re_invite
@@ -52,7 +52,7 @@ protected
 
   def set_notice(valid_emails, invalid_emails)
     flash[:notice] = ''
-    flash[:notice] = t('.success', scope: :flash, emails: valid_emails.join(',')) if valid_emails.present?
-    flash[:notice] += t('.failure', scope: :flash, emails: invalid_emails.join(',')) if invalid_emails.present?
+    flash[:notice] = t('.success', scope: :flash, emails: valid_emails.join(', ')) if valid_emails.present?
+    flash[:notice] += t('.failure', scope: :flash, emails: invalid_emails.join(', ')) if invalid_emails.present?
   end
 end

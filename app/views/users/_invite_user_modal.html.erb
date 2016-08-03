@@ -27,12 +27,19 @@
           </div>
         </div>
         <div class="modal-button text-center">
-          <a href="#" data-dismiss="modal" class="btn btn-transparent">Here’s what they'll see</a>
-          <a href="#" class="btn btn-pink btn-last">Send the email</a>
+          <a href="#" data-dismiss="modal" class="btn btn-transparent preview-invite-button">Here’s what they'll see</a>
+          <a href="#" class="btn btn-pink btn-last send-invite-button">Send the email</a>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<%= form_tag 'bulk_invitation', {class: 'hidden bulk-invitation-form'} do %>
+  <div class='form-group'>
+    <%= label_tag :email %>*<br />
+    <%= text_field_tag :email, nil, { autofocus: true, required: true, class: 'bulk-invite-emails-input' } %>
+  </div>
+<% end %>
 
 <%= javascript_include_tag('tagIt') %>
