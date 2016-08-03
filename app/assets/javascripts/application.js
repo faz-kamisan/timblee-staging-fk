@@ -18,3 +18,4 @@
 //= require flash
 //= require editFields
 //= require twemoji-picker
+//= require apply_twemoji

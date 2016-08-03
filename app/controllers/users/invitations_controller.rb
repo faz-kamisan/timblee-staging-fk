@@ -4,7 +4,6 @@ before_filter :load_user, only: [:re_invite, :revoke]
 
   def bulk_invitation
     valid_emails = []
-
     emails = params[:email].split(/\s* \s*/)
     emails.each do |email|
 
