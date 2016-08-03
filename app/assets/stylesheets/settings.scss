@@ -8,6 +8,11 @@
   line-height: 18px;
 }
 
+.font-14 {
+  font-size: 14px;
+  line-height: 20px;
+}
+
 .font-18 {
   font-size: 18px;
   line-height: 24px;
@@ -333,5 +338,70 @@ ul.tagit li.tagit-choice-editable {
     font-weight: 400;
     line-height: 20px;
     padding: 0 2px;
+  }
+}
+
+#invite-email-preview-modal {
+  .modal-body {
+    @include border-radius(10px);
+    padding: 120px 80px 0 80px;
+    p {
+      @extend .font-14;
+      color: $primaryGrey;
+    }
+    .btn-pink {
+      background: $primaryPink;
+      color: $primaryWhite;
+      margin-top: 25px;
+      cursor: default;
+    }
+  }
+  .inner {
+    background: $primaryWhite;
+    padding: 40px;
+    border: 1px solid #d6d8da;
+    @include border-radius(6px);
+  }
+  .modal-content {
+    .close {
+      position: absolute;
+      right: 17px;
+      top: 17px;
+      z-index: 3;
+    }
+  }
+}
+
+.go-back {
+  z-index: 3;
+  top: 17px;
+  left: 17px;
+  font-size: 12px;
+  color: #a3acb5;
+  position: absolute;
+  bottom: -1px;
+  .icon-caret {
+    font-size: 12px;
+    display: inline-block;
+    transform: rotate(90deg);
+    position: relative;
+    bottom: -1px;
+  }
+}
+
+.modal-footer {
+  text-align: center;
+  .logo-inner {
+    margin: 10px 0 20px 0;
+    width: 47px;
+  }
+  p {
+    font-size: 10px;
+    line-height: 15px;
+    color: #a3acb5;
+    padding-bottom: 15px;
+    span {
+      font-weight: 700;
+    }
   }
 }

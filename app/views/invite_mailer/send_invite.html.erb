@@ -1,0 +1,15 @@
+<p>Hello <%= @user.email %></p>
+
+<p><%= @inviter.full_name %> has invited you to join his business on Timblee.</p>
+
+<% if @custom_message.present? %>
+  <p>Here is a personal message from <%= @inviter.full_name %></p>
+  <p><%= @custom_message %></p>
+<% end %>
+
+<p>You can accept the invite by signing up through the below link:</p>
+
+<p><%= link_to t("devise.mailer.invitation_instructions.accept"), accept_invitation_url(@user, :invitation_token => @token) %></p>
+
+Thanks and Regards
+Timblee

@@ -9,15 +9,17 @@ before_filter :load_user, only: [:re_invite, :revoke]
     emails.each do |email|
 
       unless User.find_by(email: email)
-        user = User.invite!({email: email, business: current_business}, current_user)
-        user.valid?
-        valid_emails << email unless user.errors[:email].present?
+        user = User.invite!({email: email, business: current_business, skip_invitation: true}, current_user)
+        if user.persisted?
+          InviteMailer.send_invite(user.id, user.raw_invitation_token, params[:custom_message]).deliver_now
+          valid_emails << email unless user.errors[:email].present?
+        end
       end
     end
 
     invalid_emails = emails - valid_emails
     set_notice(valid_emails, invalid_emails)
-    redirect_to home_dashboard_path
+    redirect_to settings_users_path
   end
 
   def re_invite
@@ -52,7 +54,7 @@ protected
 
   def set_notice(valid_emails, invalid_emails)
     flash[:notice] = ''
-    flash[:notice] = t('.success', scope: :flash, emails: valid_emails.join(',')) if valid_emails.present?
-    flash[:notice] += t('.failure', scope: :flash, emails: invalid_emails.join(',')) if invalid_emails.present?
+    flash[:notice] = t('.success', scope: :flash, emails: valid_emails.join(', ')) if valid_emails.present?
+    flash[:notice] += t('.failure', scope: :flash, emails: invalid_emails.join(', ')) if invalid_emails.present?
   end
 end

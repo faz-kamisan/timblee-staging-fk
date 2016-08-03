@@ -1,5 +1,4 @@
 <div role="tabpanel" class="tab-pane" id="team">
-
   <form class="settings-form">
     <div class="form-group">
       <div class="row">
@@ -15,7 +14,7 @@
           </div>
         <div class="col-xs-3 text-right edit-info">
           <div class="edit">
-            <a href="javascript:void(0);" class="btn btn-pink new-invitation-link">Invite</a>
+            <a href="#invite-user-modal" data-toggle="modal" class="btn btn-pink">Invite</a>
           </div>
         </div>
         <% else %>
@@ -89,6 +88,5 @@
   <% end %>
 
 </div>
-
-<%= render 'users/send_invitation_modal' %>
 <%= javascript_include_tag('invitation_modal', 'delete_user') %>
+<%= javascript_include_tag('invitations', 'delete_user') %>
