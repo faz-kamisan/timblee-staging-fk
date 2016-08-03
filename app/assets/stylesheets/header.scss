@@ -44,7 +44,7 @@
     right: -22px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-    z-index: 1;
+    z-index: 3;
     visibility: hidden;
     opacity: 0;
     @include animate(.35s);
@@ -56,6 +56,9 @@
       font-size: 14px;
       line-height: 20px;
       text-align: left;
+      &:hover {
+        color: $primaryPink;
+      }
     }
     li + li {
       border-top: solid 1px #eeeeee;

@@ -23,7 +23,7 @@
         <%= current_user.full_name.titleize %>
         <ul class="p-0 m-0 user-settings">
           <li>
-            <a href="javascript:void(0)">Settings</a>
+            <%= link_to 'Settings', settings_users_path %>
           </li>
           <li>
             <a href="javascript:void(0)">Ask us anything</a>

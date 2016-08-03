@@ -12,6 +12,7 @@ gem "devise-async"
 gem 'pg', '~> 0.18.4'
 gem 'sidekiq', '~> 4.1.1'
 gem 'non-stupid-digest-assets', '~> 1.0.8'
+gem 'carrierwave', '~> 0.10.0'
 
 group :development, :test do
   gem 'byebug', '~> 9.0.5'

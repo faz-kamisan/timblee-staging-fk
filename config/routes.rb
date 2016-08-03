@@ -6,11 +6,18 @@ Rails.application.routes.draw do
       passwords: 'users/passwords'
     }
 
-  resources :users
+  resources :users do
+    collection do
+      get 'settings'
+      patch 'update_password'
+    end
+  end
+
   resources :folders
   resources :site_maps
 
   get  'home/dashboard'
+  get  'home/settings'
 
   devise_scope :user do
     root to: "devise/sessions#new"
