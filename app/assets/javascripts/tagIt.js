@@ -1,0 +1,3 @@
+$(function() {
+  $("#myTags").tagit();
+});

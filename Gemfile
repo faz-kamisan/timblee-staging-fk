@@ -6,6 +6,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'therubyracer', '~> 0.12.2' , platforms: :ruby
 gem 'jquery-rails', '~> 4.1.1'
+gem 'jquery-ui-rails', '~> 5.0.5'
 gem 'devise', '~> 3.5.10'
 gem 'devise_invitable', '~> 1.6.0'
 gem "devise-async"

@@ -1,0 +1,154 @@
+@import 'fonts.css';
+
+[class^="icon-"], [class*=" icon-"] {
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon {
+  font-size: 27px;
+  display: inline-block;
+}
+
+.link-text {
+  position: relative;
+  left: 8px;
+  top: -8px;
+}
+
+.icon-add:before {
+  content: "\e900";
+}
+
+.icon-all-folders:before {
+  content: "\e901";
+}
+
+.icon-bell:before {
+  content: "\e902";
+}
+
+.icon-binoculars:before {
+  content: "\e903";
+}
+
+.icon-caret:before {
+  content: "\e904";
+}
+
+.icon-close:before {
+  content: "\e905";
+}
+
+.icon-comment-circle:before {
+  content: "\e906";
+}
+
+.icon-comment:before {
+  content: "\e907";
+}
+
+.icon-conversation:before {
+  content: "\e908";
+}
+
+.icon-default:before {
+  content: "\e909";
+}
+
+.icon-delete-circle:before {
+  content: "\e90a";
+}
+
+.icon-edit-circle:before {
+  content: "\e90b";
+}
+
+.icon-folder-light:before {
+  content: "\e90c";
+}
+
+.icon-gateway:before {
+  content: "\e90d";
+}
+
+.icon-heart:before {
+  content: "\e90e";
+}
+
+.icon-invite-female .path1:before {
+  content: "\e90f";
+  color: rgb(234, 10, 140);
+}
+
+.icon-invite-female .path2:before {
+  content: "\e910";
+  color: rgb(255, 255, 255);
+  position: absolute;
+  left: 0;
+  top: -15px;
+}
+.icon-invite-female .path3:before {
+  content: "\e911";
+  color: rgb(234, 10, 140);
+  position: absolute;
+  left: 0;
+  top: -15px;
+}
+.icon-invite-female .path4:before {
+  content: "\e912";
+  color: rgb(234, 10, 140);
+  position: absolute;
+  left: 0;
+  top: -15px;
+}
+.icon-invite-female .path5:before {
+  content: "\e913";
+  color: rgb(0, 0, 0);
+  position: absolute;
+  left: 0;
+  top: -15px;
+}
+.icon-invite-male:before {
+  content: "\e914";
+}
+.icon-logout:before {
+  content: "\e915";
+}
+.icon-notification:before {
+  content: "\e916";
+}
+.icon-question-circle:before {
+  content: "\e917";
+}
+.icon-reload:before {
+  content: "\e918";
+}
+.icon-save-circle:before {
+  content: "\e919";
+}
+.icon-search:before {
+  content: "\e91a";
+}
+.icon-share-circle:before {
+  content: "\e91b";
+}
+.icon-sitemap:before {
+  content: "\e91c";
+}
+.icon-smail-face-mouth-open:before {
+  content: "\e91d";
+}
+.icon-upload-circle:before {
+  content: "\e91e";
+}
+.icon-wand:before {
+  content: "\e91f";
+}

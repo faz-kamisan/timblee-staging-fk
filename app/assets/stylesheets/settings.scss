@@ -100,7 +100,7 @@
   }
 
   &.last {
-    border-bottom: solid 1px $primaryLabel; 
+    border-bottom: solid 1px $primaryLabel;
   }
 
   label {
@@ -188,7 +188,7 @@
 
   p {
     @extend .font-12;
-    color: $primaryLink; 
+    color: $primaryLink;
   }
 }
 
@@ -224,7 +224,7 @@
       color: $primaryPink;
       &:hover {
         background: $primaryPink;
-        color: $primaryWhite;  
+        color: $primaryWhite;
       }
     }
   }
@@ -235,4 +235,103 @@
   text-align: center;
   display: inline-block;
   margin-top: 4px;
+}
+
+#invite-user-modal {
+  .modal-body {
+    padding: 40px 80px;
+  }
+}
+
+ul.tagit {
+  min-height: 48px;
+  padding: 5px 8px;
+}
+
+ul.tagit li.tagit-new {
+  height: 36px;
+  margin: 0;
+  padding: 0;
+}
+
+ul.tagit input[type="text"] {
+  height: 36px;
+}
+
+.ui-icon.ui-icon-close {
+  display: none;
+}
+
+ul.tagit li.tagit-choice-editable {
+  background: #f9fafc;
+  padding: 7px;
+  @extend .font-12;
+  color: $primaryGrey;
+  border: 0;
+  height: 33px;
+  margin: 0 3px 3px 0;
+}
+
+.border-top {
+  border-top: solid 1px #d6d8da;
+}
+
+.optional-message-container {
+  padding-top: 14px;
+}
+
+.optional-message {
+  height: 175px;
+  padding: 15px;
+  border: 1px solid #d4d4d4;
+  @include border-radius(6px);
+  background: $primaryWhite;
+  textarea {
+    height: 120px;
+    border: 0;
+    padding: 0;
+    resize: none;
+  }
+}
+
+#invite-user-modal {
+  .modal-button {
+    padding-top: 25px;
+  }
+  .btn-transparent {
+    border-color: $primaryGrey;
+    color: $primaryGrey;
+  }
+  .btn {
+    @extend .font-12;
+    line-height: 24px;
+  }
+  .btn-pink {
+    background: $primaryPink;
+    color: $primaryWhite;
+    text-transform: none;
+  }
+}
+
+.emoji-section {
+  margin-top: 10px;
+  .add-message {
+    font-size: 14px;
+    color: $primaryLink;
+    font-weight: 700;
+    line-height: 20px;
+  }
+  .clear-text {
+    font-size: 14px;
+    color: $primaryLink;
+    font-weight: 400;
+    line-height: 20px;
+  }
+  .or {
+    color: #d6d8da;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    padding: 0 2px;
+  }
 }
