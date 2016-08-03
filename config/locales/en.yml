@@ -39,6 +39,11 @@ en:
           failure: User couldn't be revoked
           not_found: User not found
 
+      destroy:
+        not_found: User not found.
+        success: User successfully soft deleted.
+        failure: User cannot be deleted.
+
   activerecord:
       errors:
         models:
@@ -54,3 +59,5 @@ en:
   errors:
     messages:
       not_found: "We can't find the email in our system. We've looked everywhere. Did you sign up with another email? If you've entered the right email and this isn't working, <a class='cursor-pointer'>get in touch</a> and we'll sort it out ASAP!"
+    users:
+      owner_destroy: Owner cannot be destroyed
