@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :shared_site_maps, through: :site_map_invites, source: :site_map
   # mount_uploader :avatar, AvatarUploader
 
+  before_create :set_is_admin, unless: :business_id
   before_create :add_business, unless: :business_id
   after_create :set_confirmation_instructions_to_be_sent
 
@@ -34,6 +35,9 @@ class User < ActiveRecord::Base
     #   end
     # end
 
+    def set_is_admin
+      self.is_admin = true
+    end
     def add_business
       build_business(owner: self)
     end

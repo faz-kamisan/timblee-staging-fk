@@ -3,20 +3,31 @@
   <form class="settings-form">
     <div class="form-group">
       <div class="row">
-        <div class="col-xs-9">
-          <div class="clearfix">
-            <%= image_tag('profile-image.png', class: 'profile-image pull-left') %>
-            <div class="right-text pull-right">
-              <h3 class="team-member-name">Invite a team member to Timblee</h3>
-              <span class="active-since">Each new user is US $12 per month. You'll be billed pro-rata for this billing period once you invite them.</span>
+        <% if current_user.is_admin %>
+          <div class="col-xs-9">
+            <div class="clearfix">
+              <%= image_tag('profile-image.png', class: 'profile-image pull-left') %>
+              <div class="right-text pull-right">
+                <h3 class="team-member-name">Invite a team member to Timblee</h3>
+                <span class="active-since">Each new user is US $12 per month. You'll be billed pro-rata for this billing period once you invite them.</span>
+              </div>
             </div>
           </div>
-        </div>
         <div class="col-xs-3 text-right edit-info">
           <div class="edit">
             <a href="javascript:void(0);" class="btn btn-pink new-invitation-link">Invite</a>
           </div>
         </div>
+        <% else %>
+          <div class="col-xs-9">
+            <div class="clearfix">
+              <div class="right-text">
+                <h3 class="team-member-name">Want to invite others to the team?</h3>
+                <span class="active-since">Ask your team admins to either invite them or make you an admin.<br />Admin are shown below.</span>
+              </div>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
   </form>
@@ -34,12 +45,20 @@
                 </div>
               </div>
             </div>
-            <div class="col-xs-3 text-right edit-info">
-              <div class="edit">
-                <a href="javascript:void(0);" class="btn btn-grey">Edit</a>
-                <a href="#delete-user-modal" data-toggle="modal" class="link-regular btn-regular delete-user-modal-link" data-url= "<%= user_path(user)%>">Delete</a>
+            <% if current_user.is_admin %>
+              <div class="col-xs-3 text-right edit-info">
+                <div class="edit">
+                  <a href="javascript:void(0);" class="btn btn-grey">Edit</a>
+                  <a href="#delete-user-modal" data-toggle="modal" class="link-regular btn-regular delete-user-modal-link" data-url= "<%= user_path(user)%>">Delete</a>
+                </div>
               </div>
-            </div>
+            <% elsif user.is_admin %>
+              <div class="col-xs-3 text-right edit-info">
+                <div class="edit">
+                Admin
+                </div>
+              </div>
+            <% end %>
           </div>
         <% else %>
           <div class="row">
@@ -52,13 +71,16 @@
                 </div>
               </div>
             </div>
-            <div class="col-xs-3 text-right edit-info">
-              <div class="edit">
-                <a href="javascript:void(0);" class="btn btn-grey">Edit</a>
-                <%= link_to "Invite Again", re_invite_user_path(user), class: "btn btn-grey", remote: true %>
-                <%= link_to "Revoke Invite", revoke_user_path(user), class: "link-regular btn-regular", remote: true, data: { confirm: "Are you sure you want to revoke invitation for this user?" } %>
+            <% if current_user.is_admin %>
+              <div class="col-xs-3 text-right edit-info">
+                <div class="edit">
+                  <a href="javascript:void(0);" class="btn btn-grey">Edit</a>
+                  <%= link_to "Invite Again", re_invite_user_path(user), class: "btn btn-grey", remote: true %>
+                  <%= link_to "Revoke Invite", revoke_user_path(user), class: "link-regular btn-regular", remote: true, data: { confirm: "Are you sure you want to revoke invitation for this user?" } %>
+                </div>
               </div>
-            </div>
+
+            <% end %>
           </div>
         <% end %>
 
