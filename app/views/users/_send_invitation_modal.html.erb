@@ -1,0 +1,31 @@
+<div class='modal fade' id='send_invitation_modal' tabindex='-1' role='dialog' aria-labelledby='send_invitation_modalLabel'>
+
+  <div class='modal-dialog' role='document'>
+    <div class='modal-content'>
+
+      <div class='modal-header'>
+        <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+        <h4 class='modal-title' id='send_invitation_modalLabel'>Invite Your Team</h4>
+      </div>
+
+      <div class='modal-body'>
+        <div class='form'>
+          <%= form_tag 'bulk_invitation' do %>
+            <div class='form-group'>
+              <%= label_tag :email %>*<br />
+              <%= text_area_tag :email, nil, { autofocus: true, required: true }%>
+            </div>
+            <div class='actions'>
+              <%= submit_tag 'Invite'%>
+            </div>
+          <% end %>
+
+        <br>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

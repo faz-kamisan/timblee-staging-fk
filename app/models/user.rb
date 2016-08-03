@@ -18,8 +18,11 @@ class User < ActiveRecord::Base
     (business.site_maps + shared_site_maps).sort_by {|site_map| site_map.name.capitalize }
   end
 
-  private
+  def active?
+    invitation_token == nil
+  end
 
+  private
     # def minimum_image_size
     #   image = MiniMagick::Image.open(avatar.path)
     #   unless image[:width] >= 400 && image[:height] >= 400
