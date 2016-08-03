@@ -1,0 +1,38 @@
+<!-- Invite Team Modal -->
+<div class="modal fade" id="invite-user-modal" tabindex="-1" role="dialog" aria-labelledby="invite-user-modalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Invite Your Team</h4>
+        <p class="modal-message">Timblee gets even better when you're not working solo. Invite unlimited <br> team members during your free trial. After that, it's just $19 for the first <br> user (you) and $12 for every subsequent user per month.</p>
+      </div>
+      <div class="modal-body">
+        <div>
+          <p>Enter their emails separated by commas. We'll send them a beautiful invite. You can preview the email before sending it.</p>
+          <ul id="myTags">
+          </ul>
+        </div>
+      </div>
+      <div class="modal-body border-top">
+        <div class="optional-message-container">
+          <div class="optional-message">
+            <form>
+              <textarea class="form-control clear-field" placeholder="Include an optional personal message."></textarea>
+              <div class="emoji-section">
+                <a href="#" class="add-message">Add my message</a> <span class="or">or</span>
+                <a href="javascript:void(0);" class="clear-text">cancel</a>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-button text-center">
+          <a href="#" data-dismiss="modal" class="btn btn-transparent">Here’s what they'll see</a>
+          <a href="#" class="btn btn-pink btn-last">Send the email</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag('tagIt') %>
