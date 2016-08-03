@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   devise_scope :user do
     root to: "devise/sessions#new"
     post 'users/bulk_invitation' => 'users/invitations#bulk_invitation'
+    get 'users/:id/re_invite' => 'users/invitations#re_invite', as: :re_invite_user
+    get 'users/:id/revoke' => 'users/invitations#revoke', as: :revoke_user
   end
 
 end

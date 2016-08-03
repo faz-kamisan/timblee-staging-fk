@@ -22,12 +22,19 @@ en:
       destroy:
         success: SiteMap destroyed successfully
         failure: Couldn't delete sitemap
-
     users:
       invitations:
         bulk_invitation:
           success: "%{emails} successfully invited."
           failure: "%{emails} can't be invited"
+        re_invite:
+          success: User successfully reinvited
+          failure: User couldn't be reinvited
+          not_found: User not found
+        revoke:
+          success: User successfully revoked
+          failure: User couldn't be revoked
+          not_found: User not found
 
   activerecord:
       errors:
@@ -36,3 +43,11 @@ en:
             attributes:
               email:
                 invalid: "Looks like your email is incorrect"
+
+  devise:
+    invitations:
+      invitation_token_invalid: "Either the invitation token provided is invalid or Admin has revoked your invitation!"
+
+  errors:
+    messages:
+      not_found: "We can't find the email in our system. We've looked everywhere. Did you sign up with another email? If you've entered the right email and this isn't working, <a class='cursor-pointer'>get in touch</a> and we'll sort it out ASAP!"
