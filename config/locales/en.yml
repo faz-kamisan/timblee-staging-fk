@@ -22,6 +22,10 @@ en:
       destroy:
         success: SiteMap destroyed successfully
         failure: Couldn't delete sitemap
+    users:
+      confirmations:
+        show:
+          confirmation_token_invalid: 'Confirmation Token is Invalid'
 
   activerecord:
       errors:
