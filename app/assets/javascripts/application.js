@@ -17,3 +17,4 @@
 //= require tag-it.min
 //= require flash
 //= require editFields
+//= require twemoji-picker
