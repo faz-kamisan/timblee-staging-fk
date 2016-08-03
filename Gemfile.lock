@@ -72,6 +72,8 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    devise-async (0.10.2)
+      devise (>= 3.2, < 4.0)
     devise_invitable (1.6.0)
       actionmailer (>= 3.2.6)
       devise (>= 3.2.0)
@@ -238,6 +240,7 @@ DEPENDENCIES
   capistrano-sidekiq (~> 0.5.4)
   database_cleaner (~> 1.5.3)
   devise (~> 3.5.10)
+  devise-async
   devise_invitable (~> 1.6.0)
   factory_girl_rails (~> 4.5.0)
   faker (~> 1.6.6)
