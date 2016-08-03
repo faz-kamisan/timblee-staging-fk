@@ -39,6 +39,8 @@ set :linked_dirs, fetch(:linked_dirs, []).push('tmp/pids')
 
 set :passenger_restart_with_touch, true
 
+set :sidekiq_config, "#{current_path}/config/sidekiq.yml"
+
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
