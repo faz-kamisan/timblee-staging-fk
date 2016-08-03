@@ -12,5 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
 //= require bootstrap.min
+//= require tag-it.min
 //= require flash
+//= require editFields
+//= require clearText

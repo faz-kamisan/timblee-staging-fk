@@ -99,6 +99,7 @@
       font-size: 12px;
       line-height: 18px;
       color: $primaryGrey;
+      position: relative;
       &:hover {
         color: $primaryPink;
       }
@@ -108,7 +109,7 @@
       margin: -1px 6px 0 0;
     }
     li + li {
-      margin-top: 17px;
+      margin-top: 13px;
     }
   }
   .other-users {
