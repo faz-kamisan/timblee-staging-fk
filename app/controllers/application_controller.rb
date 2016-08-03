@@ -17,8 +17,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_user_is_confirmed
-    if !resource.confirmed?
-      clean_up_passwords resource
+    if !current_user.confirmed?
       redirect_to settings_users_path, alert: 'Need to verify email before updating'
     end
   end

@@ -14,7 +14,6 @@ EditFields.prototype.showEdit = function() {
   this.editBtn.on('click', function() {
     var $this = $(this),
         $parent = $this.closest(_this.settingsForm);
-
     $parent.find(_this.edit).fadeOut(_this.fadeTime);
     $parent.find(_this.save).fadeIn(_this.fadeTime);
     $parent.find(_this.editableInput).attr('disabled', false).focus();
@@ -25,8 +24,9 @@ EditFields.prototype.hideEdit = function() {
   var _this = this;
   this.cancelBtn.on('click', function() {
     var $this = $(this),
-        $parent = $this.closest(_this.settingsForm);
-
+        $parent = $this.closest(_this.settingsForm),
+        $relatedInput = $parent.find('.editable-input');
+    $relatedInput.val($relatedInput.data('original-value'));
     $parent.find(_this.save).fadeOut(_this.fadeTime);
     $parent.find(_this.edit).fadeIn(_this.fadeTime);
     $parent.find(_this.editableInput).attr('disabled', true);
