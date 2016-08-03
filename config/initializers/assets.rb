@@ -9,4 +9,4 @@ Rails.application.config.assets.version = '1.0'
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 
-Rails.application.config.assets.precompile += %w( folders.js moreOptions.js flash.js site_maps.js show_modal.js editFields.js show_sucessful_reset_password_sent_modal.js tagIt.js cleartext.js invitations.js)
+Rails.application.config.assets.precompile += %w( folders.js moreOptions.js flash.js site_maps.js show_modal.js editFields.js show_sucessful_reset_password_sent_modal.js tagIt.js invitations.js)

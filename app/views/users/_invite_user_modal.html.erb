@@ -17,13 +17,14 @@
       <div class="modal-body border-top">
         <div class="optional-message-container">
           <div class="optional-message">
-            <form>
-              <textarea class="form-control clear-field" placeholder="Include an optional personal message."></textarea>
+            <%= form_tag 'bulk_invitation', {class: 'bulk-invitation-form'} do %>
+              <%= text_field_tag :email, nil, { autofocus: true, required: true, class: 'bulk-invite-emails-input hidden' } %>
+              <%= text_area_tag :custom_message, nil, { class: 'form-control clear-field invite-custom-message', placeholder: 'Include an optional personal message.', 'data-send' => false } %>
               <div class="emoji-section">
-                <a href="#" class="add-message">Add my message</a> <span class="or">or</span>
-                <a href="javascript:void(0);" class="clear-text">cancel</a>
+                <a href="#" class="add-message">Add my message</a>
+                <a href="javascript:void(0);" class="clear-text hidden clear-custom-message">Cancel</a>
               </div>
-            </form>
+            <% end %>
           </div>
         </div>
         <div class="modal-button text-center">
@@ -34,12 +35,5 @@
     </div>
   </div>
 </div>
-
-<%= form_tag 'bulk_invitation', {class: 'hidden bulk-invitation-form'} do %>
-  <div class='form-group'>
-    <%= label_tag :email %>*<br />
-    <%= text_field_tag :email, nil, { autofocus: true, required: true, class: 'bulk-invite-emails-input' } %>
-  </div>
-<% end %>
 
 <%= javascript_include_tag('tagIt') %>
