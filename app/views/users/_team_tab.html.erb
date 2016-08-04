@@ -48,7 +48,7 @@
               <div class="col-xs-3 text-right edit-info">
                 <div class="edit">
                   <%= link_to "Edit", edit_admin_user_path(user), class: 'btn btn-grey' %>
-                  <a href="#delete-user-modal" data-toggle="modal" class="link-regular btn-regular delete-user-modal-link" data-url= "<%= admin_user_path(user)%>">Delete</a>
+                  <a href="#delete-user-modal" data-toggle="modal" class="link-regular btn-regular delete-user-modal-link" data-url= "<%= admin_user_path(user)%>" data-name="<%= user.full_name %>">Delete</a>
                 </div>
               </div>
             <% elsif !current_user.is_admin && user.is_admin %>
