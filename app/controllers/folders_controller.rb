@@ -8,7 +8,7 @@ class FoldersController < ApplicationController
     else
       flash.now[:error] = t('.failure', scope: :flash)
     end
-    @folders = current_business.folders.order(:name)
+    @folders = current_business.folders.order_by_lower_name.includes(:site_maps)
   end
 
   def destroy
@@ -27,7 +27,7 @@ class FoldersController < ApplicationController
     else
       flash.now[:error] = t('.failure', scope: :flash)
     end
-    @folders = current_business.folders.order(:name)
+    @folders = current_business.folders.order_by_lower_name.includes(:site_maps)
   end
 
   private

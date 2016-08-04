@@ -9,7 +9,7 @@ class SiteMapsController < ApplicationController
         redirect_to site_map_path(@site_map)
     else
       flash[:error] = t('.failure', scope: :flash)
-        redirect_to root_path
+        redirect_to home_dashboard_path
     end
   end
 

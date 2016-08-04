@@ -9,6 +9,7 @@ Folders.prototype.bindEvents = function() {
   var _this = this;
   this.folderList.on('click', '.folder-info-block', function() {
     var $this = $(this);
+    console.log($this)
     _this.filterSiteMaps($this.parent('.folder-info').data('id'));
     _this.setActiveFolder($this);
     $('.folder-heading').text($this.data('name'));

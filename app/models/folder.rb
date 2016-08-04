@@ -2,13 +2,9 @@ class Folder < ActiveRecord::Base
   belongs_to :business
   has_many :site_maps, dependent: :destroy
   validates :name, :business, presence: true
-  validates :name, uniqueness: { scope: :business_id }
+  validates :name, uniqueness: { scope: :business_id, case_sensitive: false }
 
-  before_save :format_name
+  strip_fields :name
 
-  private
-
-  def format_name
-    self.name = self.name.strip.titleize
-  end
+  scope :order_by_lower_name, -> { order('lower(name)') }
 end

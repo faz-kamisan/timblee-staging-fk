@@ -1,7 +1,7 @@
 $("div.flash-message").html("<%==j render partial: 'shared/flash_message' %>");
 
 <% if @destroyed %>
-  $('.all-site-map-folder .folder-items').html('<%= current_user.business.folders.count %>')
+  $('.all-site-map-folder .folder-items').html('<%= current_user.all_site_maps.count %>')
   $('li.folder-info[data-id=<%= @folder.id %>]').remove();
   $('div.site-map-container[data-folder-id=<%= @folder.id %>]').remove();
   $('.all-site-map-folder').find('.folder-info-block').click()
