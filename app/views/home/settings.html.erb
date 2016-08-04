@@ -11,7 +11,7 @@
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="my-info">
 
-      <form class="settings-form">
+      <!-- <form class="settings-form">
         <div class="form-group">
           <div class="row">
             <div class="col-xs-6">
@@ -107,7 +107,92 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
+
+      <section class="edit-user">
+        <div class="link-with-border">
+          <a href="javascript:void(0);">
+            <span class="icon-caret"></span>
+            Back to all users
+          </a>
+        </div>
+        <form class="settings-form">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-xs-9">
+                <div class="clearfix">
+                  <%= image_tag('profile-image.png', class: 'profile-image pull-left') %>
+                  <div class="right-text pull-right">
+                    <h3 class="team-member-name">Janine Tourella</h3>
+                    <span class="active-since">Active user since 5 December 2015</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-3 text-right edit-info">
+                <div class="edit">
+                  <a href="javascript:void(0);" class="btn btn-grey">Edit</a>
+                  <a href="#delete-user-modal" data-toggle="modal" class="link-regular btn-regular">Delete</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <form class="settings-form">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-xs-12">
+                <label>email</label>
+                <input type="text" value="john@mycompany.com" disabled="" class="editable-input">
+              </div>
+            </div>
+          </div>
+        </form>
+        <form class="settings-form">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-xs-9">
+                <label>password</label>
+                <p class="font-12-light">You can't view user passwords but you can override them since you're an admin.</p>
+              </div>
+              <div class="col-xs-3 text-right edit-info">
+                <div class="edit">
+                  <a href="javascript:void(0);" class="btn btn-grey">Send reset link</a>
+                  <a href="javascript:void(0);" class="link-regular btn-regular">Change Password</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <form class="settings-form">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-xs-9">
+                <label>role</label>
+                <p class="font-12-light">[this user first name] has standard user access which allows editing and creating sitemaps but no user or account management settings. If you change a user’s role, we'll send them an email to let them know about their new superpowers (or not).</p>
+              </div>
+              <div class="col-xs-3 text-right edit-info">
+                <div class="edit">
+                  <a href="javascript:void(0);" class="btn btn-grey">Edit</a>
+                </div>
+              </div>
+              <div class="col-xs-12">
+                <div class="role-standard">
+                  <input type="radio" name="role"> Standard
+                  <div class="cus-radio">
+                    
+                  </div>
+                </div>
+                <div class="role-admin">
+                  <input type="radio" name="role"> Admin
+                  <div class="cus-radio">
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
 
     </div>
 

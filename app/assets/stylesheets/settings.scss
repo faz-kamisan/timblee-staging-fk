@@ -8,6 +8,11 @@
   line-height: 18px;
 }
 
+.font-12-light {
+  @extend .font-12;
+  color: $primaryLink;
+}
+
 .font-14 {
   font-size: 14px;
   line-height: 20px;
@@ -405,3 +410,29 @@ ul.tagit li.tagit-choice-editable {
     }
   }
 }
+
+/* Edit User */
+.link-with-border {
+  padding: 20px 0 5px 0;
+  border-bottom: solid 1px $primaryLabel;
+  a {
+    @extend .font-12;
+    color: $primaryLink;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .icon-caret {
+    display: inline-block;
+    transform: rotate(90deg);
+    position: relative;
+    bottom: -1px;
+    left: -2px;
+  }
+}
+
+// .cus-radio {
+//   @include border-radius(6px);
+//   border: 1px solid;
+//   padding: 10px;
+//   display: block;
+// }
