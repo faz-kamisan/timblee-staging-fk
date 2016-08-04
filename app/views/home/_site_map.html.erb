@@ -24,10 +24,6 @@
     <div class="actions-overlay">
       <ul class="p-0 m-0">
         <li>
-          <%= image_tag('more-icon.png', class: 'action-icon') %>
-          <a href="javascript:void(0);" class="action">Dulpicate</a>
-        </li>
-        <li>
           <a href="javascript:void(0);" class="action">
             <span class="icon icon-edit-circle"></span>
             <span class="link-text">Rename</span>
@@ -46,14 +42,14 @@
           </a>
         </li>
         <li>
-          <a href="javascript:void(0);" class="action">
+          <a href="#delete-site-map-modal" data-toggle="modal" class="action">
             <span class="icon icon-share-circle"></span>
             <span class="link-text">Share</span>
           </a>
         </li>
         <li>
           <%= link_to site_map_path(site_map), method: :delete, remote: true, class: 'action' do %>
-            <span class="icon icon-share-circle"></span>
+            <span class="icon icon-delete-circle"></span>
             <span class="link-text">Delete</span>
           <% end %>
         </li>

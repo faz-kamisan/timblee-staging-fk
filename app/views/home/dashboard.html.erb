@@ -29,7 +29,8 @@
           <div class="row p-t-40">
             <div class="col-xs-4 site-map-container new-site-map">
               <a href="javascript:void(0);" class="site-card new-site-map-link">
-                + New Sitemap
+                <span class="icon-add"></span> <br>
+                New Sitemap
               </a>
             </div>
             <div class='site_maps-listing'>
@@ -42,5 +43,6 @@
   </section>
   <%= render 'site_maps/create_site_map_modal' %>
   <%= render 'folders/delete_folder_modal' %>
+  <%= render 'delete_site_map_modal' %>
   <%= javascript_include_tag('moreOptions', 'folders', 'site_maps') %>
 <% end %>

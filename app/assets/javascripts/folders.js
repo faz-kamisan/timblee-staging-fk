@@ -77,14 +77,14 @@ Folders.prototype.configureDeletionModal = function(obj) {
   var parentWithData = obj.parent('.folder-info');
   this.deletionModal.data('id', parentWithData.data('id'));
   this.deletionModal.find('span.delete-modal-folder-name').html(parentWithData.data('name'));
-  this.deletionModal.find('div.folder-name-to-delete').html(parentWithData.data('name'));
+  this.deletionModal.find('div.folder-name-to-delete .inner-name').html(parentWithData.data('name'));
   this.deletionModal.find('span.delete-modal-folder-sitemap-count').html(parentWithData.data('site-map-count'));
 }
 
 Folders.prototype.resetDeletionModal = function() {
   this.deletionModal.data('id', null);
   this.deletionModal.find('span.delete-modal-folder-name').html();
-  this.deletionModal.find('div.folder-name-to-delete').html();
+  this.deletionModal.find('div.folder-name-to-delete .inner-name').html();
   this.deletionModal.find('span.delete-modal-folder-sitemap-count').html();
 }
 

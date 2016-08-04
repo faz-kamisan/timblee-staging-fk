@@ -31,8 +31,8 @@
 
 .user-dropdown {
   position: relative;
-  font-size: 18px;
-  line-height: 26px;
+  font-size: 16px;
+  line-height: 24px;
   color: #535353;
   padding-bottom: 25px;
   .user-settings {
@@ -68,7 +68,35 @@
     .user-settings {
       visibility: visible;
       opacity: 1;
-      top: 42px;
+      top: 40px;
     }
+  }
+  [class^="icon-"], [class*=" icon-"] {
+    font-size: 22px;
+    vertical-align: middle;
+    padding-right: 10px;
+    display: inline-block;
+  }
+  .icon-caret {
+    font-size: 14px;
+    display: inline-block;
+    position: relative;
+    top: -2px;
+    padding-left: 6px;
+  }
+}
+
+.header-links {
+  margin-right: 32px;
+  margin-top: 2px;
+  a {
+    font-size: 20px;
+    color: #61707e;
+  }
+  &.last {
+    margin-right: 42px;
+  }
+  .icon-add {
+    color: $primaryPink;  
   }
 }

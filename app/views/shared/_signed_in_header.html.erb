@@ -20,27 +20,59 @@
     </div>
     <div class="col-xs-6">
       <div class="user-dropdown pull-right text-right">
-        <%= current_user.full_name %>
+        <%= current_user.full_name %> <span class="icon-caret"></span>
         <ul class="p-0 m-0 user-settings">
           <li>
-            <%= link_to 'Settings', settings_users_path %>
+            <%= link_to settings_users_path do %>
+              <span class="icon-settings"></span> Settings
+            <% end %>
           </li>
           <li>
-            <a href="javascript:void(0)">Ask us anything</a>
+            <a href="javascript:void(0)">
+              <span class="icon-conversation"></span>
+              Ask us anything
+            </a>
           </li>
           <li>
-            <a href="javascript:void(0)">Gift someone a 60 day trial</a>
+            <a href="javascript:void(0)">
+              <span class="icon-heart"></span>
+              Gift someone a 60 day trial
+            </a>
           </li>
           <li>
-            <a href="javascript:void(0)">Request a feature</a>
+            <a href="javascript:void(0)">
+              <span class="icon-wand"></span>
+              Request a feature
+            </a>
           </li>
           <li>
-            <a href="javascript:void(0)">Join our early adopters program</a>
+            <a href="javascript:void(0)">
+              <span class="icon-binoculars"></span>
+              Join our early adopters program
+            </a>
           </li>
           <li>
-            <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
+            <%= link_to destroy_user_session_path, method: :delete do %>
+              <span class="icon-logout"></span>
+              Log out
+            <% end %>
           </li>
         </ul>
+      </div>
+      <div class="gift pull-right header-links last">
+        <a href="#">
+          <span class="icon-heart"></span>
+        </a>
+      </div>
+      <div class="notifications-tab pull-right header-links">
+        <a href="#">
+          <span class="icon-bell"></span>
+        </a>
+      </div>
+      <div class="add-sitemap-tab pull-right header-links">
+        <a href="#">
+          <span class="icon-add"></span>
+        </a>
       </div>
     </div>
   </div>
