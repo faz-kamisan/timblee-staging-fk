@@ -47,8 +47,9 @@ en:
           failure: User cannot be deleted.
         update:
           not_found: User not found.
-          success: User updated successfully
+          updated: User updated successfully
           failure: Couldn't update user
+          update_needs_confirmation: "You updated user's account successfully, but we need to verify user's new email address. Please ask user to check email and follow the confirm link to confirm new email address."
         edit:
           not_found: User not found.
         send_reset_link:

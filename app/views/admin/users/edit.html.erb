@@ -45,12 +45,21 @@
           </div>
         <% end %>
 
-        <%= form_for @user, url: '#', html: { class: 'settings-form' } do |f| %>
+        <%= form_for @user, url: admin_user_path(@user), html: { class: 'settings-form' } do |f| %>
           <div class="form-group">
             <div class="row">
-              <div class="col-xs-12">
+              <div class="col-xs-6">
                 <label>email</label>
                 <%= f.text_field :email, disabled: true, class: 'editable-input', 'data-original-value' => f.object.email %>
+              </div>
+              <div class="col-xs-6 text-right edit-info">
+                <div class="edit">
+                  <a href="javascript:void(0);" class="btn btn-grey btn-edit">Edit</a>
+                </div>
+                <div class="save">
+                  <button type="submit" class="btn btn-pink">Save</button>
+                  <a href="javascript:void(0);" class="btn btn-grey btn-cancel">Cancel</a>
+                </div>
               </div>
             </div>
           </div>
