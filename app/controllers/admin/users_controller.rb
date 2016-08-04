@@ -6,10 +6,16 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
-    if @user.update(user_params)
-      flash.now[:notice] = t('.success', scope: :flash)
+    prev_unconfirmed_email = @user.unconfirmed_email if @user.respond_to?(:unconfirmed_email)
+    user_updated = @user.update_without_password(user_params)
+    if user_updated
+      if is_flashing_format?
+        flash_key = update_needs_confirmation?(@user, prev_unconfirmed_email) ?
+          :update_needs_confirmation : :updated
+        flash[:notice] = t(".#{ flash_key }", scope: :flash)
+      end
     else
-      flash.now[:error] = t('.failure', scope: :flash)
+      flash[:error] = t('.failure', scope: :flash)
     end
     redirect_to edit_admin_user_path(@user)
   end
@@ -34,8 +40,14 @@ class Admin::UsersController < ApplicationController
 
   private
 
+  def update_needs_confirmation?(resource, previous)
+    resource.respond_to?(:pending_reconfirmation?) &&
+      resource.pending_reconfirmation? &&
+      previous != resource.unconfirmed_email
+  end
+
     def user_params
-      params.require(:user).permit(:full_name, :is_admin)
+      params.require(:user).permit(:full_name, :is_admin, :email)
     end
 
     def send_reset_link_params
