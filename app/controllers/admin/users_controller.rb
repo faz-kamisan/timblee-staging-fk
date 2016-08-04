@@ -1,7 +1,7 @@
 class Admin::UsersController < ApplicationController
 
   before_filter :load_user, only: [:destroy, :edit, :update]
-
+  before_filter :restrict_current_user, only: [:destroy]
   def edit
   end
 
@@ -40,11 +40,18 @@ class Admin::UsersController < ApplicationController
 
   private
 
-  def update_needs_confirmation?(resource, previous)
-    resource.respond_to?(:pending_reconfirmation?) &&
-      resource.pending_reconfirmation? &&
-      previous != resource.unconfirmed_email
-  end
+    def restrict_current_user
+      if current_user == @user
+        flash[:error] = t('.self_destroy', scope: :flash)
+        redirect_to home_dashboard_path
+      end
+    end
+
+    def update_needs_confirmation?(resource, previous)
+      resource.respond_to?(:pending_reconfirmation?) &&
+        resource.pending_reconfirmation? &&
+        previous != resource.unconfirmed_email
+    end
 
     def user_params
       params.require(:user).permit(:full_name, :is_admin, :email)

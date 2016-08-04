@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   before_create :add_business, unless: :business_id
   after_create :set_confirmation_instructions_to_be_sent
   before_destroy :restrict_owner_destroy
+  before_update :restrict_owner_role_update, if: :is_admin_changed?
 
   strip_fields :full_name
 
@@ -26,6 +27,10 @@ class User < ActiveRecord::Base
 
   def active?
     invitation_token == nil
+  end
+
+  def owner?
+    business.owner == self
   end
 
   private
@@ -50,8 +55,15 @@ class User < ActiveRecord::Base
     end
 
     def restrict_owner_destroy
-      if business.owner == self
+      if owner?
         errors.add(:base, I18n.t('errors.users.owner_destroy'))
+        false
+      end
+    end
+
+    def restrict_owner_role_update
+      if owner?
+        errors.add(:base, I18n.t('errors.users.owner_role_update'))
         false
       end
     end

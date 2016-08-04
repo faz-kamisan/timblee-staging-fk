@@ -48,7 +48,9 @@
           </a>
         </li>
         <li>
-          <%= link_to site_map_path(site_map), method: :delete, remote: true, class: 'action' do %>
+
+
+          <%= link_to "#delete-site-map-modal", 'data-toggle': 'modal', class: 'action delete-site-map-modal-link', 'data-url': site_map_path(site_map), 'data-name': site_map.name do %>
             <span class="icon icon-delete-circle"></span>
             <span class="link-text">Delete</span>
           <% end %>
@@ -60,3 +62,5 @@
     </div>
   </div>
 </div>
+<%= javascript_include_tag('delete_site_map') %>
+

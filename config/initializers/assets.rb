@@ -18,5 +18,6 @@ Rails.application.config.assets.precompile += %w(
   tagIt.js
   invitations.js
   delete_user.js
+  delete_site_map.js
   apply-twemoji.js
 )
