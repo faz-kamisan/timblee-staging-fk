@@ -11,8 +11,10 @@
   <div class="tab-content">
     <%= render 'users/my_info_tab' %>
     <%= render 'users/team_tab' %>
-    <%= render 'users/personalization_tab' %>
-    <%= render 'users/billing_tab' %>
+    <% if current_user.is_admin? %>
+      <%= render 'users/personalization_tab' %>
+      <%= render 'users/billing_tab' %>
+    <% end %>
   </div>
 </section>
 <%= render 'users/delete_user_modal' %>
