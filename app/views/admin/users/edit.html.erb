@@ -1,12 +1,10 @@
 <section class="settings">
   <!-- Settings -->
 
-
   <!-- Settings Tab Content -->
   <div>
-    <h4>Settings</h4>
+    <h1>Settings</h1>
     <div>
-
       <section class="edit-user">
         <div class="link-with-border">
           <a href="javascript:void(0);">
@@ -17,10 +15,10 @@
         <%= form_for @user, url: admin_user_path(@user), html: { class: 'settings-form' } do |f| %>
           <div class="form-group">
             <div class="row">
-              <div class="col-xs-6">
+              <div class="col-xs-9">
                 <div class="clearfix">
                   <%= image_tag('profile-image.png', class: 'profile-image pull-left') %>
-                  <div class="right-text pull-right">
+                  <div class="right-text pull-right margin-top-small">
 
                     <h3 class="team-member-name">
                       <%= f.text_field :full_name, disabled: true, class: 'editable-input', 'data-original-value' => f.object.full_name %>
@@ -30,12 +28,12 @@
                 </div>
               </div>
 
-              <div class="col-xs-6 text-right edit-info">
+              <div class="col-xs-3 text-right edit-info">
                 <div class="edit">
                   <a href="javascript:void(0);" class="btn btn-grey btn-edit">Edit</a>
                   <a href="#delete-user-modal" data-toggle="modal" class="link-regular btn-regular">Delete</a>
                 </div>
-                <div class="save">
+                <div class="save small">
                   <button type="submit" class="btn btn-pink">Save</button>
                   <a href="javascript:void(0);" class="btn btn-grey btn-cancel">Cancel</a>
                 </div>
@@ -66,7 +64,7 @@
               </div>
               <div class="col-xs-3 text-right edit-info">
                 <div class="edit">
-                  <%= f.submit "Send reset link", class: 'btn btn-grey' %>
+                  <%= f.submit "Send reset link", class: 'btn btn-grey btn-input' %>
                   </div>
               </div>
             </div>
@@ -76,33 +74,31 @@
         <%= form_for @user, url: admin_user_path(@user), html: { class: 'settings-form' } do |f| %>
           <div class="form-group">
             <div class="row">
-              <div class="col-xs-6">
+              <div class="col-xs-9">
                 <label>role</label>
                 <p class="font-12-light"><%= @user.full_name.titleize %> has standard user access which allows editing and creating sitemaps but no user or account management settings. If you change a user’s role, we'll send them an email to let them know about their new superpowers (or not).</p>
               </div>
 
-              <div class="col-xs-6 text-right edit-info">
+              <div class="col-xs-3 text-right edit-info">
                 <div class="edit">
                   <a href="javascript:void(0);" class="btn btn-grey btn-edit">Edit</a>
                 </div>
-                <div class="save">
+                <div class="save small">
                   <button type="submit" class="btn btn-pink">Save</button>
                   <a href="javascript:void(0);" class="btn btn-grey btn-cancel">Cancel</a>
                 </div>
               </div>
-              <div class="col-xs-12">
-                <div class="role-standard">
+              <div class="col-xs-12 text-center">
+                <div class="role role-standard">
                   <%= f.radio_button :is_admin, false, checked: !f.object.is_admin, class: 'editable-input', disabled: true %>
-                   Standard
                   <div class="cus-radio">
-
+                    Standard
                   </div>
                 </div>
-                <div class="role-admin">
+                <div class="role role-admin">
                   <%= f.radio_button :is_admin, true, checked: f.object.is_admin, class: 'editable-input', disabled: true %>
-                   Admin
                   <div class="cus-radio">
-
+                    Admin
                   </div>
                 </div>
               </div>

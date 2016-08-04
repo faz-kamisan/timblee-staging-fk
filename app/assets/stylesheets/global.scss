@@ -206,13 +206,18 @@ input:-webkit-autofill {
   padding: 37px 20px 50px 20px;
   .btn {
     height: 38px;
-    line-height: 27px;
+    line-height: 25px;
     min-width: 140px;
     display: inline-block;
   }
   .btn-last {
     margin-left: 20px;
   }
+}
+
+.close-modal {
+  width: 15px;
+  height: auto;
 }
 
 .modal-message {
@@ -240,7 +245,7 @@ input:-webkit-autofill {
 }
 
 .flash .message {
-  position: absolute;
+  position: fixed;
   padding: 25px 20px;
   background: #414952;
   color: $primaryWhite;
@@ -259,6 +264,10 @@ input:-webkit-autofill {
   text-shadow: 0 0 0 transparent;
   font-size: 12px;
   color: #fff;
+}
+
+.modal-header .close {
+  opacity: 1;
 }
 
 /* Classes */
@@ -329,4 +338,17 @@ input#toggle:checked + label:after {
 
 .logo-inner {
   width: 47px;
+}
+
+.truncate {
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.margin-top-small {
+  margin-top: 2px;
 }
