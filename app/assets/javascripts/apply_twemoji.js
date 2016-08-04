@@ -1,3 +1,3 @@
-$(function(){
-  $('.clear-field').twemojiPicker();
-});
+// $(function(){
+//   $('.clear-field').twemojiPicker();
+// });

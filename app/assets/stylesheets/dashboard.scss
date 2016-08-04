@@ -81,6 +81,9 @@
     }
   }
   .actions-overlay {
+    .icon-close {
+      color: #d7d9dc;
+    }
     position: absolute;
     left: 0;
     top: 100%;
@@ -103,6 +106,12 @@
       position: relative;
       &:hover {
         color: $primaryPink;
+        .icon-invite-female .path1:before,
+        .icon-invite-female .path3:before,
+        .icon-invite-female .path4:before,
+        .icon-invite-female .path5:before {
+          color: $primaryPink;
+        }
       }
     }
     .action-icon {
@@ -110,7 +119,7 @@
       margin: -1px 6px 0 0;
     }
     li + li {
-      margin-top: 13px;
+      margin-top: 25px;
     }
   }
   .other-users {
@@ -162,7 +171,7 @@
     }
   }
   .folder-info {
-    padding: 10px;
+    padding: 5px 10px;
     &.active {
       background: $primaryWhite;
       border: solid 1px #f0f1f3;
@@ -185,6 +194,11 @@
       color: $primaryGrey;
     }
   }
+  .folder-info-block {
+    display: inline-block;
+    height: 29px;
+    background: $pageBackground;
+  }
 }
 
 .new-folder {
@@ -200,6 +214,7 @@
   width: 0;
   display: inline-block;
   visibility: hidden;
+  cursor: pointer;
   @include animate(.35s);
   &.open {
     width: 18px;
@@ -209,7 +224,7 @@
 
 .folder-name-to-delete {
   background: $primaryWhite;
-  padding: 20px;
+  padding: 24px 19px 22px 19px;
   @include border-radius(6px);
   display: inline-block;
   margin-bottom: 30px;
@@ -217,4 +232,47 @@
   color: #535353;
   font-size: 18px;
   line-height: 24px;
+  [class^="icon-"], [class*=" icon-"] {
+    font-size: 25px;
+    color: #535353;
+    vertical-align: middle;
+    padding-right: 5px;
+    display: inline-block;
+    position: relative;
+    bottom: 2px;
+  }
+}
+
+.new-site-map-link {
+  text-align: center;
+  color: $primaryLabel;
+  font-size: 14px;
+  span {
+    color: $primaryPink;
+    font-size: 31px;
+    display: inline-block;
+    padding-top: 68px;
+    padding-bottom: 7px;
+  }
+  &:hover {
+    color: $primaryLabel;
+  }
+}
+
+.folder-info-block {
+  [class^="icon-"], [class*=" icon-"] {
+    font-size: 28px;
+    vertical-align: middle;
+    padding-right: 10px;
+    display: inline-block;
+    color: $primaryLabel;
+  }
+}
+
+.active-delete {
+  .folder-info-block {
+    [class^="icon-"], [class*=" icon-"] {
+      color: $primaryGrey;
+    }
+  }
 }
