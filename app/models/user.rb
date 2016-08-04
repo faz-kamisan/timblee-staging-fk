@@ -13,8 +13,9 @@ class User < ActiveRecord::Base
   before_create :set_is_admin, unless: :business_id
   before_create :add_business, unless: :business_id
   after_create :set_confirmation_instructions_to_be_sent
-
   before_destroy :restrict_owner_destroy
+
+  strip_fields :full_name
 
   validates :full_name, presence: true
   # validate :minimum_image_size

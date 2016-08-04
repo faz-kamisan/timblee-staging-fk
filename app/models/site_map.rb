@@ -5,19 +5,13 @@ class SiteMap < ActiveRecord::Base
   has_many :site_map_invites, dependent: :destroy
   has_many :invited_users, through: :site_map_invites, source: :user
 
-  validates :business, presence: true
-  validates :name, uniqueness: { scope: :business_id }
+  validates :business, :name, presence: true
+  validates :name, uniqueness: { scope: :business_id, case_sensitive: false }
 
-  before_save :format_name
+  strip_fields :name
 
   def updated_at_formatted
     updated_at.strftime('%b %d, %Y')
-  end
-
-  private
-
-  def format_name
-    self.name = self.name.strip.titleize
   end
 end
 

@@ -15,6 +15,7 @@ gem 'sidekiq', '~> 4.1.1'
 gem 'non-stupid-digest-assets', '~> 1.0.8'
 gem 'carrierwave', '~> 0.10.0'
 gem 'paranoia'
+gem 'stripper-rails', '~> 0.0.1'
 
 group :development, :test do
   gem 'byebug', '~> 9.0.5'

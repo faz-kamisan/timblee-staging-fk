@@ -1,1 +1,3 @@
+$("div.flash-message").html("<%==j render partial: 'shared/flash_message' %>");
 $('.dynamic-folders-list').html("<%= escape_javascript(render partial: 'home/folder', collection: @folders) %>")
+$('.folder-info[data-id=<%= @folder.id %>]').find('.folder-info-block').click()
