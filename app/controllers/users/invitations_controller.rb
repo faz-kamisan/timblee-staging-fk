@@ -18,7 +18,7 @@ before_filter :load_user, only: [:re_invite, :revoke]
 
     invalid_emails = emails - valid_emails
     set_notice(valid_emails, invalid_emails)
-    redirect_to settings_users_path
+    redirect_to team_settings_users_path
   end
 
   def re_invite
