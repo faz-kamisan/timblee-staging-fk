@@ -70,7 +70,7 @@
                 </div>
               </div>
             </div>
-            <% if current_user.is_admin %>
+            <% if current_user.is_admin && user.id != current_user.id %>
               <div class="col-xs-3 text-right edit-info">
                 <div class="edit">
                   <a href="javascript:void(0);" class="btn btn-grey">Edit</a>
