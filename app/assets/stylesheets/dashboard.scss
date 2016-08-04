@@ -157,7 +157,9 @@
     width: 25px;
     text-align: right;
     display: inline-block;
-    float: right;
+    position: absolute;
+    right: 15px;
+    top: 7px;
   }
   .folder-name {
     width: 211px;
@@ -172,6 +174,7 @@
   }
   .folder-info {
     padding: 5px 10px;
+    position: relative;
     &.active {
       background: $primaryWhite;
       border: solid 1px #f0f1f3;
