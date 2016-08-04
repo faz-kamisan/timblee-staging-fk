@@ -14,13 +14,13 @@ en:
     site_maps:
       not_found: Can't find site map
       create:
-        success: SiteMap created successfully
+        success: Sitemap created successfully
         failure: Couldn't create sitemap
       update:
-        success: SiteMap updated successfully
+        success: Sitemap updated successfully
         failure: Couldn't update sitemap
       destroy:
-        success: SiteMap destroyed successfully
+        success: Sitemap destroyed successfully
         failure: Couldn't delete sitemap
     users:
       confirmations:
@@ -39,10 +39,22 @@ en:
           failure: User couldn't be revoked
           not_found: User not found
 
-      destroy:
-        not_found: User not found.
-        success: User successfully soft deleted.
-        failure: User cannot be deleted.
+    admin:
+      users:
+        destroy:
+          not_found: User not found.
+          success: User successfully soft deleted.
+          failure: User cannot be deleted.
+        update:
+          not_found: User not found.
+          success: User updated successfully
+          failure: Couldn't update user
+        edit:
+          not_found: User not found.
+        send_reset_link:
+          not_found: User not found.
+          success: Reset link sent successfully
+          failure: Couldn't sent reset link
 
   activerecord:
       errors:

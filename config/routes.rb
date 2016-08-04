@@ -30,4 +30,12 @@ Rails.application.routes.draw do
     get 'users/:id/revoke' => 'users/invitations#revoke', as: :revoke_user
   end
 
+  namespace :admin do
+    resources :users do
+      member do
+        patch 'send_reset_link'
+      end
+    end
+  end
+
 end
