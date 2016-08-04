@@ -1,4 +1,4 @@
-<!-- Delete SiteMap Modal -->
+<!-- Delete sitemap Modal -->
 <div class="modal fade" id="delete-site-map-modal" tabindex="-1" role="dialog" aria-labelledby="delete-site-map-modalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -9,14 +9,13 @@
       </div>
       <div class="modal-body">
         <div class="text-center">
-          <div class="folder-name-to-delete">
-            <span class="icon-folder-light"></span>
+          <div class="sitemap-name-to-delete">
+            <span class="icon-sitemap-light"></span>
             <span class="inner-name"></span>
           </div>
         </div>
         <div class="modal-button text-center">
-          <!-- <%#= link_to 'Delete sitemap', site_map_path(site_map), method: :delete, remote: true, class: 'btn btn-red' %> -->
-          <a href="#" class="btn btn btn-red">Delete Sitemap</a>
+          <%= link_to "Delete Sitemap", '#', method: :delete, class: "btn btn-red", id: 'delete-sitemap-link' %>
           <a href="#" data-dismiss="modal" class="btn btn-transparent btn-last">Cancel</a>
         </div>
       </div>

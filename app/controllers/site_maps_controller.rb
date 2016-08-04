@@ -18,10 +18,11 @@ class SiteMapsController < ApplicationController
 
   def destroy
     if @site_map.destroy
-      flash.now[:notice] = t('.success', scope: :flash)
+      flash[:notice] = t('.success', scope: :flash)
     else
-      flash.now[:error] = t('.failure', scope: :flash)
+      flash[:error] = t('.failure', scope: :flash)
     end
+    redirect_to home_dashboard_path
   end
 
   private
