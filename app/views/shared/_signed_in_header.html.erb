@@ -20,7 +20,10 @@
     </div>
     <div class="col-xs-6">
       <div class="user-dropdown pull-right text-right">
-        <%= current_user.full_name %> <span class="icon-caret"></span>
+        <span class="truncate">
+          <%= current_user.full_name %>
+        </span>
+        <span class="icon-caret"></span>
         <ul class="p-0 m-0 user-settings">
           <li>
             <%= link_to settings_users_path do %>
