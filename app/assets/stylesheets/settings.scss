@@ -243,7 +243,7 @@
   .profile-image {
     width: 32px;
     height: 32px;
-    margin-top: 3px;
+    margin-top: 6px;
   }
   .right-text {
     width: calc(100% - 49px);
@@ -497,5 +497,16 @@ ul.tagit li.tagit-choice-editable {
         color: #25a45f;
       }
     }
+  }
+}
+
+.inactive-user {
+  .team-member-name,
+  .active-since {
+    color: #a3acb5;
+  }
+  .profile-image {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
   }
 }
