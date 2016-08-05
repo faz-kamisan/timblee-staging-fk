@@ -5,7 +5,13 @@
         <% if current_user.is_admin %>
           <div class="col-xs-9">
             <div class="clearfix">
-              <%= image_tag('profile-image.png', class: 'profile-image pull-left') %>
+              <span class="icon-invite-female user-invite">
+                <span class="path1"></span>
+                <span class="path2"></span>
+                <span class="path3"></span>
+                <span class="path4"></span>
+                <span class="path5"></span>
+              </span>
               <div class="right-text pull-right">
                 <h3 class="team-member-name">Invite a team member to Timblee</h3>
                 <span class="active-since">Each new user is US $12 per month. You'll be billed pro-rata for this billing period once you invite them.</span>

@@ -537,3 +537,19 @@ ul.tagit li.tagit-choice-editable {
     text-decoration: underline!important;
   }
 }
+
+.user-invite {
+  font-size: 32px;
+  .path1:before,
+  .path3:before,
+  .path4:before,
+  .path5:before {
+    color: $primaryPink;
+    top: 0;
+    left: 16px;
+  }
+  .path2:before {
+    top: 0;
+    left: 16px; 
+  }
+}
