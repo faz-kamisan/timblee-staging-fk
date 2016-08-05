@@ -510,3 +510,25 @@ ul.tagit li.tagit-choice-editable {
     filter: grayscale(100%);
   }
 }
+
+.access {
+  h4 {
+    color: #6a717f;
+    @extend .font-12;
+    border-bottom: solid 1px #d6d8da;
+    padding-bottom: 5px;
+    margin-bottom: 35px;
+    text-transform: uppercase;
+  }
+
+  p {
+    color: #a3acb5;
+    @extend .font-12;
+  }
+
+  a {
+    color: #ec008c;
+    @extend .font-12;
+    text-decoration: underline!important;
+  }
+}
