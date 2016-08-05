@@ -9,7 +9,7 @@
         <div class="link-with-border">
           <a href="javascript:void(0);">
             <span class="icon-caret"></span>
-            <%= link_to "Back to all users", settings_users_path %>
+            <%= link_to "Back to all users", team_settings_users_path %>
           </a>
         </div>
         <%= form_for @user, url: admin_user_path(@user), html: { class: 'settings-form' } do |f| %>

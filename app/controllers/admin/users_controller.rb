@@ -26,7 +26,7 @@ class Admin::UsersController < ApplicationController
     else
       flash[:error] = @user.errors[:base].join(',')
     end
-    redirect_to settings_users_path
+    redirect_to team_settings_users_path
   end
 
   def send_reset_link
