@@ -94,10 +94,10 @@
                 </div>
                 <div class="save small">
                   <button type="submit" class="btn btn-pink">Save</button>
-                  <a href="javascript:void(0);" class="btn btn-grey btn-cancel">Cancel</a>
+                  <a href="javascript:void(0);" class="btn btn-grey btn-cancel role-select-cancel">Cancel</a>
                 </div>
               </div>
-              <div class="col-xs-12 text-center">
+              <div class="col-xs-12 text-center user-roles-input" data-original-role=<%= f.object.is_admin? %>>
                 <div class="role role-standard">
                   <%= f.radio_button :is_admin, false, checked: !f.object.is_admin, class: 'editable-input', disabled: true %>
                   <div class="cus-radio">

@@ -26,11 +26,26 @@ EditFields.prototype.hideEdit = function() {
     var $this = $(this),
         $parent = $this.closest(_this.settingsForm),
         $relatedInput = $parent.find('.editable-input');
+    if($this.hasClass('role-select-cancel')) {
+      _this.setOriginalRole($this)
+    }
     $relatedInput.val($relatedInput.data('original-value'));
     $parent.find(_this.save).fadeOut(_this.fadeTime);
     $parent.find(_this.edit).fadeIn(_this.fadeTime);
     $parent.find(_this.editableInput).attr('disabled', true);
   });
+};
+
+
+EditFields.prototype.setOriginalRole = function(obj) {
+  var isAdmin = $('.user-roles-input').data('original-role');
+  if(isAdmin) {
+    $('#user_is_admin_false').removeProp('checked');
+    $('#user_is_admin_true').prop('checked', 'checked');
+  } else {
+    $('#user_is_admin_true').removeProp('checked');
+    $('#user_is_admin_false').prop('checked', 'checked');
+  }
 };
 
 EditFields.prototype.bindEvents = function() {

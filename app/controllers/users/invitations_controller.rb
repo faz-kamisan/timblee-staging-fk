@@ -31,7 +31,7 @@ before_filter :load_user, only: [:re_invite, :revoke]
   end
 
   def revoke
-    if (@user.destroy unless @user.active?)
+    if (@user.really_destroy! unless @user.active?)
       flash.now[:notice] = t('.success', scope: :flash)
     else
       flash.now[:error] = t('.failure', scope: :flash)
