@@ -225,7 +225,7 @@
   }
 }
 
-.folder-name-to-delete {
+.folder-name-to-delete, .user-name-to-delete {
   background: $primaryWhite;
   padding: 24px 19px 22px 19px;
   @include border-radius(6px);
