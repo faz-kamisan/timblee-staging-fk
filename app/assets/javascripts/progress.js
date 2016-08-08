@@ -5,18 +5,12 @@ var Progress = function(options) {
 
 Progress.prototype.init = function() {
   var _this = this;
-  this.draggableSiteMaps.draggable({
-    cursor: "crosshair",
-    start: function (event, ui) {
-      $(this).css('transform', 'rotate(-3deg)');
-    }
-  });
+  this.draggableSiteMaps.draggable();
   this.dropContainer.droppable({
     accept: ".draggable_site_map",
     drop: function(event, ui) {
       var $dropped = $(ui.draggable);
       var $droppedOn = $(this);
-      $dropped.css('transform', 'rotate(0deg)');
       if($dropped.closest('.drop_container')[0] == $droppedOn[0]) {
         // Take SiteMap back to original container
         $dropped.css({top: 0, left: 0});
