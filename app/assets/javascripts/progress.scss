@@ -1,0 +1,76 @@
+.site-map-progress {
+  max-width: 1265px;
+  margin: 0 auto;
+  padding-top: 96px;
+
+  .progress-cards {
+    padding: 58px 0;
+    display: table;
+    width: 100%;
+  }
+
+  .drag-me {
+    display: table-cell;
+    width: 23.83%;
+    height: 410px;
+    background: white;
+    vertical-align: top;
+    div {
+      color: white;
+    }
+  }
+
+  .drag-me-bar {
+    display: table-cell;
+    width: 1.55%;
+    height: 410px;
+    background: #F9FAFC;
+  }
+
+  #on-hold {
+    border-top: solid 6px #d6d8da;
+  }
+
+  #in-progress {
+    border-top: solid 6px #067ab4;
+  }
+
+  #review {
+    border-top: solid 6px #fccc2c;
+  }
+
+  #approved {
+    border-top: solid 6px #25a45f;
+  }
+
+  .drag-header {
+    h1 {
+      font-size: 18px;
+      color: #414952;
+      line-height: 24px;
+      margin: 0;
+      padding: 40px 0 5px 0;
+      font-weight: 400;
+    }
+    p {
+      color: #d6d8da;
+    }
+    background: white;
+    border-bottom: solid 1px #fafbfc;
+    padding-bottom: 25px;
+  }
+
+  .drag-div {
+    min-height: calc(100% - 122px);
+    padding: 15px;
+    height: 300px;
+  }
+
+  .sitemap-card-small {
+    background: red !important;
+  }
+}
+
+.sitemap-card-small {
+  background: red !important;
+}

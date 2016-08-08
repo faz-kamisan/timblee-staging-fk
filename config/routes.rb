@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :users do
     collection do
       get 'settings'
+      get 'progress'
       patch 'update_password'
     end
   end

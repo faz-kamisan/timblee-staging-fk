@@ -15,20 +15,34 @@ RSpec.describe SiteMap, type: :model do
   end
 
   describe 'Callbacks' do
-    it { is_expected.to callback(:format_name).before(:save) }
+    it { is_expected.to callback(:set_state_to_in_progress).before(:validation).on(:create) }
+  end
+
+  describe 'Scopes' do
+    let!(:site_map_1) { FactoryGirl.create :site_map }
+    let!(:site_map_2) { FactoryGirl.create :site_map }
+    let!(:site_map_3) { FactoryGirl.create :site_map }
+    let!(:site_map_4) { FactoryGirl.create :site_map }
+    before do
+      site_map_2.update(state: 'on_hold')
+      site_map_3.update(state: 'in_review')
+      site_map_4.update(state: 'approved')
+    end
+    describe 'on_hold' do
+      it { expect(SiteMap.on_hold).to eq [site_map_2] }
+    end
+    describe 'in_progress' do
+      it { expect(SiteMap.in_progress).to eq [site_map_1] }
+    end
+    describe 'in_review' do
+      it { expect(SiteMap.in_review).to eq [site_map_3] }
+    end
+    describe 'approved' do
+      it { expect(SiteMap.approved).to eq [site_map_4] }
+    end
   end
 
   describe 'Instance Methods' do
     let!(:site_map) { FactoryGirl.build :site_map, name: '    test    ' }
-
-    describe '#updated_at_formatted' do
-      before { site_map.save }
-      it { expect(site_map.updated_at_formatted).to eq site_map.updated_at.strftime('%b %d, %Y') }
-    end
-
-    describe '#format_name' do
-      before { site_map.send :format_name }
-      it { expect(site_map.name).to eq 'Test' }
-    end
   end
 end
