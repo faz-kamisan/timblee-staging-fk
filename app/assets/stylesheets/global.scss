@@ -52,6 +52,10 @@ body {
   width: 1145px;
 }
 
+.bg-white {
+  background: $primaryWhite;
+}
+
 .form-control::-webkit-input-placeholder {
   color: $placeHolder;
   opacity: 1;
@@ -273,6 +277,9 @@ input:-webkit-autofill {
 
 .modal-header .close {
   opacity: 1;
+  position: absolute;
+  right: 16px;
+  float: none;
 }
 
 /* Classes */
