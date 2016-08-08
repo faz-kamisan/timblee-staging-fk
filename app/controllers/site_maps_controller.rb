@@ -28,10 +28,11 @@ class SiteMapsController < ApplicationController
   def update
     if @site_map.update(site_map_params)
       flash.now[:notice] = t('.success', scope: :flash)
+      render 'shared/show_flash'
     else
       flash.now[:error] = t('.failure', scope: :flash)
+      render 'shared/show_flash', status: 522
     end
-    render 'shared/show_flash'
   end
 
   private

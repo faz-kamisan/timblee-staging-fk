@@ -66,11 +66,12 @@
     height: 300px;
   }
 
-  .sitemap-card-small {
-    background: red !important;
+  .drag-wrapper {
+    border: 1px dotted black;
   }
 }
 
 .sitemap-card-small {
   background: red !important;
+  width: 100% !important;
 }

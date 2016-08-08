@@ -11,11 +11,13 @@
     <div class="drag-me" id="on-hold">
       <div class="drag-header text-center">
         <h1>On Hold</h1>
-        <p class="site-map-count">4 Sitemaps</p>
+        <p class="site-map-count" data-count=<%= @site_maps_by_state[:on_hold].length %>><%= @site_maps_by_state[:on_hold].length %> Sitemaps</p>
       </div>
-      <div id="on-hold-holder" class="drag-div dragula_container" data-state='on_hold'>
+      <div id="on-hold-holder" class="drag-div drop_container" data-state='on_hold'>
         <% @site_maps_by_state[:on_hold].each do |site_map| %>
-          <div class="sitemap-card-small" data-id='<%= site_map.id %>'><%= image_tag('profile-image.png', class: 'profile-image') %><%= site_map.name.truncate(SiteMap::LENGTH_TO_TRUNCATE) %></div>
+          <div class='drag-wrapper'>
+            <div class="sitemap-card-small draggable_site_map" data-id='<%= site_map.id %>'><%= image_tag('profile-image.png', class: 'profile-image') %><%= site_map.name.truncate(SiteMap::LENGTH_TO_TRUNCATE) %></div>
+          </div>
         <% end %>
       </div>
     </div>
@@ -25,11 +27,13 @@
     <div class="drag-me" id="in-progress">
       <div class="drag-header text-center">
         <h1>In Progress</h1>
-        <p class="site-map-count">4 Sitemaps</p>
+        <p class="site-map-count" data-count=<%= @site_maps_by_state[:in_progress].length %>><%= @site_maps_by_state[:in_progress].length %> Sitemaps</p>
       </div>
-      <div id="in-progress-holder" class="drag-div dragula_container" data-state='in_progress'>
+      <div id="in-progress-holder" class="drag-div drop_container" data-state='in_progress'>
         <% @site_maps_by_state[:in_progress].each do |site_map| %>
-          <div class="sitemap-card-small" data-id='<%= site_map.id %>'><%= image_tag('profile-image.png', class: 'profile-image') %><%= site_map.name.truncate(SiteMap::LENGTH_TO_TRUNCATE) %></div>
+          <div class='drag-wrapper'>
+            <div class="sitemap-card-small draggable_site_map" data-id='<%= site_map.id %>'><%= image_tag('profile-image.png', class: 'profile-image') %><%= site_map.name.truncate(SiteMap::LENGTH_TO_TRUNCATE) %></div>
+          </div>
         <% end %>
       </div>
     </div>
@@ -39,11 +43,13 @@
     <div class="drag-me" id="review">
       <div class="drag-header text-center">
         <h1>Review</h1>
-        <p class="site-map-count">2 Sitemaps</p>
+        <p class="site-map-count" data-count=<%= @site_maps_by_state[:in_review].length %>><%= @site_maps_by_state[:in_review].length %> Sitemaps</p>
       </div>
-      <div id="review-holder" class="drag-div dragula_container" data-state='in_review'>
+      <div id="review-holder" class="drag-div drop_container" data-state='in_review'>
         <% @site_maps_by_state[:in_review].each do |site_map| %>
-          <div class="sitemap-card-small" data-id='<%= site_map.id %>'><%= image_tag('profile-image.png', class: 'profile-image') %><%= site_map.name.truncate(SiteMap::LENGTH_TO_TRUNCATE) %></div>
+          <div class='drag-wrapper'>
+            <div class="sitemap-card-small draggable_site_map" data-id='<%= site_map.id %>'><%= image_tag('profile-image.png', class: 'profile-image') %><%= site_map.name.truncate(SiteMap::LENGTH_TO_TRUNCATE) %></div>
+          </div>
         <% end %>
       </div>
     </div>
@@ -53,11 +59,13 @@
     <div class="drag-me" id="approved">
       <div class="drag-header text-center">
         <h1>Approved</h1>
-        <p class="site-map-count">4 Sitemaps</p>
+        <p class="site-map-count" data-count=<%= @site_maps_by_state[:approved].length %>><%= @site_maps_by_state[:approved].length %> Sitemaps</p>
       </div>
-      <div id="approved-holder" class="drag-div dragula_container" data-state='approved'>
+      <div id="approved-holder" class="drag-div drop_container" data-state='approved'>
         <% @site_maps_by_state[:approved].each do |site_map| %>
-          <div class="sitemap-card-small" data-id='<%= site_map.id %>'><%= image_tag('profile-image.png', class: 'profile-image') %><%= site_map.name.truncate(SiteMap::LENGTH_TO_TRUNCATE) %></div>
+          <div class='drag-wrapper'>
+            <div class="sitemap-card-small draggable_site_map" data-id='<%= site_map.id %>'><%= image_tag('profile-image.png', class: 'profile-image') %><%= site_map.name.truncate(SiteMap::LENGTH_TO_TRUNCATE) %></div>
+          </div>
         <% end %>
       </div>
     </div>
