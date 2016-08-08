@@ -5,7 +5,7 @@ var Progress = function(options) {
 
 Progress.prototype.init = function() {
   var _this = this;
-  this.draggableSiteMaps.draggable();
+  this.draggableSiteMaps.draggable({revert: 'invalid'});
   this.dropContainer.droppable({
     accept: ".draggable_site_map",
     drop: function(event, ui) {
