@@ -39,7 +39,13 @@ Progress.prototype.init = function() {
           success: function() {
             var sourceContainer = $dropped.closest('.drop_container')
             _this.setSiteMapCount($droppedOn, sourceContainer);
+            var updatedAt = new Date,
+                day = ("0" + updatedAt.getDate()).slice(-2),
+                month = updatedAt.toLocaleString('en-us', { month: "short" }),
+                year = updatedAt.getFullYear(),
+                updatedAtFormatted = month + ' ' + day + ', ' + year;
             $dropped.css({top: 0, left: 0}).parent('.drag-wrapper').detach().prependTo($droppedOn);
+            $dropped.find('.last-updated').html('Last updated ' + updatedAtFormatted);
             $dropped.find('.state').removeClass(originalState);
             $dropped.find('.state').addClass(targetState);
             _this.checkContainerIsEmpty($droppedOn);
