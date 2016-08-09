@@ -9,7 +9,7 @@
             </div>
           <% end %>
           <ul class="folders-list p-0 m-0">
-            <li class="folder-info all-site-map-folder">
+            <li class="folder-info all-site-map-folder active-delete" data-id=''>
               <a href="javascript:void(0);" class="delete-folder">
                 <%= image_tag('cross.png') %>
               </a>
@@ -44,5 +44,5 @@
   <%= render 'site_maps/create_site_map_modal' %>
   <%= render 'folders/delete_folder_modal' %>
   <%= render 'site_maps/delete_site_map_modal' %>
-  <%= javascript_include_tag('moreOptions', 'folders', 'site_maps') %>
+  <%= javascript_include_tag('moreOptions', 'folders', 'site_maps', 'delete_site_map') %>
 <% end %>
