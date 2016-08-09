@@ -20,7 +20,7 @@
         <% @site_maps_by_state[:on_hold].each do |site_map| %>
           <div class='drag-wrapper'>
             <div class="sitemap-card-small draggable_site_map" data-id='<%= site_map.id %>'>
-              <span class="state"></span>
+              <span class="state on_hold"></span>
               <span class="card-name"><%= site_map.name.truncate(SiteMap::LENGTH_TO_TRUNCATE) %></span>
               <span class="last-updated">Last updated <%= pretty_time(site_map.updated_at) %></span>
             </div>
@@ -43,7 +43,7 @@
         <% @site_maps_by_state[:in_progress].each do |site_map| %>
           <div class='drag-wrapper'>
             <div class="sitemap-card-small draggable_site_map" data-id='<%= site_map.id %>'>
-              <span class="state"></span>
+              <span class="state in_progress"></span>
               <span class="card-name"><%= site_map.name.truncate(SiteMap::LENGTH_TO_TRUNCATE) %></span>
               <span class="last-updated">Last updated <%= pretty_time(site_map.updated_at) %></span>
             </div>
@@ -66,7 +66,7 @@
         <% @site_maps_by_state[:in_review].each do |site_map| %>
           <div class='drag-wrapper'>
             <div class="sitemap-card-small draggable_site_map" data-id='<%= site_map.id %>'>
-              <span class="state"></span>
+              <span class="state in_review"></span>
               <span class="card-name"><%= site_map.name.truncate(SiteMap::LENGTH_TO_TRUNCATE) %></span>
               <span class="last-updated">Last updated <%= pretty_time(site_map.updated_at) %></span>
             </div>
@@ -89,7 +89,7 @@
         <% @site_maps_by_state[:approved].each do |site_map| %>
           <div class='drag-wrapper'>
             <div class="sitemap-card-small draggable_site_map" data-id='<%= site_map.id %>'>
-              <span class="state"></span>
+              <span class="state approved"></span>
               <span class="card-name"><%= site_map.name.truncate(SiteMap::LENGTH_TO_TRUNCATE) %></span>
               <span class="last-updated">Last updated <%= pretty_time(site_map.updated_at) %></span>
             </div>

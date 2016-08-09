@@ -1,6 +1,6 @@
 <div class="col-xs-4 site-map-container" data-id=<%= site_map.id %> data-folder-id=<%= site_map.folder_id %>>
   <div class="site-card">
-    <a href="javascript:void(0);" class="point"></a>
+    <span class='state <%= site_map.state %>'></span>
     <h2 class="card-name"><%= site_map.name.truncate(SiteMap::LENGTH_TO_TRUNCATE) %></h2>
     <p class="updated">Last updated <%= pretty_time(site_map.updated_at) %></p>
     <p class="version">Version 1.0</p>

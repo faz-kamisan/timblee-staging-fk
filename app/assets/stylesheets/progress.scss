@@ -114,15 +114,15 @@
     top: 9px;
     @include border-radius(50%);
 
-    &.on-hold {
+    &.on_hold {
       background: $primaryLabel;
     }
 
-    &.in-progress {
+    &.in_progress {
       background: $primaryBlue;
     }
 
-    &.review {
+    &.in_review {
       background: $primaryYellow;
     }
 

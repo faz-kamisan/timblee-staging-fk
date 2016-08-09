@@ -22,6 +22,8 @@ Progress.prototype.init = function() {
     drop: function(event, ui) {
       var $dropped = $(ui.draggable);
       var $droppedOn = $(this);
+      var originalState = $dropped.closest('.drop_container').data('state')
+      var targetState = $droppedOn.data('state')
       if($dropped.closest('.drop_container')[0] == $droppedOn[0]) {
         // Take SiteMap back to original container
       } else {
@@ -38,6 +40,8 @@ Progress.prototype.init = function() {
             var sourceContainer = $dropped.closest('.drop_container')
             _this.setSiteMapCount($droppedOn, sourceContainer);
             $dropped.css({top: 0, left: 0}).parent('.drag-wrapper').detach().prependTo($droppedOn);
+            $dropped.find('.state').removeClass(originalState);
+            $dropped.find('.state').addClass(targetState);
             _this.checkContainerIsEmpty($droppedOn);
             _this.checkContainerIsEmpty(sourceContainer);
           }

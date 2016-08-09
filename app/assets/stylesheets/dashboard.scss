@@ -137,7 +137,7 @@
       width: 28px;
     }
   }
-  .point {
+  .state {
     position: absolute;
     width: 8px;
     height: 8px;
@@ -145,6 +145,22 @@
     background: $primaryLabel;
     right: 20px;
     top: 15px;
+
+    &.on_hold {
+      background: $primaryLabel;
+    }
+
+    &.in_progress {
+      background: $primaryBlue;
+    }
+
+    &.in_review {
+      background: $primaryYellow;
+    }
+
+    &.approved {
+      background: $primaryGreen;
+    }
   }
 }
 
