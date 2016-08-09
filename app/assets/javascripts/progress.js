@@ -87,6 +87,7 @@ Progress.prototype.calculateAndSetSiteMapCount = function(container, method) {
     return
   }
   siteMapCountContainer.data('count', newCount);
+  siteMapCountContainer.attr('data-count', newCount);
   siteMapCountContainer.html(newCount + ' Sitemaps');
 }
 
