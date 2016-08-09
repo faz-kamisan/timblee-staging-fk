@@ -19,7 +19,15 @@ SiteMaps.prototype.configureNewSiteMapModal = function() {
 
 SiteMaps.prototype.bindDraggers = function() {
   var _this = this;
-  this.draggableSiteMaps.draggable({revert: 'invalid'});
+  this.draggableSiteMaps.draggable({
+    revert: 'invalid',
+    start: function(event, ui) {
+      ui.helper.parent('.site_map_wrapper').addClass('dragging');
+    },
+    stop: function(event, ui) {
+      ui.helper.parent('.site_map_wrapper').removeClass('dragging');
+    }
+  });
   this.dropContainers.droppable({
     accept: ".site-map-container",
     drop: function(event, ui) {
