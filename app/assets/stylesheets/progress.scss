@@ -1,0 +1,137 @@
+.site-map-progress {
+  max-width: 1265px;
+  margin: 0 auto;
+  padding-top: 96px;
+
+  .progress-cards {
+    padding: 58px 0;
+    display: table;
+    width: 100%;
+  }
+
+  .drag-me {
+    display: table-cell;
+    width: 23.83%;
+    height: 410px;
+    background: white;
+    vertical-align: top;
+    @include border-radius(6px);
+    @include box-shadow(1px, 1px, 2px, rgba(106, 113, 127, .2));
+  }
+
+  .drag-me-bar {
+    display: table-cell;
+    width: 1.55%;
+    min-height: 410px;
+    background: #F9FAFC;
+  }
+
+  #on-hold {
+    border-top: solid 6px $primaryLabel;
+  }
+
+  #in-progress {
+    border-top: solid 6px $primaryBlue;
+  }
+
+  #review {
+    border-top: solid 6px $primaryYellow;
+  }
+
+  #approved {
+    border-top: solid 6px $primaryGreen;
+  }
+
+  .drag-header {
+    h1 {
+      font-size: 18px;
+      color: #414952;
+      line-height: 24px;
+      margin: 0;
+      padding: 40px 0 5px 0;
+      font-weight: 400;
+    }
+    p {
+      color: #d6d8da;
+    }
+    background: white;
+    border-bottom: solid 1px #fafbfc;
+    padding-bottom: 25px;
+  }
+
+  .drag-div {
+    min-height: calc(100% - 122px);
+    padding: 15px;
+    min-height: 300px;
+  }
+}
+
+.drag-wrapper {
+  ~ .drag-wrapper {
+    margin-top: 16px;
+  }
+  &.dragging {
+    @include border-radius(6px);
+    background: #f9fafc;
+    border: 1px dashed #aeb6be;
+    .sitemap-card-small {
+      z-index: 2;
+    }
+  }
+}
+
+.sitemap-card-small {
+  background: $primaryWhite;
+  min-height: 72px;
+  @include border-radius(6px);
+  border: 1px solid #dadada;
+  padding: 10px;
+  text-align: center;
+  cursor: move;
+  position: relative;
+
+  .card-name {
+    padding-top: 6px;
+    display: block;
+    @extend .font-12;
+    color: $primaryGrey;
+  }
+
+  .last-updated {
+    display: block;
+    padding-top: 5px;
+    @extend .font-10;
+    color: $primaryLabel;
+  }
+
+  .state {
+    position: absolute;
+    background: $primaryLabel;
+    width: 7px;
+    height: 7px;
+    z-index: 1;
+    right: 9px;
+    top: 9px;
+    @include border-radius(50%);
+
+    &.on_hold {
+      background: $primaryLabel;
+    }
+
+    &.in_progress {
+      background: $primaryBlue;
+    }
+
+    &.in_review {
+      background: $primaryYellow;
+    }
+
+    &.approved {
+      background: $primaryGreen;
+    }
+  }
+}
+
+.ui-draggable-dragging {
+  transform: rotate(-2deg);
+}
