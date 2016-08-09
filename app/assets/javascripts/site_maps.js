@@ -74,7 +74,7 @@ SiteMaps.prototype.setSiteMapCountForFolders = function(targetFolder, sourceFold
 
 SiteMaps.prototype.calculateAndSetSiteMapCount = function(folder, method) {
   if(folder.data('id') == '') {
-    return();
+    return
   }
   var count = folder.data('site-map-count');
   if(method == 'add') {
@@ -82,7 +82,7 @@ SiteMaps.prototype.calculateAndSetSiteMapCount = function(folder, method) {
   } else if(method == 'subtract') {
     var newCount = --count;
   } else {
-    return();
+    return
   }
   folder.data('site-map-count', newCount);
   folder.attr('data-site-map-count', newCount);
