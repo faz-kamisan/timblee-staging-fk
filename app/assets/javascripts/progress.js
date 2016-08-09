@@ -10,10 +10,10 @@ Progress.prototype.init = function() {
       return(!(droppedContainer && (droppedContainer[0] != $(this).closest('.drop_container')[0])))
     },
     revertDuration: 200,
-    start: function(abc, ui) {
+    start: function(event, ui) {
       ui.helper.parent('.drag-wrapper').addClass('dragging');
     },
-    stop: function(abc, ui) {
+    stop: function(event, ui) {
       ui.helper.parent('.drag-wrapper').removeClass('dragging');
     }
   });
