@@ -5,15 +5,27 @@ var Progress = function(options) {
 
 Progress.prototype.init = function() {
   var _this = this;
-  this.draggableSiteMaps.draggable({revert: 'invalid'});
+  this.draggableSiteMaps.draggable({
+    revert: function(droppedContainer) {
+      return(!(droppedContainer && (droppedContainer[0] != $(this).closest('.drop_container')[0])))
+    },
+    revertDuration: 200,
+    start: function(event, ui) {
+      ui.helper.parent('.drag-wrapper').addClass('dragging');
+    },
+    stop: function(event, ui) {
+      ui.helper.parent('.drag-wrapper').removeClass('dragging');
+    }
+  });
   this.dropContainer.droppable({
     accept: ".draggable_site_map",
     drop: function(event, ui) {
       var $dropped = $(ui.draggable);
       var $droppedOn = $(this);
+      var originalState = $dropped.closest('.drop_container').data('state')
+      var targetState = $droppedOn.data('state')
       if($dropped.closest('.drop_container')[0] == $droppedOn[0]) {
         // Take SiteMap back to original container
-        $dropped.css({top: 0, left: 0});
       } else {
         // Update Sitemap State
         $.ajax({
@@ -25,8 +37,19 @@ Progress.prototype.init = function() {
             $dropped.css({top: 0, left: 0});
           },
           success: function() {
-            _this.setSiteMapCount($droppedOn, $dropped.closest('.drop_container'))
+            var sourceContainer = $dropped.closest('.drop_container')
+            _this.setSiteMapCount($droppedOn, sourceContainer);
+            var updatedAt = new Date,
+                day = ("0" + updatedAt.getDate()).slice(-2),
+                month = updatedAt.toLocaleString('en-us', { month: "short" }),
+                year = updatedAt.getFullYear(),
+                updatedAtFormatted = month + ' ' + day + ', ' + year;
             $dropped.css({top: 0, left: 0}).parent('.drag-wrapper').detach().prependTo($droppedOn);
+            $dropped.find('.last-updated').html('Last updated ' + updatedAtFormatted);
+            $dropped.find('.state').removeClass(originalState);
+            $dropped.find('.state').addClass(targetState);
+            _this.checkContainerIsEmpty($droppedOn);
+            _this.checkContainerIsEmpty(sourceContainer);
           }
         });
       }
@@ -39,6 +62,14 @@ Progress.prototype.init = function() {
     }
   });
 };
+
+Progress.prototype.checkContainerIsEmpty = function(container) {
+  if(container.find('.drag-wrapper').length > 0) {
+    container.find('.empty-sitemap-holder').addClass('hidden')
+  } else {
+    container.find('.empty-sitemap-holder').removeClass('hidden')
+  }
+}
 
 Progress.prototype.setSiteMapCount = function(targetContainer, sourceContainer) {
   this.calculateAndSetSiteMapCount(targetContainer, 'add');
