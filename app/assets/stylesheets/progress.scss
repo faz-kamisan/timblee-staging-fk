@@ -15,6 +15,8 @@
     height: 410px;
     background: white;
     vertical-align: top;
+    @include border-radius(6px);
+    @include box-shadow(1px, 1px, 2px, rgba(106, 113, 127, .2));
     div {
       color: white;
     }
@@ -23,24 +25,24 @@
   .drag-me-bar {
     display: table-cell;
     width: 1.55%;
-    height: 410px;
+    min-height: 410px;
     background: #F9FAFC;
   }
 
   #on-hold {
-    border-top: solid 6px #d6d8da;
+    border-top: solid 6px $primaryLabel;
   }
 
   #in-progress {
-    border-top: solid 6px #067ab4;
+    border-top: solid 6px $primaryBlue;
   }
 
   #review {
-    border-top: solid 6px #fccc2c;
+    border-top: solid 6px $primaryYellow;
   }
 
   #approved {
-    border-top: solid 6px #25a45f;
+    border-top: solid 6px $primaryGreen;
   }
 
   .drag-header {
@@ -63,15 +65,71 @@
   .drag-div {
     min-height: calc(100% - 122px);
     padding: 15px;
-    height: 300px;
+    min-height: 300px;
   }
+}
 
-  .drag-wrapper {
-    border: 1px dotted black;
+.drag-wrapper {
+  @include border-radius(6px);
+  background: #f9fafc;
+  border: 1px dashed #aeb6be;
+  + .drag-wrapper {
+    margin-top: 16px;
   }
 }
 
 .sitemap-card-small {
-  background: red !important;
-  width: 100% !important;
+  background: $primaryWhite;
+  min-height: 72px;
+  @include border-radius(6px);
+  border: 1px solid #dadada;
+  padding: 10px;
+  text-align: center;
+  cursor: move;
+  position: relative;
+
+  .card-name {
+    padding-top: 6px;
+    display: block;
+    @extend .font-12;
+    color: $primaryGrey;
+  }
+
+  .last-updated {
+    display: block;
+    padding-top: 5px;
+    @extend .font-10;
+    color: $primaryLabel;
+  }
+
+  .state {
+    position: absolute;
+    background: $primaryLabel;
+    width: 7px;
+    height: 7px;
+    z-index: 1;
+    right: 9px;
+    top: 9px;
+    @include border-radius(50%);
+
+    &.on-hold {
+      background: $primaryLabel;
+    }
+
+    &.in-progress {
+      background: $primaryBlue;
+    }
+
+    &.review {
+      background: $primaryYellow;
+    }
+
+    &.approved {
+      background: $primaryGreen;
+    }
+  }
+}
+
+.ui-draggable-dragging {
+  transform: rotate(-2deg);
 }
