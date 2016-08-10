@@ -15,7 +15,7 @@
       </div>
       <div id="on-hold-holder" class="drag-div drop_container" data-state='on_hold'>
         <div class='empty-sitemap-holder <%= 'hidden' if @site_maps_by_state[:on_hold].present? %>'>
-          Empty
+          <%= image_tag('empty-state-container.svg', class: 'empty-state') %>
         </div>
         <% @site_maps_by_state[:on_hold].each do |site_map| %>
           <div class='drag-wrapper'>
@@ -38,7 +38,7 @@
       </div>
       <div id="in-progress-holder" class="drag-div drop_container" data-state='in_progress'>
         <div class='empty-sitemap-holder <%= 'hidden' if @site_maps_by_state[:in_progress].present? %>'>
-          Empty
+          <%= image_tag('empty-state-container.svg', class: 'empty-state') %>
         </div>
         <% @site_maps_by_state[:in_progress].each do |site_map| %>
           <div class='drag-wrapper'>
@@ -61,7 +61,7 @@
       </div>
       <div id="review-holder" class="drag-div drop_container" data-state='in_review'>
         <div class='empty-sitemap-holder <%= 'hidden' if @site_maps_by_state[:in_review].present? %>'>
-          Empty
+          <%= image_tag('empty-state-container.svg', class: 'empty-state') %>
         </div>
         <% @site_maps_by_state[:in_review].each do |site_map| %>
           <div class='drag-wrapper'>
@@ -84,7 +84,7 @@
       </div>
       <div id="approved-holder" class="drag-div drop_container" data-state='approved'>
         <div class='empty-sitemap-holder <%= 'hidden' if @site_maps_by_state[:approved].present? %>'>
-          Empty
+          <%= image_tag('empty-state-container.svg', class: 'empty-state') %>
         </div>
         <% @site_maps_by_state[:approved].each do |site_map| %>
           <div class='drag-wrapper'>

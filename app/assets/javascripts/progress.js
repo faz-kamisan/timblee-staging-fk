@@ -91,7 +91,6 @@ Progress.prototype.calculateAndSetSiteMapCount = function(container, method) {
   siteMapCountContainer.html(newCount + ' Sitemaps');
 }
 
-
 $(function() {
   var options = {
     dropContainer : $('.drop_container'),
