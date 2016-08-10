@@ -1,0 +1,215 @@
+.default-input {
+  background: #f9f9fa;
+  &:focus {
+    background: $primaryWhite;
+  }
+}
+
+.add-credit-card {
+  margin: 20px -10px 0 -10px;
+  [class^="col-"], [class*=" col-"] {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+#choose-plan-modal {
+  .modal-dialog {
+    width: 942px;
+  }
+  .modal-header {
+    background: $pageBackground;
+    border: 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  .modal-body {
+    padding: 10px 105px;
+  }
+  .para-light-14 {
+    padding-top: 25px;
+  }
+}
+
+.para-light-14 {
+  font-size: 14px;
+  color: $primaryLabel;
+  line-height: 20px;
+}
+
+.plan-benefits {
+  float: left;
+  background: $primaryWhite;
+  @include border-radius(6px);
+  position: relative;
+  border: 1px solid #f4f5f5;
+  padding: 10px;
+  text-align: center;
+  @include box-shadow(1px, 1px, 2px, rgba(106, 113, 127, .2));
+  h1 {
+      @extend .font-24;
+      color: $primaryBlack;
+    }
+    h3 {
+      @extend .font-14;
+      color: $primaryGrey;
+      margin-top: 0;
+    }
+    ul {
+      padding: 10px 0 20px 0;
+    }
+    li, p {
+      font-size: 14px;
+      line-height: 11px;
+      color: $primaryGrey;
+      + li {
+        margin-top: 10px;
+      }
+    }
+    &.pro-plan-benefits {
+      width: 380px;
+      min-height: 330px;
+      z-index: 2;
+      .btn {
+        font-size: 10px;
+        background: $primaryPink;
+        color: $primaryWhite;
+        margin-top: 8px;
+      }
+   }
+   &.starter-plan-benefits {
+    width: 350px;
+    min-height: 300px;
+    margin-top: 15px;
+    z-index: 1;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    h1 {
+      font-size: 18px;
+      line-height: 26px;
+      color: $primaryGrey;
+    }
+    h3 {
+      @extend .font-12;
+    }
+    li {
+      color: $primaryLink;
+      font-size: 12px;
+    }
+    p {
+      color: $primaryGrey;
+      font-size: 12px; 
+    }
+    ul {
+      padding: 8px 0 12px 0;
+    }
+    .btn {
+      height: 29px;
+      line-height: 22px;
+      font-size: 8px;
+      line-height: 14px;
+      margin-top: 10px;
+    }
+  }
+}
+
+#pro-plan-modal,
+#starter-plan-modal {
+  .modal-body,
+  .modal-header {
+    padding-left: 240px;
+    padding-right: 240px;
+  }
+  .modal-dialog {
+    width: 942px;
+  }
+  .modal-body {
+    padding-bottom: 40px;
+  }
+  .modal-title {
+    padding-top: 45px;
+  }
+}
+
+.pay {
+  .row {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+  [class^="col-"], [class*=" col-"] {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .form-group {
+    margin-bottom: 25px;
+  }
+}
+
+.btn-success {
+  background: #00af40;
+  color: $primaryWhite;
+  font-size: 14px;
+  line-height: 24px;
+  min-width: 160px!important;
+  height: 50px!important;
+  text-transform: uppercase;
+  margin-bottom: 25px;
+}
+
+#starter-plan-modal {
+  .modal-body {
+    padding-bottom: 20px!important;
+  }
+  .modal-header {
+    padding-bottom: 30px;
+  }
+  .form-group {
+    margin-bottom: 15px;
+  }
+  .para-light-14 {
+    color: $primaryLink;
+    @extend .font-12;
+  }
+  li {
+    @extend .font-14;
+    color: $primaryGrey;
+    + li {
+      margin-top: 5px;
+    }
+  }
+  ul {
+    padding: 0;
+    padding-bottom: 30px;
+  }
+  .btn-success {
+    margin-bottom: 15px;
+  }
+}
+
+.charge {
+  text-align: center;
+  @extend .font-14;
+  color: $primaryLink;
+  span {
+    font-size: 32px;
+    line-height: 37px;
+    margin-top: 5px;
+    display: block;
+    color: $primaryBlack;
+    margin-bottom: 30px;
+  }
+}
+
+.plan-users {
+  padding: 35px 0 5px 0;
+  p {
+    color: #414952;
+    @extend .font-18;
+    text-align: left;
+  }
+  .form-control {
+    width: 80px;
+    height: 40px;
+    text-align: center;
+  }
+}

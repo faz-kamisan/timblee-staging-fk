@@ -39,6 +39,12 @@ en:
           failure: User couldn't be revoked
           not_found: User not found
 
+    businesses:
+      cards:
+        create:
+          success: You have successfully added a credit card.
+          failure: Some error occurred
+
     admin:
       users:
         destroy:

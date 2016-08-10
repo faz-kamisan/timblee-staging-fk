@@ -1,3 +1,279 @@
 <div role="tabpanel" class="tab-pane" id="billing">
 
+  <form class="settings-form">
+    <div class="form-group">
+
+      <% if !current_business.plan && current_business.in_trial_period? %>
+        <div class="row">
+          <div class="col-xs-9">
+            <label>Plan</label>
+            <p class="font-12-light">You're on the free trial till  [<%= current_business.trial_end_date.to_s(:long) %>] with no restrictions. To keep using Timblee after that, we'll ask you to choose a plan and add a credit card. Our pricing is simple – $19 per month for the first user and $12 for every subsequent user. If you’ll only need to plan websites ocassionally and work alone, there's also a free plan.</p>
+          </div>
+          <div class="col-xs-3 text-right edit-info">
+            <div class="edit">
+              <a href="#choose-plan-modal" data-toggle="modal" class="btn btn-pink btn-single">Choose a plan</a>
+            </div>
+          </div>
+        </div>
+      <% elsif current_business.is_pro_plan? %>
+
+      <div class="row">
+        <div class="col-xs-9">
+          <label>Plan</label>
+          <p class="font-12-light">You're on the Pro plan with <%= current_business.no_of_users %> users. Your monthly charge is $<%= current_business.monthly_charge%>. To add more users, click on the 'Team' tab above.</p>
+        </div>
+        <div class="col-xs-3 text-right edit-info">
+          <div class="edit">
+            <a href="#starter-plan-modal" data-dismiss="modal" data-toggle="modal" class="btn btn-pink btn-single">Edit Plan</a>
+          </div>
+        </div>
+      </div>
+      <% else %>
+
+
+      <div class="row">
+        <div class="col-xs-9">
+          <label>Plan</label>
+          <p class="font-12-light">You're on the Starter plan with one user and a maximum of three sitemaps. This is a free plan. Upgrade to the Pro plan for only $19 to have unlimited sitemaps.</p>
+        </div>
+        <div class="col-xs-3 text-right edit-info">
+          <div class="edit">
+            <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" class="btn btn-pink btn-single">Edit Plan</a>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </form>
+
+  <% if @card %>
+    <%= form_tag businesses_card_path, { method: :post, class: 'settings-form', id: 'add-card-form' } do |f| %>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-xs-6">
+            <label>Credit Card</label>
+            <p class="font-12-light cc-detail-save">We're currently charging your <%= @card.brand %> ending in [<%= @card.last4 %>]. We accept MasterCard, Visa and American Express.</p>
+            <p class="font-12-light cc-detail-edit hide">We're currently charging your <%= @card.brand %> ending in [<%= @card.last4 %>]. We'll never charge it without your permission. We accept MasterCard, Visa and American Express -with no additional fees or charges.</p>
+          </div>
+          <div class="col-xs-6 text-right edit-info">
+            <div class="edit">
+              <a href="javascript:void(0);" class="btn btn-grey btn-edit">Edit</a>
+            </div>
+            <div class="save">
+              <button type="submit" class="btn btn-pink" id="add-card">Save</button>
+              <a href="javascript:void(0);" class="btn btn-grey btn-cancel">Cancel</a>
+            </div>
+          </div>
+        </div>
+        <div class="hide cc-add">
+          <span class='cc-errors'></span>
+          <div class="row add-credit-card">
+            <div class="col-xs-6">
+              <%= text_field_tag '', nil, placeholder: "Card number", class: 'string form-control default-input cc-number editable-input', disabled: true %>
+              <br /><span class='cc-brand pull-right'></span>
+            </div>
+            <div class="col-xs-3">
+              <input type="text" placeholder="MM / YY" class="form-control default-input cc-exp editable-input" disabled='disabled'>
+
+            </div>
+            <div class="col-xs-3">
+              <input type="password" placeholder="CVV" class="form-control default-input cc-cvv editable-input" disabled='disabled'>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <%= form_tag businesses_card_path, { method: :post, class: 'settings-form', id: 'add-card-form' } do |f| %>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-xs-6">
+            <label>Credit Card</label>
+            <p class="font-12-light">There is currently no credit card linked to your account. Add a card below. We'll never charge it without your permission. We accept MasterCard, Visa and American Express – with no additional fees or charges.</p>
+          </div>
+          <div class="col-xs-6 text-right edit-info">
+            <div class="save show">
+              <button type="submit" class="btn btn-pink" id="add-card">Save</button>
+              <a href="javascript:void(0);" class="btn btn-grey">Cancel</a>
+            </div>
+          </div>
+        </div>
+        <span class='cc-errors'></span>
+        <div class="row add-credit-card">
+          <div class="col-xs-6">
+            <%= text_field_tag '', nil, placeholder: "Card number", class: 'string form-control default-input cc-number' %>
+            <br /><span class='cc-brand pull-right'></span>
+          </div>
+          <div class="col-xs-3">
+            <input type="text" placeholder="MM / YY" class="form-control default-input cc-exp">
+
+          </div>
+          <div class="col-xs-3">
+            <input type="password" placeholder="CVV" class="form-control default-input cc-cvv">
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <form class="settings-form delete-account">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-xs-12">
+          <label class="label-bordered">Drastic measures</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-9">
+          <label>Delete your account</label>
+          <p class="font-12-light">Send us a notification to delete your account. Just remember, all sitemaps and all users will be deleted permanently. This is not reversible once completed. We'll send you an email to confirm before we proceed with the deletion.</p>
+        </div>
+        <div class="col-xs-3 text-right edit-info">
+          <div class="edit">
+            <a href="javascript:void(0);" class="btn btn-grey">Request Deletion</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
 </div>
+<!-- Choose Plan Modal -->
+<div class="modal fade" id="choose-plan-modal" tabindex="-1" role="dialog" aria-labelledby="choose-plan-modalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">
+            <%= image_tag('close-modal.svg', class: 'close-modal') %>
+          </span>
+        </button>
+        <h4 class="modal-title">Choose your plan</h4>
+        <p class="modal-message">Choose from one of two plans based on your needs. Pay only for the <br> users you need and nothing more, with simple, <br> per user per month pricing.</p>
+      </div>
+      <div class="modal-body">
+        <div class="clearfix">
+          <div class="pro-plan-benefits plan-benefits">
+            <h1>Pro</h1>
+            <h3>If you plan web projects for a living or <br> work in a team.</h3>
+            <ul>
+              <li>Unlimited users</li>
+              <li>Unlimited guests</li>
+              <li>Unlimited sitemaps</li>
+              <li>All features</li>
+            </ul>
+            <p>$19 for the first user. Then $12 per user.</p>
+            <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" class="btn btn-pink">Choose this plan</a>
+          </div>
+          <div class="starter-plan-benefits plan-benefits">
+            <h1>Starter</h1>
+            <h3>Business owners and those looking to plan the <br> occasional web project.</h3>
+            <ul>
+              <li>One user</li>
+              <li>Unlimited guests</li>
+              <li>Three sitemaps</li>
+              <li>All features</li>
+            </ul>
+            <p>Free</p>
+            <a href="#starter-plan-modal" data-dismiss="modal" data-toggle="modal" class="btn btn-grey">Choose this plan</a>
+          </div>
+        </div>
+        <p class="para-light-14 text-center">All amounts are in USD and reflect monthly charges. <br> We only offer monthly plans so you can change and cancel any time you <br> want. If you're in Australia, the amounts include 10% GST.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Pro Plan Modal -->
+<div class="modal fade" id="pro-plan-modal" tabindex="-1" role="dialog" aria-labelledby="pro-plan-modalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">
+            <%= image_tag('close-modal.svg', class: 'close-modal') %>
+          </span>
+        </button>
+        <a href="#choose-plan-modal" class="go-back" data-dismiss="modal" data-toggle="modal">
+          <span class="icon icon-caret"></span>
+          Back
+        </a>
+        <h4 class="modal-title">Pro plan</h4>
+        <p class="modal-message">Awesome choice! The Pro plan is just $19 for the first user (you) and then <br> $12 per month for each additional user.</p>
+        <div class="clearfix plan-users">
+          <p class="pull-left">How many users do you want to start <br> with (including you)?</p>
+          <input type="number" value="1" class="form-control pull-right plan-users-input">
+        </div>
+      </div>
+      <div class="modal-body">
+        <p class="charge">Your monthly charge will be <br> <span id="monthly-charge">$19</span> </p>
+        <form class="pay">
+          <div class="row">
+            <div class="form-group col-xs-12">
+              <input type="text" class="form-control default-input" placeholder="Card number">
+            </div>
+            <div class="form-group col-xs-6">
+              <input type="text" class="form-control default-input" placeholder="MM / YY">
+            </div>
+            <div class="form-group col-xs-6">
+              <input type="password" class="form-control default-input" placeholder="CVV">
+            </div>
+            <div class="text-center col-xs-12">
+              <button type="submit" class="btn btn-success">Confirm &amp; pay</button>
+            </div>
+          </div>
+        </form>
+        <div class="text-center">
+          <p class="para-light-14">All amounts are in USD.</p>
+          <%= image_tag('stripe-payment.png') %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Starter Plan Modal -->
+<div class="modal fade" id="starter-plan-modal" tabindex="-1" role="dialog" aria-labelledby="starter-plan-modalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">
+            <%= image_tag('close-modal.svg', class: 'close-modal') %>
+          </span>
+        </button>
+        <a href="#choose-plan-modal" class="go-back" data-dismiss="modal" data-toggle="modal">
+          <span class="icon icon-caret"></span>
+          Back
+        </a>
+        <h4 class="modal-title">Starter plan</h4>
+        <p class="modal-message">You have chosen the Starter plan. It's perfect if you only plan the <br> occassional web project and don't work in a team. You can always upgrade later.</p>
+      </div>
+      <div class="modal-body">
+        <form class="pay">
+          <ul>
+            <li>You won't have unlimited sitemaps. You'll only be able to have three sitemaps at any one time</li>
+            <li>You won't be able to invite other team members</li>
+            <li>You can invite unlimited guests to view and comment on sitemaps</li>
+          </ul>
+          <div class="row">
+            <div class="text-center col-xs-12">
+              <button type="submit" class="btn btn-success">Confirm Plan</button>
+            </div>
+          </div>
+        </form>
+        <div class="text-center">
+          <p class="para-light-14">Upgrade anytime to the Pro plan for just $19 per month</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/1.4.3/jquery.payment.min.js"></script>
+<script type="text/javascript">
+  Stripe.setPublishableKey('<%= STRIPE_PUBLISHABLE_KEY %>');
+</script>
+<%= javascript_include_tag('payments', 'billing') %>

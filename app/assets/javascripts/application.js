@@ -20,3 +20,4 @@
 //= require twemoji-picker
 //= require apply_twemoji
 //= require settings_tabs
+//= require settings

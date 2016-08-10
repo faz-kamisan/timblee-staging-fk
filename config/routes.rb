@@ -39,4 +39,7 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :businesses do
+    resource :card, only: [:create]
+  end
 end

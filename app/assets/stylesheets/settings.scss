@@ -23,6 +23,11 @@
   line-height: 24px;
 }
 
+.font-24 {
+  font-size: 24px;
+  line-height: 30px;
+}
+
 .remove-default-styles {
   background: $transparent;
   border: 0;
@@ -112,6 +117,9 @@
       margin-right: 0;
     }
   }
+  &.show {
+    display: block;
+  }
 }
 
 .resend {
@@ -143,7 +151,7 @@
     @extend .font-12;
   }
 
-  input {
+  input:not(.default-input) {
     width: 100%;
     border: 0;
     background: $transparent;
@@ -161,6 +169,9 @@
     background: $primaryPink;
     margin-right: 15px;
     font-size: 10px;
+    &.btn-single {
+      margin-right: 0;
+    }
   }
 
   .btn-grey {
@@ -412,6 +423,7 @@ ul.tagit li.tagit-choice-editable {
   color: #a3acb5;
   position: absolute;
   bottom: -1px;
+  height: 18px;
   .icon-caret {
     font-size: 12px;
     display: inline-block;
@@ -552,4 +564,17 @@ ul.tagit li.tagit-choice-editable {
     top: 0;
     left: 16px; 
   }
+}
+
+.settings-form .label-bordered {
+  color: $primaryGrey;
+  padding-bottom: 3px;
+  border-bottom: solid 1px $primaryLabel;
+  display: block;
+  margin-bottom: 30px;
+}
+
+.delete-account {
+  border-top: 0!important;
+  padding-top: 92px;
 }

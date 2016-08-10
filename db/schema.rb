@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160808073307) do
+ActiveRecord::Schema.define(version: 20160810104504) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20160808073307) do
     t.integer  "owner_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.integer  "trial_days"
   end
 
   create_table "folders", force: :cascade do |t|
@@ -34,7 +35,7 @@ ActiveRecord::Schema.define(version: 20160808073307) do
 
   create_table "guests", force: :cascade do |t|
     t.string   "full_name"
-    t.string   "logo"
+    t.string   "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -54,6 +55,14 @@ ActiveRecord::Schema.define(version: 20160808073307) do
     t.datetime "updated_at",   null: false
   end
 
+  create_table "plans", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "cost_in_cents"
+    t.string   "stripe_plan_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "site_map_invites", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "site_map_id"
@@ -69,6 +78,20 @@ ActiveRecord::Schema.define(version: 20160808073307) do
     t.datetime "updated_at",  null: false
     t.string   "state"
   end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "quantity"
+    t.integer  "no_of_users"
+    t.integer  "plan_id"
+    t.integer  "business_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "subscriptions", ["business_id"], name: "index_subscriptions_on_business_id", using: :btree
+  add_index "subscriptions", ["plan_id"], name: "index_subscriptions_on_plan_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
@@ -109,4 +132,6 @@ ActiveRecord::Schema.define(version: 20160808073307) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "subscriptions", "businesses"
+  add_foreign_key "subscriptions", "plans"
 end
