@@ -11,7 +11,7 @@
     <div class="drag-me" id="on-hold">
       <div class="drag-header text-center">
         <h1>On Hold</h1>
-        <p class="site-map-count" data-count=<%= @site_maps_by_state[:on_hold].length %>><%= @site_maps_by_state[:on_hold].length %> Sitemaps</p>
+        <p class="site-map-count" data-count=<%= @site_maps_by_state[:on_hold].length %>><%= pluralize(@site_maps_by_state[:on_hold].length, 'Sitemap') %></p>
       </div>
       <div id="on-hold-holder" class="drag-div drop_container" data-state='on_hold'>
         <div class='empty-sitemap-holder <%= 'hidden' if @site_maps_by_state[:on_hold].present? %>'>
@@ -34,7 +34,7 @@
     <div class="drag-me" id="in-progress">
       <div class="drag-header text-center">
         <h1>In Progress</h1>
-        <p class="site-map-count" data-count=<%= @site_maps_by_state[:in_progress].length %>><%= @site_maps_by_state[:in_progress].length %> Sitemaps</p>
+        <p class="site-map-count" data-count=<%= @site_maps_by_state[:in_progress].length %>><%= pluralize(@site_maps_by_state[:in_progress].length, 'Sitemap') %></p>
       </div>
       <div id="in-progress-holder" class="drag-div drop_container" data-state='in_progress'>
         <div class='empty-sitemap-holder <%= 'hidden' if @site_maps_by_state[:in_progress].present? %>'>
@@ -57,7 +57,7 @@
     <div class="drag-me" id="review">
       <div class="drag-header text-center">
         <h1>Review</h1>
-        <p class="site-map-count" data-count=<%= @site_maps_by_state[:in_review].length %>><%= @site_maps_by_state[:in_review].length %> Sitemaps</p>
+        <p class="site-map-count" data-count=<%= @site_maps_by_state[:in_review].length %>><%= pluralize(@site_maps_by_state[:in_review].length, 'Sitemap') %></p>
       </div>
       <div id="review-holder" class="drag-div drop_container" data-state='in_review'>
         <div class='empty-sitemap-holder <%= 'hidden' if @site_maps_by_state[:in_review].present? %>'>
@@ -80,7 +80,7 @@
     <div class="drag-me" id="approved">
       <div class="drag-header text-center">
         <h1>Approved</h1>
-        <p class="site-map-count" data-count=<%= @site_maps_by_state[:approved].length %>><%= @site_maps_by_state[:approved].length %> Sitemaps</p>
+        <p class="site-map-count" data-count=<%= @site_maps_by_state[:approved].length %>><%= pluralize(@site_maps_by_state[:approved].length, 'Sitemap') %></p>
       </div>
       <div id="approved-holder" class="drag-div drop_container" data-state='approved'>
         <div class='empty-sitemap-holder <%= 'hidden' if @site_maps_by_state[:approved].present? %>'>

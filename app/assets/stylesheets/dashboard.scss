@@ -34,6 +34,9 @@
     position: relative;
     overflow: hidden;
     cursor: move;
+    &.new-site-map-link {
+      cursor: auto;
+    }
   }
 
   h1 {

@@ -21,7 +21,9 @@ SiteMaps.prototype.bindDraggers = function() {
   var _this = this;
   this.draggableSiteMaps.draggable({
     revert: 'invalid',
+    containment: ".user-dashboard",
     start: function(event, ui) {
+      $('.actions-overlay').removeClass('animate-top');
       ui.helper.parent('.site_map_wrapper').addClass('dragging');
     },
     stop: function(event, ui) {
