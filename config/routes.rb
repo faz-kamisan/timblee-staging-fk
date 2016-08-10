@@ -38,4 +38,7 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :businesses do
+    resource :payment, only: [:create]
+  end
 end

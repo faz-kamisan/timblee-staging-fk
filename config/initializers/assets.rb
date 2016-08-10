@@ -20,4 +20,6 @@ Rails.application.config.assets.precompile += %w(
   delete_user.js
   delete_site_map.js
   apply-twemoji.js
+  payments.js
+  billing.js
 )

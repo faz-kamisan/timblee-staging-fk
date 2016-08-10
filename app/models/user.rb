@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
       self.is_admin = true
     end
     def add_business
-      build_business(owner: self)
+      build_business(owner: self, no_of_users: 1)
     end
 
     def set_confirmation_instructions_to_be_sent

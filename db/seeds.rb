@@ -5,3 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Plan.delete_all
+
+Plan.create(id: 1, name: 'TIMBLEE-Pro')  #// keeping id same as in stripe api
+Plan.create(id: 2, name: 'TIMBLEE-Starter')
