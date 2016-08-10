@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-
   devise :invitable, :database_authenticatable, :async, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   acts_as_paranoid
@@ -18,7 +17,24 @@ class User < ActiveRecord::Base
 
   strip_fields :full_name
 
-  validates :full_name, presence: true
+  # remove devise validations
+  _validators.delete(:email)
+  _validators.delete(:password)
+  _validate_callbacks.each do |callback|
+    if callback.raw_filter.respond_to? :attributes
+      callback.raw_filter.attributes.delete :email
+      callback.raw_filter.attributes.delete :password
+    end
+  end
+
+  # add custom validations
+  validates :full_name, presence: { message: 'Hmm... no name? Make something up :)' }
+  validates :email, presence: { message: 'We really do need an email. Pretty please.' }
+  validates :email, uniqueness: { message: "There's already an account linked to this email. Forgot your password? <a href='/users/password/new'>Reset it here</a>." }, allow_blank: true, if: :email_changed?
+  validates_format_of     :email, with: email_regexp, allow_blank: true, if: :email_changed?
+
+  validates :password, presence: { message: 'Without a password, it\'s like leaving your door open to the whole internet.' }
+  validates :password, length: { within: password_length, message: 'Your password needs to be at least 6 characters.' }, allow_blank: true
   # validate :minimum_image_size
 
   def all_site_maps
@@ -67,5 +83,13 @@ class User < ActiveRecord::Base
         errors.add(:base, I18n.t('errors.users.owner_role_update'))
         false
       end
+    end
+
+    def email_required?
+      false
+    end
+
+    def password_required?
+      false
     end
 end
