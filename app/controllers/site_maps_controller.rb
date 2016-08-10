@@ -1,5 +1,5 @@
 class SiteMapsController < ApplicationController
-  before_filter :fetch_site_map, only: [:destroy, :show]
+  before_filter :fetch_site_map, only: [:destroy, :show, :update]
 
   def create
     @site_map = current_business.site_maps.build(site_map_params)
@@ -9,7 +9,7 @@ class SiteMapsController < ApplicationController
         redirect_to site_map_path(@site_map)
     else
       flash[:error] = t('.failure', scope: :flash)
-        redirect_to home_dashboard_path
+      redirect_to home_dashboard_path
     end
   end
 
@@ -25,14 +25,25 @@ class SiteMapsController < ApplicationController
     redirect_to home_dashboard_path
   end
 
+  def update
+    if @site_map.update(site_map_params)
+      flash.now[:notice] = t('.success', scope: :flash)
+      render 'shared/show_flash'
+    else
+      flash.now[:error] = t('.failure', scope: :flash)
+      render 'shared/show_flash', status: 522
+    end
+  end
+
   private
     def fetch_site_map
       unless @site_map = current_business.site_maps.find_by(id: params[:id])
         flash.now[:alert] = 'SiteMap Not Found'
-        render 'shared/show_flash.js.erb'
+        render 'shared/show_flash'
       end
     end
+
     def site_map_params
-      params.require(:site_map).permit(:name, :folder_id)
+      params.require(:site_map).permit(:name, :folder_id, :state)
     end
 end

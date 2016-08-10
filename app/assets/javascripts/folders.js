@@ -88,9 +88,9 @@ Folders.prototype.resetDeletionModal = function() {
 }
 
 Folders.prototype.filterSiteMaps = function(folderId) {
-  $('.site-map-container').removeClass('hidden');
+  $('.site-map-container').closest('.site-map-outer-wrapper').removeClass('hidden');
   if(folderId) {
-    $('.site-map-container').filter('[data-folder-id!=' + folderId + ']').not('.new-site-map').addClass('hidden');
+    $('.site-map-container').filter('[data-folder-id!=' + folderId + ']').not('.new-site-map').closest('.site-map-outer-wrapper').addClass('hidden');
   }
 }
 

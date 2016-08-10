@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 20160809133949) do
     t.integer  "business_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "state"
   end
 
   create_table "subscriptions", force: :cascade do |t|

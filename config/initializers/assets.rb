@@ -22,4 +22,5 @@ Rails.application.config.assets.precompile += %w(
   apply-twemoji.js
   payments.js
   billing.js
+  progress.js
 )

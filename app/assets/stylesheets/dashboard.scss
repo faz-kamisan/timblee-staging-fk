@@ -14,9 +14,14 @@
       margin: 0 -10px;
     }
     .site-map-container {
-      margin-bottom: 30px;
-      padding: 0 10px;
+      &.ui-draggable-dragging {
+        transform: rotate(-2deg);
+        z-index: 2;
+      }
     }
+  }
+  .site-map-outer-wrapper {
+    margin-bottom: 30px;
   }
   .site-card {
     height: 230px;
@@ -27,7 +32,9 @@
     display: block;
     position: relative;
     overflow: hidden;
+    cursor: move;
   }
+
   h1 {
     font-weight: 400;
     margin-top: 0;
@@ -40,8 +47,7 @@
     font-weight: 400;
     word-break: break-all;
   }
-  .updated,
-  .version {
+  .updated {
     font-size: 10px;
     line-height: 16px;
     margin: 0 0 2px 0;
@@ -137,7 +143,7 @@
       width: 28px;
     }
   }
-  .point {
+  .state {
     position: absolute;
     width: 8px;
     height: 8px;
@@ -145,6 +151,22 @@
     background: $primaryLabel;
     right: 20px;
     top: 15px;
+
+    &.on_hold {
+      background: $primaryLabel;
+    }
+
+    &.in_progress {
+      background: $primaryBlue;
+    }
+
+    &.in_review {
+      background: $primaryYellow;
+    }
+
+    &.approved {
+      background: $primaryGreen;
+    }
   }
 }
 
@@ -186,6 +208,15 @@
     &.active-delete {
      a {
         color: $primaryGrey;
+      }
+    }
+    &.dragging-over {
+      background: $primaryWhite;
+      @include border-radius(6px);
+      @include box-shadow(1px, 1px, 2px, rgba(106, 113, 127, .2));
+      a {
+        color: $primaryGrey;
+        background: $primaryWhite;
       }
     }
   }
@@ -277,5 +308,14 @@
     [class^="icon-"], [class*=" icon-"] {
       color: $primaryGrey;
     }
+  }
+}
+
+.site_map_wrapper {
+  border: 1px dashed $transparent;
+  &.dragging {
+    @include border-radius(6px);
+    border-color: #d8dadc;
+    background: $pageBackground;
   }
 }
