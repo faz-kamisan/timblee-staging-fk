@@ -8,5 +8,6 @@
 
 Plan.delete_all
 
-Plan.create(id: 1, name: 'TIMBLEE-Pro')  #// keeping id same as in stripe api
-Plan.create(id: 2, name: 'TIMBLEE-Starter')
+Stripe::Plan.list.data.each do  |plan|
+  Plan.create(stripe_plan_id: plan.id, name: plan.name, cost: (plan.amount/100))  #// keeping stripe_plan_id same as in stripe api
+end

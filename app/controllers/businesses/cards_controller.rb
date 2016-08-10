@@ -1,12 +1,7 @@
-class Businesses::PaymentsController < UsersController
+class Businesses::CardsController < ApplicationController
 
   def create
-    credit_card_service = CreditCardService.new(current_business)
-    if current_business.stripe_customer_id
-      credit_card_service.create_card(params[:stripeToken])
-    else
-      credit_card_service.create_customer(params[:stripeToken])
-    end
+    credit_card_service = CreditCardService.new(current_business).add_card(params[:stripeToken])
 
     redirect_to billing_settings_users_path, notice: t('.success', scope: :flash)
 

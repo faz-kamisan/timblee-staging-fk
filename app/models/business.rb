@@ -7,6 +7,7 @@ class Business < ActiveRecord::Base
   has_many :subscriptions, dependent: :destroy
   has_one :active_subscription, ->{ where('subscriptions.end_date >= :todays_date and subscriptions.start_date <= :todays_date', { todays_date: Date.today }) }, class_name: :Subscription, dependent: :destroy
   has_one :plan, through: :active_subscription
+  delegate :no_of_users, to: :active_subscription
 
   def invited_users
     users.where.not(invitation_token: nil)
@@ -17,15 +18,15 @@ class Business < ActiveRecord::Base
   end
 
   def in_trial_period?
-    trial_end_date > Date.today
+    trial_end_date > Date.current
   end
 
   def is_pro_plan?
-    plan.try(:id) == Plan::PRO_ID
+    plan.try(:stripe_plan_id) == PRO_STRIPE_ID
   end
 
   def is_starter_plan?
-    plan.try(:id) == PLAN::STARTER_ID
+    plan.try(:stripe_plan_id) == STARTER_STRIPE_ID
   end
 
   def monthly_charge

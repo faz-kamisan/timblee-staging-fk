@@ -4,6 +4,7 @@ class CreateSubscriptions < ActiveRecord::Migration
       t.date :start_date
       t.date :end_date
       t.integer :quantity
+      t.integer :no_of_users
       t.references :plan, index: true, foreign_key: true
       t.references :business, index: true, foreign_key: true
 

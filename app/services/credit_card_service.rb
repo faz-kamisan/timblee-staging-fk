@@ -6,6 +6,13 @@ class CreditCardService
     @current_business = current_business
   end
 
+  def add_card(stripe_token)
+    if @current_business.stripe_customer_id
+      create_card(stripe_token)
+    else
+      create_customer(stripe_token)
+    end
+  end
 
   def create_card(stripe_token)
     @customer = Stripe::Customer.retrieve(@current_business.stripe_customer_id)

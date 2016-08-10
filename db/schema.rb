@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160809133949) do
+ActiveRecord::Schema.define(version: 20160809130708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 20160809133949) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.integer  "trial_days"
-    t.integer  "no_of_users"
   end
 
   create_table "folders", force: :cascade do |t|
@@ -58,8 +57,10 @@ ActiveRecord::Schema.define(version: 20160809133949) do
 
   create_table "plans", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "cost"
+    t.string   "stripe_plan_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "site_map_invites", force: :cascade do |t|
@@ -82,6 +83,7 @@ ActiveRecord::Schema.define(version: 20160809133949) do
     t.date     "start_date"
     t.date     "end_date"
     t.integer  "quantity"
+    t.integer  "no_of_users"
     t.integer  "plan_id"
     t.integer  "business_id"
     t.datetime "created_at",  null: false

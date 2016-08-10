@@ -40,10 +40,10 @@ en:
           not_found: User not found
 
     businesses:
-      payments:
+      cards:
         create:
           success: You have successfully added a credit card.
-          failure: Some error occoured
+          failure: Some error occurred
 
     admin:
       users:

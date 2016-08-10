@@ -1,17 +1,17 @@
 var SettingsTabs = function(options) {
   this.url = document.location.toString();
-  this.nav_tab_ul = options.nav_tab_ul;
+  this.navTabUl = options.navTabUl;
   this.tabs = options.tabs;
 };
 
 SettingsTabs.prototype.bindEvents = function() {
   if (this.url.match('#')) {
-    $(this.nav_tab_ul + ' a[href= "#' + this.url.split('#')[1] + '"]').tab('show');
+    $(this.navTabUl + ' a[href= "#' + this.url.split('#')[1] + '"]').tab('show');
   }
 
   //Change hash for page-reload
   for (var i = 0; i < this.tabs.length; i++) {
-    $(this.nav_tab_ul + ' a[href= "' + this.tabs[i] + '"]').on('click', function (e) {
+    $(this.navTabUl + ' a[href= "' + this.tabs[i] + '"]').on('click', function (e) {
         window.location.hash = e.target.hash;
     });
   };
@@ -20,7 +20,7 @@ SettingsTabs.prototype.bindEvents = function() {
 
 $(function() {
   var options = {
-    nav_tab_ul : 'ul.nav-tabs',
+    navTabUl : 'ul.nav-tabs',
     tabs : [ '#team', '#my-info', '#personalization', '#billing' ]
   }
   new SettingsTabs(options).bindEvents();

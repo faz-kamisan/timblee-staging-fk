@@ -24,7 +24,7 @@
         </div>
         <div class="col-xs-3 text-right edit-info">
           <div class="edit">
-            <a href="javascript:void(0);" class="btn btn-pink btn-single">Edit Plan</a>
+            <a href="#starter-plan-modal" data-dismiss="modal" data-toggle="modal" class="btn btn-pink btn-single">Edit Plan</a>
           </div>
         </div>
       </div>
@@ -38,7 +38,7 @@
         </div>
         <div class="col-xs-3 text-right edit-info">
           <div class="edit">
-            <a href="javascript:void(0);" class="btn btn-pink btn-single">Edit Plan</a>
+            <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" class="btn btn-pink btn-single">Edit Plan</a>
           </div>
         </div>
       </div>
@@ -47,7 +47,7 @@
   </form>
 
   <% if @card %>
-    <%= form_tag businesses_payment_path, { method: :post, class: 'settings-form', id: 'add-card-form' } do |f| %>
+    <%= form_tag businesses_card_path, { method: :post, class: 'settings-form', id: 'add-card-form' } do |f| %>
       <div class="form-group">
         <div class="row">
           <div class="col-xs-6">
@@ -84,7 +84,7 @@
       </div>
     <% end %>
   <% else %>
-    <%= form_tag businesses_payment_path, { method: :post, class: 'settings-form', id: 'add-card-form' } do |f| %>
+    <%= form_tag businesses_card_path, { method: :post, class: 'settings-form', id: 'add-card-form' } do |f| %>
       <div class="form-group">
         <div class="row">
           <div class="col-xs-6">

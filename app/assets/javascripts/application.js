@@ -20,7 +20,4 @@
 //= require twemoji-picker
 //= require apply_twemoji
 //= require settings_tabs
-
-$(document).ready(function() {
-  $('.settings').parents('body').addClass('bg-white');
-});
+//= require settings
