@@ -139,136 +139,14 @@
 
 </div>
 <!-- Choose Plan Modal -->
-<div class="modal fade" id="choose-plan-modal" tabindex="-1" role="dialog" aria-labelledby="choose-plan-modalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">
-            <%= image_tag('close-modal.svg', class: 'close-modal') %>
-          </span>
-        </button>
-        <h4 class="modal-title">Choose your plan</h4>
-        <p class="modal-message">Choose from one of two plans based on your needs. Pay only for the <br> users you need and nothing more, with simple, <br> per user per month pricing.</p>
-      </div>
-      <div class="modal-body">
-        <div class="clearfix">
-          <div class="pro-plan-benefits plan-benefits">
-            <h1>Pro</h1>
-            <h3>If you plan web projects for a living or <br> work in a team.</h3>
-            <ul>
-              <li>Unlimited users</li>
-              <li>Unlimited guests</li>
-              <li>Unlimited sitemaps</li>
-              <li>All features</li>
-            </ul>
-            <p>$19 for the first user. Then $12 per user.</p>
-            <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" class="btn btn-pink">Choose this plan</a>
-          </div>
-          <div class="starter-plan-benefits plan-benefits">
-            <h1>Starter</h1>
-            <h3>Business owners and those looking to plan the <br> occasional web project.</h3>
-            <ul>
-              <li>One user</li>
-              <li>Unlimited guests</li>
-              <li>Three sitemaps</li>
-              <li>All features</li>
-            </ul>
-            <p>Free</p>
-            <a href="#starter-plan-modal" data-dismiss="modal" data-toggle="modal" class="btn btn-grey">Choose this plan</a>
-          </div>
-        </div>
-        <p class="para-light-14 text-center">All amounts are in USD and reflect monthly charges. <br> We only offer monthly plans so you can change and cancel any time you <br> want. If you're in Australia, the amounts include 10% GST.</p>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render 'users/choose_plan_modal' %>
 
 <!-- Pro Plan Modal -->
-<div class="modal fade" id="pro-plan-modal" tabindex="-1" role="dialog" aria-labelledby="pro-plan-modalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">
-            <%= image_tag('close-modal.svg', class: 'close-modal') %>
-          </span>
-        </button>
-        <a href="#choose-plan-modal" class="go-back" data-dismiss="modal" data-toggle="modal">
-          <span class="icon icon-caret"></span>
-          Back
-        </a>
-        <h4 class="modal-title">Pro plan</h4>
-        <p class="modal-message">Awesome choice! The Pro plan is just $19 for the first user (you) and then <br> $12 per month for each additional user.</p>
-        <div class="clearfix plan-users">
-          <p class="pull-left">How many users do you want to start <br> with (including you)?</p>
-          <input type="number" value="1" class="form-control pull-right plan-users-input">
-        </div>
-      </div>
-      <div class="modal-body">
-        <p class="charge">Your monthly charge will be <br> <span id="monthly-charge">$19</span> </p>
-        <form class="pay">
-          <div class="row">
-            <div class="form-group col-xs-12">
-              <input type="text" class="form-control default-input" placeholder="Card number">
-            </div>
-            <div class="form-group col-xs-6">
-              <input type="text" class="form-control default-input" placeholder="MM / YY">
-            </div>
-            <div class="form-group col-xs-6">
-              <input type="password" class="form-control default-input" placeholder="CVV">
-            </div>
-            <div class="text-center col-xs-12">
-              <button type="submit" class="btn btn-success">Confirm &amp; pay</button>
-            </div>
-          </div>
-        </form>
-        <div class="text-center">
-          <p class="para-light-14">All amounts are in USD.</p>
-          <%= image_tag('stripe-payment.png') %>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render 'users/pro_plan_modal' %>
 
 <!-- Starter Plan Modal -->
-<div class="modal fade" id="starter-plan-modal" tabindex="-1" role="dialog" aria-labelledby="starter-plan-modalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">
-            <%= image_tag('close-modal.svg', class: 'close-modal') %>
-          </span>
-        </button>
-        <a href="#choose-plan-modal" class="go-back" data-dismiss="modal" data-toggle="modal">
-          <span class="icon icon-caret"></span>
-          Back
-        </a>
-        <h4 class="modal-title">Starter plan</h4>
-        <p class="modal-message">You have chosen the Starter plan. It's perfect if you only plan the <br> occassional web project and don't work in a team. You can always upgrade later.</p>
-      </div>
-      <div class="modal-body">
-        <form class="pay">
-          <ul>
-            <li>You won't have unlimited sitemaps. You'll only be able to have three sitemaps at any one time</li>
-            <li>You won't be able to invite other team members</li>
-            <li>You can invite unlimited guests to view and comment on sitemaps</li>
-          </ul>
-          <div class="row">
-            <div class="text-center col-xs-12">
-              <button type="submit" class="btn btn-success">Confirm Plan</button>
-            </div>
-          </div>
-        </form>
-        <div class="text-center">
-          <p class="para-light-14">Upgrade anytime to the Pro plan for just $19 per month</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render 'users/starter_plan_modal' %>
+
 
 
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
@@ -276,4 +154,4 @@
 <script type="text/javascript">
   Stripe.setPublishableKey('<%= STRIPE_PUBLISHABLE_KEY %>');
 </script>
-<%= javascript_include_tag('payments', 'billing') %>
+<%= javascript_include_tag('payments', 'billing', 'plan') %>

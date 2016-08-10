@@ -23,4 +23,5 @@ Rails.application.config.assets.precompile += %w(
   payments.js
   billing.js
   progress.js
+  plan.js
 )

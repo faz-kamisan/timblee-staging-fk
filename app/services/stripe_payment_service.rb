@@ -1,4 +1,4 @@
-class CreditCardService
+class StripePaymentService
 
   attr_accessor :customer
 

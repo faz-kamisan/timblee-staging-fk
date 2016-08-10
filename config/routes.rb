@@ -41,5 +41,6 @@ Rails.application.routes.draw do
 
   namespace :businesses do
     resource :card, only: [:create]
+    resource :subscription, only: [:create]
   end
 end

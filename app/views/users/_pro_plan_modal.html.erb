@@ -1,0 +1,46 @@
+<div class="modal fade" id="pro-plan-modal" tabindex="-1" role="dialog" aria-labelledby="pro-plan-modalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">
+            <%= image_tag('close-modal.svg', class: 'close-modal') %>
+          </span>
+        </button>
+        <a href="#choose-plan-modal" class="go-back" data-dismiss="modal" data-toggle="modal">
+          <span class="icon icon-caret"></span>
+          Back
+        </a>
+        <h4 class="modal-title">Pro plan</h4>
+        <p class="modal-message">Awesome choice! The Pro plan is just $19 for the first user (you) and then <br> $12 per month for each additional user.</p>
+        <div class="clearfix plan-users">
+          <p class="pull-left">How many users do you want to start <br> with (including you)?</p>
+          <input type="number" value="1" class="form-control pull-right plan-users-input">
+        </div>
+      </div>
+      <div class="modal-body">
+        <p class="charge">Your monthly charge will be <br> <span id="monthly-charge">$19</span> </p>
+        <form class="pay">
+          <div class="row">
+            <div class="form-group col-xs-12">
+              <input type="text" class="form-control default-input" placeholder="Card number">
+            </div>
+            <div class="form-group col-xs-6">
+              <input type="text" class="form-control default-input" placeholder="MM / YY">
+            </div>
+            <div class="form-group col-xs-6">
+              <input type="password" class="form-control default-input" placeholder="CVV">
+            </div>
+            <div class="text-center col-xs-12">
+              <button type="submit" class="btn btn-success">Confirm &amp; pay</button>
+            </div>
+          </div>
+        </form>
+        <div class="text-center">
+          <p class="para-light-14">All amounts are in USD.</p>
+          <%= image_tag('stripe-payment.png') %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
