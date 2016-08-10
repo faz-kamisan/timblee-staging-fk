@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
     end
 
     def add_business
-      build_business(owner: self, no_of_users: 1, trial_days: DEFAULT_TRIAL_DAYS)
+      build_business(owner: self, trial_days: DEFAULT_TRIAL_DAYS)
     end
 
     def set_confirmation_instructions_to_be_sent

@@ -11,7 +11,7 @@ class Folder < ActiveRecord::Base
 
   private
     def check_name_is_not_all_site_maps
-      if self.name.squeeze(' ').downcase == 'all sitemaps'
+      if self.name && self.name.squeeze(' ').downcase == 'all sitemaps'
         errors.add(:name, "has already been taken")
       end
     end

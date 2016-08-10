@@ -12,14 +12,14 @@ RSpec.describe Folder, type: :model do
   end
 
   describe 'Callbacks' do
-    it { is_expected.to callback(:format_name).before(:save) }
+    it { is_expected.to callback(:check_name_is_not_all_site_maps).before(:validation) }
   end
 
   describe 'Instance Methods' do
-    let!(:folder) { FactoryGirl.build :folder, name: '    test    ' }
-    describe '#format_name' do
-      before { folder.send :format_name }
-      it { expect(folder.name).to eq 'Test' }
+    let!(:folder) { FactoryGirl.build :folder, name: 'all sitemaps' }
+    describe '#check_name_is_not_all_site_maps' do
+      before { folder.send :check_name_is_not_all_site_maps }
+      it { expect(folder.errors[:name]).to eq ['has already been taken'] }
     end
   end
 end
