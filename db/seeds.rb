@@ -9,5 +9,5 @@
 Plan.delete_all
 
 Stripe::Plan.list.data.each do  |plan|
-  Plan.create(stripe_plan_id: plan.id, name: plan.name, cost: (plan.amount/100))  #// keeping stripe_plan_id same as in stripe api
+  Plan.create(stripe_plan_id: plan.id, name: plan.name, cost_in_cents: (plan.amount))  #// keeping stripe_plan_id same as in stripe api
 end
