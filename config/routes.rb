@@ -1,5 +1,6 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
+  get 'hello_world', to: 'hello_world#index'
   mount Sidekiq::Web, at: '/sidekiq'
 
   devise_scope :user do
