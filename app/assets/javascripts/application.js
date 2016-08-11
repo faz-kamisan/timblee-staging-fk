@@ -21,3 +21,4 @@
 //= require apply_twemoji
 //= require settings_tabs
 //= require settings
+//= require modal_fix

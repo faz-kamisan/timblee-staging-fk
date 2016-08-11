@@ -7,7 +7,7 @@
         <div class="row">
           <div class="col-xs-9">
             <label>Plan</label>
-            <p class="font-12-light">You're on the free trial till  [<%= current_business.trial_end_date.to_s(:long) %>] with no restrictions. To keep using Timblee after that, we'll ask you to choose a plan and add a credit card. Our pricing is simple – $19 per month for the first user and $12 for every subsequent user. If you’ll only need to plan websites ocassionally and work alone, there's also a free plan.</p>
+            <p class="font-12-light">You're on the free trial till  <%= current_business.trial_end_date.to_s(:long) %> with no restrictions. To keep using Timblee after that, we'll ask you to choose a plan and add a credit card. Our pricing is simple – $19 per month for the first user and $12 for every subsequent user. If you’ll only need to plan websites ocassionally and work alone, there's also a free plan.</p>
           </div>
           <div class="col-xs-3 text-right edit-info">
             <div class="edit">
@@ -29,7 +29,6 @@
         </div>
       </div>
       <% else %>
-
 
       <div class="row">
         <div class="col-xs-9">
@@ -154,7 +153,7 @@
       <div class="modal-body">
         <div class="clearfix">
           <div class="pro-plan-benefits plan-benefits">
-            <h1>Pro</h1>
+            <h1 class="choose-plan-heading">Pro</h1>
             <h3>If you plan web projects for a living or <br> work in a team.</h3>
             <ul>
               <li>Unlimited users</li>
@@ -162,11 +161,11 @@
               <li>Unlimited sitemaps</li>
               <li>All features</li>
             </ul>
-            <p>$19 for the first user. Then $12 per user.</p>
-            <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" class="btn btn-pink">Choose this plan</a>
+            <p class="plan-dis">$19 for the first user. Then $12 per user.</p>
+            <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" class="btn btn-pink btn-modal-open">Choose this plan</a>
           </div>
           <div class="starter-plan-benefits plan-benefits">
-            <h1>Starter</h1>
+            <h1 class="choose-plan-heading">Starter</h1>
             <h3>Business owners and those looking to plan the <br> occasional web project.</h3>
             <ul>
               <li>One user</li>
@@ -174,8 +173,8 @@
               <li>Three sitemaps</li>
               <li>All features</li>
             </ul>
-            <p>Free</p>
-            <a href="#starter-plan-modal" data-dismiss="modal" data-toggle="modal" class="btn btn-grey">Choose this plan</a>
+            <p class="plan-dis">Free</p>
+            <a href="#starter-plan-modal" data-dismiss="modal" data-toggle="modal" class="btn btn-grey btn-modal-open">Choose this plan</a>
           </div>
         </div>
         <p class="para-light-14 text-center">All amounts are in USD and reflect monthly charges. <br> We only offer monthly plans so you can change and cancel any time you <br> want. If you're in Australia, the amounts include 10% GST.</p>
@@ -194,7 +193,7 @@
             <%= image_tag('close-modal.svg', class: 'close-modal') %>
           </span>
         </button>
-        <a href="#choose-plan-modal" class="go-back" data-dismiss="modal" data-toggle="modal">
+        <a href="#choose-plan-modal" class="go-back btn-modal-open" data-dismiss="modal" data-toggle="modal">
           <span class="icon icon-caret"></span>
           Back
         </a>
@@ -202,7 +201,7 @@
         <p class="modal-message">Awesome choice! The Pro plan is just $19 for the first user (you) and then <br> $12 per month for each additional user.</p>
         <div class="clearfix plan-users">
           <p class="pull-left">How many users do you want to start <br> with (including you)?</p>
-          <input type="number" value="1" class="form-control pull-right plan-users-input">
+          <input type="text" value="1" class="form-control pull-right plan-users-input">
         </div>
       </div>
       <div class="modal-body">
@@ -210,7 +209,7 @@
         <form class="pay">
           <div class="row">
             <div class="form-group col-xs-12">
-              <input type="text" class="form-control default-input" placeholder="Card number">
+              <input type="text" class="form-control default-input card-number" placeholder="Card number">
             </div>
             <div class="form-group col-xs-6">
               <input type="text" class="form-control default-input" placeholder="MM / YY">
@@ -242,7 +241,7 @@
             <%= image_tag('close-modal.svg', class: 'close-modal') %>
           </span>
         </button>
-        <a href="#choose-plan-modal" class="go-back" data-dismiss="modal" data-toggle="modal">
+        <a href="#choose-plan-modal" class="go-back btn-modal-open" data-dismiss="modal" data-toggle="modal">
           <span class="icon icon-caret"></span>
           Back
         </a>
@@ -251,10 +250,19 @@
       </div>
       <div class="modal-body">
         <form class="pay">
-          <ul>
-            <li>You won't have unlimited sitemaps. You'll only be able to have three sitemaps at any one time</li>
-            <li>You won't be able to invite other team members</li>
-            <li>You can invite unlimited guests to view and comment on sitemaps</li>
+          <ul class="starter-plan-list">
+            <li>
+              <span class="icon-close"></span>
+              You won't have unlimited sitemaps. You'll only be able to have three sitemaps at any one time
+            </li>
+            <li>
+              <span class="icon-close"></span>
+              You won't be able to invite other team members
+            </li>
+            <li>
+              <span class="icon-save-circle green"></span>
+              You can invite unlimited guests to view and comment on sitemaps
+            </li>
           </ul>
           <div class="row">
             <div class="text-center col-xs-12">

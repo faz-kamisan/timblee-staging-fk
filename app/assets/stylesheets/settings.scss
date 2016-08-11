@@ -68,13 +68,13 @@
     border-bottom: solid 1px $primaryLabel;
     a {
       padding: 0;
-      color: $primaryBlack;
+      color: $primaryGrey;
       font-weight: 700;
       @extend .font-12;
       text-transform: uppercase;
       border: 0;
       @include border-radius(0);
-      padding-bottom: 12px;
+      padding-bottom: 10px;
       position: relative;
       &:hover {
         @extend .remove-default-styles;
@@ -85,9 +85,9 @@
       &:after {
         content: ' ';
         position: absolute;
-        left: -6%;
+        left: -8%;
         bottom: 0;
-        width: 112%;
+        width: 116%;
         height: 3px;
         background: $primaryPink;
         display: none;
@@ -171,6 +171,15 @@
     font-size: 10px;
     &.btn-single {
       margin-right: 0;
+      color: $primaryPink;
+      background: $primaryWhite;
+      border-color: $primaryPink;
+      @include animate(.35s);
+      &:hover {
+        color: $primaryWhite;
+        border-color: $primaryPink;
+        background: $primaryPink;
+      }
     }
   }
 
@@ -184,9 +193,10 @@
   min-width: 112px;
   border: 1px solid #a3acb5;
   color: #a3acb5;
-  line-height: 20px;
+  line-height: 19px;
   font-size: 10px;
   text-transform: uppercase;
+  @include animate(.25s);
   &:hover {
     background: #a3acb5;
     color: $primaryWhite;
@@ -577,4 +587,10 @@ ul.tagit li.tagit-choice-editable {
 .delete-account {
   border-top: 0!important;
   padding-top: 92px;
+}
+
+.btn-grey {
+  + .btn-grey {
+    margin-left: 12px;
+  }
 }
