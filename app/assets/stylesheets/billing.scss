@@ -142,7 +142,7 @@
   .modal-message {
     color: $primaryGrey;
   }
-  .card-number {
+  .cc-number {
     background: $primaryWhite;
   }
 }
@@ -250,4 +250,8 @@
       margin-bottom: 0!important;
     }
   }
+}
+
+.plan-users-input {
+  font-size: 24px;
 }
