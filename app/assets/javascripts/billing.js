@@ -7,12 +7,15 @@ var Billing = function(options) {
   this.btn_edit = options.btn_edit;
   this.btn_cancel = options.btn_cancel;
   this.cardErrors = options.cardErrors;
-  this.cardBrand = options.cardBrand;
+  this.cardCVV = options.cardCVV;
 };
 
 Billing.prototype.bindEvents = function() {
   this.addCardType();
   this.toggleCardInputFields();
+  this.cardCVV.on('focus', function() {
+    $(this).val('');
+  })
 };
 
 Billing.prototype.addCardType = function() {
@@ -36,7 +39,7 @@ Billing.prototype.toggleCardInputFields = function() {
     _this.cardDetailsOnSave.removeClass('hide');
     _this.cardFormDiv.addClass('hide');
     _this.cardErrors.html('');
-    _this.cardBrand.html('');
+    _this.brandSpan.html('');
   });
 };
 
@@ -50,7 +53,7 @@ $(function() {
     btn_edit : $('.btn-edit'),
     btn_cancel : $('.btn-cancel'),
     cardErrors : $('.cc-errors'),
-    cardBrand : $('.cc-brand')
+    cardCVV : $('.cc-cvv')
   }
   new Billing(options).bindEvents();
 });

@@ -6,6 +6,7 @@ var Progress = function(options) {
 Progress.prototype.init = function() {
   var _this = this;
   this.draggableSitemaps.draggable({
+    containment: "body",
     revert: function(droppedContainer) {
       return(!(droppedContainer && (droppedContainer[0] != $(this).closest('.drop_container')[0])))
     },
