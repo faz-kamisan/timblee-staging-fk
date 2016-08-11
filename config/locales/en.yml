@@ -44,6 +44,10 @@ en:
         create:
           success: You have successfully added a credit card.
           failure: Some error occurred
+      subscriptions:
+        create:
+          success: You are successfully subscribed to selected plan
+          plan_not_found: Plan not found
 
     admin:
       users:
@@ -67,6 +71,11 @@ en:
   activerecord:
       errors:
         models:
+          subscription:
+            attributes:
+              end_at:
+                on_or_after: 'End date should be after start date'
+                invalid_date: 'End date is invalid'
           user:
             attributes:
               email:

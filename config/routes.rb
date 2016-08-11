@@ -50,7 +50,14 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :businesses, only: [] do
+    member do
+      get 'send_destroy_request_to_superadmin'
+    end
+  end
+
   namespace :businesses do
     resource :card, only: [:create]
+    resource :subscription, only: [:create]
   end
 end

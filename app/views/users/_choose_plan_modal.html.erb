@@ -1,0 +1,44 @@
+<div class="modal fade" id="choose-plan-modal" tabindex="-1" role="dialog" aria-labelledby="choose-plan-modalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">
+            <%= image_tag('close-modal.svg', class: 'close-modal') %>
+          </span>
+        </button>
+        <h4 class="modal-title">Choose your plan</h4>
+        <p class="modal-message">Choose from one of two plans based on your needs. Pay only for the <br> users you need and nothing more, with simple, <br> per user per month pricing.</p>
+      </div>
+      <div class="modal-body">
+        <div class="clearfix">
+          <div class="pro-plan-benefits plan-benefits">
+            <h1>Pro</h1>
+            <h3>If you plan web projects for a living or <br> work in a team.</h3>
+            <ul>
+              <li>Unlimited users</li>
+              <li>Unlimited guests</li>
+              <li>Unlimited sitemaps</li>
+              <li>All features</li>
+            </ul>
+            <p>$19 for the first user. Then $12 per user.</p>
+            <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" class="btn btn-pink">Choose this plan</a>
+          </div>
+          <div class="starter-plan-benefits plan-benefits">
+            <h1>Starter</h1>
+            <h3>Business owners and those looking to plan the <br> occasional web project.</h3>
+            <ul>
+              <li>One user</li>
+              <li>Unlimited guests</li>
+              <li>Three sitemaps</li>
+              <li>All features</li>
+            </ul>
+            <p>Free</p>
+            <a href="#starter-plan-modal" data-dismiss="modal" data-toggle="modal" class="btn btn-grey">Choose this plan</a>
+          </div>
+        </div>
+        <p class="para-light-14 text-center">All amounts are in USD and reflect monthly charges. <br> We only offer monthly plans so you can change and cancel any time you <br> want. If you're in Australia, the amounts include 10% GST.</p>
+      </div>
+    </div>
+  </div>
+</div>

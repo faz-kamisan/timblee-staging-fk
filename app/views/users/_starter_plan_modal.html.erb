@@ -1,0 +1,37 @@
+<div class="modal fade" id="starter-plan-modal" tabindex="-1" role="dialog" aria-labelledby="starter-plan-modalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">
+            <%= image_tag('close-modal.svg', class: 'close-modal') %>
+          </span>
+        </button>
+        <a href="#choose-plan-modal" class="go-back" data-dismiss="modal" data-toggle="modal">
+          <span class="icon icon-caret"></span>
+          Back
+        </a>
+        <h4 class="modal-title">Starter plan</h4>
+        <p class="modal-message">You have chosen the Starter plan. It's perfect if you only plan the <br> occassional web project and don't work in a team. You can always upgrade later.</p>
+      </div>
+      <div class="modal-body">
+        <%= form_tag businesses_subscription_path, { method: :post, class: 'pay' } do %>
+          <ul>
+            <li>You won't have unlimited sitemaps. You'll only be able to have three sitemaps at any one time</li>
+            <li>You won't be able to invite other team members</li>
+            <li>You can invite unlimited guests to view and comment on sitemaps</li>
+          </ul>
+          <div class="row">
+            <div class="text-center col-xs-12">
+                <input type='hidden', name='stripe_plan_id', value='<%= STARTER_STRIPE_ID %>'>
+                <button type="submit" class="btn btn-success">Confirm Plan</button>
+            </div>
+          </div>
+        <% end %>
+        <div class="text-center">
+          <p class="para-light-14">Upgrade anytime to the Pro plan for just $19 per month</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
