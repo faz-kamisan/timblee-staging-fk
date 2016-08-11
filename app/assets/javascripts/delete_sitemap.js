@@ -1,10 +1,10 @@
-var DeleteSiteMap = function(options) {
+var DeleteSitemap = function(options) {
   this.deleteSitemapLink = options.deleteSitemapLink;
   this.sitemapModalLink = options.sitemapModalLink;
   this.sitemapNameSpan = options.sitemapNameSpan;
 };
 
-DeleteSiteMap.prototype.bindEvents = function() {
+DeleteSitemap.prototype.bindEvents = function() {
   var _this = this;
   this.sitemapModalLink.on('click', function() {
     delete_sitemap_url = $(this).data('url');
@@ -18,9 +18,9 @@ DeleteSiteMap.prototype.bindEvents = function() {
 $(function() {
   var options = {
     deleteSitemapLink : $('#delete-sitemap-link'),
-    sitemapModalLink: $('.delete-site-map-modal-link'),
+    sitemapModalLink: $('.delete-sitemap-modal-link'),
     sitemapNameSpan: $('.sitemap-name-to-delete .inner-name')
   }
-  var delete_sitemap = new DeleteSiteMap(options);
+  var delete_sitemap = new DeleteSitemap(options);
   delete_sitemap.bindEvents();
 });

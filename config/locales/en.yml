@@ -11,7 +11,7 @@ en:
       destroy:
         success: Folder destroyed successfully
         failure: Couldn't delete folder
-    site_maps:
+    sitemaps:
       not_found: Can't find site map
       create:
         success: Sitemap created successfully

@@ -18,7 +18,8 @@ Billing.prototype.bindEvents = function() {
 Billing.prototype.addCardType = function() {
   var _this = this;
   this.cardNumber.on('input', function() {
-    _this.brandSpan.html($.payment.cardType(this.value))
+    _this.brandSpan.removeClass('visa mastercard amex');
+    _this.brandSpan.addClass($.payment.cardType(this.value));
   })
 };
 

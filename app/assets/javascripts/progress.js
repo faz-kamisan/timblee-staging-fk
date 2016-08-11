@@ -1,11 +1,11 @@
 var Progress = function(options) {
   this.dropContainer = options.dropContainer;
-  this.draggableSiteMaps = options.draggableSiteMaps;
+  this.draggableSitemaps = options.draggableSitemaps;
 };
 
 Progress.prototype.init = function() {
   var _this = this;
-  this.draggableSiteMaps.draggable({
+  this.draggableSitemaps.draggable({
     revert: function(droppedContainer) {
       return(!(droppedContainer && (droppedContainer[0] != $(this).closest('.drop_container')[0])))
     },
@@ -18,27 +18,27 @@ Progress.prototype.init = function() {
     }
   });
   this.dropContainer.droppable({
-    accept: ".draggable_site_map",
+    accept: ".draggable_sitemap",
     drop: function(event, ui) {
       var $dropped = $(ui.draggable);
       var $droppedOn = $(this);
       var originalState = $dropped.closest('.drop_container').data('state')
       var targetState = $droppedOn.data('state')
       if($dropped.closest('.drop_container')[0] == $droppedOn[0]) {
-        // Take SiteMap back to original container
+        // Take Sitemap back to original container
       } else {
         // Update Sitemap State
         $.ajax({
           method: 'put',
-          url: '/site_maps/' + $dropped.data('id'),
-          data: { site_map: { state: $droppedOn.data('state') } },
+          url: '/sitemaps/' + $dropped.data('id'),
+          data: { sitemap: { state: $droppedOn.data('state') } },
           dataType: 'script',
           error: function() {
             $dropped.css({top: 0, left: 0});
           },
           success: function() {
             var sourceContainer = $dropped.closest('.drop_container')
-            _this.setSiteMapCount($droppedOn, sourceContainer);
+            _this.setSitemapCount($droppedOn, sourceContainer);
             var updatedAt = new Date,
                 day = ("0" + updatedAt.getDate()).slice(-2),
                 month = updatedAt.toLocaleString('en-us', { month: "short" }),
@@ -71,14 +71,14 @@ Progress.prototype.checkContainerIsEmpty = function(container) {
   }
 }
 
-Progress.prototype.setSiteMapCount = function(targetContainer, sourceContainer) {
-  this.calculateAndSetSiteMapCount(targetContainer, 'add');
-  this.calculateAndSetSiteMapCount(sourceContainer, 'subtract');
+Progress.prototype.setSitemapCount = function(targetContainer, sourceContainer) {
+  this.calculateAndSetSitemapCount(targetContainer, 'add');
+  this.calculateAndSetSitemapCount(sourceContainer, 'subtract');
 }
 
-Progress.prototype.calculateAndSetSiteMapCount = function(container, method) {
-  var siteMapCountContainer = container.parent('.drag-me').find('.site-map-count')
-  var count = siteMapCountContainer.data('count');
+Progress.prototype.calculateAndSetSitemapCount = function(container, method) {
+  var sitemapCountContainer = container.parent('.drag-me').find('.sitemap-count')
+  var count = sitemapCountContainer.data('count');
   if(method == 'add') {
     var newCount = ++count
   } else if(method == 'subtract') {
@@ -86,16 +86,19 @@ Progress.prototype.calculateAndSetSiteMapCount = function(container, method) {
   } else {
     return
   }
-  siteMapCountContainer.data('count', newCount);
-  siteMapCountContainer.attr('data-count', newCount);
-  siteMapCountContainer.html(newCount + ' Sitemaps');
+  sitemapCountContainer.data('count', newCount);
+  sitemapCountContainer.attr('data-count', newCount);
+  if(newCount == 1) {
+    sitemapCountContainer.html(newCount + ' Sitemap');
+  } else {
+    sitemapCountContainer.html(newCount + ' Sitemaps');
+  }
 }
-
 
 $(function() {
   var options = {
     dropContainer : $('.drop_container'),
-    draggableSiteMaps : $('.draggable_site_map')
+    draggableSitemaps : $('.draggable_sitemap')
   }
   var progress = new Progress(options);
   progress.init();

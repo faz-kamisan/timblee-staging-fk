@@ -1,12 +1,12 @@
-class SiteMap < ActiveRecord::Base
+class Sitemap < ActiveRecord::Base
 
   LENGTH_TO_TRUNCATE = 40
 
   belongs_to :folder
   belongs_to :business
   has_many :pages, dependent: :destroy
-  has_many :site_map_invites, dependent: :destroy
-  has_many :invited_users, through: :site_map_invites, source: :user
+  has_many :sitemap_invites, dependent: :destroy
+  has_many :invited_users, through: :sitemap_invites, source: :user
 
   validates :business, :name, presence: true
   validates :state, inclusion: { in: ['on_hold', 'in_progress', 'in_review', 'approved'] }

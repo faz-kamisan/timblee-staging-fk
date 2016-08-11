@@ -1,6 +1,6 @@
 FactoryGirl.define do
-  factory :site_map do
-    name "test site_map"
+  factory :sitemap do
+    name "test sitemap"
     association :business
   end
 end

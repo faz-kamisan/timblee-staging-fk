@@ -12,16 +12,17 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w(
   folders.js
   moreOptions.js
-  site_maps.js
+  sitemaps.js
   show_modal.js
   show_sucessful_reset_password_sent_modal.js
   tagIt.js
   invitations.js
   delete_user.js
-  delete_site_map.js
+  delete_sitemap.js
   apply-twemoji.js
   payments.js
   billing.js
   progress.js
   plan.js
+  modal_fix.js
 )

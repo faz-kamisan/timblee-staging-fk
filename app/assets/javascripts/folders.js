@@ -1,6 +1,6 @@
 var Folders = function(options) {
   this.folderList = options.folderList;
-  this.allSiteMapsFolder = options.allSiteMapsFolder;
+  this.allSitemapsFolder = options.allSitemapsFolder;
   this.classToToggle = options.classToToggle;
   this.deletionModal = options.deletionModal;
 };
@@ -9,7 +9,7 @@ Folders.prototype.bindEvents = function() {
   var _this = this;
   this.folderList.on('click', '.folder-info-block', function() {
     var $this = $(this);
-    _this.filterSiteMaps($this.parent('.folder-info').data('id'));
+    _this.filterSitemaps($this.parent('.folder-info').data('id'));
     _this.setActiveFolder($this);
     $('.folder-heading').text($this.data('name'));
   });
@@ -38,7 +38,7 @@ Folders.prototype.bindEvents = function() {
   });
 
   this.folderList.on('mouseenter', '.folder-info', function() {
-    if(!$(this).hasClass('all-site-map-folder')) {
+    if(!$(this).hasClass('all-sitemap-folder')) {
       $(this).find('.delete-folder').addClass('open');
     }
   });
@@ -77,7 +77,7 @@ Folders.prototype.configureDeletionModal = function(obj) {
   this.deletionModal.data('id', parentWithData.data('id'));
   this.deletionModal.find('span.delete-modal-folder-name').html(parentWithData.data('name'));
   this.deletionModal.find('div.folder-name-to-delete .inner-name').html(parentWithData.data('name'));
-  this.deletionModal.find('span.delete-modal-folder-sitemap-count').html(parentWithData.data('site-map-count'));
+  this.deletionModal.find('span.delete-modal-folder-sitemap-count').html(parentWithData.data('sitemap-count'));
 }
 
 Folders.prototype.resetDeletionModal = function() {
@@ -87,17 +87,17 @@ Folders.prototype.resetDeletionModal = function() {
   this.deletionModal.find('span.delete-modal-folder-sitemap-count').html();
 }
 
-Folders.prototype.filterSiteMaps = function(folderId) {
-  $('.site-map-container').closest('.site-map-outer-wrapper').removeClass('hidden');
+Folders.prototype.filterSitemaps = function(folderId) {
+  $('.sitemap-container').closest('.sitemap-outer-wrapper').removeClass('hidden');
   if(folderId) {
-    $('.site-map-container').filter('[data-folder-id!=' + folderId + ']').not('.new-site-map').closest('.site-map-outer-wrapper').addClass('hidden');
+    $('.sitemap-container').filter('[data-folder-id!=' + folderId + ']').not('.new-sitemap').closest('.sitemap-outer-wrapper').addClass('hidden');
   }
 }
 
 $(function() {
   var options = {
     folderList : $('.folders-list'),
-    allSiteMapsFolder : $('.all-site-map-folder'),
+    allSitemapsFolder : $('.all-sitemap-folder'),
     deletionModal: $('#delete-folder-modal'),
     classToToggle : 'open'
   },

@@ -16,3 +16,12 @@
   -moz-transition: $duration;
   -webkit-transition: $duration;
 }
+
+@mixin alignCenter($left, $top) {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: $left;
+  margin-top: $top;
+  z-index: 1;
+}

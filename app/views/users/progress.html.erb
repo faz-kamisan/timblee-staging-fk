@@ -1,4 +1,4 @@
-<div class='site-map-progress'>
+<div class='sitemap-progress'>
   <h1 class="page-heading">
     Progress
   </h1>
@@ -11,18 +11,18 @@
     <div class="drag-me" id="on-hold">
       <div class="drag-header text-center">
         <h1>On Hold</h1>
-        <p class="site-map-count" data-count=<%= @site_maps_by_state[:on_hold].length %>><%= @site_maps_by_state[:on_hold].length %> Sitemaps</p>
+        <p class="sitemap-count" data-count=<%= @sitemaps_by_state[:on_hold].length %>><%= pluralize(@sitemaps_by_state[:on_hold].length, 'Sitemap') %></p>
       </div>
       <div id="on-hold-holder" class="drag-div drop_container" data-state='on_hold'>
-        <div class='empty-sitemap-holder <%= 'hidden' if @site_maps_by_state[:on_hold].present? %>'>
-          Empty
+        <div class='empty-sitemap-holder <%= 'hidden' if @sitemaps_by_state[:on_hold].present? %>'>
+          <%= image_tag('empty-state-container.svg', class: 'empty-state') %>
         </div>
-        <% @site_maps_by_state[:on_hold].each do |site_map| %>
+        <% @sitemaps_by_state[:on_hold].each do |sitemap| %>
           <div class='drag-wrapper'>
-            <div class="sitemap-card-small draggable_site_map" data-id='<%= site_map.id %>'>
+            <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
               <span class="state on_hold"></span>
-              <span class="card-name"><%= site_map.name.truncate(SiteMap::LENGTH_TO_TRUNCATE) %></span>
-              <span class="last-updated">Last updated <%= pretty_time(site_map.updated_at) %></span>
+              <span class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></span>
+              <span class="last-updated">Last updated <%= pretty_time(sitemap.updated_at) %></span>
             </div>
           </div>
         <% end %>
@@ -34,18 +34,18 @@
     <div class="drag-me" id="in-progress">
       <div class="drag-header text-center">
         <h1>In Progress</h1>
-        <p class="site-map-count" data-count=<%= @site_maps_by_state[:in_progress].length %>><%= @site_maps_by_state[:in_progress].length %> Sitemaps</p>
+        <p class="sitemap-count" data-count=<%= @sitemaps_by_state[:in_progress].length %>><%= pluralize(@sitemaps_by_state[:in_progress].length, 'Sitemap') %></p>
       </div>
       <div id="in-progress-holder" class="drag-div drop_container" data-state='in_progress'>
-        <div class='empty-sitemap-holder <%= 'hidden' if @site_maps_by_state[:in_progress].present? %>'>
-          Empty
+        <div class='empty-sitemap-holder <%= 'hidden' if @sitemaps_by_state[:in_progress].present? %>'>
+          <%= image_tag('empty-state-container.svg', class: 'empty-state') %>
         </div>
-        <% @site_maps_by_state[:in_progress].each do |site_map| %>
+        <% @sitemaps_by_state[:in_progress].each do |sitemap| %>
           <div class='drag-wrapper'>
-            <div class="sitemap-card-small draggable_site_map" data-id='<%= site_map.id %>'>
+            <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
               <span class="state in_progress"></span>
-              <span class="card-name"><%= site_map.name.truncate(SiteMap::LENGTH_TO_TRUNCATE) %></span>
-              <span class="last-updated">Last updated <%= pretty_time(site_map.updated_at) %></span>
+              <span class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></span>
+              <span class="last-updated">Last updated <%= pretty_time(sitemap.updated_at) %></span>
             </div>
           </div>
         <% end %>
@@ -57,18 +57,18 @@
     <div class="drag-me" id="review">
       <div class="drag-header text-center">
         <h1>Review</h1>
-        <p class="site-map-count" data-count=<%= @site_maps_by_state[:in_review].length %>><%= @site_maps_by_state[:in_review].length %> Sitemaps</p>
+        <p class="sitemap-count" data-count=<%= @sitemaps_by_state[:in_review].length %>><%= pluralize(@sitemaps_by_state[:in_review].length, 'Sitemap') %></p>
       </div>
       <div id="review-holder" class="drag-div drop_container" data-state='in_review'>
-        <div class='empty-sitemap-holder <%= 'hidden' if @site_maps_by_state[:in_review].present? %>'>
-          Empty
+        <div class='empty-sitemap-holder <%= 'hidden' if @sitemaps_by_state[:in_review].present? %>'>
+          <%= image_tag('empty-state-container.svg', class: 'empty-state') %>
         </div>
-        <% @site_maps_by_state[:in_review].each do |site_map| %>
+        <% @sitemaps_by_state[:in_review].each do |sitemap| %>
           <div class='drag-wrapper'>
-            <div class="sitemap-card-small draggable_site_map" data-id='<%= site_map.id %>'>
+            <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
               <span class="state in_review"></span>
-              <span class="card-name"><%= site_map.name.truncate(SiteMap::LENGTH_TO_TRUNCATE) %></span>
-              <span class="last-updated">Last updated <%= pretty_time(site_map.updated_at) %></span>
+              <span class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></span>
+              <span class="last-updated">Last updated <%= pretty_time(sitemap.updated_at) %></span>
             </div>
           </div>
         <% end %>
@@ -80,18 +80,18 @@
     <div class="drag-me" id="approved">
       <div class="drag-header text-center">
         <h1>Approved</h1>
-        <p class="site-map-count" data-count=<%= @site_maps_by_state[:approved].length %>><%= @site_maps_by_state[:approved].length %> Sitemaps</p>
+        <p class="sitemap-count" data-count=<%= @sitemaps_by_state[:approved].length %>><%= pluralize(@sitemaps_by_state[:approved].length, 'Sitemap') %></p>
       </div>
       <div id="approved-holder" class="drag-div drop_container" data-state='approved'>
-        <div class='empty-sitemap-holder <%= 'hidden' if @site_maps_by_state[:approved].present? %>'>
-          Empty
+        <div class='empty-sitemap-holder <%= 'hidden' if @sitemaps_by_state[:approved].present? %>'>
+          <%= image_tag('empty-state-container.svg', class: 'empty-state') %>
         </div>
-        <% @site_maps_by_state[:approved].each do |site_map| %>
+        <% @sitemaps_by_state[:approved].each do |sitemap| %>
           <div class='drag-wrapper'>
-            <div class="sitemap-card-small draggable_site_map" data-id='<%= site_map.id %>'>
+            <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
               <span class="state approved"></span>
-              <span class="card-name"><%= site_map.name.truncate(SiteMap::LENGTH_TO_TRUNCATE) %></span>
-              <span class="last-updated">Last updated <%= pretty_time(site_map.updated_at) %></span>
+              <span class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></span>
+              <span class="last-updated">Last updated <%= pretty_time(sitemap.updated_at) %></span>
             </div>
           </div>
         <% end %>

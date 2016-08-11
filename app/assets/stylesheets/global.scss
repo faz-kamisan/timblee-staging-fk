@@ -125,11 +125,7 @@ a {
 }
 
 input[type="password"] {
-  color: $password;
   letter-spacing: 2.5px;
-  &:focus {
-    color: $password;
-  }
 }
 
 input:-webkit-autofill {
@@ -150,7 +146,8 @@ input:-webkit-autofill {
   color: $primaryPink;
   text-transform: uppercase;
   font-size: 14px;
-  line-height: 20px;
+  line-height: 19px;
+  @include animate(.25s);
   &:hover {
     background: $primaryPink;
     color: $primaryWhite;

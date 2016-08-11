@@ -4,6 +4,7 @@
 }
 
 .user-dashboard {
+  padding-top: 100px;
   .folders {
     width: 320px;
     margin-right: 90px;
@@ -13,14 +14,14 @@
     .row {
       margin: 0 -10px;
     }
-    .site-map-container {
+    .sitemap-container {
       &.ui-draggable-dragging {
         transform: rotate(-2deg);
         z-index: 2;
       }
     }
   }
-  .site-map-outer-wrapper {
+  .sitemap-outer-wrapper {
     margin-bottom: 30px;
   }
   .site-card {
@@ -33,6 +34,9 @@
     position: relative;
     overflow: hidden;
     cursor: move;
+    &.new-sitemap-link {
+      cursor: auto;
+    }
   }
 
   h1 {
@@ -277,7 +281,7 @@
   }
 }
 
-.new-site-map-link {
+.new-sitemap-link {
   text-align: center;
   color: $primaryLabel;
   font-size: 14px;
@@ -311,7 +315,7 @@
   }
 }
 
-.site_map_wrapper {
+.sitemap_wrapper {
   border: 1px dashed $transparent;
   &.dragging {
     @include border-radius(6px);

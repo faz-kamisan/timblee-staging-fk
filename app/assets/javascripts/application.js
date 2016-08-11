@@ -22,3 +22,4 @@
 //= require settings_tabs
 //= require settings
 //= require constants
+//= require modal_fix

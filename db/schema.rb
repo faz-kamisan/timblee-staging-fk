@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160810104504) do
+ActiveRecord::Schema.define(version: 20160811083131) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20160810104504) do
 
   create_table "guests", force: :cascade do |t|
     t.string   "full_name"
-    t.string   "email"
+    t.string   "logo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20160810104504) do
 
   create_table "pages", force: :cascade do |t|
     t.string   "name"
-    t.integer  "site_map_id"
+    t.integer  "sitemap_id"
     t.integer  "page_type_id"
     t.integer  "parent_id"
     t.datetime "created_at",   null: false
@@ -63,14 +63,14 @@ ActiveRecord::Schema.define(version: 20160810104504) do
     t.datetime "updated_at",     null: false
   end
 
-  create_table "site_map_invites", force: :cascade do |t|
+  create_table "sitemap_invites", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "site_map_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "sitemap_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "site_maps", force: :cascade do |t|
+  create_table "sitemaps", force: :cascade do |t|
     t.string   "name"
     t.integer  "folder_id"
     t.integer  "business_id"
