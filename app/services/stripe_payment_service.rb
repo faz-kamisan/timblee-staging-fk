@@ -38,7 +38,7 @@ class StripePaymentService
         quantity: @current_business.subscriptions.last.quantity
     }
 
-    subscription_hash.merge!({trial_end: @current_business.trial_end_date.to_time.to_i}) if @current_business.in_trial_period?
+    subscription_hash.merge!({trial_end: @current_business.trial_end_at.to_time.to_i}) if @current_business.in_trial_period?
 
     Stripe::Subscription.create(subscription_hash)
 

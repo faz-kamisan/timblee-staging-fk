@@ -5,7 +5,7 @@ class Business < ActiveRecord::Base
   has_many :folders, dependent: :destroy
   has_many :sitemaps, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
-  has_one :active_subscription, ->{ where('subscriptions.end_date >= :todays_date and subscriptions.start_date <= :todays_date', { todays_date: Date.current}) }, class_name: :Subscription, dependent: :destroy
+  has_one :active_subscription, ->{ where('subscriptions.end_at >= :todays_date and subscriptions.start_at <= :todays_date', { todays_date: Date.current}) }, class_name: :Subscription, dependent: :destroy
   has_one :plan, through: :active_subscription
   delegate :no_of_users, to: :active_subscription
 
@@ -13,12 +13,12 @@ class Business < ActiveRecord::Base
     users.where.not(invitation_token: nil)
   end
 
-  def trial_end_date
+  def trial_end_at
     created_at.to_date + trial_days.days
   end
 
   def in_trial_period?
-    trial_end_date > Date.current
+    trial_end_at > Date.current
   end
 
   def is_pro_plan?

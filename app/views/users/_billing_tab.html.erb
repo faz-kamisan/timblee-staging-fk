@@ -7,7 +7,7 @@
         <div class="row">
           <div class="col-xs-9">
             <label>Plan</label>
-            <p class="font-12-light">You're on the free trial till  <%= current_business.trial_end_date.to_s(:long) %> with no restrictions. To keep using Timblee after that, we'll ask you to choose a plan and add a credit card. Our pricing is simple – $19 per month for the first user and $12 for every subsequent user. If you’ll only need to plan websites ocassionally and work alone, there's also a free plan.</p>
+            <p class="font-12-light">You're on the free trial till  <%= current_business.trial_end_at.to_s(:long) %> with no restrictions. To keep using Timblee after that, we'll ask you to choose a plan and add a credit card. Our pricing is simple – $19 per month for the first user and $12 for every subsequent user. If you’ll only need to plan websites ocassionally and work alone, there's also a free plan.</p>
           </div>
           <div class="col-xs-3 text-right edit-info">
             <div class="edit">

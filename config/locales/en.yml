@@ -73,7 +73,7 @@ en:
         models:
           subscription:
             attributes:
-              end_date:
+              end_at:
                 on_or_after: 'End date should be after start date'
                 invalid_date: 'End date is invalid'
           user:
