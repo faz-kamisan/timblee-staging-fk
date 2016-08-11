@@ -1,12 +1,12 @@
-class SiteMapsController < ApplicationController
-  before_filter :fetch_site_map, only: [:destroy, :show, :update]
+class SitemapsController < ApplicationController
+  before_filter :fetch_sitemap, only: [:destroy, :show, :update]
 
   def create
-    @site_map = current_business.site_maps.build(site_map_params)
-    @site_map.business = current_business
-    if @site_map.save
+    @sitemap = current_business.sitemaps.build(sitemap_params)
+    @sitemap.business = current_business
+    if @sitemap.save
       flash[:notice] = t('.success', scope: :flash)
-        redirect_to site_map_path(@site_map)
+        redirect_to sitemap_path(@sitemap)
     else
       flash[:error] = t('.failure', scope: :flash)
       redirect_to home_dashboard_path
@@ -17,7 +17,7 @@ class SiteMapsController < ApplicationController
   end
 
   def destroy
-    if @site_map.destroy
+    if @sitemap.destroy
       flash[:notice] = t('.success', scope: :flash)
     else
       flash[:error] = t('.failure', scope: :flash)
@@ -26,7 +26,7 @@ class SiteMapsController < ApplicationController
   end
 
   def update
-    if @site_map.update(site_map_params)
+    if @sitemap.update(sitemap_params)
       flash.now[:notice] = t('.success', scope: :flash)
       render 'shared/show_flash'
     else
@@ -36,14 +36,14 @@ class SiteMapsController < ApplicationController
   end
 
   private
-    def fetch_site_map
-      unless @site_map = current_business.site_maps.find_by(id: params[:id])
-        flash.now[:alert] = 'SiteMap Not Found'
+    def fetch_sitemap
+      unless @sitemap = current_business.sitemaps.find_by(id: params[:id])
+        flash.now[:alert] = 'Sitemap Not Found'
         render 'shared/show_flash'
       end
     end
 
-    def site_map_params
-      params.require(:site_map).permit(:name, :folder_id, :state)
+    def sitemap_params
+      params.require(:sitemap).permit(:name, :folder_id, :state)
     end
 end

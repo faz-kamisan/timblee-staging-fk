@@ -2,12 +2,12 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   describe 'Associations' do
     it { is_expected.to belong_to(:business) }
-    it { is_expected.to have_many(:site_map_invites).dependent(:destroy) }
-    it { is_expected.to have_many(:shared_site_maps).through(:site_map_invites).source(:site_map) }
+    it { is_expected.to have_many(:sitemap_invites).dependent(:destroy) }
+    it { is_expected.to have_many(:shared_sitemaps).through(:sitemap_invites).source(:sitemap) }
   end
 
   describe 'Validations' do
-    it { is_expected.to validate_presence_of(:full_name) }
+    it { is_expected.to validate_presence_of(:full_name).with_message('Hmm... no name? Make something up :)') }
   end
 
   describe 'Callbacks' do
@@ -20,12 +20,12 @@ RSpec.describe User, type: :model do
 
   describe 'Instance Methods' do
     let!(:user) { FactoryGirl.create :user }
-    let!(:site_map_1) { FactoryGirl.create :site_map, name: 'Site Map 1', business: user.business }
-    let!(:site_map_2) { FactoryGirl.create :site_map, name: 'Site Map 2', business: user.business }
-    let!(:site_map_3) { FactoryGirl.create :site_map, name: 'Site Map 3', business: user.business }
+    let!(:sitemap_1) { FactoryGirl.create :sitemap, name: 'Site Map 1', business: user.business }
+    let!(:sitemap_2) { FactoryGirl.create :sitemap, name: 'Site Map 2', business: user.business }
+    let!(:sitemap_3) { FactoryGirl.create :sitemap, name: 'Site Map 3', business: user.business }
 
-    describe '#all_site_maps' do
-      it { expect(user.all_site_maps).to eq [site_map_1, site_map_2, site_map_3] }
+    describe '#all_sitemaps' do
+      it { expect(user.all_sitemaps).to eq [sitemap_1, sitemap_2, sitemap_3] }
     end
 
     describe '#add_business' do

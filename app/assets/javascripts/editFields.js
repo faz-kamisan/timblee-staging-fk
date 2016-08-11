@@ -72,7 +72,6 @@ $(function() {
     editableInput : $('.editable-input'),
     fadeTime : 500
   },
-
   editFields = new EditFields(options);
   editFields.bindEvents();
 });
