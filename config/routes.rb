@@ -39,8 +39,14 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :businesses, only: :destroy
+
   namespace :businesses do
     resource :card, only: [:create]
-    resource :subscription, only: [:create]
+    resource :subscription, only: [:create] do
+      member do
+        post 'activate_starter_plan'
+      end
+    end
   end
 end

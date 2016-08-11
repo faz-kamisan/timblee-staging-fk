@@ -1,7 +1,7 @@
 class Businesses::CardsController < ApplicationController
 
   def create
-    stripe_payment_service = StripePaymentService.new(current_business).add_card(params[:stripeToken])
+    StripePaymentService.new(current_business).add_card(params[:stripeToken])
 
     redirect_to billing_settings_users_path, notice: t('.success', scope: :flash)
 

@@ -15,7 +15,7 @@
         <p class="modal-message">You have chosen the Starter plan. It's perfect if you only plan the <br> occassional web project and don't work in a team. You can always upgrade later.</p>
       </div>
       <div class="modal-body">
-        <form class="pay">
+        <%= form_tag activate_starter_plan_businesses_subscription_path, { method: :post, class: 'pay' } do %>
           <ul>
             <li>You won't have unlimited sitemaps. You'll only be able to have three sitemaps at any one time</li>
             <li>You won't be able to invite other team members</li>
@@ -23,10 +23,11 @@
           </ul>
           <div class="row">
             <div class="text-center col-xs-12">
-              <button type="submit" class="btn btn-success">Confirm Plan</button>
+                <input type='hidden', name='stripe_plan_id', value='<%= STARTER_STRIPE_ID %>'>
+                <button type="submit" class="btn btn-success">Confirm Plan</button>
             </div>
           </div>
-        </form>
+        <% end %>
         <div class="text-center">
           <p class="para-light-14">Upgrade anytime to the Pro plan for just $19 per month</p>
         </div>

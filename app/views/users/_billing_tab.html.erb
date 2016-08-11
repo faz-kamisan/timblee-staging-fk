@@ -24,7 +24,7 @@
         </div>
         <div class="col-xs-3 text-right edit-info">
           <div class="edit">
-            <a href="#starter-plan-modal" data-dismiss="modal" data-toggle="modal" class="btn btn-pink btn-single">Edit Plan</a>
+            <a href="#starter-plan-modal-" data-dismiss="modal" data-toggle="modal" class="btn btn-pink btn-single">Edit Plan</a>
           </div>
         </div>
       </div>
@@ -38,7 +38,7 @@
         </div>
         <div class="col-xs-3 text-right edit-info">
           <div class="edit">
-            <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" class="btn btn-pink btn-single">Edit Plan</a>
+            <a href="#pro-plan-modal-" data-toggle="modal" data-dismiss="modal" class="btn btn-pink btn-single">Edit Plan</a>
           </div>
         </div>
       </div>
@@ -130,7 +130,7 @@
         </div>
         <div class="col-xs-3 text-right edit-info">
           <div class="edit">
-            <a href="javascript:void(0);" class="btn btn-grey">Request Deletion</a>
+            <%= link_to "Request Deletion", business_path(current_business), method: :delete, class: 'btn btn-grey' %>
           </div>
         </div>
       </div>

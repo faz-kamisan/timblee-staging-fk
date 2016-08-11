@@ -44,6 +44,11 @@ en:
         create:
           success: You have successfully added a credit card.
           failure: Some error occurred
+      subscriptions:
+        create:
+          success: You are successfully subscribed to pro plan
+        activate_starter_plan:
+          success: You are successfully subscribed to starter plan
 
     admin:
       users:

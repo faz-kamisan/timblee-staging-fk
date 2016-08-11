@@ -10,7 +10,7 @@ class StripePaymentService
     if @current_business.stripe_customer_id
       create_card(stripe_token)
     else
-      create_customer(stripe_token)
+      create_customer_with_card(stripe_token)
     end
   end
 
@@ -23,12 +23,30 @@ class StripePaymentService
     customer.save
   end
 
-  def create_customer(stripe_token)
+  def create_customer_with_card(stripe_token)
     @customer = Stripe::Customer.create(
       email:  @current_business.owner.email,
       source: stripe_token
     )
     @current_business.update_column(:stripe_customer_id, customer.id)
+  end
+
+  def create_subscription
+    if @current_business.in_trial_period?
+      Stripe::Subscription.create(
+        customer: @current_business.stripe_customer_id,
+        plan:     @current_business.subscriptions.last.plan.stripe_plan_id,
+        quantity: @current_business.subscriptions.last.quantity,
+        trial_end: @current_business.trial_end_date.to_time.to_i
+      )
+    else
+      Stripe::Subscription.create(
+        customer: @current_business.stripe_customer_id,
+        plan:     @current_business.subscriptions.last.plan.stripe_plan_id,
+        quantity: @current_business.subscriptions.last.quantity
+      )
+    end
+    @current_business.save!
   end
 
 end
