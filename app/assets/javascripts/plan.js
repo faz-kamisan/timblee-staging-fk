@@ -10,7 +10,7 @@ Plan.prototype.bindEvents = function() {
     if(this.value < 1) {
       this.value = 1;
     }
-    var monthlyCharge = '$' + (CHARGE_FOR_FIRST_USER + (CHARGE_FOR_REST_USERS * (parseInt(this.value)- 1)))
+    var monthlyCharge = '$' + (CHARGE_FOR_OWNER + (CHARGE_FOR_OTHER_USERS * (parseInt(this.value)- 1)))
     _this.plansCostSpan.html(monthlyCharge);
   })
 };

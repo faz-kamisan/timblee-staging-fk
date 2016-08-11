@@ -32,20 +32,16 @@ class StripePaymentService
   end
 
   def create_subscription
-    if @current_business.in_trial_period?
-      Stripe::Subscription.create(
-        customer: @current_business.stripe_customer_id,
-        plan:     @current_business.subscriptions.last.plan.stripe_plan_id,
-        quantity: @current_business.subscriptions.last.quantity,
-        trial_end: @current_business.trial_end_date.to_time.to_i
-      )
-    else
-      Stripe::Subscription.create(
+    subscription_hash = {
         customer: @current_business.stripe_customer_id,
         plan:     @current_business.subscriptions.last.plan.stripe_plan_id,
         quantity: @current_business.subscriptions.last.quantity
-      )
-    end
+    }
+
+    subscription_hash.merge!({trial_end: @current_business.trial_end_date.to_time.to_i}) if @current_business.in_trial_period?
+
+    Stripe::Subscription.create(subscription_hash)
+
     @current_business.save!
   end
 

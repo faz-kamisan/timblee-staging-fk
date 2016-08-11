@@ -52,7 +52,7 @@
           <div class="col-xs-6">
             <label>Credit Card</label>
             <p class="font-12-light cc-detail-save">We're currently charging your <%= @card.brand %> ending in [<%= @card.last4 %>]. We accept MasterCard, Visa and American Express.</p>
-            <p class="font-12-light cc-detail-edit hide">We're currently charging your <%= @card.brand %> ending in [<%= @card.last4 %>]. We'll never charge it without your permission. We accept MasterCard, Visa and American Express -with no additional fees or charges.</p>
+            <p class="font-12-light cc-detail-edit hide">We're currently charging your <%= @card.brand %> ending in [<%= @card.last4 %>]. We'll never charge it without your permission. We accept MasterCard, Visa and American Express – with no additional fees or charges.</p>
           </div>
           <div class="col-xs-6 text-right edit-info">
             <div class="edit">
@@ -129,7 +129,7 @@
         </div>
         <div class="col-xs-3 text-right edit-info">
           <div class="edit">
-            <%= link_to "Request Deletion", business_path(current_business), method: :delete, class: 'btn btn-grey' %>
+            <%= link_to "Request Deletion", send_destroy_request_to_superadmin_business_path(current_business), data: { confirm: "Are you sure you want to delete account" }, class: 'btn btn-grey' %>
           </div>
         </div>
       </div>

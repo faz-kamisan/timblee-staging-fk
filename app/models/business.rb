@@ -31,13 +31,13 @@ class Business < ActiveRecord::Base
 
   def monthly_charge
     if is_pro_plan?
-      CHARGE_FOR_FIRST_USER + (CHARGE_FOR_REST_USERS * (no_of_users - 1))
+      CHARGE_FOR_OWNER + (CHARGE_FOR_OTHER_USERS * (no_of_users - 1))
     else
       0
     end
   end
 
   def self.monthly_charge(no_of_users)
-    CHARGE_FOR_FIRST_USER + (CHARGE_FOR_REST_USERS * (no_of_users - 1))
+    CHARGE_FOR_OWNER + (CHARGE_FOR_OTHER_USERS * (no_of_users - 1))
   end
 end

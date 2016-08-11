@@ -15,7 +15,7 @@
         <p class="modal-message">You have chosen the Starter plan. It's perfect if you only plan the <br> occassional web project and don't work in a team. You can always upgrade later.</p>
       </div>
       <div class="modal-body">
-        <%= form_tag activate_starter_plan_businesses_subscription_path, { method: :post, class: 'pay' } do %>
+        <%= form_tag businesses_subscription_path, { method: :post, class: 'pay' } do %>
           <ul>
             <li>You won't have unlimited sitemaps. You'll only be able to have three sitemaps at any one time</li>
             <li>You won't be able to invite other team members</li>
