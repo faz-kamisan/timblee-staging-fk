@@ -3,7 +3,7 @@ class Business < ActiveRecord::Base
 
   has_many :users, dependent: :destroy
   has_many :folders, dependent: :destroy
-  has_many :site_maps, dependent: :destroy
+  has_many :sitemaps, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
   has_one :active_subscription, ->{ where('subscriptions.end_date >= :todays_date and subscriptions.start_date <= :todays_date', { todays_date: Date.today }) }, class_name: :Subscription, dependent: :destroy
   has_one :plan, through: :active_subscription

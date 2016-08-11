@@ -2,8 +2,8 @@ class HomeController < ApplicationController
 
   def dashboard
     if current_business
-      @folders = current_business.folders.order_by_lower_name.includes(:site_maps)
-      @site_maps = current_user.all_site_maps
+      @folders = current_business.folders.order_by_lower_name.includes(:sitemaps)
+      @sitemaps = current_user.all_sitemaps
     end
   end
 

@@ -2,13 +2,24 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   mount Sidekiq::Web, at: '/sidekiq'
 
+  devise_scope :user do
+    get "users/sign-up" => "devise/registrations#new", as: "new_user_registration"
+  end
+
   devise_for :users, controllers: {
-      sessions: 'users/sessions',
-      registrations: 'users/registrations',
-      passwords: 'users/passwords',
-      confirmations: 'users/confirmations',
-      invitations: 'users/invitations'
-    }
+    sessions: 'users/sessions',
+    registrations: 'users/registrations',
+    passwords: 'users/passwords',
+    confirmations: 'users/confirmations',
+    invitations: 'users/invitations'
+  }, skip: [:sessions]
+
+  as :user do
+    get 'users/sign-in' => 'devise/sessions#new', :as => :new_user_session
+    post 'signin' => 'devise/sessions#create', :as => :user_session
+    match 'signout' => 'devise/sessions#destroy', :as => :destroy_user_session,
+      :via => Devise.mappings[:user].sign_out_via
+  end
 
   resources :users do
     collection do
@@ -19,7 +30,7 @@ Rails.application.routes.draw do
   end
 
   resources :folders
-  resources :site_maps
+  resources :sitemaps
 
   get  'home/dashboard'
   get  'home/settings'

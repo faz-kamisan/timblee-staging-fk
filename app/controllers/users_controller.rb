@@ -10,11 +10,11 @@ class UsersController < ApplicationController
   end
 
   def progress
-    @site_maps = current_business.site_maps.order(updated_at: :desc)
-    @site_maps_by_state = { on_hold: @site_maps.select { |site_map| site_map.state == 'on_hold' },
-                            in_progress: @site_maps.select { |site_map| site_map.state == 'in_progress' },
-                            in_review: @site_maps.select { |site_map| site_map.state == 'in_review' },
-                            approved: @site_maps.select { |site_map| site_map.state == 'approved' }
+    @sitemaps = current_business.sitemaps.order(updated_at: :desc)
+    @sitemaps_by_state = { on_hold: @sitemaps.select { |sitemap| sitemap.state == 'on_hold' },
+                            in_progress: @sitemaps.select { |sitemap| sitemap.state == 'in_progress' },
+                            in_review: @sitemaps.select { |sitemap| sitemap.state == 'in_review' },
+                            approved: @sitemaps.select { |sitemap| sitemap.state == 'approved' }
                           }
   end
 

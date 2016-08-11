@@ -5,8 +5,8 @@ class User < ActiveRecord::Base
 
   belongs_to :business, autosave: true
 
-  has_many :site_map_invites, dependent: :destroy
-  has_many :shared_site_maps, through: :site_map_invites, source: :site_map
+  has_many :sitemap_invites, dependent: :destroy
+  has_many :shared_sitemaps, through: :sitemap_invites, source: :sitemap
   # mount_uploader :avatar, AvatarUploader
 
   before_create :set_is_admin, unless: :business_id
@@ -37,8 +37,8 @@ class User < ActiveRecord::Base
   validates :password, length: { within: password_length, message: 'Your password needs to be at least 6 characters.' }, allow_blank: true
   # validate :minimum_image_size
 
-  def all_site_maps
-    (business.site_maps + shared_site_maps).sort_by {|site_map| site_map.name.capitalize }
+  def all_sitemaps
+    (business.sitemaps + shared_sitemaps).sort_by {|sitemap| sitemap.name.capitalize }
   end
 
   def active?
