@@ -17,6 +17,7 @@ gem 'carrierwave', '~> 0.10.0'
 gem 'paranoia'
 gem 'stripper-rails', '~> 0.0.1'
 gem 'stripe', '~> 1.49.0'
+gem 'react_on_rails'
 
 group :development, :test do
   gem 'byebug', '~> 9.0.5'
