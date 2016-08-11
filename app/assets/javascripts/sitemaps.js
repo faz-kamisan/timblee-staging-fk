@@ -21,7 +21,7 @@ Sitemaps.prototype.bindDraggers = function() {
   var _this = this;
   this.draggableSitemaps.draggable({
     revert: 'invalid',
-    containment: ".user-dashboard",
+    containment: "body",
     start: function(event, ui) {
       $('.actions-overlay').removeClass('animate-top');
       ui.helper.parent('.sitemap_wrapper').addClass('dragging');

@@ -51,8 +51,8 @@
         <div class="row">
           <div class="col-xs-6">
             <label>Credit Card</label>
-            <p class="font-12-light cc-detail-save">We're currently charging your <%= @card.brand %> ending in [<%= @card.last4 %>]. We accept MasterCard, Visa and American Express.</p>
-            <p class="font-12-light cc-detail-edit hide">We're currently charging your <%= @card.brand %> ending in [<%= @card.last4 %>]. We'll never charge it without your permission. We accept MasterCard, Visa and American Express -with no additional fees or charges.</p>
+            <p class="font-12-light cc-detail-save">We're currently charging your <%= @card.brand %> ending in <%= @card.last4 %>. We accept MasterCard, Visa and American Express.</p>
+            <p class="font-12-light cc-detail-edit hide">We're currently charging your <%= @card.brand %> ending in <%= @card.last4 %>. We'll never charge it without your permission. We accept MasterCard, Visa and American Express -with no additional fees or charges.</p>
           </div>
           <div class="col-xs-6 text-right edit-info">
             <div class="edit">
