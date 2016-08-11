@@ -19,7 +19,7 @@ $(function() {
     modalBtn : $('.btn-modal-open'),
     target: $('body'),
     targetClass: 'modal-open',
-    delayTime: 400
+    delayTime: 500
   },
   modalFix = new ModalFix(options);
   modalFix.fixScroll();

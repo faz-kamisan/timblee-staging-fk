@@ -7,7 +7,7 @@
             <%= image_tag('close-modal.svg', class: 'close-modal') %>
           </span>
         </button>
-        <a href="#choose-plan-modal" class="go-back" data-dismiss="modal" data-toggle="modal">
+        <a href="#choose-plan-modal" class="go-back btn-modal-open" data-dismiss="modal" data-toggle="modal">
           <span class="icon icon-caret"></span>
           Back
         </a>
@@ -16,15 +16,24 @@
       </div>
       <div class="modal-body">
         <%= form_tag businesses_subscription_path, { method: :post, class: 'pay' } do %>
-          <ul>
-            <li>You won't have unlimited sitemaps. You'll only be able to have three sitemaps at any one time</li>
-            <li>You won't be able to invite other team members</li>
-            <li>You can invite unlimited guests to view and comment on sitemaps</li>
+          <ul class="starter-plan-list">
+            <li>
+              <span class="icon-close"></span>
+              You won't have unlimited sitemaps. You'll only be able to have three sitemaps at any one time
+            </li>
+            <li>
+              <span class="icon-close"></span>
+              You won't be able to invite other team members
+            </li>
+            <li>
+              <span class="icon-save-circle green"></span>
+              You can invite unlimited guests to view and comment on sitemaps
+            </li>
           </ul>
           <div class="row">
             <div class="text-center col-xs-12">
-                <input type='hidden', name='stripe_plan_id', value='<%= STARTER_STRIPE_ID %>'>
-                <button type="submit" class="btn btn-success">Confirm Plan</button>
+              <input type='hidden', name='stripe_plan_id', value='<%= STARTER_STRIPE_ID %>'>
+              <button type="submit" class="btn btn-success">Confirm Plan</button>
             </div>
           </div>
         <% end %>
