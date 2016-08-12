@@ -7,8 +7,8 @@ Payment.prototype.createToken = function() {
   var _this = this;
   this.form.on('submit', function(event) {
     var $form = $(this);
-
     $form.find('button#add-card').prop('disabled', true);
+    $form.find('a#cancel').addClass('disabled');
     var expiration = $form.find('input.cc-exp').payment('cardExpiryVal');
 
     Stripe.card.createToken(
@@ -33,6 +33,7 @@ Payment.prototype.stripeResponseHandler = function (status, response) {
 
     $form.find('.cc-errors').text(response.error.message);
     $form.find('button#add-card').prop('disabled', false);
+    $form.find('a#cancel').removeClass('disabled');
 
   } else {
     // response contains id and card, which contains additional card details
