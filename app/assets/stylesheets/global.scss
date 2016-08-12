@@ -370,3 +370,8 @@ input#toggle:checked + label:after {
 .margin-top-small {
   margin-top: 2px;
 }
+
+.cc-errors {
+  color: $primaryError;
+  font-size: 12px;
+}

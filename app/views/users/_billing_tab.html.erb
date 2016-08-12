@@ -65,7 +65,6 @@
           </div>
         </div>
         <div class="hide cc-add">
-          <span class='cc-errors'></span>
           <div class="row add-credit-card">
             <div class="col-xs-6">
               <%= text_field_tag '', nil, placeholder: "Card number", class: 'string form-control default-input cc-number editable-input', disabled: true %>
@@ -77,6 +76,11 @@
             </div>
             <div class="col-xs-3">
               <input type="password" placeholder="CVV" class="form-control default-input cc-cvv editable-input" disabled='disabled'>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <span class='cc-errors'></span>
             </div>
           </div>
         </div>
@@ -97,7 +101,6 @@
             </div>
           </div>
         </div>
-        <span class='cc-errors'></span>
         <div class="row add-credit-card">
           <div class="col-xs-6">
             <%= text_field_tag '', nil, placeholder: "Card number", class: 'string form-control default-input cc-number' %>
@@ -109,6 +112,11 @@
           </div>
           <div class="col-xs-3">
             <input type="password" placeholder="CVV" class="form-control default-input cc-cvv">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <span class='cc-errors'></span>
           </div>
         </div>
       </div>
