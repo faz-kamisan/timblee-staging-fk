@@ -7,7 +7,7 @@ var DeleteSitemap = function(options) {
 DeleteSitemap.prototype.bindEvents = function() {
   var _this = this;
   this.sitemapModalLink.on('click', function() {
-    delete_sitemap_url = $(this).data('url');
+    var delete_sitemap_url = $(this).data('url'),
     delete_sitemap_name = $(this).data('name');
     _this.deleteSitemapLink.attr('href', delete_sitemap_url);
     _this.sitemapNameSpan.html(delete_sitemap_name);
