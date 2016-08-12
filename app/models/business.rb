@@ -5,7 +5,7 @@ class Business < ActiveRecord::Base
   has_many :folders, dependent: :destroy
   has_many :sitemaps, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
-  has_one :active_subscription, ->{ where('subscriptions.end_at >= :current_time and subscriptions.start_at <= :current_time', { current_time: Time.current}) }, class_name: :Subscription, dependent: :destroy
+  has_one :active_subscription, ->{ where('subscriptions.end_at >= :today and subscriptions.start_at <= :today', { today: Time.current}) }, class_name: :Subscription
   has_one :plan, through: :active_subscription
   delegate :no_of_users, to: :active_subscription
 
@@ -14,7 +14,7 @@ class Business < ActiveRecord::Base
   end
 
   def trial_end_at
-    created_at.to_date + trial_days.days
+    created_at + trial_days.days
   end
 
   def in_trial_period?
