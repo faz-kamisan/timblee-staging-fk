@@ -137,7 +137,7 @@
         </div>
         <div class="col-xs-3 text-right edit-info">
           <div class="edit">
-            <%= link_to "Request Deletion", send_destroy_request_to_superadmin_business_path(current_business), data: { confirm: "Are you sure you want to delete account" }, class: 'btn btn-grey' %>
+            <a href="#delete-business-modal" data-toggle="modal" class="btn btn-grey">Request Deletion</a>
           </div>
         </div>
       </div>
@@ -153,6 +153,8 @@
 
 <!-- Starter Plan Modal -->
 <%= render 'users/starter_plan_modal' %>
+
+<%= render 'businesses/delete_business_modal' %>
 
 
 

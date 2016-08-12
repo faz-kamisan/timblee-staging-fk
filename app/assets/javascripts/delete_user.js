@@ -7,7 +7,7 @@ var DeleteUser = function(options) {
 DeleteUser.prototype.bindEvents = function() {
   var _this = this;
   this.userModalLink.on('click', function() {
-    deleteUserUrl = $(this).data('url');
+    var deleteUserUrl = $(this).data('url'),
     deleteUserName = $(this).data('name');
     _this.deleteUserLink.attr('href', deleteUserUrl);
     _this.userNameSpan.html(deleteUserName);
