@@ -8,14 +8,14 @@ var MoreOptions = function(options) {
 MoreOptions.prototype.open = function() {
   var _this = this;
   this.openOverlayBtn.on('click', function() {
-    $(this).siblings(_this.actionOverlay).addClass(_this.animateClass);
+    $(this).next(_this.actionOverlay).animate({ top: 0 }, 150);
   });
 };
 
 MoreOptions.prototype.close = function() {
   var _this = this;
   this.closeOverlayBtn.on('click', function() {
-    $(this).closest(_this.actionOverlay).removeClass(_this.animateClass);
+    $(this).closest(_this.actionOverlay).animate({ top: 230 }, 150);
   });
 };
 
