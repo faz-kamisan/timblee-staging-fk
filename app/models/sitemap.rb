@@ -19,7 +19,7 @@ class Sitemap < ActiveRecord::Base
   scope :in_progress, -> { where(state: 'in_progress') }
   scope :in_review, -> { where(state: 'in_review') }
   scope :approved, -> { where(state: 'approved') }
-
+  scope :order_by_alphanumeric_lower_name, -> { order("SUBSTRING(name FROM '(^[0-9]+)')::BIGINT ASC, lower(name)") }
 
   private
     def set_state_to_in_progress
