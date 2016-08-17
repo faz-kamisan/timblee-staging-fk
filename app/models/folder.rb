@@ -7,7 +7,7 @@ class Folder < ActiveRecord::Base
   before_validation :check_name_is_not_all_sitemaps
   strip_fields :name
 
-  scope :order_by_lower_name, -> { order('lower(name)') }
+  scope :order_by_alphanumeric_lower_name, -> { order("SUBSTRING(name FROM '(^[0-9]+)')::BIGINT ASC, lower(name)") }
 
   private
     def check_name_is_not_all_sitemaps

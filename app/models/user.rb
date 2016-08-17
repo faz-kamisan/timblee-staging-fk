@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   # validate :minimum_image_size
 
   def all_sitemaps
-    (business.sitemaps + shared_sitemaps).sort_by {|sitemap| sitemap.name.capitalize }
+    Sitemap.where(id: business.sitemaps.pluck(:id) + shared_sitemaps.pluck(:id)).order_by_alphanumeric_lower_name
   end
 
   def active?
