@@ -90,6 +90,7 @@ en:
 
   errors:
     messages:
+      already_confirmed: "was already confirmed, please try signing in"
       not_found: "We can't find the email in our system. We've looked everywhere. Did you sign up with another email? If you've entered the right email and this isn't working, <a class='cursor-pointer'>get in touch</a> and we'll sort it out ASAP!"
     users:
       owner_destroy: Owner cannot be destroyed.

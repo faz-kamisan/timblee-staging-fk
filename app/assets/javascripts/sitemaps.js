@@ -1,4 +1,5 @@
 var Sitemaps = function(options) {
+  this.actionOverlays = options.actionOverlays
   this.newSitemapLink = options.newSitemapLink;
   this.newSitemapModal = options.newSitemapModal;
   this.dropContainers = options.dropContainers;
@@ -11,6 +12,16 @@ Sitemaps.prototype.bindEvents = function() {
     _this.configureNewSitemapModal();
     _this.newSitemapModal.modal('show');
   })
+
+  $('body').on('click', function() {
+    var $tartget = $(event.target)
+    if($tartget.closest('.sitemap_wrapper').length > 0) {
+      var sitemapId = $tartget.closest('.sitemap_wrapper').find('.sitemap-container').data('id')
+      _this.actionOverlays.not('[data-id= ' + sitemapId.toString() + ']').animate({ top: 230 }, 150);
+    } else {
+      _this.actionOverlays.animate({ top: 230 }, 150);
+    }
+  });
 };
 
 Sitemaps.prototype.configureNewSitemapModal = function() {
@@ -21,9 +32,9 @@ Sitemaps.prototype.bindDraggers = function() {
   var _this = this;
   this.draggableSitemaps.draggable({
     revert: 'invalid',
-    containment: "body",
+    containment: "html",
     start: function(event, ui) {
-      $('.actions-overlay').removeClass('animate-top');
+      _this.actionOverlays.animate({ top: 230 }, 150);
       ui.helper.parent('.sitemap_wrapper').addClass('dragging');
     },
     stop: function(event, ui) {
@@ -39,6 +50,7 @@ Sitemaps.prototype.init = function() {
 
 $(function() {
   var options = {
+    actionOverlays : $('.actions-overlay'),
     newSitemapLink : $('.new-sitemap-link'),
     newSitemapModal: $('#create_sitemap_modal'),
     dropContainers : $('.folder-info'),

@@ -31,7 +31,10 @@ Folders.prototype.bindEvents = function() {
           method: 'put',
           url: '/folders/' + $this.data('id'),
           data: { folder: { name: $this.val() } },
-          dataType: 'script'
+          dataType: 'script',
+          success: function(e, data, status, xhr) {
+            _this.makeFoldersDroppable($('.folder-info'));
+          }
         });
       }
     }
