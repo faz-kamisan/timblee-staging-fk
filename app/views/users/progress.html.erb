@@ -20,7 +20,10 @@
         <% @sitemaps_by_state[:on_hold].each do |sitemap| %>
           <div class='drag-wrapper'>
             <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
-              <span class="state on_hold"></span>
+              <!-- change if logic to check presence of comments -->
+              <% if true %>
+                <span class="state"></span>
+              <% end %>
               <span class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></span>
               <span class="last-updated">Last updated <%= pretty_time(sitemap.updated_at) %></span>
             </div>
@@ -43,7 +46,10 @@
         <% @sitemaps_by_state[:in_progress].each do |sitemap| %>
           <div class='drag-wrapper'>
             <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
-              <span class="state in_progress"></span>
+              <!-- change if logic to check presence of comments -->
+              <% if true %>
+                <span class="state"></span>
+              <% end %>
               <span class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></span>
               <span class="last-updated">Last updated <%= pretty_time(sitemap.updated_at) %></span>
             </div>
@@ -66,7 +72,10 @@
         <% @sitemaps_by_state[:in_review].each do |sitemap| %>
           <div class='drag-wrapper'>
             <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
-              <span class="state in_review"></span>
+              <!-- change if logic to check presence of comments -->
+              <% if true %>
+                <span class="state"></span>
+              <% end %>
               <span class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></span>
               <span class="last-updated">Last updated <%= pretty_time(sitemap.updated_at) %></span>
             </div>
@@ -89,7 +98,10 @@
         <% @sitemaps_by_state[:approved].each do |sitemap| %>
           <div class='drag-wrapper'>
             <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
-              <span class="state approved"></span>
+              <!-- change if logic to check presence of comments -->
+              <% if true %>
+                <span class="state"></span>
+              <% end %>
               <span class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></span>
               <span class="last-updated">Last updated <%= pretty_time(sitemap.updated_at) %></span>
             </div>

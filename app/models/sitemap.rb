@@ -1,6 +1,6 @@
 class Sitemap < ActiveRecord::Base
 
-  LENGTH_TO_TRUNCATE = 40
+  LENGTH_TO_TRUNCATE = 44
 
   belongs_to :folder
   belongs_to :business
