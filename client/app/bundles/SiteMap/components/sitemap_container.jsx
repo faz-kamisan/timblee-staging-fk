@@ -7,9 +7,9 @@ export default class SitemapContainer extends React.Component {
     // name: PropTypes.string.isRequired,
   };
   render() {
-    var childNodes;
-    if (this.props.sitemapTree.childNodes != null) {
-      childNodes = this.props.sitemapTree.childNodes.map(function(sitemapTree, index) {
+    var children;
+    if (this.props.sitemapTree.children != null) {
+      children = this.props.sitemapTree.children.map(function(sitemapTree, index) {
         return <li key={index}><SitemapContainer sitemapTree={sitemapTree} /></li>
       });
     }
@@ -20,7 +20,7 @@ export default class SitemapContainer extends React.Component {
           {this.props.sitemapTree.name}
         </h5>
         <ul>
-          {childNodes}
+          {children}
         </ul>
       </div>
     );

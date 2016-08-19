@@ -19,6 +19,7 @@ gem 'stripper-rails', '~> 0.0.1'
 gem 'stripe', '~> 1.49.0'
 gem 'react_on_rails', '~> 6.0.5'
 gem 'jc-validates_timeliness', '~> 3.1.1'
+gem 'acts_as_tree'
 
 group :development, :test do
   gem 'byebug', '~> 9.0.5'

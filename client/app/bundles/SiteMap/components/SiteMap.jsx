@@ -8,8 +8,7 @@ export default class SiteMap extends React.Component {
   static propTypes = {
     // If you have lots of data or action properties, you should consider grouping them by
     // passing two properties: "data" and "actions".
-    // updateName: PropTypes.func.isRequired,
-    // name: PropTypes.string.isRequired,
+    sitemapProps: PropTypes.object.isRequired
   };
 
   // React will automatically provide us with the event `e`
@@ -20,26 +19,14 @@ export default class SiteMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sitemap: {
-        name: "howdy"
-      },
-      sitemapTree: {
-        name: 'page1',
-        childNodes: [
-          {name: "page2"},
-          {name: "page3", childNodes: [
-            {name: "page4", childNodes: [
-              {name: "page5"}
-            ]},
-            {name: "page6"}
-          ]}
-        ]
-      }
+      name: props.sitemapProps.name,
+      sitemapTree: props.sitemapProps.page_tree,
     };
   }
   render() {
     return (
       <div>
+        <h2>{this.state.name}</h2>
         <SitemapContainer sitemapTree={this.state.sitemapTree} />
       </div>
     );

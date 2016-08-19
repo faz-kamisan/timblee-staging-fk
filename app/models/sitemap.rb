@@ -5,6 +5,7 @@ class Sitemap < ActiveRecord::Base
   belongs_to :folder
   belongs_to :business
   has_many :pages, dependent: :destroy
+  has_one :root_page, ->{ where(parent_id: nil) }, class_name: :Page
   has_many :sitemap_invites, dependent: :destroy
   has_many :invited_users, through: :sitemap_invites, source: :user
 
@@ -20,6 +21,14 @@ class Sitemap < ActiveRecord::Base
   scope :in_review, -> { where(state: 'in_review') }
   scope :approved, -> { where(state: 'approved') }
   scope :order_by_alphanumeric_lower_name, -> { order("SUBSTRING(name FROM '(^[0-9]+)')::BIGINT ASC, lower(name)") }
+
+  def get_page_tree
+    root_page.get_tree
+  end
+
+  def to_react_data
+    { name: name, page_tree: get_page_tree }
+  end
 
   private
     def set_state_to_in_progress

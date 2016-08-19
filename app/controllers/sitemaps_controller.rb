@@ -14,6 +14,7 @@ class SitemapsController < ApplicationController
   end
 
   def show
+    @sitemap_props = @sitemap.to_react_data
   end
 
   def destroy

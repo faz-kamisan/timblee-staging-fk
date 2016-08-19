@@ -11,7 +11,7 @@ const SitemapApp = (props, _railsContext) => {
   const reactComponent = (
     <div>
       <p>Rendering From React</p>
-      <Sitemap />
+      <Sitemap sitemapProps={props}/>
     </div>
   );
   return reactComponent;
