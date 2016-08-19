@@ -44,6 +44,13 @@ en:
         create:
           success: You have successfully added a credit card.
           failure: Some error occurred
+      subscriptions:
+        create:
+          success: You are successfully subscribed to selected plan
+          plan_not_found: Plan not found
+
+      send_destroy_request_to_superadmin:
+          success: Request sent successfully
 
     admin:
       users:
@@ -67,6 +74,11 @@ en:
   activerecord:
       errors:
         models:
+          subscription:
+            attributes:
+              end_at:
+                on_or_after: 'End date should be after start date'
+                invalid_date: 'End date is invalid'
           user:
             attributes:
               email:
@@ -78,6 +90,7 @@ en:
 
   errors:
     messages:
+      already_confirmed: "was already confirmed, please try signing in"
       not_found: "We can't find the email in our system. We've looked everywhere. Did you sign up with another email? If you've entered the right email and this isn't working, <a class='cursor-pointer'>get in touch</a> and we'll sort it out ASAP!"
     users:
       owner_destroy: Owner cannot be destroyed.

@@ -23,6 +23,7 @@ Rails.application.config.assets.precompile += %w(
   payments.js
   billing.js
   progress.js
+  plan.js
   modal_fix.js
 )
 # Add client/assets/ folders to asset pipeline's search path.

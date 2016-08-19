@@ -31,7 +31,10 @@ Folders.prototype.bindEvents = function() {
           method: 'put',
           url: '/folders/' + $this.data('id'),
           data: { folder: { name: $this.val() } },
-          dataType: 'script'
+          dataType: 'script',
+          success: function(e, data, status, xhr) {
+            _this.makeFoldersDroppable($('.folder-info'));
+          }
         });
       }
     }
@@ -52,12 +55,88 @@ Folders.prototype.bindEvents = function() {
     $('#delete-folder-modal').modal('show');
   });
 
+  $('#new_folder').on("ajax:success", function(e, data, status, xhr) {
+    _this.makeFoldersDroppable($('.folder-info'));
+  });
+
   $('#confirm-delete-folder-btn').on('click', function() {
     _this.sendFolderDeletionRequest();
     _this.resetDeletionModal();
     _this.deletionModal.modal('hide');
   });
+  this.makeFoldersDroppable($('.folder-info'));
 };
+
+Folders.prototype.makeFoldersDroppable = function(folders) {
+  var _this = this;
+  folders.droppable({
+    accept: ".sitemap-container",
+    drop: function(event, ui) {
+      var $droppedSitemap = $(ui.draggable);
+      var $droppedOnFolder = $(this);
+      if($droppedSitemap.data('folder-id') == $droppedOnFolder.data('id')) {
+        // Take Sitemap back to original position
+        _this.revertSitemap($droppedSitemap, $droppedOnFolder);
+      } else {
+        // Update Sitemap Folder
+        $.ajax({
+          method: 'put',
+          url: '/sitemaps/' + $droppedSitemap.data('id'),
+          data: { sitemap: { folder_id: $droppedOnFolder.data('id') } },
+          dataType: 'script',
+          complete: function() {
+            _this.revertSitemap($droppedSitemap, $droppedOnFolder);
+          },
+          success: function() {
+            var sourceFolderId = $droppedSitemap.data('folder-id');
+            if(sourceFolderId && sourceFolderId != '') {
+              var $sourceFolder = $('.folder-info[data-id=' + $droppedSitemap.data('folder-id') + ']');
+            } else {
+              var $sourceFolder = $('.folder-info.all-sitemap-folder');
+            }
+            _this.setSitemapCountForFolders($droppedOnFolder, $sourceFolder);
+            $droppedSitemap.attr('data-folder-id', $droppedOnFolder.data('id'));
+            $droppedSitemap.data('folder-id', $droppedOnFolder.data('id'));
+            $('.folder-info.active-delete').find('.folder-info-block').click();
+          }
+        });
+      }
+    },
+    over: function(event, elem) {
+      $(this).addClass("dragging-over");
+    },
+    out: function(event, elem) {
+      $(this).removeClass("dragging-over");
+    }
+  });
+}
+
+Folders.prototype.setSitemapCountForFolders = function(targetFolder, sourceFolder) {
+  this.calculateAndSetSitemapCount(targetFolder, 'add');
+  this.calculateAndSetSitemapCount(sourceFolder, 'subtract');
+}
+
+Folders.prototype.calculateAndSetSitemapCount = function(folder, method) {
+  if(folder.data('id') == '') {
+    return
+  }
+  var count = folder.data('sitemap-count');
+  if(method == 'add') {
+    var newCount = ++count;
+  } else if(method == 'subtract') {
+    var newCount = --count;
+  } else {
+    return
+  }
+  folder.data('sitemap-count', newCount);
+  folder.attr('data-sitemap-count', newCount);
+  folder.find('.folder-items').html(newCount);
+}
+
+Folders.prototype.revertSitemap = function($droppedSitemap, $droppedOnFolder) {
+  $droppedSitemap.css({top: 0, left: 0});
+  $droppedOnFolder.removeClass("dragging-over");
+}
 
 Folders.prototype.sendFolderDeletionRequest = function(id) {
   $.ajax({

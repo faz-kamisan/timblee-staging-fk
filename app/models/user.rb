@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 
   before_create :set_is_admin, unless: :business_id
   before_create :add_business, unless: :business_id
-  after_create :set_confirmation_instructions_to_be_sent
+  after_create :set_confirmation_instructions_to_be_sent, unless: :confirmed?
   before_destroy :restrict_owner_destroy
   before_update :restrict_owner_role_update, if: :is_admin_changed?
 
@@ -31,14 +31,14 @@ class User < ActiveRecord::Base
   validates :full_name, presence: { message: 'Hmm... no name? Make something up :)' }
   validates :email, presence: { message: 'We really do need an email. Pretty please.' }
   validates :email, uniqueness: { message: "There's already an account linked to this email. Forgot your password? <a href='/users/password/new'>Reset it here</a>." }, allow_blank: true, if: :email_changed?
-  validates_format_of     :email, with: email_regexp, allow_blank: true, if: :email_changed?
-
-  validates :password, presence: { message: 'Without a password, it\'s like leaving your door open to the whole internet.' }
+  validates_format_of :email, with: email_regexp, allow_blank: true, if: :email_changed?
+  validates :password, presence: { message: 'Without a password, it\'s like leaving your door open to the whole internet.' }, if: :password_required?
+  validates :password, confirmation: true, if: :password_required?
   validates :password, length: { within: password_length, message: 'Your password needs to be at least 6 characters.' }, allow_blank: true
   # validate :minimum_image_size
 
   def all_sitemaps
-    (business.sitemaps + shared_sitemaps).sort_by {|sitemap| sitemap.name.capitalize }
+    Sitemap.where(id: business.sitemaps.pluck(:id) + shared_sitemaps.pluck(:id)).order_by_alphanumeric_lower_name
   end
 
   def active?
@@ -86,10 +86,6 @@ class User < ActiveRecord::Base
     end
 
     def email_required?
-      false
-    end
-
-    def password_required?
       false
     end
 end

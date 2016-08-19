@@ -1,4 +1,4 @@
-class CreditCardService
+class StripePaymentService
 
   attr_accessor :customer
 
@@ -10,7 +10,7 @@ class CreditCardService
     if @current_business.stripe_customer_id
       create_card(stripe_token)
     else
-      create_customer(stripe_token)
+      create_customer_with_card(stripe_token)
     end
   end
 
@@ -23,12 +23,26 @@ class CreditCardService
     customer.save
   end
 
-  def create_customer(stripe_token)
+  def create_customer_with_card(stripe_token)
     @customer = Stripe::Customer.create(
       email:  @current_business.owner.email,
       source: stripe_token
     )
     @current_business.update_column(:stripe_customer_id, customer.id)
+  end
+
+  def create_subscription
+    subscription_hash = {
+        customer: @current_business.stripe_customer_id,
+        plan:     @current_business.subscriptions.last.plan.stripe_plan_id,
+        quantity: @current_business.subscriptions.last.quantity
+    }
+
+    subscription_hash.merge!({trial_end: @current_business.trial_end_at.to_time.to_i}) if @current_business.in_trial_period?
+
+    Stripe::Subscription.create(subscription_hash)
+
+    @current_business.save!
   end
 
 end

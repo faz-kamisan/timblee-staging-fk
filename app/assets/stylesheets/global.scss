@@ -36,6 +36,10 @@ body {
   padding-right: 0;
 }
 
+.p-r-5 {
+  padding-right: 5px;
+}
+
 .p-t-40 {
   padding-top: 40px;
 }
@@ -222,7 +226,7 @@ input:-webkit-autofill {
 
 .close-modal {
   width: 15px;
-  height: auto;
+  height: 15px;
 }
 
 .modal-message {
@@ -360,4 +364,9 @@ input#toggle:checked + label:after {
 
 .margin-top-small {
   margin-top: 2px;
+}
+
+.cc-errors {
+  color: $primaryError;
+  font-size: 12px;
 }

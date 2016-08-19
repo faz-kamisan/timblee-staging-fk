@@ -1,16 +1,38 @@
-<h2>Resend confirmation instructions</h2>
+<!-- Resend Confirmation -->
+<main class="main">
+  <section class="user-entry forgot-password-page">
+    <div class="panel">
+      <div class="panel-body text-center">
+        <div class="logo">
+          <%= image_tag('Timblee-icon.svg', class: 'logo-inner') %>
+        </div>
+        <h1 class="modal-heading">
+          Didn't receive confirmation email?
+        </h1>
+        <p class="small">
+          Don't worry. We will help you with that.
+        </p>
+        <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post, class: 'user-form' }) do |f| %>
+          <div class="form-group">
+            <%= f.text_field :email, class: 'form-control', placeholder: 'Your email' %>
+            <span class='error-message add-top-padding'><%= f.object.errors[:email].join(',').html_safe %></span>
 
-<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
+          </div>
+          <div class="form-group m-b-10">
+            <%= f.submit "get my account confirmation link", class: 'btn btn-pink btn-block' %>
+          </div>
+          <div class="row recover">
+            <div class="col-md-6 text-left p-r-0">
+              <%= link_to "Back to Login", new_session_path(resource_name), class: 'link-regular' %>
+            </div>
+            <div class="col-md-6 text-right">
+              <%= link_to "Don't have a login?", new_registration_path(resource_name), class: 'link-regular' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+</main>
+<!-- Forget Password -->
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %> 
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Resend confirmation instructions" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>

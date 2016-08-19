@@ -2,7 +2,10 @@
   <div class='sitemap_wrapper'>
     <div class="sitemap-container" data-id=<%= sitemap.id %> data-folder-id=<%= sitemap.folder_id %>>
       <div class="site-card">
-        <span class='state <%= sitemap.state %>'></span>
+        <!-- change if logic to check presence of comments -->
+        <% if true %>
+          <span class='state'></span>
+        <% end %>
         <h2 class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></h2>
         <p class="updated">Last updated <%= pretty_time(sitemap.updated_at) %></p>
         <div class="actions">
@@ -22,7 +25,7 @@
         <a href="javascript:void(0);" class="more-options">
           <%= image_tag('more-icon.png') %>
         </a>
-        <div class="actions-overlay">
+        <div class="actions-overlay" data-id=<%= sitemap.id %>>
           <ul class="p-0 m-0">
             <li>
               <a href="javascript:void(0);" class="action">

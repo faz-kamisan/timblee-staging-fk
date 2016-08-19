@@ -107,7 +107,7 @@
     }
     p {
       color: $primaryGrey;
-      font-size: 12px; 
+      font-size: 12px;
     }
     ul {
       padding: 8px 0 12px 0;
@@ -142,7 +142,7 @@
   .modal-message {
     color: $primaryGrey;
   }
-  .card-number {
+  .cc-number {
     background: $primaryWhite;
   }
 }
@@ -250,4 +250,13 @@
       margin-bottom: 0!important;
     }
   }
+}
+
+.plan-users-input {
+  font-size: 24px;
+}
+
+a#upgrade {
+  color: inherit;
+  text-decoration: underline;
 }

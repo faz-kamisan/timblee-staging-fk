@@ -126,3 +126,20 @@
     } 
   }
 }
+
+#sucessful_reset_password_sent_modal {
+  .modal-dialog {
+    @include alignCenter(-310px, -116px);
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+  .modal-body {
+    padding-bottom: 37px;
+    p {
+      padding-bottom: 0;
+    }
+  }
+  .modal-title {
+    padding-top: 11px;
+  }
+}
