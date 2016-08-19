@@ -9,7 +9,7 @@ set :branch, 'develop'
 # property set. Specify the username and a domain or IP for the server.
 # Don't use `:all`, it's a meta role.
 
-server '52.65.4.119', user: 'deploy', roles: %w{web app db}
+server '52.64.63.239', user: 'deploy', roles: %w{web app db}
 
 
 # server-based syntax
