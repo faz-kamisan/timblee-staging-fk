@@ -1,6 +1,2 @@
-<div class="container">
-  <h3>Canvas</h3>
-  <%= @sitemap.name %>
-</div>
-
-<%= react_component("SiteMapApp") %>
+<h1 class="alert alert-info this-works">Hello World</h1>
+<%= react_component("SitemapApp", props: @hello_world_props, prerender: false) %>
