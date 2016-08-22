@@ -49,6 +49,11 @@ class User < ActiveRecord::Base
     business.owner == self
   end
 
+  protected
+    def confirmation_period_valid?
+      self.class.allow_unconfirmed_access_for.nil? || (created_at && created_at.utc >= self.class.allow_unconfirmed_access_for.ago)
+    end
+
   private
     # def minimum_image_size
     #   image = MiniMagick::Image.open(avatar.path)
