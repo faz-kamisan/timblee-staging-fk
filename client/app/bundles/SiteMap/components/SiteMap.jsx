@@ -3,8 +3,11 @@
 
 import React, { PropTypes } from 'react';
 import SitemapContainer from './sitemap_container';
+import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContext } from 'react-dnd';
+
 // Simple example of a React "dumb" component
-export default class SiteMap extends React.Component {
+class SiteMap extends React.Component {
   static propTypes = {
     // If you have lots of data or action properties, you should consider grouping them by
     // passing two properties: "data" and "actions".
@@ -32,3 +35,5 @@ export default class SiteMap extends React.Component {
     );
   }
 }
+
+export default DragDropContext(HTML5Backend)(SiteMap);
