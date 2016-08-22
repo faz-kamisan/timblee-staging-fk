@@ -31,17 +31,10 @@ var DropTargetDecorator = DropTarget(ItemTypes.PAGE_CONTAINER, sitemapTarget,
   function(connect, monitor) {
     return {
       connectDropTarget: connect.dropTarget(),
+      isOverCurrent: monitor.isOver({ shallow: true }),
+      isOver: monitor.isOver()
     };
 });
-
-// function collect(connect, monitor) {
-//   debugger
-//   return {
-//     connectDragSource: connect.dragSource(),
-//     connectDropTarget: connect.dropTarget(),
-//     isDragging: monitor.isDragging()
-//   };
-// }
 
 export default class PageContainer extends React.Component {
   static propTypes = {
@@ -55,16 +48,35 @@ export default class PageContainer extends React.Component {
     super(props)
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
+      var domNode = findDOMNode(this);
+      // debugger
+      $(domNode).addClass('drag-over' )
+    }
+
+    if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
+      // You can use this as leave handler
+      var domNode = findDOMNode(this);
+      $(domNode).removeClass('drag-over')
+    }
+
+    if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
+      // You can be more specific and track enter/leave
+      // shallowly, not including nested targets
+    }
+  }
+
   render() {
     const connectDragSource = this.props.connectDragSource
     const connectDropTarget = this.props.connectDropTarget
-    const isDragging = this.props.isDragging
     var children;
     if (this.props.pageTree.children != null) {
       children = this.props.pageTree.children.map(function(pageTree, index) {
         return <li key={index}><WrappedDraggableNode pageTree={pageTree} /></li>
       });
     }
+    console.log(this.props.isDragging)
 
     return connectDragSource(connectDropTarget(
       <div data-level={this.props.pageTree.level} className={ 'page-container level-' + this.props.pageTree.level.toString() }>

@@ -32,4 +32,7 @@
   &.drag-over {
     background-color: yellow
   }
+  &.dragging {
+    transform: rotate(-5deg)
+  }
 }
