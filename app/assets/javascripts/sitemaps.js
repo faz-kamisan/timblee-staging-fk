@@ -13,7 +13,7 @@ Sitemaps.prototype.bindEvents = function() {
     _this.newSitemapModal.modal('show');
   })
 
-  $('body').on('click', function() {
+  $('body').on('click', function(event) {
     var $tartget = $(event.target)
     if($tartget.closest('.sitemap_wrapper').length > 0) {
       var sitemapId = $tartget.closest('.sitemap_wrapper').find('.sitemap-container').data('id')
