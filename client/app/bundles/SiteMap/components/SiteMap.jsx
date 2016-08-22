@@ -2,7 +2,7 @@
 // all your dump component names with Widget.
 
 import React, { PropTypes } from 'react';
-import SitemapContainer from './sitemap_container';
+import PageContainer from './page_container';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 
@@ -23,14 +23,14 @@ class SiteMap extends React.Component {
     super(props);
     this.state = {
       name: props.sitemapProps.name,
-      sitemapTree: props.sitemapProps.page_tree,
+      pageTree: props.sitemapProps.page_tree,
     };
   }
   render() {
     return (
       <div>
         <h2>{this.state.name}</h2>
-        <SitemapContainer sitemapTree={this.state.sitemapTree} />
+        <PageContainer pageTree={this.state.pageTree} />
       </div>
     );
   }

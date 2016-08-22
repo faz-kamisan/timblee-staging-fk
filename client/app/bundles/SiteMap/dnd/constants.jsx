@@ -1,3 +1,3 @@
 export const ItemTypes = {
-  SITEMAP_CONTAINER: 'SitemapContainer'
+  PAGE_CONTAINER: 'PageContainer'
 };
