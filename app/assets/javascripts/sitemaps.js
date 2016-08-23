@@ -10,6 +10,7 @@ var Sitemaps = function(options) {
 
 Sitemaps.prototype.bindEvents = function() {
   var _this = this;
+
   this.newSitemap.on('click', function() {
     if($(this).find('a').hasClass(_this.newSitemapLinkClass)) {
       _this.configureNewSitemapModal();
@@ -20,11 +21,17 @@ Sitemaps.prototype.bindEvents = function() {
   });
 
   $('body').on('click', function(event) {
-    var $tartget = $(event.target)
-    if($tartget.closest('.sitemap_wrapper').length > 0) {
-      var sitemapId = $tartget.closest('.sitemap_wrapper').find('.sitemap-container').data('id')
+    var $target = $(event.target);
+    if($target.closest('.sitemap_wrapper').length > 0) {
+      var sitemapId = $target.closest('.sitemap_wrapper').find('.sitemap-container').data('id')
       _this.actionOverlays.not('[data-id= ' + sitemapId.toString() + ']').animate({ top: 230 }, 150);
-    } else {
+    }
+    else if($target.hasClass('hide-delete-modal')) {
+      setTimeout(function() {
+        _this.actionOverlays.animate({ top: 230 }, 150);
+      }, 250);
+    }
+    else {
       _this.actionOverlays.animate({ top: 230 }, 150);
     }
   });
