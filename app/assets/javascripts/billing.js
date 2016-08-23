@@ -8,6 +8,9 @@ var Billing = function(options) {
   this.btn_cancel = options.btn_cancel;
   this.cardErrors = options.cardErrors;
   this.cardCVV = options.cardCVV;
+  this.starterErrorButton = options.starterErrorButton;
+  this.starterModal = options.starterModal;
+  this.starterErrorModal = options.starterErrorModal;
 };
 
 Billing.prototype.bindEvents = function() {
@@ -15,7 +18,16 @@ Billing.prototype.bindEvents = function() {
   this.toggleCardInputFields();
   this.cardCVV.on('focus', function() {
     $(this).val('');
-  })
+  });
+  this.bindDowngradeErrorEvent();
+};
+Billing.prototype.bindDowngradeErrorEvent = function() {
+  var _this = this;
+  this.starterErrorButton.on('click', function(e) {
+    e.preventDefault();
+    _this.starterModal.modal('hide');
+    _this.starterErrorModal.modal('show');
+  });
 };
 
 Billing.prototype.addCardType = function() {
@@ -53,7 +65,10 @@ $(function() {
     btn_edit : $('.btn-edit'),
     btn_cancel : $('.btn-cancel'),
     cardErrors : $('.cc-errors'),
-    cardCVV : $('.cc-cvv')
+    cardCVV : $('.cc-cvv'),
+    starterErrorButton : $('#starter-error'),
+    starterModal : $('#starter-plan-modal'),
+    starterErrorModal : $('#starter-error-modal')
   }
   new Billing(options).bindEvents();
 });

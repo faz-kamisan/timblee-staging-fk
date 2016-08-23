@@ -32,8 +32,12 @@
           </ul>
           <div class="row">
             <div class="text-center col-xs-12">
-              <input type='hidden', name='stripe_plan_id', value='<%= STARTER_STRIPE_ID %>'>
-              <button type="submit" class="btn btn-success">Confirm Plan</button>
+              <% if current_business.allow_downgrade_to_starter? %>
+                <input type='hidden', name='stripe_plan_id', value='<%= STARTER_STRIPE_ID %>'>
+                <button type="submit" class="btn btn-success">Confirm Plan</button>
+              <% else %>
+                <button id="starter-error" class="btn btn-success">Confirm Plan</button>
+              <% end %>
             </div>
           </div>
         <% end %>
@@ -44,3 +48,4 @@
     </div>
   </div>
 </div>
+<%= render 'users/starter_error_modal'%>

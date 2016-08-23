@@ -29,6 +29,10 @@ class Business < ActiveRecord::Base
     plan.try(:stripe_plan_id) == STARTER_STRIPE_ID
   end
 
+  def allow_downgrade_to_starter?
+    users.count == 1 && sitemaps.count <= 3
+  end
+
   def monthly_charge
     if is_pro_plan?
       CHARGE_FOR_OWNER + (CHARGE_FOR_OTHER_USERS * (no_of_users - 1))

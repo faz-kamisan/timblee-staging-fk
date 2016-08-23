@@ -1,7 +1,7 @@
 class Businesses::SubscriptionsController < ApplicationController
 
-  before_action :load_plan, only: :create
-
+  before_action :load_plan, :check_validity, only: :create
+  around_action :wrap_in_transaction, only: :create
   def create
     if @plan.stripe_plan_id == STARTER_STRIPE_ID
       activate_starter_plan
@@ -33,6 +33,22 @@ class Businesses::SubscriptionsController < ApplicationController
       @plan = Plan.find_by(stripe_plan_id: params[:stripe_plan_id])
       unless @plan
         redirect_to billing_settings_users_path, alert: t('.plan_not_found', scope: :flash)
+      end
+    end
+
+    def check_validity
+      if @plan.stripe_plan_id == STARTER_STRIPE_ID && !current_business.allow_downgrade_to_starter?
+        redirect_to billing_settings_users_path, alert: t('.failure', scope: :flash)
+      end
+    end
+
+    def wrap_in_transaction
+      begin
+        ActiveRecord::Base.transaction do
+          yield
+        end
+      rescue
+        redirect_to billing_settings_users_path, alert: t('.failure', scope: :flash)
       end
     end
 
