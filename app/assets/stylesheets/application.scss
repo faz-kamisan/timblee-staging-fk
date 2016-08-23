@@ -33,6 +33,6 @@
     background-color: yellow
   }
   &.dragging {
-    transform: rotate(-5deg)
+    display: none;
   }
 }

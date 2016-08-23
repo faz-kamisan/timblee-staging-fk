@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import sitemapAppReducer from '../reducers/index';
 import Sitemap from '../components/sitemap';
-import ConnectedHeader from '../containers/connected_header';
 
 // See documentation for https://github.com/reactjs/react-redux.
 // This is how you get props from the Rails view into the redux store.
@@ -20,9 +19,5 @@ const SitemapApp = (props, _railsContext) => {
   );
   return reactComponent;
 };
-// <Sitemap />
-
-
-
 // This is how react_on_rails can see the Sitemap in the browser.
 ReactOnRails.register({ SitemapApp });
