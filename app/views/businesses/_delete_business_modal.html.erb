@@ -1,5 +1,5 @@
 <!-- Delete business Modal -->
-<div class="modal fade" id="delete-business-modal" tabindex="-1" role="dialog" aria-labelledby="delete-business-modalLabel">
+<div class="modal fade delete-account-page" id="delete-business-modal" tabindex="-1" role="dialog" aria-labelledby="delete-business-modalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
@@ -9,13 +9,15 @@
           </span>
         </button>
         <h4 class="modal-title">Delete Account</h4>
-        <p class="modal-message">You're about to delete your account. Deleting this will delete all sitemaps and users associated with this account</p>
+        <p class="modal-message">You're about to delete your account. <br> Deleting this will delete all sitemaps and users <br> associated with this account.</p>
       </div>
       <div class="modal-body">
         <div class="text-center">
           <div class="business-name-to-delete">
-            <%= image_tag('profile-image.png', class: 'profile-image with-delete') %>
-            <span></span>
+            <div class="user-name-to-delete">
+              <%= image_tag('profile-image.png', class: 'profile-image with-delete') %>
+              <span><%= current_user.full_name %></span>
+            </div>
           </div>
         </div>
         <div class="modal-button text-center">

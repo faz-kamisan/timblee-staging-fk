@@ -12,6 +12,10 @@ body {
   min-width: 1300px;
 }
 
+.btn {
+  @include border-radius(3px);
+}
+
 .p-0 {
   padding: 0;
 }
@@ -22,6 +26,10 @@ body {
 
 .m-b-10 {
   margin-bottom: 10px;
+}
+
+.m-t-10 {
+  margin-top: 10px;
 }
 
 .m-t-15 {
@@ -369,4 +377,24 @@ input#toggle:checked + label:after {
 .cc-errors {
   color: $primaryError;
   font-size: 12px;
+}
+
+.hidden-password::-webkit-input-placeholder {
+   color: $primaryFormColor;
+   opacity: 1;
+}
+
+.hidden-password:-moz-placeholder {
+   color: $primaryFormColor;
+   opacity: 1;  
+}
+
+.hidden-password::-moz-placeholder {
+   color: $primaryFormColor;
+   opacity: 1;  
+}
+
+.hidden-password:-ms-input-placeholder {  
+   color: $primaryFormColor;
+   opacity: 1;  
 }

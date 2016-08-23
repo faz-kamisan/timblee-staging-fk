@@ -260,3 +260,82 @@ a#upgrade {
   color: inherit;
   text-decoration: underline;
 }
+
+.team-logo {
+  width: 167px;
+  height: 24px;
+  margin-top: 3px;
+}
+
+#thanks-modal,
+#pro-plan-message-modal {
+  .modal-dialog {
+    width: 942px;
+    @include alignCenter(-471px, -190px);
+  }
+
+  h4 {
+    padding-bottom: 12px;
+  }
+
+  p {
+    color: $primaryGrey;
+    a {
+      color: $primaryGrey;
+      text-decoration: underline;
+    }
+  }
+
+  .btn {
+    min-width: 197px;
+    margin-top: 32px;
+    line-height: 34px;
+  }
+
+  .modal-header {
+    border-bottom: 0;
+    padding-top: 71px;
+    padding-bottom: 48px;
+    position: relative;
+  }
+
+  .close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    z-index: 4;
+  }
+}
+
+#pro-plan-message-modal {
+  h4 {
+    color: $primaryError;
+  }
+
+  .modal-dialog {
+    margin-top: -208px;
+  }
+
+  .btn {
+    margin-top: 17px;
+  }
+
+  .sad {
+    margin-left: 9px;
+    position: relative;
+    top: -2px;
+  }
+}
+
+.sad {
+  width: 21px;
+  height: 21px;
+}
+
+.label-bordered {
+  .sad {
+    position: relative;
+    top: -2px;
+    margin-left: 5px;
+  }
+}
