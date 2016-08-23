@@ -68,7 +68,7 @@ $(function() {
     cardCVV : $('.cc-cvv'),
     starterErrorButton : $('#starter-error'),
     starterModal : $('#starter-plan-modal'),
-    starterErrorModal : $('#starter-error-modal')
+    starterErrorModal : $('#pro-plan-message-modal')
   }
   new Billing(options).bindEvents();
 });

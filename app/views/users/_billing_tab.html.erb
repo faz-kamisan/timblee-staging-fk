@@ -145,8 +145,7 @@
     </div>
   </form>
 
-  <a href="#thanks-modal" data-toggle="modal">modal 1</a>
-  <a href="#pro-plan-message-modal" data-toggle="modal">modal 2</a>
+  <!-- <a href="#thanks-modal" data-toggle="modal">modal 1</a> -->
 
 </div>
 <!-- Choose Plan Modal -->
@@ -182,29 +181,8 @@
   </div>
 </div>
 
-<!-- Choose Pro Plan Message Modal -->
-<div class="modal fade" id="pro-plan-message-modal" tabindex="-1" role="dialog" aria-labelledby="pro-plan-message-modalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">
-            <%= image_tag('close-modal.svg', class: 'close-modal') %>
-          </span>
-        </button>
-        <h4>You can't proceed with this plan <%= image_tag('sad.png', class: 'sad') %> </h4>
-        <p>You currently have more sitemaps or users (or both), than the Starter plan <br> allows.</p>
-        <p>To choose the Starter plan, you'll need to go and delete all but three <br> sitemaps, and any other users you have on the team (except you).</p>
-        <p>Then, come back here, and you'll be able to choose this plan.</p>
-        <p>Don't want to delete users or sitemaps? <br> <a href="#">Choose the Pro plan</a> instead. </p>
-        <div class="modal-button text-center">
-          <a href="#" class="btn btn-pink">Go to the home screen</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
+<%= render 'users/starter_error_modal'%>
 
 
 

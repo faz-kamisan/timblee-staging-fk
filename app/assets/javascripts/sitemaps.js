@@ -1,10 +1,9 @@
 var Sitemaps = function(options) {
   this.actionOverlays = options.actionOverlays
   this.newSitemapLinkClass = options.newSitemapLinkClass;
-  this.newSitemapErrorLink = options.newSitemapErrorLink;
   this.newSitemapModal = options.newSitemapModal;
   this.newSitemap = options.newSitemap;
-  this.starterErrorModal = options.starterErrorModal;
+  this.sitemapErrorModal = options.sitemapErrorModal;
   this.dropContainers = options.dropContainers;
   this.draggableSitemaps = options.draggableSitemaps;
 };
@@ -16,7 +15,7 @@ Sitemaps.prototype.bindEvents = function() {
       _this.configureNewSitemapModal();
       _this.newSitemapModal.modal('show');
     } else {
-      _this.starterErrorModal.modal('show');
+      _this.sitemapErrorModal.modal('show');
     }
   });
 
@@ -60,9 +59,8 @@ $(function() {
     actionOverlays : $('.actions-overlay'),
     newSitemapLinkClass : 'new-sitemap-link',
     newSitemap : $('.new-sitemap'),
-    newSitemapErrorLink : $('.starter-error-link'),
     newSitemapModal: $('#create_sitemap_modal'),
-    starterErrorModal: $('#starter-error-modal'),
+    sitemapErrorModal: $('#sitemap-error-modal'),
     dropContainers : $('.folder-info'),
     draggableSitemaps : $('.sitemap-container').not('.new-sitemap')
   }
