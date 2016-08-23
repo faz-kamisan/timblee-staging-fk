@@ -2,6 +2,7 @@ var Sitemaps = function(options) {
   this.actionOverlays = options.actionOverlays
   this.newSitemapModal = options.newSitemapModal;
   this.newSitemapLink = options.newSitemapLink;
+  this.newSitemap = options.newSitemap;
   this.sitemapErrorModal = options.sitemapErrorModal;
   this.dropContainers = options.dropContainers;
   this.draggableSitemaps = options.draggableSitemaps;
@@ -10,7 +11,7 @@ var Sitemaps = function(options) {
 Sitemaps.prototype.bindEvents = function() {
   var _this = this;
 
-  this.newSitemapLink.on('click', function() {
+  this.newSitemap.on('click', _this.newSitemapLink, function() {
     if($(this).data('allow-more-sitemaps')) {
       _this.configureNewSitemapModal();
       _this.newSitemapModal.modal('show');
@@ -63,7 +64,8 @@ Sitemaps.prototype.init = function() {
 $(function() {
   var options = {
     actionOverlays : $('.actions-overlay'),
-    newSitemapLink : $('.new-sitemap-link'),
+    newSitemap : $('.new-sitemap'),
+    newSitemapLink : ('.new-sitemap-link'),
     newSitemapModal: $('#create_sitemap_modal'),
     sitemapErrorModal: $('#sitemap-error-modal'),
     dropContainers : $('.folder-info'),
