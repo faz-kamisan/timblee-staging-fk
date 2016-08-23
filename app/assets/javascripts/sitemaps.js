@@ -1,6 +1,5 @@
 var Sitemaps = function(options) {
   this.actionOverlays = options.actionOverlays
-  this.newSitemapLinkClass = options.newSitemapLinkClass;
   this.newSitemapModal = options.newSitemapModal;
   this.newSitemapLink = options.newSitemapLink;
   this.sitemapErrorModal = options.sitemapErrorModal;
