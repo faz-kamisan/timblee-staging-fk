@@ -24,6 +24,7 @@
   .sitemap-outer-wrapper {
     margin-bottom: 30px;
   }
+
   .site-card {
     height: 230px;
     background: $primaryWhite;
@@ -37,6 +38,23 @@
     &.new-sitemap-link {
       cursor: pointer;
     }
+    &.cloned {
+      width: 210px;
+      pointer-events: none;
+      display: inline-block;
+      margin-bottom: 35px;
+      .actions-overlay {
+        text-align: left;
+        top: 100%!important;
+      }
+      .more-options {
+        pointer-events: none;
+      }
+    }
+  }
+
+  .site-map-clone {
+    text-align: center;
   }
 
   h1 {
@@ -154,8 +172,8 @@
     height: 8px;
     @include border-radius(50%);
     background: $primaryLabel;
-    right: 20px;
-    top: 20px;
+    right: 15px;
+    top: 15px;
 
     &.on_hold {
       background: $primaryLabel;
@@ -339,6 +357,6 @@
 
 #delete-sitemap-modal {
   .modal-dialog {
-    @include alignCenter(-310px, -138px);
+    @include alignCenter(-310px, -264px);
   }
 }

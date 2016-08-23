@@ -127,6 +127,18 @@
   }
 }
 
+.delete-account-page {
+  .modal-dialog {
+    @include alignCenter(-310px, -200px);
+  }
+}
+
+#choose-plan-modal {
+  .modal-dialog {
+    @include alignCenter(-471px, -308px); 
+  }
+}
+
 #sucessful_reset_password_sent_modal {
   .modal-dialog {
     @include alignCenter(-310px, -116px);

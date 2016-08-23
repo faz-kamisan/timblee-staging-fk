@@ -40,9 +40,10 @@
         </div>
       </div>
     </div>
+    <%= render 'sitemaps/create_sitemap_modal' %>
+    <%= render 'folders/delete_folder_modal' %>
+    <%= render 'sitemaps/delete_sitemap_modal' %>
   </section>
-  <%= render 'sitemaps/create_sitemap_modal' %>
-  <%= render 'folders/delete_folder_modal' %>
-  <%= render 'sitemaps/delete_sitemap_modal' %>
+  
   <%= javascript_include_tag('moreOptions', 'folders', 'sitemaps', 'delete_sitemap') %>
 <% end %>
