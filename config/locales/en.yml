@@ -48,6 +48,7 @@ en:
         create:
           success: You are successfully subscribed to selected plan
           plan_not_found: Plan not found
+          failure: Something went wrong.
 
       send_destroy_request_to_superadmin:
           success: Request sent successfully

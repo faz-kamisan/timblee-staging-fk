@@ -17,31 +17,31 @@
         </div>
       <% elsif current_business.is_pro_plan? %>
 
-      <div class="row">
-        <div class="col-xs-9">
-          <label>Plan</label>
-          <p class="font-12-light">You're on the Pro plan with <%= current_business.no_of_users %> users. Your monthly charge is $<%= current_business.monthly_charge%>. To add more users, click on the 'Team' tab above.</p>
-        </div>
-        <div class="col-xs-3 text-right edit-info">
-          <div class="edit">
-            <a href="#starter-plan-modal-" data-dismiss="modal" data-toggle="modal" class="btn btn-pink btn-single">Edit Plan</a>
+        <div class="row">
+          <div class="col-xs-9">
+            <label>Plan</label>
+            <p class="font-12-light">You're on the Pro plan with <%= current_business.no_of_users %> users. Your monthly charge is $<%= current_business.monthly_charge%>. To add more users, click on the 'Team' tab above.</p>
+          </div>
+          <div class="col-xs-3 text-right edit-info">
+            <div class="edit">
+              <a href="#starter-plan-modal" data-dismiss="modal" data-toggle="modal" class="btn btn-pink btn-single">Edit Plan</a>
+            </div>
           </div>
         </div>
-      </div>
       <% else %>
 
-      <div class="row">
-        <div class="col-xs-9">
-          <label>Plan</label>
-          <p class="font-12-light">You're on the Starter plan with one user and a maximum of three sitemaps. This is a free plan.
-          <a href="#pro-plan-modal-" data-toggle="modal" data-dismiss="modal" id="upgrade">Upgrade to the Pro plan</a> for only $19 to have unlimited sitemaps.</p>
-        </div>
-        <div class="col-xs-3 text-right edit-info">
-          <div class="edit">
-            <a href="#pro-plan-modal-" data-toggle="modal" data-dismiss="modal" class="btn btn-pink btn-single">Edit Plan</a>
+        <div class="row">
+          <div class="col-xs-9">
+            <label>Plan</label>
+            <p class="font-12-light">You're on the Starter plan with one user and a maximum of three sitemaps. This is a free plan.
+            <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" id="upgrade">Upgrade to the Pro plan</a> for only $19 to have unlimited sitemaps.</p>
+          </div>
+          <div class="col-xs-3 text-right edit-info">
+            <div class="edit">
+              <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" class="btn btn-pink btn-single">Edit Plan</a>
+            </div>
           </div>
         </div>
-      </div>
       <% end %>
     </div>
   </form>
@@ -128,7 +128,7 @@
     <div class="form-group">
       <div class="row">
         <div class="col-xs-12">
-          <label class="label-bordered">Drastic measures</label>
+          <label class="label-bordered">Drastic measures <%= image_tag('sad.png', class: 'sad') %></label>
         </div>
       </div>
       <div class="row">
@@ -145,6 +145,8 @@
     </div>
   </form>
 
+  <!-- <a href="#thanks-modal" data-toggle="modal">modal 1</a> -->
+
 </div>
 <!-- Choose Plan Modal -->
 <%= render 'users/choose_plan_modal' %>
@@ -156,6 +158,31 @@
 <%= render 'users/starter_plan_modal' %>
 
 <%= render 'businesses/delete_business_modal' %>
+
+<!-- Thanks Modal -->
+<div class="modal fade" id="thanks-modal" tabindex="-1" role="dialog" aria-labelledby="thanks-modalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">
+            <%= image_tag('close-modal.svg', class: 'close-modal') %>
+          </span>
+        </button>
+        <h4>Thanks [First Name]</h4>
+        <p>We're so excited to have you on board! If you ever have a question or <br> need a hand with anything, we're just a click away via the settings menu <br> and would love to help!</p>
+        <p>Lots of Love,</p>
+        <%= image_tag('team.svg', class: 'team-logo') %>
+        <div class="modal-button text-center">
+          <a href="#" class="btn btn-pink">Create a sitemap</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<%= render 'users/starter_error_modal'%>
 
 
 

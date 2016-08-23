@@ -20,7 +20,11 @@
           </div>
         <div class="col-xs-3 text-right edit-info">
           <div class="edit">
-            <a href="#invite-user-modal" data-toggle="modal" class="btn btn-pink">Invite</a>
+            <% if current_business.is_starter_plan? %>
+                <a href="#invite-error-modal" data-toggle="modal" class="btn btn-pink">Invite</a>
+            <% else %>
+              <a href="#invite-user-modal" data-toggle="modal" class="btn btn-pink">Invite</a>
+            <% end %>
           </div>
         </div>
         <% else %>
@@ -94,4 +98,5 @@
   <% end %>
 
 </div>
+<%= render 'users/invite_error_modal'%>
 <%= javascript_include_tag('invitations', 'delete_user') %>

@@ -12,15 +12,10 @@
         <p class="modal-message">Youre about to permanently delete this sitemap from your account.</p>
       </div>
       <div class="modal-body">
-        <div class="text-center">
-          <div class="sitemap-name-to-delete">
-            <span class="icon-sitemap-light"></span>
-            <span class="inner-name"></span>
-          </div>
-        </div>
+        <div class="site-map-clone"></div>
         <div class="modal-button text-center">
           <%= link_to "Delete Sitemap", '#', method: :delete, class: "btn btn-red", id: 'delete-sitemap-link' %>
-          <a href="#" data-dismiss="modal" class="btn btn-transparent btn-last">Cancel</a>
+          <a href="#" data-dismiss="modal" class="btn btn-transparent btn-last hide-delete-modal">Cancel</a>
         </div>
       </div>
     </div>

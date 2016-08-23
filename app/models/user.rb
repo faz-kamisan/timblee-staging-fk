@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   after_create :set_confirmation_instructions_to_be_sent, unless: :confirmed?
   before_destroy :restrict_owner_destroy
   before_update :restrict_owner_role_update, if: :is_admin_changed?
+  after_update :mail_user_about_role_update, if: :is_admin_changed?
 
   strip_fields :full_name
 
@@ -61,6 +62,10 @@ class User < ActiveRecord::Base
     #     errors.add :avatar, "should be 400x400px minimum!"
     #   end
     # end
+
+    def mail_user_about_role_update
+      UserMailer.delay.send_updated_role_details(id)
+    end
 
     def set_is_admin
       self.is_admin = true

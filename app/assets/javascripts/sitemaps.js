@@ -1,24 +1,37 @@
 var Sitemaps = function(options) {
   this.actionOverlays = options.actionOverlays
-  this.newSitemapLink = options.newSitemapLink;
   this.newSitemapModal = options.newSitemapModal;
+  this.newSitemapLink = options.newSitemapLink;
+  this.newSitemap = options.newSitemap;
+  this.sitemapErrorModal = options.sitemapErrorModal;
   this.dropContainers = options.dropContainers;
   this.draggableSitemaps = options.draggableSitemaps;
 };
 
 Sitemaps.prototype.bindEvents = function() {
   var _this = this;
-  this.newSitemapLink.on('click', function() {
-    _this.configureNewSitemapModal();
-    _this.newSitemapModal.modal('show');
-  })
+
+  this.newSitemap.on('click', _this.newSitemapLink, function() {
+    if($(this).data('allow-more-sitemaps')) {
+      _this.configureNewSitemapModal();
+      _this.newSitemapModal.modal('show');
+    } else {
+      _this.sitemapErrorModal.modal('show');
+    }
+  });
 
   $('body').on('click', function(event) {
-    var $tartget = $(event.target)
-    if($tartget.closest('.sitemap_wrapper').length > 0) {
-      var sitemapId = $tartget.closest('.sitemap_wrapper').find('.sitemap-container').data('id')
+    var $target = $(event.target);
+    if($target.closest('.sitemap_wrapper').length > 0) {
+      var sitemapId = $target.closest('.sitemap_wrapper').find('.sitemap-container').data('id')
       _this.actionOverlays.not('[data-id= ' + sitemapId.toString() + ']').animate({ top: 230 }, 150);
-    } else {
+    }
+    else if($target.hasClass('hide-delete-modal')) {
+      setTimeout(function() {
+        _this.actionOverlays.animate({ top: 230 }, 150);
+      }, 250);
+    }
+    else {
       _this.actionOverlays.animate({ top: 230 }, 150);
     }
   });
@@ -51,8 +64,10 @@ Sitemaps.prototype.init = function() {
 $(function() {
   var options = {
     actionOverlays : $('.actions-overlay'),
-    newSitemapLink : $('.new-sitemap-link'),
+    newSitemap : $('.new-sitemap'),
+    newSitemapLink : ('.new-sitemap-link'),
     newSitemapModal: $('#create_sitemap_modal'),
+    sitemapErrorModal: $('#sitemap-error-modal'),
     dropContainers : $('.folder-info'),
     draggableSitemaps : $('.sitemap-container').not('.new-sitemap')
   }
