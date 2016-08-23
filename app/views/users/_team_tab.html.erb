@@ -20,7 +20,17 @@
           </div>
         <div class="col-xs-3 text-right edit-info">
           <div class="edit">
-            <a href="#invite-user-modal" data-toggle="modal" class="btn btn-pink">Invite</a>
+              <% if current_business.is_pro_plan? %>
+                <% if current_business.active_subscription.no_of_users > current_business.users.count %>
+                  <a href="#invite-user-modal" data-toggle="modal" class="btn btn-pink">Invite</a>
+                <% else %>
+                  <a href="#pro-invite-user-modal" data-toggle="modal" class="btn btn-pink">Invite</a>
+                <% end %>
+              <% elsif current_business.is_starter_plan? %>
+                  <a href="#starter-error-modal" data-toggle="modal" class="btn btn-pink">Invite</a>
+              <% elsif current_business.in_trial_period? %>
+                <a href="#invite-user-modal" data-toggle="modal" class="btn btn-pink">Invite</a>
+              <% end %>
           </div>
         </div>
         <% else %>

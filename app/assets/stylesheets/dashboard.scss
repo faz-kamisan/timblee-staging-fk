@@ -34,7 +34,7 @@
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    &.new-sitemap-link {
+    &.new-sitemap-link, .starter-error-link {
       cursor: pointer;
     }
   }
@@ -145,7 +145,7 @@
     &:hover {
       .icon-close {
         color: $primaryPink;
-      } 
+      }
     }
   }
   .state {
@@ -235,7 +235,7 @@
     &:hover {
       .icon-folder-light,
       .icon-all-folders {
-        color: $primaryGrey;  
+        color: $primaryGrey;
       }
       color: $primaryGrey;
     }
@@ -289,7 +289,7 @@
   }
 }
 
-.new-sitemap-link {
+.new-sitemap-link, .starter-error-link {
   text-align: center;
   color: $primaryLabel;
   font-size: 14px;

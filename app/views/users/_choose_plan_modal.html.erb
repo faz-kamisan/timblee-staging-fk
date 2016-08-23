@@ -7,7 +7,7 @@
             <%= image_tag('close-modal.svg', class: 'close-modal') %>
           </span>
         </button>
-        <h4 class="modal-title">Choose your plan</h4>
+        <h4 class="modal-title"><%= current_business.plan ? "Switch your plan": "Choose your plan"%></h4>
         <p class="modal-message">Choose from one of two plans based on your needs. Pay only for the <br> users you need and nothing more, with simple, <br> per user per month pricing.</p>
       </div>
       <div class="modal-body">
@@ -22,7 +22,11 @@
               <li>All features</li>
             </ul>
             <p>$19 for the first user. Then $12 per user.</p>
-            <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" class="btn btn-pink btn-modal-open">Choose this plan</a>
+            <% if current_business.is_pro_plan? %>
+              <span>YOUR CURRENT PLAN</span>
+            <% else %>
+              <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" class="btn btn-pink btn-modal-open"><%= current_business.plan ? "SWITCH TO PRO": "Choose this plan"%></a>
+            <% end %>
           </div>
           <div class="starter-plan-benefits plan-benefits">
             <h1 class="choose-plan-heading">Starter</h1>
@@ -34,7 +38,11 @@
               <li>All features</li>
             </ul>
             <p>Free</p>
-            <a href="#starter-plan-modal" data-dismiss="modal" data-toggle="modal" class="btn btn-grey btn-modal-open">Choose this plan</a>
+            <% if current_business.is_starter_plan? %>
+              <span>YOUR CURRENT PLAN</span>
+            <% else %>
+              <a href="#starter-plan-modal" data-dismiss="modal" data-toggle="modal" class="btn btn-grey btn-modal-open"><%= current_business.plan ? "DOWNGRADE TO STARTER": "Choose this plan"%></a>
+            <% end %>
           </div>
         </div>
         <p class="para-light-14 text-center">All amounts are in USD and reflect monthly charges. <br> We only offer monthly plans so you can change and cancel any time you <br> want. If you're in Australia, the amounts include 10% GST.</p>

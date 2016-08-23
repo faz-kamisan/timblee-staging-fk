@@ -17,31 +17,31 @@
         </div>
       <% elsif current_business.is_pro_plan? %>
 
-      <div class="row">
-        <div class="col-xs-9">
-          <label>Plan</label>
-          <p class="font-12-light">You're on the Pro plan with <%= current_business.no_of_users %> users. Your monthly charge is $<%= current_business.monthly_charge%>. To add more users, click on the 'Team' tab above.</p>
-        </div>
-        <div class="col-xs-3 text-right edit-info">
-          <div class="edit">
-            <a href="#starter-plan-modal-" data-dismiss="modal" data-toggle="modal" class="btn btn-pink btn-single">Edit Plan</a>
+        <div class="row">
+          <div class="col-xs-9">
+            <label>Plan</label>
+            <p class="font-12-light">You're on the Pro plan with <%= current_business.no_of_users %> users. Your monthly charge is $<%= current_business.monthly_charge%>. To add more users, click on the 'Team' tab above.</p>
+          </div>
+          <div class="col-xs-3 text-right edit-info">
+            <div class="edit">
+              <a href="#starter-plan-modal" data-dismiss="modal" data-toggle="modal" class="btn btn-pink btn-single">Edit Plan</a>
+            </div>
           </div>
         </div>
-      </div>
       <% else %>
 
-      <div class="row">
-        <div class="col-xs-9">
-          <label>Plan</label>
-          <p class="font-12-light">You're on the Starter plan with one user and a maximum of three sitemaps. This is a free plan.
-          <a href="#pro-plan-modal-" data-toggle="modal" data-dismiss="modal" id="upgrade">Upgrade to the Pro plan</a> for only $19 to have unlimited sitemaps.</p>
-        </div>
-        <div class="col-xs-3 text-right edit-info">
-          <div class="edit">
-            <a href="#pro-plan-modal-" data-toggle="modal" data-dismiss="modal" class="btn btn-pink btn-single">Edit Plan</a>
+        <div class="row">
+          <div class="col-xs-9">
+            <label>Plan</label>
+            <p class="font-12-light">You're on the Starter plan with one user and a maximum of three sitemaps. This is a free plan.
+            <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" id="upgrade">Upgrade to the Pro plan</a> for only $19 to have unlimited sitemaps.</p>
+          </div>
+          <div class="col-xs-3 text-right edit-info">
+            <div class="edit">
+              <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" class="btn btn-pink btn-single">Edit Plan</a>
+            </div>
           </div>
         </div>
-      </div>
       <% end %>
     </div>
   </form>

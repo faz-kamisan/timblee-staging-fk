@@ -4,5 +4,6 @@ $("div.flash-message").html("<%==j render partial: 'shared/flash_message' %>");
   $('.all-sitemap-folder .folder-items').html('<%= current_user.all_sitemaps.count %>')
   $('li.folder-info[data-id=<%= @folder.id %>]').remove();
   $('div.sitemap-container[data-folder-id=<%= @folder.id %>]').closest('.sitemap-outer-wrapper').remove();
-  $('.all-sitemap-folder').find('.folder-info-block').click()
+  $('.all-sitemap-folder').find('.folder-info-block').click();
+  $('.new-sitemap').html("<%==j render partial: 'sitemaps/new_sitemap' %>");
 <% end %>

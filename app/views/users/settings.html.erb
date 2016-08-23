@@ -16,6 +16,8 @@
     <%= render 'users/my_info_tab' %>
     <%= render 'users/team_tab' %>
     <% if current_user.is_admin? %>
+      <%= render 'users/pro_invite_user_modal'%>
+      <%= render 'users/starter_error_modal'%>
       <%= render 'users/personalization_tab' %>
       <%= render 'users/billing_tab' %>
     <% end %>
