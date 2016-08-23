@@ -1,12 +1,22 @@
 import React, { PropTypes } from 'react';
 import { ItemTypes } from '../dnd/constants';
-import { DragSource, DropTarget } from 'react-dnd';
+import { DragSource, DropTarget, DragLayer } from 'react-dnd';
 import { findDOMNode } from 'react-dom';
 
 const sitemapSource = {
-  beginDrag() {
-    return {};
+  beginDrag(props, monitor, component) {
+    return {id: props.pageTree.id};
   }
+};
+
+const layerStyles = {
+  position: 'fixed',
+  pointerEvents: 'none',
+  zIndex: 100,
+  left: 0,
+  top: 0,
+  width: '100%',
+  height: '100%'
 };
 
 const sitemapTarget = {
@@ -19,12 +29,26 @@ const sitemapTarget = {
   }
 };
 
+const sitemapDragLayer = {
+
+}
+
 var DragSourceDecorator = DragSource(ItemTypes.PAGE_CONTAINER, sitemapSource,
   function(connect, monitor) {
     return {
       connectDragSource: connect.dragSource(),
+      connectDragPreview: connect.dragPreview(),
       isDragging: monitor.isDragging()
     };
+});
+
+var DragLayerDecorator = DragLayer(function(monitor) {
+                                    return {
+                                      item: monitor.getItem(),
+                                      itemType: monitor.getItemType(),
+                                      currentOffset: monitor.getSourceClientOffset(),
+                                      isDragging: monitor.isDragging()
+                                    };
 });
 
 var DropTargetDecorator = DropTarget(ItemTypes.PAGE_CONTAINER, sitemapTarget,
@@ -70,19 +94,20 @@ export default class PageContainer extends React.Component {
   render() {
     const connectDragSource = this.props.connectDragSource
     const connectDropTarget = this.props.connectDropTarget
+    const connectDragPreview = this.props.connectDragPreview;
     var children;
     if (this.props.pageTree.children != null) {
       children = this.props.pageTree.children.map(function(pageTree, index) {
         return <li key={index}><WrappedDraggableNode pageTree={pageTree} /></li>
       });
     }
-    console.log(this.props.isDragging)
 
     return connectDragSource(connectDropTarget(
-      <div data-level={this.props.pageTree.level} className={ 'page-container level-' + this.props.pageTree.level.toString() }>
+      <div data-level={this.props.pageTree.level} className={ 'page-container level-' + this.props.pageTree.level.toString() + (this.props.isDragging ? ' dragging' : '') }>
         <h5>
           {this.props.pageTree.name}
         </h5>
+        {this.props.isDragging && ' (and I am being dragged now)'}
         <ul>
           {children}
         </ul>
@@ -92,7 +117,7 @@ export default class PageContainer extends React.Component {
 }
 
 // var WrappedDraggableNode = DragSource(ItemTypes.PAGE_CONTAINER, sitemapSource, collect)(PageContainer)
-var WrappedDraggableNode = DropTargetDecorator(DragSourceDecorator(PageContainer))
+var WrappedDraggableNode = DragLayerDecorator(DropTargetDecorator(DragSourceDecorator(PageContainer)))
 // var WrappedDroppableDraggableNode = Drop(ItemTypes.PAGE_CONTAINER, sitemapSource, collect)(PageContainer)
 export default WrappedDraggableNode
 
