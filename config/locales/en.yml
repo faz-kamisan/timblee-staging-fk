@@ -83,6 +83,7 @@ en:
             attributes:
               email:
                 invalid: "Looks like your email is incorrect"
+                blank: "This can't be blank. We're sorry :("
 
   devise:
     invitations:
