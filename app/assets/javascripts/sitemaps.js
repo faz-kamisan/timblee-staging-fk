@@ -2,7 +2,7 @@ var Sitemaps = function(options) {
   this.actionOverlays = options.actionOverlays
   this.newSitemapLinkClass = options.newSitemapLinkClass;
   this.newSitemapModal = options.newSitemapModal;
-  this.newSitemap = options.newSitemap;
+  this.newSitemapLink = options.newSitemapLink;
   this.sitemapErrorModal = options.sitemapErrorModal;
   this.dropContainers = options.dropContainers;
   this.draggableSitemaps = options.draggableSitemaps;
@@ -11,8 +11,8 @@ var Sitemaps = function(options) {
 Sitemaps.prototype.bindEvents = function() {
   var _this = this;
 
-  this.newSitemap.on('click', function() {
-    if($(this).find('a').hasClass(_this.newSitemapLinkClass)) {
+  this.newSitemapLink.on('click', function() {
+    if($(this).data('allow-more-sitemaps')) {
       _this.configureNewSitemapModal();
       _this.newSitemapModal.modal('show');
     } else {
@@ -64,8 +64,7 @@ Sitemaps.prototype.init = function() {
 $(function() {
   var options = {
     actionOverlays : $('.actions-overlay'),
-    newSitemapLinkClass : 'new-sitemap-link',
-    newSitemap : $('.new-sitemap'),
+    newSitemapLink : $('.new-sitemap-link'),
     newSitemapModal: $('#create_sitemap_modal'),
     sitemapErrorModal: $('#sitemap-error-modal'),
     dropContainers : $('.folder-info'),
