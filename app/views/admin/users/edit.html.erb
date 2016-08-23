@@ -85,7 +85,11 @@
             <div class="row">
               <div class="col-xs-9">
                 <label>role</label>
-                <p class="font-12-light"><%= @user.full_name.titleize %> has standard user access which allows editing and creating sitemaps but no user or account management settings. If you change a user’s role, we'll send them an email to let them know about their new superpowers (or not).</p>
+                <% if @user.is_admin %>
+                  <p class="font-12-light"><%= @user.full_name.titleize %> has admin user access which allows editing and creating sitemaps and also user and account management settings. If you change a user’s role, we'll send them an email to let them know about their new superpowers (or not).</p>
+                <% else %>
+                  <p class="font-12-light"><%= @user.full_name.titleize %> has standard user access which allows editing and creating sitemaps but no user or account management settings. If you change a user’s role, we'll send them an email to let them know about their new superpowers (or not).</p>
+                <% end %>
               </div>
 
               <div class="col-xs-3 text-right edit-info">
