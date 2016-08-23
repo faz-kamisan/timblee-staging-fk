@@ -23,7 +23,8 @@ Folders.prototype.bindEvents = function() {
   this.folderList.on('blur keyup', '.folder-name-field', function(e) {
     if(e.type == 'focusout' || e.keyCode == '13') {
       var $this = $(this);
-      if($this.val() == $this.data('name')) {
+      // debugger
+      if($this.val().toString() == $this.data('name').toString()) {
         $this.siblings('.folder-name-text').removeClass('hidden');
         $this.addClass('hidden');
       } else {

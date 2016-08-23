@@ -86,6 +86,6 @@ Rails.application.configure do
     :port => '2525',
     :authentication => :cram_md5
   }
-  config.action_mailer.default_url_options = { host: "http://52.64.63.239/" }
+  config.action_mailer.default_url_options = { host: "http://staging.timblee.io/" }
 
 end

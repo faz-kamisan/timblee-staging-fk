@@ -11,7 +11,7 @@
         </h1>
         <% if flash.alert.present? %>
           <div class='field_with_errors'>
-            <span class='error-message login-error-message'><%= flash.alert %></span>
+            <span class='error-message login-error-message'><%= flash.alert.html_safe %></span>
           </div>
           <% flash.clear %>
         <% end %>
@@ -32,9 +32,6 @@
             <div class="col-md-6 text-right">
               <%= link_to "Don't have a login?", new_registration_path(resource_name), class: 'link-regular' %>
             </div>
-            <!-- <div class="col-md-6 text-center col-md-offset-3 m-t-10">
-              <%= link_to "Resend Confirmation", new_confirmation_path(resource_name), class: 'link-regular' %>
-            </div> -->
           </div>
         <% end %>
       </div>

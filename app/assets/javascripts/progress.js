@@ -45,10 +45,8 @@ Progress.prototype.init = function() {
                 month = updatedAt.toLocaleString('en-us', { month: "short" }),
                 year = updatedAt.getFullYear(),
                 updatedAtFormatted = month + ' ' + day + ', ' + year;
-            $dropped.css({top: 0, left: 0}).parent('.drag-wrapper').detach().prependTo($droppedOn);
+            $dropped.css({top: 0, left: 0}).parent('.drag-wrapper').detach().prependTo($droppedOn.find('.sitemap_container'));
             $dropped.find('.last-updated').html('Last updated ' + updatedAtFormatted);
-            $dropped.find('.state').removeClass(originalState);
-            $dropped.find('.state').addClass(targetState);
             _this.checkContainerIsEmpty($droppedOn);
             _this.checkContainerIsEmpty(sourceContainer);
           }
@@ -78,7 +76,7 @@ Progress.prototype.setSitemapCount = function(targetContainer, sourceContainer) 
 }
 
 Progress.prototype.calculateAndSetSitemapCount = function(container, method) {
-  var sitemapCountContainer = container.parent('.drag-me').find('.sitemap-count')
+  var sitemapCountContainer = container.find('.sitemap-count')
   var count = sitemapCountContainer.data('count');
   if(method == 'add') {
     var newCount = ++count

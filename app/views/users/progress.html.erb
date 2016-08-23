@@ -8,12 +8,12 @@
 
   <div class="progress-cards">
 
-    <div class="drag-me" id="on-hold">
+    <div class="drag-me drop_container" id="on-hold" data-state='on_hold'>
       <div class="drag-header text-center">
         <h1>On Hold</h1>
         <p class="sitemap-count" data-count=<%= @sitemaps_by_state[:on_hold].length %>><%= pluralize(@sitemaps_by_state[:on_hold].length, 'Sitemap') %></p>
       </div>
-      <div id="on-hold-holder" class="drag-div drop_container" data-state='on_hold'>
+      <div id="on-hold-holder" class="drag-div sitemap_container">
         <div class='empty-sitemap-holder <%= 'hidden' if @sitemaps_by_state[:on_hold].present? %>'>
           <%= image_tag('empty-state-container.svg', class: 'empty-state') %>
         </div>
@@ -34,12 +34,12 @@
 
     <div class="drag-me-bar"></div>
 
-    <div class="drag-me" id="in-progress">
+    <div class="drag-me drop_container" id="in-progress" data-state='in_progress'>
       <div class="drag-header text-center">
         <h1>In Progress</h1>
         <p class="sitemap-count" data-count=<%= @sitemaps_by_state[:in_progress].length %>><%= pluralize(@sitemaps_by_state[:in_progress].length, 'Sitemap') %></p>
       </div>
-      <div id="in-progress-holder" class="drag-div drop_container" data-state='in_progress'>
+      <div id="in-progress-holder" class="drag-div sitemap_container">
         <div class='empty-sitemap-holder <%= 'hidden' if @sitemaps_by_state[:in_progress].present? %>'>
           <%= image_tag('empty-state-container.svg', class: 'empty-state') %>
         </div>
@@ -60,12 +60,12 @@
 
     <div class="drag-me-bar"></div>
 
-    <div class="drag-me" id="review">
+    <div class="drag-me drop_container" id="review" data-state='in_review'>
       <div class="drag-header text-center">
         <h1>Review</h1>
         <p class="sitemap-count" data-count=<%= @sitemaps_by_state[:in_review].length %>><%= pluralize(@sitemaps_by_state[:in_review].length, 'Sitemap') %></p>
       </div>
-      <div id="review-holder" class="drag-div drop_container" data-state='in_review'>
+      <div id="review-holder" class="drag-div sitemap_container">
         <div class='empty-sitemap-holder <%= 'hidden' if @sitemaps_by_state[:in_review].present? %>'>
           <%= image_tag('empty-state-container.svg', class: 'empty-state') %>
         </div>
@@ -86,12 +86,12 @@
 
     <div class="drag-me-bar"></div>
 
-    <div class="drag-me" id="approved">
+    <div class="drag-me drop_container" id="approved" data-state='approved'>
       <div class="drag-header text-center">
         <h1>Approved</h1>
         <p class="sitemap-count" data-count=<%= @sitemaps_by_state[:approved].length %>><%= pluralize(@sitemaps_by_state[:approved].length, 'Sitemap') %></p>
       </div>
-      <div id="approved-holder" class="drag-div drop_container" data-state='approved'>
+      <div id="approved-holder" class="drag-div sitemap_container">
         <div class='empty-sitemap-holder <%= 'hidden' if @sitemaps_by_state[:approved].present? %>'>
           <%= image_tag('empty-state-container.svg', class: 'empty-state') %>
         </div>
