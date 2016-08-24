@@ -31,7 +31,8 @@ class User < ActiveRecord::Base
   # add custom validations
   validates :full_name, presence: { message: 'Hmm... no name? Make something up :)' }
   validates :email, presence: { message: 'We really do need an email. Pretty please.' }
-  validates :email, uniqueness: { message: "There's already an account linked to this email. Forgot your password? <a href='/users/password/new'>Reset it here</a>." }, allow_blank: true, if: :email_changed?
+  validates :email, uniqueness: { message: I18n.t('devise.failure.invited') }, allow_blank: true, if: -> { email_changed? && User.find_by_email(email).try(:invitation_not_accepted?) }
+  validates :email, uniqueness: { message: "There's already an account linked to this email. Forgot your password? <a href='/users/password/new'>Reset it here</a>." }, allow_blank: true, if: -> { email_changed? && !User.find_by_email(email).try(:invitation_not_accepted?) }
   validates_format_of :email, with: email_regexp, allow_blank: true, if: :email_changed?
   validates :password, presence: { message: 'Without a password, it\'s like leaving your door open to the whole internet.' }, if: :password_required?
   validates :password, confirmation: true, if: :password_required?
@@ -40,6 +41,10 @@ class User < ActiveRecord::Base
 
   def all_sitemaps
     Sitemap.where(id: business.sitemaps.pluck(:id) + shared_sitemaps.pluck(:id)).order_by_alphanumeric_lower_name
+  end
+
+  def invitation_not_accepted?
+    invitation_token.present? && invitation_accepted_at.blank?
   end
 
   def active?

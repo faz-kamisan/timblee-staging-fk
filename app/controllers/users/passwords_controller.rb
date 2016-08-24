@@ -1,4 +1,5 @@
 class Users::PasswordsController < Devise::PasswordsController
+  before_action :restrict_users_with_invitation_not_accepted, only: :create
   # GET /resource/password/new
   # def new
   #   super
@@ -29,4 +30,12 @@ class Users::PasswordsController < Devise::PasswordsController
   def after_sending_reset_password_instructions_path_for(resource_name)
     new_user_session_path(modal: true)
   end
+
+  def restrict_users_with_invitation_not_accepted
+    user = User.find_by_email(params[:user][:email])
+    if user && user.invitation_not_accepted?
+      redirect_to root_path, alert: t('devise.failure.invited')
+    end
+  end
+
 end
