@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
     # end
 
     def mail_user_about_role_update
-      UserMailer.delay.send_updated_role_details(id)
+      UserMailer.delay_for(10.seconds).send_updated_role_details(id)
     end
 
     def set_is_admin
