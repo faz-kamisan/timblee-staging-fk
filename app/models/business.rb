@@ -21,6 +21,10 @@ class Business < ActiveRecord::Base
     trial_end_at > Time.current
   end
 
+  def in_trial_period_without_any_plan?
+    in_trial_period? && !plan
+  end
+
   def is_pro_plan?
     plan.try(:stripe_plan_id) == PRO_STRIPE_ID
   end
@@ -42,7 +46,7 @@ class Business < ActiveRecord::Base
   end
 
   def allow_more_sitemaps?
-    is_pro_plan? || (in_trial_period? && !plan) || sitemaps.count < 3
+    is_pro_plan? || in_trial_period_without_any_plan? || sitemaps.count < 3
   end
 
   def self.monthly_charge(no_of_users)

@@ -3,46 +3,24 @@
   <form class="settings-form">
     <div class="form-group">
 
-      <% if !current_business.plan && current_business.in_trial_period? %>
-        <div class="row">
-          <div class="col-xs-9">
-            <label>Plan</label>
+      <div class="row">
+        <div class="col-xs-9">
+          <label>Plan</label>
+          <% if current_business.in_trial_period_without_any_plan? %>
             <p class="font-12-light">You're on the free trial till  <%= current_business.trial_end_at.strftime('%b %d, %Y') %> with no restrictions. To keep using Timblee after that, we'll ask you to choose a plan and add a credit card. Our pricing is simple – $19 per month for the first user and $12 for every subsequent user. If you’ll only need to plan websites ocassionally and work alone, there's also a free plan.</p>
-          </div>
-          <div class="col-xs-3 text-right edit-info">
-            <div class="edit">
-              <a href="#choose-plan-modal" data-toggle="modal" class="btn btn-pink btn-single">Choose a plan</a>
-            </div>
-          </div>
-        </div>
-      <% elsif current_business.is_pro_plan? %>
-
-        <div class="row">
-          <div class="col-xs-9">
-            <label>Plan</label>
+          <% elsif current_business.is_pro_plan? %>
             <p class="font-12-light">You're on the Pro plan with <%= current_business.no_of_users %> users. Your monthly charge is $<%= current_business.monthly_charge%>. To add more users, click on the 'Team' tab above.</p>
-          </div>
-          <div class="col-xs-3 text-right edit-info">
-            <div class="edit">
-              <a href="#starter-plan-modal" data-dismiss="modal" data-toggle="modal" class="btn btn-pink btn-single">Edit Plan</a>
-            </div>
-          </div>
-        </div>
-      <% else %>
-
-        <div class="row">
-          <div class="col-xs-9">
-            <label>Plan</label>
+          <% else %>
             <p class="font-12-light">You're on the Starter plan with one user and a maximum of three sitemaps. This is a free plan.
             <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" id="upgrade">Upgrade to the Pro plan</a> for only $19 to have unlimited sitemaps.</p>
-          </div>
-          <div class="col-xs-3 text-right edit-info">
-            <div class="edit">
-              <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" class="btn btn-pink btn-single">Edit Plan</a>
-            </div>
+          <% end %>
+        </div>
+        <div class="col-xs-3 text-right edit-info">
+          <div class="edit">
+            <a href="#choose-plan-modal" data-toggle="modal" class="btn btn-pink btn-single"><%= current_business.in_trial_period_without_any_plan? ? 'Choose a plan' : 'Edit Plan' %></a>
           </div>
         </div>
-      <% end %>
+      </div>
     </div>
   </form>
 
