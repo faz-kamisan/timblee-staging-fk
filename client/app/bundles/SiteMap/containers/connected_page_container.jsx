@@ -1,13 +1,16 @@
 import { connect } from 'react-redux'
-import { setName } from '../actions'
+import { updatePagePosition } from '../actions'
 import PageContainer from '../components/page_container'
 
 const mapStateToProps = (state) => {
-  return { pageTree: state.page_tree }
+  return { pageTree: state.pageTree }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    onDrop: (id, newParentId) => {
+      dispatch(updatePagePosition(id, newParentId));
+    }
   }
 }
 

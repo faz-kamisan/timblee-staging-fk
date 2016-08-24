@@ -6,14 +6,17 @@ class Page < ActiveRecord::Base
 
   validates :name, presence: true
 
-  def get_tree(level = 0)
+  def get_tree(collection, level = 0)
     # optimise: firing too many queries
     tree = {
       name: name,
       id: id,
-      level: level
+      parentId: parent_id,
+      level: level,
+      pageType: page_type
     }
-    tree.merge!({ children: self.children.map { |child| child.get_tree(level + 1) } })
+    child_pages = collection.select {|page| page.parent_id == self.id}
+    tree.merge!({ children: child_pages.map { |child_page| child_page.get_tree(collection, level + 1) } })
     tree
   end
 end

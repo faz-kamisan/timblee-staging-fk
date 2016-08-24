@@ -17,7 +17,9 @@
 //= require jquery-ui
 //= require bootstrap.min
 //= require tag-it.min
+//= require Queue
 //= require flash
+//= require array_decorator
 //= require editFields
 //= require twemoji-picker
 //= require apply_twemoji

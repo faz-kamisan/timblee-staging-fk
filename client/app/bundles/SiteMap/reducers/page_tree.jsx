@@ -1,12 +1,19 @@
-import { UPDATE_PAGE_TREE } from '../actions/index'
+import { ADD_NEW_PAGE, REMOVE_PAGE, UPDATE_PAGE_NAME, UPDATE_PAGE_POSITION } from '../actions/index'
+import { addPage, removePage, updatePagePosition, updatePageName } from '../helpers/tree_helper'
 
-const page_tree = (state = {}, action) => {
+const pageTree = (state = {}, action) => {
   switch (action.type) {
-    case UPDATE_PAGE_TREE:
-      return state
+    case ADD_NEW_PAGE:
+      return addPage(state, action.parentId)
+    case REMOVE_PAGE:
+      return removePage(state, action.id)
+    case UPDATE_PAGE_POSITION:
+      return updatePagePosition(state, action.id, action.newParentId)
+    case UPDATE_PAGE_NAME:
+      return updatePageName(state, action.id, action.name)
     default:
       return state
   }
 }
 
-export default page_tree
+export default pageTree

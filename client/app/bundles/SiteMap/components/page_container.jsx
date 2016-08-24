@@ -5,8 +5,13 @@ import { findDOMNode } from 'react-dom';
 
 const sitemapSource = {
   beginDrag(props, monitor, component) {
-    return {id: props.pageTree.id};
+    return {id: props.pageTree.id, parentId: props.pageTree.parentId};
   }
+  // beginDrag: function (props) {
+  //   // Return the data describing the dragged item
+  //   var item = { id: props.pageTree.id };
+  //   return item;
+  // },
 };
 
 const layerStyles = {
@@ -25,7 +30,11 @@ const sitemapTarget = {
     // $(domNode).css('background-color', 'yellow')
   },
   drop: function(props, monitor, component) {
-    // var domNode = findDOMNode(component);
+    const item = monitor.getItem();
+    if (monitor.didDrop() || item.parentId == props.pageTree.id) {
+      return;
+    }
+    props.onDrop(item.id, props.pageTree.id);
   }
 };
 
@@ -66,6 +75,7 @@ export default class PageContainer extends React.Component {
     // passing two properties: "data" and "actions".
     // updateName: PropTypes.func.isRequired,
     // name: PropTypes.string.isRequired,
+    // onDrop: PropTypes.func.isRequired,
     pageTree: PropTypes.object.isRequired
   };
   constructor(props) {
@@ -75,7 +85,6 @@ export default class PageContainer extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
       var domNode = findDOMNode(this);
-      // debugger
       $(domNode).addClass('drag-over' )
     }
 
@@ -95,10 +104,11 @@ export default class PageContainer extends React.Component {
     const connectDragSource = this.props.connectDragSource
     const connectDropTarget = this.props.connectDropTarget
     const connectDragPreview = this.props.connectDragPreview;
+    var _this = this;
     var children;
     if (this.props.pageTree.children != null) {
       children = this.props.pageTree.children.map(function(pageTree, index) {
-        return <li key={index}><WrappedDraggableNode pageTree={pageTree} /></li>
+        return <li key={index}><WrappedDraggableNode pageTree={pageTree} onDrop={_this.props.onDrop} /></li>
       });
     }
 

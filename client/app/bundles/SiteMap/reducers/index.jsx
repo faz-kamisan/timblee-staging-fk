@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
 import name from './name'
-import page_tree from './page_tree'
+import pageTree from './page_tree'
 
 const sitemapAppReducer = combineReducers({
   name,
-  page_tree
+  pageTree
 })
 
 export default sitemapAppReducer
