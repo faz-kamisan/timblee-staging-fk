@@ -75,7 +75,7 @@ var DropTargetDecorator = DropTarget([ItemTypes.PAGE_CONTAINER, ItemTypes.PAGE_T
     };
 });
 
-export default class PageContainer extends React.Component {
+class PageContainer extends React.Component {
   static propTypes = {
     onPageDrop: PropTypes.func.isRequired,
     onPageTypeDrop: PropTypes.func.isRequired,
