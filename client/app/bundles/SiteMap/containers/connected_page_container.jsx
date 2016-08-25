@@ -3,7 +3,7 @@ import { updatePagePosition } from '../actions'
 import PageContainer from '../components/page_container'
 
 const mapStateToProps = (state) => {
-  return { pageTree: state.pageTree }
+  return { pageTree: state.pageTree, sitemapId: state.id }
 }
 
 const mapDispatchToProps = (dispatch) => {

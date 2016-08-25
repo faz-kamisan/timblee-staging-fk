@@ -1,17 +1,32 @@
 import React, { PropTypes } from 'react';
 class Header extends React.Component {
   static propTypes = {
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    onNameChange: PropTypes.func.isRequired
   };
   constructor(props) {
     super(props);
-    this.state = {
-      name: props.name
-    };
+    this.handleNameChange = this.handleNameChange.bind(this);
+  }
+  handleNameChange(event) {
+    var name = event.target.value
+    $.ajax({
+      url: '/sitemaps/' + this.props.id,
+      method: 'put',
+      dataType: 'JSON',
+      data: { sitemap: { name: name } },
+      error: (result, b, c, d) => {
+        document.setFlash(result.responseText)
+      }
+    });
+    this.props.onNameChange(name);
   }
   render() {
+    let input
     return (
-      <h2>{this.state.name}</h2>
+      <div>
+        <input value = {this.props.name} onChange={this.handleNameChange} />
+      </div>
     );
   }
 }

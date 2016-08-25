@@ -4,7 +4,7 @@ class Page < ActiveRecord::Base
   belongs_to :page_type
   acts_as_tree order: "name"
 
-  validates :name, presence: true
+  validates :name, :page_type, :sitemap, presence: true
 
   def get_tree(collection, level = 0)
     # optimise: firing too many queries

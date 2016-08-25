@@ -28,11 +28,25 @@ class SitemapsController < ApplicationController
 
   def update
     if @sitemap.update(sitemap_params)
-      flash.now[:notice] = t('.success', scope: :flash)
-      render 'shared/show_flash'
+      respond_to do |format|
+        format.js do
+          flash.now[:notice] = t('.success', scope: :flash)
+          render 'shared/show_flash'
+        end
+        format.json do
+          render json: { success: t('.success', scope: :flash) }, status: 200
+        end
+      end
     else
-      flash.now[:error] = t('.failure', scope: :flash)
-      render 'shared/show_flash', status: 522
+      respond_to do |format|
+        format.js do
+          flash.now[:error] = t('.failure', scope: :flash)
+          render 'shared/show_flash', status: 522
+        end
+        format.json do
+          render json: t('.failure', scope: :flash) , status: 522
+        end
+      end
     end
   end
 

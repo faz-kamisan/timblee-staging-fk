@@ -20,6 +20,7 @@
 //= require Queue
 //= require flash
 //= require array_decorator
+//= require document_decorator
 //= require editFields
 //= require twemoji-picker
 //= require apply_twemoji

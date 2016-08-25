@@ -7,11 +7,6 @@ const sitemapSource = {
   beginDrag(props, monitor, component) {
     return {id: props.pageTree.id, parentId: props.pageTree.parentId};
   }
-  // beginDrag: function (props) {
-  //   // Return the data describing the dragged item
-  //   var item = { id: props.pageTree.id };
-  //   return item;
-  // },
 };
 
 const layerStyles = {
@@ -25,12 +20,17 @@ const layerStyles = {
 };
 
 const sitemapTarget = {
-  hover: function(props, monitor, component) {
-    // var domNode = findDOMNode(component);
-    // $(domNode).css('background-color', 'yellow')
-  },
   drop: function(props, monitor, component) {
     const item = monitor.getItem();
+    $.ajax({
+      url: '/pages/' + item.id,
+      method: 'put',
+      dataType: 'JSON',
+      data: { page: { parent_id: props.pageTree.id } },
+      error: (result, b, c, d) => {
+        document.setFlash(result.responseText)
+      }
+    });
     if (monitor.didDrop() || item.parentId == props.pageTree.id) {
       return;
     }
@@ -53,9 +53,6 @@ var DragSourceDecorator = DragSource(ItemTypes.PAGE_CONTAINER, sitemapSource,
 
 var DragLayerDecorator = DragLayer(function(monitor) {
                                     return {
-                                      item: monitor.getItem(),
-                                      itemType: monitor.getItemType(),
-                                      currentOffset: monitor.getSourceClientOffset(),
                                       isDragging: monitor.isDragging()
                                     };
 });
@@ -71,11 +68,7 @@ var DropTargetDecorator = DropTarget(ItemTypes.PAGE_CONTAINER, sitemapTarget,
 
 export default class PageContainer extends React.Component {
   static propTypes = {
-    // If you have lots of data or action properties, you should consider grouping them by
-    // passing two properties: "data" and "actions".
-    // updateName: PropTypes.func.isRequired,
-    // name: PropTypes.string.isRequired,
-    // onDrop: PropTypes.func.isRequired,
+    onDrop: PropTypes.func.isRequired,
     pageTree: PropTypes.object.isRequired
   };
   constructor(props) {
@@ -117,7 +110,6 @@ export default class PageContainer extends React.Component {
         <h5>
           {this.props.pageTree.name}
         </h5>
-        {this.props.isDragging && ' (and I am being dragged now)'}
         <ul>
           {children}
         </ul>
@@ -126,8 +118,6 @@ export default class PageContainer extends React.Component {
   }
 }
 
-// var WrappedDraggableNode = DragSource(ItemTypes.PAGE_CONTAINER, sitemapSource, collect)(PageContainer)
 var WrappedDraggableNode = DragLayerDecorator(DropTargetDecorator(DragSourceDecorator(PageContainer)))
-// var WrappedDroppableDraggableNode = Drop(ItemTypes.PAGE_CONTAINER, sitemapSource, collect)(PageContainer)
 export default WrappedDraggableNode
 

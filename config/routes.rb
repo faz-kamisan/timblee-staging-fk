@@ -32,6 +32,7 @@ Rails.application.routes.draw do
 
   resources :folders
   resources :sitemaps
+  resources :pages, only: [:create, :update, :destroy]
 
   get  'home/dashboard'
   get  'home/settings'

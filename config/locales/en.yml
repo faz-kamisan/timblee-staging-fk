@@ -12,7 +12,7 @@ en:
         success: Folder destroyed successfully
         failure: Couldn't delete folder
     sitemaps:
-      not_found: Can't find site map
+      not_found: Can't find sitemap
       create:
         success: Sitemap created successfully
         failure: Couldn't create sitemap
@@ -22,6 +22,17 @@ en:
       destroy:
         success: Sitemap destroyed successfully
         failure: Couldn't delete sitemap
+    pages:
+      not_found: Can't find page
+      create:
+        success: Page created successfully
+        failure: Couldn't create page
+      update:
+        success: Page updated successfully
+        failure: Couldn't update page
+      destroy:
+        success: Page destroyed successfully
+        failure: Couldn't delete page
     users:
       confirmations:
         show:
