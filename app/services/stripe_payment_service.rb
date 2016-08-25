@@ -31,7 +31,13 @@ class StripePaymentService
     @current_business.update_column(:stripe_customer_id, customer.id)
   end
 
+  def remove_old_subscription
+    @customer = Stripe::Customer.retrieve(@current_business.stripe_customer_id)
+    @customer.subscriptions.first.try(:delete)
+  end
+
   def create_subscription
+    @customer = Stripe::Customer.retrieve(@current_business.stripe_customer_id)
     subscription_hash = {
         customer: @current_business.stripe_customer_id,
         plan:     @current_business.subscriptions.last.plan.stripe_plan_id,
@@ -40,8 +46,13 @@ class StripePaymentService
 
     subscription_hash.merge!({trial_end: @current_business.trial_end_at.to_time.to_i}) if @current_business.in_trial_period?
 
-    Stripe::Subscription.create(subscription_hash)
-
+    active_subscription = @customer.subscriptions.first
+    if active_subscription
+      active_subscription.quantity = @current_business.subscriptions.last.quantity
+      active_subscription.save
+    else
+      Stripe::Subscription.create(subscription_hash)
+    end
     @current_business.save!
   end
 

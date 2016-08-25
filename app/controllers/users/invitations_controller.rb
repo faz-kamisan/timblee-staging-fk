@@ -8,7 +8,7 @@ before_filter :load_user, only: [:re_invite, :revoke]
     emails.each do |email|
 
       unless User.find_by(email: email)
-        user = User.invite!({email: email, business: current_business, confirmed_at: Time.current, skip_invitation: true}, current_user)
+        user = User.invite!({ email: email, business: current_business, confirmed_at: Time.current, skip_invitation: true }, current_user)
         if user.persisted?
           InviteMailer.delay.send_invite(user.id, user.raw_invitation_token, params[:custom_message])
           valid_emails << email unless user.errors[:email].present?

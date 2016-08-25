@@ -7,12 +7,12 @@
         <div class="col-xs-9">
           <label>Plan</label>
           <% if current_business.in_trial_period_without_any_plan? %>
-            <p class="font-12-light">You're on the free trial till  <%= current_business.trial_end_at.strftime('%b %d, %Y') %> with no restrictions. To keep using Timblee after that, we'll ask you to choose a plan and add a credit card. Our pricing is simple – $19 per month for the first user and $12 for every subsequent user. If you’ll only need to plan websites ocassionally and work alone, there's also a free plan.</p>
+            <p class="font-12-light">You're on the free trial till  <%= current_business.trial_end_at.strftime('%d %b %Y') %> with no restrictions. To keep using Timblee after that, we'll ask you to choose a plan and add a credit card. Our pricing is simple – $19 per month for the first user and $12 for every subsequent user. If you’ll only need to plan websites ocassionally and work alone, there's also a free plan.</p>
           <% elsif current_business.is_pro_plan? %>
             <p class="font-12-light">You're on the Pro plan with <%= current_business.no_of_users %> users. Your monthly charge is $<%= current_business.monthly_charge%>. To add more users, click on the 'Team' tab above.</p>
           <% else %>
             <p class="font-12-light">You're on the Starter plan with one user and a maximum of three sitemaps. This is a free plan.
-            <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" id="upgrade">Upgrade to the Pro plan</a> for only $19 to have unlimited sitemaps.</p>
+            <a href="#choose-plan-modal" data-toggle="modal" data-dismiss="modal" id="upgrade">Upgrade to the Pro plan</a> for only $19 to have unlimited sitemaps.</p>
           <% end %>
         </div>
         <div class="col-xs-3 text-right edit-info">
