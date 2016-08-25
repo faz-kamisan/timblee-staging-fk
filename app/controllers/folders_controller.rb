@@ -3,9 +3,7 @@ class FoldersController < ApplicationController
 
   def create
     @folder = current_business.folders.build(folder_params)
-    if @folder.save
-      flash.now[:notice] = t('.success', scope: :flash)
-    else
+    if @folder.name.present? && !@folder.save
       flash.now[:error] = t('.failure', scope: :flash)
     end
     @folders = current_business.folders.order_by_alphanumeric_lower_name.includes(:sitemaps)

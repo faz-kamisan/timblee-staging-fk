@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   }, skip: [:sessions]
 
   as :user do
-    get 'users/login' => 'devise/sessions#new', :as => :new_user_session
+    get 'users/log-in' => 'devise/sessions#new', :as => :new_user_session
     post 'signin' => 'devise/sessions#create', :as => :user_session
     match 'signout' => 'devise/sessions#destroy', :as => :destroy_user_session,
       :via => Devise.mappings[:user].sign_out_via

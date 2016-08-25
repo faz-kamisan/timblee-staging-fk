@@ -4,7 +4,7 @@ en:
       not_found: Can't find folder
       create:
         success: Folder created successfully
-        failure: Couldn't create folder
+        failure: Whoops! Looks like you have another folder with the same name so we couldn't create the folder. Try another name.
       update:
         success: Folder updated successfully
         failure: Couldn't update folder
