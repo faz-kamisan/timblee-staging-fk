@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import { updatePagePosition } from '../actions'
-import PageContainer from '../components/page_container'
+import { updatePagePosition, addNewPage } from '../actions'
+import DraggablePageContainer from '../components/page_container'
 
 const mapStateToProps = (state) => {
   return { pageTree: state.pageTree, sitemapId: state.id }
@@ -8,8 +8,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onDrop: (id, newParentId) => {
+    onPageDrop: (id, newParentId) => {
       dispatch(updatePagePosition(id, newParentId));
+    },
+    onPageTypeDrop: (pageTypeId, parentId) => {
+      dispatch(addNewPage(pageTypeId, parentId));
     }
   }
 }
@@ -17,6 +20,6 @@ const mapDispatchToProps = (dispatch) => {
 const ConnectedPageContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(PageContainer)
+)(DraggablePageContainer)
 
 export default ConnectedPageContainer

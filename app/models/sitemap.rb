@@ -27,7 +27,7 @@ class Sitemap < ActiveRecord::Base
   end
 
   def to_react_data
-    { name: self.name, id: self.id, pageTree: get_page_tree }
+    { name: self.name, id: self.id, pageTree: get_page_tree, pageTypes: PageType.all }
   end
 
   private

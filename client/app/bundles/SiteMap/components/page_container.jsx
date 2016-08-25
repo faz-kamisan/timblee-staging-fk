@@ -5,7 +5,7 @@ import { findDOMNode } from 'react-dom';
 
 const sitemapSource = {
   beginDrag(props, monitor, component) {
-    return {id: props.pageTree.id, parentId: props.pageTree.parentId};
+    return {id: props.pageTree.id, parentId: props.pageTree.parentId, type: 'page'};
   }
 };
 
@@ -22,25 +22,34 @@ const layerStyles = {
 const sitemapTarget = {
   drop: function(props, monitor, component) {
     const item = monitor.getItem();
-    $.ajax({
-      url: '/pages/' + item.id,
-      method: 'put',
-      dataType: 'JSON',
-      data: { page: { parent_id: props.pageTree.id } },
-      error: (result, b, c, d) => {
-        document.setFlash(result.responseText)
-      }
-    });
     if (monitor.didDrop() || item.parentId == props.pageTree.id) {
       return;
     }
-    props.onDrop(item.id, props.pageTree.id);
+    if(item.type == 'page') {
+      $.ajax({
+        url: '/pages/' + item.id,
+        method: 'put',
+        dataType: 'JSON',
+        data: { page: { parent_id: props.pageTree.id } },
+        error: (result, b, c, d) => {
+          document.setFlash(result.responseText)
+        }
+      });
+      props.onPageDrop(item.id, props.pageTree.id);
+    } else if(item.type == 'pageType') {
+      $.ajax({
+        url: '/pages/',
+        method: 'post',
+        dataType: 'JSON',
+        data: { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: 'New Page' } },
+        error: (result, b, c, d) => {
+          document.setFlash(result.responseText)
+        }
+      });
+      props.onPageTypeDrop(item.id, props.pageTree.id);
+    }
   }
 };
-
-const sitemapDragLayer = {
-
-}
 
 var DragSourceDecorator = DragSource(ItemTypes.PAGE_CONTAINER, sitemapSource,
   function(connect, monitor) {
@@ -57,7 +66,7 @@ var DragLayerDecorator = DragLayer(function(monitor) {
                                     };
 });
 
-var DropTargetDecorator = DropTarget(ItemTypes.PAGE_CONTAINER, sitemapTarget,
+var DropTargetDecorator = DropTarget([ItemTypes.PAGE_CONTAINER, ItemTypes.PAGE_TYPE], sitemapTarget,
   function(connect, monitor) {
     return {
       connectDropTarget: connect.dropTarget(),
@@ -68,8 +77,10 @@ var DropTargetDecorator = DropTarget(ItemTypes.PAGE_CONTAINER, sitemapTarget,
 
 export default class PageContainer extends React.Component {
   static propTypes = {
-    onDrop: PropTypes.func.isRequired,
-    pageTree: PropTypes.object.isRequired
+    onPageDrop: PropTypes.func.isRequired,
+    onPageTypeDrop: PropTypes.func.isRequired,
+    pageTree: PropTypes.object.isRequired,
+    sitemapId: PropTypes.number.isRequired
   };
   constructor(props) {
     super(props)
@@ -101,7 +112,7 @@ export default class PageContainer extends React.Component {
     var children;
     if (this.props.pageTree.children != null) {
       children = this.props.pageTree.children.map(function(pageTree, index) {
-        return <li key={index}><WrappedDraggableNode pageTree={pageTree} onDrop={_this.props.onDrop} /></li>
+        return <li key={index}><DraggablePageContainer pageTree={pageTree} onPageDrop={_this.props.onPageDrop} onPageTypeDrop={_this.props.onPageTypeDrop} sitemapId={_this.props.sitemapId} /></li>
       });
     }
 
@@ -118,6 +129,6 @@ export default class PageContainer extends React.Component {
   }
 }
 
-var WrappedDraggableNode = DragLayerDecorator(DropTargetDecorator(DragSourceDecorator(PageContainer)))
-export default WrappedDraggableNode
+var DraggablePageContainer = DragLayerDecorator(DropTargetDecorator(DragSourceDecorator(PageContainer)))
+export default DraggablePageContainer
 

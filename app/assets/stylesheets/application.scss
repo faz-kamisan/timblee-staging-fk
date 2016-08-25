@@ -21,18 +21,23 @@
 
 .page-container {
   &.level-0 {
-    background-color: red
+    background-color: red;
   }
   &.level-1 {
-    background-color: blue
+    background-color: blue;
   }
   &.level-2 {
-    background-color: green
+    background-color: green;
   }
   &.drag-over {
-    background-color: yellow
+    background-color: yellow;
   }
   &.dragging {
     display: none;
   }
+}
+
+.sitemap-sidebar {
+  background-color: purple;
+  margin: 20px, 0;
 }

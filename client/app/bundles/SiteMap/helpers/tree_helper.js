@@ -1,7 +1,7 @@
-function addPage(tree, parentId) {
+function addPage(tree, pageTypeId, parentId) {
   var parentPage = getNodeById(tree, parentId),
       parentLevel = parentPage.level;
-  var newPage = { name: '', parentId: parentId, level: (parentLevel + 1) };
+  var newPage = { name: 'New Page', pageTypeId: pageTypeId, parentId: parentId, level: (parentLevel + 1), children: []};
   parentPage.children.push(newPage);
   return tree
 }

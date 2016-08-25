@@ -4,7 +4,7 @@ import { addPage, removePage, updatePagePosition, updatePageName } from '../help
 const pageTree = (state = {}, action) => {
   switch (action.type) {
     case ADD_NEW_PAGE:
-      return addPage(state, action.parentId)
+      return addPage(state, action.pageTypeId, action.parentId)
     case REMOVE_PAGE:
       return removePage(state, action.id)
     case UPDATE_PAGE_POSITION:

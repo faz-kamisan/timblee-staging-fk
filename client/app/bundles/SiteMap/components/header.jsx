@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 class Header extends React.Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     onNameChange: PropTypes.func.isRequired
   };
   constructor(props) {
@@ -22,7 +23,6 @@ class Header extends React.Component {
     this.props.onNameChange(name);
   }
   render() {
-    let input
     return (
       <div>
         <input value = {this.props.name} onChange={this.handleNameChange} />

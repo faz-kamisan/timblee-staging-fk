@@ -8,8 +8,8 @@ export function setName(name) {
   return { type: SET_NAME, name }
 }
 
-export function addNewPage(parentId) {
-  return { type: ADD_NEW_PAGE, parentId }
+export function addNewPage(pageTypeId, parentId) {
+  return { type: ADD_NEW_PAGE, pageTypeId, parentId }
 }
 
 export function removePage(id) {
