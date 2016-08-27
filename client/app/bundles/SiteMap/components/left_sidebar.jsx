@@ -10,7 +10,7 @@ class LeftSidebar extends React.Component {
       return <li key={index}><DraggablePageType name={pageType.name} id={pageType.id} /></li>
     })
     return (
-      <div className='sitemap-sidebar'>
+      <div className='sitemap-left-sidebar'>
         <ul>
           {pageTypeComponents}
         </ul>

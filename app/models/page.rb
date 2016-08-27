@@ -2,6 +2,7 @@ class Page < ActiveRecord::Base
   extend ActsAsTree::TreeView
   belongs_to :sitemap
   belongs_to :page_type
+  has_many :comments, as: :commentable
   acts_as_tree order: "name"
 
   validates :name, :page_type, :sitemap, presence: true
@@ -13,6 +14,7 @@ class Page < ActiveRecord::Base
       id: id,
       parentId: parent_id,
       level: level,
+      comments: comments.map(&:to_react_data),
       pageType: page_type
     }
     child_pages = collection.select {|page| page.parent_id == self.id}

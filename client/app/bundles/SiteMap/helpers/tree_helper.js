@@ -20,8 +20,11 @@ function updatePagePosition(tree, id, newParentId) {
       oldParentPage = getNodeById(treeCopy, page.parentId);
   oldParentPage.children.removeIf(function(elem, idx) { return elem.id == id });
   page.parentId = newParentPage.id;
-  page.level = newParentPage.level + 1
   newParentPage.children.push(page);
+  traverse(page, function(node) {
+    var parentNode = getNodeById(treeCopy, node.parentId);
+    node.level = parentNode.level + 1
+  })
   return treeCopy
 }
 
@@ -31,6 +34,19 @@ function removePage(tree, id) {
       parentPage = getNodeById(treeCopy, page.parentId);
   parentPage.children.removeIf(function(elem, idx) { return elem.id == id });
   return treeCopy
+}
+
+function traverse(tree, callback) {
+  var queue = new Queue();
+  queue.enqueue(tree);
+  var currentTree = queue.dequeue();
+  while(currentTree){
+    for (var i = 0, length = currentTree.children.length; i < length; i++) {
+      queue.enqueue(currentTree.children[i]);
+    }
+    callback(currentTree);
+    currentTree = queue.dequeue();
+  }
 }
 
 function getNodeById(tree, id){
@@ -47,4 +63,5 @@ function getNodeById(tree, id){
      return null;
 }
 
-export { addPage, removePage, updatePagePosition, updatePageName }
+
+export { addPage, removePage, updatePagePosition, updatePageName, traverse }
