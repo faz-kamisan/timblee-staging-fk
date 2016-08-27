@@ -1,4 +1,1 @@
-<div class="container">
-  <h3>Canvas</h3>
-  <%= @sitemap.name %>
-</div>
+<%= react_component("SitemapApp", props: @sitemap_props, prerender: false) %>

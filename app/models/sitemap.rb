@@ -5,8 +5,10 @@ class Sitemap < ActiveRecord::Base
   belongs_to :folder
   belongs_to :business
   has_many :pages, dependent: :destroy
+  has_one :root_page, ->{ where(parent_id: nil) }, class_name: :Page
   has_many :sitemap_invites, dependent: :destroy
   has_many :invited_users, through: :sitemap_invites, source: :user
+  has_many :comments, as: :commentable
 
   validates :business, :name, presence: true
   validates :state, inclusion: { in: ['on_hold', 'in_progress', 'in_review', 'approved'] }
@@ -20,6 +22,19 @@ class Sitemap < ActiveRecord::Base
   scope :in_review, -> { where(state: 'in_review') }
   scope :approved, -> { where(state: 'approved') }
   scope :order_by_alphanumeric_lower_name, -> { order("SUBSTRING(name FROM '(^[0-9]+)')::BIGINT ASC, lower(name)") }
+
+  def get_page_tree
+    root_page ? root_page.get_tree(pages.includes(:page_type, :comments)) : {}
+  end
+
+  def to_react_data
+    { name: self.name,
+      id: self.id,
+      pageTypes: PageType.all,
+      comments: self.comments.map(&:to_react_data),
+      pageTree: get_page_tree
+    }
+  end
 
   private
     def set_state_to_in_progress

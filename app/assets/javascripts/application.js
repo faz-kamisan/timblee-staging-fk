@@ -1,3 +1,5 @@
+//= require webpack-bundle
+
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //
@@ -15,7 +17,10 @@
 //= require jquery-ui
 //= require bootstrap.min
 //= require tag-it.min
+//= require Queue
 //= require flash
+//= require array_decorator
+//= require document_decorator
 //= require editFields
 //= require twemoji-picker
 //= require apply_twemoji

@@ -1,5 +1,6 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
+  get 'hello_world', to: 'hello_world#index'
   mount Sidekiq::Web, at: '/sidekiq'
 
   devise_scope :user do
@@ -31,6 +32,7 @@ Rails.application.routes.draw do
 
   resources :folders
   resources :sitemaps
+  resources :pages, only: [:create, :update, :destroy]
 
   get  'home/dashboard'
   get  'home/settings'
