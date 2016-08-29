@@ -11,6 +11,7 @@ var Billing = function(options) {
   this.starterErrorButton = options.starterErrorButton;
   this.starterModal = options.starterModal;
   this.starterErrorModal = options.starterErrorModal;
+  this.expField = options.expField;
 };
 
 Billing.prototype.bindEvents = function() {
@@ -20,7 +21,23 @@ Billing.prototype.bindEvents = function() {
     $(this).val('');
   });
   this.bindDowngradeErrorEvent();
+  this.bindExpFieldEvent();
 };
+
+Billing.prototype.bindExpFieldEvent = function() {
+  this.expField.on('keypress keyup', function (e) {
+    if(e.keyCode > 47 && e.keyCode <= 57) {
+      if(this.value.length > 4) {
+        e.preventDefault();
+      } else if(this.value.length == 2){
+        this.value = this.value + '/';
+      };
+    } else {
+      e.preventDefault();
+    }
+  });
+};
+
 Billing.prototype.bindDowngradeErrorEvent = function() {
   var _this = this;
   this.starterErrorButton.on('click', function(e) {
@@ -68,7 +85,8 @@ $(function() {
     cardCVV : $('.cc-cvv'),
     starterErrorButton : $('#starter-error'),
     starterModal : $('#starter-plan-modal'),
-    starterErrorModal : $('#pro-plan-message-modal')
+    starterErrorModal : $('#pro-plan-message-modal'),
+    expField : $('.cc-exp')
   }
   new Billing(options).bindEvents();
 });

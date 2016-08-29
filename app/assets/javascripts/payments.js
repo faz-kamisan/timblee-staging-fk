@@ -1,5 +1,9 @@
 var Payment = function(form, usersCount) {
   this.form = form;
+  this.ccNumberDiv = this.form.find('.cc-number').closest('div');
+  this.expDiv = this.form.find('.cc-exp').closest('div');
+  this.cvvDiv = this.form.find('.cc-cvv').closest('div');
+  this.errorsDiv = this.form.find('.cc-errors');
   this.usersCount = usersCount;
 };
 
@@ -30,8 +34,27 @@ Payment.prototype.stripeResponseHandler = function (status, response) {
   var $form = this.form;
 
   if (response.error) {
+    // Show the errors on the form
+      this.ccNumberDiv.removeClass('field_with_errors');
+      this.expDiv.removeClass('field_with_errors');
+      this.cvvDiv.removeClass('field_with_errors');
 
-    $form.find('.cc-errors').text(response.error.message);
+    if (response.error.param == 'number'){
+      this.errorsDiv.text("You seem to have entered a wrong card number. Please check and fix this.");
+      this.ccNumberDiv.addClass('field_with_errors');
+    }
+    else if (response.error.param == 'exp_year' || response.error.param == 'exp_month'){
+      this.errorsDiv.text("The expiry date you've entered seems like it's wrong. Please check and fix this.");
+      this.expDiv.addClass('field_with_errors');
+    }
+    else if (response.error.param == 'cvc'){
+      this.errorsDiv.text("Your CVV seems to be invalid. Visa and MasterCard cards have a three digit CVV on the back, and AMEX has a four digit one on the front. Please re-enter this.");
+      this.cvvDiv.addClass('field_with_errors');
+    }
+    else {
+      this.errorsDiv.text(response.error.message);
+    }
+
     $form.find('button#add-card').prop('disabled', false);
     $form.find('a#cancel').removeClass('disabled');
 
