@@ -62,7 +62,7 @@ en:
           failure: Something went wrong.
 
       send_destroy_request_to_superadmin:
-          success: "We've received your request to delete your account. We'll shortly send you an email to confirm, and then, your account will be gone forever:("
+          success: "We've received your request to delete your account. We'll shortly send you an email to confirm, and then, your account will be gone forever :("
 
     admin:
       users:
