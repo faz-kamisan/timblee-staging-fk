@@ -35,7 +35,7 @@
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    &.new-sitemap-link, .sitemap-error-link {
+    &.new_sitemap-link, .sitemap-error-link {
       cursor: pointer;
     }
     &.cloned {
@@ -307,7 +307,7 @@
   }
 }
 
-.new-sitemap-link, .sitemap-error-link {
+.new_sitemap_link, .sitemap-error-link {
   text-align: center;
   color: $primaryLabel;
   font-size: 14px;
