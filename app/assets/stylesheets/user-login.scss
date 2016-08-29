@@ -119,11 +119,11 @@
   .panel {
     @include alignCenter(-310px, -268px);
   }
-  
+
   &.with-error {
     .panel {
       @include alignCenter(-310px, -318px);
-    } 
+    }
   }
 }
 
@@ -159,17 +159,23 @@
 #delete-folder-modal {
   .modal-dialog {
     @include alignCenter(-310px, -180px);
-  } 
+  }
 }
 
 #delete-user-modal {
   .modal-dialog {
     @include alignCenter(-310px, -180px);
-  } 
+  }
+}
+
+#revoke-invite-modal {
+  .modal-dialog {
+    @include alignCenter(-310px, -180px);
+  }
 }
 
 #pro-plan-modal {
   .modal-dialog {
     @include alignCenter(-471px, -381px);
-  } 
+  }
 }
