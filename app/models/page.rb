@@ -3,12 +3,12 @@ class Page < ActiveRecord::Base
   belongs_to :sitemap
   belongs_to :page_type
   has_many :comments, as: :commentable
-  acts_as_tree order: "name"
+  acts_as_tree order: :position
+  acts_as_list scope: :parent
 
   validates :name, :page_type, :sitemap, presence: true
 
   def get_tree(collection, level = 0)
-    # optimise: firing too many queries
     tree = {
       name: name,
       id: id,

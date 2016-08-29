@@ -1,0 +1,310 @@
+.page-container {
+  .page-tile {
+    width: 200px;
+    height: 87px;
+    border-top: solid 3px $primaryPink;
+    @include border-radius(4px);
+    @include box-shadow(1px, 1px, 2px, rgba(106, 113, 127, .2));
+    background: $primaryWhite;
+    position: relative;
+    display: inline-block;
+    .collapse-open {
+      position: absolute;
+      left: 0;
+      bottom: -10px;
+      width: 20px;
+      height: 20px;
+      @include border-radius(4px);
+      border: 1px solid #f0f0f0;
+      z-index: 2;
+      cursor: pointer;
+      background: $primaryWhite;
+      &:after {
+        content: ' ';
+        position: absolute;
+        width: 8px;
+        height: 2px;
+        background: #535c63;
+        left: 50%;
+        top: 50%;
+        margin-left: -4px;
+        margin-top: -1px;
+        z-index: 2;
+      }
+
+      &:before {
+        content: ' ';
+        position: absolute;
+        width: 2px;
+        height: 8px;
+        background: #535c63;
+        left: 50%;
+        top: 50%;
+        margin-left: -1px;
+        margin-top: -4px;
+        z-index: 2;
+        display: none;
+      }
+
+      &.collapse-close {
+        &:before {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .tile-number {
+    color: $primaryGrey;
+    font-size: 9px;
+    display: block;
+    margin: 0 0 2px 0;
+  }
+
+  .tile-id {
+    position: absolute;
+    left: 27px;
+    bottom: 8px;
+    font-size: 9px;
+    color: #b7b6bc;
+    display: block;
+  }
+
+  .tile-name {
+    margin: 0;
+    font-size: 10px;
+    color: $primaryBlack;
+    line-height: 14px;
+    text-transform: capitalize;
+    word-wrap: break-word;
+  }
+
+  .tile-top,
+  .tile-bottom {
+    padding-right: 70px;
+    padding-left: 22px;
+    height: 42px;
+    text-align: left;
+    position: relative;
+  }
+
+  .tile-top {
+    padding-top: 12px;
+  }
+
+  .tile-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 70px;
+    height: 100%;
+    border-left: solid 1px #f8f9fb;
+  }
+
+  &.level-0 {
+    text-align: center;
+    padding-left: 40px;
+    > .page-tile {
+      margin-bottom: 75px;
+      margin-left: -40px;
+      + .gutter {
+        display: none;
+      }
+      &:before {
+        background: #d5d7da;
+        content: ' ';
+        position: absolute;
+        bottom: -75px;
+        left: 50%;
+        width: 1px;
+        height: 75px;
+        z-index: 2;
+      }
+    }
+  }
+
+  &.level-2 {
+    .page-tile {
+      width: 182px;
+      margin-left: 18px;
+      &:before {
+        position: absolute;
+        content: ' ';
+        width: 9px;
+        left: -9px;
+        top: 22px;
+        height: 1px;
+        background: #d5d7da;
+        z-index: 2;
+      }
+
+      &:after {
+        position: absolute;
+        content: ' ';
+        width: 1px;
+        left: -9px;
+        top: -19px;
+        height: 42px;
+        background: #d5d7da;
+        z-index: 2;
+      }
+    }
+
+    .tile-top,
+    .tile-bottom {
+      padding-right: 60px;
+    }
+
+    .tile-right {
+      width: 60px;
+    }
+  }
+
+  &.level-3 {
+    .page-tile {
+      width: 164px;
+      margin-left: 36px;
+    }
+
+    .tile-top,
+    .tile-bottom {
+      padding-right: 50px;
+    }
+
+    .tile-right {
+      width: 50px;
+    }
+  }
+
+  &.level-4 {
+    .page-tile {
+      width: 146px;
+      margin-left: 54px;
+    }
+
+    .tile-top,
+    .tile-bottom {
+      padding-right: 40px;
+    }
+
+    .tile-right {
+      width: 40px;
+    }
+  }
+
+  &.level-5 {
+    .page-tile {
+      width: 128px;
+      margin-left: 72px;
+    }
+
+    .tile-top,
+    .tile-bottom {
+      padding-right: 22px;
+    }
+
+    .tile-right {
+      display: none;
+    }
+  }
+
+  &.level-6 {
+    .page-tile {
+      width: 110px;
+      margin-left: 90px;
+    }
+
+    .tile-top,
+    .tile-bottom {
+      padding-right: 22px;
+    }
+
+    .tile-right {
+      display: none;
+    }
+  }
+
+  &.level-7 {
+    .page-tile {
+      width: 92px;
+      margin-left: 108px;
+    }
+
+    .tile-top,
+    .tile-bottom {
+      padding-right: 22px;
+    }
+
+    .tile-right {
+      display: none;
+    }
+  }
+
+  &.level-8 {
+    .page-tile {
+      width: 74px;
+      margin-left: 126px;
+    }
+
+    .tile-top,
+    .tile-bottom {
+      padding-right: 22px;
+    }
+
+    .tile-right {
+      display: none;
+    }
+  }
+
+  .gutter {
+    width: 100%;
+    height: 26px;
+    background: $transparent;
+  }
+
+  .parent {
+    > div {
+      display: inline-block;
+      width: 240px;
+      vertical-align: top;
+      .level-support {
+        width: 40px;
+        background: $transparent;
+        height: 87px;
+        position: relative;
+        &:before {
+          content: ' ';
+          position: absolute;
+          top: 50%;
+          left: 0;
+          height: 1px;
+          width: 100%;
+          margin-top: -.5px;
+          background: #d5d7da;
+        }
+      }
+
+      &:last-child {
+        .level-support {
+          display: none;
+        }        
+      }
+    }
+
+    .page-container {
+      float: left;
+      width: 200px;
+    }
+
+    .level-support {
+      float: left;
+    }
+
+    &.parent-1 {
+      .level-support {
+        display: none;
+      }      
+    }
+  }
+
+}
