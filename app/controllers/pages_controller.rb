@@ -23,7 +23,7 @@ class PagesController < ApplicationController
     end
 
     def page_params
-      params.require(:page).permit(:name, :sitemap_id, :parent_id, :page_type_id)
+      params.require(:page).permit(:name, :sitemap_id, :parent_id, :page_type_id, :position)
     end
 
     def send_conditional_json_response(condition)

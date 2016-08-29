@@ -1,8 +1,8 @@
-function addPage(tree, pageTypeId, parentId) {
+function addPage(tree, pageTypeId, parentId, position) {
   var parentPage = getNodeById(tree, parentId),
       parentLevel = parentPage.level;
-  var newPage = { name: 'New Page', pageTypeId: pageTypeId, parentId: parentId, level: (parentLevel + 1), children: []};
-  parentPage.children.push(newPage);
+  var newPage = { name: 'New Page', pageTypeId: pageTypeId, parentId: parentId, level: (parentLevel + 1), position: position, children: []};
+  parentPage.push(newPage);
   return tree
 }
 
@@ -13,13 +13,14 @@ function updatePageName(tree, id, name) {
   return treeCopy
 }
 
-function updatePagePosition(tree, id, newParentId) {
+function updatePagePosition(tree, id, newParentId, position) {
   var treeCopy = Object.assign({}, tree)
   var page = getNodeById(treeCopy, id),
       newParentPage = getNodeById(treeCopy, newParentId),
       oldParentPage = getNodeById(treeCopy, page.parentId);
   oldParentPage.children.removeIf(function(elem, idx) { return elem.id == id });
   page.parentId = newParentPage.id;
+  page.position = position;
   newParentPage.children.push(page);
   traverse(page, function(node) {
     var parentNode = getNodeById(treeCopy, node.parentId);

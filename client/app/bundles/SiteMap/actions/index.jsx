@@ -8,8 +8,8 @@ export function setName(name) {
   return { type: SET_NAME, name }
 }
 
-export function addNewPage(pageTypeId, parentId) {
-  return { type: ADD_NEW_PAGE, pageTypeId, parentId }
+export function addNewPage(pageTypeId, parentId, position) {
+  return { type: ADD_NEW_PAGE, pageTypeId, parentId, position }
 }
 
 export function removePage(id) {
@@ -20,6 +20,6 @@ export function updatePageName(id, name) {
   return { type: UPDATE_PAGE_NAME, id, name }
 }
 
-export function updatePagePosition(id, newParentId) {
-  return { type: UPDATE_PAGE_POSITION, id, newParentId }
+export function updatePagePosition(id, newParentId, position) {
+  return { type: UPDATE_PAGE_POSITION, id, newParentId, position}
 }

@@ -18,7 +18,7 @@ class Page < ActiveRecord::Base
       comments: comments.map(&:to_react_data),
       pageType: page_type
     }
-    child_pages = collection.select {|page| page.parent_id == self.id}
+    child_pages = collection.select {|page| page.parent_id == self.id}.sort_by(&:position)
     tree.merge!({ children: child_pages.map { |child_page| child_page.get_tree(collection, level + 1) } })
     tree
   end

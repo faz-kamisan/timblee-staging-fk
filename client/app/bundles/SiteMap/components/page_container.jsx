@@ -1,53 +1,11 @@
 import React, { PropTypes } from 'react';
 import { ItemTypes } from '../dnd/constants';
-import { DragSource, DropTarget, DragLayer } from 'react-dnd';
-import { findDOMNode } from 'react-dom';
+import { DragSource, DragLayer } from 'react-dnd';
+import PageTile from './page_tile'
 
 const sitemapSource = {
   beginDrag(props, monitor, component) {
     return {id: props.pageTree.id, parentId: props.pageTree.parentId, type: 'page'};
-  }
-};
-
-const layerStyles = {
-  position: 'fixed',
-  pointerEvents: 'none',
-  zIndex: 100,
-  left: 0,
-  top: 0,
-  width: '100%',
-  height: '100%'
-};
-
-const sitemapTarget = {
-  drop: function(props, monitor, component) {
-    const item = monitor.getItem();
-    if (monitor.didDrop() || item.parentId == props.pageTree.id) {
-      return;
-    }
-    if(item.type == 'page') {
-      $.ajax({
-        url: '/pages/' + item.id,
-        method: 'put',
-        dataType: 'JSON',
-        data: { page: { parent_id: props.pageTree.id } },
-        error: (result, b, c, d) => {
-          document.setFlash(result.responseText)
-        }
-      });
-      props.onPageDrop(item.id, props.pageTree.id);
-    } else if(item.type == 'pageType') {
-      $.ajax({
-        url: '/pages/',
-        method: 'post',
-        dataType: 'JSON',
-        data: { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: 'New Page' } },
-        error: (result, b, c, d) => {
-          document.setFlash(result.responseText)
-        }
-      });
-      props.onPageTypeDrop(item.id, props.pageTree.id);
-    }
   }
 };
 
@@ -60,25 +18,8 @@ var DragSourceDecorator = DragSource(ItemTypes.PAGE_CONTAINER, sitemapSource,
     };
 });
 
-var DragLayerDecorator = DragLayer(function(monitor) {
-                                    return {
-                                      isDragging: monitor.isDragging()
-                                    };
-});
-
-var DropTargetDecorator = DropTarget([ItemTypes.PAGE_CONTAINER, ItemTypes.PAGE_TYPE], sitemapTarget,
-  function(connect, monitor) {
-    return {
-      connectDropTarget: connect.dropTarget(),
-      isOverCurrent: monitor.isOver({ shallow: true }),
-      isOver: monitor.isOver()
-    };
-});
-
 class PageContainer extends React.Component {
   static propTypes = {
-    onPageDrop: PropTypes.func.isRequired,
-    onPageTypeDrop: PropTypes.func.isRequired,
     pageTree: PropTypes.object.isRequired,
     sitemapId: PropTypes.number.isRequired
   };
@@ -86,32 +27,12 @@ class PageContainer extends React.Component {
     super(props)
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
-      var domNode = findDOMNode(this);
-      $(domNode).addClass('drag-over' )
-    }
-
-    if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
-      // You can use this as leave handler
-      var domNode = findDOMNode(this);
-      $(domNode).removeClass('drag-over')
-    }
-
-    if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
-      // You can be more specific and track enter/leave
-      // shallowly, not including nested targets
-    }
-  }
-
   render() {
-    const connectDragSource = this.props.connectDragSource
-    const connectDropTarget = this.props.connectDropTarget
-    const connectDragPreview = this.props.connectDragPreview;
+    const connectDragSource = this.props.connectDragSource;
     var _this = this;
     var children;
     if (this.props.pageTree.children != null) {
-      children = this.props.pageTree.children.map(function(pageTree, index) {
+      children = this.props.pageTree.children.sort(function(first, second) { first.position - second.position }).map(function(pageTree, index) {
         return (
         <div key={index}>
           <DraggablePageContainer pageTree={pageTree} onPageDrop={_this.props.onPageDrop} onPageTypeDrop={_this.props.onPageTypeDrop} sitemapId={_this.props.sitemapId} />
@@ -121,23 +42,9 @@ class PageContainer extends React.Component {
       });
     }
 
-    return connectDropTarget(
+    return connectDragSource(
       <div data-level={this.props.pageTree.level} className={ 'page-container level-' + this.props.pageTree.level.toString() + (this.props.isDragging ? ' dragging' : '') }>
-        <div className="page-tile">
-          <div className="tile-top">
-            <h1 className="tile-name">
-              <span className="tile-number">1.0</span>
-              {this.props.pageTree.name}
-            </h1>
-          </div>
-          <div className="tile-bottom">
-            <span className="tile-id">
-              ID: 001
-            </span>
-          </div>
-          <div className="tile-right"></div>
-          <div className="collapse-open"></div>
-        </div>
+        <PageTile pageTree={ this.props.pageTree } />
         <div className="gutter"></div>
         <div className={ 'parent parent-' + this.props.pageTree.level.toString()}>
           {children}
@@ -147,6 +54,6 @@ class PageContainer extends React.Component {
   }
 }
 
-var DraggablePageContainer = DragLayerDecorator(DropTargetDecorator(PageContainer))
+var DraggablePageContainer = DragSourceDecorator(PageContainer)
 export default DraggablePageContainer
 
