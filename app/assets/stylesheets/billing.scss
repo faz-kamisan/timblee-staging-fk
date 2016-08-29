@@ -78,16 +78,20 @@
       margin-top: 10px;
     }
   }
-    &.pro-plan-benefits {
-      width: 380px;
-      min-height: 330px;
-      z-index: 2;
-      .btn {
-        font-size: 10px;
-        background: $primaryPink;
-        color: $primaryWhite;
-        margin-top: 6px;
+  &.pro-plan-benefits {
+    width: 380px;
+    min-height: 330px;
+    z-index: 2;
+    .btn {
+      font-size: 10px;
+      background: $primaryPink;
+      color: $primaryWhite;
+      margin-top: 6px;
+      &:hover {
+        background: $primaryWhite;
+        color: $primaryPink;
       }
+    }
    }
    &.starter-plan-benefits {
     width: 348px;
@@ -176,6 +180,9 @@
 }
 
 #starter-plan-modal {
+  .modal-dialog {
+    @include alignCenter(-471px, -260px);
+  }
   .modal-body {
     padding-bottom: 20px!important;
   }
@@ -286,6 +293,9 @@ a#upgrade {
     a {
       color: $primaryGrey;
       text-decoration: underline;
+      &:hover {
+        color: $primaryPink;
+      }
     }
   }
 
@@ -340,5 +350,19 @@ a#upgrade {
     position: relative;
     top: -2px;
     margin-left: 5px;
+  }
+}
+
+.current-plan-text {
+  color: $primarySuccess;
+  font-size: 9px;
+  text-transform: uppercase;
+  display: block;
+  margin-top: 22px;
+}
+
+.pro-plan-benefits {
+  .current-plan-text {
+    margin-top: 33px;   
   }
 }

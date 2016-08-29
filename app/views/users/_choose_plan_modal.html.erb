@@ -23,7 +23,7 @@
             </ul>
             <p>$19 for the first user. Then $12 per user.</p>
             <% if current_business.is_pro_plan? %>
-              <span>YOUR CURRENT PLAN</span>
+              <span class="current-plan-text">YOUR CURRENT PLAN</span>
             <% else %>
               <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" class="btn btn-pink btn-modal-open"><%= current_business.plan ? "SWITCH TO PRO": "Choose this plan"%></a>
             <% end %>
@@ -39,7 +39,7 @@
             </ul>
             <p>Free</p>
             <% if current_business.is_starter_plan? %>
-              <span>YOUR CURRENT PLAN</span>
+              <span class="current-plan-text">YOUR CURRENT PLAN</span>
             <% else %>
               <a href="#starter-plan-modal" data-dismiss="modal" data-toggle="modal" class="btn btn-grey btn-modal-open"><%= current_business.plan ? "DOWNGRADE TO STARTER": "Choose this plan"%></a>
             <% end %>

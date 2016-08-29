@@ -135,7 +135,7 @@
 
 #choose-plan-modal {
   .modal-dialog {
-    @include alignCenter(-471px, -308px); 
+    @include alignCenter(-471px, -308px);
   }
 }
 
@@ -154,4 +154,22 @@
   .modal-title {
     padding-top: 11px;
   }
+}
+
+#delete-folder-modal {
+  .modal-dialog {
+    @include alignCenter(-310px, -180px);
+  } 
+}
+
+#delete-user-modal {
+  .modal-dialog {
+    @include alignCenter(-310px, -180px);
+  } 
+}
+
+#pro-plan-modal {
+  .modal-dialog {
+    @include alignCenter(-471px, -381px);
+  } 
 }
