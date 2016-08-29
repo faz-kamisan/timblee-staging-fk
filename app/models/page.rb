@@ -13,6 +13,7 @@ class Page < ActiveRecord::Base
       name: name,
       id: id,
       parentId: parent_id,
+      position: position,
       level: level,
       comments: comments.map(&:to_react_data),
       pageType: page_type
