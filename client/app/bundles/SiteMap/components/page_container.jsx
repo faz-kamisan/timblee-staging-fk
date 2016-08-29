@@ -112,23 +112,41 @@ class PageContainer extends React.Component {
     var children;
     if (this.props.pageTree.children != null) {
       children = this.props.pageTree.children.map(function(pageTree, index) {
-        return <li key={index}><DraggablePageContainer pageTree={pageTree} onPageDrop={_this.props.onPageDrop} onPageTypeDrop={_this.props.onPageTypeDrop} sitemapId={_this.props.sitemapId} /></li>
+        return (
+        <div key={index}>
+          <DraggablePageContainer pageTree={pageTree} onPageDrop={_this.props.onPageDrop} onPageTypeDrop={_this.props.onPageTypeDrop} sitemapId={_this.props.sitemapId} />
+          <div key={index + 'support'} className="level-support"></div>
+        </div>
+        )
       });
     }
 
-    return connectDragSource(connectDropTarget(
+    return connectDropTarget(
       <div data-level={this.props.pageTree.level} className={ 'page-container level-' + this.props.pageTree.level.toString() + (this.props.isDragging ? ' dragging' : '') }>
-        <h5>
-          {this.props.pageTree.name}
-        </h5>
-        <ul>
+        <div className="page-tile">
+          <div className="tile-top">
+            <h1 className="tile-name">
+              <span className="tile-number">1.0</span>
+              {this.props.pageTree.name}
+            </h1>
+          </div>
+          <div className="tile-bottom">
+            <span className="tile-id">
+              ID: 001
+            </span>
+          </div>
+          <div className="tile-right"></div>
+          <div className="collapse-open"></div>
+        </div>
+        <div className="gutter"></div>
+        <div className={ 'parent parent-' + this.props.pageTree.level.toString()}>
           {children}
-        </ul>
+        </div>
       </div>
-    ));
+    );
   }
 }
 
-var DraggablePageContainer = DragLayerDecorator(DropTargetDecorator(DragSourceDecorator(PageContainer)))
+var DraggablePageContainer = DragLayerDecorator(DropTargetDecorator(PageContainer))
 export default DraggablePageContainer
 
