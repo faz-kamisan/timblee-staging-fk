@@ -190,7 +190,7 @@ input:-webkit-autofill {
 }
 
 .modal-backdrop {
-  background: $primaryWhite;
+  background: #000000;
   &.in {
     opacity: .85;
   }
@@ -397,4 +397,15 @@ input#toggle:checked + label:after {
 .hidden-password:-ms-input-placeholder {  
    color: $primaryFormColor;
    opacity: 1;  
+}
+
+.modal.in .modal-dialog,
+.modal.fade .modal-dialog {
+  transform: translate(0px, 0px);
+  -moz-transform: translate(0px, 0px);
+  -webkit-transform: translate(0px, 0px);
+}
+
+.primary-link-color {
+  color: $primaryLink;
 }
