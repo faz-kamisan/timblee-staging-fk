@@ -17,27 +17,3 @@
  *= require main
  *= require_self
  */
-
-
-.page-container {
-  &.level-0 {
-    background-color: red;
-  }
-  &.level-1 {
-    background-color: blue;
-  }
-  &.level-2 {
-    background-color: green;
-  }
-  &.drag-over {
-    background-color: yellow;
-  }
-  &.dragging {
-    display: none;
-  }
-}
-
-.sitemap-sidebar {
-  background-color: purple;
-  margin: 20px, 0;
-}
