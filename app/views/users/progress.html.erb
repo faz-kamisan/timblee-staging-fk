@@ -20,8 +20,7 @@
         <% @sitemaps_by_state[:on_hold].each do |sitemap| %>
           <div class='drag-wrapper'>
             <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
-              <!-- change if logic to check presence of comments -->
-              <% if true %>
+              <% if sitemap.comments.exists? %>
                 <span class="state"></span>
               <% end %>
               <span class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></span>
@@ -46,8 +45,7 @@
         <% @sitemaps_by_state[:in_progress].each do |sitemap| %>
           <div class='drag-wrapper'>
             <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
-              <!-- change if logic to check presence of comments -->
-              <% if true %>
+              <% if sitemap.comments.exists? %>
                 <span class="state"></span>
               <% end %>
               <span class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></span>
@@ -72,8 +70,7 @@
         <% @sitemaps_by_state[:in_review].each do |sitemap| %>
           <div class='drag-wrapper'>
             <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
-              <!-- change if logic to check presence of comments -->
-              <% if true %>
+              <% if sitemap.comments.exists? %>
                 <span class="state"></span>
               <% end %>
               <span class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></span>
@@ -98,8 +95,7 @@
         <% @sitemaps_by_state[:approved].each do |sitemap| %>
           <div class='drag-wrapper'>
             <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
-              <!-- change if logic to check presence of comments -->
-              <% if true %>
+              <% if sitemap.comments.exists? %>
                 <span class="state"></span>
               <% end %>
               <span class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></span>

@@ -30,7 +30,6 @@ class SitemapsController < ApplicationController
     if @sitemap.update(sitemap_params)
       respond_to do |format|
         format.js do
-          flash.now[:notice] = t('.success', scope: :flash)
           render 'shared/show_flash'
         end
         format.json do
@@ -40,7 +39,6 @@ class SitemapsController < ApplicationController
     else
       respond_to do |format|
         format.js do
-          flash.now[:error] = t('.failure', scope: :flash)
           render 'shared/show_flash', status: 522
         end
         format.json do

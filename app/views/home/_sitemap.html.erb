@@ -2,8 +2,7 @@
   <div class='sitemap_wrapper'>
     <div class="sitemap-container" data-id=<%= sitemap.id %> data-folder-id=<%= sitemap.folder_id %>>
       <div class="site-card">
-        <!-- change if logic to check presence of comments -->
-        <% if true %>
+        <% if sitemap.comments.exists? %>
           <span class='state'></span>
         <% end %>
         <h2 class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></h2>
