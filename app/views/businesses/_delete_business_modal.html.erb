@@ -9,7 +9,8 @@
           </span>
         </button>
         <h4 class="modal-title">Delete Account</h4>
-        <p class="modal-message">You're about to delete your account. <br> Deleting this will delete all sitemaps and users <br> associated with this account.</p>
+        <p class="modal-message">You're requesting deletion of your entire account.<br /> Deleting this will delete all sitemaps and users in this account. Forever.<br /> We will send you an email to confirm this action.
+        </p>
       </div>
       <div class="modal-body">
         <div class="text-center">
@@ -21,7 +22,7 @@
           </div>
         </div>
         <div class="modal-button text-center">
-          <%= link_to "Delete Account", send_destroy_request_to_superadmin_business_path(current_business), class: "btn btn-red", id: 'delete-business-link', data: { disable_with: 'Please wait...' } %>
+          <%= link_to "Request Deletion", send_destroy_request_to_superadmin_business_path(current_business), class: "btn btn-red", id: 'delete-business-link', data: { disable_with: 'Please wait...' } %>
           <a href="#" data-dismiss="modal" class="btn btn-transparent btn-last">Cancel</a>
         </div>
       </div>

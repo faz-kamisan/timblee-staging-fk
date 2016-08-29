@@ -14,7 +14,13 @@
               </span>
               <div class="right-text pull-right">
                 <h3 class="team-member-name">Invite a team member to Timblee</h3>
-                <span class="active-since">Each new user is US $12 per month. You'll be billed pro-rata for this billing period once you invite them.</span>
+                <span class="active-since">
+                  <% if current_business.in_trial_period? %>
+                  You’re currently in your free unlimited trial period. Invite as many team members as you want for no charge. After the trial, you’ll need to pay US $19 for the first user + US $12 for subsequent users.
+                  <% else %>
+                  Each new user is US $12 per month. You'll be billed pro-rata for this billing period once you invite them.
+                  <% end %>
+                </span>
               </div>
             </div>
           </div>
@@ -71,19 +77,19 @@
           </div>
         <% else %>
           <div class="row inactive-user">
-            <div class="col-xs-6">
+            <div class="col-xs-9">
               <div class="clearfix">
                 <%= image_tag('profile-image.png', class: 'profile-image pull-left') %>
                 <div class="right-text pull-right">
                   <h3 class="team-member-name"><%= user.email %></h3>
-                  <span class="active-since">Invited on <%= pretty_time(user.invitation_created_at) %> Hasn't accepted yet</span>
+                  <span class="active-since">Invited on <%= pretty_time(user.invitation_created_at) %>. Hasn't accepted yet</span>
                 </div>
               </div>
             </div>
             <% if current_user.is_admin && user.id != current_user.id %>
-              <div class="col-xs-6 text-right edit-info">
+              <div class="col-xs-3 text-right edit-info">
                 <div class="edit">
-                  <a href="javascript:void(0);" class="btn btn-grey">Edit</a>
+                  <a href="javascript:void(0);" class=""></a>
                   <%= link_to "Invite Again", re_invite_user_path(user), class: "btn btn-grey", remote: true %>
                   <%= link_to "Revoke Invite", revoke_user_path(user), class: "link-regular btn-regular", remote: true, data: { confirm: "Are you sure you want to revoke invitation for this user?" } %>
                 </div>
