@@ -46,7 +46,7 @@ en:
           failure: User couldn't be reinvited
           not_found: User not found
         revoke:
-          success: User successfully revoked
+          success: The invitation was revoked successfully. They won't receive any notification about this.
           failure: User couldn't be revoked
           not_found: User not found
 
@@ -62,7 +62,7 @@ en:
           failure: Something went wrong.
 
       send_destroy_request_to_superadmin:
-          success: Request sent successfully
+          success: "We've received your request to delete your account. We'll shortly send you an email to confirm, and then, your account will be gone forever:("
 
     admin:
       users:
