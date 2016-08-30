@@ -49,6 +49,9 @@
               <div class="col-xs-6">
                 <label>email</label>
                 <%= f.text_field :email, disabled: true, class: 'editable-input', 'data-original-value' => f.object.email %>
+                <% if @user.pending_reconfirmation? %>
+                  <div class="primary-link-color">Currently waiting confirmation for: <%= @user.unconfirmed_email %></div>
+                <% end %>
               </div>
               <div class="col-xs-6 text-right edit-info">
                 <div class="edit">
