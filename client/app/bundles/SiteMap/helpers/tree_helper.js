@@ -1,62 +1,51 @@
 function addPage(tree, pageTypeId, parentId, position) {
-  var parentPage = getNodeById(tree, parentId),
+  var treeCopy = Object.assign({}, tree);
+  var parentPage = getNodeById(treeCopy, parentId),
       parentLevel = parentPage.level;
   var newPage = { name: 'New Page', pageTypeId: pageTypeId, parentId: parentId, level: (parentLevel + 1), children: []};
   if(position == 'begining') {
-    newPage.position = parentPage.children[0] ? (parentPage.children[0].position - 1) : 1
     parentPage.children.unshift(newPage)
   } else {
-    var previousPage = getNodeByPosition(tree, position)
     var indexToAddPage = parentPage.children.findIndex(function(page) { return(page.position == position) })
-    for(var index = 0; index < parentPage.children.length; index++){
-      if(index <= indexToAddPage) {
-        parentPage.children[index].position--
-      } else {
-        parentPage.children[index].position++
-      }
-    }
-    newPage.position = position
-    parentPage.children.splice(indexToAddPage, 0, newPage);
+    parentPage.children.splice(indexToAddPage + 1, 0, newPage);
   }
-  return tree
+  for(var index = 0; index < parentPage.children.length; index++){
+    parentPage.children[index].position = index + 1
+  }
+  return treeCopy
 }
 
 function updatePageName(tree, id, name) {
-  var treeCopy = Object.assign({}, tree)
+  var treeCopy = Object.assign({}, tree);
   var page = getNodeById(treeCopy, id);
   page.name = name;
   return treeCopy
 }
 
 function updateCollapse(tree, id) {
-  var treeCopy = Object.assign({}, tree)
+  var treeCopy = Object.assign({}, tree);
   var page = getNodeById(treeCopy, id);
   page.collapsed = !page.collapsed;
   return treeCopy
 }
 
 function updatePagePosition(tree, id, newParentId, position) {
-  var treeCopy = Object.assign({}, tree)
+  var treeCopy = Object.assign({}, tree);
   var page = getNodeById(treeCopy, id),
       newParentPage = getNodeById(treeCopy, newParentId),
       oldParentPage = getNodeById(treeCopy, page.parentId);
   oldParentPage.children.removeIf(function(elem, idx) { return elem.id == id });
   page.parentId = newParentPage.id;
+  //  Insert at begining.
   if(position == 'begining') {
-    page.position = newParentPage.children[0] ? (newParentPage.children[0].position - 1) : 1
     newParentPage.children.unshift(page)
   } else {
-    var previousPage = getNodeByPosition(tree, position)
+    // when only sorting in same scope
     var indexToAddPage = newParentPage.children.findIndex(function(page) { return(page.position == position) })
-    for(var index = 0; index < newParentPage.children.length; index++){
-      if(index <= indexToAddPage) {
-        newParentPage.children[index].position--
-      } else {
-        newParentPage.children[index].position++
-      }
-    }
-    page.position = position
     newParentPage.children.splice(indexToAddPage + 1, 0, page);
+  }
+  for(var index = 0; index < newParentPage.children.length; index++){
+    newParentPage.children[index].position = index + 1
   }
   traverse(page, function(node) {
     var parentNode = getNodeById(treeCopy, node.parentId);
@@ -66,7 +55,7 @@ function updatePagePosition(tree, id, newParentId, position) {
 }
 
 function removePage(tree, id) {
-  var treeCopy = Object.assign({}, tree)
+  var treeCopy = Object.assign({}, tree);
   var page = getNodeById(treeCopy, id),
       parentPage = getNodeById(treeCopy, page.parentId);
   parentPage.children.removeIf(function(elem, idx) { return elem.id == id });

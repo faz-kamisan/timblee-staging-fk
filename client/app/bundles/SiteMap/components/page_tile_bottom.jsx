@@ -4,6 +4,11 @@ import { DropTarget } from 'react-dnd';
 import { findDOMNode } from 'react-dom';
 
 const sitemapTarget = {
+  canDrop: function(props, monitor) {
+    const item = monitor.getItem()
+    return((item.type == 'PageType') || (item.id != props.pageTree.id))
+    // debugger
+  },
   drop: function(props, monitor, component) {
     const item = monitor.getItem();
     if (monitor.didDrop() || item.parentId == props.pageTree.id) {

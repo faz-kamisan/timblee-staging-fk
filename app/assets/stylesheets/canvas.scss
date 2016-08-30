@@ -263,6 +263,9 @@
     width: 100%;
     height: 26px;
     background: $transparent;
+    &.drag-over {
+      background: $primaryPink;
+    }
   }
 
   .parent {
@@ -285,6 +288,9 @@
           margin-top: -.5px;
           background: #d5d7da;
         }
+        &.drag-over {
+          background: $primaryPink;
+        }
       }
 
       &:last-child {
@@ -297,6 +303,12 @@
     .page-container {
       float: left;
       width: 200px;
+      &.dragging {
+        display: none;
+        + .level-support {
+          display: none;
+        }
+      }
     }
 
     .level-support {

@@ -4,16 +4,18 @@ import { DropTarget } from 'react-dnd';
 import { findDOMNode } from 'react-dom';
 
 const sitemapTarget = {
-  canDrop: function(props, monitor) {
-    const item = monitor.getItem()
-    return((item.type == 'PageType') || (item.id != props.pageTree.id))
-    // debugger
-  },
+  // canDrop: function(props, monitor) {
+  //   const item = monitor.getItem()
+  //   return((item.type == 'PageType') || (item.id != props.pageTree.id))
+  //   // debugger
+  // },
   drop: function(props, monitor, component) {
     const item = monitor.getItem();
+    // debugger
     if (monitor.didDrop() || !(props.pageTree.id)) {
       return;
     }
+    debugger
     if(item.type == 'page') {
       $.ajax({
         url: '/pages/' + item.id,
@@ -24,7 +26,7 @@ const sitemapTarget = {
           document.setFlash(result.responseText)
         }
       });
-      props.onPageDrop(item.id, props.pageTree.parentId, (props.pageTree.position));
+      props.onPageDrop(item.id, props.pageTree.parentId, props.pageTree.position);
     } else if(item.type == 'pageType') {
       $.ajax({
         url: '/pages/',
@@ -35,7 +37,7 @@ const sitemapTarget = {
           document.setFlash(result.responseText)
         }
       });
-      props.onPageTypeDrop(item.id, props.pageTree.parentId, (props.pageTree.position));
+      props.onPageTypeDrop(item.id, props.pageTree.parentId, props.pageTree.position);
     }
   }
 };
@@ -49,7 +51,7 @@ var DropTargetDecorator = DropTarget([ItemTypes.PAGE_CONTAINER, ItemTypes.PAGE_T
     };
 });
 
-class PageTileTop extends React.Component {
+class Gutter extends React.Component {
   static propTypes = {
     onPageDrop: PropTypes.func.isRequired,
     onPageTypeDrop: PropTypes.func.isRequired,
@@ -59,34 +61,29 @@ class PageTileTop extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
-      if(this.props.pageTree.parentId) {
-        var domNode = findDOMNode(this);
-        $(domNode).addClass('drag-over' )
-      }
+      var domNode = findDOMNode(this);
+      $(domNode).addClass('drag-over' )
     }
 
     if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
       // You can use this as leave handler
-      if(this.props.pageTree.parentId) {
-        var domNode = findDOMNode(this);
-        $(domNode).removeClass('drag-over')
-      }
+      var domNode = findDOMNode(this);
+      $(domNode).removeClass('drag-over')
+    }
+
+    if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
+      // You can be more specific and track enter/leave
+      // shallowly, not including nested targets
     }
   }
 
   render() {
     const connectDropTarget = this.props.connectDropTarget
-
     return connectDropTarget(
-      <div className="tile-top">
-        <h1 className="tile-name">
-          <span className="tile-number">1.0</span>
-          { this.props.pageTree.name }
-        </h1>
-      </div>
+      <div className="gutter"></div>
     );
   }
 }
 
-var DroppablePageTileTop = DropTargetDecorator(PageTileTop)
-export default DroppablePageTileTop
+var DroppableGutter = DropTargetDecorator(Gutter)
+export default DroppableGutter
