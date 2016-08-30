@@ -45,7 +45,7 @@
             <label>Credit Card</label>
             <p class="font-12-light cc-detail-save">
               <% if current_business.is_starter_plan? %>
-                We currently have your <%= @card.brand %> ending in <%= @card.last4 %> on file. We're not charging it because you're on the Starter plan, which is free.
+                We currently have your <%= @card.brand %> ending in <%= @card.last4 %> on file. We're not charging it because you're on the Starter plan, which is free. You can change your saved card at any time.
               <% else %>
                 We're currently charging your <%= @card.brand %> ending in <%= @card.last4 %>. You can change your saved card at any time.
               <% end %>

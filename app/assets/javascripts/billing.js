@@ -25,17 +25,25 @@ Billing.prototype.bindEvents = function() {
 };
 
 Billing.prototype.bindExpFieldEvent = function() {
-  this.expField.on('keypress keyup', function (e) {
-    if(e.keyCode > 47 && e.keyCode <= 57) {
+  this.expField.on('keypress', function (e) {
+    if(e.charCode > 47 && e.charCode <= 57) {
       if(this.value.length > 4) {
         e.preventDefault();
-      } else if(this.value.length == 2){
-        this.value = this.value + '/';
+      } else if(this.value.length == 1){
+        this.value = this.value + (e.charCode - 48) + '/';
+        e.preventDefault();
       };
     } else {
-      e.preventDefault();
+        e.preventDefault();
     }
   });
+
+  this.expField.on('keydown', function (e) {
+    if(e.keyCode == 8 && this.value.length == 3) {
+      this.value = this.value.substring(0, 1)
+      e.preventDefault()
+    }
+  })
 };
 
 Billing.prototype.bindDowngradeErrorEvent = function() {
