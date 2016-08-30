@@ -10,15 +10,15 @@ const sitemapTarget = {
       return;
     }
     if(item.type == 'page') {
-      // $.ajax({
-      //   url: '/pages/' + item.id,
-      //   method: 'put',
-      //   dataType: 'JSON',
-      //   data: { page: { parent_id: props.pageTree.parentId, position: (props.pageTree.position) } },
-      //   error: (result, b, c, d) => {
-      //     document.setFlash(result.responseText)
-      //   }
-      // });
+      $.ajax({
+        url: '/pages/' + item.id,
+        method: 'put',
+        dataType: 'JSON',
+        data: { page: { parent_id: props.pageTree.parentId, position: (props.pageTree.position) } },
+        error: (result, b, c, d) => {
+          document.setFlash(result.responseText)
+        }
+      });
       props.onPageDrop(item.id, props.pageTree.parentId, props.pageTree.position);
     } else if(item.type == 'pageType') {
       $.ajax({

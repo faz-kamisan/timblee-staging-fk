@@ -19,7 +19,7 @@ const sitemapTarget = {
           document.setFlash(result.responseText)
         }
       });
-      props.onPageDrop(item.id, props.pageTree.id, 1);
+      props.onPageDrop(item.id, props.pageTree.id, 'begining');
     } else if(item.type == 'pageType') {
       $.ajax({
         url: '/pages/',
@@ -30,7 +30,7 @@ const sitemapTarget = {
           document.setFlash(result.responseText)
         }
       });
-      props.onPageTypeDrop(item.id, props.pageTree.id, 1);
+      props.onPageTypeDrop(item.id, props.pageTree.id, 'begining');
     }
   }
 };
