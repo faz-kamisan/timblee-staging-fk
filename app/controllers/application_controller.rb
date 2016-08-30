@@ -18,9 +18,4 @@ class ApplicationController < ActionController::Base
     new_user_session_path
   end
 
-  def check_user_is_confirmed
-    if !current_user.confirmed?
-      redirect_to settings_users_path, alert: 'Need to verify email before updating'
-    end
-  end
 end

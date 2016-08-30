@@ -50,4 +50,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def after_update_path_for(resource)
     settings_users_path
   end
+
+  def check_user_is_confirmed
+    if !current_user.confirmed? && params[:user][:email].present?
+      redirect_to settings_users_path, alert: 'Need to verify email before updating'
+    end
+  end
 end

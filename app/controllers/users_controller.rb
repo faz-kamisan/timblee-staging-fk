@@ -1,7 +1,5 @@
 class UsersController < ApplicationController
 
-  before_filter :check_user_is_confirmed, only: [:update_password]
-
   def settings
     if(current_business.stripe_customer_id)
       customer = Stripe::Customer.retrieve(current_business.stripe_customer_id)
