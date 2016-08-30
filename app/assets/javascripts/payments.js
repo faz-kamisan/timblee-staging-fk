@@ -52,6 +52,9 @@ Payment.prototype.stripeResponseHandler = function (status, response) {
       this.cvvDiv.addClass('field_with_errors');
     }
     else {
+      this.ccNumberDiv.addClass('field_with_errors');
+      this.cvvDiv.addClass('field_with_errors');
+      this.expDiv.addClass('field_with_errors');
       this.errorsDiv.text(response.error.message);
     }
 
