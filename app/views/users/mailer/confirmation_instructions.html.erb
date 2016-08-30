@@ -1,6 +1,6 @@
 <p>Welcome <%= @email %>!</p>
-<% unless @resource.confirmed? || (@user.created_at + User.allow_unconfirmed_access_for).to_date >= Date.current %>
-  <p>You have to confirm your account by <%= (@user.created_at + User.allow_unconfirmed_access_for).strftime('%b %d, %Y') %>(in <%= (((@user.created_at + User.allow_unconfirmed_access_for).to_date) - Date.current).to_i %> days). After this, you won't be able to signin to Timblee.</p>
+<% unless @resource.confirmed? || (@user.created_at + User.allow_unconfirmed_access_for).to_date < Date.current %>
+  <p>You have to confirm your account by <%= (@user.created_at + User.allow_unconfirmed_access_for).strftime('%d %b %Y') %>(in <%= (((@user.created_at + User.allow_unconfirmed_access_for).to_date) - Date.current).to_i %> days). After this, you won't be able to signin to Timblee.</p>
 <% end %>
 
 <p>You can confirm your account email through the link below:</p>
