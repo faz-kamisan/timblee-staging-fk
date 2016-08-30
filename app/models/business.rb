@@ -46,7 +46,7 @@ class Business < ActiveRecord::Base
   end
 
   def allow_more_sitemaps?
-    is_pro_plan? || in_trial_period_without_any_plan? || sitemaps.count < 3
+    is_pro_plan? || in_trial_period? || sitemaps.count < 3
   end
 
   def self.monthly_charge(no_of_users)

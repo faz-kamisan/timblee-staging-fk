@@ -1,8 +1,8 @@
 var Billing = function(options) {
   this.cardNumber = options.cardNumber;
   this.brandSpan = options.brandSpan;
-  this.cardDetailsOnEdit = options.cardDetailsOnEdit;
-  this.cardDetailsOnSave = options.cardDetailsOnSave;
+  this.cardDetailsrowOnEdit = options.cardDetailsrowOnEdit;
+  this.cardDetailsrowOnSave = options.cardDetailsrowOnSave;
   this.cardFormDiv = options.cardFormDiv;
   this.btn_edit = options.btn_edit;
   this.btn_cancel = options.btn_cancel;
@@ -58,14 +58,14 @@ Billing.prototype.addCardType = function() {
 Billing.prototype.toggleCardInputFields = function() {
   var _this = this;
   this.btn_edit.on('click', function() {
-    _this.cardDetailsOnEdit.removeClass('hide');
-    _this.cardDetailsOnSave.addClass('hide');
+    _this.cardDetailsrowOnEdit.removeClass('hide');
+    _this.cardDetailsrowOnSave.addClass('hide');
     _this.cardFormDiv.removeClass('hide');
   });
 
   this.btn_cancel.on('click', function() {
-    _this.cardDetailsOnEdit.addClass('hide');
-    _this.cardDetailsOnSave.removeClass('hide');
+    _this.cardDetailsrowOnEdit.addClass('hide');
+    _this.cardDetailsrowOnSave.removeClass('hide');
     _this.cardFormDiv.addClass('hide');
     _this.cardErrors.html('');
     _this.brandSpan.html('');
@@ -76,11 +76,11 @@ $(function() {
   var options = {
     cardNumber : $('.cc-number'),
     brandSpan : $('.cc-brand'),
-    cardDetailsOnEdit : $('.cc-detail-edit'),
-    cardDetailsOnSave : $('.cc-detail-save'),
+    cardDetailsrowOnEdit : $('.cc-row-on-edit'),
+    cardDetailsrowOnSave : $('.cc-row-on-save'),
     cardFormDiv : $('.cc-add'),
-    btn_edit : $('.btn-edit'),
-    btn_cancel : $('.btn-cancel'),
+    btn_edit : $('.btn-to-edit'),
+    btn_cancel : $('.btn-to-cancel'),
     cardErrors : $('.cc-errors'),
     cardCVV : $('.cc-cvv'),
     starterErrorButton : $('#starter-error'),

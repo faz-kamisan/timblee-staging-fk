@@ -6,14 +6,27 @@
       <div class="row">
         <div class="col-xs-9">
           <label>Plan</label>
-          <% if current_business.in_trial_period_without_any_plan? %>
-            <p class="font-12-light">You're on the free trial till  <%= current_business.trial_end_at.strftime('%d %b %Y') %> with no restrictions. To keep using Timblee after that, we'll ask you to choose a plan and add a credit card. Our pricing is simple – $19 per month for the first user and $12 for every subsequent user. If you’ll only need to plan websites ocassionally and work alone, there's also a free plan.</p>
-          <% elsif current_business.is_pro_plan? %>
-            <p class="font-12-light">You're on the Pro plan with <%= current_business.no_of_users %> users. Your monthly charge is $<%= current_business.monthly_charge%>. To add more users, click on the 'Team' tab above.</p>
-          <% else %>
-            <p class="font-12-light">You're on the Starter plan with one user and a maximum of three sitemaps. This is a free plan.
-            <a href="#choose-plan-modal" data-toggle="modal" data-dismiss="modal" id="upgrade">Upgrade to the Pro plan</a> for only $19 to have unlimited sitemaps.</p>
-          <% end %>
+            <p class="font-12-light">
+
+            <% if current_business.in_trial_period_without_any_plan? %>
+              You're on the free trial till  <%= current_business.trial_end_at.strftime('%d %b %Y') %> with no restrictions. To keep using Timblee after that, we'll ask you to choose a plan and add a credit card. Our pricing is simple – $19 per month for the first user and $12 for every subsequent user. If you’ll only need to plan websites ocassionally and work alone, there's also a free plan.
+
+            <% elsif current_business.in_trial_period? && current_business.is_pro_plan? %>
+              You're on the Pro plan with <%= current_business.no_of_users %> users. Your monthly charge is $<%= current_business.monthly_charge%>. To add more users, click on the 'Team' tab above.
+              You're on the free trial till  <%= current_business.trial_end_at.strftime('%d %b %Y') %>.
+            <% elsif current_business.in_trial_period? && current_business.is_starter_plan? %>
+              You're on the Starter plan with one user and a maximum of three sitemaps. This is a free plan.
+              <a href="#choose-plan-modal" data-toggle="modal" data-dismiss="modal" id="upgrade">Upgrade to the Pro plan</a> for only $19 to have unlimited sitemaps.
+              You're on the free trial till  <%= current_business.trial_end_at.strftime('%d %b %Y') %> with no restrictions.
+            <% elsif current_business.is_pro_plan? %>
+              You're on the Pro plan with <%= current_business.no_of_users %> users. Your monthly charge is $<%= current_business.monthly_charge%>. To add more users, click on the 'Team' tab above.
+
+            <% else %>
+              You're on the Starter plan with one user and a maximum of three sitemaps. This is a free plan.
+              <a href="#choose-plan-modal" data-toggle="modal" data-dismiss="modal" id="upgrade">Upgrade to the Pro plan</a> for only $19 to have unlimited sitemaps.
+
+            <% end %>
+          </p>
         </div>
         <div class="col-xs-3 text-right edit-info">
           <div class="edit">
@@ -27,23 +40,44 @@
   <% if @card %>
     <%= form_tag businesses_card_path, { method: :post, class: 'settings-form', id: 'add-card-form' } do |f| %>
       <div class="form-group">
-        <div class="row">
-          <div class="col-xs-6">
+        <div class="row cc-row-on-save">
+          <div class="col-xs-9">
             <label>Credit Card</label>
-            <p class="font-12-light cc-detail-save">We're currently charging your <%= @card.brand %> ending in <%= @card.last4 %>. We accept MasterCard, Visa and American Express.</p>
-            <p class="font-12-light cc-detail-edit hide">We're currently charging your <%= @card.brand %> ending in <%= @card.last4 %>. We'll never charge it without your permission. We accept MasterCard, Visa and American Express – with no additional fees or charges.</p>
+            <p class="font-12-light cc-detail-save">
+              <% if current_business.is_starter_plan? %>
+                We currently have your <%= @card.brand %> ending in <%= @card.last4 %> on file. We're not charging it because you're on the Starter plan, which is free.
+              <% else %>
+                We're currently charging your <%= @card.brand %> ending in <%= @card.last4 %>. You can change your saved card at any time.
+              <% end %>
+            </p>
           </div>
-          <div class="col-xs-6 text-right edit-info">
+          <div class="col-xs-3 text-right edit-info">
             <div class="edit">
-              <a href="javascript:void(0);" class="btn btn-grey btn-edit">Edit</a>
-            </div>
-            <div class="save">
-              <button type="submit" class="btn btn-pink" id="add-card">Save</button>
-              <a href="javascript:void(0);" class="btn btn-grey btn-cancel" id='cancel' >Cancel</a>
+              <a href="javascript:void(0);" class="btn btn-grey btn-edit btn-to-edit">Edit</a>
             </div>
           </div>
         </div>
-        <div class="hide cc-add">
+
+        <div class="row cc-row-on-edit hide">
+          <div class="col-xs-6">
+            <label>Credit Card</label>
+            <p class="font-12-light cc-detail-edit">
+              <% if current_business.is_starter_plan? %>
+                We currently have your <%= @card.brand %> ending in <%= @card.last4 %> on file. We're not charging it because you're on the Starter plan, which is free. We'll never charge it without your permission. We accept MasterCard, Visa and American Express – with no additional fees or charges.
+              <% else %>
+                We're currently charging your <%= @card.brand %> ending in <%= @card.last4 %>. We'll never charge it without your permission. We accept MasterCard, Visa and American Express – with no additional fees or charges.
+              <% end %>
+            </p>
+          </div>
+          <div class="col-xs-6 text-right edit-info">
+            <div>
+              <button type="submit" class="btn btn-pink" id="add-card">Save</button>
+              <a href="javascript:void(0);" class="btn btn-grey btn-cancel btn-to-cancel" id='cancel'>Cancel</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cc-add hide">
           <div class="row add-credit-card">
             <div class="col-xs-6">
               <%= text_field_tag '', nil, placeholder: "Card number", class: 'string form-control default-input cc-number editable-input', disabled: true %>

@@ -26,7 +26,7 @@
           </div>
         <div class="col-xs-3 text-right edit-info">
           <div class="edit">
-            <% if current_business.is_starter_plan? %>
+            <% if current_business.is_starter_plan? && !current_business.in_trial_period? %>
                 <a href="#invite-error-modal" data-toggle="modal" class="btn btn-pink">Invite</a>
             <% else %>
               <a href="#invite-user-modal" data-toggle="modal" class="btn btn-pink">Invite</a>
