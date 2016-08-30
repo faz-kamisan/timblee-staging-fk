@@ -26,11 +26,13 @@ Billing.prototype.bindEvents = function() {
 
 Billing.prototype.bindExpFieldEvent = function() {
   this.expField.on('keypress', function (e) {
-    if(e.charCode > 47 && e.charCode <= 57) {
+    if(e.charCode >= 47 && e.charCode <= 57) {
       if(this.value.length > 4) {
         e.preventDefault();
       } else if(this.value.length == 1){
         this.value = this.value + (e.charCode - 48) + '/';
+        e.preventDefault();
+      } else if (e.charCode == 47 && this.value.match('/')) {
         e.preventDefault();
       };
     } else {
