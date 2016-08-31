@@ -5,6 +5,7 @@ import { DragDropContext } from 'react-dnd';
 import ConnectedHeader from '../containers/connected_header';
 import ConnectedLeftSidebar from '../containers/connected_left_sidebar';
 import ConnectedRightSidebar from '../containers/connected_right_sidebar';
+import CustomDragLayer from '../components/custom_drag_layer';
 
 class SiteMap extends React.Component {
   render() {
@@ -13,7 +14,8 @@ class SiteMap extends React.Component {
           <ConnectedHeader />
           <ConnectedLeftSidebar />
           <ConnectedRightSidebar />
-          <ConnectedPageContainer />
+          <ConnectedPageContainer sitemapNumber='' />
+          <CustomDragLayer />
         </div>
     );
   }

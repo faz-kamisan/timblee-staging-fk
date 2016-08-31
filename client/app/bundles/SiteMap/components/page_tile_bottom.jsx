@@ -7,7 +7,6 @@ const sitemapTarget = {
   canDrop: function(props, monitor) {
     const item = monitor.getItem()
     return((item.type == 'PageType') || (item.id != props.pageTree.id))
-    // debugger
   },
   drop: function(props, monitor, component) {
     const item = monitor.getItem();
@@ -20,22 +19,23 @@ const sitemapTarget = {
         method: 'put',
         dataType: 'JSON',
         data: { page: { parent_id: props.pageTree.id, position: 1 } },
-        error: (result, b, c, d) => {
+        error: (result) => {
           document.setFlash(result.responseText)
         }
       });
       props.onPageDrop(item.id, props.pageTree.id, 'begining');
     } else if(item.type == 'pageType') {
+      var timeStamp = new Date();
       $.ajax({
         url: '/pages/',
         method: 'post',
         dataType: 'JSON',
         data: { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: 'New Page', position: 1 } },
-        error: (result, b, c, d) => {
+        error: (result) => {
           document.setFlash(result.responseText)
         }
       });
-      props.onPageTypeDrop(item.id, props.pageTree.id, 'begining');
+      props.onPageTypeDrop(item.id, props.pageTree.id, 'begining', timeStamp);
     }
   }
 };
@@ -53,6 +53,7 @@ class PageTileBottom extends React.Component {
   static propTypes = {
     onPageDrop: PropTypes.func.isRequired,
     onPageTypeDrop: PropTypes.func.isRequired,
+    onPageIdUpdate: PropTypes.func.isRequired,
     pageTree: PropTypes.object.isRequired,
     sitemapId: PropTypes.number.isRequired
   };

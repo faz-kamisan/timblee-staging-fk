@@ -4,14 +4,8 @@ import { DropTarget } from 'react-dnd';
 import { findDOMNode } from 'react-dom';
 
 const sitemapTarget = {
-  // canDrop: function(props, monitor) {
-  //   const item = monitor.getItem()
-  //   return((item.type == 'PageType') || (item.id != props.pageTree.id))
-  //   // debugger
-  // },
   drop: function(props, monitor, component) {
     const item = monitor.getItem();
-    // debugger
     if (monitor.didDrop() || !(props.pageTree.id)) {
       return;
     }
@@ -27,6 +21,7 @@ const sitemapTarget = {
       });
       props.onPageDrop(item.id, props.pageTree.parentId, props.pageTree.position);
     } else if(item.type == 'pageType') {
+      var timeStamp = new Date();
       $.ajax({
         url: '/pages/',
         method: 'post',
@@ -36,7 +31,7 @@ const sitemapTarget = {
           document.setFlash(result.responseText)
         }
       });
-      props.onPageTypeDrop(item.id, props.pageTree.parentId, props.pageTree.position);
+      props.onPageTypeDrop(item.id, props.pageTree.parentId, props.pageTree.position, timeStamp);
     }
   }
 };
@@ -54,6 +49,7 @@ class LevelSupport extends React.Component {
   static propTypes = {
     onPageDrop: PropTypes.func.isRequired,
     onPageTypeDrop: PropTypes.func.isRequired,
+    onPageIdUpdate: PropTypes.func.isRequired,
     pageTree: PropTypes.object.isRequired,
     sitemapId: PropTypes.number.isRequired
   };

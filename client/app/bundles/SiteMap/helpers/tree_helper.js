@@ -1,8 +1,8 @@
-function addPage(tree, pageTypeId, parentId, position) {
+function addPage(tree, pageTypeId, parentId, position, tempId) {
   var treeCopy = Object.assign({}, tree);
   var parentPage = getNodeById(treeCopy, parentId),
       parentLevel = parentPage.level;
-  var newPage = { name: 'New Page', pageTypeId: pageTypeId, parentId: parentId, level: (parentLevel + 1), children: []};
+  var newPage = { name: 'New Page', pageTypeId: pageTypeId, parentId: parentId, level: (parentLevel + 1), children: [], comments: [], collapsed: false, id: tempId};
   if(position == 'begining') {
     parentPage.children.unshift(newPage)
   } else {
@@ -19,6 +19,13 @@ function updatePageName(tree, id, name) {
   var treeCopy = Object.assign({}, tree);
   var page = getNodeById(treeCopy, id);
   page.name = name;
+  return treeCopy
+}
+
+function updatePageId(tree, id, newId) {
+  var treeCopy = Object.assign({}, tree);
+  var page = getNodeById(treeCopy, id);
+  page.id = newId;
   return treeCopy
 }
 
@@ -104,4 +111,4 @@ function getNodeByPosition(tree, position){
 }
 
 
-export { addPage, removePage, updatePagePosition, updatePageName, traverse, updateCollapse }
+export { addPage, removePage, updatePagePosition, updatePageName, traverse, updateCollapse, updatePageId }

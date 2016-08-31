@@ -5,6 +5,7 @@ import ConnectedPageTileBottom from '../containers/connected_page_tile_bottom';
 class PageTile extends React.Component {
   static propTypes = {
     pageTree: PropTypes.object.isRequired,
+    sitemapNumber: PropTypes.string.isRequired,
     collapsed: PropTypes.bool.isRequired,
     childrenLength: PropTypes.number.isRequired,
     onCollapsedChanged: PropTypes.func.isRequired
@@ -22,7 +23,7 @@ class PageTile extends React.Component {
     if(this.props.childrenLength > 0) {
       return (
         <div className="page-tile">
-          <ConnectedPageTileTop pageTree={this.props.pageTree} />
+          <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber} />
           <ConnectedPageTileBottom pageTree={this.props.pageTree} />
           <div className="tile-right"></div>
           <div className={ "collapse-open" + (this.props.collapsed ? ' collapse-close' : '') } onClick={this.handleOnCollapsedChanged}></div>
@@ -31,7 +32,7 @@ class PageTile extends React.Component {
     } else {
       return (
         <div className="page-tile">
-          <ConnectedPageTileTop pageTree={this.props.pageTree} />
+          <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber} />
           <ConnectedPageTileBottom pageTree={this.props.pageTree} />
           <div className="tile-right"></div>
         </div>

@@ -4,13 +4,9 @@ import { DropTarget } from 'react-dnd';
 import { findDOMNode } from 'react-dom';
 
 const sitemapTarget = {
-  canDrop: function(props, monitor) {
-    const item = monitor.getItem()
-    return((item.type == 'PageType') || (item.id != props.pageTree.id))
-    // debugger
-  },
   drop: function(props, monitor, component) {
     const item = monitor.getItem();
+    var _this = this;
     if (monitor.didDrop() || !(props.pageTree.id)) {
       return;
     }
@@ -26,6 +22,7 @@ const sitemapTarget = {
       });
       props.onPageDrop(item.id, props.pageTree.parentId, (props.pageTree.position));
     } else if(item.type == 'pageType') {
+      var timeStamp = new Date();
       $.ajax({
         url: '/pages/',
         method: 'post',
@@ -33,9 +30,12 @@ const sitemapTarget = {
         data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: 'New Page', position: (props.pageTree.position + 1) } },
         error: (result, b, c, d) => {
           document.setFlash(result.responseText)
+        },
+        success: (result) => {
+          props.onPageIdUpdate(timeStamp, result.id)
         }
       });
-      props.onPageTypeDrop(item.id, props.pageTree.parentId, (props.pageTree.position));
+      props.onPageTypeDrop(item.id, props.pageTree.parentId, (props.pageTree.position), timeStamp);
     }
   }
 };
@@ -53,7 +53,9 @@ class PageTileTop extends React.Component {
   static propTypes = {
     onPageDrop: PropTypes.func.isRequired,
     onPageTypeDrop: PropTypes.func.isRequired,
+    onPageIdUpdate: PropTypes.func.isRequired,
     pageTree: PropTypes.object.isRequired,
+    sitemapNumber: PropTypes.string.isRequired,
     sitemapId: PropTypes.number.isRequired
   };
 
@@ -76,11 +78,10 @@ class PageTileTop extends React.Component {
 
   render() {
     const connectDropTarget = this.props.connectDropTarget
-
     return connectDropTarget(
       <div className="tile-top">
         <h1 className="tile-name">
-          <span className="tile-number">1.0</span>
+          <span className="tile-number">{this.props.sitemapNumber}</span>
           { this.props.pageTree.name }
         </h1>
       </div>

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { updatePagePosition, addNewPage } from '../actions'
-import DraggablePageContainer from '../components/page_container'
+import DraggablePageContainer from '../components/draggable_page_container'
 
 const mapStateToProps = (state) => {
   return { pageTree: state.pageTree, sitemapId: state.id }

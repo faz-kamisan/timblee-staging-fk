@@ -126,7 +126,19 @@
     }
   }
 
+  &.level-1 {
+    > .page-tile {
+      + .gutter {
+        opacity: 0;
+      }
+    }
+  }
+
   &.level-2 {
+    .gutter {
+      width: 182px;
+      margin-left: 18px;
+    }
     .page-tile {
       width: 182px;
       margin-left: 18px;
@@ -164,6 +176,11 @@
   }
 
   &.level-3 {
+    .gutter {
+      width: 164px;
+      margin-left: 36px;
+    }
+
     .page-tile {
       width: 164px;
       margin-left: 36px;
@@ -180,6 +197,11 @@
   }
 
   &.level-4 {
+    .gutter {
+      width: 146px;
+      margin-left: 54px;
+    }
+
     .page-tile {
       width: 146px;
       margin-left: 54px;
@@ -196,6 +218,11 @@
   }
 
   &.level-5 {
+    .gutter {
+      width: 128px;
+      margin-left: 72px;
+    }
+
     .page-tile {
       width: 128px;
       margin-left: 72px;
@@ -212,6 +239,11 @@
   }
 
   &.level-6 {
+    .gutter {
+      width: 110px;
+      margin-left: 90px;
+    }
+
     .page-tile {
       width: 110px;
       margin-left: 90px;
@@ -228,6 +260,11 @@
   }
 
   &.level-7 {
+    .gutter {
+      width: 92px;
+      margin-left: 108px;
+    }
+
     .page-tile {
       width: 92px;
       margin-left: 108px;
@@ -244,6 +281,11 @@
   }
 
   &.level-8 {
+    .gutter {
+      width: 74px;
+      margin-left: 126px;
+    }
+
     .page-tile {
       width: 74px;
       margin-left: 126px;
@@ -277,7 +319,10 @@
         width: 40px;
         background: $transparent;
         height: 87px;
-        position: relative;
+        position: absolute;
+        right: -40px;
+        top: 0;
+        z-index: 2;
         &:before {
           content: ' ';
           position: absolute;
@@ -303,16 +348,7 @@
     .page-container {
       float: left;
       width: 200px;
-      &.dragging {
-        display: none;
-        + .level-support {
-          display: none;
-        }
-      }
-    }
-
-    .level-support {
-      float: left;
+      position: relative;
     }
 
     &.parent-1 {
@@ -321,5 +357,12 @@
       }
     }
   }
+}
 
+.page-container-wrapper {
+  &.dragging {
+    opacity: 0;
+    height: 0;
+    display: none;
+  }
 }

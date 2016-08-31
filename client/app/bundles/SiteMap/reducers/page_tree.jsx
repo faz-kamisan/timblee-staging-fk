@@ -1,10 +1,10 @@
-import { ADD_NEW_PAGE, REMOVE_PAGE, UPDATE_PAGE_NAME, UPDATE_PAGE_POSITION, CHANGE_COLLAPSE } from '../actions/index'
-import { addPage, removePage, updatePagePosition, updatePageName, updateCollapse } from '../helpers/tree_helper'
+import { ADD_NEW_PAGE, REMOVE_PAGE, UPDATE_PAGE_NAME, UPDATE_PAGE_POSITION, CHANGE_COLLAPSE, UPDATE_ID } from '../actions/index'
+import { addPage, removePage, updatePagePosition, updatePageName, updateCollapse, updatePageId } from '../helpers/tree_helper'
 
 const pageTree = (state = {}, action) => {
   switch (action.type) {
     case ADD_NEW_PAGE:
-      return addPage(state, action.pageTypeId, action.parentId, action.position)
+      return addPage(state, action.pageTypeId, action.parentId, action.position, action.timeStamp)
     case REMOVE_PAGE:
       return removePage(state, action.id)
     case UPDATE_PAGE_POSITION:
@@ -13,6 +13,8 @@ const pageTree = (state = {}, action) => {
       return updatePageName(state, action.id, action.name)
     case CHANGE_COLLAPSE:
       return updateCollapse(state, action.id)
+    case UPDATE_ID:
+      return updatePageId(state, action.id, action.newId)
     default:
       return state
   }

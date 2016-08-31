@@ -40,7 +40,7 @@ class PagesController < ApplicationController
 
     def send_conditional_json_response(condition)
       if condition
-        render json: { success: t('.success', scope: :flash) }, status: 200
+        render json: @page.as_json, status: 200
       else
         render json: t('.failure', scope: :flash) , status: 522
       end
