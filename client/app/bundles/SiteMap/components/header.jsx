@@ -24,7 +24,7 @@ class Header extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="hide">
         <input value = {this.props.name} onChange={this.handleNameChange} />
       </div>
     );

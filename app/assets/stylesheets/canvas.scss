@@ -8,6 +8,7 @@
     background: $primaryWhite;
     position: relative;
     display: inline-block;
+    cursor: pointer;
     .collapse-open {
       position: absolute;
       left: 0;
@@ -106,7 +107,8 @@
 
   &.level-0 {
     text-align: center;
-    padding-left: 40px;
+    padding: 55px 0 0 40px;
+    transition: padding-left .2s;
     > .page-tile {
       margin-bottom: 75px;
       margin-left: -40px;
@@ -364,5 +366,133 @@
     opacity: 0;
     height: 0;
     display: none;
+  }
+}
+
+.sitemap-right-sidebar {
+  display: none;
+}
+
+.sitemap-left-sidebar {
+  position: fixed;
+  width: 372px;
+  background: #262b30;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  overflow-y: auto;
+  top: 0;
+  padding-top: 95px;
+  z-index: 2;
+  transition: width .2s;
+  ~ .page-container.level-0 {
+    padding-left: 372px;
+  }
+  &.expand-false {
+    cursor: pointer;
+    width: 30px;
+    overflow: hidden;
+    ~ .page-container.level-0 {
+      padding-left: 40px;
+    }
+  }
+
+  .expand-btn {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    text-align: center;
+    span {
+      color: #6a717f;
+      text-transform: uppercase;
+      font-size: 10px;
+      position: absolute;
+      top: calc(50% - 47px);
+      left: 50%;
+      margin-top: -7px;
+      margin-left: -19px;
+      @include rotate(90deg);
+    }
+    &:hover {
+      span {
+        color: $primaryWhite;
+      }
+    }
+  }
+}
+
+.page-type-list {
+  padding: 0;
+  margin: 0;
+  li {
+    float: left;
+    width: 50%;
+    height: 112px;
+    padding: 17px 25px 12px 25px;
+    border-right: 1px solid #171a1d;
+    border-bottom: 1px solid #171a1d;
+    text-align: center;
+    color: $primaryLink;
+    font-size: 14px;
+    &:first-child,
+    &:nth-child(2) {
+      border-top: 1px solid #171a1d;
+    }
+  }
+
+  .page-type-box {
+    font-family: "proxima-nova",sans-serif;
+    height: 60px;
+    background: $primaryWhite;
+    @include border-radius(6px);
+    @include box-shadow(1px, 1px, 2px, rgba(106, 113, 127, .2));
+    padding-left: 15px;
+    text-align: left;
+    position: relative;
+  }
+
+  .dummy-number {
+    font-size: 8px;
+    color: #858a9c;
+  }
+
+  h5 {
+    font-size: 8px;
+    margin: 0;
+    color: #535c63;
+    font-weight: 600;
+  }
+
+  .dummy-id {
+    color: #b7b6bc;
+    font-size: 7px;
+    position: absolute;
+    bottom: 5px;
+    left: 15px;
+    z-index: 2;
+  }
+
+  h4 {
+    margin: 0;
+    color: $primaryGrey;
+    font-size: 11px;
+    font-weight: 500;
+    margin-top: 10px;
+    text-transform: uppercase;
+  }
+
+  .page-type-details {
+    padding-right: 50px;
+  }
+
+  .page-type-icon {
+    position: absolute;
+    right: 0;
+    width: 45px;
+    height: 100%;
+    top: 0;
+    border-left: solid 1px #fafafc;
   }
 }
