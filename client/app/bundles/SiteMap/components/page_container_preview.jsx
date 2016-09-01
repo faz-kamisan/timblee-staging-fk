@@ -16,9 +16,14 @@ export default class PageContainerPreview extends Component {
     var children;
     if (this.props.pageTree.children != null) {
       children = pageTree.children.map(function(pageTree, index) {
+        if(pageTree.level == 2) {
+          var sitemapNumber = parseInt(_this.props.sitemapNumber).toString() + '.1';
+        } else {
+          var sitemapNumber = _this.props.sitemapNumber + '.' + (index + 1)
+        }
         return (
           <div key={pageTree.id}>
-            <PageContainerPreview pageTree={pageTree} />
+            <PageContainerPreview pageTree={pageTree} sitemapNumber={sitemapNumber} />
           </div>
         )
       });
@@ -26,7 +31,7 @@ export default class PageContainerPreview extends Component {
 
     return (
       <div style={styles}>
-        <PageContainer pageTree={pageTree} children={children} />
+        <PageContainer pageTree={pageTree} children={children} sitemapNumber={this.props.sitemapNumber} />
       </div>
     );
   }

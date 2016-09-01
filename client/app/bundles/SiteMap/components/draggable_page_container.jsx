@@ -6,7 +6,7 @@ import PageContainer from './page_container'
 
 const sitemapSource = {
   beginDrag(props, monitor, component) {
-    return {id: props.pageTree.id, parentId: props.pageTree.parentId, type: 'page', pageTree: props.pageTree};
+    return {id: props.pageTree.id, parentId: props.pageTree.parentId, type: 'page', pageTree: props.pageTree, sitemapNumber: props.sitemapNumber};
   },
   canDrag(props, monitor) {
     return(props.pageTree.level != 0)
@@ -49,9 +49,7 @@ class DraggedPageContainer extends React.Component {
     var children;
     if (this.props.pageTree.children != null) {
       children = this.props.pageTree.children.map(function(pageTree, index) {
-        if(pageTree.level == 0) {
-          var sitemapNumber = this.props.sitemapNumber
-        } else if(pageTree.level == 1) {
+        if(pageTree.level == 1) {
           var sitemapNumber = (index + 1).toString() + '.0';
         } else if(pageTree.level == 2) {
           var sitemapNumber = parseInt(_this.props.sitemapNumber).toString() + '.1';

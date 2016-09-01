@@ -64,6 +64,11 @@ class PageTileTop extends React.Component {
       if(this.props.pageTree.parentId) {
         var domNode = findDOMNode(this);
         $(domNode).addClass('drag-over' )
+        if(this.props.pageTree.level == 1) {
+          $(domNode).parent('.page-tile').siblings('.level-support').addClass('drag-over')
+        } else {
+          $(domNode).parent('.page-tile').siblings('.gutter').addClass('drag-over')
+        }
       }
     }
 
@@ -72,6 +77,11 @@ class PageTileTop extends React.Component {
       if(this.props.pageTree.parentId) {
         var domNode = findDOMNode(this);
         $(domNode).removeClass('drag-over')
+        if(this.props.pageTree.level == 1) {
+          $(domNode).parent('.page-tile').siblings('.level-support').removeClass('drag-over')
+        } else {
+          $(domNode).parent('.page-tile').siblings('.gutter').removeClass('drag-over')
+        }
       }
     }
   }

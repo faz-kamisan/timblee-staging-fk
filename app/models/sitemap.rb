@@ -15,6 +15,7 @@ class Sitemap < ActiveRecord::Base
   validates :name, uniqueness: { scope: :business_id, case_sensitive: false }
 
   before_validation :set_state_to_in_progress, on: :create
+  after_create :create_first_page
   strip_fields :name
 
   scope :on_hold, -> { where(state: 'on_hold') }
@@ -39,6 +40,10 @@ class Sitemap < ActiveRecord::Base
   private
     def set_state_to_in_progress
       self.state = 'in_progress'
+    end
+
+    def create_first_page
+      pages.create(page_type: PageType.first, name: name)
     end
 
 end
