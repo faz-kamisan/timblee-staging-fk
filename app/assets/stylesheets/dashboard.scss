@@ -43,6 +43,12 @@
     font-weight: 400;
     margin-top: 0;
   }
+
+  .sitemap-link {
+    height: 100%;
+    width: 100%;
+  }
+
   .card-name {
     font-size: 18px;
     line-height: 24px;
@@ -145,7 +151,7 @@
     &:hover {
       .icon-close {
         color: $primaryPink;
-      } 
+      }
     }
   }
   .state {
@@ -235,7 +241,7 @@
     &:hover {
       .icon-folder-light,
       .icon-all-folders {
-        color: $primaryGrey;  
+        color: $primaryGrey;
       }
       color: $primaryGrey;
     }

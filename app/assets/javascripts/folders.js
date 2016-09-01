@@ -71,6 +71,7 @@ Folders.prototype.makeFoldersDroppable = function(folders) {
   var _this = this;
   folders.droppable({
     accept: ".sitemap-container",
+    tolerance: 'pointer',
     drop: function(event, ui) {
       var $droppedSitemap = $(ui.draggable);
       var $droppedOnFolder = $(this);
