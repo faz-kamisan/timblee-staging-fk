@@ -32,7 +32,7 @@ class Sitemap < ActiveRecord::Base
   def to_react_data
     { name: self.name,
       id: self.id,
-      pageTypes: PageType.all,
+      pageTypes: PageType.order_by_name,
       comments: self.comments.map(&:to_react_data),
       pageTree: get_page_tree
     }
