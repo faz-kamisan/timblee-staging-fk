@@ -25,3 +25,15 @@
   margin-top: $top;
   z-index: 1;
 }
+
+@mixin rotate($degree) {
+  transform: rotate($degree);
+  -moz-transform: rotate($degree);
+  -webkit-transform: rotate($degree);
+}
+
+@mixin scale($times) {
+  transform: scale($times);
+  -moz-transform: scale($times);
+  -webkit-transform: scale($times);
+}

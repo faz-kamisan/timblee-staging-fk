@@ -10,7 +10,7 @@ const sitemapAppReducer = combineReducers({
   id,
   pageTree,
   pageTypes,
-  comments,
+  comments
 })
 
 export default sitemapAppReducer

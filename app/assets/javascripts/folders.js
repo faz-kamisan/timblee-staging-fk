@@ -72,6 +72,7 @@ Folders.prototype.makeFoldersDroppable = function(folders) {
   var _this = this;
   folders.droppable({
     accept: ".sitemap-container",
+    tolerance: 'pointer',
     drop: function(event, ui) {
       var $droppedSitemap = $(ui.draggable);
       var $droppedOnFolder = $(this);
@@ -149,6 +150,7 @@ Folders.prototype.sendFolderDeletionRequest = function(id) {
 
 Folders.prototype.setActiveFolder = function(obj) {
   $('.folder-info').removeClass('active-delete');
+  $('#new_sitemap #sitemap_folder_id').val(obj.parent('.folder-info').data('id'));
   obj.parent('.folder-info').addClass('active-delete');
 }
 

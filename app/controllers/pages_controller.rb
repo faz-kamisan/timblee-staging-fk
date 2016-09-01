@@ -11,7 +11,19 @@ class PagesController < ApplicationController
   end
 
   def update
-    send_conditional_json_response(@page.update(page_params))
+    # @page.assign_attributes(page_params)
+    # if(params[:page][:position].present?)
+    #   @previous_page = Page.where(parent_id: @page.parent_id, position: params[:page][:postion])
+
+    # end
+    # if(@page.update(page_params))
+    #   if(params[:page][:position].present?)
+
+    #   end
+    # else
+    # end
+      # send_conditional_json_response(false)
+      send_conditional_json_response(@page.update(page_params))
   end
 
   private
@@ -23,12 +35,12 @@ class PagesController < ApplicationController
     end
 
     def page_params
-      params.require(:page).permit(:name, :sitemap_id, :parent_id, :page_type_id)
+      params.require(:page).permit(:name, :sitemap_id, :parent_id, :page_type_id, :position)
     end
 
     def send_conditional_json_response(condition)
       if condition
-        render json: { success: t('.success', scope: :flash) }, status: 200
+        render json: @page.as_json, status: 200
       else
         render json: t('.failure', scope: :flash) , status: 522
       end

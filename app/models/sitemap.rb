@@ -15,6 +15,8 @@ class Sitemap < ActiveRecord::Base
   validates :name, uniqueness: { scope: :business_id, case_sensitive: false }
 
   before_validation :set_state_to_in_progress, on: :create
+  before_validation :set_name_to_new_sitemap, on: :create
+  after_create :create_first_page
   strip_fields :name
 
   scope :on_hold, -> { where(state: 'on_hold') }
@@ -30,7 +32,7 @@ class Sitemap < ActiveRecord::Base
   def to_react_data
     { name: self.name,
       id: self.id,
-      pageTypes: PageType.all,
+      pageTypes: PageType.order_by_name,
       comments: self.comments.map(&:to_react_data),
       pageTree: get_page_tree
     }
@@ -39,6 +41,20 @@ class Sitemap < ActiveRecord::Base
   private
     def set_state_to_in_progress
       self.state = 'in_progress'
+    end
+
+    def set_name_to_new_sitemap
+      new_site_map_numbers = Sitemap.where("name ILIKE 'new sitemap%'").pluck(:name).map {|name| name.match(/\d*$/)[0].to_i}.sort
+      if(new_site_map_numbers[0] == 1)
+        first_unoccupied_number = (new_site_map_numbers.select.with_index { |number, index| number == index + 1 }[-1]) + 1
+        self.name = 'New Sitemap ' + first_unoccupied_number.to_s
+      else
+        self.name = 'New Sitemap 1'
+      end
+    end
+
+    def create_first_page
+      pages.create(page_type: PageType.first, name: name)
     end
 
 end
