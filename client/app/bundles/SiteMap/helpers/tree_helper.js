@@ -67,6 +67,7 @@ function traverse(tree, callback) {
   queue.enqueue(tree);
   var currentTree = queue.dequeue();
   while(currentTree){
+    console.log(currentTree)
     for (var i = 0, length = currentTree.children.length; i < length; i++) {
       queue.enqueue(currentTree.children[i]);
     }
