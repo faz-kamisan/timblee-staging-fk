@@ -1,25 +1,47 @@
-var Plan = function(options) {
-  this.plansCostSpan = options.plansCostSpan;
-  this.inputUserLink = options.inputUserLink;
+var ProPlan = function(options) {
+  this.addNewCard = options.addNewCard;
+  this.useSavedCard = options.useSavedCard;
+  this.cardErrors = options.cardErrors;
+  this.confirmSavedCard = options.confirmSavedCard;
+  this.proPlanModal = options.proPlanModal;
+  this.inviteUserModal = options.inviteUserModal;
 
 };
 
-Plan.prototype.bindEvents = function() {
+ProPlan.prototype.bindEvents = function() {
   var _this = this;
-  this.inputUserLink.on('input', function() {
-    if(this.value < 1) {
-      this.value = 1;
-    }
-    var monthlyCharge = '$' + (CHARGE_FOR_OWNER + (CHARGE_FOR_OTHER_USERS * (parseInt(this.value)- 1)))
-    _this.plansCostSpan.html(monthlyCharge);
-  })
+  this.useSavedCard.on('click', function() {
+    $('.old-card-info').addClass('show');
+    $('.old-card-info').removeClass('hide');
+    $('.new-card').addClass('hide');
+    $('.new-card').removeClass('show');
+    _this.cardErrors.html('');
+  });
+
+  this.addNewCard.on('click', function() {
+    $('.old-card-info').addClass('hide');
+    $('.old-card-info').removeClass('show');
+    $('.new-card').addClass('show');
+    $('.new-card').removeClass('hide');
+  });
+
+  this.confirmSavedCard.on('click', function(e) {
+    e.preventDefault();
+    _this.proPlanModal.modal('hide');
+    _this.inviteUserModal.modal('show');
+  });
+
 };
 
 
 $(function() {
   var options = {
-    plansCostSpan : $('#monthly-charge'),
-    inputUserLink : $('input.plan-users-input')
+    cardErrors : $('.cc-errors'),
+    confirmSavedCard : $('#confirm-saved-card'),
+    proPlanModal : $('#pro-plan-modal'),
+    inviteUserModal : $('#invite-user-modal'),
+    addNewCard : $('#add-new-card'),
+    useSavedCard : $('#use-saved-card')
   }
-  new Plan(options).bindEvents();
+  new ProPlan(options).bindEvents();
 });

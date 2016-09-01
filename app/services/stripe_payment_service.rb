@@ -46,10 +46,10 @@ class StripePaymentService
 
     subscription_hash.merge!({trial_end: @current_business.trial_end_at.to_time.to_i}) if @current_business.in_trial_period?
 
-    active_subscription = @customer.subscriptions.first
-    if active_subscription
-      active_subscription.quantity = @current_business.subscriptions.last.quantity
-      active_subscription.save
+    current_subscription = @customer.subscriptions.first
+    if current_subscription
+      current_subscription.quantity = @current_business.subscriptions.last.quantity
+      current_subscription.save
     else
       Stripe::Subscription.create(subscription_hash)
     end

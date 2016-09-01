@@ -26,7 +26,7 @@ class Businesses::SubscriptionsController < ApplicationController
     end
 
     def activate_starter_plan
-      if @active_subscription && @active_subscription.plan.stripe_plan_id == PRO_STRIPE_ID
+      if @current_subscription && @current_subscription.plan.stripe_plan_id == PRO_STRIPE_ID
         stripe_payment_service = StripePaymentService.new(current_business)
         stripe_payment_service.remove_old_subscription
       end
@@ -43,8 +43,8 @@ class Businesses::SubscriptionsController < ApplicationController
     end
 
     def deactivate_old_subscription
-      @active_subscription = current_business.active_subscription
-      if @active_subscription && !@active_subscription.update(end_at: Time.current)
+      @current_subscription = current_business.current_subscription
+      if @current_subscription && !@current_subscription.update(end_at: Time.current)
         redirect_to billing_settings_users_path, alert: t('.failure', scope: :flash)
       end
     end

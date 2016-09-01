@@ -9,7 +9,15 @@ class Subscription < ActiveRecord::Base
   before_validation :add_start_at_and_end_at, on: :create
 
   def add_start_at_and_end_at
-    self.start_at = Time.current
-    self.end_at = Time.current + 1.month - 1.day
+    self.start_at = business.in_trial_period? ? business.trial_end_at : Time.current
+    self.end_at = start_at + 1.month
+  end
+
+  def in_future?
+    start_at > Time.current && end_at > Time.current
+  end
+
+  def active?
+    start_at < Time.current && end_at > Time.current
   end
 end
