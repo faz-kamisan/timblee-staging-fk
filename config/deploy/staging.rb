@@ -1,5 +1,5 @@
 set :rails_env, 'staging'
-set :branch, 'develop'
+set :branch, 'staging'
 
 # role-based syntax
 # ==================
