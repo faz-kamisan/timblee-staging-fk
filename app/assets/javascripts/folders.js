@@ -148,6 +148,7 @@ Folders.prototype.sendFolderDeletionRequest = function(id) {
 
 Folders.prototype.setActiveFolder = function(obj) {
   $('.folder-info').removeClass('active-delete');
+  $('#new_sitemap #sitemap_folder_id').val(obj.parent('.folder-info').data('id'));
   obj.parent('.folder-info').addClass('active-delete');
 }
 

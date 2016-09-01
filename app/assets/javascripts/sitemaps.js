@@ -1,12 +1,16 @@
 var Sitemaps = function(options) {
-  this.actionOverlays = options.actionOverlays
+  this.actionOverlays = options.actionOverlays;
+  this.newSiteampLink = options.newSiteampLink;
   this.dropContainers = options.dropContainers;
   this.draggableSitemaps = options.draggableSitemaps;
 };
 
 Sitemaps.prototype.bindEvents = function() {
   var _this = this;
-  $('body').on('click', function() {
+  this.newSiteampLink.on('click', function(event) {
+    $(this).parent('form#new_sitemap').submit();
+  })
+  $('body').on('click', function(event) {
     var $tartget = $(event.target)
     if($tartget.closest('.sitemap_wrapper').length > 0) {
       var sitemapId = $tartget.closest('.sitemap_wrapper').find('.sitemap-container').data('id')
@@ -41,6 +45,7 @@ $(function() {
   var options = {
     actionOverlays : $('.actions-overlay'),
     dropContainers : $('.folder-info'),
+    newSiteampLink : $('.new-sitemap-link'),
     draggableSitemaps : $('.sitemap-container').not('.new-sitemap')
   }
   var sitemaps = new Sitemaps(options);
