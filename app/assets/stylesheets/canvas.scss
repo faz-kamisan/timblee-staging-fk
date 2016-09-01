@@ -8,6 +8,7 @@
     background: $primaryWhite;
     position: relative;
     display: inline-block;
+    cursor: pointer;
     .collapse-open {
       position: absolute;
       left: 0;
@@ -106,7 +107,8 @@
 
   &.level-0 {
     text-align: center;
-    padding-left: 40px;
+    padding: 55px 0 0 40px;
+    transition: padding-left .2s;
     > .page-tile {
       margin-bottom: 75px;
       margin-left: -40px;
@@ -322,4 +324,51 @@
     }
   }
 
+}
+
+.sitemap-right-sidebar {
+  display: none;
+}
+
+.sitemap-left-sidebar {
+  position: fixed;
+  width: 372px;
+  background: #262b30;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  top: 0;
+  padding-top: 95px;
+  z-index: 2;
+  transition: width .2s;
+  ~ .page-container.level-0 {
+    padding-left: 372px;
+  }
+  &.expand-false {
+    cursor: pointer;
+    width: 30px;
+    ~ .page-container.level-0 {
+      padding-left: 40px;
+    }
+  }
+
+  .expand-btn {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    text-align: center;
+    span {
+      color: #6a717f;
+      text-transform: uppercase;
+      font-size: 10px;
+      position: absolute;
+      top: calc(50% - 47px);
+      left: 50%;
+      margin-top: -7px;
+      margin-left: -19px;
+      @include rotate(90deg);
+    }
+  }
 }
