@@ -46,6 +46,7 @@ Sitemaps.prototype.bindDraggers = function() {
   this.draggableSitemaps.draggable({
     revert: 'invalid',
     containment: "html",
+    tolerance: 'pointer',
     start: function(event, ui) {
       _this.actionOverlays.animate({ top: 230 }, 150);
       ui.helper.parent('.sitemap_wrapper').addClass('dragging');
