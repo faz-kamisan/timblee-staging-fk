@@ -20,7 +20,7 @@ class LeftSidebar extends React.Component {
 
   render() {
     var pageTypeComponents = this.props.pageTypes.map(function(pageType, index) {
-      return <li key={index}><DraggablePageType name={pageType.name} id={pageType.id} /></li>
+      return <li key={index}><DraggablePageType name={pageType.name} iconName={pageType.icon_name} id={pageType.id} /></li>
     })
     return (
       <div className={'sitemap-left-sidebar' + (this.state.expand ? '' : ' expand-false')}>
@@ -30,7 +30,7 @@ class LeftSidebar extends React.Component {
             <span onClick={this.toogleExpand}>
               Hide
             </span>
-            <ul>
+            <ul className="page-type-list clearfix">
               {pageTypeComponents}
             </ul>
           </div> 

@@ -20,13 +20,24 @@ var DragSourceDecorator = DragSource(ItemTypes.PAGE_TYPE, pageTypeSource,
 class PageType extends React.Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
+    iconName: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired
   };
   render() {
     const connectDragSource = this.props.connectDragSource
     return connectDragSource(
-      <div>
-        {this.props.name}
+      <div className={"page-type-outer " + this.props.iconName}>
+        <div className="page-type-box">
+          <aside className="page-type-details">
+            <span className="dummy-number">xx</span>
+            <h5>{this.props.name}</h5>
+            <span className="dummy-id">
+              <span className="dummy-state"></span> ID: xxx
+            </span>  
+          </aside>
+          <aside className="page-type-icon"></aside>
+        </div>
+        <h4>{this.props.name}</h4>
       </div>
     );
   }
