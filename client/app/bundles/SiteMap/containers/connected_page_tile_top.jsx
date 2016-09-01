@@ -11,8 +11,8 @@ const mapDispatchToProps = (dispatch) => {
     onPageDrop: (id, newParentId, position) => {
       dispatch(updatePagePosition(id, newParentId, position));
     },
-    onPageTypeDrop: (pageTypeId, parentId, position, timeStamp) => {
-      dispatch(addNewPage(pageTypeId, parentId, position, timeStamp));
+    onPageTypeDrop: (pageType, parentId, position, timeStamp) => {
+      dispatch(addNewPage(pageType, parentId, position, timeStamp));
     },
     onPageIdUpdate: (id, newId) => {
       dispatch(updateId(id, newId));

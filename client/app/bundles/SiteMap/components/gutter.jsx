@@ -26,7 +26,7 @@ const sitemapTarget = {
         url: '/pages/',
         method: 'post',
         dataType: 'JSON',
-        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: 'New Page', position: (props.pageTree.position + 1) } },
+        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: (props.pageTree.position + 1) } },
         error: (result, b, c, d) => {
           document.setFlash(result.responseText)
         },
@@ -34,7 +34,7 @@ const sitemapTarget = {
           props.onPageIdUpdate(timeStamp, result.id)
         }
       });
-      props.onPageTypeDrop(item.id, props.pageTree.parentId, props.pageTree.position, timeStamp);
+      props.onPageTypeDrop(item, props.pageTree.parentId, props.pageTree.position, timeStamp);
     }
   }
 };

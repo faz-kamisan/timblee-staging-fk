@@ -25,7 +25,7 @@ class PageTile extends React.Component {
         <div className="page-tile">
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber} />
           <ConnectedPageTileBottom pageTree={this.props.pageTree} />
-          <div className="tile-right"></div>
+          <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }></div>
           <div className={ "collapse-open" + (this.props.collapsed ? ' collapse-close' : '') } onClick={this.handleOnCollapsedChanged}></div>
         </div>
       );
@@ -34,7 +34,7 @@ class PageTile extends React.Component {
         <div className="page-tile">
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber} />
           <ConnectedPageTileBottom pageTree={this.props.pageTree} />
-          <div className="tile-right"></div>
+          <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }></div>
         </div>
       );
     }

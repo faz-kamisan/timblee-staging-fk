@@ -1,8 +1,11 @@
-function addPage(tree, pageTypeId, parentId, position, tempId) {
+function addPage(tree, pageType, parentId, position, tempId) {
   var treeCopy = Object.assign({}, tree);
+  var pageTypeCopy = Object.assign({}, pageType);
+  pageTypeCopy.icon_name = pageTypeCopy.iconName
+  delete(pageTypeCopy.iconName)
   var parentPage = getNodeById(treeCopy, parentId),
       parentLevel = parentPage.level;
-  var newPage = { name: 'New Page', pageTypeId: pageTypeId, parentId: parentId, level: (parentLevel + 1), children: [], comments: [], collapsed: false, id: tempId};
+  var newPage = { name: pageTypeCopy.name, pageType: pageTypeCopy, parentId: parentId, level: (parentLevel + 1), children: [], comments: [], collapsed: false, id: tempId};
   if(position == 'begining') {
     parentPage.children.unshift(newPage)
   } else {
@@ -74,7 +77,6 @@ function traverse(tree, callback) {
   queue.enqueue(tree);
   var currentTree = queue.dequeue();
   while(currentTree){
-    console.log(currentTree)
     for (var i = 0, length = currentTree.children.length; i < length; i++) {
       queue.enqueue(currentTree.children[i]);
     }

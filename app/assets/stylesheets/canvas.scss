@@ -437,7 +437,7 @@
   padding: 0;
   margin: 0;
   height: calc(100vh - 195px);
-  overflow-y: auto; 
+  overflow-y: auto;
   li {
     float: left;
     width: 50%;
@@ -628,72 +628,84 @@
 }
 
 .General-2-icon {
+  &.tile-right,
   .page-type-icon {
     @include pageTypeIcon('/assets/General-2.svg');
   }
 }
 
 .blog-post-icon {
+  &.tile-right,
   .page-type-icon {
     @include pageTypeIcon('/assets/Blog-Post.svg');
   }
 }
 
 .blog-icon {
+  &.tile-right,
   .page-type-icon {
     @include pageTypeIcon('/assets/Blog.svg');
   }
 }
 
 .general-1-icon {
+  &.tile-right,
   .page-type-icon {
     @include pageTypeIcon('/assets/General-1.svg');
   }
 }
 
 .calendar-icon {
+  &.tile-right,
   .page-type-icon {
     @include pageTypeIcon('/assets/Calendar.svg');
   }
 }
 
 .checkout-payment-icon {
+  &.tile-right,
   .page-type-icon {
     @include pageTypeIcon('/assets/Checkout-payment.svg');
   }
 }
 
 .confirmation-icon {
+  &.tile-right,
   .page-type-icon {
     @include pageTypeIcon('/assets/Confirmation.svg');
   }
 }
 
 .contact-icon {
+  &.tile-right,
   .page-type-icon {
     @include pageTypeIcon('/assets/Contact.svg');
   }
 }
 
 .dashboard-icon {
+  &.tile-right,
   .page-type-icon {
     @include pageTypeIcon('/assets/Dashboard.svg');
   }
 }
 
 .download-icon {
+  &.tile-right,
   .page-type-icon {
     @include pageTypeIcon('/assets/Download.svg');
   }
 }
 
 .error-icon {
+  &.tile-right,
   .page-type-icon {
     @include pageTypeIcon('/assets/Error.svg');
   }
 }
 
 .event-detail-icon {
+  &.tile-right,
   .page-type-icon {
     @include pageTypeIcon('/assets/Event-detail.svg');
   }
