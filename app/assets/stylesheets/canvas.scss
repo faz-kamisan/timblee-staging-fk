@@ -134,6 +134,10 @@
         opacity: 0;
       }
     }
+
+    .page-tile {
+      border-top-color: #0679b4;
+    }
   }
 
   &.level-2 {
@@ -144,6 +148,7 @@
     .page-tile {
       width: 182px;
       margin-left: 18px;
+      border-top-color: #ff650f;
       &:before {
         position: absolute;
         content: ' ';
@@ -186,6 +191,7 @@
     .page-tile {
       width: 164px;
       margin-left: 36px;
+      border-top-color: #24a35f;
     }
 
     .tile-top,
@@ -207,6 +213,7 @@
     .page-tile {
       width: 146px;
       margin-left: 54px;
+      border-top-color: #8851b4;
     }
 
     .tile-top,
@@ -228,6 +235,7 @@
     .page-tile {
       width: 128px;
       margin-left: 72px;
+      border-top-color: #00cfff;
     }
 
     .tile-top,
@@ -381,10 +389,9 @@
   top: 0;
   left: 0;
   overflow: hidden;
-  overflow-y: auto;
   top: 0;
   padding-top: 95px;
-  z-index: 2;
+  z-index: 10;
   transition: width .2s;
   ~ .page-container-wrapper .page-container.level-0 {
     padding-left: 372px;
@@ -392,7 +399,6 @@
   &.expand-false {
     cursor: pointer;
     width: 30px;
-    overflow: hidden;
     ~ .page-container-wrapper .page-container.level-0 {
       padding-left: 40px;
     }
@@ -430,6 +436,8 @@
 .page-type-list, .page-type-preview {
   padding: 0;
   margin: 0;
+  height: calc(100vh - 195px);
+  overflow-y: auto; 
   li {
     float: left;
     width: 50%;
@@ -440,21 +448,23 @@
     text-align: center;
     color: $primaryLink;
     font-size: 14px;
-    &:first-child,
-    &:nth-child(2) {
-      border-top: 1px solid #171a1d;
-    }
   }
 
   .page-type-box {
     font-family: "proxima-nova",sans-serif;
     height: 60px;
     background: $primaryWhite;
-    @include border-radius(6px);
-    @include box-shadow(1px, 1px, 2px, rgba(106, 113, 127, .2));
+    @include border-radius(3px);
     padding-left: 15px;
     text-align: left;
     position: relative;
+    border-top: solid 1px #a1a3a5;
+    border-bottom: solid 1px #a1a3a5;
+    @include animate(.25s);
+    cursor: pointer;
+    &:hover {
+      @include scale(1.07);
+    }
   }
 
   .dummy-number {
@@ -476,6 +486,15 @@
     bottom: 5px;
     left: 15px;
     z-index: 2;
+  }
+
+  .dummy-state {
+    width: 4px;
+    height: 4px;
+    display: inline-block;
+    margin-right: 1px;
+    @include border-radius(50%);
+    background: #b7b6bc;
   }
 
   h4 {
@@ -532,14 +551,14 @@
 .search-page-type {
   height: 50px;
   border-top: solid 1px #171a1d;
+  border-bottom: 1px solid #171a1d;
   position: relative;
-
   input {
     font-size: 14px;
     color: $primaryWhite;
-    height: 49px;
+    height: 48px;
     padding: 0 50px 0 25px;
-    line-height: 49px;
+    line-height: 48px;
     width: 100%;
     border: 0;
     background: #262B30;
@@ -548,8 +567,8 @@
   .icon-search {
     position: absolute;
     right: 25px;
-    top: 20px;
-    color: $primaryWhite;
+    top: 16px;
+    color: #c9cbcc;
     z-index: 2;
     font-size: 16px;
   }
@@ -580,5 +599,102 @@
     opacity: 1;
     font-size: 14px;
     letter-spacing: 0;
+  }
+}
+
+.close-left-bar {
+  height: 50px;
+  color: $primaryWhite;
+  padding: 15px 25px 15px 22px;
+  span {
+    color: $primaryFormColor;
+    text-transform: uppercase;
+  }
+  .caret-left {
+    @include rotate(90deg);
+    display: inline-block;
+    margin-right: 3px;
+    font-size: 14px;
+    position: relative;
+    bottom: 1px;
+  }
+}
+
+@mixin pageTypeIcon($iconPath) {
+  background: url($iconPath);
+  background-size: 65%;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.General-2-icon {
+  .page-type-icon {
+    @include pageTypeIcon('/assets/General-2.svg');
+  }
+}
+
+.blog-post-icon {
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Blog-Post.svg');
+  }
+}
+
+.blog-icon {
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Blog.svg');
+  }
+}
+
+.general-1-icon {
+  .page-type-icon {
+    @include pageTypeIcon('/assets/General-1.svg');
+  }
+}
+
+.calendar-icon {
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Calendar.svg');
+  }
+}
+
+.checkout-payment-icon {
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Checkout-payment.svg');
+  }
+}
+
+.confirmation-icon {
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Confirmation.svg');
+  }
+}
+
+.contact-icon {
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Contact.svg');
+  }
+}
+
+.dashboard-icon {
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Dashboard.svg');
+  }
+}
+
+.download-icon {
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Download.svg');
+  }
+}
+
+.error-icon {
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Error.svg');
+  }
+}
+
+.event-detail-icon {
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Event-detail.svg');
   }
 }

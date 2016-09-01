@@ -31,3 +31,9 @@
   -moz-transform: rotate($degree);
   -webkit-transform: rotate($degree);
 }
+
+@mixin scale($times) {
+  transform: scale($times);
+  -moz-transform: scale($times);
+  -webkit-transform: scale($times);
+}

@@ -370,3 +370,7 @@ input#toggle:checked + label:after {
   color: $primaryError;
   font-size: 12px;
 }
+
+.cursor {
+  cursor: pointer;
+}

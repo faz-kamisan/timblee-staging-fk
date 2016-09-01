@@ -35,9 +35,14 @@ class LeftSidebar extends React.Component {
         {
           this.state.expand ?
           <div>
-            <span onClick={this.toogleExpand}>
-              Hide
-            </span>
+            <div className="close-left-bar">
+              <span className="cursor" onClick={this.toogleExpand}>
+                <span className="caret-left">
+                  <i className="icon-caret"></i>
+                </span>
+                Hide Sidebar
+              </span>
+            </div>
             <form className="search-page-type">
               <input type="search" placeholder="Page Type" onChange={this.handleSearch} />
               <i className="icon-search"></i>
