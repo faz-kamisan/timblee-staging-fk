@@ -30,6 +30,10 @@ class LeftSidebar extends React.Component {
             <span onClick={this.toogleExpand}>
               Hide
             </span>
+            <form className="search-page-type">
+              <input type="search" placeholder="Page Type" />
+              <i className="icon-search"></i>
+            </form>
             <ul className="page-type-list clearfix">
               {pageTypeComponents}
             </ul>
