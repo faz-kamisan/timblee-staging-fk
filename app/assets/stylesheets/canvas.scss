@@ -386,14 +386,14 @@
   padding-top: 95px;
   z-index: 2;
   transition: width .2s;
-  ~ .page-container.level-0 {
+  ~ .page-container-wrapper .page-container.level-0 {
     padding-left: 372px;
   }
   &.expand-false {
     cursor: pointer;
     width: 30px;
     overflow: hidden;
-    ~ .page-container.level-0 {
+    ~ .page-container-wrapper .page-container.level-0 {
       padding-left: 40px;
     }
   }
