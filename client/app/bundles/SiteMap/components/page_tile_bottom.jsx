@@ -4,13 +4,9 @@ import { DropTarget } from 'react-dnd';
 import { findDOMNode } from 'react-dom';
 
 const sitemapTarget = {
-  canDrop: function(props, monitor) {
-    const item = monitor.getItem()
-    return((item.type == 'PageType') || (item.id != props.pageTree.id))
-  },
   drop: function(props, monitor, component) {
     const item = monitor.getItem();
-    if (monitor.didDrop() || item.parentId == props.pageTree.id) {
+    if (monitor.didDrop() || ((item.type == 'Page') && item.parentId == props.pageTree.id)) {
       return;
     }
     if(item.type == 'page') {
@@ -24,7 +20,7 @@ const sitemapTarget = {
         }
       });
       props.onPageDrop(item.id, props.pageTree.id, 'begining');
-    } else if(item.type == 'pageType') {
+    } else if(item.type == 'PageType') {
       var timeStamp = new Date();
       $.ajax({
         url: '/pages/',
@@ -33,6 +29,9 @@ const sitemapTarget = {
         data: { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: 'New Page', position: 1 } },
         error: (result) => {
           document.setFlash(result.responseText)
+        },
+        success: (result) => {
+          props.onPageIdUpdate(timeStamp, result.id)
         }
       });
       props.onPageTypeDrop(item.id, props.pageTree.id, 'begining', timeStamp);

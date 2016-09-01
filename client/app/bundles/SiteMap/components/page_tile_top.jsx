@@ -21,7 +21,7 @@ const sitemapTarget = {
         }
       });
       props.onPageDrop(item.id, props.pageTree.parentId, (props.pageTree.position));
-    } else if(item.type == 'pageType') {
+    } else if(item.type == 'PageType') {
       var timeStamp = new Date();
       $.ajax({
         url: '/pages/',

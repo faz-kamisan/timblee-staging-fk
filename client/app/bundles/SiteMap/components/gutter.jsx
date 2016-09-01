@@ -20,7 +20,7 @@ const sitemapTarget = {
         }
       });
       props.onPageDrop(item.id, props.pageTree.parentId, props.pageTree.position);
-    } else if(item.type == 'pageType') {
+    } else if(item.type == 'PageType') {
       var timeStamp = new Date();
       $.ajax({
         url: '/pages/',
@@ -29,6 +29,9 @@ const sitemapTarget = {
         data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: 'New Page', position: (props.pageTree.position + 1) } },
         error: (result, b, c, d) => {
           document.setFlash(result.responseText)
+        },
+        success: (result) => {
+          props.onPageIdUpdate(timeStamp, result.id)
         }
       });
       props.onPageTypeDrop(item.id, props.pageTree.parentId, props.pageTree.position, timeStamp);
