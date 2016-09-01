@@ -26,7 +26,7 @@ class LeftSidebar extends React.Component {
 
   render() {
     var _this = this;
-    var filteredPageTypes = this.props.pageTypes.filter(function(pageType) { return(pageType.name.indexOf(_this.state.searchQuery) !== -1) })
+    var filteredPageTypes = this.props.pageTypes.filter(function(pageType) { return(pageType.name.toLowerCase().indexOf(_this.state.searchQuery.toLowerCase()) !== -1) })
     var pageTypeComponents = filteredPageTypes.map(function(pageType, index) {
       return <li key={index}><DraggablePageType name={pageType.name} iconName={pageType.icon_name} id={pageType.id} /></li>
     })
