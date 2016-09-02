@@ -409,3 +409,22 @@ input#toggle:checked + label:after {
 .primary-link-color {
   color: $primaryLink;
 }
+
+.cursor {
+  cursor: pointer;
+}
+
+.btn-pink {
+  &.btn-border {
+    &:hover {
+      background: $primaryWhite!important;
+      color: $primaryPink!important;  
+    }
+  }
+}
+
+.primary-link {
+  &:hover {
+    color: $primaryPink!important;
+  }
+}

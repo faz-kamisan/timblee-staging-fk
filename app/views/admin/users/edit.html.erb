@@ -7,17 +7,16 @@
     <div>
       <section class="edit-user">
         <div class="link-with-border">
-          <a href="javascript:void(0);">
-            <span class="icon-caret"></span>
-            <%= link_to "Back to all users", team_settings_users_path %>
-          </a>
+          <%= link_to team_settings_users_path, class: 'primary-link' do %>
+            <span class="icon-caret"></span> Back to all users
+          <% end %>
         </div>
         <%= form_for @user, url: admin_user_path(@user), html: { class: 'settings-form' } do |f| %>
           <div class="form-group">
             <div class="row">
               <div class="col-xs-9">
                 <div class="clearfix">
-                  <%= image_tag('profile-image.png', class: 'profile-image pull-left') %>
+                  <%= image_tag('profile-image.png', class: 'profile-image pull-left profile-image-lg') %>
                   <div class="right-text pull-right margin-top-small">
 
                     <h3 class="team-member-name">
@@ -34,7 +33,7 @@
                   <a href="#delete-user-modal" data-toggle="modal" class="link-regular btn-regular delete-user-modal-link" data-url= "<%= admin_user_path(@user)%>" data-name="<%= @user.full_name %>">Delete</a>
                 </div>
                 <div class="save small">
-                  <button type="submit" class="btn btn-pink">Save</button>
+                  <button type="submit" class="btn btn-pink btn-border">Save</button>
                   <a href="javascript:void(0);" class="btn btn-grey btn-cancel">Cancel</a>
                 </div>
               </div>
@@ -58,7 +57,7 @@
                   <a href="javascript:void(0);" class="btn btn-grey btn-edit">Edit</a>
                 </div>
                 <div class="save">
-                  <button type="submit" class="btn btn-pink">Save</button>
+                  <button type="submit" class="btn btn-pink btn-border">Save</button>
                   <a href="javascript:void(0);" class="btn btn-grey btn-cancel">Cancel</a>
                 </div>
               </div>
@@ -100,7 +99,7 @@
                   <a href="javascript:void(0);" class="btn btn-grey btn-edit">Edit</a>
                 </div>
                 <div class="save small">
-                  <button type="submit" class="btn btn-pink">Save</button>
+                  <button type="submit" class="btn btn-pink btn-border">Save</button>
                   <a href="javascript:void(0);" class="btn btn-grey btn-cancel role-select-cancel">Cancel</a>
                 </div>
               </div>
