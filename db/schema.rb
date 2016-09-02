@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20160901060112) do
 
   create_table "guests", force: :cascade do |t|
     t.string   "full_name"
-    t.string   "logo"
+    t.string   "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -120,7 +120,6 @@ ActiveRecord::Schema.define(version: 20160901060112) do
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
     t.string   "full_name"
-    t.string   "avatar"
     t.boolean  "is_admin",               default: false
     t.integer  "business_id"
     t.string   "invitation_token"
@@ -137,6 +136,7 @@ ActiveRecord::Schema.define(version: 20160901060112) do
     t.string   "unconfirmed_email"
     t.boolean  "notify_by_email",        default: true
     t.datetime "deleted_at"
+    t.string   "avatar"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
