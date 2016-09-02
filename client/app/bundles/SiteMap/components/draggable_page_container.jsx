@@ -51,7 +51,7 @@ class DraggedPageContainer extends React.Component {
           var sitemapNumber = _this.props.sitemapNumber + '.' + (index + 1)
         }
         return (
-          <div key={pageTree.parentId.toString() + pageTree.position.toString()}>
+          <div className='test' key={pageTree.parentId.toString() + pageTree.position.toString()}>
             <DraggablePageContainer pageTree={pageTree} onPageDrop={_this.props.onPageDrop} onPageTypeDrop={_this.props.onPageTypeDrop} sitemapId={_this.props.sitemapId} sitemapNumber={sitemapNumber} />
           </div>
         )

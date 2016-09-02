@@ -22,7 +22,7 @@ export default class PageContainerPreview extends Component {
           var sitemapNumber = _this.props.sitemapNumber + '.' + (index + 1)
         }
         return (
-          <div key={pageTree.id}>
+          <div className='test' key={pageTree.id}>
             <PageContainerPreview pageTree={pageTree} sitemapNumber={sitemapNumber} />
           </div>
         )
@@ -30,7 +30,7 @@ export default class PageContainerPreview extends Component {
     }
 
     return (
-      <div style={styles}>
+      <div style={styles} className='custom-drag-preview'>
         <PageContainer pageTree={pageTree} children={children} sitemapNumber={this.props.sitemapNumber} />
       </div>
     );
