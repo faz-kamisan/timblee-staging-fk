@@ -270,6 +270,11 @@
     width: 26px;
     height: 26px;
   }
+  &.profile-image-lg {
+    width: 55px;
+    height: 55px;
+    margin-top: 3px;
+  }
 }
 #team {
   .right-text {
@@ -368,6 +373,9 @@ ul.tagit li.tagit-choice-editable {
     background: $primaryPink;
     color: $primaryWhite;
     text-transform: none;
+  }
+  .modal-message, p {
+    color: $primaryGrey;
   }
 }
 
@@ -594,4 +602,26 @@ ul.tagit li.tagit-choice-editable {
   + .btn-grey {
     margin-left: 12px;
   }
+}
+
+.text-right.edit-info {
+  margin-top: 2px;
+}
+
+.settings-form {
+  .user-invite {
+    display: inline-block;
+    margin-top: 4px;
+    .path1::before,
+    .path2::before,
+    .path3::before,
+    .path4::before,
+    .path5::before, {
+      top: 4px;
+    }
+  }
+}
+
+.plan-benefits.starter-plan-benefits .btn.btn-grey {
+  line-height: 15px;
 }
