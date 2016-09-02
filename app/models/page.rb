@@ -6,12 +6,15 @@ class Page < ActiveRecord::Base
   acts_as_tree order: :position
   acts_as_list scope: :parent
 
-  validates :name, :page_type, :sitemap, presence: true
+  before_validation :set_uid, on: :create
+
+  validates :name, :page_type, :sitemap, :uid, presence: true
 
   def get_tree(collection, level = 0)
     tree = {
       name: name,
       id: id,
+      uid: uid,
       parentId: parent_id,
       position: position,
       level: level,
@@ -23,4 +26,10 @@ class Page < ActiveRecord::Base
     tree.merge!({ children: child_pages.map { |child_page| child_page.get_tree(collection, level + 1) } })
     tree
   end
+
+  private
+    def set_uid
+      highest_uid = sitemap.pages.maximum('uid')
+      self.uid = highest_uid + 1
+    end
 end

@@ -77,10 +77,11 @@ class PageTileBottom extends React.Component {
 
   render() {
     const connectDropTarget = this.props.connectDropTarget
+    var formattedUid = (this.props.pageTree.uid.toString().length < 3 ? (('000' + this.props.pageTree.uid).substr(-3)) : this.props.pageTree.uid )
     return connectDropTarget(
       <div className="tile-bottom">
         <span className="tile-id">
-          ID: 001
+          ID: { formattedUid }
         </span>
       </div>
     );

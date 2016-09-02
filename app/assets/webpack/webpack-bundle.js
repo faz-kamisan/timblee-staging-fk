@@ -38574,7 +38574,12 @@
 	  delete pageTypeCopy.iconName;
 	  var parentPage = getNodeById(treeCopy, parentId),
 	      parentLevel = parentPage.level;
-	  var newPage = { name: pageTypeCopy.name, pageType: pageTypeCopy, parentId: parentId, level: parentLevel + 1, children: [], comments: [], collapsed: false, id: tempId };
+	  var uids = [];
+	  traverse(treeCopy, function (node) {
+	    uids.push(node.uid);
+	  });
+	  var newUid = Math.max.apply(null, uids) + 1;
+	  var newPage = { name: pageTypeCopy.name, pageType: pageTypeCopy, parentId: parentId, level: parentLevel + 1, children: [], comments: [], collapsed: false, id: tempId, uid: newUid };
 	  if (position == 'begining') {
 	    parentPage.children.unshift(newPage);
 	  } else {
@@ -47137,13 +47142,15 @@
 	    key: 'render',
 	    value: function render() {
 	      var connectDropTarget = this.props.connectDropTarget;
+	      var formattedUid = this.props.pageTree.uid.toString().length < 3 ? ('000' + this.props.pageTree.uid).substr(-3) : this.props.pageTree.uid;
 	      return connectDropTarget(_react2.default.createElement(
 	        'div',
 	        { className: 'tile-bottom' },
 	        _react2.default.createElement(
 	          'span',
 	          { className: 'tile-id' },
-	          'ID: 001'
+	          'ID: ',
+	          formattedUid
 	        )
 	      ));
 	    }
