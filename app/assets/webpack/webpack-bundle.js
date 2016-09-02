@@ -38791,6 +38791,16 @@
 	  }
 	}
 	
+	function traverseDF(tree, callback) {
+	  (function recurse(currentNode) {
+	    // step 2
+	    for (var i = 0, length = currentNode.children.length; i < length; i++) {
+	      recurse(currentNode.children[i]);
+	    }
+	    callback(currentNode);
+	  })(tree);
+	}
+	
 	function getNodeById(tree, id) {
 	  if (tree.id == id) {
 	    return tree;
@@ -42877,6 +42887,8 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactDom = __webpack_require__(/*! react-dom */ 378);
+	
 	var _constants = __webpack_require__(/*! ../dnd/constants */ 708);
 	
 	var _reactDnd = __webpack_require__(/*! react-dnd */ 709);
@@ -42925,6 +42937,19 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      this.props.connectDragPreview((0, _reactDndHtml5Backend.getEmptyImage)(), {});
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      if (!this.props.isDragging && nextProps.isDragging) {
+	        var domNode = (0, _reactDom.findDOMNode)(this);
+	        $(domNode).parent('.child-page').addClass('dragging');
+	      }
+	      if (this.props.isDragging && !nextProps.isDragging) {
+	        // You can use this as leave handler
+	        var domNode = (0, _reactDom.findDOMNode)(this);
+	        $(domNode).parent('.child-page').removeClass('dragging');
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -49278,7 +49303,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { 'data-level': this.props.pageTree.level, className: 'page-container level-' + this.props.pageTree.level.toString() },
-	        _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: this.props.pageTree.children.length, sitemapNumber: this.props.sitemapNumber }),
+	        _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: this.props.pageTree.children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name }),
 	        _react2.default.createElement(_connected_gutter2.default, { pageTree: this.props.pageTree }),
 	        _react2.default.createElement(_connected_level_support2.default, { pageTree: this.props.pageTree }),
 	        _react2.default.createElement(
@@ -49383,10 +49408,23 @@
 	    var _this = _possibleConstructorReturn(this, (PageTile.__proto__ || Object.getPrototypeOf(PageTile)).call(this, props));
 	
 	    _this.handleOnCollapsedChanged = _this.handleOnCollapsedChanged.bind(_this);
+	    _this.mouseOver = _this.mouseOver.bind(_this);
+	    _this.mouseOut = _this.mouseOut.bind(_this);
+	    _this.state = { hover: false };
 	    return _this;
 	  }
 	
 	  _createClass(PageTile, [{
+	    key: 'mouseOver',
+	    value: function mouseOver(e) {
+	      this.setState({ hover: true });
+	    }
+	  }, {
+	    key: 'mouseOut',
+	    value: function mouseOut(e) {
+	      this.setState({ hover: false });
+	    }
+	  }, {
 	    key: 'handleOnCollapsedChanged',
 	    value: function handleOnCollapsedChanged(e) {
 	      this.props.onCollapsedChanged(this.props.pageTree.id);
@@ -49397,19 +49435,27 @@
 	      if (this.props.childrenLength > 0) {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: 'page-tile' },
-	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber }),
+	          { className: "page-tile " + (this.props.pageTree.level == 0 && this.props.childrenLength % 2 == 0 ? 'even-tree' : 'odd-tree'), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut },
+	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name }),
 	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree }),
-	          _react2.default.createElement('div', { className: "tile-right " + this.props.pageTree.pageType.icon_name }),
+	          _react2.default.createElement(
+	            'div',
+	            { className: "tile-right " + this.props.pageTree.pageType.icon_name },
+	            _react2.default.createElement('div', { className: "tile-right-hover " + (this.state.hover ? 'hovered' : '') })
+	          ),
 	          _react2.default.createElement('div', { className: "collapse-open" + (this.props.collapsed ? ' collapse-close' : ''), onClick: this.handleOnCollapsedChanged })
 	        );
 	      } else {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: 'page-tile' },
-	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber }),
+	          { className: 'page-tile', onMouseOver: this.mouseOver, onMouseOut: this.mouseOut },
+	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name }),
 	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree }),
-	          _react2.default.createElement('div', { className: "tile-right " + this.props.pageTree.pageType.icon_name })
+	          _react2.default.createElement(
+	            'div',
+	            { className: "tile-right " + this.props.pageTree.pageType.icon_name },
+	            _react2.default.createElement('div', { className: "tile-right-hover " + (this.state.hover ? 'hovered' : '') })
+	          )
 	        );
 	      }
 	    }
@@ -49421,6 +49467,7 @@
 	PageTile.propTypes = {
 	  pageTree: _react.PropTypes.object.isRequired,
 	  sitemapNumber: _react.PropTypes.string.isRequired,
+	  name: _react.PropTypes.string.isRequired,
 	  collapsed: _react.PropTypes.bool.isRequired,
 	  childrenLength: _react.PropTypes.number.isRequired,
 	  onCollapsedChanged: _react.PropTypes.func.isRequired
@@ -49464,6 +49511,9 @@
 	    },
 	    onPageIdUpdate: function onPageIdUpdate(id, newId) {
 	      dispatch((0, _actions.updateId)(id, newId));
+	    },
+	    onNameChange: function onNameChange(id, name) {
+	      dispatch((0, _actions.updatePageName)(id, name));
 	    }
 	  };
 	};
@@ -49553,13 +49603,32 @@
 	var PageTileTop = function (_React$Component) {
 	  _inherits(PageTileTop, _React$Component);
 	
-	  function PageTileTop() {
+	  function PageTileTop(props) {
 	    _classCallCheck(this, PageTileTop);
 	
-	    return _possibleConstructorReturn(this, (PageTileTop.__proto__ || Object.getPrototypeOf(PageTileTop)).apply(this, arguments));
+	    var _this2 = _possibleConstructorReturn(this, (PageTileTop.__proto__ || Object.getPrototypeOf(PageTileTop)).call(this, props));
+	
+	    _this2.state = { nameChangeDisabled: true };
+	    _this2.handleNameChange = _this2.handleNameChange.bind(_this2);
+	    return _this2;
 	  }
 	
 	  _createClass(PageTileTop, [{
+	    key: 'handleNameChange',
+	    value: function handleNameChange(event) {
+	      var name = event.target.value;
+	      $.ajax({
+	        url: '/pages/' + this.props.pageTree.id,
+	        method: 'put',
+	        dataType: 'JSON',
+	        data: { page: { name: name } },
+	        error: function error(result) {
+	          document.setFlash(result.responseText);
+	        }
+	      });
+	      this.props.onNameChange(this.props.pageTree.id, name);
+	    }
+	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
 	      if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
@@ -49602,7 +49671,8 @@
 	            { className: 'tile-number' },
 	            this.props.sitemapNumber
 	          ),
-	          this.props.pageTree.name
+	          this.state.nameChangeDisabled && this.props.name,
+	          !this.state.nameChangeDisabled && _react2.default.createElement('textarea', { value: this.props.name, onChange: this.handleNameChange, disabled: this.state.nameChangeDisabled })
 	        )
 	      ));
 	    }
@@ -49617,6 +49687,7 @@
 	  onPageIdUpdate: _react.PropTypes.func.isRequired,
 	  pageTree: _react.PropTypes.object.isRequired,
 	  sitemapNumber: _react.PropTypes.string.isRequired,
+	  name: _react.PropTypes.string.isRequired,
 	  sitemapId: _react.PropTypes.number.isRequired
 	};
 	
@@ -51030,7 +51101,7 @@
 	          }
 	          return _react2.default.createElement(
 	            'div',
-	            { key: pageTree.id },
+	            { className: 'test', key: pageTree.id },
 	            _react2.default.createElement(PageContainerPreview, { pageTree: pageTree, sitemapNumber: sitemapNumber })
 	          );
 	        });
@@ -51038,7 +51109,7 @@
 	
 	      return _react2.default.createElement(
 	        'div',
-	        { style: styles },
+	        { style: styles, className: 'custom-drag-preview' },
 	        _react2.default.createElement(_page_container2.default, { pageTree: pageTree, children: children, sitemapNumber: this.props.sitemapNumber })
 	      );
 	    }

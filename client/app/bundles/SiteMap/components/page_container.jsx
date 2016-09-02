@@ -12,7 +12,7 @@ class PageContainer extends React.Component {
   render() {
     return (
       <div data-level={this.props.pageTree.level} className={ 'page-container level-' + this.props.pageTree.level.toString() }>
-        <ConnectedPageTile pageTree={this.props.pageTree} collapsed={this.props.pageTree.collapsed} childrenLength={this.props.pageTree.children.length} sitemapNumber={this.props.sitemapNumber} />
+        <ConnectedPageTile pageTree={this.props.pageTree} collapsed={this.props.pageTree.collapsed} childrenLength={this.props.pageTree.children.length} sitemapNumber={this.props.sitemapNumber} name={this.props.pageTree.name} />
         <ConnectedGutter pageTree={this.props.pageTree} />
         <ConnectedLevelSupport pageTree={this.props.pageTree} />
         <div className={ 'parent parent-' + this.props.pageTree.level.toString() + (this.props.pageTree.collapsed ? ' hide' : '')}>

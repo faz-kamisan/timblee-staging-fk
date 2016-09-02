@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 import { ItemTypes } from '../dnd/constants';
 import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
@@ -34,6 +35,18 @@ class DraggedPageContainer extends React.Component {
 
   componentDidMount() {
     this.props.connectDragPreview(getEmptyImage(), {});
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.isDragging && nextProps.isDragging) {
+      var domNode = findDOMNode(this);
+      $(domNode).parent('.child-page').addClass('dragging')
+    }
+    if (this.props.isDragging && !nextProps.isDragging) {
+      // You can use this as leave handler
+      var domNode = findDOMNode(this);
+      $(domNode).parent('.child-page').removeClass('dragging')
+    }
   }
 
   render() {
