@@ -42753,7 +42753,7 @@
 	          }
 	          return _react2.default.createElement(
 	            'div',
-	            { key: pageTree.parentId.toString() + pageTree.position.toString() },
+	            { className: 'test', key: pageTree.parentId.toString() + pageTree.position.toString() },
 	            _react2.default.createElement(DraggablePageContainer, { pageTree: pageTree, onPageDrop: _this.props.onPageDrop, onPageTypeDrop: _this.props.onPageTypeDrop, sitemapId: _this.props.sitemapId, sitemapNumber: sitemapNumber })
 	          );
 	        });
@@ -46761,7 +46761,7 @@
 	      if (this.props.childrenLength > 0) {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: 'page-tile' },
+	          { className: "page-tile " + (this.props.pageTree.level == 0 && this.props.childrenLength % 2 == 0 ? 'even-tree' : 'odd-tree') },
 	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber }),
 	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement('div', { className: "tile-right " + this.props.pageTree.pageType.icon_name }),
@@ -48394,7 +48394,7 @@
 	          }
 	          return _react2.default.createElement(
 	            'div',
-	            { key: pageTree.id },
+	            { className: 'test', key: pageTree.id },
 	            _react2.default.createElement(PageContainerPreview, { pageTree: pageTree, sitemapNumber: sitemapNumber })
 	          );
 	        });
@@ -48402,7 +48402,7 @@
 	
 	      return _react2.default.createElement(
 	        'div',
-	        { style: styles },
+	        { style: styles, className: 'custom-drag-preview' },
 	        _react2.default.createElement(_page_container2.default, { pageTree: pageTree, children: children, sitemapNumber: this.props.sitemapNumber })
 	      );
 	    }
