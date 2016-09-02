@@ -75,14 +75,14 @@
     margin: 0;
     font-size: 10px;
     color: $primaryBlack;
-    line-height: 14px;
+    line-height: 12px;
     text-transform: capitalize;
     word-wrap: break-word;
   }
 
   .tile-top,
   .tile-bottom {
-    padding-right: 70px;
+    padding-right: 22px;
     padding-left: 22px;
     height: 42px;
     text-align: left;
@@ -706,5 +706,318 @@
   &.tile-right,
   .page-type-icon {
     @include pageTypeIcon('/assets/Event-detail.svg');
+  }
+}
+
+.events-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Events.svg');
+  }
+}
+
+.external-link-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/External-link.svg');
+  }
+}
+
+.faqs-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/FAQs.svg');
+  }
+}
+
+.features-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Features.svg');
+  }
+}
+
+.form-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Form.svg');
+  }
+}
+
+.gallery-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Gallery.svg');
+  }
+}
+
+.landing-page-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Landing-Page.svg');
+  }
+}
+
+.legal-terms-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Legal-Terms.svg');
+  }
+}
+
+.listing-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Listing.svg');
+  }
+}
+
+.loading-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Loading.svg');
+  }
+}
+
+.login-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Log-In.svg');
+  }
+}
+
+.modal-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Modal.svg');
+  }
+}
+
+.portfolio-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Portfolio.svg');
+  }
+}
+
+.pricing-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Pricing.svg');
+  }
+}
+
+.product-clothing-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Product-Clothing.svg');
+  }
+}
+
+.product-electronics-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Product-Electronics.svg');
+  }
+}
+
+.product-general-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Product-General.svg');
+  }
+}
+
+.product-shoes-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Product-Shoes.svg');
+  }
+}
+
+.reviews-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Reviews.svg');
+  }
+}
+
+.settings-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Settings.svg');
+  }
+}
+
+.shop-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Shop.svg');
+  }
+}
+
+.shop-categories-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Shop-Categories.svg');
+  }
+}
+
+.shopping-cart-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Shopping-Cart.svg');
+  }
+}
+
+.support-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Support.svg');
+  }
+}
+
+.team-member-profile-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Team-Member.svg');
+  }
+}
+
+.team-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Team.svg');
+  }
+}
+
+.thank-you-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Thank-You.svg');
+  }
+}
+
+.upload-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Upload.svg');
+  }
+}
+
+.video-icon {
+  &.tile-right,
+  .page-type-icon {
+    @include pageTypeIcon('/assets/Video.svg');
+  }
+}
+
+.parent {
+  position: relative;
+  &:before {
+    background: #d5d7da none repeat scroll 0 0;
+    content: " ";
+    height: calc(100% - 87px);
+    left: 9px;
+    position: absolute;
+    top: 0;
+    width: 1px;
+  }
+  &.parent-0 {
+    &:before {
+      display: none;
+    }
+  }
+  &.parent-2 {
+    &:before {
+      left: 27px;
+    }
+  }
+  &.parent-3 {
+    &:before {
+      left: 45px;
+    }
+  }
+  &.parent-4 {
+    &:before {
+      left: 63px;
+    }
+  }
+  &.parent-5 {
+    &:before {
+      left: 81px;
+    }
+  }
+  &.parent-6 {
+    &:before {
+      left: 99px;
+    }
+  }
+}
+
+.hide-before {
+  background: $pageBackground;
+  content: " ";
+  height: 100%;
+  position: absolute;
+  top: -87px;
+  width: 1px;
+  z-index: 10;
+}
+
+.child-page:last-child {
+  position: relative;
+  > .page-container-wrapper,
+  > .custom-drag-preview {
+    > .page-container {
+      > .parent-2 {
+        > .child-page:before {
+          @extend .hide-before;
+          left: 9px;
+        }
+      }
+      > .parent-3 {
+        > .child-page:before {
+          @extend .hide-before;
+          left: 27px;
+        }
+      }
+      > .parent-4 {
+        > .child-page:before {
+          @extend .hide-before;
+          left: 45px;
+        }
+      }
+      > .parent-5 {
+        > .child-page:before {
+          @extend .hide-before;
+          left: 63px;
+        }
+      }
+      > .parent-6 {
+        > .child-page:before {
+          @extend .hide-before;
+          left: 81px;
+        }
+      }
+      > .parent-7 {
+        > .child-page:before {
+          @extend .hide-before;
+          left: 99px;
+        }
+      }
+      > .parent-8 {
+        > .child-page:before {
+          @extend .hide-before;
+          left: 117px;
+        }
+      }
+      > .parent-9 {
+        > .child-page:before {
+          @extend .hide-before;
+          left: 135px;
+        }
+      }
+    }
   }
 }

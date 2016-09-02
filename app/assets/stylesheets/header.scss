@@ -5,8 +5,11 @@
   padding: 34px;
   min-width: 1300px;
   border-bottom: solid 1px #f9f9fa;
-  position: relative;
+  position: fixed;
   z-index: 11;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
 .logo-main {
