@@ -125,6 +125,18 @@
         height: 75px;
         z-index: 2;
       }
+      &.even-tree {
+        &:after {
+          background: #d5d7da;
+          bottom: -118px;
+          content: " ";
+          height: 43px;
+          left: 50%;
+          position: absolute;
+          width: 1px;
+          z-index: 2;
+        }
+      }
     }
   }
 
@@ -708,5 +720,118 @@
   &.tile-right,
   .page-type-icon {
     @include pageTypeIcon('/assets/Event-detail.svg');
+  }
+}
+
+.parent {
+  position: relative;
+  &:before {
+    background: #d5d7da none repeat scroll 0 0;
+    content: "";
+    height: calc(100% - 87px);
+    left: 9px;
+    position: absolute;
+    top: 0;
+    width: 1px;
+  }
+  &.parent-0 {
+    &:before {
+      display: none;
+    }
+  }
+  &.parent-2 {
+    &:before {
+      left: 27px;
+    }
+  }
+  &.parent-3 {
+    &:before {
+      left: 45px;
+    }
+  }
+  &.parent-4 {
+    &:before {
+      left: 63px;
+    }
+  }
+}
+
+.test:last-child {
+  position: relative;
+  > .page-container-wrapper, > .custom-drag-preview {
+    > .page-container {
+      > .parent-2 {
+        > .test:before {
+          background: $pageBackground;
+          content: " ";
+          height: 100%;
+          left: 9px;
+          position: absolute;
+          top: -87px;
+          width: 1px;
+          z-index: 10;
+        }
+      }
+      > .parent-3 {
+        > .test:before {
+          background: $pageBackground;
+          content: " ";
+          height: 100%;
+          left: 27px;
+          position: absolute;
+          top: -87px;
+          width: 1px;
+          z-index: 10;
+        }
+      }
+      > .parent-4 {
+        > .test:before {
+          background: $pageBackground;
+          content: " ";
+          height: 100%;
+          left: 45px;
+          position: absolute;
+          top: -87px;
+          width: 1px;
+          z-index: 10;
+        }
+      }
+      > .parent-5 {
+        > .test:before {
+          background: $pageBackground;
+          content: " ";
+          height: 100%;
+          left: 63px;
+          position: absolute;
+          top: -87px;
+          width: 1px;
+          z-index: 10;
+        }
+      }
+      > .parent-6 {
+        > .test:before {
+          background: $pageBackground;
+          content: " ";
+          height: 100%;
+          left: 81px;
+          position: absolute;
+          top: -87px;
+          width: 1px;
+          z-index: 10;
+        }
+      }
+      > .parent-7 {
+        > .test:before {
+          background: $pageBackground;
+          content: " ";
+          height: 100%;
+          left: 99px;
+          position: absolute;
+          top: -87px;
+          width: 1px;
+          z-index: 10;
+        }
+      }
+    }
   }
 }
