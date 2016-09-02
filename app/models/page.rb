@@ -9,6 +9,7 @@ class Page < ActiveRecord::Base
   before_validation :set_uid, on: :create
 
   validates :name, :page_type, :sitemap, :uid, presence: true
+  validates :uid, uniqueness: { scope: :sitemap_id }
 
   def get_tree(collection, level = 0)
     tree = {
