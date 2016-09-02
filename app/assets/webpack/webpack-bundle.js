@@ -42742,7 +42742,7 @@
 	          if (pageTree.level == 1) {
 	            var sitemapNumber = (index + 1).toString() + '.0';
 	          } else if (pageTree.level == 2) {
-	            var sitemapNumber = parseInt(_this.props.sitemapNumber).toString() + '.1';
+	            var sitemapNumber = parseInt(_this.props.sitemapNumber).toString() + '.' + (index + 1);
 	          } else {
 	            var sitemapNumber = _this.props.sitemapNumber + '.' + (index + 1);
 	          }
@@ -47856,7 +47856,7 @@
 	      return connectDragSource(_react2.default.createElement(
 	        'div',
 	        { className: 'page-type-wrapper' + (isDragging ? ' dragging' : '') },
-	        _react2.default.createElement(_page_type2.default, { name: this.props.name, iconName: this.props.iconName })
+	        _react2.default.createElement(_page_type2.default, { name: this.props.name, iconName: this.props.iconName, isDragPrview: false })
 	      ));
 	    }
 	  }]);
@@ -47941,7 +47941,7 @@
 	          ),
 	          _react2.default.createElement("aside", { className: "page-type-icon" })
 	        ),
-	        _react2.default.createElement(
+	        !this.props.isDragPrview && _react2.default.createElement(
 	          "h4",
 	          null,
 	          this.props.name
@@ -48381,7 +48381,7 @@
 	      if (this.props.pageTree.children != null) {
 	        children = pageTree.children.map(function (pageTree, index) {
 	          if (pageTree.level == 2) {
-	            var sitemapNumber = parseInt(_this.props.sitemapNumber).toString() + '.1';
+	            var sitemapNumber = parseInt(_this.props.sitemapNumber).toString() + '.' + (index + 1);
 	          } else {
 	            var sitemapNumber = _this.props.sitemapNumber + '.' + (index + 1);
 	          }
@@ -48459,7 +48459,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { style: styles, className: 'page-type-preview' },
-	        _react2.default.createElement(_page_type2.default, { name: this.props.name, iconName: this.props.iconName })
+	        _react2.default.createElement(_page_type2.default, { name: this.props.name, iconName: this.props.iconName, isDragPrview: true })
 	      );
 	    }
 	  }]);

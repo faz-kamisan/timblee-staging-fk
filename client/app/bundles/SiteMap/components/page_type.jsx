@@ -18,7 +18,7 @@ class PageType extends React.Component {
           </aside>
           <aside className="page-type-icon"></aside>
         </div>
-        <h4>{this.props.name}</h4>
+        { !(this.props.isDragPrview) && <h4>{this.props.name}</h4> }
       </div>
     );
   }

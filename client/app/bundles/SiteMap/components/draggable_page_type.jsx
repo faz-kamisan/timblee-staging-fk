@@ -34,7 +34,7 @@ class DraggedPageType extends React.Component {
     const { connectDragSource, isDragging } = this.props
     return connectDragSource(
       <div className={'page-type-wrapper' + (isDragging ? ' dragging' : '')} >
-        <PageType name={this.props.name} iconName={this.props.iconName} />
+        <PageType name={this.props.name} iconName={this.props.iconName} isDragPrview={false} />
       </div>
     );
   }
