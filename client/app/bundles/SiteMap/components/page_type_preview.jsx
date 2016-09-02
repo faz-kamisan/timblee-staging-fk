@@ -13,7 +13,7 @@ export default class PageTypePreview extends Component {
   render() {
     return (
       <div style={styles} className='page-type-preview'>
-        <PageType name={this.props.name} iconName={this.props.iconName} />
+        <PageType name={this.props.name} iconName={this.props.iconName} isDragPrview={true} />
       </div>
     );
   }

@@ -17,7 +17,7 @@ export default class PageContainerPreview extends Component {
     if (this.props.pageTree.children != null) {
       children = pageTree.children.map(function(pageTree, index) {
         if(pageTree.level == 2) {
-          var sitemapNumber = parseInt(_this.props.sitemapNumber).toString() + '.1';
+          var sitemapNumber = parseInt(_this.props.sitemapNumber).toString() + '.' + (index + 1)
         } else {
           var sitemapNumber = _this.props.sitemapNumber + '.' + (index + 1)
         }

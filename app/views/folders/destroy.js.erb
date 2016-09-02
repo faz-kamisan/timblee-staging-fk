@@ -5,5 +5,5 @@ $("div.flash-message").html("<%==j render partial: 'shared/flash_message' %>");
   $('li.folder-info[data-id=<%= @folder.id %>]').remove();
   $('div.sitemap-container[data-folder-id=<%= @folder.id %>]').closest('.sitemap-outer-wrapper').remove();
   $('.all-sitemap-folder').find('.folder-info-block').click();
-  $('.new-sitemap').html("<%==j render partial: 'sitemaps/new_sitemap' %>");
+  $('.new-sitemap-link').data('allow-more-sitemaps', <%= current_business.allow_more_sitemaps? ? 'true' : 'false' %>);
 <% end %>

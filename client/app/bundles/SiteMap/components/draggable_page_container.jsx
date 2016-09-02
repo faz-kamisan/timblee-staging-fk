@@ -46,7 +46,7 @@ class DraggedPageContainer extends React.Component {
         if(pageTree.level == 1) {
           var sitemapNumber = (index + 1).toString() + '.0';
         } else if(pageTree.level == 2) {
-          var sitemapNumber = parseInt(_this.props.sitemapNumber).toString() + '.1';
+          var sitemapNumber = parseInt(_this.props.sitemapNumber).toString() + '.' + (index + 1);
         } else {
           var sitemapNumber = _this.props.sitemapNumber + '.' + (index + 1)
         }

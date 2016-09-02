@@ -4,8 +4,8 @@ class Sitemap < ActiveRecord::Base
 
   belongs_to :folder
   belongs_to :business
-  has_many :pages, dependent: :destroy
-  has_one :root_page, ->{ where(parent_id: nil) }, class_name: :Page
+  has_many :pages
+  has_one :root_page, ->{ where(parent_id: nil) }, class_name: :Page, dependent: :destroy
   has_many :sitemap_invites, dependent: :destroy
   has_many :invited_users, through: :sitemap_invites, source: :user
   has_many :comments, as: :commentable
@@ -44,7 +44,7 @@ class Sitemap < ActiveRecord::Base
     end
 
     def set_name_to_new_sitemap
-      new_site_map_numbers = Sitemap.where("name ILIKE 'new sitemap%'").pluck(:name).map {|name| name.match(/\d*$/)[0].to_i}.sort
+      new_site_map_numbers = self.business.sitemaps.where("name ILIKE 'new sitemap%'").pluck(:name).map {|name| name.match(/\d*$/)[0].to_i}.sort
       if(new_site_map_numbers[0] == 1)
         first_unoccupied_number = (new_site_map_numbers.select.with_index { |number, index| number == index + 1 }[-1]) + 1
         self.name = 'New Sitemap ' + first_unoccupied_number.to_s
