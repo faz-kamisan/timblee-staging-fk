@@ -383,7 +383,22 @@
 
 .page-container-wrapper {
   &.dragging {
-    display: none;
+    display: none !important;
+  }
+}
+
+.child-page {
+  &.dragging {
+    display: none !important;
+  }
+}
+
+.parent-0 {
+  > .child-page {
+    &.dragging {
+      display: inline-block !important;
+      vertical-align: top;
+    }
   }
 }
 
@@ -619,6 +634,13 @@
   span {
     color: $primaryFormColor;
     text-transform: uppercase;
+    padding: 0 5px;
+    &:hover {
+      color: $primaryWhite;
+      .caret-left {
+        color: $primaryWhite;
+      }
+    }
   }
   .caret-left {
     @include rotate(90deg);
@@ -754,12 +776,12 @@
   }
 }
 
-.test:last-child {
+.child-page:last-child {
   position: relative;
   > .page-container-wrapper, > .custom-drag-preview {
     > .page-container {
       > .parent-2 {
-        > .test:before {
+        > .child-page:before {
           background: $pageBackground;
           content: " ";
           height: 100%;
@@ -771,7 +793,7 @@
         }
       }
       > .parent-3 {
-        > .test:before {
+        > .child-page:before {
           background: $pageBackground;
           content: " ";
           height: 100%;
@@ -783,7 +805,7 @@
         }
       }
       > .parent-4 {
-        > .test:before {
+        > .child-page:before {
           background: $pageBackground;
           content: " ";
           height: 100%;
@@ -795,7 +817,7 @@
         }
       }
       > .parent-5 {
-        > .test:before {
+        > .child-page:before {
           background: $pageBackground;
           content: " ";
           height: 100%;
@@ -807,7 +829,7 @@
         }
       }
       > .parent-6 {
-        > .test:before {
+        > .child-page:before {
           background: $pageBackground;
           content: " ";
           height: 100%;
@@ -819,7 +841,7 @@
         }
       }
       > .parent-7 {
-        > .test:before {
+        > .child-page:before {
           background: $pageBackground;
           content: " ";
           height: 100%;

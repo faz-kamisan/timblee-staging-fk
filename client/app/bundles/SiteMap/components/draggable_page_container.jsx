@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 import { ItemTypes } from '../dnd/constants';
 import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
@@ -36,6 +37,18 @@ class DraggedPageContainer extends React.Component {
     this.props.connectDragPreview(getEmptyImage(), {});
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.isDragging && nextProps.isDragging) {
+      var domNode = findDOMNode(this);
+      $(domNode).parent('.child-page').addClass('dragging')
+    }
+    if (this.props.isDragging && !nextProps.isDragging) {
+      // You can use this as leave handler
+      var domNode = findDOMNode(this);
+      $(domNode).parent('.child-page').removeClass('dragging')
+    }
+  }
+
   render() {
     const connectDragSource = this.props.connectDragSource;
     const isDragging = this.props.isDragging;
@@ -51,7 +64,7 @@ class DraggedPageContainer extends React.Component {
           var sitemapNumber = _this.props.sitemapNumber + '.' + (index + 1)
         }
         return (
-          <div className='test' key={pageTree.parentId.toString() + pageTree.position.toString()}>
+          <div className='child-page' key={pageTree.parentId.toString() + pageTree.position.toString()}>
             <DraggablePageContainer pageTree={pageTree} onPageDrop={_this.props.onPageDrop} onPageTypeDrop={_this.props.onPageTypeDrop} sitemapId={_this.props.sitemapId} sitemapNumber={sitemapNumber} />
           </div>
         )

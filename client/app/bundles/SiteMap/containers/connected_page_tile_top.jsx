@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { updatePagePosition, addNewPage, updateId } from '../actions'
+import { updatePagePosition, addNewPage, updateId, updatePageName } from '../actions'
 import DroppablePageTileTop from '../components/page_tile_top'
 
 const mapStateToProps = (state) => {
@@ -16,6 +16,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onPageIdUpdate: (id, newId) => {
       dispatch(updateId(id, newId));
+    },
+    onNameChange: (id, name) => {
+      dispatch(updatePageName(id, name));
     }
   }
 }

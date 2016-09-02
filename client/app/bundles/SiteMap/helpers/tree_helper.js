@@ -90,6 +90,16 @@ function traverse(tree, callback) {
   }
 }
 
+function traverseDF(tree, callback) {
+  (function recurse(currentNode) {
+    // step 2
+    for (var i = 0, length = currentNode.children.length; i < length; i++) {
+      recurse(currentNode.children[i]);
+    }
+    callback(currentNode);
+  })(tree);
+}
+
 function getNodeById(tree, id){
   if(tree.id == id){
     return tree;
