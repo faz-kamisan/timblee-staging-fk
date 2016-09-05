@@ -11,7 +11,11 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    home_dashboard_path
+    if resource.is_super_admin?
+      admin_dashboard_path
+    else
+      home_dashboard_path
+    end
   end
 
   def after_sign_out_path_for(resource)

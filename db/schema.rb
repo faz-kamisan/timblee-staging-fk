@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160901060112) do
+ActiveRecord::Schema.define(version: 20160905125407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,8 @@ ActiveRecord::Schema.define(version: 20160901060112) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "position"
+    t.integer  "uid"
+    t.integer  "section_id"
   end
 
   create_table "plans", force: :cascade do |t|
@@ -74,6 +76,14 @@ ActiveRecord::Schema.define(version: 20160901060112) do
     t.string   "stripe_plan_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+  end
+
+  create_table "sections", force: :cascade do |t|
+    t.string   "name"
+    t.boolean  "default"
+    t.integer  "sitemap_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sitemap_invites", force: :cascade do |t|
@@ -120,6 +130,7 @@ ActiveRecord::Schema.define(version: 20160901060112) do
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
     t.string   "full_name"
+    t.string   "avatar"
     t.boolean  "is_admin",               default: false
     t.integer  "business_id"
     t.string   "invitation_token"
@@ -136,7 +147,7 @@ ActiveRecord::Schema.define(version: 20160901060112) do
     t.string   "unconfirmed_email"
     t.boolean  "notify_by_email",        default: true
     t.datetime "deleted_at"
-    t.string   "avatar"
+    t.boolean  "is_super_admin",         default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

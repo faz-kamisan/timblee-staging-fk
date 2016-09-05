@@ -37,6 +37,11 @@ Rails.application.routes.draw do
   get  'home/dashboard'
   get  'home/settings'
 
+  scope module: :super_admin do
+    get '/admin', to: 'main#dashboard', as: 'admin_dashboard'
+    post '/impersonate', to: 'main#impersonate', as: 'admin_impersonate'
+  end
+
   devise_scope :user do
     root to: "devise/sessions#new"
     post 'users/bulk_invitation' => 'users/invitations#bulk_invitation'

@@ -1,0 +1,10 @@
+<div class='row'>
+<div class='col-md-3'></div>
+<div class='col-md-6'>
+  <%= form_tag admin_impersonate_path do %>
+    <%= select_tag :business_id, options_for_select(@businesses.map { |business| [(business.name.present? ? business.name : business.owner.email), business.id] }) %>
+    <%= submit_tag 'lets go' %>
+  <% end %>
+</div>
+<div class='col-md-3'></div>
+</div>
