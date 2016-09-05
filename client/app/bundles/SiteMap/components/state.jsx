@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 
+const stateMapping = {'In Progress': 'in_progress', 'Review': 'in_review', 'Approved': 'approved', 'On Hold': 'on_hold'}
+
 class State extends React.Component {
   static propTypes = {
     state: PropTypes.string.isRequired,
@@ -15,7 +17,7 @@ class State extends React.Component {
       url: '/sitemaps/' + this.props.id,
       method: 'put',
       dataType: 'JSON',
-      data: { sitemap: { state: this.props.state } },
+      data: { sitemap: { state: stateMapping[this.props.state] } },
       error: (result) => {
         document.setFlash(result.responseText)
       }

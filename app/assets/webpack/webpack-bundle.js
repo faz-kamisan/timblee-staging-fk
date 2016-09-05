@@ -47824,7 +47824,7 @@
 	        return _react2.default.createElement(
 	          'li',
 	          { key: index },
-	          _react2.default.createElement(_state2.default, { state: state, id: this.props.id, onStateChange: _this.props.onStateChange })
+	          _react2.default.createElement(_state2.default, { state: state, id: _this.props.id, onStateChange: _this.props.onStateChange })
 	        );
 	      });
 	      return _react2.default.createElement(
@@ -48766,6 +48766,8 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	var stateMapping = { 'In Progress': 'in_progress', 'Review': 'in_review', 'Approved': 'approved', 'On Hold': 'on_hold' };
+	
 	var State = function (_React$Component) {
 	  _inherits(State, _React$Component);
 	
@@ -48785,7 +48787,7 @@
 	        url: '/sitemaps/' + this.props.id,
 	        method: 'put',
 	        dataType: 'JSON',
-	        data: { sitemap: { state: this.props.state } },
+	        data: { sitemap: { state: stateMapping[this.props.state] } },
 	        error: function error(result) {
 	          document.setFlash(result.responseText);
 	        }

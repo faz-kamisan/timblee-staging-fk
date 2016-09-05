@@ -29,7 +29,7 @@ class Header extends React.Component {
     var renderStates = ['In Progress', 'Review', 'Approved', 'On Hold'].map(function(state, index) {
       return(
         <li key={index}>
-          <State state={state} id={this.props.id} onStateChange={_this.props.onStateChange} />
+          <State state={state} id={_this.props.id} onStateChange={_this.props.onStateChange} />
         </li>
       )
     })
