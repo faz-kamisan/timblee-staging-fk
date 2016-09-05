@@ -38383,9 +38383,9 @@
 	
 	var _id2 = _interopRequireDefault(_id);
 	
-	var _page_tree = __webpack_require__(/*! ./page_tree */ 608);
+	var _sections = __webpack_require__(/*! ./sections */ 608);
 	
-	var _page_tree2 = _interopRequireDefault(_page_tree);
+	var _sections2 = _interopRequireDefault(_sections);
 	
 	var _page_types = __webpack_require__(/*! ./page_types */ 610);
 	
@@ -38400,7 +38400,7 @@
 	var sitemapAppReducer = (0, _redux.combineReducers)({
 	  name: _name2.default,
 	  id: _id2.default,
-	  pageTree: _page_tree2.default,
+	  sections: _sections2.default,
 	  pageTypes: _page_types2.default,
 	  comments: _comments2.default
 	});
@@ -38467,28 +38467,28 @@
 	  return { type: SET_NAME, name: name };
 	}
 	
-	function addNewPage(pageType, parentId, position, timeStamp) {
-	  return { type: ADD_NEW_PAGE, pageType: pageType, parentId: parentId, position: position, timeStamp: timeStamp };
+	function addNewPage(sectionId, pageType, parentId, position, timeStamp) {
+	  return { type: ADD_NEW_PAGE, sectionId: sectionId, pageType: pageType, parentId: parentId, position: position, timeStamp: timeStamp };
 	}
 	
-	function removePage(id) {
-	  return { type: REMOVE_PAGE, id: id };
+	function removePage(id, sectionId) {
+	  return { type: REMOVE_PAGE, id: id, sectionId: sectionId };
 	}
 	
-	function updatePageName(id, name) {
-	  return { type: UPDATE_PAGE_NAME, id: id, name: name };
+	function updatePageName(id, sectionId, name) {
+	  return { type: UPDATE_PAGE_NAME, id: id, sectionId: sectionId, name: name };
 	}
 	
-	function updatePagePosition(id, newParentId, position) {
-	  return { type: UPDATE_PAGE_POSITION, id: id, newParentId: newParentId, position: position };
+	function updatePagePosition(id, sectionId, newParentId, position) {
+	  return { type: UPDATE_PAGE_POSITION, id: id, sectionId: sectionId, newParentId: newParentId, position: position };
 	}
 	
-	function changeCollapse(id) {
-	  return { type: CHANGE_COLLAPSE, id: id };
+	function changeCollapse(id, sectionId, section_id) {
+	  return { type: CHANGE_COLLAPSE, id: id, sectionId: sectionId };
 	}
 	
-	function updateId(id, newId) {
-	  return { type: UPDATE_ID, id: id, newId: newId };
+	function updateId(id, sectionId, newId) {
+	  return { type: UPDATE_ID, id: id, sectionId: sectionId, newId: newId };
 	}
 	
 	changeCollapse;
@@ -38516,9 +38516,9 @@
 
 /***/ },
 /* 608 */
-/*!****************************************************!*\
-  !*** ./app/bundles/SiteMap/reducers/page_tree.jsx ***!
-  \****************************************************/
+/*!***************************************************!*\
+  !*** ./app/bundles/SiteMap/reducers/sections.jsx ***!
+  \***************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38531,29 +38531,29 @@
 	
 	var _tree_helper = __webpack_require__(/*! ../helpers/tree_helper */ 609);
 	
-	var pageTree = function pageTree() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	var sections = function sections() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 	  var action = arguments[1];
 	
 	  switch (action.type) {
 	    case _index.ADD_NEW_PAGE:
-	      return (0, _tree_helper.addPage)(state, action.pageType, action.parentId, action.position, action.timeStamp);
+	      return (0, _tree_helper.addPage)(state, action.sectionId, action.pageType, action.parentId, action.position, action.timeStamp);
 	    case _index.REMOVE_PAGE:
-	      return (0, _tree_helper.removePage)(state, action.id);
+	      return (0, _tree_helper.removePage)(state, action.id, action.sectionId);
 	    case _index.UPDATE_PAGE_POSITION:
-	      return (0, _tree_helper.updatePagePosition)(state, action.id, action.newParentId, action.position);
+	      return (0, _tree_helper.updatePagePosition)(state, action.id, action.sectionId, action.newParentId, action.position);
 	    case _index.UPDATE_PAGE_NAME:
-	      return (0, _tree_helper.updatePageName)(state, action.id, action.name);
+	      return (0, _tree_helper.updatePageName)(state, action.id, action.sectionId, action.name);
 	    case _index.CHANGE_COLLAPSE:
-	      return (0, _tree_helper.updateCollapse)(state, action.id);
+	      return (0, _tree_helper.updateCollapse)(state, action.id, action.sectionId);
 	    case _index.UPDATE_ID:
-	      return (0, _tree_helper.updatePageId)(state, action.id, action.newId);
+	      return (0, _tree_helper.updatePageId)(state, action.id, action.sectionId, action.newId);
 	    default:
 	      return state;
 	  }
 	};
 	
-	exports.default = pageTree;
+	exports.default = sections;
 
 /***/ },
 /* 609 */
@@ -38567,8 +38567,11 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	function addPage(tree, pageType, parentId, position, tempId) {
-	  var treeCopy = Object.assign({}, tree);
+	function addPage(sections, sectionId, pageType, parentId, position, tempId) {
+	  var sectionsCopy = Object.assign([], sections);
+	  var treeCopy = sectionsCopy.filter(function (section) {
+	    return section.id == sectionId;
+	  })[0].pageTree;
 	  var pageTypeCopy = Object.assign({}, pageType);
 	  pageTypeCopy.icon_name = pageTypeCopy.iconName;
 	  delete pageTypeCopy.iconName;
@@ -38579,7 +38582,7 @@
 	    uids.push(node.uid);
 	  });
 	  var newUid = Math.max.apply(null, uids) + 1;
-	  var newPage = { name: pageTypeCopy.name, pageType: pageTypeCopy, parentId: parentId, level: parentLevel + 1, children: [], comments: [], collapsed: false, id: tempId, uid: newUid };
+	  var newPage = { name: pageTypeCopy.name, pageType: pageTypeCopy, parentId: parentId, level: parentLevel + 1, children: [], comments: [], collapsed: false, id: tempId, uid: newUid, section_id: sectionId };
 	  if (position == 'begining') {
 	    parentPage.children.unshift(newPage);
 	  } else {
@@ -38591,32 +38594,44 @@
 	  for (var index = 0; index < parentPage.children.length; index++) {
 	    parentPage.children[index].position = index + 1;
 	  }
-	  return treeCopy;
+	  return sectionsCopy;
 	}
 	
-	function updatePageName(tree, id, name) {
-	  var treeCopy = Object.assign({}, tree);
+	function updatePageName(sections, id, sectionId, name) {
+	  var sectionsCopy = Object.assign([], sections);
+	  var treeCopy = sectionsCopy.filter(function (section) {
+	    return section.id == sectionId;
+	  })[0].pageTree;
 	  var page = getNodeById(treeCopy, id);
 	  page.name = name;
-	  return treeCopy;
+	  return sectionsCopy;
 	}
 	
-	function updatePageId(tree, id, newId) {
-	  var treeCopy = Object.assign({}, tree);
+	function updatePageId(sections, id, sectionId, newId) {
+	  var sectionsCopy = Object.assign([], sections);
+	  var treeCopy = sectionsCopy.filter(function (section) {
+	    return section.id == sectionId;
+	  })[0].pageTree;
 	  var page = getNodeById(treeCopy, id);
 	  page.id = newId;
-	  return treeCopy;
+	  return sectionsCopy;
 	}
 	
-	function updateCollapse(tree, id) {
-	  var treeCopy = Object.assign({}, tree);
+	function updateCollapse(sections, id, sectionId) {
+	  var sectionsCopy = Object.assign([], sections);
+	  var treeCopy = sectionsCopy.filter(function (section) {
+	    return section.id == sectionId;
+	  })[0].pageTree;
 	  var page = getNodeById(treeCopy, id);
 	  page.collapsed = !page.collapsed;
-	  return treeCopy;
+	  return sectionsCopy;
 	}
 	
-	function updatePagePosition(tree, id, newParentId, position) {
-	  var treeCopy = Object.assign({}, tree);
+	function updatePagePosition(sections, id, sectionId, newParentId, position) {
+	  var sectionsCopy = Object.assign([], sections);
+	  var treeCopy = sectionsCopy.filter(function (section) {
+	    return section.id == sectionId;
+	  })[0].pageTree;
 	  var page = getNodeById(treeCopy, id),
 	      newParentPage = getNodeById(treeCopy, newParentId),
 	      oldParentPage = getNodeById(treeCopy, page.parentId);
@@ -38641,17 +38656,20 @@
 	    var parentNode = getNodeById(treeCopy, node.parentId);
 	    node.level = parentNode.level + 1;
 	  });
-	  return treeCopy;
+	  return sectionsCopy;
 	}
 	
-	function removePage(tree, id) {
-	  var treeCopy = Object.assign({}, tree);
+	function removePage(sections, id, sectionId) {
+	  var sectionsCopy = Object.assign([], sections);
+	  var treeCopy = sectionsCopy.filter(function (section) {
+	    return section.id == sectionId;
+	  })[0].pageTree;
 	  var page = getNodeById(treeCopy, id),
 	      parentPage = getNodeById(treeCopy, page.parentId);
 	  parentPage.children.removeIf(function (elem, idx) {
 	    return elem.id == id;
 	  });
-	  return treeCopy;
+	  return sectionsCopy;
 	}
 	
 	function traverse(tree, callback) {
@@ -38778,25 +38796,25 @@
 	
 	var _reactDndHtml5Backend2 = _interopRequireDefault(_reactDndHtml5Backend);
 	
-	var _connected_page_container = __webpack_require__(/*! ../containers/connected_page_container */ 702);
+	var _connected_section_container = __webpack_require__(/*! ../containers/connected_section_container */ 702);
 	
-	var _connected_page_container2 = _interopRequireDefault(_connected_page_container);
+	var _connected_section_container2 = _interopRequireDefault(_connected_section_container);
 	
-	var _reactDnd = __webpack_require__(/*! react-dnd */ 705);
+	var _reactDnd = __webpack_require__(/*! react-dnd */ 706);
 	
-	var _connected_header = __webpack_require__(/*! ../containers/connected_header */ 767);
+	var _connected_header = __webpack_require__(/*! ../containers/connected_header */ 768);
 	
 	var _connected_header2 = _interopRequireDefault(_connected_header);
 	
-	var _connected_left_sidebar = __webpack_require__(/*! ../containers/connected_left_sidebar */ 769);
+	var _connected_left_sidebar = __webpack_require__(/*! ../containers/connected_left_sidebar */ 770);
 	
 	var _connected_left_sidebar2 = _interopRequireDefault(_connected_left_sidebar);
 	
-	var _connected_right_sidebar = __webpack_require__(/*! ../containers/connected_right_sidebar */ 773);
+	var _connected_right_sidebar = __webpack_require__(/*! ../containers/connected_right_sidebar */ 774);
 	
 	var _connected_right_sidebar2 = _interopRequireDefault(_connected_right_sidebar);
 	
-	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 776);
+	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 777);
 	
 	var _custom_drag_layer2 = _interopRequireDefault(_custom_drag_layer);
 	
@@ -38826,7 +38844,7 @@
 	        _react2.default.createElement(_connected_header2.default, null),
 	        _react2.default.createElement(_connected_left_sidebar2.default, null),
 	        _react2.default.createElement(_connected_right_sidebar2.default, null),
-	        _react2.default.createElement(_connected_page_container2.default, { sitemapNumber: '' }),
+	        _react2.default.createElement(_connected_section_container2.default, { sitemapNumber: '' }),
 	        _react2.default.createElement(_custom_drag_layer2.default, null)
 	      );
 	    }
@@ -42648,9 +42666,9 @@
 
 /***/ },
 /* 702 */
-/*!*********************************************************************!*\
-  !*** ./app/bundles/SiteMap/containers/connected_page_container.jsx ***!
-  \*********************************************************************/
+/*!************************************************************************!*\
+  !*** ./app/bundles/SiteMap/containers/connected_section_container.jsx ***!
+  \************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42663,22 +42681,122 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _draggable_page_container = __webpack_require__(/*! ../components/draggable_page_container */ 703);
+	var _section_container = __webpack_require__(/*! ../components/section_container */ 703);
+	
+	var _section_container2 = _interopRequireDefault(_section_container);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return { sections: state.sections, sitemapId: state.id };
+	};
+	
+	var ConnectedSecionContainer = (0, _reactRedux.connect)(mapStateToProps)(_section_container2.default);
+	
+	exports.default = ConnectedSecionContainer;
+
+/***/ },
+/* 703 */
+/*!**************************************************************!*\
+  !*** ./app/bundles/SiteMap/components/section_container.jsx ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 301);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _tree_helper = __webpack_require__(/*! ../helpers/tree_helper */ 609);
+	
+	var _draggable_page_container = __webpack_require__(/*! ./draggable_page_container */ 704);
 	
 	var _draggable_page_container2 = _interopRequireDefault(_draggable_page_container);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var mapStateToProps = function mapStateToProps(state) {
-	  return { pageTree: state.pageTree, sitemapId: state.id };
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var SectionContainer = function (_React$Component) {
+	  _inherits(SectionContainer, _React$Component);
+	
+	  function SectionContainer(props) {
+	    _classCallCheck(this, SectionContainer);
+	
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(SectionContainer).call(this, props));
+	
+	    _this2.changeCurrentSectionId = _this2.changeCurrentSectionId.bind(_this2);
+	    _this2.state = { currentSectionId: _this2.getDefaultSectionId(props.sections) };
+	    return _this2;
+	  }
+	
+	  _createClass(SectionContainer, [{
+	    key: 'getDefaultSectionId',
+	    value: function getDefaultSectionId(sections) {
+	      return sections.filter(function (section) {
+	        return section.default;
+	      })[0].id;
+	    }
+	  }, {
+	    key: 'changeCurrentSectionId',
+	    value: function changeCurrentSectionId(id) {
+	      this.setState({ currentSectionId: id });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this = this;
+	      var renderedSectionTabs = this.props.sections.map(function (section, index) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: section.id, className: 'sitemap-section-tab' + (_this.state.currentSectionId == section.id ? ' active' : ''), onClick: function onClick(e) {
+	              _this.changeCurrentSectionId(section.id);
+	            } },
+	          section.name
+	        );
+	      });
+	      var renderedSections = this.props.sections.map(function (section, index) {
+	        return _react2.default.createElement(
+	          'div',
+	          { key: section.id, className: 'sitemap-section' + (_this.state.currentSectionId == section.id ? ' active' : ' hide') },
+	          _react2.default.createElement(_draggable_page_container2.default, { pageTree: section.pageTree, sitemapNumber: '', sitemapId: _this.props.sitemapId })
+	        );
+	      });
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'sitemap-sections' },
+	        _react2.default.createElement(
+	          'ul',
+	          null,
+	          renderedSectionTabs
+	        ),
+	        renderedSections
+	      );
+	    }
+	  }]);
+	
+	  return SectionContainer;
+	}(_react2.default.Component);
+	
+	SectionContainer.propTypes = {
+	  sections: _react.PropTypes.array.isRequired
 	};
-	
-	var ConnectedPageContainer = (0, _reactRedux.connect)(mapStateToProps)(_draggable_page_container2.default);
-	
-	exports.default = ConnectedPageContainer;
+	exports.default = SectionContainer;
 
 /***/ },
-/* 703 */
+/* 704 */
 /*!*********************************************************************!*\
   !*** ./app/bundles/SiteMap/components/draggable_page_container.jsx ***!
   \*********************************************************************/
@@ -42698,13 +42816,13 @@
 	
 	var _reactDom = __webpack_require__(/*! react-dom */ 379);
 	
-	var _constants = __webpack_require__(/*! ../dnd/constants */ 704);
+	var _constants = __webpack_require__(/*! ../dnd/constants */ 705);
 	
-	var _reactDnd = __webpack_require__(/*! react-dnd */ 705);
+	var _reactDnd = __webpack_require__(/*! react-dnd */ 706);
 	
 	var _reactDndHtml5Backend = __webpack_require__(/*! react-dnd-html5-backend */ 613);
 	
-	var _page_container = __webpack_require__(/*! ./page_container */ 756);
+	var _page_container = __webpack_require__(/*! ./page_container */ 757);
 	
 	var _page_container2 = _interopRequireDefault(_page_container);
 	
@@ -42809,7 +42927,7 @@
 	exports.default = DraggablePageContainer;
 
 /***/ },
-/* 704 */
+/* 705 */
 /*!***********************************************!*\
   !*** ./app/bundles/SiteMap/dnd/constants.jsx ***!
   \***********************************************/
@@ -42826,7 +42944,7 @@
 	};
 
 /***/ },
-/* 705 */
+/* 706 */
 /*!**********************************!*\
   !*** ./~/react-dnd/lib/index.js ***!
   \**********************************/
@@ -42838,24 +42956,24 @@
 	
 	function _interopRequire(obj) { return obj && obj.__esModule ? obj['default'] : obj; }
 	
-	var _DragDropContext = __webpack_require__(/*! ./DragDropContext */ 706);
+	var _DragDropContext = __webpack_require__(/*! ./DragDropContext */ 707);
 	
 	exports.DragDropContext = _interopRequire(_DragDropContext);
 	
-	var _DragLayer = __webpack_require__(/*! ./DragLayer */ 733);
+	var _DragLayer = __webpack_require__(/*! ./DragLayer */ 734);
 	
 	exports.DragLayer = _interopRequire(_DragLayer);
 	
-	var _DragSource = __webpack_require__(/*! ./DragSource */ 736);
+	var _DragSource = __webpack_require__(/*! ./DragSource */ 737);
 	
 	exports.DragSource = _interopRequire(_DragSource);
 	
-	var _DropTarget = __webpack_require__(/*! ./DropTarget */ 751);
+	var _DropTarget = __webpack_require__(/*! ./DropTarget */ 752);
 	
 	exports.DropTarget = _interopRequire(_DropTarget);
 
 /***/ },
-/* 706 */
+/* 707 */
 /*!********************************************!*\
   !*** ./~/react-dnd/lib/DragDropContext.js ***!
   \********************************************/
@@ -42883,13 +43001,13 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _dndCore = __webpack_require__(/*! dnd-core */ 707);
+	var _dndCore = __webpack_require__(/*! dnd-core */ 708);
 	
 	var _invariant = __webpack_require__(/*! invariant */ 603);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
-	var _utilsCheckDecoratorArguments = __webpack_require__(/*! ./utils/checkDecoratorArguments */ 732);
+	var _utilsCheckDecoratorArguments = __webpack_require__(/*! ./utils/checkDecoratorArguments */ 733);
 	
 	var _utilsCheckDecoratorArguments2 = _interopRequireDefault(_utilsCheckDecoratorArguments);
 	
@@ -42963,7 +43081,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 707 */
+/* 708 */
 /*!*********************************!*\
   !*** ./~/dnd-core/lib/index.js ***!
   \*********************************/
@@ -42975,24 +43093,24 @@
 	
 	function _interopRequire(obj) { return obj && obj.__esModule ? obj['default'] : obj; }
 	
-	var _DragDropManager = __webpack_require__(/*! ./DragDropManager */ 708);
+	var _DragDropManager = __webpack_require__(/*! ./DragDropManager */ 709);
 	
 	exports.DragDropManager = _interopRequire(_DragDropManager);
 	
-	var _DragSource = __webpack_require__(/*! ./DragSource */ 729);
+	var _DragSource = __webpack_require__(/*! ./DragSource */ 730);
 	
 	exports.DragSource = _interopRequire(_DragSource);
 	
-	var _DropTarget = __webpack_require__(/*! ./DropTarget */ 730);
+	var _DropTarget = __webpack_require__(/*! ./DropTarget */ 731);
 	
 	exports.DropTarget = _interopRequire(_DropTarget);
 	
-	var _backendsCreateTestBackend = __webpack_require__(/*! ./backends/createTestBackend */ 731);
+	var _backendsCreateTestBackend = __webpack_require__(/*! ./backends/createTestBackend */ 732);
 	
 	exports.createTestBackend = _interopRequire(_backendsCreateTestBackend);
 
 /***/ },
-/* 708 */
+/* 709 */
 /*!*******************************************!*\
   !*** ./~/dnd-core/lib/DragDropManager.js ***!
   \*******************************************/
@@ -43012,19 +43130,19 @@
 	
 	var _reduxLibCreateStore2 = _interopRequireDefault(_reduxLibCreateStore);
 	
-	var _reducers = __webpack_require__(/*! ./reducers */ 709);
+	var _reducers = __webpack_require__(/*! ./reducers */ 710);
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
 	
-	var _actionsDragDrop = __webpack_require__(/*! ./actions/dragDrop */ 711);
+	var _actionsDragDrop = __webpack_require__(/*! ./actions/dragDrop */ 712);
 	
 	var dragDropActions = _interopRequireWildcard(_actionsDragDrop);
 	
-	var _DragDropMonitor = __webpack_require__(/*! ./DragDropMonitor */ 724);
+	var _DragDropMonitor = __webpack_require__(/*! ./DragDropMonitor */ 725);
 	
 	var _DragDropMonitor2 = _interopRequireDefault(_DragDropMonitor);
 	
-	var _HandlerRegistry = __webpack_require__(/*! ./HandlerRegistry */ 725);
+	var _HandlerRegistry = __webpack_require__(/*! ./HandlerRegistry */ 726);
 	
 	var _HandlerRegistry2 = _interopRequireDefault(_HandlerRegistry);
 	
@@ -43093,7 +43211,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 709 */
+/* 710 */
 /*!******************************************!*\
   !*** ./~/dnd-core/lib/reducers/index.js ***!
   \******************************************/
@@ -43105,23 +43223,23 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _dragOffset = __webpack_require__(/*! ./dragOffset */ 710);
+	var _dragOffset = __webpack_require__(/*! ./dragOffset */ 711);
 	
 	var _dragOffset2 = _interopRequireDefault(_dragOffset);
 	
-	var _dragOperation = __webpack_require__(/*! ./dragOperation */ 713);
+	var _dragOperation = __webpack_require__(/*! ./dragOperation */ 714);
 	
 	var _dragOperation2 = _interopRequireDefault(_dragOperation);
 	
-	var _refCount = __webpack_require__(/*! ./refCount */ 715);
+	var _refCount = __webpack_require__(/*! ./refCount */ 716);
 	
 	var _refCount2 = _interopRequireDefault(_refCount);
 	
-	var _dirtyHandlerIds = __webpack_require__(/*! ./dirtyHandlerIds */ 716);
+	var _dirtyHandlerIds = __webpack_require__(/*! ./dirtyHandlerIds */ 717);
 	
 	var _dirtyHandlerIds2 = _interopRequireDefault(_dirtyHandlerIds);
 	
-	var _stateId = __webpack_require__(/*! ./stateId */ 723);
+	var _stateId = __webpack_require__(/*! ./stateId */ 724);
 	
 	var _stateId2 = _interopRequireDefault(_stateId);
 	
@@ -43140,7 +43258,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 710 */
+/* 711 */
 /*!***********************************************!*\
   !*** ./~/dnd-core/lib/reducers/dragOffset.js ***!
   \***********************************************/
@@ -43156,7 +43274,7 @@
 	exports.getSourceClientOffset = getSourceClientOffset;
 	exports.getDifferenceFromInitialOffset = getDifferenceFromInitialOffset;
 	
-	var _actionsDragDrop = __webpack_require__(/*! ../actions/dragDrop */ 711);
+	var _actionsDragDrop = __webpack_require__(/*! ../actions/dragDrop */ 712);
 	
 	var initialState = {
 	  initialSourceClientOffset: null,
@@ -43224,7 +43342,7 @@
 	}
 
 /***/ },
-/* 711 */
+/* 712 */
 /*!********************************************!*\
   !*** ./~/dnd-core/lib/actions/dragDrop.js ***!
   \********************************************/
@@ -43241,7 +43359,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utilsMatchesType = __webpack_require__(/*! ../utils/matchesType */ 712);
+	var _utilsMatchesType = __webpack_require__(/*! ../utils/matchesType */ 713);
 	
 	var _utilsMatchesType2 = _interopRequireDefault(_utilsMatchesType);
 	
@@ -43428,7 +43546,7 @@
 	}
 
 /***/ },
-/* 712 */
+/* 713 */
 /*!*********************************************!*\
   !*** ./~/dnd-core/lib/utils/matchesType.js ***!
   \*********************************************/
@@ -43458,7 +43576,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 713 */
+/* 714 */
 /*!**************************************************!*\
   !*** ./~/dnd-core/lib/reducers/dragOperation.js ***!
   \**************************************************/
@@ -43474,9 +43592,9 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _actionsDragDrop = __webpack_require__(/*! ../actions/dragDrop */ 711);
+	var _actionsDragDrop = __webpack_require__(/*! ../actions/dragDrop */ 712);
 	
-	var _actionsRegistry = __webpack_require__(/*! ../actions/registry */ 714);
+	var _actionsRegistry = __webpack_require__(/*! ../actions/registry */ 715);
 	
 	var _lodashWithout = __webpack_require__(/*! lodash/without */ 691);
 	
@@ -43544,7 +43662,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 714 */
+/* 715 */
 /*!********************************************!*\
   !*** ./~/dnd-core/lib/actions/registry.js ***!
   \********************************************/
@@ -43596,7 +43714,7 @@
 	}
 
 /***/ },
-/* 715 */
+/* 716 */
 /*!*********************************************!*\
   !*** ./~/dnd-core/lib/reducers/refCount.js ***!
   \*********************************************/
@@ -43607,7 +43725,7 @@
 	exports.__esModule = true;
 	exports['default'] = refCount;
 	
-	var _actionsRegistry = __webpack_require__(/*! ../actions/registry */ 714);
+	var _actionsRegistry = __webpack_require__(/*! ../actions/registry */ 715);
 	
 	function refCount(state, action) {
 	  if (state === undefined) state = 0;
@@ -43627,7 +43745,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 716 */
+/* 717 */
 /*!****************************************************!*\
   !*** ./~/dnd-core/lib/reducers/dirtyHandlerIds.js ***!
   \****************************************************/
@@ -43641,17 +43759,17 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _lodashXor = __webpack_require__(/*! lodash/xor */ 717);
+	var _lodashXor = __webpack_require__(/*! lodash/xor */ 718);
 	
 	var _lodashXor2 = _interopRequireDefault(_lodashXor);
 	
-	var _lodashIntersection = __webpack_require__(/*! lodash/intersection */ 720);
+	var _lodashIntersection = __webpack_require__(/*! lodash/intersection */ 721);
 	
 	var _lodashIntersection2 = _interopRequireDefault(_lodashIntersection);
 	
-	var _actionsDragDrop = __webpack_require__(/*! ../actions/dragDrop */ 711);
+	var _actionsDragDrop = __webpack_require__(/*! ../actions/dragDrop */ 712);
 	
-	var _actionsRegistry = __webpack_require__(/*! ../actions/registry */ 714);
+	var _actionsRegistry = __webpack_require__(/*! ../actions/registry */ 715);
 	
 	var NONE = [];
 	var ALL = [];
@@ -43724,15 +43842,15 @@
 	}
 
 /***/ },
-/* 717 */
+/* 718 */
 /*!*************************!*\
   !*** ./~/lodash/xor.js ***!
   \*************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayFilter = __webpack_require__(/*! ./_arrayFilter */ 718),
+	var arrayFilter = __webpack_require__(/*! ./_arrayFilter */ 719),
 	    baseRest = __webpack_require__(/*! ./_baseRest */ 623),
-	    baseXor = __webpack_require__(/*! ./_baseXor */ 719),
+	    baseXor = __webpack_require__(/*! ./_baseXor */ 720),
 	    isArrayLikeObject = __webpack_require__(/*! ./isArrayLikeObject */ 634);
 	
 	/**
@@ -43761,7 +43879,7 @@
 
 
 /***/ },
-/* 718 */
+/* 719 */
 /*!**********************************!*\
   !*** ./~/lodash/_arrayFilter.js ***!
   \**********************************/
@@ -43795,7 +43913,7 @@
 
 
 /***/ },
-/* 719 */
+/* 720 */
 /*!******************************!*\
   !*** ./~/lodash/_baseXor.js ***!
   \******************************/
@@ -43834,16 +43952,16 @@
 
 
 /***/ },
-/* 720 */
+/* 721 */
 /*!**********************************!*\
   !*** ./~/lodash/intersection.js ***!
   \**********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var arrayMap = __webpack_require__(/*! ./_arrayMap */ 693),
-	    baseIntersection = __webpack_require__(/*! ./_baseIntersection */ 721),
+	    baseIntersection = __webpack_require__(/*! ./_baseIntersection */ 722),
 	    baseRest = __webpack_require__(/*! ./_baseRest */ 623),
-	    castArrayLikeObject = __webpack_require__(/*! ./_castArrayLikeObject */ 722);
+	    castArrayLikeObject = __webpack_require__(/*! ./_castArrayLikeObject */ 723);
 	
 	/**
 	 * Creates an array of unique values that are included in all given arrays
@@ -43873,7 +43991,7 @@
 
 
 /***/ },
-/* 721 */
+/* 722 */
 /*!***************************************!*\
   !*** ./~/lodash/_baseIntersection.js ***!
   \***************************************/
@@ -43956,7 +44074,7 @@
 
 
 /***/ },
-/* 722 */
+/* 723 */
 /*!******************************************!*\
   !*** ./~/lodash/_castArrayLikeObject.js ***!
   \******************************************/
@@ -43979,7 +44097,7 @@
 
 
 /***/ },
-/* 723 */
+/* 724 */
 /*!********************************************!*\
   !*** ./~/dnd-core/lib/reducers/stateId.js ***!
   \********************************************/
@@ -43999,7 +44117,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 724 */
+/* 725 */
 /*!*******************************************!*\
   !*** ./~/dnd-core/lib/DragDropMonitor.js ***!
   \*******************************************/
@@ -44017,7 +44135,7 @@
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
-	var _utilsMatchesType = __webpack_require__(/*! ./utils/matchesType */ 712);
+	var _utilsMatchesType = __webpack_require__(/*! ./utils/matchesType */ 713);
 	
 	var _utilsMatchesType2 = _interopRequireDefault(_utilsMatchesType);
 	
@@ -44025,13 +44143,13 @@
 	
 	var _lodashIsArray2 = _interopRequireDefault(_lodashIsArray);
 	
-	var _HandlerRegistry = __webpack_require__(/*! ./HandlerRegistry */ 725);
+	var _HandlerRegistry = __webpack_require__(/*! ./HandlerRegistry */ 726);
 	
 	var _HandlerRegistry2 = _interopRequireDefault(_HandlerRegistry);
 	
-	var _reducersDragOffset = __webpack_require__(/*! ./reducers/dragOffset */ 710);
+	var _reducersDragOffset = __webpack_require__(/*! ./reducers/dragOffset */ 711);
 	
-	var _reducersDirtyHandlerIds = __webpack_require__(/*! ./reducers/dirtyHandlerIds */ 716);
+	var _reducersDirtyHandlerIds = __webpack_require__(/*! ./reducers/dirtyHandlerIds */ 717);
 	
 	var DragDropMonitor = (function () {
 	  function DragDropMonitor(store) {
@@ -44217,7 +44335,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 725 */
+/* 726 */
 /*!*******************************************!*\
   !*** ./~/dnd-core/lib/HandlerRegistry.js ***!
   \*******************************************/
@@ -44241,13 +44359,13 @@
 	
 	var _lodashIsArray2 = _interopRequireDefault(_lodashIsArray);
 	
-	var _utilsGetNextUniqueId = __webpack_require__(/*! ./utils/getNextUniqueId */ 726);
+	var _utilsGetNextUniqueId = __webpack_require__(/*! ./utils/getNextUniqueId */ 727);
 	
 	var _utilsGetNextUniqueId2 = _interopRequireDefault(_utilsGetNextUniqueId);
 	
-	var _actionsRegistry = __webpack_require__(/*! ./actions/registry */ 714);
+	var _actionsRegistry = __webpack_require__(/*! ./actions/registry */ 715);
 	
-	var _asap = __webpack_require__(/*! asap */ 727);
+	var _asap = __webpack_require__(/*! asap */ 728);
 	
 	var _asap2 = _interopRequireDefault(_asap);
 	
@@ -44429,7 +44547,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 726 */
+/* 727 */
 /*!*************************************************!*\
   !*** ./~/dnd-core/lib/utils/getNextUniqueId.js ***!
   \*************************************************/
@@ -44448,7 +44566,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 727 */
+/* 728 */
 /*!********************************!*\
   !*** ./~/asap/browser-asap.js ***!
   \********************************/
@@ -44457,7 +44575,7 @@
 	"use strict";
 	
 	// rawAsap provides everything we need except exception management.
-	var rawAsap = __webpack_require__(/*! ./raw */ 728);
+	var rawAsap = __webpack_require__(/*! ./raw */ 729);
 	// RawTasks are recycled to reduce GC churn.
 	var freeTasks = [];
 	// We queue errors to ensure they are thrown in right order (FIFO).
@@ -44523,7 +44641,7 @@
 
 
 /***/ },
-/* 728 */
+/* 729 */
 /*!*******************************!*\
   !*** ./~/asap/browser-raw.js ***!
   \*******************************/
@@ -44753,7 +44871,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 729 */
+/* 730 */
 /*!**************************************!*\
   !*** ./~/dnd-core/lib/DragSource.js ***!
   \**************************************/
@@ -44787,7 +44905,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 730 */
+/* 731 */
 /*!**************************************!*\
   !*** ./~/dnd-core/lib/DropTarget.js ***!
   \**************************************/
@@ -44819,7 +44937,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 731 */
+/* 732 */
 /*!******************************************************!*\
   !*** ./~/dnd-core/lib/backends/createTestBackend.js ***!
   \******************************************************/
@@ -44895,7 +45013,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 732 */
+/* 733 */
 /*!**********************************************************!*\
   !*** ./~/react-dnd/lib/utils/checkDecoratorArguments.js ***!
   \**********************************************************/
@@ -44926,7 +45044,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 733 */
+/* 734 */
 /*!**************************************!*\
   !*** ./~/react-dnd/lib/DragLayer.js ***!
   \**************************************/
@@ -44954,11 +45072,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _utilsShallowEqual = __webpack_require__(/*! ./utils/shallowEqual */ 734);
+	var _utilsShallowEqual = __webpack_require__(/*! ./utils/shallowEqual */ 735);
 	
 	var _utilsShallowEqual2 = _interopRequireDefault(_utilsShallowEqual);
 	
-	var _utilsShallowEqualScalar = __webpack_require__(/*! ./utils/shallowEqualScalar */ 735);
+	var _utilsShallowEqualScalar = __webpack_require__(/*! ./utils/shallowEqualScalar */ 736);
 	
 	var _utilsShallowEqualScalar2 = _interopRequireDefault(_utilsShallowEqualScalar);
 	
@@ -44970,7 +45088,7 @@
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
-	var _utilsCheckDecoratorArguments = __webpack_require__(/*! ./utils/checkDecoratorArguments */ 732);
+	var _utilsCheckDecoratorArguments = __webpack_require__(/*! ./utils/checkDecoratorArguments */ 733);
 	
 	var _utilsCheckDecoratorArguments2 = _interopRequireDefault(_utilsCheckDecoratorArguments);
 	
@@ -45072,7 +45190,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 734 */
+/* 735 */
 /*!***********************************************!*\
   !*** ./~/react-dnd/lib/utils/shallowEqual.js ***!
   \***********************************************/
@@ -45116,7 +45234,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 735 */
+/* 736 */
 /*!*****************************************************!*\
   !*** ./~/react-dnd/lib/utils/shallowEqualScalar.js ***!
   \*****************************************************/
@@ -45164,7 +45282,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 736 */
+/* 737 */
 /*!***************************************!*\
   !*** ./~/react-dnd/lib/DragSource.js ***!
   \***************************************/
@@ -45186,31 +45304,31 @@
 	
 	var _lodashIsPlainObject2 = _interopRequireDefault(_lodashIsPlainObject);
 	
-	var _utilsCheckDecoratorArguments = __webpack_require__(/*! ./utils/checkDecoratorArguments */ 732);
+	var _utilsCheckDecoratorArguments = __webpack_require__(/*! ./utils/checkDecoratorArguments */ 733);
 	
 	var _utilsCheckDecoratorArguments2 = _interopRequireDefault(_utilsCheckDecoratorArguments);
 	
-	var _decorateHandler = __webpack_require__(/*! ./decorateHandler */ 737);
+	var _decorateHandler = __webpack_require__(/*! ./decorateHandler */ 738);
 	
 	var _decorateHandler2 = _interopRequireDefault(_decorateHandler);
 	
-	var _registerSource = __webpack_require__(/*! ./registerSource */ 743);
+	var _registerSource = __webpack_require__(/*! ./registerSource */ 744);
 	
 	var _registerSource2 = _interopRequireDefault(_registerSource);
 	
-	var _createSourceFactory = __webpack_require__(/*! ./createSourceFactory */ 744);
+	var _createSourceFactory = __webpack_require__(/*! ./createSourceFactory */ 745);
 	
 	var _createSourceFactory2 = _interopRequireDefault(_createSourceFactory);
 	
-	var _createSourceMonitor = __webpack_require__(/*! ./createSourceMonitor */ 745);
+	var _createSourceMonitor = __webpack_require__(/*! ./createSourceMonitor */ 746);
 	
 	var _createSourceMonitor2 = _interopRequireDefault(_createSourceMonitor);
 	
-	var _createSourceConnector = __webpack_require__(/*! ./createSourceConnector */ 746);
+	var _createSourceConnector = __webpack_require__(/*! ./createSourceConnector */ 747);
 	
 	var _createSourceConnector2 = _interopRequireDefault(_createSourceConnector);
 	
-	var _utilsIsValidType = __webpack_require__(/*! ./utils/isValidType */ 750);
+	var _utilsIsValidType = __webpack_require__(/*! ./utils/isValidType */ 751);
 	
 	var _utilsIsValidType2 = _interopRequireDefault(_utilsIsValidType);
 	
@@ -45251,7 +45369,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 737 */
+/* 738 */
 /*!********************************************!*\
   !*** ./~/react-dnd/lib/decorateHandler.js ***!
   \********************************************/
@@ -45277,13 +45395,13 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _disposables = __webpack_require__(/*! disposables */ 738);
+	var _disposables = __webpack_require__(/*! disposables */ 739);
 	
-	var _utilsShallowEqual = __webpack_require__(/*! ./utils/shallowEqual */ 734);
+	var _utilsShallowEqual = __webpack_require__(/*! ./utils/shallowEqual */ 735);
 	
 	var _utilsShallowEqual2 = _interopRequireDefault(_utilsShallowEqual);
 	
-	var _utilsShallowEqualScalar = __webpack_require__(/*! ./utils/shallowEqualScalar */ 735);
+	var _utilsShallowEqualScalar = __webpack_require__(/*! ./utils/shallowEqualScalar */ 736);
 	
 	var _utilsShallowEqualScalar2 = _interopRequireDefault(_utilsShallowEqualScalar);
 	
@@ -45451,7 +45569,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 738 */
+/* 739 */
 /*!****************************************!*\
   !*** ./~/disposables/modules/index.js ***!
   \****************************************/
@@ -45463,32 +45581,32 @@
 	
 	exports.__esModule = true;
 	
-	var _isDisposable2 = __webpack_require__(/*! ./isDisposable */ 739);
+	var _isDisposable2 = __webpack_require__(/*! ./isDisposable */ 740);
 	
 	var _isDisposable3 = _interopRequireWildcard(_isDisposable2);
 	
 	exports.isDisposable = _isDisposable3['default'];
 	
-	var _Disposable2 = __webpack_require__(/*! ./Disposable */ 740);
+	var _Disposable2 = __webpack_require__(/*! ./Disposable */ 741);
 	
 	var _Disposable3 = _interopRequireWildcard(_Disposable2);
 	
 	exports.Disposable = _Disposable3['default'];
 	
-	var _CompositeDisposable2 = __webpack_require__(/*! ./CompositeDisposable */ 741);
+	var _CompositeDisposable2 = __webpack_require__(/*! ./CompositeDisposable */ 742);
 	
 	var _CompositeDisposable3 = _interopRequireWildcard(_CompositeDisposable2);
 	
 	exports.CompositeDisposable = _CompositeDisposable3['default'];
 	
-	var _SerialDisposable2 = __webpack_require__(/*! ./SerialDisposable */ 742);
+	var _SerialDisposable2 = __webpack_require__(/*! ./SerialDisposable */ 743);
 	
 	var _SerialDisposable3 = _interopRequireWildcard(_SerialDisposable2);
 	
 	exports.SerialDisposable = _SerialDisposable3['default'];
 
 /***/ },
-/* 739 */
+/* 740 */
 /*!***********************************************!*\
   !*** ./~/disposables/modules/isDisposable.js ***!
   \***********************************************/
@@ -45506,7 +45624,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 740 */
+/* 741 */
 /*!*********************************************!*\
   !*** ./~/disposables/modules/Disposable.js ***!
   \*********************************************/
@@ -45553,7 +45671,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 741 */
+/* 742 */
 /*!******************************************************!*\
   !*** ./~/disposables/modules/CompositeDisposable.js ***!
   \******************************************************/
@@ -45567,7 +45685,7 @@
 	
 	exports.__esModule = true;
 	
-	var _isDisposable = __webpack_require__(/*! ./isDisposable */ 739);
+	var _isDisposable = __webpack_require__(/*! ./isDisposable */ 740);
 	
 	var _isDisposable2 = _interopRequireWildcard(_isDisposable);
 	
@@ -45662,7 +45780,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 742 */
+/* 743 */
 /*!***************************************************!*\
   !*** ./~/disposables/modules/SerialDisposable.js ***!
   \***************************************************/
@@ -45676,7 +45794,7 @@
 	
 	exports.__esModule = true;
 	
-	var _isDisposable = __webpack_require__(/*! ./isDisposable */ 739);
+	var _isDisposable = __webpack_require__(/*! ./isDisposable */ 740);
 	
 	var _isDisposable2 = _interopRequireWildcard(_isDisposable);
 	
@@ -45751,7 +45869,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 743 */
+/* 744 */
 /*!*******************************************!*\
   !*** ./~/react-dnd/lib/registerSource.js ***!
   \*******************************************/
@@ -45779,7 +45897,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 744 */
+/* 745 */
 /*!************************************************!*\
   !*** ./~/react-dnd/lib/createSourceFactory.js ***!
   \************************************************/
@@ -45874,7 +45992,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 745 */
+/* 746 */
 /*!************************************************!*\
   !*** ./~/react-dnd/lib/createSourceMonitor.js ***!
   \************************************************/
@@ -45975,7 +46093,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 746 */
+/* 747 */
 /*!**************************************************!*\
   !*** ./~/react-dnd/lib/createSourceConnector.js ***!
   \**************************************************/
@@ -45988,11 +46106,11 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _wrapConnectorHooks = __webpack_require__(/*! ./wrapConnectorHooks */ 747);
+	var _wrapConnectorHooks = __webpack_require__(/*! ./wrapConnectorHooks */ 748);
 	
 	var _wrapConnectorHooks2 = _interopRequireDefault(_wrapConnectorHooks);
 	
-	var _areOptionsEqual = __webpack_require__(/*! ./areOptionsEqual */ 749);
+	var _areOptionsEqual = __webpack_require__(/*! ./areOptionsEqual */ 750);
 	
 	var _areOptionsEqual2 = _interopRequireDefault(_areOptionsEqual);
 	
@@ -46072,7 +46190,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 747 */
+/* 748 */
 /*!***********************************************!*\
   !*** ./~/react-dnd/lib/wrapConnectorHooks.js ***!
   \***********************************************/
@@ -46085,7 +46203,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utilsCloneWithRef = __webpack_require__(/*! ./utils/cloneWithRef */ 748);
+	var _utilsCloneWithRef = __webpack_require__(/*! ./utils/cloneWithRef */ 749);
 	
 	var _utilsCloneWithRef2 = _interopRequireDefault(_utilsCloneWithRef);
 	
@@ -46147,7 +46265,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 748 */
+/* 749 */
 /*!***********************************************!*\
   !*** ./~/react-dnd/lib/utils/cloneWithRef.js ***!
   \***********************************************/
@@ -46191,7 +46309,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 749 */
+/* 750 */
 /*!********************************************!*\
   !*** ./~/react-dnd/lib/areOptionsEqual.js ***!
   \********************************************/
@@ -46204,7 +46322,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utilsShallowEqual = __webpack_require__(/*! ./utils/shallowEqual */ 734);
+	var _utilsShallowEqual = __webpack_require__(/*! ./utils/shallowEqual */ 735);
 	
 	var _utilsShallowEqual2 = _interopRequireDefault(_utilsShallowEqual);
 	
@@ -46219,7 +46337,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 750 */
+/* 751 */
 /*!**********************************************!*\
   !*** ./~/react-dnd/lib/utils/isValidType.js ***!
   \**********************************************/
@@ -46245,7 +46363,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 751 */
+/* 752 */
 /*!***************************************!*\
   !*** ./~/react-dnd/lib/DropTarget.js ***!
   \***************************************/
@@ -46267,31 +46385,31 @@
 	
 	var _lodashIsPlainObject2 = _interopRequireDefault(_lodashIsPlainObject);
 	
-	var _utilsCheckDecoratorArguments = __webpack_require__(/*! ./utils/checkDecoratorArguments */ 732);
+	var _utilsCheckDecoratorArguments = __webpack_require__(/*! ./utils/checkDecoratorArguments */ 733);
 	
 	var _utilsCheckDecoratorArguments2 = _interopRequireDefault(_utilsCheckDecoratorArguments);
 	
-	var _decorateHandler = __webpack_require__(/*! ./decorateHandler */ 737);
+	var _decorateHandler = __webpack_require__(/*! ./decorateHandler */ 738);
 	
 	var _decorateHandler2 = _interopRequireDefault(_decorateHandler);
 	
-	var _registerTarget = __webpack_require__(/*! ./registerTarget */ 752);
+	var _registerTarget = __webpack_require__(/*! ./registerTarget */ 753);
 	
 	var _registerTarget2 = _interopRequireDefault(_registerTarget);
 	
-	var _createTargetFactory = __webpack_require__(/*! ./createTargetFactory */ 753);
+	var _createTargetFactory = __webpack_require__(/*! ./createTargetFactory */ 754);
 	
 	var _createTargetFactory2 = _interopRequireDefault(_createTargetFactory);
 	
-	var _createTargetMonitor = __webpack_require__(/*! ./createTargetMonitor */ 754);
+	var _createTargetMonitor = __webpack_require__(/*! ./createTargetMonitor */ 755);
 	
 	var _createTargetMonitor2 = _interopRequireDefault(_createTargetMonitor);
 	
-	var _createTargetConnector = __webpack_require__(/*! ./createTargetConnector */ 755);
+	var _createTargetConnector = __webpack_require__(/*! ./createTargetConnector */ 756);
 	
 	var _createTargetConnector2 = _interopRequireDefault(_createTargetConnector);
 	
-	var _utilsIsValidType = __webpack_require__(/*! ./utils/isValidType */ 750);
+	var _utilsIsValidType = __webpack_require__(/*! ./utils/isValidType */ 751);
 	
 	var _utilsIsValidType2 = _interopRequireDefault(_utilsIsValidType);
 	
@@ -46332,7 +46450,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 752 */
+/* 753 */
 /*!*******************************************!*\
   !*** ./~/react-dnd/lib/registerTarget.js ***!
   \*******************************************/
@@ -46360,7 +46478,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 753 */
+/* 754 */
 /*!************************************************!*\
   !*** ./~/react-dnd/lib/createTargetFactory.js ***!
   \************************************************/
@@ -46451,7 +46569,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 754 */
+/* 755 */
 /*!************************************************!*\
   !*** ./~/react-dnd/lib/createTargetMonitor.js ***!
   \************************************************/
@@ -46544,7 +46662,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 755 */
+/* 756 */
 /*!**************************************************!*\
   !*** ./~/react-dnd/lib/createTargetConnector.js ***!
   \**************************************************/
@@ -46557,11 +46675,11 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _wrapConnectorHooks = __webpack_require__(/*! ./wrapConnectorHooks */ 747);
+	var _wrapConnectorHooks = __webpack_require__(/*! ./wrapConnectorHooks */ 748);
 	
 	var _wrapConnectorHooks2 = _interopRequireDefault(_wrapConnectorHooks);
 	
-	var _areOptionsEqual = __webpack_require__(/*! ./areOptionsEqual */ 749);
+	var _areOptionsEqual = __webpack_require__(/*! ./areOptionsEqual */ 750);
 	
 	var _areOptionsEqual2 = _interopRequireDefault(_areOptionsEqual);
 	
@@ -46614,7 +46732,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 756 */
+/* 757 */
 /*!***********************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_container.jsx ***!
   \***********************************************************/
@@ -46632,15 +46750,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _connected_page_tile = __webpack_require__(/*! ../containers/connected_page_tile */ 757);
+	var _connected_page_tile = __webpack_require__(/*! ../containers/connected_page_tile */ 758);
 	
 	var _connected_page_tile2 = _interopRequireDefault(_connected_page_tile);
 	
-	var _connected_level_support = __webpack_require__(/*! ../containers/connected_level_support */ 763);
+	var _connected_level_support = __webpack_require__(/*! ../containers/connected_level_support */ 764);
 	
 	var _connected_level_support2 = _interopRequireDefault(_connected_level_support);
 	
-	var _connected_gutter = __webpack_require__(/*! ../containers/connected_gutter */ 765);
+	var _connected_gutter = __webpack_require__(/*! ../containers/connected_gutter */ 766);
 	
 	var _connected_gutter2 = _interopRequireDefault(_connected_gutter);
 	
@@ -46690,7 +46808,7 @@
 	exports.default = PageContainer;
 
 /***/ },
-/* 757 */
+/* 758 */
 /*!****************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_page_tile.jsx ***!
   \****************************************************************/
@@ -46706,7 +46824,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _page_tile = __webpack_require__(/*! ../components/page_tile */ 758);
+	var _page_tile = __webpack_require__(/*! ../components/page_tile */ 759);
 	
 	var _page_tile2 = _interopRequireDefault(_page_tile);
 	
@@ -46718,8 +46836,8 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    onCollapsedChanged: function onCollapsedChanged(id) {
-	      dispatch((0, _actions.changeCollapse)(id));
+	    onCollapsedChanged: function onCollapsedChanged(id, sectionId) {
+	      dispatch((0, _actions.changeCollapse)(id, sectionId));
 	    }
 	  };
 	};
@@ -46729,7 +46847,7 @@
 	exports.default = ConnectedPageTile;
 
 /***/ },
-/* 758 */
+/* 759 */
 /*!******************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_tile.jsx ***!
   \******************************************************/
@@ -46747,11 +46865,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _connected_page_tile_top = __webpack_require__(/*! ../containers/connected_page_tile_top */ 759);
+	var _connected_page_tile_top = __webpack_require__(/*! ../containers/connected_page_tile_top */ 760);
 	
 	var _connected_page_tile_top2 = _interopRequireDefault(_connected_page_tile_top);
 	
-	var _connected_page_tile_bottom = __webpack_require__(/*! ../containers/connected_page_tile_bottom */ 761);
+	var _connected_page_tile_bottom = __webpack_require__(/*! ../containers/connected_page_tile_bottom */ 762);
 	
 	var _connected_page_tile_bottom2 = _interopRequireDefault(_connected_page_tile_bottom);
 	
@@ -46791,7 +46909,7 @@
 	  }, {
 	    key: 'handleOnCollapsedChanged',
 	    value: function handleOnCollapsedChanged(e) {
-	      this.props.onCollapsedChanged(this.props.pageTree.id);
+	      this.props.onCollapsedChanged(this.props.pageTree.id, this.props.pageTree.section_id);
 	    }
 	  }, {
 	    key: 'render',
@@ -46839,7 +46957,7 @@
 	exports.default = PageTile;
 
 /***/ },
-/* 759 */
+/* 760 */
 /*!********************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_page_tile_top.jsx ***!
   \********************************************************************/
@@ -46855,7 +46973,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _page_tile_top = __webpack_require__(/*! ../components/page_tile_top */ 760);
+	var _page_tile_top = __webpack_require__(/*! ../components/page_tile_top */ 761);
 	
 	var _page_tile_top2 = _interopRequireDefault(_page_tile_top);
 	
@@ -46867,17 +46985,17 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    onPageDrop: function onPageDrop(id, newParentId, position) {
-	      dispatch((0, _actions.updatePagePosition)(id, newParentId, position));
+	    onPageDrop: function onPageDrop(id, sectionId, newParentId, position) {
+	      dispatch((0, _actions.updatePagePosition)(id, sectionId, newParentId, position));
 	    },
-	    onPageTypeDrop: function onPageTypeDrop(pageType, parentId, position, timeStamp) {
-	      dispatch((0, _actions.addNewPage)(pageType, parentId, position, timeStamp));
+	    onPageTypeDrop: function onPageTypeDrop(sectionId, pageType, parentId, position, timeStamp) {
+	      dispatch((0, _actions.addNewPage)(sectionId, pageType, parentId, position, timeStamp));
 	    },
-	    onPageIdUpdate: function onPageIdUpdate(id, newId) {
-	      dispatch((0, _actions.updateId)(id, newId));
+	    onPageIdUpdate: function onPageIdUpdate(id, sectionId, newId) {
+	      dispatch((0, _actions.updateId)(id, sectionId, newId));
 	    },
-	    onNameChange: function onNameChange(id, name) {
-	      dispatch((0, _actions.updatePageName)(id, name));
+	    onNameChange: function onNameChange(id, sectionId, name) {
+	      dispatch((0, _actions.updatePageName)(id, sectionId, name));
 	    }
 	  };
 	};
@@ -46887,7 +47005,7 @@
 	exports.default = ConnectedPageTileTop;
 
 /***/ },
-/* 760 */
+/* 761 */
 /*!**********************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_tile_top.jsx ***!
   \**********************************************************/
@@ -46905,9 +47023,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _constants = __webpack_require__(/*! ../dnd/constants */ 704);
+	var _constants = __webpack_require__(/*! ../dnd/constants */ 705);
 	
-	var _reactDnd = __webpack_require__(/*! react-dnd */ 705);
+	var _reactDnd = __webpack_require__(/*! react-dnd */ 706);
 	
 	var _reactDom = __webpack_require__(/*! react-dom */ 379);
 	
@@ -46922,7 +47040,6 @@
 	var sitemapTarget = {
 	  drop: function drop(props, monitor, component) {
 	    var item = monitor.getItem();
-	    var _this = this;
 	    if (monitor.didDrop() || !props.pageTree.id) {
 	      return;
 	    }
@@ -46936,22 +47053,22 @@
 	          document.setFlash(result.responseText);
 	        }
 	      });
-	      props.onPageDrop(item.id, props.pageTree.parentId, props.pageTree.position);
+	      props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.parentId, props.pageTree.position);
 	    } else if (item.type == 'PageType') {
 	      var timeStamp = new Date();
 	      $.ajax({
 	        url: '/pages/',
 	        method: 'post',
 	        dataType: 'JSON',
-	        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: props.pageTree.position + 1 } },
+	        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: props.pageTree.position + 1, section_id: props.pageTree.section_id } },
 	        error: function error(result, b, c, d) {
 	          document.setFlash(result.responseText);
 	        },
 	        success: function success(result) {
-	          props.onPageIdUpdate(timeStamp, result.id);
+	          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id);
 	        }
 	      });
-	      props.onPageTypeDrop(item, props.pageTree.parentId, props.pageTree.position, timeStamp);
+	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp);
 	    }
 	  }
 	};
@@ -46970,11 +47087,11 @@
 	  function PageTileTop(props) {
 	    _classCallCheck(this, PageTileTop);
 	
-	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(PageTileTop).call(this, props));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PageTileTop).call(this, props));
 	
-	    _this2.state = { nameChangeDisabled: true };
-	    _this2.handleNameChange = _this2.handleNameChange.bind(_this2);
-	    return _this2;
+	    _this.state = { nameChangeDisabled: true };
+	    _this.handleNameChange = _this.handleNameChange.bind(_this);
+	    return _this;
 	  }
 	
 	  _createClass(PageTileTop, [{
@@ -47060,7 +47177,7 @@
 	exports.default = DroppablePageTileTop;
 
 /***/ },
-/* 761 */
+/* 762 */
 /*!***********************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_page_tile_bottom.jsx ***!
   \***********************************************************************/
@@ -47076,7 +47193,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _page_tile_Bottom = __webpack_require__(/*! ../components/page_tile_Bottom */ 762);
+	var _page_tile_Bottom = __webpack_require__(/*! ../components/page_tile_Bottom */ 763);
 	
 	var _page_tile_Bottom2 = _interopRequireDefault(_page_tile_Bottom);
 	
@@ -47088,14 +47205,14 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    onPageDrop: function onPageDrop(id, newParentId, position) {
-	      dispatch((0, _actions.updatePagePosition)(id, newParentId, position));
+	    onPageDrop: function onPageDrop(id, sectionId, newParentId, position) {
+	      dispatch((0, _actions.updatePagePosition)(id, sectionId, newParentId, position));
 	    },
-	    onPageTypeDrop: function onPageTypeDrop(pageType, parentId, position, timeStamp) {
-	      dispatch((0, _actions.addNewPage)(pageType, parentId, position, timeStamp));
+	    onPageTypeDrop: function onPageTypeDrop(sectionId, pageType, parentId, position, timeStamp) {
+	      dispatch((0, _actions.addNewPage)(sectionId, pageType, parentId, position, timeStamp));
 	    },
-	    onPageIdUpdate: function onPageIdUpdate(id, newId) {
-	      dispatch((0, _actions.updateId)(id, newId));
+	    onPageIdUpdate: function onPageIdUpdate(id, sectionId, newId) {
+	      dispatch((0, _actions.updateId)(id, sectionId, newId));
 	    }
 	  };
 	};
@@ -47105,7 +47222,7 @@
 	exports.default = ConnectedPageTileBottom;
 
 /***/ },
-/* 762 */
+/* 763 */
 /*!*************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_tile_Bottom.jsx ***!
   \*************************************************************/
@@ -47123,9 +47240,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _constants = __webpack_require__(/*! ../dnd/constants */ 704);
+	var _constants = __webpack_require__(/*! ../dnd/constants */ 705);
 	
-	var _reactDnd = __webpack_require__(/*! react-dnd */ 705);
+	var _reactDnd = __webpack_require__(/*! react-dnd */ 706);
 	
 	var _reactDom = __webpack_require__(/*! react-dom */ 379);
 	
@@ -47153,22 +47270,22 @@
 	          document.setFlash(result.responseText);
 	        }
 	      });
-	      props.onPageDrop(item.id, props.pageTree.id, 'begining');
+	      props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.id, 'begining');
 	    } else if (item.type == 'PageType') {
 	      var timeStamp = new Date();
 	      $.ajax({
 	        url: '/pages/',
 	        method: 'post',
 	        dataType: 'JSON',
-	        data: { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: item.name, position: 1 } },
+	        data: { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: item.name, position: 1, section_id: props.pageTree.section_id } },
 	        error: function error(result) {
 	          document.setFlash(result.responseText);
 	        },
 	        success: function success(result) {
-	          props.onPageIdUpdate(timeStamp, result.id);
+	          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id);
 	        }
 	      });
-	      props.onPageTypeDrop(item, props.pageTree.id, 'begining', timeStamp);
+	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp);
 	    }
 	  }
 	};
@@ -47243,7 +47360,7 @@
 	exports.default = DroppablePageTileBottom;
 
 /***/ },
-/* 763 */
+/* 764 */
 /*!********************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_level_support.jsx ***!
   \********************************************************************/
@@ -47259,7 +47376,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _level_support = __webpack_require__(/*! ../components/level_support */ 764);
+	var _level_support = __webpack_require__(/*! ../components/level_support */ 765);
 	
 	var _level_support2 = _interopRequireDefault(_level_support);
 	
@@ -47271,14 +47388,14 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    onPageDrop: function onPageDrop(id, newParentId, position) {
-	      dispatch((0, _actions.updatePagePosition)(id, newParentId, position));
+	    onPageDrop: function onPageDrop(id, sectionId, newParentId, position) {
+	      dispatch((0, _actions.updatePagePosition)(id, sectionId, newParentId, position));
 	    },
-	    onPageTypeDrop: function onPageTypeDrop(pageType, parentId, position, timeStamp) {
-	      dispatch((0, _actions.addNewPage)(pageType, parentId, position, timeStamp));
+	    onPageTypeDrop: function onPageTypeDrop(sectionId, pageType, parentId, position, timeStamp) {
+	      dispatch((0, _actions.addNewPage)(sectionId, pageType, parentId, position, timeStamp));
 	    },
-	    onPageIdUpdate: function onPageIdUpdate(id, newId) {
-	      dispatch((0, _actions.updateId)(id, newId));
+	    onPageIdUpdate: function onPageIdUpdate(id, sectionId, newId) {
+	      dispatch((0, _actions.updateId)(id, sectionId, newId));
 	    }
 	  };
 	};
@@ -47288,7 +47405,7 @@
 	exports.default = ConnectedLevelSupport;
 
 /***/ },
-/* 764 */
+/* 765 */
 /*!**********************************************************!*\
   !*** ./app/bundles/SiteMap/components/level_support.jsx ***!
   \**********************************************************/
@@ -47306,9 +47423,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _constants = __webpack_require__(/*! ../dnd/constants */ 704);
+	var _constants = __webpack_require__(/*! ../dnd/constants */ 705);
 	
-	var _reactDnd = __webpack_require__(/*! react-dnd */ 705);
+	var _reactDnd = __webpack_require__(/*! react-dnd */ 706);
 	
 	var _reactDom = __webpack_require__(/*! react-dom */ 379);
 	
@@ -47336,22 +47453,22 @@
 	          document.setFlash(result.responseText);
 	        }
 	      });
-	      props.onPageDrop(item.id, props.pageTree.parentId, props.pageTree.position);
+	      props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.parentId, props.pageTree.position);
 	    } else if (item.type == 'PageType') {
 	      var timeStamp = new Date();
 	      $.ajax({
 	        url: '/pages/',
 	        method: 'post',
 	        dataType: 'JSON',
-	        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: props.pageTree.position + 1 } },
+	        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: props.pageTree.position + 1, section_id: props.pageTree.section_id } },
 	        error: function error(result, b, c, d) {
 	          document.setFlash(result.responseText);
 	        },
 	        success: function success(result) {
-	          props.onPageIdUpdate(timeStamp, result.id);
+	          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id);
 	        }
 	      });
-	      props.onPageTypeDrop(item, props.pageTree.parentId, props.pageTree.position, timeStamp);
+	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp);
 	    }
 	  }
 	};
@@ -47416,7 +47533,7 @@
 	exports.default = DroppableLevelSupport;
 
 /***/ },
-/* 765 */
+/* 766 */
 /*!*************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_gutter.jsx ***!
   \*************************************************************/
@@ -47432,7 +47549,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _gutter = __webpack_require__(/*! ../components/gutter */ 766);
+	var _gutter = __webpack_require__(/*! ../components/gutter */ 767);
 	
 	var _gutter2 = _interopRequireDefault(_gutter);
 	
@@ -47444,14 +47561,14 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    onPageDrop: function onPageDrop(id, newParentId, position) {
-	      dispatch((0, _actions.updatePagePosition)(id, newParentId, position));
+	    onPageDrop: function onPageDrop(id, sectionId, newParentId, position) {
+	      dispatch((0, _actions.updatePagePosition)(id, sectionId, newParentId, position));
 	    },
-	    onPageTypeDrop: function onPageTypeDrop(pageType, parentId, position, timeStamp) {
-	      dispatch((0, _actions.addNewPage)(pageType, parentId, position, timeStamp));
+	    onPageTypeDrop: function onPageTypeDrop(sectionId, pageType, parentId, position, timeStamp) {
+	      dispatch((0, _actions.addNewPage)(sectionId, pageType, parentId, position, timeStamp));
 	    },
-	    onPageIdUpdate: function onPageIdUpdate(id, newId) {
-	      dispatch((0, _actions.updateId)(id, newId));
+	    onPageIdUpdate: function onPageIdUpdate(id, sectionId, newId) {
+	      dispatch((0, _actions.updateId)(id, sectionId, newId));
 	    }
 	  };
 	};
@@ -47461,7 +47578,7 @@
 	exports.default = ConnectedGutter;
 
 /***/ },
-/* 766 */
+/* 767 */
 /*!***************************************************!*\
   !*** ./app/bundles/SiteMap/components/gutter.jsx ***!
   \***************************************************/
@@ -47479,9 +47596,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _constants = __webpack_require__(/*! ../dnd/constants */ 704);
+	var _constants = __webpack_require__(/*! ../dnd/constants */ 705);
 	
-	var _reactDnd = __webpack_require__(/*! react-dnd */ 705);
+	var _reactDnd = __webpack_require__(/*! react-dnd */ 706);
 	
 	var _reactDom = __webpack_require__(/*! react-dom */ 379);
 	
@@ -47509,22 +47626,22 @@
 	          document.setFlash(result.responseText);
 	        }
 	      });
-	      props.onPageDrop(item.id, props.pageTree.parentId, props.pageTree.position);
+	      props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.parentId, props.pageTree.position);
 	    } else if (item.type == 'PageType') {
 	      var timeStamp = new Date();
 	      $.ajax({
 	        url: '/pages/',
 	        method: 'post',
 	        dataType: 'JSON',
-	        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: props.pageTree.position + 1 } },
+	        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: props.pageTree.position + 1, section_id: props.pageTree.section_id } },
 	        error: function error(result, b, c, d) {
 	          document.setFlash(result.responseText);
 	        },
 	        success: function success(result) {
-	          props.onPageIdUpdate(timeStamp, result.id);
+	          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id);
 	        }
 	      });
-	      props.onPageTypeDrop(item, props.pageTree.parentId, props.pageTree.position, timeStamp);
+	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp);
 	    }
 	  }
 	};
@@ -47589,7 +47706,7 @@
 	exports.default = DroppableGutter;
 
 /***/ },
-/* 767 */
+/* 768 */
 /*!*************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_header.jsx ***!
   \*************************************************************/
@@ -47605,7 +47722,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _header = __webpack_require__(/*! ../components/header */ 768);
+	var _header = __webpack_require__(/*! ../components/header */ 769);
 	
 	var _header2 = _interopRequireDefault(_header);
 	
@@ -47628,7 +47745,7 @@
 	exports.default = ConnectedHeader;
 
 /***/ },
-/* 768 */
+/* 769 */
 /*!***************************************************!*\
   !*** ./app/bundles/SiteMap/components/header.jsx ***!
   \***************************************************/
@@ -47703,7 +47820,7 @@
 	exports.default = Header;
 
 /***/ },
-/* 769 */
+/* 770 */
 /*!*******************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_left_sidebar.jsx ***!
   \*******************************************************************/
@@ -47717,7 +47834,7 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
 	
-	var _left_sidebar = __webpack_require__(/*! ../components/left_sidebar */ 770);
+	var _left_sidebar = __webpack_require__(/*! ../components/left_sidebar */ 771);
 	
 	var _left_sidebar2 = _interopRequireDefault(_left_sidebar);
 	
@@ -47736,7 +47853,7 @@
 	exports.default = ConnectedLeftSideBar;
 
 /***/ },
-/* 770 */
+/* 771 */
 /*!*********************************************************!*\
   !*** ./app/bundles/SiteMap/components/left_sidebar.jsx ***!
   \*********************************************************/
@@ -47754,7 +47871,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _draggable_page_type = __webpack_require__(/*! ./draggable_page_type */ 771);
+	var _draggable_page_type = __webpack_require__(/*! ./draggable_page_type */ 772);
 	
 	var _draggable_page_type2 = _interopRequireDefault(_draggable_page_type);
 	
@@ -47860,7 +47977,7 @@
 	exports.default = LeftSidebar;
 
 /***/ },
-/* 771 */
+/* 772 */
 /*!****************************************************************!*\
   !*** ./app/bundles/SiteMap/components/draggable_page_type.jsx ***!
   \****************************************************************/
@@ -47878,13 +47995,13 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _constants = __webpack_require__(/*! ../dnd/constants */ 704);
+	var _constants = __webpack_require__(/*! ../dnd/constants */ 705);
 	
-	var _reactDnd = __webpack_require__(/*! react-dnd */ 705);
+	var _reactDnd = __webpack_require__(/*! react-dnd */ 706);
 	
 	var _reactDndHtml5Backend = __webpack_require__(/*! react-dnd-html5-backend */ 613);
 	
-	var _page_type = __webpack_require__(/*! ./page_type */ 772);
+	var _page_type = __webpack_require__(/*! ./page_type */ 773);
 	
 	var _page_type2 = _interopRequireDefault(_page_type);
 	
@@ -47953,7 +48070,7 @@
 	exports.default = DraggablePageType;
 
 /***/ },
-/* 772 */
+/* 773 */
 /*!******************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_type.jsx ***!
   \******************************************************/
@@ -48038,7 +48155,7 @@
 	exports.default = PageType;
 
 /***/ },
-/* 773 */
+/* 774 */
 /*!********************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_right_sidebar.jsx ***!
   \********************************************************************/
@@ -48052,7 +48169,7 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
 	
-	var _right_sidebar = __webpack_require__(/*! ../components/right_sidebar */ 774);
+	var _right_sidebar = __webpack_require__(/*! ../components/right_sidebar */ 775);
 	
 	var _right_sidebar2 = _interopRequireDefault(_right_sidebar);
 	
@@ -48074,7 +48191,7 @@
 	exports.default = ConnectedRightSideBar;
 
 /***/ },
-/* 774 */
+/* 775 */
 /*!**********************************************************!*\
   !*** ./app/bundles/SiteMap/components/right_sidebar.jsx ***!
   \**********************************************************/
@@ -48094,7 +48211,7 @@
 	
 	var _tree_helper = __webpack_require__(/*! ../helpers/tree_helper */ 609);
 	
-	var _comment = __webpack_require__(/*! ./comment */ 775);
+	var _comment = __webpack_require__(/*! ./comment */ 776);
 	
 	var _comment2 = _interopRequireDefault(_comment);
 	
@@ -48192,7 +48309,7 @@
 	exports.default = RightSidebar;
 
 /***/ },
-/* 775 */
+/* 776 */
 /*!****************************************************!*\
   !*** ./app/bundles/SiteMap/components/comment.jsx ***!
   \****************************************************/
@@ -48257,7 +48374,7 @@
 	exports.default = Comment;
 
 /***/ },
-/* 776 */
+/* 777 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/custom_drag_layer.jsx ***!
   \**************************************************************/
@@ -48275,15 +48392,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _constants = __webpack_require__(/*! ../dnd/constants */ 704);
+	var _constants = __webpack_require__(/*! ../dnd/constants */ 705);
 	
-	var _reactDnd = __webpack_require__(/*! react-dnd */ 705);
+	var _reactDnd = __webpack_require__(/*! react-dnd */ 706);
 	
-	var _page_container_preview = __webpack_require__(/*! ./page_container_preview */ 777);
+	var _page_container_preview = __webpack_require__(/*! ./page_container_preview */ 778);
 	
 	var _page_container_preview2 = _interopRequireDefault(_page_container_preview);
 	
-	var _page_type_preview = __webpack_require__(/*! ./page_type_preview */ 778);
+	var _page_type_preview = __webpack_require__(/*! ./page_type_preview */ 779);
 	
 	var _page_type_preview2 = _interopRequireDefault(_page_type_preview);
 	
@@ -48405,7 +48522,7 @@
 	exports.default = DragLayerDecorator(CustomDragLayer);
 
 /***/ },
-/* 777 */
+/* 778 */
 /*!*******************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_container_preview.jsx ***!
   \*******************************************************************/
@@ -48423,7 +48540,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _page_container = __webpack_require__(/*! ./page_container */ 756);
+	var _page_container = __webpack_require__(/*! ./page_container */ 757);
 	
 	var _page_container2 = _interopRequireDefault(_page_container);
 	
@@ -48488,7 +48605,7 @@
 	exports.default = PageContainerPreview;
 
 /***/ },
-/* 778 */
+/* 779 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_type_preview.jsx ***!
   \**************************************************************/
@@ -48506,7 +48623,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _page_type = __webpack_require__(/*! ./page_type */ 772);
+	var _page_type = __webpack_require__(/*! ./page_type */ 773);
 	
 	var _page_type2 = _interopRequireDefault(_page_type);
 	

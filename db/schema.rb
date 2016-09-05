@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160902105324) do
+ActiveRecord::Schema.define(version: 20160905064826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20160902105324) do
 
   create_table "guests", force: :cascade do |t|
     t.string   "full_name"
-    t.string   "logo"
+    t.string   "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20160902105324) do
     t.datetime "updated_at",   null: false
     t.integer  "position"
     t.integer  "uid"
+    t.integer  "section_id"
   end
 
   create_table "plans", force: :cascade do |t|
@@ -75,6 +76,14 @@ ActiveRecord::Schema.define(version: 20160902105324) do
     t.string   "stripe_plan_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+  end
+
+  create_table "sections", force: :cascade do |t|
+    t.string   "name"
+    t.boolean  "default"
+    t.integer  "sitemap_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sitemap_invites", force: :cascade do |t|

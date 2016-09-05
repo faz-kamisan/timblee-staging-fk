@@ -8,8 +8,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onCollapsedChanged: (id) => {
-      dispatch(changeCollapse(id));
+    onCollapsedChanged: (id, sectionId) => {
+      dispatch(changeCollapse(id, sectionId));
     }
   }
 }

@@ -33,6 +33,7 @@ class DraggedPageContainer extends React.Component {
     sitemapId: PropTypes.number.isRequired
   };
 
+
   componentDidMount() {
     this.props.connectDragPreview(getEmptyImage(), {});
   }

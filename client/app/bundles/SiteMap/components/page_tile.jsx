@@ -29,7 +29,7 @@ class PageTile extends React.Component {
   }
 
   handleOnCollapsedChanged(e) {
-    this.props.onCollapsedChanged(this.props.pageTree.id)
+    this.props.onCollapsedChanged(this.props.pageTree.id, this.props.pageTree.section_id)
   }
   render() {
     if(this.props.childrenLength > 0) {

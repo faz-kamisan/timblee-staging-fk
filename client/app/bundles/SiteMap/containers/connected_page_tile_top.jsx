@@ -8,17 +8,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onPageDrop: (id, newParentId, position) => {
-      dispatch(updatePagePosition(id, newParentId, position));
+    onPageDrop: (id, sectionId, newParentId, position) => {
+      dispatch(updatePagePosition(id,sectionId,  newParentId, position));
     },
-    onPageTypeDrop: (pageType, parentId, position, timeStamp) => {
-      dispatch(addNewPage(pageType, parentId, position, timeStamp));
+    onPageTypeDrop: (sectionId, pageType, parentId, position, timeStamp) => {
+      dispatch(addNewPage(sectionId, pageType, parentId, position, timeStamp));
     },
-    onPageIdUpdate: (id, newId) => {
-      dispatch(updateId(id, newId));
+    onPageIdUpdate: (id, sectionId, newId) => {
+      dispatch(updateId(id, sectionId, newId));
     },
-    onNameChange: (id, name) => {
-      dispatch(updatePageName(id, name));
+    onNameChange: (id, sectionId, name) => {
+      dispatch(updatePageName(id, sectionId, name));
     }
   }
 }

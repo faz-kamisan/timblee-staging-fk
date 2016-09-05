@@ -10,28 +10,28 @@ export function setName(name) {
   return { type: SET_NAME, name }
 }
 
-export function addNewPage(pageType, parentId, position, timeStamp) {
-  return { type: ADD_NEW_PAGE, pageType, parentId, position, timeStamp }
+export function addNewPage(sectionId, pageType, parentId, position, timeStamp) {
+  return { type: ADD_NEW_PAGE, sectionId, pageType, parentId, position, timeStamp }
 }
 
-export function removePage(id) {
-  return { type: REMOVE_PAGE, id }
+export function removePage(id, sectionId) {
+  return { type: REMOVE_PAGE, id, sectionId }
 }
 
-export function updatePageName(id, name) {
-  return { type: UPDATE_PAGE_NAME, id, name }
+export function updatePageName(id, sectionId, name) {
+  return { type: UPDATE_PAGE_NAME, id, sectionId, name }
 }
 
-export function updatePagePosition(id, newParentId, position) {
-  return { type: UPDATE_PAGE_POSITION, id, newParentId, position}
+export function updatePagePosition(id, sectionId, newParentId, position) {
+  return { type: UPDATE_PAGE_POSITION, id, sectionId, newParentId, position}
 }
 
-export function changeCollapse(id) {
-  return { type: CHANGE_COLLAPSE, id}
+export function changeCollapse(id, sectionId, section_id) {
+  return { type: CHANGE_COLLAPSE, id, sectionId}
 }
 
-export function updateId(id, newId) {
-  return { type: UPDATE_ID, id, newId}
+export function updateId(id, sectionId, newId) {
+  return { type: UPDATE_ID, id, sectionId, newId}
 }
 
 changeCollapse

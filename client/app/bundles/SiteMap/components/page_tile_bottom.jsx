@@ -19,22 +19,22 @@ const sitemapTarget = {
           document.setFlash(result.responseText)
         }
       });
-      props.onPageDrop(item.id, props.pageTree.id, 'begining');
+      props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.id, 'begining');
     } else if(item.type == 'PageType') {
       var timeStamp = new Date();
       $.ajax({
         url: '/pages/',
         method: 'post',
         dataType: 'JSON',
-        data: { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: item.name, position: 1 } },
+        data: { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: item.name, position: 1, section_id: props.pageTree.section_id } },
         error: (result) => {
           document.setFlash(result.responseText)
         },
         success: (result) => {
-          props.onPageIdUpdate(timeStamp, result.id)
+          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id)
         }
       });
-      props.onPageTypeDrop(item, props.pageTree.id, 'begining', timeStamp);
+      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp);
     }
   }
 };

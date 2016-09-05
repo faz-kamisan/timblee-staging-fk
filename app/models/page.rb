@@ -1,6 +1,7 @@
 class Page < ActiveRecord::Base
   extend ActsAsTree::TreeView
   belongs_to :sitemap
+  belongs_to :section
   belongs_to :page_type
   has_many :comments, as: :commentable
   acts_as_tree order: :position
@@ -8,7 +9,7 @@ class Page < ActiveRecord::Base
 
   before_validation :set_uid, on: :create
 
-  validates :name, :page_type, :sitemap, :uid, presence: true
+  validates :name, :section, :page_type, :sitemap, :uid, presence: true
   validates :uid, uniqueness: { scope: :sitemap_id }
 
   def get_tree(collection, level = 0)
@@ -16,6 +17,7 @@ class Page < ActiveRecord::Base
       name: name,
       id: id,
       uid: uid,
+      section_id: section_id,
       parentId: parent_id,
       position: position,
       level: level,
