@@ -112,7 +112,7 @@ class PageTileTop extends React.Component {
     return connectDropTarget(
       <div className="tile-top">
         <h1 className="tile-name">
-          <span className="tile-number">{this.props.sitemapNumber}</span>          
+          <span className="tile-number">{this.props.sitemapNumber}</span>
           {this.state.nameChangeDisabled && this.props.name}
           {!(this.state.nameChangeDisabled) && <textarea value = {this.props.name} onChange={this.handleNameChange} disabled={this.state.nameChangeDisabled}></textarea>}
         </h1>

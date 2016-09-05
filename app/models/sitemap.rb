@@ -54,7 +54,7 @@ class Sitemap < ActiveRecord::Base
     end
 
     def create_first_page
-      pages.create(page_type: PageType.first, name: name)
+      pages.create(page_type: PageType.find_by_name 'General 1', name: name)
     end
 
 end
