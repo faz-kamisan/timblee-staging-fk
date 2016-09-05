@@ -5,6 +5,7 @@ export const UPDATE_PAGE_POSITION = 'UPDATE_PAGE_POSITION'
 export const UPDATE_PAGE_NAME = 'UPDATE_PAGE_NAME'
 export const CHANGE_COLLAPSE = 'CHANGE_COLLAPSE'
 export const UPDATE_ID = 'UPDATE_ID'
+export const CHANGE_STATE = 'CHANGE_STATE'
 
 export function setName(name) {
   return { type: SET_NAME, name }
@@ -32,6 +33,10 @@ export function changeCollapse(id, sectionId, section_id) {
 
 export function updateId(id, sectionId, newId) {
   return { type: UPDATE_ID, id, sectionId, newId}
+}
+
+export function updateState(state) {
+  return { type: CHANGE_STATE, state}
 }
 
 changeCollapse

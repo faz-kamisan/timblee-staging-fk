@@ -28,11 +28,11 @@ class Sitemap < ActiveRecord::Base
 
   def to_react_data
     { name: self.name,
+      state: state.titleize,
       id: self.id,
       pageTypes: PageType.order_by_name,
       comments: self.comments.map(&:to_react_data),
       sections: sections.map(&:to_react_data),
-      # pageTree: get_page_tree
     }
   end
 
