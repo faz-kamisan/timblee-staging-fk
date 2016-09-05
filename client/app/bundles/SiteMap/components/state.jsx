@@ -6,6 +6,7 @@ class State extends React.Component {
   static propTypes = {
     state: PropTypes.string.isRequired,
     onStateChange: PropTypes.func.isRequired,
+    setSaving: PropTypes.func.isRequired,
     id: PropTypes.number.isRequired
   };
   constructor(props) {
@@ -13,6 +14,7 @@ class State extends React.Component {
     this.handleStateChange = this.handleStateChange.bind(this);
   }
   handleStateChange(event) {
+    this.props.setSaving(true)
     $.ajax({
       url: '/sitemaps/' + this.props.id,
       method: 'put',
@@ -20,6 +22,9 @@ class State extends React.Component {
       data: { sitemap: { state: stateMapping[this.props.state] } },
       error: (result) => {
         document.setFlash(result.responseText)
+      },
+      complete: (result) => {
+        this.props.setSaving(false)
       }
     });
     this.props.onStateChange(this.props.state);

@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
-import { setName, updateState } from '../actions'
+import { setName, updateState, setSaving } from '../actions'
 import Header from '../components/header'
 
 const mapStateToProps = (state) => {
-  return { name: state.name, id: state.id, state: state.state }
+  return { name: state.name, id: state.id, state: state.state, saving: state.saving }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -13,6 +13,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onStateChange: (state) => {
       dispatch(updateState(state));
+    },
+    setSaving: (saving) => {
+      dispatch(setSaving(saving));
     }
   }
 }

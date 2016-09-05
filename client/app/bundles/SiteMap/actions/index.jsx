@@ -6,6 +6,7 @@ export const UPDATE_PAGE_NAME = 'UPDATE_PAGE_NAME'
 export const CHANGE_COLLAPSE = 'CHANGE_COLLAPSE'
 export const UPDATE_ID = 'UPDATE_ID'
 export const CHANGE_STATE = 'CHANGE_STATE'
+export const SET_SAVING = 'SET_SAVING'
 
 export function setName(name) {
   return { type: SET_NAME, name }
@@ -39,4 +40,6 @@ export function updateState(state) {
   return { type: CHANGE_STATE, state}
 }
 
-changeCollapse
+export function setSaving(saving) {
+  return { type: SET_SAVING, saving }
+}

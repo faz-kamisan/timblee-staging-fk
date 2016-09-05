@@ -10,6 +10,7 @@ const sitemapTarget = {
       return;
     }
     if(item.type == 'page') {
+      props.setSaving(true)
       $.ajax({
         url: '/pages/' + item.id,
         method: 'put',
@@ -17,11 +18,15 @@ const sitemapTarget = {
         data: { page: { parent_id: props.pageTree.id, position: 1 } },
         error: (result) => {
           document.setFlash(result.responseText)
+        },
+        complete: (result) => {
+          props.setSaving(false)
         }
       });
       props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.id, 'begining');
     } else if(item.type == 'PageType') {
       var timeStamp = new Date();
+      props.setSaving(true)
       $.ajax({
         url: '/pages/',
         method: 'post',
@@ -32,6 +37,9 @@ const sitemapTarget = {
         },
         success: (result) => {
           props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id)
+        },
+        complete: (result) => {
+          props.setSaving(false)
         }
       });
       props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp);
@@ -53,6 +61,7 @@ class PageTileBottom extends React.Component {
     onPageDrop: PropTypes.func.isRequired,
     onPageTypeDrop: PropTypes.func.isRequired,
     onPageIdUpdate: PropTypes.func.isRequired,
+    setSaving: PropTypes.func.isRequired,
     pageTree: PropTypes.object.isRequired,
     sitemapId: PropTypes.number.isRequired
   };
