@@ -28,13 +28,3 @@
 //= require settings
 //= require constants
 //= require modal_fix
-
-$(document).ready(function() {
-  $('.animated-bar').animate({ left: $('.animated-bar').siblings('li.active').position().left + 27});
-  $('.animated-bar').css('width', $('.animated-bar').siblings('li.active').width());
-
-  $('.nav.nav-tabs li').not('.animated-bar').click(function() {
-    var $this = $(this);
-    $('.animated-bar').animate({ left:  $this.position().left + 27, width: $this.width()}, 350);
-  });
-});
