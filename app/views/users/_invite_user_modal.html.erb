@@ -14,15 +14,18 @@
       <div class="modal-body">
         <div>
           <p>Enter their emails separated by commas. We'll send them a beautiful invite. You can preview the email before sending it.</p>
-          <ul id="myTags">
+          <ul id="myTags" data-url='<%= validate_unique_email_users_path %>'>
           </ul>
+          <span class='pro-users-count'><%= current_business.users.count %></span><br>
+          $<span class='pro-charges'><%= Business.monthly_charge(current_business.users.count) %></span>
         </div>
       </div>
       <div class="modal-body border-top">
         <div class="optional-message-container">
           <div class="optional-message">
-            <%= form_tag 'bulk_invitation', {class: 'bulk-invitation-form'} do %>
-              <%= text_field_tag :email, nil, { autofocus: true, required: true, class: 'bulk-invite-emails-input hidden' } %>
+            <%= form_tag '#', { method: :post, class: 'bulk-invitation-form'} do %>
+              <%= hidden_field_tag :stripe_plan_id %>
+              <%= text_field_tag :email, nil, { autofocus: true, class: 'bulk-invite-emails-input hidden' } %>
               <%= text_area_tag :custom_message, nil, { class: 'form-control clear-field invite-custom-message', placeholder: 'Include an optional personal message.', 'data-send' => false } %>
               <div class="emoji-section">
                 <a href="#" class="add-message">Add my message</a>

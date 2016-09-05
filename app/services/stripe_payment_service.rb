@@ -16,11 +16,11 @@ class StripePaymentService
 
   def create_card(stripe_token)
     @customer = Stripe::Customer.retrieve(@current_business.stripe_customer_id)
-    card = customer.sources.create(
+    card = @customer.sources.create(
       source: stripe_token
     )
-    customer.default_source = card.id
-    customer.save
+    @customer.default_source = card.id
+    @customer.save
   end
 
   def create_customer_with_card(stripe_token)
@@ -28,7 +28,7 @@ class StripePaymentService
       email:  @current_business.owner.email,
       source: stripe_token
     )
-    @current_business.update_column(:stripe_customer_id, customer.id)
+    @current_business.update_column(:stripe_customer_id, @customer.id)
   end
 
   def remove_old_subscription

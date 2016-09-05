@@ -1,0 +1,11 @@
+$("div.flash-message").html("<%==j render partial: 'shared/flash_message' %>");
+$('#pro-plan-modal').modal('hide');
+<% if flash[:notice].present? %>
+  $('#invite-user-modal').find('form').attr('action', '<%= businesses_subscription_path %>');
+  $('#invite-user-modal').find('form').find('input#stripe_plan_id').val('<%= PRO_STRIPE_ID %>');
+  $('#invite-user-modal').modal('show');
+  $('.card-brand').html('<%= @card.brand %>');
+  $('.card-last4').html('<%= @card.last4 %>');
+  $('.default-input').val('')
+  $('button#add-card').prop('disabled', false);
+<% end %>

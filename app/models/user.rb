@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   before_create :add_business, unless: :business_id
   after_create :set_confirmation_instructions_to_be_sent, unless: :confirmed?
   before_destroy :restrict_owner_destroy
+  after_destroy :update_business_subscription
   before_update :restrict_owner_role_update, if: :is_admin_changed?
   after_update :mail_user_about_role_update, if: :is_admin_changed?
 
@@ -104,5 +105,13 @@ class User < ActiveRecord::Base
 
     def email_required?
       false
+    end
+
+    def update_business_subscription
+      if business.is_pro_plan?
+        business.current_subscription.update(end_at: Time.current)
+        business.subscriptions.build(plan: Plan.find_by(stripe_plan_id: PRO_STRIPE_ID), no_of_users: business.users.count, quantity: Business.monthly_charge(business.users.count))
+        StripePaymentService.new(business).create_subscription
+      end
     end
 end

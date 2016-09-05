@@ -386,17 +386,17 @@ input#toggle:checked + label:after {
 
 .hidden-password:-moz-placeholder {
    color: $primaryFormColor;
-   opacity: 1;  
+   opacity: 1;
 }
 
 .hidden-password::-moz-placeholder {
    color: $primaryFormColor;
-   opacity: 1;  
+   opacity: 1;
 }
 
-.hidden-password:-ms-input-placeholder {  
+.hidden-password:-ms-input-placeholder {
    color: $primaryFormColor;
-   opacity: 1;  
+   opacity: 1;
 }
 
 .modal.in .modal-dialog,

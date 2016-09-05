@@ -25,6 +25,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def validate_unique_email
+        render :json => {
+                            :existing_email => User.unscoped.find_by(email: params[:email]).present?
+                        }
+  end
+
   private
 
     def password_update_params

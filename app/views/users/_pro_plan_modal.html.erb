@@ -1,6 +1,8 @@
 <div class="modal fade" id="pro-plan-modal" tabindex="-1" role="dialog" aria-labelledby="pro-plan-modalLabel">
   <div class="modal-dialog" role="document">
-    <%= form_tag businesses_card_path, { method: :post, id: 'add-card-modal-form' } do |f| %>
+    <%= form_tag businesses_card_path, remote: true, id: 'add-card-modal-form', class: 'settings-form'  do |f| %>
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
       <div class="modal-content">
         <div class="modal-header text-center">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -16,14 +18,14 @@
           <p class="modal-message">Awesome choice! The Pro plan is just $19 for the first user (you) and then <br> $12 per month for each additional user.</p>
         </div>
         <div class="modal-body">
-          <a href='javascript:void(0);' id='add-new-card'>Add New Card</a> |
-          <a href='javascript:void(0);' id='use-saved-card'> Use Saved Card</a>
           <div class="pay">
             <% if @card %>
+              <p class="font-12-light cc-detail-save">You already have a saved card. You can continue with that, or replace it with a new card.</p>
+              <a href='javascript:void(0);' id='use-saved-card'> Use my existing card ending in <span class='card-last4'><%= @card.last4 %></span></a> <br>
+              <a href='javascript:void(0);' id='add-new-card'>Add a new card</a>
               <div class="old-card-info show">
-                <p class="font-12-light cc-detail-save">We're currently charging your <%= @card.brand %> ending in <%= @card.last4 %>. We accept MasterCard, Visa and American Express.</p>
                 <div class="text-center col-xs-12">
-                  <button class="btn btn-success" id='confirm-saved-card'>Confirm &amp; Proceed</button>
+                  <a href='javascript:void(0);' class="btn btn-success" id='confirm-saved-card' data-url='<%= businesses_subscription_path %>' data-disable-with= 'Please wait...'>NEXT: INVITE USERS</a>
                 </div>
               </div>
             <% end %>
@@ -40,7 +42,7 @@
                   <input type="password" class="form-control default-input cc-cvv" placeholder="CVV">
                 </div>
                 <div class="text-center col-xs-12">
-                  <button type="submit" class="btn btn-success" id="add-card">Add Card &amp; Proceed</button>
+                  <button type="submit" class="btn btn-success" id="add-card">NEXT: INVITE USERS</button>
                 </div>
               </div>
             </div>

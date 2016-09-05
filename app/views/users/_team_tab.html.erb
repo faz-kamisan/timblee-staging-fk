@@ -29,7 +29,8 @@
             <% if current_business.is_starter_plan? && !current_business.in_trial_period? %>
                 <a href="#invite-error-modal" data-toggle="modal" class="btn btn-pink invite-user-modal-link">Invite</a>
             <% else %>
-              <a href="#invite-user-modal" data-toggle="modal" class="btn btn-pink invite-user-modal-link">Invite</a>
+              <% url = current_business.is_pro_plan? ? businesses_subscription_path : users_bulk_invitation_path %>
+              <a data-toggle="modal" class="btn btn-pink invite-user-modal-link invite-link" data-url='<%= url %>'>Invite</a>
             <% end %>
           </div>
         </div>
@@ -67,7 +68,7 @@
                   <a href="#delete-user-modal" data-toggle="modal" class="link-regular btn-regular delete-user-modal-link" data-url= "<%= admin_user_path(user)%>" data-name="<%= user.full_name %>">Delete</a>
                 </div>
               </div>
-            <% elsif !current_user.is_admin && user.is_admin %>
+            <% elsif (!current_user.is_admin || current_user == user) && user.is_admin %>
               <div class="col-xs-3 text-right edit-info">
                 <div class="edit">
                 Admin
@@ -106,4 +107,4 @@
 
 </div>
 <%= render 'users/invite_error_modal'%>
-<%= javascript_include_tag('invitations', 'delete_user') %>
+<%= javascript_include_tag('invitations', 'delete_user', 'team') %>

@@ -573,7 +573,7 @@ ul.tagit li.tagit-choice-editable {
   }
   .path2:before {
     top: 0;
-    left: 16px; 
+    left: 16px;
   }
 }
 
@@ -594,4 +594,8 @@ ul.tagit li.tagit-choice-editable {
   + .btn-grey {
     margin-left: 12px;
   }
+}
+
+ul.tagit li.tagit-choice-editable.invalid-tag {
+  color: $primaryRed;
 }
