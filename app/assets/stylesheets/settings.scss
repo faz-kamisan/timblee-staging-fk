@@ -649,3 +649,28 @@ ul.tagit li.tagit-choice-editable {
     top: 12px;
   }
 }
+
+.admin-dp {
+  margin-top: 7px;
+  span {
+    background: $primaryWhite;
+    border: 1px solid #bbbec4;
+    border-radius: 14px;
+    display: inline-block;
+    padding: 0 10px;
+    height: 26px;
+    line-height: 24px;
+    font-size: 10px;
+    color: #000;
+    padding-left: 20px;
+    text-transform: uppercase;
+    @include box-shadow(1px, 1px, 2px, rgba(106, 113, 127, .2));
+  }
+  .admin-image {
+    width: 36px;
+    height: 36px;
+    position: relative;
+    left: 20px;
+  }
+}
+

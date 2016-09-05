@@ -57,12 +57,17 @@
                 <div class="right-text pull-right">
                   <h3 class="team-member-name"><%= user.full_name %></h3>
                   <span class="active-since">Active user since <%= pretty_time(user.invitation_accepted_at || user.created_at) %></span>
-                  <% if user.is_admin %>
-                    <span>Admin</span>
-                  <% end %>  
                 </div>
               </div>
             </div>
+            <% if current_user.is_admin? %>
+              <div class="col-xs-3 relative">
+                <div class="admin-dp text-right">
+                  <%= image_tag('avatar_11.svg', class: 'admin-image') %>
+                  <span>Admin</span>
+                </div>
+              </div>
+            <% end %>
             <% if current_user.is_admin && current_user != user %>
               <div class="col-xs-3 text-right edit-info">
                 <div class="edit">
