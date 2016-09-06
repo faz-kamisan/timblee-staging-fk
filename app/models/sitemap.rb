@@ -53,7 +53,7 @@ class Sitemap < ActiveRecord::Base
 
     def create_associations
       section = sections.create(name: 'Default', default: true)
-      section.pages.create(page_type: PageType.find_by_name('General 1'), name: name)
+      section.pages.create(page_type: PageType.find_by_name('General 1'), name: name, sitemap_id: id)
     end
 
 end
