@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-const stateMapping = {'In Progress': 'in_progress', 'Review': 'in_review', 'Approved': 'approved', 'On Hold': 'on_hold'}
+const stateMapping = {'In Progress': 'in_progress', 'Review': 'review', 'Approved': 'approved', 'On Hold': 'on_hold'}
 
 class State extends React.Component {
   static propTypes = {

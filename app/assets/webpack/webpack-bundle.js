@@ -48044,29 +48044,52 @@
 	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Header).call(this, props));
 	
 	    _this2.handleNameChange = _this2.handleNameChange.bind(_this2);
+	    _this2.handleNameInputBlur = _this2.handleNameInputBlur.bind(_this2);
+	    _this2.handleNameInputFocus = _this2.handleNameInputFocus.bind(_this2);
+	    _this2.state = { nameFocused: false, name: props.name };
 	    return _this2;
 	  }
 	
 	  _createClass(Header, [{
 	    key: 'handleNameChange',
 	    value: function handleNameChange(event) {
+	      var name = event.target.value;
+	      this.setState({ name: name });
+	    }
+	  }, {
+	    key: 'handleNameInputBlur',
+	    value: function handleNameInputBlur(e) {
 	      var _this3 = this;
 	
-	      var name = event.target.value;
-	      this.props.setSaving(true);
-	      $.ajax({
-	        url: '/sitemaps/' + this.props.id,
-	        method: 'put',
-	        dataType: 'JSON',
-	        data: { sitemap: { name: name } },
-	        error: function error(result, b, c, d) {
-	          document.setFlash(result.responseText);
-	        },
-	        complete: function complete(result) {
-	          _this3.props.setSaving(false);
-	        }
-	      });
-	      this.props.onNameChange(name);
+	      this.setState({ nameFocused: false });
+	      if (this.state.name != this.props.name) {
+	        this.props.setSaving(true);
+	        $.ajax({
+	          url: '/sitemaps/' + this.props.id,
+	          method: 'put',
+	          dataType: 'JSON',
+	          data: { sitemap: { name: this.state.name } },
+	          error: function error(result, b, c, d) {
+	            document.setFlash(result.responseText);
+	          },
+	          complete: function complete(result) {
+	            _this3.props.setSaving(false);
+	          }
+	        });
+	        this.props.onNameChange(name);
+	      }
+	    }
+	  }, {
+	    key: 'handleNameInputFocus',
+	    value: function handleNameInputFocus(e) {
+	      this.setState({ nameFocused: true });
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      if (this.state.nameFocused) {
+	        $(this.refs.sitemapNameInput).focus();
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -48096,11 +48119,11 @@
 	                'div',
 	                { className: 'col-xs-9' },
 	                _react2.default.createElement('span', { className: 'logo-dark relative' }),
-	                _react2.default.createElement('input', { value: this.props.name, onChange: this.handleNameChange, className: 'site-map-name hide' }),
+	                _react2.default.createElement('input', { value: this.state.name, onChange: this.handleNameChange, onBlur: this.handleNameInputBlur, className: "site-map-name" + (this.state.nameFocused ? '' : ' hide'), ref: 'sitemapNameInput' }),
 	                _react2.default.createElement(
 	                  'h3',
-	                  { className: 'site-map-name' },
-	                  this.props.name
+	                  { className: "site-map-name" + (this.state.nameFocused ? ' hide' : ''), onClick: this.handleNameInputFocus },
+	                  this.state.name
 	                )
 	              ),
 	              _react2.default.createElement(
@@ -48181,7 +48204,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var stateMapping = { 'In Progress': 'in_progress', 'Review': 'in_review', 'Approved': 'approved', 'On Hold': 'on_hold' };
+	var stateMapping = { 'In Progress': 'in_progress', 'Review': 'review', 'Approved': 'approved', 'On Hold': 'on_hold' };
 	
 	var State = function (_React$Component) {
 	  _inherits(State, _React$Component);
@@ -48728,7 +48751,7 @@
 	
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'sitemap-right-sidebar' },
+	        { className: 'sitemap-right-sidebar hide' },
 	        _react2.default.createElement(
 	          'h2',
 	          null,

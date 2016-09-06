@@ -12,7 +12,7 @@ class Sitemap < ActiveRecord::Base
   has_many :comments, as: :commentable
 
   validates :business, :name, presence: true
-  validates :state, inclusion: { in: ['on_hold', 'in_progress', 'in_review', 'approved'] }
+  validates :state, inclusion: { in: ['on_hold', 'in_progress', 'review', 'approved'] }
   validates :name, uniqueness: { scope: :business_id, case_sensitive: false }
 
   before_validation :set_state_to_in_progress, on: :create
@@ -22,7 +22,7 @@ class Sitemap < ActiveRecord::Base
 
   scope :on_hold, -> { where(state: 'on_hold') }
   scope :in_progress, -> { where(state: 'in_progress') }
-  scope :in_review, -> { where(state: 'in_review') }
+  scope :review, -> { where(state: 'review') }
   scope :approved, -> { where(state: 'approved') }
   scope :order_by_alphanumeric_lower_name, -> { order("SUBSTRING(name FROM '(^[0-9]+)')::BIGINT ASC, lower(name)") }
 

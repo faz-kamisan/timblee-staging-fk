@@ -13,24 +13,45 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleNameInputBlur = this.handleNameInputBlur.bind(this);
+    this.handleNameInputFocus = this.handleNameInputFocus.bind(this);
+    this.state = { nameFocused: false, name: props.name }
   }
   handleNameChange(event) {
     var name = event.target.value
-    this.props.setSaving(true)
-    $.ajax({
-      url: '/sitemaps/' + this.props.id,
-      method: 'put',
-      dataType: 'JSON',
-      data: { sitemap: { name: name } },
-      error: (result, b, c, d) => {
-        document.setFlash(result.responseText)
-      },
-      complete: (result) => {
-        this.props.setSaving(false)
-      }
-    });
-    this.props.onNameChange(name);
+    this.setState({name: name})
   }
+
+  handleNameInputBlur(e) {
+    this.setState({nameFocused: false})
+    if(this.state.name != this.props.name) {
+      this.props.setSaving(true)
+      $.ajax({
+        url: '/sitemaps/' + this.props.id,
+        method: 'put',
+        dataType: 'JSON',
+        data: { sitemap: { name: this.state.name } },
+        error: (result, b, c, d) => {
+          document.setFlash(result.responseText)
+        },
+        complete: (result) => {
+          this.props.setSaving(false)
+        }
+      });
+      this.props.onNameChange(name);
+    }
+  }
+
+  handleNameInputFocus(e) {
+    this.setState({nameFocused: true})
+  }
+
+  componentDidUpdate() {
+    if(this.state.nameFocused) {
+      $(this.refs.sitemapNameInput).focus()
+    }
+  }
+
   render() {
     var _this = this;
     var renderStates = ['In Progress', 'Review', 'Approved', 'On Hold'].map(function(state, index) {
@@ -48,14 +69,14 @@ class Header extends React.Component {
             <div className="row">
               <div className="col-xs-9">
                 <span className="logo-dark relative"></span>
-                <input value = {this.props.name} onChange={this.handleNameChange} className="site-map-name hide" />
-                <h3 className="site-map-name">{this.props.name}</h3>
+                <input value = {this.state.name} onChange={this.handleNameChange} onBlur={this.handleNameInputBlur} className={"site-map-name" + (this.state.nameFocused ? '' : ' hide')} ref='sitemapNameInput' />
+                <h3 className={"site-map-name" + (this.state.nameFocused ? ' hide' : '')} onClick={this.handleNameInputFocus}>{this.state.name}</h3>
               </div>
               <div className="col-xs-3 state-status text-center">
                 <h5>
                   <span className={this.props.state}>
                     {this.props.state}
-                    <i className="icon-caret"></i> 
+                    <i className="icon-caret"></i>
                   </span>
                   <ul className="state-drop-down">
                     {renderStates}
@@ -67,7 +88,7 @@ class Header extends React.Component {
           <div className="col-xs-6">
 
           </div>
-        </div> 
+        </div>
         <div className="toggle-header">
           <i className="icon-caret"></i>
           <div>show</div>

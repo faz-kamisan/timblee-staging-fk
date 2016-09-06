@@ -41,7 +41,7 @@ class RightSidebar extends React.Component {
     })
 
     return (
-      <div className='sitemap-right-sidebar'>
+      <div className='sitemap-right-sidebar hide'>
         <h2>
           General Comments
         </h2>
