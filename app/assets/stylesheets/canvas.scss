@@ -107,7 +107,7 @@
 
   &.level-0 {
     text-align: center;
-    padding: 55px 0 0 40px;
+    padding: 204px 0 0 30px;
     transition: padding-left .2s;
     > .page-tile {
       margin-bottom: 75px;
@@ -410,23 +410,29 @@
   position: fixed;
   width: 372px;
   background: #262b30;
-  height: 100%;
+  height: calc(100% - 222px);
   top: 0;
   left: 0;
   overflow: hidden;
-  top: 0;
-  padding-top: 95px;
+  top: 222px;
   z-index: 10;
-  transition: width .2s;
+  transition: .35s;
+  border-top: solid 1px #171a1d;
   ~ .page-container-wrapper .page-container.level-0 {
     padding-left: 372px;
   }
+
   &.expand-false {
     cursor: pointer;
     width: 30px;
     ~ .page-container-wrapper .page-container.level-0 {
       padding-left: 40px;
     }
+  }
+
+  &.toggle {
+    top: 127px;
+    height: calc(100% - 127px);
   }
 
   .expand-btn {
@@ -440,7 +446,7 @@
       text-transform: uppercase;
       font-size: 10px;
       position: absolute;
-      top: calc(50% - 47px);
+      top: 50%;
       left: 50%;
       margin-top: -7px;
       margin-left: -19px;
@@ -634,7 +640,6 @@
   span {
     color: $primaryFormColor;
     text-transform: uppercase;
-    padding: 0 5px;
     &:hover {
       color: $primaryWhite;
       .caret-left {
@@ -1055,4 +1060,189 @@
       }
     }
   }
+}
+
+.react-header {
+  background: $primaryBlack;
+  position: fixed;
+  top: 95px;
+  z-index: 11;
+  height: 127px;
+  left: 0;
+  width: 100%;
+  padding: 40px 30px;
+  transition: top .35s;
+  -moz-transition: top .35s;
+  -webkit-transition: top .35s;
+
+  &.toggle {
+    top: 0;
+  }
+
+  .toggle-header {
+    position: absolute;
+    right: 0;
+    width: 85px;
+    height: 100%;
+    border-left: solid 1px #171A1D;
+    color: #414952;
+    top: 0;
+    cursor: pointer;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 12px;
+    padding-top: 43px;
+    div {
+      position: relative;
+      bottom: 3px;
+    }
+    &:hover {
+      color: $primaryPink;
+    }
+  }
+
+  .site-map-name {
+    color: #a3acb5;
+    font-size: 30px;
+    background: $transparent;
+    border: 0;
+    padding: 0;
+    display: inline-block;
+    vertical-align: middle;
+    height: 38px;
+    font-weight: 400;
+    width: calc(100% - 75px);
+    margin: 0;
+  }
+
+  .logo-dark {
+    background: url('/assets/timblee-icon-dark.svg');
+    width: 45px;
+    background-size: 45px 41px;
+    display: inline-block;
+    height: 41px;
+    margin-right: 30px;
+    vertical-align: middle;
+  }
+
+  .state-status {
+    h5 {
+      color: $primaryGrey;
+      margin: 0;
+      font-weight: 400;
+      font-size: 14px;
+      margin-top: 15px;
+      cursor: pointer;
+      position: relative;
+      padding-bottom: 20px;
+      .icon-caret {
+        font-size: 11px;
+        margin-left: 9px;
+      }
+      > span {
+        display: inline-block;
+        position: relative;
+        &:before {
+          content: ' ';
+          width: 10px;
+          height: 10px;
+          @include border-radius(50%);
+          background: $primaryBlue;
+          left: -20px;
+          top: 50%;
+          margin-top: -5px;
+          position: absolute;
+        }
+        &.Review {
+          &:before {
+            background: $primaryYellow;
+          }
+        }
+        &.Approved {
+          &:before {
+            background: $primaryGreen;   
+          }
+        }
+        &.Hold {
+          &:before {
+            background: #A3ACB5;  
+          }
+        }
+      }
+      &:hover {
+       ul {
+          visibility: visible;
+          top: 30px;
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .state-drop-down {
+    position: absolute;
+    width: 170px;
+    background: $primaryWhite;
+    left: -21px;
+    top: 20px;
+    @include animate(.35s);
+    @include box-shadow(1px, 1px, 2px, rgba(106, 113, 127, .2));
+    opacity: 0;
+    padding: 0;
+    visibility: hidden;
+    border: solid 1px #F0F0F2;
+    border-top: 0;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    .icon-save-circle {
+      display: none;
+    }
+    .active {
+      position: relative;
+      .icon-save-circle {
+        display: block;
+        font-size: 16px;
+        color: $primaryPink;
+        position: absolute;
+        right: 17px;
+        top: 50%;
+        margin-top: -7px;
+      }
+    }
+    .sitemap-state {
+      height: 60px;
+      border-top: solid 1px #F0F0F2;
+      padding: 0 20px 0 40px;
+      line-height: 59px;
+      text-align: left;
+      cursor: pointer;
+      font-size: 12px;
+      color: $primaryGrey;
+      position: relative;
+      &:hover {
+        color: $primaryPink;
+      }
+      .state-indicator {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        width: 12px;
+        height: 12px;
+        margin-top: -6px;
+        border: 2px solid #F2F3F4;
+        @include border-radius(50%);
+        background: $primaryBlue;
+        &.Review {
+          background: $primaryYellow;
+        }
+        &.Approved {
+          background: $primaryGreen; 
+        }
+        &.Hold {
+          background: #A3ACB5;
+        }
+      }
+    }
+  }
+
 }
