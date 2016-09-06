@@ -7,7 +7,7 @@ import comments from './comments'
 import state from './state'
 import saving from './saving'
 import updated_at from './updated_at'
-
+import currentUser from './current_user'
 
 const sitemapAppReducer = combineReducers({
   name,
@@ -17,7 +17,8 @@ const sitemapAppReducer = combineReducers({
   pageTypes,
   state,
   saving,
-  comments
+  comments,
+  currentUser
 })
 
 export default sitemapAppReducer

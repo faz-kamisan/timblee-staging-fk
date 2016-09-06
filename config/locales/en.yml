@@ -22,6 +22,17 @@ en:
       destroy:
         success: Sitemap destroyed successfully
         failure: Couldn't delete sitemap
+    comments:
+      not_found: Can't find comment
+      create:
+        success: Comment created successfully
+        failure: Couldn't create comment
+      update:
+        success: Comment updated successfully
+        failure: Couldn't update comment
+      destroy:
+        success: Comment destroyed successfully
+        failure: Couldn't delete comment
     pages:
       not_found: Can't find page
       create:

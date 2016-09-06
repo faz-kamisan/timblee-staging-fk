@@ -17,6 +17,7 @@
 //= require jquery-ui
 //= require bootstrap.min
 //= require tag-it.min
+//= require jquery.watermark.min
 //= require Queue
 //= require flash
 //= require array_decorator

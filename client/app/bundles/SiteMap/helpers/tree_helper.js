@@ -83,6 +83,25 @@ function removePage(sections, id, sectionId) {
   return sectionsCopy
 }
 
+function addPageComment(sections, id, sectionId, commenter, message, tempId) {
+  var sectionsCopy = Object.assign([], sections);
+  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
+  var page = getNodeById(treeCopy, id)
+  var newComment = { message: message, commenter: commenter, id: tempId }
+  page.comments.push(newComment)
+  return sectionsCopy
+}
+
+function updateCommentId(sections, oldId, newId, sectionId, pageId) {
+  var sectionsCopy = Object.assign([], sections);
+  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
+  var comment = treeCopy.comments.filter(function(comment) { return comment.id == oldId })[0]
+  var page = getNodeById(treeCopy, pageId)
+  var comment = page.comments.filter(function(comment) { return comment.id == oldId })[0]
+  comment.id = newId
+  return sectionsCopy
+}
+
 function traverse(tree, callback) {
   var queue = new Queue();
   queue.enqueue(tree);
@@ -94,16 +113,6 @@ function traverse(tree, callback) {
     callback(currentTree);
     currentTree = queue.dequeue();
   }
-}
-
-function traverseDF(tree, callback) {
-  (function recurse(currentNode) {
-    // step 2
-    for (var i = 0, length = currentNode.children.length; i < length; i++) {
-      recurse(currentNode.children[i]);
-    }
-    callback(currentNode);
-  })(tree);
 }
 
 function getNodeById(tree, id){
@@ -135,4 +144,4 @@ function getNodeByPosition(tree, position){
 }
 
 
-export { addPage, removePage, updatePagePosition, updatePageName, traverse, updateCollapse, updatePageId }
+export { addPage, removePage, updatePagePosition, updatePageName, traverse, updateCollapse, updatePageId, addPageComment, updateCommentId }

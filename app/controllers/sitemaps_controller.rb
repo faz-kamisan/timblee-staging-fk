@@ -14,7 +14,7 @@ class SitemapsController < ApplicationController
   end
 
   def show
-    @sitemap_props = @sitemap.to_react_data
+    @sitemap_props = @sitemap.to_react_data.merge!(currentUser: { fullName: current_user.full_name, email: current_user.email })
   end
 
   def destroy
