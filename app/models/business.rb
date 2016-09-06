@@ -5,7 +5,7 @@ class Business < ActiveRecord::Base
   has_many :folders, dependent: :destroy
   has_many :sitemaps, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
-  has_one :current_subscription, ->{ where('subscriptions.end_at >= :today', { today: Time.current}) }, class_name: :Subscription
+  has_one :current_subscription, ->{ where('subscriptions.end_at >= :today', { today: Time.current }) }, class_name: :Subscription
   has_one :plan, through: :current_subscription
   delegate :no_of_users, to: :current_subscription
 

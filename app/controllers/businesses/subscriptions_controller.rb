@@ -17,7 +17,7 @@ class Businesses::SubscriptionsController < ApplicationController
       emails = params[:email].split(/\s* \s*/)
       no_of_users = current_business.users.count + InvitationService.get_invitable_users_count(emails)
 
-      current_business.subscriptions.build(plan: @plan, no_of_users: no_of_users, quantity: Business.monthly_charge(current_business.users.count))
+      current_business.subscriptions.build(plan: @plan, no_of_users: no_of_users, quantity: Business.monthly_charge(no_of_users))
       StripePaymentService.new(current_business).create_subscription
 
       InvitationService.invite_users(emails, current_user, params[:custom_message])
@@ -29,6 +29,7 @@ class Businesses::SubscriptionsController < ApplicationController
 
     def activate_starter_plan
       StripePaymentService.new(current_business).remove_old_subscription if @current_subscription && @current_subscription.plan.stripe_plan_id == PRO_STRIPE_ID
+
       current_business.subscriptions.build(plan: @plan)
       current_business.save!
       redirect_to billing_settings_users_path, notice: t('.success', scope: :flash)

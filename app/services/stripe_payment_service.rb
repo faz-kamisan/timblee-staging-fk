@@ -33,7 +33,7 @@ class StripePaymentService
 
   def remove_old_subscription
     @customer = Stripe::Customer.retrieve(@current_business.stripe_customer_id)
-    @customer.subscriptions.first.try(:delete)
+    @customer.subscriptions.first.delete(at_period_end: true)
   end
 
   def create_subscription

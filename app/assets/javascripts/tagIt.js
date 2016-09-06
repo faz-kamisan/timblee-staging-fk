@@ -9,26 +9,28 @@ $(function() {
           url: $("#myTags").data('url'),
           dataType: 'json',
           data: { 'email': tagValue },
+
           success: function (data) {
             if(data.existing_email){
               ui.tag.addClass("invalid-tag");
-            }else {
+            } else {
               ui.tag.addClass("valid-tag");
-              var count = parseInt($('.users-count').html()) + 1,
-                monthlyCharge = '$' + (CHARGE_FOR_OWNER + (CHARGE_FOR_OTHER_USERS * (count - 1)));
-              $('.users-count').html(count);
-              $('.total-amount').html(monthlyCharge);
+              var numberOfUsers = parseInt($('.pro-users-count').html()) + 1,
+                monthlyCharge = (CHARGE_FOR_OWNER + (CHARGE_FOR_OTHER_USERS * (numberOfUsers - 1)));
+              $('.pro-users-count').html(numberOfUsers);
+              $('.pro-charges').html(monthlyCharge);
             }
-          }
+          };
+
         });
       }
     },
     afterTagRemoved: function (event, ui) {
       if(ui.tag.hasClass('valid-tag')) {
-        var count = parseInt($('.users-count').html()) - 1,
-          monthlyCharge = '$' + (CHARGE_FOR_OWNER + (CHARGE_FOR_OTHER_USERS * (count - 1)));
-        $('.users-count').html(count);
-        $('.total-amount').html(monthlyCharge);
+        var numberOfUsers = parseInt($('.pro-users-count').html()) - 1,
+          monthlyCharge = (CHARGE_FOR_OWNER + (CHARGE_FOR_OTHER_USERS * (numberOfUsers - 1)));
+        $('.pro-users-count').html(numberOfUsers);
+        $('.pro-charges').html(monthlyCharge);
       }
     }
   });
