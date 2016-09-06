@@ -1,9 +1,12 @@
 import React, { PropTypes } from 'react';
 import DraggablePageType from './draggable_page_type'
+import { traverse } from '../helpers/tree_helper'
 
 class LeftSidebar extends React.Component {
   static propTypes = {
-    pageTypes: PropTypes.array.isRequired
+    pageTypes: PropTypes.array.isRequired,
+    sections: PropTypes.array.isRequired,
+    updatedAt: PropTypes.string.isRequired
   };
 
   constructor(props) {
@@ -24,6 +27,16 @@ class LeftSidebar extends React.Component {
     this.setState({searchQuery: e.target.value})
   }
 
+  getPageCount() {
+    var pageCount = 0
+    this.props.sections.forEach(function(section, index) {
+      traverse(section.pageTree, function(page) {
+        pageCount ++
+      })
+    })
+    return pageCount
+  }
+
   render() {
     var _this = this;
     var filteredPageTypes = this.props.pageTypes.filter(function(pageType) { return(pageType.name.toLowerCase().indexOf(_this.state.searchQuery.toLowerCase()) !== -1) })
@@ -41,6 +54,9 @@ class LeftSidebar extends React.Component {
                   <i className="icon-caret"></i>
                 </span>
                 Hide Sidebar
+              </span>
+              <span>
+                {this.getPageCount()} Pages | Last updated {this.props.updatedAt}
               </span>
             </div>
             <form className="search-page-type">

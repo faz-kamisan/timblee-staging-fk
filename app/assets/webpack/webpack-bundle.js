@@ -38403,11 +38403,16 @@
 	
 	var _saving2 = _interopRequireDefault(_saving);
 	
+	var _updated_at = __webpack_require__(/*! ./updated_at */ 785);
+	
+	var _updated_at2 = _interopRequireDefault(_updated_at);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var sitemapAppReducer = (0, _redux.combineReducers)({
 	  name: _name2.default,
 	  id: _id2.default,
+	  updated_at: _updated_at2.default,
 	  sections: _sections2.default,
 	  pageTypes: _page_types2.default,
 	  state: _state2.default,
@@ -48018,7 +48023,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { pageTypes: state.pageTypes };
+	  return { pageTypes: state.pageTypes, sections: state.sections, updatedAt: state.updated_at };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -48051,6 +48056,8 @@
 	var _draggable_page_type = __webpack_require__(/*! ./draggable_page_type */ 774);
 	
 	var _draggable_page_type2 = _interopRequireDefault(_draggable_page_type);
+	
+	var _tree_helper = __webpack_require__(/*! ../helpers/tree_helper */ 609);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -48088,6 +48095,17 @@
 	      this.setState({ searchQuery: e.target.value });
 	    }
 	  }, {
+	    key: 'getPageCount',
+	    value: function getPageCount() {
+	      var pageCount = 0;
+	      this.props.sections.forEach(function (section, index) {
+	        (0, _tree_helper.traverse)(section.pageTree, function (page) {
+	          pageCount++;
+	        });
+	      });
+	      return pageCount;
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this = this;
@@ -48119,6 +48137,13 @@
 	                _react2.default.createElement('i', { className: 'icon-caret' })
 	              ),
 	              'Hide Sidebar'
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              null,
+	              this.getPageCount(),
+	              ' Pages | Last updated ',
+	              this.props.updatedAt
 	            )
 	          ),
 	          _react2.default.createElement(
@@ -48149,7 +48174,9 @@
 	}(_react2.default.Component);
 	
 	LeftSidebar.propTypes = {
-	  pageTypes: _react.PropTypes.array.isRequired
+	  pageTypes: _react.PropTypes.array.isRequired,
+	  sections: _react.PropTypes.array.isRequired,
+	  updatedAt: _react.PropTypes.string.isRequired
 	};
 	exports.default = LeftSidebar;
 
@@ -48927,6 +48954,29 @@
 	  id: _react.PropTypes.number.isRequired
 	};
 	exports.default = State;
+
+/***/ },
+/* 783 */,
+/* 784 */,
+/* 785 */
+/*!*****************************************************!*\
+  !*** ./app/bundles/SiteMap/reducers/updated_at.jsx ***!
+  \*****************************************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var updated_at = function updated_at() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+	  var action = arguments[1];
+	
+	  return state;
+	};
+	
+	exports.default = updated_at;
 
 /***/ }
 /******/ ]);

@@ -30,6 +30,7 @@ class Sitemap < ActiveRecord::Base
     { name: self.name,
       state: state.titleize,
       id: self.id,
+      updated_at: self.updated_at.strftime('%d %b %Y'),
       pageTypes: PageType.order_by_name,
       comments: self.comments.map(&:to_react_data),
       sections: sections.map(&:to_react_data),

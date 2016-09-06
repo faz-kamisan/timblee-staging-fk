@@ -6,11 +6,13 @@ import pageTypes from './page_types'
 import comments from './comments'
 import state from './state'
 import saving from './saving'
+import updated_at from './updated_at'
 
 
 const sitemapAppReducer = combineReducers({
   name,
   id,
+  updated_at,
   sections,
   pageTypes,
   state,
