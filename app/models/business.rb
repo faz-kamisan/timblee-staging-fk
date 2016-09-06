@@ -6,7 +6,6 @@ class Business < ActiveRecord::Base
   has_many :sitemaps, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
   has_one :current_subscription, ->{ where('subscriptions.end_at >= :today', { today: Time.current }) }, class_name: :Subscription
-  has_one :plan, through: :current_subscription
   delegate :no_of_users, to: :current_subscription
 
   def active_subscription
@@ -30,15 +29,15 @@ class Business < ActiveRecord::Base
   end
 
   def in_trial_period_without_any_plan?
-    in_trial_period? && !plan
+    in_trial_period? && !has_plan
   end
 
   def is_pro_plan?
-    plan.try(:stripe_plan_id) == PRO_STRIPE_ID
+    is_pro
   end
 
   def is_starter_plan?
-    plan.try(:stripe_plan_id) == STARTER_STRIPE_ID
+    !is_pro && has_plan
   end
 
   def allow_downgrade_to_starter?

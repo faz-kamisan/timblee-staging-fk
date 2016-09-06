@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160826082526) do
+ActiveRecord::Schema.define(version: 20160906062017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,9 +21,11 @@ ActiveRecord::Schema.define(version: 20160826082526) do
     t.string   "logo"
     t.string   "stripe_customer_id"
     t.integer  "owner_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.integer  "trial_days"
+    t.boolean  "has_plan",           default: false
+    t.boolean  "is_pro",             default: false
   end
 
   create_table "comments", force: :cascade do |t|
@@ -55,6 +57,7 @@ ActiveRecord::Schema.define(version: 20160826082526) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "icon_name"
   end
 
   create_table "pages", force: :cascade do |t|
@@ -64,6 +67,7 @@ ActiveRecord::Schema.define(version: 20160826082526) do
     t.integer  "parent_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.integer  "position"
   end
 
   create_table "plans", force: :cascade do |t|
@@ -93,7 +97,6 @@ ActiveRecord::Schema.define(version: 20160826082526) do
   create_table "subscriptions", force: :cascade do |t|
     t.integer  "quantity"
     t.integer  "no_of_users"
-    t.integer  "plan_id"
     t.integer  "business_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -102,7 +105,6 @@ ActiveRecord::Schema.define(version: 20160826082526) do
   end
 
   add_index "subscriptions", ["business_id"], name: "index_subscriptions_on_business_id", using: :btree
-  add_index "subscriptions", ["plan_id"], name: "index_subscriptions_on_plan_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
@@ -118,7 +120,6 @@ ActiveRecord::Schema.define(version: 20160826082526) do
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
     t.string   "full_name"
-    t.string   "avatar"
     t.boolean  "is_admin",               default: false
     t.integer  "business_id"
     t.string   "invitation_token"
@@ -135,6 +136,7 @@ ActiveRecord::Schema.define(version: 20160826082526) do
     t.string   "unconfirmed_email"
     t.boolean  "notify_by_email",        default: true
     t.datetime "deleted_at"
+    t.string   "avatar"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -144,5 +146,4 @@ ActiveRecord::Schema.define(version: 20160826082526) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "subscriptions", "businesses"
-  add_foreign_key "subscriptions", "plans"
 end

@@ -40,7 +40,7 @@ class StripePaymentService
     @customer = Stripe::Customer.retrieve(@current_business.stripe_customer_id)
     subscription_hash = {
         customer: @current_business.stripe_customer_id,
-        plan:     @current_business.subscriptions.last.plan.stripe_plan_id,
+        plan:     PRO_STRIPE_ID,
         quantity: @current_business.subscriptions.last.quantity
     }
 
