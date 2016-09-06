@@ -23,6 +23,7 @@
 //= require document_decorator
 //= require editFields
 //= require twemoji-picker
+//= require select2.min
 //= require apply_twemoji
 //= require settings_tabs
 //= require settings

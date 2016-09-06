@@ -4,7 +4,7 @@ class SuperAdmin::MainController < ApplicationController
   before_action :fetch_business, only: [:impersonate]
 
   def dashboard
-    @businesses = Business.all.includes(:owner)
+    @businesses = Business.all.includes(:owner) - [current_user.business]
     @businesses = @businesses.sort_by {|business| business.name.present? ? business.name.downcase : business.owner.email.downcase }
   end
 
