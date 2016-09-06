@@ -35,24 +35,43 @@ class Header extends React.Component {
     var _this = this;
     var renderStates = ['In Progress', 'Review', 'Approved', 'On Hold'].map(function(state, index) {
       return(
-        <li key={index}>
+        <li key={index} className={ (_this.props.state == state) ? 'active' : '' }>
+          <i className="icon-save-circle"></i>
           <State state={state} id={_this.props.id} onStateChange={_this.props.onStateChange} setSaving={_this.props.setSaving} />
         </li>
       )
     })
     return (
-      <div className="" style={{ 'padding-left': '50px' }}>
-        <input value = {this.props.name} onChange={this.handleNameChange} />
-        <span>
-          <h5>State</h5>
-          {this.props.state}
-        </span>
-        <ul>
-          {renderStates}
-        </ul>
-        <span>
-         {this.props.saving ? 'saving' : 'saved'}
-        </span>
+      <div className="react-header">
+        <div className="row">
+          <div className="col-xs-6">
+            <div className="row">
+              <div className="col-xs-9">
+                <span className="logo-dark relative"></span>
+                <input value = {this.props.name} onChange={this.handleNameChange} className="site-map-name hide" />
+                <h3 className="site-map-name">{this.props.name}</h3>
+              </div>
+              <div className="col-xs-3 state-status text-center">
+                <h5>
+                  <span className={this.props.state}>
+                    {this.props.state}
+                    <i className="icon-caret"></i> 
+                  </span>
+                  <ul className="state-drop-down">
+                    {renderStates}
+                  </ul>
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div className="col-xs-6">
+
+          </div>
+        </div> 
+        <div className="toggle-header">
+          <i className="icon-caret"></i>
+          <div>show</div>
+        </div>
       </div>
     );
   }

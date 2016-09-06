@@ -32,6 +32,7 @@ class State extends React.Component {
   render() {
     return (
       <div className='sitemap-state' onClick={this.handleStateChange}>
+        <span className={"state-indicator " + this.props.state}></span>
         {this.props.state}
       </div>
     );

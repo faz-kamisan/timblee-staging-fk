@@ -48075,33 +48075,66 @@
 	      var renderStates = ['In Progress', 'Review', 'Approved', 'On Hold'].map(function (state, index) {
 	        return _react2.default.createElement(
 	          'li',
-	          { key: index },
+	          { key: index, className: _this.props.state == state ? 'active' : '' },
+	          _react2.default.createElement('i', { className: 'icon-save-circle' }),
 	          _react2.default.createElement(_state2.default, { state: state, id: _this.props.id, onStateChange: _this.props.onStateChange, setSaving: _this.props.setSaving })
 	        );
 	      });
 	      return _react2.default.createElement(
 	        'div',
-	        { className: '', style: { 'padding-left': '50px' } },
-	        _react2.default.createElement('input', { value: this.props.name, onChange: this.handleNameChange }),
+	        { className: 'react-header' },
 	        _react2.default.createElement(
-	          'span',
-	          null,
+	          'div',
+	          { className: 'row' },
 	          _react2.default.createElement(
-	            'h5',
-	            null,
-	            'State'
+	            'div',
+	            { className: 'col-xs-6' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'row' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-xs-9' },
+	                _react2.default.createElement('span', { className: 'logo-dark relative' }),
+	                _react2.default.createElement('input', { value: this.props.name, onChange: this.handleNameChange, className: 'site-map-name hide' }),
+	                _react2.default.createElement(
+	                  'h3',
+	                  { className: 'site-map-name' },
+	                  this.props.name
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-xs-3 state-status text-center' },
+	                _react2.default.createElement(
+	                  'h5',
+	                  null,
+	                  _react2.default.createElement(
+	                    'span',
+	                    { className: this.props.state },
+	                    this.props.state,
+	                    _react2.default.createElement('i', { className: 'icon-caret' })
+	                  ),
+	                  _react2.default.createElement(
+	                    'ul',
+	                    { className: 'state-drop-down' },
+	                    renderStates
+	                  )
+	                )
+	              )
+	            )
 	          ),
-	          this.props.state
+	          _react2.default.createElement('div', { className: 'col-xs-6' })
 	        ),
 	        _react2.default.createElement(
-	          'ul',
-	          null,
-	          renderStates
-	        ),
-	        _react2.default.createElement(
-	          'span',
-	          null,
-	          this.props.saving ? 'saving' : 'saved'
+	          'div',
+	          { className: 'toggle-header' },
+	          _react2.default.createElement('i', { className: 'icon-caret' }),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            'show'
+	          )
 	        )
 	      );
 	    }
@@ -48188,6 +48221,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'sitemap-state', onClick: this.handleStateChange },
+	        _react2.default.createElement('span', { className: "state-indicator " + this.props.state }),
 	        this.props.state
 	      );
 	    }

@@ -3,7 +3,7 @@ namespace :sitemaps do
   task :create_sections => :environment do
     Sitemap.all.each do |sitemap|
       section = sitemap.sections.create(name: 'Default', default: true)
-      Pages.where(sitemap_id: sitemap.id).update_all(section_id: section.id)
+      Page.where(sitemap_id: sitemap.id).update_all(section_id: section.id)
     end
   end
 end

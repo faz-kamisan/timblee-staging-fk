@@ -33,6 +33,6 @@ class Page < ActiveRecord::Base
   private
     def set_uid
       highest_uid = sitemap.pages.maximum('uid')
-      self.uid = highest_uid + 1
+      self.uid = highest_uid.to_i + 1
     end
 end
