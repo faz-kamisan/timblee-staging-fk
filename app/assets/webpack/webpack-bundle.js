@@ -48112,7 +48112,7 @@
 	          { className: 'row' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'col-xs-6' },
+	            { className: 'col-xs-5' },
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'row' },
@@ -48123,7 +48123,7 @@
 	                _react2.default.createElement('input', { value: this.state.name, onChange: this.handleNameChange, onBlur: this.handleNameInputBlur, className: "site-map-name" + (this.state.nameFocused ? '' : ' hide'), ref: 'sitemapNameInput' }),
 	                _react2.default.createElement(
 	                  'h3',
-	                  { className: "site-map-name" + (this.state.nameFocused ? ' hide' : ''), onClick: this.handleNameInputFocus },
+	                  { className: "site-map-name truncate " + (this.state.nameFocused ? ' hide' : ''), onClick: this.handleNameInputFocus },
 	                  this.state.name
 	                )
 	              ),
@@ -48148,7 +48148,25 @@
 	              )
 	            )
 	          ),
-	          _react2.default.createElement('div', { className: 'col-xs-6' })
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-xs-2 saved-status' },
+	            _react2.default.createElement(
+	              'span',
+	              null,
+	              this.props.saving ? _react2.default.createElement(
+	                'div',
+	                null,
+	                'Saving'
+	              ) : _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement('i', { className: 'icon-save-circle' }),
+	                ' Saved'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement('div', { className: 'col-xs-5' })
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -48390,28 +48408,36 @@
 	            'div',
 	            { className: 'close-left-bar' },
 	            _react2.default.createElement(
-	              'span',
-	              { className: 'cursor', onClick: this.toogleExpand },
+	              'div',
+	              { 'class': 'row' },
 	              _react2.default.createElement(
 	                'span',
-	                { className: 'caret-left' },
-	                _react2.default.createElement('i', { className: 'icon-caret' })
+	                { className: 'cursor col-xs-4 p-l-0', onClick: this.toogleExpand },
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'caret-left' },
+	                  _react2.default.createElement('i', { className: 'icon-caret' })
+	                ),
+	                'Hide Sidebar'
 	              ),
-	              'Hide Sidebar'
-	            ),
-	            _react2.default.createElement(
-	              'span',
-	              { className: 'hide' },
-	              this.getPageCount(),
-	              ' Pages | Last updated ',
-	              this.props.updatedAt
+	              _react2.default.createElement(
+	                'span',
+	                { className: 'last-updated col-xs-8 p-r-0 text-right' },
+	                this.getPageCount(),
+	                ' Pages | Last updated ',
+	                this.props.updatedAt
+	              )
 	            )
 	          ),
 	          _react2.default.createElement(
 	            'form',
 	            { className: 'search-page-type' },
-	            _react2.default.createElement('input', { type: 'search', placeholder: 'Page Type', onChange: this.handleSearch }),
-	            _react2.default.createElement('i', { className: 'icon-search' })
+	            _react2.default.createElement(
+	              'label',
+	              { htmlFor: 'page-type' },
+	              _react2.default.createElement('i', { className: 'icon-search' })
+	            ),
+	            _react2.default.createElement('input', { type: 'search', id: 'page-type', name: 'page-type', placeholder: 'Page Type', onChange: this.handleSearch })
 	          ),
 	          _react2.default.createElement(
 	            'ul',

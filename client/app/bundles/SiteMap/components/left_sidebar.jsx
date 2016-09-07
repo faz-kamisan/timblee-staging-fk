@@ -49,19 +49,23 @@ class LeftSidebar extends React.Component {
           this.state.expand ?
           <div>
             <div className="close-left-bar">
-              <span className="cursor" onClick={this.toogleExpand}>
-                <span className="caret-left">
-                  <i className="icon-caret"></i>
+              <div class="row">
+                <span className="cursor col-xs-4 p-l-0" onClick={this.toogleExpand}>
+                  <span className="caret-left">
+                    <i className="icon-caret"></i>
+                  </span>
+                  Hide Sidebar
+                </span>  
+                <span className="last-updated col-xs-8 p-r-0 text-right">
+                  {this.getPageCount()} Pages | Last updated {this.props.updatedAt}
                 </span>
-                Hide Sidebar
-              </span>
-              <span className='hide'>
-                {this.getPageCount()} Pages | Last updated {this.props.updatedAt}
-              </span>
+              </div>
             </div>
             <form className="search-page-type">
-              <input type="search" placeholder="Page Type" onChange={this.handleSearch} />
-              <i className="icon-search"></i>
+              <label htmlFor="page-type">
+                <i className="icon-search"></i>
+              </label>
+              <input type="search" id="page-type" name="page-type" placeholder="Page Type" onChange={this.handleSearch} />
             </form>
             <ul className="page-type-list clearfix">
               {pageTypeComponents}
