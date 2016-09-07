@@ -33,12 +33,13 @@ class Header extends React.Component {
         data: { sitemap: { name: this.state.name } },
         error: (result, b, c, d) => {
           document.setFlash(result.responseText)
+          this.setState({name: this.props.name})
         },
         complete: (result) => {
           this.props.setSaving(false)
+          this.props.onNameChange(name);
         }
       });
-      this.props.onNameChange(name);
     }
   }
 

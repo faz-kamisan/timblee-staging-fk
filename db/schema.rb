@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160905064826) do
+ActiveRecord::Schema.define(version: 20160907081900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,9 +32,9 @@ ActiveRecord::Schema.define(version: 20160905064826) do
     t.string   "commentable_type"
     t.integer  "commenter_id"
     t.string   "commenter_type"
-    t.string   "state"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.string   "state",            default: "active"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   create_table "folders", force: :cascade do |t|
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20160905064826) do
 
   create_table "guests", force: :cascade do |t|
     t.string   "full_name"
-    t.string   "logo"
+    t.string   "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -147,6 +147,7 @@ ActiveRecord::Schema.define(version: 20160905064826) do
     t.string   "unconfirmed_email"
     t.boolean  "notify_by_email",        default: true
     t.datetime "deleted_at"
+    t.boolean  "is_super_admin",         default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

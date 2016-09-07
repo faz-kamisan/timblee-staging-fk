@@ -14,6 +14,7 @@ class RightSidebar extends React.Component {
     $('.comment-input').watermark('Add a comment...<br/>You can mention people by typing @.', {fallback: false});
   }
   render() {
+    const CommentTabs = ['active', 'resolved', 'archived']
     var renderedComments = this.props.comments.map(function(comment, index) {
       return <li key={index}><Comment message={comment.message} commenter={comment.commenter} /></li>
     })
@@ -40,8 +41,17 @@ class RightSidebar extends React.Component {
       )
     })
 
+    var renderedCommentTabs = CommentTabs.map(function(commentTab, index) {
+      return (<li key={index}>{commentTab}</li>)
+    })
+
     return (
-      <div className='sitemap-right-sidebar hide'>
+      <div className='sitemap-right-sidebar'>
+        <div className='sitemap-comment-tabs'>
+          <ul>
+            {renderedCommentTabs}
+          </ul>
+        </div>
         <h2>
           General Comments
         </h2>

@@ -48071,12 +48071,13 @@
 	          data: { sitemap: { name: this.state.name } },
 	          error: function error(result, b, c, d) {
 	            document.setFlash(result.responseText);
+	            _this3.setState({ name: _this3.props.name });
 	          },
 	          complete: function complete(result) {
 	            _this3.props.setSaving(false);
+	            _this3.props.onNameChange(name);
 	          }
 	        });
-	        this.props.onNameChange(name);
 	      }
 	    }
 	  }, {
@@ -48709,6 +48710,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var CommentTabs = ['active', 'resolved', 'archived'];
 	      var renderedComments = this.props.comments.map(function (comment, index) {
 	        return _react2.default.createElement(
 	          'li',
@@ -48749,9 +48751,26 @@
 	        );
 	      });
 	
+	      var renderedCommentTabs = CommentTabs.map(function (commentTab, index) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: index },
+	          commentTab
+	        );
+	      });
+	
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'sitemap-right-sidebar hide' },
+	        { className: 'sitemap-right-sidebar' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'sitemap-comment-tabs' },
+	          _react2.default.createElement(
+	            'ul',
+	            null,
+	            renderedCommentTabs
+	          )
+	        ),
 	        _react2.default.createElement(
 	          'h2',
 	          null,
@@ -48955,26 +48974,28 @@
 	  }, {
 	    key: 'handleAddComment',
 	    value: function handleAddComment(e) {
-	      var _this = this;
-	      var timeStamp = new Date();
-	      this.props.addComment(this.props.commentableId, this.props.commentableType, this.state.newCommentMessage, this.props.currentUser, this.props.sectionId, timeStamp);
-	      this.props.setSaving(true);
-	      $.ajax({
-	        url: '/comments/',
-	        method: 'post',
-	        dataType: 'JSON',
-	        data: { comment: { commentable_id: this.props.commentableId, commentable_type: this.props.commentableType, message: this.state.newCommentMessage } },
-	        error: function error(result, b, c, d) {
-	          document.setFlash(result.responseText);
-	        },
-	        success: function success(result) {
-	          _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, timeStamp, result.id, _this.props.sectionId);
-	        },
-	        complete: function complete(result) {
-	          _this.props.setSaving(false);
-	        }
-	      });
-	      this.setState({ newCommentMessage: '' });
+	      if (this.state.newCommentMessage.trim().length > 0) {
+	        var _this = this;
+	        var timeStamp = new Date();
+	        this.props.addComment(this.props.commentableId, this.props.commentableType, this.state.newCommentMessage, this.props.currentUser, this.props.sectionId, timeStamp);
+	        this.props.setSaving(true);
+	        $.ajax({
+	          url: '/comments/',
+	          method: 'post',
+	          dataType: 'JSON',
+	          data: { comment: { commentable_id: this.props.commentableId, commentable_type: this.props.commentableType, message: this.state.newCommentMessage } },
+	          error: function error(result, b, c, d) {
+	            document.setFlash(result.responseText);
+	          },
+	          success: function success(result) {
+	            _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, timeStamp, result.id, _this.props.sectionId);
+	          },
+	          complete: function complete(result) {
+	            _this.props.setSaving(false);
+	          }
+	        });
+	        this.setState({ newCommentMessage: '' });
+	      }
 	    }
 	  }, {
 	    key: 'handleClearComment',
