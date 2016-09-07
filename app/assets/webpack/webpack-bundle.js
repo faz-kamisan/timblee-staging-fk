@@ -48387,7 +48387,7 @@
 	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(LeftSidebar).call(this, props));
 	
 	    _this2.state = {
-	      expand: false,
+	      expand: true,
 	      searchQuery: ''
 	    };
 	    _this2.toogleExpand = _this2.toogleExpand.bind(_this2);
@@ -48441,7 +48441,7 @@
 	            { className: 'close-left-bar' },
 	            _react2.default.createElement(
 	              'div',
-	              { 'class': 'row' },
+	              { className: 'row' },
 	              _react2.default.createElement(
 	                'span',
 	                { className: 'cursor col-xs-4 p-l-0', onClick: this.toogleExpand },

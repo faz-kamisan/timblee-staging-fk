@@ -828,7 +828,7 @@
 .legal-terms-icon {
   &.tile-right,
   .page-type-icon {
-    @include pageTypeIcon('/assets/Legal-Terms.svg');
+    @include pageTypeIcon('/assets/Legal-terms.svg');
   }
 }
 
@@ -849,7 +849,7 @@
 .login-icon {
   &.tile-right,
   .page-type-icon {
-    @include pageTypeIcon('/assets/Log-In.svg');
+    @include pageTypeIcon('/assets/Log-in.svg');
   }
 }
 
@@ -947,21 +947,21 @@
 .team-member-profile-icon {
   &.tile-right,
   .page-type-icon {
-    @include pageTypeIcon('/assets/Team-Member.svg');
+    @include pageTypeIcon('/assets/Team-member.svg');
   }
 }
 
 .team-icon {
   &.tile-right,
   .page-type-icon {
-    @include pageTypeIcon('/assets/Team.svg');
+    @include pageTypeIcon('/assets/team.svg');
   }
 }
 
 .thank-you-icon {
   &.tile-right,
   .page-type-icon {
-    @include pageTypeIcon('/assets/Thank-You.svg');
+    @include pageTypeIcon('/assets/Thank-you.svg');
   }
 }
 

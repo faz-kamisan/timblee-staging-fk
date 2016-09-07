@@ -12,7 +12,7 @@ class LeftSidebar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      expand: false,
+      expand: true,
       searchQuery: ''
     }
     this.toogleExpand = this.toogleExpand.bind(this)
@@ -49,13 +49,13 @@ class LeftSidebar extends React.Component {
           this.state.expand ?
           <div>
             <div className="close-left-bar">
-              <div class="row">
+              <div className="row">
                 <span className="cursor col-xs-4 p-l-0" onClick={this.toogleExpand}>
                   <span className="caret-left">
                     <i className="icon-caret"></i>
                   </span>
                   Hide Sidebar
-                </span>  
+                </span>
                 <span className="last-updated col-xs-8 p-r-0 text-right">
                   {this.getPageCount()} Pages | Last updated {this.props.updatedAt}
                 </span>
