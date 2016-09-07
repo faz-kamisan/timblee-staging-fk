@@ -58,16 +58,16 @@
 
     <div class="drag-me-bar"></div>
 
-    <div class="drag-me drop_container" id="review" data-state='in_review'>
+    <div class="drag-me drop_container" id="review" data-state='review'>
       <div class="drag-header text-center">
         <h1>Review</h1>
-        <p class="sitemap-count" data-count=<%= @sitemaps_by_state[:in_review].length %>><%= pluralize(@sitemaps_by_state[:in_review].length, 'Sitemap') %></p>
+        <p class="sitemap-count" data-count=<%= @sitemaps_by_state[:review].length %>><%= pluralize(@sitemaps_by_state[:review].length, 'Sitemap') %></p>
       </div>
       <div id="review-holder" class="drag-div sitemap_container">
-        <div class='empty-sitemap-holder <%= 'hidden' if @sitemaps_by_state[:in_review].present? %>'>
+        <div class='empty-sitemap-holder <%= 'hidden' if @sitemaps_by_state[:review].present? %>'>
           <%= image_tag('empty-state-container.svg', class: 'empty-state') %>
         </div>
-        <% @sitemaps_by_state[:in_review].each do |sitemap| %>
+        <% @sitemaps_by_state[:review].each do |sitemap| %>
           <div class='drag-wrapper'>
             <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
               <% if sitemap.comments.exists? %>

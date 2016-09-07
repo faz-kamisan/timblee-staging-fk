@@ -1,4 +1,4 @@
 export const ItemTypes = {
-  PAGE_CONTAINER: 'PageContainer',
+  PAGE_CONTAINER: 'Page',
   PAGE_TYPE: 'PageType'
 };

@@ -33,6 +33,7 @@ Rails.application.routes.draw do
 
   resources :folders
   resources :sitemaps
+  resources :comments, only: [:create, :update, :destroy]
   resources :pages, only: [:create, :update, :destroy]
 
   get  'home/dashboard'

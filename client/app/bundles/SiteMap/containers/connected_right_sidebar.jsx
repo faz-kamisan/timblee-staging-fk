@@ -4,7 +4,8 @@ import RightSideBar from '../components/right_sidebar'
 const mapStateToProps = (state) => {
   return {
     comments: state.comments,
-    pageTree: state.pageTree
+    sitemapId: state.id,
+    sections: state.sections
   }
 }
 

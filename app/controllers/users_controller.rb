@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     @sitemaps = current_business.sitemaps.order(updated_at: :desc)
     @sitemaps_by_state = { on_hold: @sitemaps.select { |sitemap| sitemap.state == 'on_hold' },
                             in_progress: @sitemaps.select { |sitemap| sitemap.state == 'in_progress' },
-                            in_review: @sitemaps.select { |sitemap| sitemap.state == 'in_review' },
+                            review: @sitemaps.select { |sitemap| sitemap.state == 'review' },
                             approved: @sitemaps.select { |sitemap| sitemap.state == 'approved' }
                           }
   end

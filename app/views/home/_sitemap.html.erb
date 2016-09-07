@@ -5,8 +5,10 @@
         <% if sitemap.comments.exists? %>
           <span class='state'></span>
         <% end %>
-        <h2 class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></h2>
-        <p class="updated">Last updated <%= pretty_time(sitemap.updated_at) %></p>
+        <a href=<%= '/sitemaps/' + sitemap.id.to_s %> class='sitemap-link'>
+          <h2 class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></h2>
+          <p class="updated">Last updated <%= pretty_time(sitemap.updated_at) %></p>
+        </a>
         <div class="actions">
           <ul class="card-users clearfix">
             <li>
@@ -22,7 +24,9 @@
           <span class="other-users">+12</span>
         </div>
         <a href="javascript:void(0);" class="more-options">
-          <%= image_tag('more-icon.png') %>
+          <span></span>
+          <span></span>
+          <span></span>
         </a>
         <div class="actions-overlay" data-id=<%= sitemap.id %>>
           <ul class="p-0 m-0">

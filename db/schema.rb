@@ -76,6 +76,8 @@ ActiveRecord::Schema.define(version: 20160907071016) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "position"
+    t.integer  "uid"
+    t.integer  "section_id"
   end
 
   create_table "plans", force: :cascade do |t|
@@ -84,6 +86,14 @@ ActiveRecord::Schema.define(version: 20160907071016) do
     t.string   "stripe_plan_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+  end
+
+  create_table "sections", force: :cascade do |t|
+    t.string   "name"
+    t.boolean  "default"
+    t.integer  "sitemap_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sitemap_invites", force: :cascade do |t|

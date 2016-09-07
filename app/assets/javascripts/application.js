@@ -1,4 +1,4 @@
-// require webpack-bundle
+//= require webpack-bundle
 
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
@@ -17,6 +17,7 @@
 //= require jquery-ui
 //= require bootstrap.min
 //= require tag-it.min
+//= require jquery.watermark.min
 //= require Queue
 //= require flash
 //= require array_decorator
@@ -28,3 +29,12 @@
 //= require settings
 //= require constants
 //= require modal_fix
+
+$(document).ready(function() {
+  $('.toggle-header').on('click', function() {
+    $('.main-header').toggleClass('toggle');
+    $('.react-header').toggleClass('toggle');
+    $('body').toggleClass('toggle');
+    $('.sitemap-left-sidebar').toggleClass('toggle');
+  });
+});

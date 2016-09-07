@@ -79,13 +79,12 @@
 
         <div class="cc-add hide">
           <div class="row add-credit-card">
-            <div class="col-xs-6">
+            <div class="col-xs-6 relative">
               <%= text_field_tag '', nil, placeholder: "Card number", class: 'string form-control default-input cc-number editable-input', disabled: true %>
-              <br /><span class='cc-brand pull-right'></span>
+              <span class='cc-brand pull-right'></span>
             </div>
             <div class="col-xs-3">
               <input type="text" placeholder="MM / YY" class="form-control default-input cc-exp editable-input" disabled='disabled'>
-
             </div>
             <div class="col-xs-3">
               <input type="password" placeholder="CVV" class="form-control default-input cc-cvv editable-input" disabled='disabled'>

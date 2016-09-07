@@ -5,6 +5,7 @@
 
 .user-dashboard {
   padding-top: 100px;
+  padding-bottom: 100px;
   .folders {
     width: 320px;
     margin-right: 90px;
@@ -64,6 +65,12 @@
     font-weight: 400;
     margin-top: 0;
   }
+
+  .sitemap-link {
+    height: 100%;
+    width: 100%;
+  }
+
   .card-name {
     font-size: 18px;
     line-height: 24px;
@@ -106,8 +113,31 @@
     bottom: 16px;
     right: 15px;
     z-index: 1;
-    img {
-      width: 28px;
+    width: 28px;
+    height: 28px;
+    background: $transparent;
+    @include border-radius(50%);
+    border: 1px solid #DADBDD;
+    display: inline-block;
+    text-align: center;
+    span {
+      width: 3px;
+      height: 3px;
+      @include border-radius(50%);
+      background: #DADBDD;
+      display: inline-block;
+      margin: 0 -.5px;
+      position: relative;
+      top: .5px;
+      &:first-child {
+        margin-left: .5px;
+      }
+    }
+    &:hover {
+      border-color: $primaryPink;
+      span {
+        background: $primaryPink;
+      }
     }
   }
   .actions-overlay {
@@ -265,6 +295,7 @@
     display: inline-block;
     height: 29px;
     background: $pageBackground;
+    @include animate(.25s);
   }
 }
 
@@ -279,13 +310,28 @@
 
 .delete-folder {
   width: 0;
-  display: inline-block;
-  visibility: hidden;
   cursor: pointer;
-  @include animate(.35s);
+  height: 12px;
+  width: 12px;
+  position: absolute;
+  opacity: 0;
+  top: 13px;
+  transition: opacity .25s;
+  -moz-transition: opacity .25s;
+  -webkit-transition: opacity .25s;
   &.open {
-    width: 18px;
-    visibility: visible;
+    opacity: 1;
+    + .folder-info-block {
+      margin-left: 23px;
+    }
+  }
+  &.with-bg {
+    background: url('/assets/close.png');
+    background-size: 12px 12px;
+    background-size: 100%;
+  }
+  &:hover {
+    background-position: 0 -12px;
   }
 }
 

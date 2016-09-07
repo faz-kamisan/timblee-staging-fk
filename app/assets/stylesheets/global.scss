@@ -10,6 +10,15 @@ body {
   background: $pageBackground;
   font-family: "proxima-nova",sans-serif;
   min-width: 1300px;
+  padding-top: 95px;
+
+  transition: padding-top .35s;
+  -moz-transition: padding-top .35s;
+  -webkit-transition: padding-top .35s;
+
+  &.toggle {
+    padding-top: 0;
+  }
 }
 
 .btn {
@@ -271,7 +280,7 @@ input:-webkit-autofill {
   top: 10px;
   right: 5px;
   @include border-radius(6px);
-  z-index: 10;
+  z-index: 15;
 }
 
 .flash .close {
@@ -408,4 +417,28 @@ input#toggle:checked + label:after {
 
 .primary-link-color {
   color: $primaryLink;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.btn-pink {
+  &.btn-border {
+    &:hover {
+      background: $primaryWhite!important;
+      color: $primaryPink!important;
+    }
+  }
+}
+
+.primary-link {
+  &:hover {
+    color: $primaryPink!important;
+  }
+}
+
+.relative {
+  position: relative;
+  overflow: hidden;
 }

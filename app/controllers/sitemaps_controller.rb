@@ -14,7 +14,7 @@ class SitemapsController < ApplicationController
   end
 
   def show
-    @sitemap_props = @sitemap.to_react_data
+    @sitemap_props = @sitemap.to_react_data.merge!(currentUser: { fullName: current_user.full_name, email: current_user.email })
   end
 
   def destroy
@@ -39,6 +39,7 @@ class SitemapsController < ApplicationController
     else
       respond_to do |format|
         format.js do
+          flash.now[:alert] = t('.failure', scope: :flash)
           render 'shared/show_flash', status: 522
         end
         format.json do
