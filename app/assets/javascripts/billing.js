@@ -35,7 +35,7 @@ Billing.prototype.bindExpFieldEvent = function() {
       } else if (e.charCode == 47 && this.value.match('/')) {
         e.preventDefault();
       };
-    } else {
+    } else  if(e.charCode != 0){
         e.preventDefault();
     }
   });
