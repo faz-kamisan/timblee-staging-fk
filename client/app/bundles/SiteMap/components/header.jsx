@@ -15,8 +15,15 @@ class Header extends React.Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleNameInputBlur = this.handleNameInputBlur.bind(this);
     this.handleNameInputFocus = this.handleNameInputFocus.bind(this);
-    this.state = { nameFocused: false, name: props.name }
+    this.handleMainHeaderToggle = this.handleMainHeaderToggle.bind(this);
+    this.state = { nameFocused: false, name: props.name, showMainHeader: true }
   }
+
+  handleMainHeaderToggle(e) {
+    $('body').toggleClass('hide-header');
+    this.setState({showMainHeader: !this.state.showMainHeader})
+  }
+
   handleNameChange(event) {
     var name = event.target.value
     this.setState({name: name})
@@ -88,7 +95,7 @@ class Header extends React.Component {
           </div>
           <div className="col-xs-2 saved-status">
             <span>
-              { this.props.saving ? 
+              { this.props.saving ?
                 <div>Saving</div>
                 :
                 <div>
@@ -96,14 +103,17 @@ class Header extends React.Component {
                 </div>
               }
             </span>
-          </div> 
+          </div>
           <div className="col-xs-5">
 
           </div>
         </div>
-        <div className="toggle-header">
-          <i className="icon-caret"></i>
-          <div>show</div>
+        <div className="toggle-header" onClick={this.handleMainHeaderToggle}>
+          <div className={this.state.showMainHeader ? 'caret-up' : ''}>
+            <i className="icon-caret"></i>
+          </div>
+          {this.state.showMainHeader && <div>hide</div>}
+          {!this.state.showMainHeader && <div>show</div>}
         </div>
       </div>
     );

@@ -1126,6 +1126,9 @@
     &:hover {
       color: $primaryPink;
     }
+    .caret-up {
+      transform: rotate(180deg);
+    }
   }
 
   .site-map-name {
@@ -1201,12 +1204,12 @@
         }
         &.Approved {
           &:before {
-            background: $primaryGreen;   
+            background: $primaryGreen;
           }
         }
         &.Hold {
           &:before {
-            background: #A3ACB5;  
+            background: #A3ACB5;
           }
         }
       }
@@ -1214,7 +1217,7 @@
         ul {
           visibility: visible;
           top: 30px;
-          opacity: 1;  
+          opacity: 1;
         }
       }
     }
@@ -1289,7 +1292,7 @@
           background: $primaryYellow;
         }
         &.Approved {
-          background: $primaryGreen; 
+          background: $primaryGreen;
         }
         &.Hold {
           background: #A3ACB5;

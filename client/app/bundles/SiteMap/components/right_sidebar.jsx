@@ -16,7 +16,7 @@ class RightSidebar extends React.Component {
   render() {
     const CommentTabs = ['active', 'resolved', 'archived']
     var renderedComments = this.props.comments.map(function(comment, index) {
-      return <li key={index}><Comment message={comment.message} commenter={comment.commenter} /></li>
+      return <li key={index}><Comment message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} /></li>
     })
     var pageWithComments = []
     this.props.sections.forEach(function(section, index) {
@@ -28,7 +28,7 @@ class RightSidebar extends React.Component {
     })
     var renderedPageWithComments = pageWithComments.map(function(page, index) {
       var renderedPageComments = page.comments.map(function(comment, index) {
-        return <li key={index}><Comment message={comment.message} commenter={comment.commenter} /></li>
+        return <li key={index}><Comment message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} /></li>
       })
       return(
         <li key={index}>

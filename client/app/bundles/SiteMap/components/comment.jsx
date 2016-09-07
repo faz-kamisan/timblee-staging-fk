@@ -3,17 +3,23 @@ import React, { PropTypes } from 'react';
 class Comment extends React.Component {
   static propTypes = {
     commenter: PropTypes.object.isRequired,
-    message: PropTypes.string.isRequired
+    message: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired
   };
   render() {
     return (
       <div>
-        <h4>
+        <h3>
           {this.props.commenter.fullName}
-        </h4>
-        <h5>
+        </h3>
+        <h6>
+          <span>
+            {this.props.createdAt}
+          </span>
+        </h6>
+        <p>
           {this.props.message}
-        </h5>
+        </p>
       </div>
     );
   }

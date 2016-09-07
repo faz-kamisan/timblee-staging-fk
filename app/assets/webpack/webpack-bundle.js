@@ -48046,11 +48046,18 @@
 	    _this2.handleNameChange = _this2.handleNameChange.bind(_this2);
 	    _this2.handleNameInputBlur = _this2.handleNameInputBlur.bind(_this2);
 	    _this2.handleNameInputFocus = _this2.handleNameInputFocus.bind(_this2);
-	    _this2.state = { nameFocused: false, name: props.name };
+	    _this2.handleMainHeaderToggle = _this2.handleMainHeaderToggle.bind(_this2);
+	    _this2.state = { nameFocused: false, name: props.name, showMainHeader: true };
 	    return _this2;
 	  }
 	
 	  _createClass(Header, [{
+	    key: 'handleMainHeaderToggle',
+	    value: function handleMainHeaderToggle(e) {
+	      $('body').toggleClass('hide-header');
+	      this.setState({ showMainHeader: !this.state.showMainHeader });
+	    }
+	  }, {
 	    key: 'handleNameChange',
 	    value: function handleNameChange(event) {
 	      var name = event.target.value;
@@ -48170,9 +48177,18 @@
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'toggle-header' },
-	          _react2.default.createElement('i', { className: 'icon-caret' }),
+	          { className: 'toggle-header', onClick: this.handleMainHeaderToggle },
 	          _react2.default.createElement(
+	            'div',
+	            { className: this.state.showMainHeader ? 'caret-up' : '' },
+	            _react2.default.createElement('i', { className: 'icon-caret' })
+	          ),
+	          this.state.showMainHeader && _react2.default.createElement(
+	            'div',
+	            null,
+	            'hide'
+	          ),
+	          !this.state.showMainHeader && _react2.default.createElement(
 	            'div',
 	            null,
 	            'show'
@@ -48741,7 +48757,7 @@
 	        return _react2.default.createElement(
 	          'li',
 	          { key: index },
-	          _react2.default.createElement(_comment2.default, { message: comment.message, commenter: comment.commenter })
+	          _react2.default.createElement(_comment2.default, { message: comment.message, commenter: comment.commenter, createdAt: comment.created_at })
 	        );
 	      });
 	      var pageWithComments = [];
@@ -48757,7 +48773,7 @@
 	          return _react2.default.createElement(
 	            'li',
 	            { key: index },
-	            _react2.default.createElement(_comment2.default, { message: comment.message, commenter: comment.commenter })
+	            _react2.default.createElement(_comment2.default, { message: comment.message, commenter: comment.commenter, createdAt: comment.created_at })
 	          );
 	        });
 	        return _react2.default.createElement(
@@ -48875,12 +48891,21 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(
-	          'h4',
+	          'h3',
 	          null,
 	          this.props.commenter.fullName
 	        ),
 	        _react2.default.createElement(
-	          'h5',
+	          'h6',
+	          null,
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            this.props.createdAt
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'p',
 	          null,
 	          this.props.message
 	        )
@@ -48893,7 +48918,8 @@
 	
 	Comment.propTypes = {
 	  commenter: _react.PropTypes.object.isRequired,
-	  message: _react.PropTypes.string.isRequired
+	  message: _react.PropTypes.string.isRequired,
+	  createdAt: _react.PropTypes.string.isRequired
 	};
 	exports.default = Comment;
 
