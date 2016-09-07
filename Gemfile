@@ -20,11 +20,13 @@ gem 'stripe', '~> 1.49.0'
 # gem 'react_on_rails', '~> 6.0.5'
 gem 'jc-validates_timeliness', '~> 3.1.1'
 gem 'acts_as_tree'
+gem 'pdfkit'
+gem 'wkhtmltopdf-binary'
 
 group :development, :test do
   gem 'byebug', '~> 9.0.5'
   gem 'rspec-rails', '~> 3.5'
-
+  gem 'ultrahook'
 end
 
 group :development do

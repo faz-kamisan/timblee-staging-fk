@@ -1,5 +1,7 @@
 class Businesses::SubscriptionsController < ApplicationController
 
+  protect_from_forgery except: :webhook
+  skip_before_action :authenticate_user!, only: :webhook
   before_action :load_plan, :check_validity, only: :create
   around_action :wrap_in_transaction, only: :create
   before_action :deactivate_old_subscription , only: :create
@@ -11,6 +13,23 @@ class Businesses::SubscriptionsController < ApplicationController
     end
   end
 
+  def webhook
+    @event = Stripe::Event.retrieve(params['id'])
+    user = Business.find_by(stripe_customer_id: @event.data.object.customer).owner
+
+    if @event.type == 'charge.succeeded'
+      PaymentNotifier.delay.success(user, @event)
+
+    elsif @event.type == 'charge.refunded'
+      PaymentNotifier.delay.refund(user, @event)
+
+    elsif @event.type == 'charge.failed'
+      PaymentNotifier.delay.failure(user, @event)
+    end
+    render status: :ok, json: 'success'
+
+  end
+
   private
 
     def activate_pro_plan
@@ -20,7 +39,7 @@ class Businesses::SubscriptionsController < ApplicationController
       current_business.subscriptions.build(no_of_users: no_of_users, quantity: Business.monthly_charge(no_of_users))
       current_business.is_pro = true
       current_business.has_plan = true
-      StripePaymentService.new(current_business).create_subscription
+      StripePaymentService.new(current_business).update_subscription
 
       InvitationService.invite_users(emails, current_user, params[:custom_message])
       redirect_to team_settings_users_path

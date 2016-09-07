@@ -5,7 +5,10 @@ class Business < ActiveRecord::Base
   has_many :folders, dependent: :destroy
   has_many :sitemaps, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
+  has_many :cards, dependent: :destroy
   has_one :current_subscription, ->{ where('subscriptions.end_at >= :today', { today: Time.current }) }, class_name: :Subscription
+  has_one :active_card, -> { order(created_at: :desc) }, class_name: :Card
+
   delegate :no_of_users, to: :current_subscription
 
   def active_subscription
@@ -37,7 +40,7 @@ class Business < ActiveRecord::Base
   end
 
   def is_starter_plan?
-    !is_pro && has_plan
+    !is_pro && (has_plan || !in_trial_period?)
   end
 
   def allow_downgrade_to_starter?

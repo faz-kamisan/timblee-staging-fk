@@ -111,7 +111,7 @@ class User < ActiveRecord::Base
       if business.is_pro_plan?
         business.current_subscription.update(end_at: Time.current)
         business.subscriptions.build(no_of_users: business.users.count, quantity: Business.monthly_charge(business.users.count))
-        StripePaymentService.new(business).create_subscription
+        StripePaymentService.new(business).update_subscription
       end
     end
 end

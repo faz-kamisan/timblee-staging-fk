@@ -2,7 +2,7 @@ class Subscription < ActiveRecord::Base
   belongs_to :business
 
   validates :start_at, :end_at, :business, presence: true
-  validates_date :end_at, on_or_after: :start_at
+  validates_date :end_at, on_or_after: :created_at
   validates :quantity, presence: true
 
   before_validation :add_start_at_and_end_at, on: :create
