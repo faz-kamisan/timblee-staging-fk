@@ -11,14 +11,9 @@ body {
   font-family: "proxima-nova",sans-serif;
   min-width: 1300px;
   padding-top: 95px;
-
   transition: padding-top .35s;
   -moz-transition: padding-top .35s;
   -webkit-transition: padding-top .35s;
-
-  &.toggle {
-    padding-top: 0;
-  }
 }
 
 .btn {

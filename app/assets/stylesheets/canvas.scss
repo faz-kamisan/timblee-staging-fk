@@ -1103,10 +1103,6 @@
   -moz-transition: top .35s;
   -webkit-transition: top .35s;
 
-  &.toggle {
-    top: 0;
-  }
-
   .toggle-header {
     position: absolute;
     right: 0;
@@ -1302,4 +1298,18 @@
     }
   }
 
+}
+
+.hide-header {
+  padding-top: 0;
+  .main-header {
+    top: -95px;
+  }
+  .react-header {
+    top: 0;
+  }
+  .sitemap-left-sidebar {
+    top: 127px;
+    height: calc(100% - 127px);
+  }
 }
