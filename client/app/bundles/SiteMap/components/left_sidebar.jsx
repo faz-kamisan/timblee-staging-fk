@@ -6,13 +6,14 @@ class LeftSidebar extends React.Component {
   static propTypes = {
     pageTypes: PropTypes.array.isRequired,
     sections: PropTypes.array.isRequired,
-    updatedAt: PropTypes.string.isRequired
+    updatedAt: PropTypes.string.isRequired,
+    leftSidebarExpanded: PropTypes.bool.isRequired,
+    toggleLeftSideBarExpanded: PropTypes.func.isRequired
   };
 
   constructor(props) {
     super(props)
     this.state = {
-      expand: true,
       searchQuery: ''
     }
     this.toogleExpand = this.toogleExpand.bind(this)
@@ -20,7 +21,7 @@ class LeftSidebar extends React.Component {
   }
 
   toogleExpand() {
-    this.setState({expand: !this.state.expand});
+    this.props.toggleLeftSideBarExpanded(!this.props.leftSidebarExpanded)
   }
 
   handleSearch(e) {
@@ -44,9 +45,9 @@ class LeftSidebar extends React.Component {
       return <li key={index}><DraggablePageType name={pageType.name} iconName={pageType.icon_name} id={pageType.id} /></li>
     })
     return (
-      <div className={'sitemap-left-sidebar' + (this.state.expand ? '' : ' expand-false')}>
+      <div className={'sitemap-left-sidebar' + (this.props.leftSidebarExpanded ? '' : ' expand-false')}>
         {
-          this.state.expand ?
+          this.props.leftSidebarExpanded ?
           <div>
             <div className="close-left-bar">
               <div className="row">

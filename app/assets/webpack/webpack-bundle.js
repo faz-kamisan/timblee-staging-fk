@@ -38411,6 +38411,10 @@
 	
 	var _current_user2 = _interopRequireDefault(_current_user);
 	
+	var _left_sidebar_expanded = __webpack_require__(/*! ./left_sidebar_expanded */ 787);
+	
+	var _left_sidebar_expanded2 = _interopRequireDefault(_left_sidebar_expanded);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var sitemapAppReducer = (0, _redux.combineReducers)({
@@ -38422,6 +38426,7 @@
 	  state: _state2.default,
 	  saving: _saving2.default,
 	  comments: _comments2.default,
+	  leftSidebarExpanded: _left_sidebar_expanded2.default,
 	  currentUser: _current_user2.default
 	});
 	
@@ -38481,6 +38486,7 @@
 	exports.addGeneralComment = addGeneralComment;
 	exports.updatePageCommentId = updatePageCommentId;
 	exports.updateGeneralCommentId = updateGeneralCommentId;
+	exports.changeLeftSideBarExpanded = changeLeftSideBarExpanded;
 	var SET_NAME = exports.SET_NAME = 'SET_NAME';
 	var ADD_NEW_PAGE = exports.ADD_NEW_PAGE = 'ADD_NEW_PAGE';
 	var REMOVE_PAGE = exports.REMOVE_PAGE = 'REMOVE_PAGE';
@@ -38494,6 +38500,7 @@
 	var ADD_GENERAL_COMMENT = exports.ADD_GENERAL_COMMENT = 'ADD_GENERAL_COMMENT';
 	var UPDATE_PAGE_COMMENT_ID = exports.UPDATE_PAGE_COMMENT_ID = 'UPDATE_PAGE_COMMENT_ID';
 	var UPDATE_GENERAL_COMMENT_ID = exports.UPDATE_GENERAL_COMMENT_ID = 'UPDATE_GENERAL_COMMENT_ID';
+	var CHANGE_LEFT_SIDEBAR_EXPANDED = exports.CHANGE_LEFT_SIDEBAR_EXPANDED = 'CHANGE_LEFT_SIDEBAR_EXPANDED';
 	
 	function setName(name) {
 	  return { type: SET_NAME, name: name };
@@ -38545,6 +38552,10 @@
 	
 	function updateGeneralCommentId(oldId, newId) {
 	  return { type: UPDATE_GENERAL_COMMENT_ID, oldId: oldId, newId: newId };
+	}
+	
+	function changeLeftSideBarExpanded(expanded) {
+	  return { type: CHANGE_LEFT_SIDEBAR_EXPANDED, expanded: expanded };
 	}
 
 /***/ },
@@ -42891,7 +42902,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { sections: state.sections, sitemapId: state.id };
+	  return { sections: state.sections, sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded };
 	};
 	
 	var ConnectedSecionContainer = (0, _reactRedux.connect)(mapStateToProps)(_section_container2.default);
@@ -42973,7 +42984,7 @@
 	        return _react2.default.createElement(
 	          'div',
 	          { key: section.id, className: 'sitemap-section' + (_this.state.currentSectionId == section.id ? ' active' : ' hide') },
-	          _react2.default.createElement(_draggable_page_container2.default, { pageTree: section.pageTree, sitemapNumber: '', sitemapId: _this.props.sitemapId })
+	          _react2.default.createElement(_draggable_page_container2.default, { pageTree: section.pageTree, sitemapNumber: '', sitemapId: _this.props.sitemapId, leftSidebarExpanded: _this.props.leftSidebarExpanded })
 	        );
 	      });
 	
@@ -43108,7 +43119,7 @@
 	      return connectDragSource(_react2.default.createElement(
 	        'div',
 	        { className: 'page-container-wrapper' + (isDragging ? ' dragging' : '') },
-	        _react2.default.createElement(_page_container2.default, { pageTree: this.props.pageTree, children: children, sitemapNumber: this.props.sitemapNumber })
+	        _react2.default.createElement(_page_container2.default, { pageTree: this.props.pageTree, children: children, sitemapNumber: this.props.sitemapNumber, leftSidebarExpanded: this.props.leftSidebarExpanded })
 	      ));
 	    }
 	  }]);
@@ -46986,7 +46997,12 @@
 	    key: 'render',
 	    value: function render() {
 	      if (this.props.pageTree.level == 0) {
-	        var width = (this.props.pageTree.children.length * 240 + 60).toString() + 'px';
+	        if (this.props.leftSidebarExpanded) {
+	          var width = (this.props.pageTree.children.length * 240 + 432).toString() + 'px';
+	        } else {
+	          var width = (this.props.pageTree.children.length * 240 + 60).toString() + 'px';
+	        }
+	
 	        return _react2.default.createElement(
 	          'div',
 	          { 'data-level': this.props.pageTree.level, className: 'page-container level-' + this.props.pageTree.level.toString(), style: { width: width } },
@@ -48327,6 +48343,8 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
 	
+	var _actions = __webpack_require__(/*! ../actions */ 606);
+	
 	var _left_sidebar = __webpack_require__(/*! ../components/left_sidebar */ 776);
 	
 	var _left_sidebar2 = _interopRequireDefault(_left_sidebar);
@@ -48334,11 +48352,15 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { pageTypes: state.pageTypes, sections: state.sections, updatedAt: state.updated_at };
+	  return { pageTypes: state.pageTypes, sections: state.sections, updatedAt: state.updated_at, leftSidebarExpanded: state.leftSidebarExpanded };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {};
+	  return {
+	    toggleLeftSideBarExpanded: function toggleLeftSideBarExpanded(expanded) {
+	      dispatch((0, _actions.changeLeftSideBarExpanded)(expanded));
+	    }
+	  };
 	};
 	
 	var ConnectedLeftSideBar = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_left_sidebar2.default);
@@ -48387,7 +48409,6 @@
 	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(LeftSidebar).call(this, props));
 	
 	    _this2.state = {
-	      expand: true,
 	      searchQuery: ''
 	    };
 	    _this2.toogleExpand = _this2.toogleExpand.bind(_this2);
@@ -48398,7 +48419,7 @@
 	  _createClass(LeftSidebar, [{
 	    key: 'toogleExpand',
 	    value: function toogleExpand() {
-	      this.setState({ expand: !this.state.expand });
+	      this.props.toggleLeftSideBarExpanded(!this.props.leftSidebarExpanded);
 	    }
 	  }, {
 	    key: 'handleSearch',
@@ -48432,8 +48453,8 @@
 	      });
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'sitemap-left-sidebar' + (this.state.expand ? '' : ' expand-false') },
-	        this.state.expand ? _react2.default.createElement(
+	        { className: 'sitemap-left-sidebar' + (this.props.leftSidebarExpanded ? '' : ' expand-false') },
+	        this.props.leftSidebarExpanded ? _react2.default.createElement(
 	          'div',
 	          null,
 	          _react2.default.createElement(
@@ -48444,7 +48465,7 @@
 	              { className: 'row' },
 	              _react2.default.createElement(
 	                'span',
-	                { className: 'cursor col-xs-4 p-l-0', onClick: this.toogleExpand },
+	                { className: 'cursor col-xs-4 p-r-0', onClick: this.toogleExpand },
 	                _react2.default.createElement(
 	                  'span',
 	                  { className: 'caret-left' },
@@ -48495,7 +48516,9 @@
 	LeftSidebar.propTypes = {
 	  pageTypes: _react.PropTypes.array.isRequired,
 	  sections: _react.PropTypes.array.isRequired,
-	  updatedAt: _react.PropTypes.string.isRequired
+	  updatedAt: _react.PropTypes.string.isRequired,
+	  leftSidebarExpanded: _react.PropTypes.bool.isRequired,
+	  toggleLeftSideBarExpanded: _react.PropTypes.func.isRequired
 	};
 	exports.default = LeftSidebar;
 
@@ -49426,6 +49449,35 @@
 	  iconName: _react.PropTypes.string.isRequired
 	};
 	exports.default = PageTypePreview;
+
+/***/ },
+/* 787 */
+/*!****************************************************************!*\
+  !*** ./app/bundles/SiteMap/reducers/left_sidebar_expanded.jsx ***!
+  \****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _index = __webpack_require__(/*! ../actions/index */ 606);
+	
+	var leftSidebarExpanded = function leftSidebarExpanded() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case _index.CHANGE_LEFT_SIDEBAR_EXPANDED:
+	      return action.expanded;
+	    default:
+	      return state;
+	  }
+	};
+	
+	exports.default = leftSidebarExpanded;
 
 /***/ }
 /******/ ]);
