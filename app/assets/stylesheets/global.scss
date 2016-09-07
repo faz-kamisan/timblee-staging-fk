@@ -480,7 +480,7 @@ input#toggle:checked + label:after {
   .cus-icon-add {
     width: 20px;
     height: 20px;
-    margin-top: 1px;
+    margin-top: 2px;
     &:before {
       height: 8px;
       margin-top: -4px;
@@ -488,6 +488,14 @@ input#toggle:checked + label:after {
     &:after {
       width: 8px;
       margin-left: -4px;
+    }
+    &:hover {
+      background: $primaryWhite;
+      border: 1px solid $primaryPink;
+      &:before,
+      &:after {
+        background: $primaryPink;
+      }
     }
   }
 }
