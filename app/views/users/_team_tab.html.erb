@@ -61,14 +61,6 @@
                 </div>
               </div>
             </div>
-            <% if current_user.is_admin? && current_user == user %>
-              <div class="col-xs-3 relative">
-                <div class="admin-dp text-right">
-                  <%= image_tag('avatar_11.svg', class: 'admin-image') %>
-                  <span>Admin</span>
-                </div>
-              </div>
-            <% end %>
             <% if current_user.is_admin && current_user != user %>
               <div class="col-xs-3 text-right edit-info">
                 <div class="edit">
@@ -76,10 +68,7 @@
                   <a href="#delete-user-modal" data-toggle="modal" class="link-regular btn-regular delete-user-modal-link" data-url= "<%= admin_user_path(user)%>" data-name="<%= user.full_name %>">Delete</a>
                 </div>
               </div>
-            <% elsif (!current_user.is_admin || current_user == user) && user.is_admin %>
-              <div class="col-xs-3 text-right edit-info">
-                <div class="edit">
-                Admin
+
             <% elsif (!current_user.is_admin || current_user == user) && user.is_admin %>
               <div class="col-xs-3 relative">
                 <div class="admin-dp text-right">

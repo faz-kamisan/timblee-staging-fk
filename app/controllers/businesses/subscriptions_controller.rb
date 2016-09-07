@@ -42,7 +42,7 @@ class Businesses::SubscriptionsController < ApplicationController
       StripePaymentService.new(current_business).update_subscription
 
       InvitationService.invite_users(emails, current_user, params[:custom_message])
-      redirect_to team_settings_users_path
+      redirect_to team_settings_users_path, notice: t('.success', scope: :flash)
 
       rescue Stripe::CardError => e
         redirect_to billing_settings_users_path, alert: e.message
