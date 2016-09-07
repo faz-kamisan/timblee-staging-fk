@@ -50,7 +50,7 @@ class LeftSidebar extends React.Component {
           <div>
             <div className="close-left-bar">
               <div className="row">
-                <span className="cursor col-xs-4 p-l-0" onClick={this.toogleExpand}>
+                <span className="cursor col-xs-4 p-r-0" onClick={this.toogleExpand}>
                   <span className="caret-left">
                     <i className="icon-caret"></i>
                   </span>
