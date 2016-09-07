@@ -2,7 +2,7 @@ import { ADD_GENERAL_COMMENT, UPDATE_GENERAL_COMMENT_ID } from '../actions/index
 
 function addGeneralComment(comments, message, commenter, tempId) {
   var commentsCopy = Object.assign([], comments)
-  var newComment = { message: message, commenter: commenter, id: tempId }
+  var newComment = { message: message, commenter: commenter, id: tempId, createdAt: 'Just now' }
   commentsCopy.push(newComment)
   return commentsCopy
 }

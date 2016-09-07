@@ -38736,7 +38736,7 @@
 	    return section.id == sectionId;
 	  })[0].pageTree;
 	  var page = getNodeById(treeCopy, id);
-	  var newComment = { message: message, commenter: commenter, id: tempId };
+	  var newComment = { message: message, commenter: commenter, id: tempId, createdAt: 'Just now' };
 	  page.comments.push(newComment);
 	  return sectionsCopy;
 	}
@@ -38846,7 +38846,7 @@
 	
 	function addGeneralComment(comments, message, commenter, tempId) {
 	  var commentsCopy = Object.assign([], comments);
-	  var newComment = { message: message, commenter: commenter, id: tempId };
+	  var newComment = { message: message, commenter: commenter, id: tempId, createdAt: 'Just now' };
 	  commentsCopy.push(newComment);
 	  return commentsCopy;
 	}
@@ -48738,13 +48738,22 @@
 	var RightSidebar = function (_React$Component) {
 	  _inherits(RightSidebar, _React$Component);
 	
-	  function RightSidebar() {
+	  function RightSidebar(props) {
 	    _classCallCheck(this, RightSidebar);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(RightSidebar).apply(this, arguments));
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(RightSidebar).call(this, props));
+	
+	    _this2.state = { currentTab: 'active' };
+	    _this2.handleTabClick = _this2.handleTabClick.bind(_this2);
+	    return _this2;
 	  }
 	
 	  _createClass(RightSidebar, [{
+	    key: 'handleTabClick',
+	    value: function handleTabClick(e, tabName) {
+	      this.setState({ currentTab: tabName });
+	    }
+	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      $('.comment-input').watermark('Add a comment...<br/>You can mention people by typing @.', { fallback: false });
@@ -48753,6 +48762,7 @@
 	    key: 'render',
 	    value: function render() {
 	      var CommentTabs = ['active', 'resolved', 'archived'];
+	      var _this = this;
 	      var renderedComments = this.props.comments.map(function (comment, index) {
 	        return _react2.default.createElement(
 	          'li',
@@ -48796,7 +48806,9 @@
 	      var renderedCommentTabs = CommentTabs.map(function (commentTab, index) {
 	        return _react2.default.createElement(
 	          'li',
-	          { key: index },
+	          { key: index, className: 'comment-tab' + (_this.state.currentTab == commentTab ? ' active' : ''), onClick: function onClick(e) {
+	              _this.handleTabClick(e, commentTab);
+	            } },
 	          commentTab
 	        );
 	      });
