@@ -5,6 +5,7 @@ class Businesses::SubscriptionsController < ApplicationController
   before_action :load_plan, :check_validity, only: :create
   around_action :wrap_in_transaction, only: :create
   before_action :deactivate_old_subscription , only: :create
+
   def create
     if @plan.stripe_plan_id == STARTER_STRIPE_ID
       activate_starter_plan
@@ -42,7 +43,7 @@ class Businesses::SubscriptionsController < ApplicationController
       StripePaymentService.new(current_business).update_subscription
 
       InvitationService.invite_users(emails, current_user, params[:custom_message])
-      redirect_to team_settings_users_path, notice: t('.success', scope: :flash)
+      redirect_to team_settings_users_path, notice: t('pro_plan_success', scope: :flash, users: no_of_users)
 
       rescue Stripe::CardError => e
         redirect_to billing_settings_users_path, alert: e.message

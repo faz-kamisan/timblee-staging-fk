@@ -12,7 +12,7 @@ Sitemaps.prototype.bindEvents = function() {
 
   this.newSitemap.on('click', _this.newSitemapLink, function() {
     if(_this.newSitemapLink.data('allow-more-sitemaps')) {
-      $(this).find('form#new_sitemap').submit();
+      $(this).submit();
     } else {
       _this.sitemapErrorModal.modal('show');
     }
@@ -59,11 +59,10 @@ Sitemaps.prototype.init = function() {
 $(function() {
   var options = {
     actionOverlays : $('.actions-overlay'),
-    newSitemap : $('.new-sitemap'),
+    newSitemap : $('.new_sitemap'),
     newSitemapLink : $('.new-sitemap-link'),
     sitemapErrorModal: $('#sitemap-error-modal'),
     dropContainers : $('.folder-info'),
-    newSitemapLink : $('.new-sitemap-link'),
     draggableSitemaps : $('.sitemap-container').not('.new-sitemap')
   }
   var sitemaps = new Sitemaps(options);

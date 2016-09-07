@@ -171,7 +171,7 @@
 <%= render 'businesses/delete_business_modal' %>
 
 <!-- Thanks Modal -->
-<div class="modal fade" id="thanks-modal" tabindex="-1" role="dialog" aria-labelledby="thanks-modalLabel">
+<div class="modal fade" id="thanks-modal" tabindex="-1" role="dialog" aria-labelledby="thanks-modalLabel" data-show= <%= flash[:notice] == I18n.t('pro_plan_success', scope: :flash, users: current_business.no_of_users) ? true : false %>>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
@@ -180,12 +180,15 @@
             <%= image_tag('close-modal.svg', class: 'close-modal') %>
           </span>
         </button>
-        <h4>Thanks [First Name]</h4>
+        <h4>Thanks <%= current_user.full_name %></h4>
         <p>We're so excited to have you on board! If you ever have a question or <br> need a hand with anything, we're just a click away via the settings menu <br> and would love to help!</p>
         <p>Lots of Love,</p>
         <%= image_tag('team.svg', class: 'team-logo') %>
         <div class="modal-button text-center">
-          <a href="#" class="btn btn-pink">Create a sitemap</a>
+          <%= form_for Sitemap.new do |f| %>
+            <%= f.hidden_field :folder_id %>
+            <a href="javascript:void(0);" class="btn btn-pink new-sitemap-link" data-allow-more-sitemaps= "<%= current_business.allow_more_sitemaps? ? 'true' : 'false' %>">Create a sitemap</a>
+          <% end %>
         </div>
       </div>
     </div>
