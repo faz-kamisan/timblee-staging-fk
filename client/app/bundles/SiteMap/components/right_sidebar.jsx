@@ -26,19 +26,19 @@ class RightSidebar extends React.Component {
   render() {
     const CommentTabs = ['active', 'resolved', 'archived']
     var _this = this;
-    var renderedComments = this.props.comments.map(function(comment, index) {
+    var renderedComments = this.props.comments.filter(function(comment) { return(comment.state == _this.state.currentTab) }).map(function(comment, index) {
       return <li key={index}><Comment message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} /></li>
     })
     var pageWithComments = []
     this.props.sections.forEach(function(section, index) {
       traverse(section.pageTree, function(page) {
-        if(page.comments.length > 0) {
+        if(page.comments.filter(function(comment) { return(comment.state == _this.state.currentTab) }).length > 0) {
           pageWithComments.push({ name: page.name, comments: page.comments, id: page.id, sectionId: section.id });
         }
       })
     })
     var renderedPageWithComments = pageWithComments.map(function(page, index) {
-      var renderedPageComments = page.comments.map(function(comment, index) {
+      var renderedPageComments = page.comments.filter(function(comment) { return(comment.state == _this.state.currentTab) }).map(function(comment, index) {
         return <li key={index}><Comment message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} /></li>
       })
       return(

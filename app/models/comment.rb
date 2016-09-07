@@ -6,7 +6,7 @@ class Comment < ActiveRecord::Base
   strip_fields :message
 
   def to_react_data
-    { id: id, message: message, created_at: created_at_decorated, commenter: { fullName: commenter.full_name, email: commenter.email } }
+    { id: id, message: message, created_at: created_at_decorated, state: state, commenter: { fullName: commenter.full_name, email: commenter.email } }
   end
 
   def created_at_decorated

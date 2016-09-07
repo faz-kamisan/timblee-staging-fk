@@ -38736,7 +38736,7 @@
 	    return section.id == sectionId;
 	  })[0].pageTree;
 	  var page = getNodeById(treeCopy, id);
-	  var newComment = { message: message, commenter: commenter, id: tempId, createdAt: 'Just now' };
+	  var newComment = { message: message, commenter: commenter, id: tempId, created_at: 'Just now' };
 	  page.comments.push(newComment);
 	  return sectionsCopy;
 	}
@@ -38846,7 +38846,7 @@
 	
 	function addGeneralComment(comments, message, commenter, tempId) {
 	  var commentsCopy = Object.assign([], comments);
-	  var newComment = { message: message, commenter: commenter, id: tempId, createdAt: 'Just now' };
+	  var newComment = { message: message, commenter: commenter, id: tempId, created_at: 'Just now' };
 	  commentsCopy.push(newComment);
 	  return commentsCopy;
 	}
@@ -48779,7 +48779,9 @@
 	    value: function render() {
 	      var CommentTabs = ['active', 'resolved', 'archived'];
 	      var _this = this;
-	      var renderedComments = this.props.comments.map(function (comment, index) {
+	      var renderedComments = this.props.comments.filter(function (comment) {
+	        return comment.state == _this.state.currentTab;
+	      }).map(function (comment, index) {
 	        return _react2.default.createElement(
 	          'li',
 	          { key: index },
@@ -48789,13 +48791,17 @@
 	      var pageWithComments = [];
 	      this.props.sections.forEach(function (section, index) {
 	        (0, _tree_helper.traverse)(section.pageTree, function (page) {
-	          if (page.comments.length > 0) {
+	          if (page.comments.filter(function (comment) {
+	            return comment.state == _this.state.currentTab;
+	          }).length > 0) {
 	            pageWithComments.push({ name: page.name, comments: page.comments, id: page.id, sectionId: section.id });
 	          }
 	        });
 	      });
 	      var renderedPageWithComments = pageWithComments.map(function (page, index) {
-	        var renderedPageComments = page.comments.map(function (comment, index) {
+	        var renderedPageComments = page.comments.filter(function (comment) {
+	          return comment.state == _this.state.currentTab;
+	        }).map(function (comment, index) {
 	          return _react2.default.createElement(
 	            'li',
 	            { key: index },
