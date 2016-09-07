@@ -65,12 +65,12 @@ class Header extends React.Component {
     return (
       <div className="react-header">
         <div className="row">
-          <div className="col-xs-6">
+          <div className="col-xs-5">
             <div className="row">
               <div className="col-xs-9">
                 <span className="logo-dark relative"></span>
                 <input value = {this.state.name} onChange={this.handleNameChange} onBlur={this.handleNameInputBlur} className={"site-map-name" + (this.state.nameFocused ? '' : ' hide')} ref='sitemapNameInput' />
-                <h3 className={"site-map-name" + (this.state.nameFocused ? ' hide' : '')} onClick={this.handleNameInputFocus}>{this.state.name}</h3>
+                <h3 className={"site-map-name truncate " + (this.state.nameFocused ? ' hide' : '')} onClick={this.handleNameInputFocus}>{this.state.name}</h3>
               </div>
               <div className="col-xs-3 state-status text-center">
                 <h5>
@@ -85,7 +85,18 @@ class Header extends React.Component {
               </div>
             </div>
           </div>
-          <div className="col-xs-6">
+          <div className="col-xs-2 saved-status">
+            <span>
+              { this.props.saving ? 
+                <div>Saving</div>
+                :
+                <div>
+                  <i className="icon-save-circle"></i> Saved
+                </div>
+              }
+            </span>
+          </div> 
+          <div className="col-xs-5">
 
           </div>
         </div>
