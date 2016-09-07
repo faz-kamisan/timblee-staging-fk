@@ -46985,18 +46985,34 @@
 	  _createClass(PageContainer, [{
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { 'data-level': this.props.pageTree.level, className: 'page-container level-' + this.props.pageTree.level.toString() },
-	        _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: this.props.pageTree.children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name }),
-	        _react2.default.createElement(_connected_gutter2.default, { pageTree: this.props.pageTree }),
-	        _react2.default.createElement(_connected_level_support2.default, { pageTree: this.props.pageTree }),
-	        _react2.default.createElement(
+	      if (this.props.pageTree.level == 0) {
+	        var width = (this.props.pageTree.children.length * 240 + 60).toString() + 'px';
+	        return _react2.default.createElement(
 	          'div',
-	          { className: 'parent parent-' + this.props.pageTree.level.toString() + (this.props.pageTree.collapsed ? ' hide' : '') },
-	          this.props.children
-	        )
-	      );
+	          { 'data-level': this.props.pageTree.level, className: 'page-container level-' + this.props.pageTree.level.toString(), style: { width: width } },
+	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: this.props.pageTree.children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name }),
+	          _react2.default.createElement(_connected_gutter2.default, { pageTree: this.props.pageTree }),
+	          _react2.default.createElement(_connected_level_support2.default, { pageTree: this.props.pageTree }),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'parent parent-' + this.props.pageTree.level.toString() + (this.props.pageTree.collapsed ? ' hide' : '') },
+	            this.props.children
+	          )
+	        );
+	      } else {
+	        return _react2.default.createElement(
+	          'div',
+	          { 'data-level': this.props.pageTree.level, className: 'page-container level-' + this.props.pageTree.level.toString() },
+	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: this.props.pageTree.children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name }),
+	          _react2.default.createElement(_connected_gutter2.default, { pageTree: this.props.pageTree }),
+	          _react2.default.createElement(_connected_level_support2.default, { pageTree: this.props.pageTree }),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'parent parent-' + this.props.pageTree.level.toString() + (this.props.pageTree.collapsed ? ' hide' : '') },
+	            this.props.children
+	          )
+	        );
+	      }
 	    }
 	  }]);
 	
