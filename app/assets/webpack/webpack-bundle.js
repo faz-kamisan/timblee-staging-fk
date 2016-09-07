@@ -48400,7 +48400,7 @@
 	            ),
 	            _react2.default.createElement(
 	              'span',
-	              null,
+	              { className: 'hide' },
 	              this.getPageCount(),
 	              ' Pages | Last updated ',
 	              this.props.updatedAt

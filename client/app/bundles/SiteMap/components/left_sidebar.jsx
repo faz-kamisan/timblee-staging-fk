@@ -55,7 +55,7 @@ class LeftSidebar extends React.Component {
                 </span>
                 Hide Sidebar
               </span>
-              <span>
+              <span className='hide'>
                 {this.getPageCount()} Pages | Last updated {this.props.updatedAt}
               </span>
             </div>
