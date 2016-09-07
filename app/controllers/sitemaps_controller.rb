@@ -39,6 +39,7 @@ class SitemapsController < ApplicationController
     else
       respond_to do |format|
         format.js do
+          flash.now[:alert] = t('.failure', scope: :flash)
           render 'shared/show_flash', status: 522
         end
         format.json do

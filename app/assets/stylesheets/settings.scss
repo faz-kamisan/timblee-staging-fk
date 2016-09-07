@@ -56,16 +56,11 @@
   .nav-tabs .active:focus {
     a {
       @extend .remove-default-styles;
-      &:after {
-        display: block;
-      }
-      &:focus {
-        @extend .remove-default-styles;
-      }
     }
   }
   .nav-tabs {
     border-bottom: solid 1px $primaryLabel;
+    position: relative;
     a {
       padding: 0;
       color: $primaryGrey;
@@ -78,19 +73,6 @@
       position: relative;
       &:hover {
         @extend .remove-default-styles;
-        &:after {
-          display: block;
-        }
-      }
-      &:after {
-        content: ' ';
-        position: absolute;
-        left: -8%;
-        bottom: 0;
-        width: 116%;
-        height: 3px;
-        background: $primaryPink;
-        display: none;
       }
     }
     li + li {
@@ -103,6 +85,13 @@
           left: 0;
         }
       }
+    }
+    .animated-bar {
+      position: absolute;
+      bottom: 0;
+      height: 3px;
+      background: $primaryPink;
+      margin: 0;
     }
   }
 }
@@ -625,3 +614,63 @@ ul.tagit li.tagit-choice-editable {
 .plan-benefits.starter-plan-benefits .btn.btn-grey {
   line-height: 15px;
 }
+
+.cc-number {
+  padding-right: 50px!important;
+}
+
+.cc-brand {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  display: block;
+  z-index: 2;
+  top: 8px;
+  right: 20px;
+  &.amex {
+    background: url('/assets/amex.png');
+    background-size: 32px 32px;
+    background-repeat: no-repeat;
+  }
+  &.visa {
+    background: url('/assets/visa.png');
+    background-size: 40px 13px;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 13px;
+    top: 16px;
+  }
+  &.mastercard {
+    background: url('/assets/master-card.png');
+    background-size: 40px 25px;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 25px;
+    top: 12px;
+  }
+}
+
+.admin-dp {
+  margin-top: 7px;
+  span {
+    background: $primaryWhite;
+    border: 1px solid #bbbec4;
+    border-radius: 14px;
+    display: inline-block;
+    padding: 0 10px;
+    height: 26px;
+    line-height: 24px;
+    font-size: 10px;
+    color: #000;
+    padding-left: 20px;
+    text-transform: uppercase;
+    @include box-shadow(1px, 1px, 2px, rgba(106, 113, 127, .2));
+  }
+  .admin-image {
+    width: 36px;
+    height: 36px;
+    position: relative;
+    left: 20px;
+  }
+}
+

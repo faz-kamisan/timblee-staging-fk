@@ -29,24 +29,32 @@ Progress.prototype.init = function() {
         // Take Sitemap back to original container
       } else {
         // Update Sitemap State
+
+
+        var sourceContainer = $dropped.closest('.drop_container')
+        var updatedAt = new Date,
+            day = ("0" + updatedAt.getDate()).slice(-2),
+            month = updatedAt.toLocaleString('en-us', { month: "short" }),
+            year = updatedAt.getFullYear(),
+            updatedAtFormatted = month + ' ' + day + ', ' + year;
+        $dropped.css({top: 0, left: 0, transform: 'rotate(0deg)'}).parent('.drag-wrapper').removeClass('dragging').detach().prependTo($droppedOn.find('.sitemap_container'));
+        $dropped.find('.last-updated').data('original-last-updated', $dropped.find('.last-updated').html());
+        $dropped.find('.last-updated').html('Last updated ' + updatedAtFormatted);
+        _this.setSitemapCount($droppedOn, sourceContainer);
+        _this.checkContainerIsEmpty($droppedOn);
+        _this.checkContainerIsEmpty(sourceContainer);
+
+
+
         $.ajax({
           method: 'put',
           url: '/sitemaps/' + $dropped.data('id'),
           data: { sitemap: { state: $droppedOn.data('state') } },
           dataType: 'script',
           error: function() {
-            $dropped.css({top: 0, left: 0});
-          },
-          success: function() {
-            var sourceContainer = $dropped.closest('.drop_container')
-            _this.setSitemapCount($droppedOn, sourceContainer);
-            var updatedAt = new Date,
-                day = ("0" + updatedAt.getDate()).slice(-2),
-                month = updatedAt.toLocaleString('en-us', { month: "short" }),
-                year = updatedAt.getFullYear(),
-                updatedAtFormatted = month + ' ' + day + ', ' + year;
-            $dropped.css({top: 0, left: 0}).parent('.drag-wrapper').detach().prependTo($droppedOn.find('.sitemap_container'));
-            $dropped.find('.last-updated').html('Last updated ' + updatedAtFormatted);
+            $dropped.parent('.drag-wrapper').detach().prependTo(sourceContainer.find('.sitemap_container'));
+            $dropped.find('.last-updated').html($dropped.find('.last-updated').data('original-last-updated'));
+            _this.setSitemapCount(sourceContainer, $droppedOn);
             _this.checkContainerIsEmpty($droppedOn);
             _this.checkContainerIsEmpty(sourceContainer);
           }
