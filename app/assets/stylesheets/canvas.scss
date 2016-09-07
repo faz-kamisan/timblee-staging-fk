@@ -109,6 +109,7 @@
     text-align: center;
     padding: 204px 0 0 30px;
     transition: padding-left .2s;
+    margin: 0 auto;
     > .page-tile {
       margin-bottom: 75px;
       margin-left: -40px;
@@ -1156,12 +1157,12 @@
         }
         &.Approved {
           &:before {
-            background: $primaryGreen;   
+            background: $primaryGreen;
           }
         }
         &.Hold {
           &:before {
-            background: #A3ACB5;  
+            background: #A3ACB5;
           }
         }
       }
@@ -1232,7 +1233,7 @@
           background: $primaryYellow;
         }
         &.Approved {
-          background: $primaryGreen; 
+          background: $primaryGreen;
         }
         &.Hold {
           background: #A3ACB5;
