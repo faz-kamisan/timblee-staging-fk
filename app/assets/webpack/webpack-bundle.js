@@ -48837,7 +48837,7 @@
 	
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'sitemap-right-sidebar' },
+	        { className: 'sitemap-right-sidebar hide' },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'sitemap-comment-tabs' },
