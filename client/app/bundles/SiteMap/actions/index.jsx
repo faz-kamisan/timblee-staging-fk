@@ -11,6 +11,7 @@ export const ADD_PAGE_COMMENT = 'ADD_PAGE_COMMENT'
 export const ADD_GENERAL_COMMENT = 'ADD_GENERAL_COMMENT'
 export const UPDATE_PAGE_COMMENT_ID = 'UPDATE_PAGE_COMMENT_ID'
 export const UPDATE_GENERAL_COMMENT_ID = 'UPDATE_GENERAL_COMMENT_ID'
+export const CHANGE_LEFT_SIDEBAR_EXPANDED = 'CHANGE_LEFT_SIDEBAR_EXPANDED'
 
 export function setName(name) {
   return { type: SET_NAME, name }
@@ -62,4 +63,8 @@ export function updatePageCommentId(oldId, newId, sectionId, pageId) {
 
 export function updateGeneralCommentId(oldId, newId) {
   return { type: UPDATE_GENERAL_COMMENT_ID, oldId, newId }
+}
+
+export function changeLeftSideBarExpanded(expanded) {
+  return { type: CHANGE_LEFT_SIDEBAR_EXPANDED, expanded }
 }

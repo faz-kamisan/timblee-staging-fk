@@ -74,7 +74,7 @@ class DraggedPageContainer extends React.Component {
     // TODO: Have to fix passing of collapse separately.
     return connectDragSource(
       <div className={'page-container-wrapper' + (isDragging ? ' dragging' : '')} >
-        <PageContainer pageTree={this.props.pageTree} children={children} sitemapNumber={this.props.sitemapNumber} />
+        <PageContainer pageTree={this.props.pageTree} children={children} sitemapNumber={this.props.sitemapNumber}  leftSidebarExpanded={this.props.leftSidebarExpanded} />
       </div>
     );
   }

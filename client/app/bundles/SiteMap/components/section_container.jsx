@@ -33,7 +33,7 @@ class SectionContainer extends React.Component {
     var renderedSections = this.props.sections.map(function(section, index) {
       return (
         <div key={section.id} className={'sitemap-section' + (_this.state.currentSectionId == section.id ? ' active' : ' hide')}>
-          <DraggablePageContainer pageTree={section.pageTree} sitemapNumber='' sitemapId={_this.props.sitemapId} />
+          <DraggablePageContainer pageTree={section.pageTree} sitemapNumber='' sitemapId={_this.props.sitemapId} leftSidebarExpanded={_this.props.leftSidebarExpanded} />
         </div>
       )
     })
