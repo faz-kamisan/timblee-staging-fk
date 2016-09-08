@@ -133,8 +133,8 @@
 #starter-plan-modal {
   .modal-body,
   .modal-header {
-    padding-left: 240px;
-    padding-right: 240px;
+    padding-left: 278px;
+    padding-right: 278px;
   }
   .modal-dialog {
     width: 942px;
@@ -164,7 +164,23 @@
     padding-right: 10px;
   }
   .form-group {
-    margin-bottom: 25px;
+    margin-bottom: 10px;
+  }
+  #confirm-saved-card,
+  #add-card {
+    min-width: 185px;
+    @include border-radius(1px);
+    font-size: 14px;
+    height: 45px;
+    line-height: 31px;
+    margin-top: 33px;
+  }
+  #add-card {
+    margin-top: 29px;
+  }
+  input {
+    @include border-radius(1px);
+    background: $primaryWhite;
   }
 }
 
@@ -364,5 +380,49 @@ a#upgrade {
 .pro-plan-benefits {
   .current-plan-text {
     margin-top: 33px;   
+  }
+}
+
+.select-card {
+  padding: 22px 35px 30px 35px;
+  margin: 0;
+  li {
+    + li {
+      margin-top: 8px;
+    }
+    &:not(.active) {
+      a {
+        &:after {
+          display: none;
+        }
+      }
+    }
+  }
+  a {
+    color: $primaryLink;
+    font-size: 14px;
+    padding-left: 18px;
+    display: block;
+    position: relative;
+    &:before {
+      content: ' ';
+      left: 0;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      border: 1px solid $primaryPink;
+      @include border-radius(50%);
+      position: absolute;
+    }
+    &:after {
+      content: ' ';
+      left: 2px;
+      top: 6px;
+      width: 8px;
+      height: 8px;
+      @include border-radius(50%);
+      position: absolute;
+      background: $primaryPink;
+    }
   }
 }
