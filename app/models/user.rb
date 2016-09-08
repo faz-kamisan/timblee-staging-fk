@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   has_many :sitemap_invites, dependent: :destroy
   has_many :shared_sitemaps, through: :sitemap_invites, source: :sitemap
   has_many :comments, as: :commenter
-  # mount_uploader :avatar, AvatarUploader
+  mount_uploader :avatar, AvatarUploader
 
   before_create :set_is_admin, unless: :business_id
   before_create :add_business, unless: :business_id

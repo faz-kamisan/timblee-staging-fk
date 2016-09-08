@@ -677,3 +677,16 @@ ul.tagit li.tagit-choice-editable.invalid-tag {
     left: 20px;
   }
 }
+label.avatar-label {
+  display:inline;
+}
+label.avatar-label > input[type=radio]{
+  display:none;
+}
+label.avatar-label > input[type=radio] + img{
+  cursor:pointer;
+  border:2px solid transparent;
+}
+label.avatar-label > input[type=radio]:checked + img{
+  border:2px solid #f00;
+}

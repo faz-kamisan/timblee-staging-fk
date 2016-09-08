@@ -25,6 +25,22 @@ class UsersController < ApplicationController
     end
   end
 
+  def update_avatar
+    if params[:user]
+      if current_user.update(avatar_update_params)
+        redirect_to settings_users_path, notice: 'Avatar Updated'
+      else
+        redirect_to settings_users_path, alert: 'Could Not Update Avatar'
+      end
+    else
+      if params[:default_avatar] && current_user.avatar.store!(File.open(File.join(Rails.root, "app/assets/images/avatars/#{params[:default_avatar]}"))) && current_user.save!
+        redirect_to settings_users_path, notice: 'Avatar Updated'
+      else
+        redirect_to settings_users_path, alert: 'No Avatar selected'
+      end
+    end
+  end
+
   def validate_unique_email
         render :json => {
                             :existing_email => User.unscoped.find_by(email: params[:email]).present?
@@ -35,5 +51,9 @@ class UsersController < ApplicationController
 
     def password_update_params
       params.require(:user).permit(:password)
+    end
+
+    def avatar_update_params
+      params.require(:user).permit(:avatar)
     end
 end

@@ -72,26 +72,68 @@
   <% end %>
 
   <!-- Static Avatar For Now -->
-  <form class="settings-form">
+  <%= form_for current_user, url: update_avatar_users_path, html: { class: 'settings-form', method: :patch, multipart: true } do |f| %>
     <div class="form-group">
-      <div class="row">
+      <div class="row row-avatar-save">
         <div class="col-xs-9">
           <label>Your image</label>
           <div class="clearfix m-t-15">
-            <%= image_tag('profile-image.png', class: 'profile-image pull-left profile-image-lg') %>
+            <% if current_user.avatar.present? %>
+              <%= image_tag(current_user.avatar, class: 'profile-image pull-left profile-image-lg') %>
+            <% else %>
+              <%= image_tag('profile-image.png', class: 'profile-image pull-left profile-image-lg') %>
+            <% end %>
             <div class="right-text pull-right">
               <p class="pull-right">Helps you better collaborate with clients &amp; co-workers by making your notifications and comments more personal since it will include your image. We highly recommend it.</p>
             </div>
           </div>
         </div>
         <div class="col-xs-3 text-right edit-info">
-          <div class="edit">
-            <a href="javascript:void(0);" class="btn btn-grey">Edit</a>
+          <div class>
+            <a href="javascript:void(0);" class="btn btn-grey btn-edit-avatar">Edit</a>
+          </div>
+        </div>
+      </div>
+      <div class="row row-avatar-edit hide">
+        <div class="col-xs-6">
+          <label>Your image</label>
+          <div class="clearfix m-t-15">
+
+            <div class="right-text pull-right">
+              <p class="pull-right">
+                Upload a square PNG or JPEG image at least 400 x 400px in size. We’ll resize it automatically  and it’ll appear sharp everywhere. If you upload a non-square image, It’ll come out squished! :O
+              </p>
+            </div>
+              <%= f.file_field :avatar , class: 'avatar-field'%>
+            <div class="dropdown">
+              <span class="truncate">
+                Avatars
+              </span>
+              <span class="icon-caret"></span>
+              <ul>
+                <li>
+                  <% (1..5).each do |index| %>
+                    <label for='avatar<%=index%>' class='avatar-label'>
+                      <input type='radio' id='avatar<%=index%>' value='avatar<%=index%>.png' name='default_avatar' />
+                        <%= image_tag('avatars/avatar' + index.to_s + '.png', class: "profile-image avatar-link") %>
+                    </label>
+                  <%end%>
+                </li>
+
+              </ul>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-xs-6 text-right edit-info">
+          <div>
+            <button type="submit" class="btn btn-pink">Save</button>
+            <a href="javascript:void(0);" class="btn btn-grey btn-cancel-edit-avatar">Cancel</a>
           </div>
         </div>
       </div>
     </div>
-  </form>
+  <% end %>
   <!-- Static Avatar For Now -->
 
   <div class="notification">
@@ -110,4 +152,6 @@
     </div>
   </div>
 </div>
+<%= javascript_include_tag('my_info') %>
+
 <!-- My Info Tab End -->

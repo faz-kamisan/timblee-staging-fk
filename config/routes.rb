@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       get 'settings'
       get 'progress'
       patch 'update_password'
+      patch 'update_avatar'
       get 'validate_unique_email'
     end
   end

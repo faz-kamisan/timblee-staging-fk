@@ -24,6 +24,7 @@ tmp/
 config/*.yml
 config/*.pem
 public/assets
+public/uploads
 coverage
 public/system
 .ruby-version
