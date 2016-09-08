@@ -33,7 +33,7 @@ class UsersController < ApplicationController
         redirect_to settings_users_path, alert: 'Could Not Update Avatar'
       end
     else
-      if params[:default_avatar] && current_user.avatar.store!(File.open(File.join(Rails.root, "app/assets/images/avatars/#{params[:default_avatar]}"))) && current_user.save!
+      if params[:default_avatar] && current_user.avatar.store!(File.open(File.join(Rails.root, "app/assets/images/#{params[:default_avatar]}"))) && current_user.save!
         redirect_to settings_users_path, notice: 'Avatar Updated'
       else
         redirect_to settings_users_path, alert: 'No Avatar selected'
