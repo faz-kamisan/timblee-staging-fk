@@ -1,10 +1,9 @@
-var Payment = function(form, usersCount) {
+var Payment = function(form) {
   this.form = form;
   this.ccNumberDiv = this.form.find('.cc-number').closest('div');
   this.expDiv = this.form.find('.cc-exp').closest('div');
   this.cvvDiv = this.form.find('.cc-cvv').closest('div');
   this.errorsDiv = this.form.find('.cc-errors');
-  this.usersCount = usersCount;
 };
 
 Payment.prototype.createToken = function() {
@@ -66,21 +65,16 @@ Payment.prototype.stripeResponseHandler = function (status, response) {
     var token = response.id;
     // Insert the token into the form so it gets submitted to the server
     $form.append($('<input type="hidden" name="stripeToken" />').val(token));
-    if(this.usersCount) {
-      $form.append($('<input type="hidden" name="no_of_users" />').val(this.usersCount.val()));
-      $form.append($('<input type="hidden" name="stripe_plan_id" />').val(PRO_STRIPE_ID));
-    }
     // and submit
-    $form.get(0).submit();
+    $form.trigger('submit.rails');
   }
 };
 
 $(function($) {
   var form1       = $('#add-card-form'),
-      form2       = $('#add-card-modal-form'),
-      usersCount  = $('.plan-users-input');
+      form2       = $('#add-card-modal-form');
 
 
-  new Payment(form1, null).createToken();
-  new Payment(form2, usersCount).createToken();
+  new Payment(form1).createToken();
+  new Payment(form2).createToken();
 });

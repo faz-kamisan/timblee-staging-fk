@@ -14,6 +14,7 @@ class Sitemap < ActiveRecord::Base
   validates :business, :name, presence: true
   validates :state, inclusion: { in: ['on_hold', 'in_progress', 'review', 'approved'] }
   validates :name, uniqueness: { scope: :business_id, case_sensitive: false }
+  validate :business_can_have_more_sitemaps
 
   before_validation :set_state_to_in_progress, on: :create
   before_validation :set_name_to_new_sitemap, on: :create
@@ -40,6 +41,12 @@ class Sitemap < ActiveRecord::Base
   private
     def set_state_to_in_progress
       self.state = 'in_progress'
+    end
+
+    def business_can_have_more_sitemaps
+      unless business.allow_more_sitemaps?
+        errors.add(:base, 'Can\'t create more sitemaps for current business')
+      end
     end
 
     def set_name_to_new_sitemap

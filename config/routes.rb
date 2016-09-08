@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       get 'settings'
       get 'progress'
       patch 'update_password'
+      get 'validate_unique_email'
     end
   end
 
@@ -61,6 +62,8 @@ Rails.application.routes.draw do
 
   namespace :businesses do
     resource :card, only: [:create]
-    resource :subscription, only: [:create]
+    resource :subscription, only: [:create] do
+      post 'webhook', on: :collection
+    end
   end
 end

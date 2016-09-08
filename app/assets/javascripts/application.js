@@ -29,3 +29,4 @@
 //= require settings
 //= require constants
 //= require modal_fix
+//= require toggle_class

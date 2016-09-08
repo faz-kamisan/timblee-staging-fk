@@ -1,8 +1,11 @@
 class Businesses::SubscriptionsController < ApplicationController
 
+  protect_from_forgery except: :webhook
+  skip_before_action :authenticate_user!, only: :webhook
   before_action :load_plan, :check_validity, only: :create
   around_action :wrap_in_transaction, only: :create
   before_action :deactivate_old_subscription , only: :create
+
   def create
     if @plan.stripe_plan_id == STARTER_STRIPE_ID
       activate_starter_plan
@@ -11,27 +14,45 @@ class Businesses::SubscriptionsController < ApplicationController
     end
   end
 
+  def webhook
+    @event = Stripe::Event.retrieve(params['id'])
+    user = Business.find_by(stripe_customer_id: @event.data.object.customer).owner
+
+    if @event.type == 'charge.succeeded'
+      PaymentNotifier.delay.success(user, @event)
+
+    elsif @event.type == 'charge.refunded'
+      PaymentNotifier.delay.refund(user, @event)
+
+    elsif @event.type == 'charge.failed'
+      PaymentNotifier.delay.failure(user, @event)
+    end
+    render status: :ok, json: 'success'
+
+  end
+
   private
 
     def activate_pro_plan
-      current_business.subscriptions.build(plan: @plan, no_of_users: params[:no_of_users], quantity: Business.monthly_charge(params[:no_of_users].to_i))
+      emails = params[:email].split(/\s* \s*/)
+      no_of_users = current_business.users.count + InvitationService.get_invitable_users_count(emails)
 
-      stripe_payment_service = StripePaymentService.new(current_business)
-      stripe_payment_service.add_card(params[:stripeToken]) if params[:stripeToken]
-      stripe_payment_service.create_subscription
-      redirect_to billing_settings_users_path, notice: t('.success', scope: :flash)
+      current_business.subscriptions.build(no_of_users: no_of_users, quantity: Business.monthly_charge(no_of_users))
+      current_business.is_pro = true
+      current_business.has_plan = true
+      StripePaymentService.new(current_business).update_subscription
+
+      InvitationService.invite_users(emails, current_user, params[:custom_message])
+      redirect_to team_settings_users_path, notice: t('pro_plan_success', scope: :flash, users: no_of_users)
 
       rescue Stripe::CardError => e
         redirect_to billing_settings_users_path, alert: e.message
     end
 
     def activate_starter_plan
-      if @active_subscription && @active_subscription.plan.stripe_plan_id == PRO_STRIPE_ID
-        stripe_payment_service = StripePaymentService.new(current_business)
-        stripe_payment_service.remove_old_subscription
-      end
-      current_business.subscriptions.build(plan: @plan)
-      current_business.save
+      StripePaymentService.new(current_business).remove_old_subscription if @current_subscription
+
+      current_business.update(is_pro: false, has_plan: true)
       redirect_to billing_settings_users_path, notice: t('.success', scope: :flash)
     end
 
@@ -43,8 +64,8 @@ class Businesses::SubscriptionsController < ApplicationController
     end
 
     def deactivate_old_subscription
-      @active_subscription = current_business.active_subscription
-      if @active_subscription && !@active_subscription.update(end_at: Time.current)
+      @current_subscription = current_business.current_subscription
+      if @current_subscription && !@current_subscription.update(end_at: Time.current)
         redirect_to billing_settings_users_path, alert: t('.failure', scope: :flash)
       end
     end
