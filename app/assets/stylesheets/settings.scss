@@ -291,13 +291,27 @@
 
 #invite-user-modal {
   .modal-body {
-    padding: 40px 80px;
+    padding: 40px 45px;
+  }
+  .modal-dialog {
+    width: 940px;
+  }
+  h3 {
+    font-size: 18px;
+    margin-bottom: 19px;
+  }
+  h1 {
+    font-size: 50px;
+    font-weight: 400;
+    margin: 0;
+    padding: 37px 0 50px 0;
   }
 }
 
 ul.tagit {
   min-height: 48px;
   padding: 5px 8px;
+  border-color: #d4d4d4;
 }
 
 ul.tagit li.tagit-new {
@@ -348,20 +362,20 @@ ul.tagit li.tagit-choice-editable {
 
 #invite-user-modal {
   .modal-button {
-    padding-top: 25px;
+    padding-top: 30px;
   }
   .btn-transparent {
-    border-color: $primaryGrey;
-    color: $primaryGrey;
+    border-color: $primaryGreyLight;
+    color: $primaryGreyLight;
   }
   .btn {
-    @extend .font-12;
-    line-height: 24px;
-  }
-  .btn-pink {
-    background: $primaryPink;
-    color: $primaryWhite;
-    text-transform: none;
+    line-height: 31px;
+    min-width: 200px!important;
+    height: 45px!important;
+    margin-bottom: 0;
+    @extend .font-14;
+    @include border-radius(1px);
+    text-transform: uppercase;
   }
   .modal-message, p {
     color: $primaryGrey;
@@ -372,7 +386,7 @@ ul.tagit li.tagit-choice-editable {
   margin-top: 10px;
   .add-message {
     font-size: 14px;
-    color: $primaryLink;
+    color: $primaryGrey;
     font-weight: 700;
     line-height: 20px;
   }
@@ -390,6 +404,7 @@ ul.tagit li.tagit-choice-editable {
     padding: 0 2px;
   }
 }
+
 
 #invite-email-preview-modal {
   .modal-body {
@@ -682,4 +697,27 @@ ul.tagit li.tagit-choice-editable.invalid-tag {
   .font-12-light {
     font-size: 14px;
   }
+}
+
+.p-t-b-20 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 45px;
+  position: relative;
+  &:after {
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    right: 0px;
+    z-index: 2;
+    background: #D6D8DA;
+    top: 0;
+    content: ' ';
+  }
+}
+
+.charge {
+  padding-top: 16px;
+  padding-bottom: 13px;
+  color: $primaryGreyLight;
 }
