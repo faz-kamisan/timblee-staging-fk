@@ -176,6 +176,12 @@
 
 #pro-plan-modal {
   .modal-dialog {
-    @include alignCenter(-471px, -381px);
+    @include alignCenter(-470px, -326px);
+  }
+}
+
+#invite-user-modal {
+  .modal-dialog {
+    @include alignCenter(-470px, -317px);
   }
 }

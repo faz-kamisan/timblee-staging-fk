@@ -19,7 +19,7 @@
           </div>
         </div>
         <div class="modal-button text-center">
-          <%= link_to "Revoke Invite", revoke_user_path(user), class: "btn btn-red", remote: true %>
+          <%= link_to "Revoke Invite", revoke_user_path(user), class: "btn btn-red", remote: true, data: { disable_with: 'Please Wait...' }  %>
           <a href="#" data-dismiss="modal" class="btn btn-transparent btn-last">Cancel</a>
         </div>
       </div>

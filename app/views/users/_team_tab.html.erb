@@ -27,9 +27,10 @@
         <div class="col-xs-3 text-right edit-info">
           <div class="edit">
             <% if current_business.is_starter_plan? && !current_business.in_trial_period? %>
-                <a href="#invite-error-modal" data-toggle="modal" class="btn btn-pink">Invite</a>
+                <a href="#invite-error-modal" data-toggle="modal" class="btn btn-pink invite-user-modal-link">Invite</a>
             <% else %>
-              <a href="#invite-user-modal" data-toggle="modal" class="btn btn-pink">Invite</a>
+              <% url = current_business.is_pro_plan? ? businesses_subscription_path : users_bulk_invitation_path %>
+              <a data-toggle="modal" class="btn btn-pink invite-user-modal-link invite-link" data-url='<%= url %>'>Invite</a>
             <% end %>
           </div>
         </div>
@@ -60,14 +61,6 @@
                 </div>
               </div>
             </div>
-            <% if current_user.is_admin? && current_user == user %>
-              <div class="col-xs-3 relative">
-                <div class="admin-dp text-right">
-                  <%= image_tag('avatar_11.svg', class: 'admin-image') %>
-                  <span>Admin</span>
-                </div>
-              </div>
-            <% end %>
             <% if current_user.is_admin && current_user != user %>
               <div class="col-xs-3 text-right edit-info">
                 <div class="edit">
@@ -75,7 +68,8 @@
                   <a href="#delete-user-modal" data-toggle="modal" class="link-regular btn-regular delete-user-modal-link" data-url= "<%= admin_user_path(user)%>" data-name="<%= user.full_name %>">Delete</a>
                 </div>
               </div>
-            <% elsif !current_user.is_admin && user.is_admin %>
+
+            <% elsif (!current_user.is_admin || current_user == user) && user.is_admin %>
               <div class="col-xs-3 relative">
                 <div class="admin-dp text-right">
                   <%= image_tag('avatar_11.svg', class: 'admin-image') %>
@@ -115,4 +109,4 @@
 
 </div>
 <%= render 'users/invite_error_modal'%>
-<%= javascript_include_tag('invitations', 'delete_user') %>
+<%= javascript_include_tag('invitations', 'delete_user', 'team') %>
