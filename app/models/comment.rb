@@ -1,9 +1,11 @@
 class Comment < ActiveRecord::Base
   belongs_to :commentable, polymorphic: true
-  belongs_to :commenter, class_name: :User
+  belongs_to :commenter, polymorphic: true
   validates :message, :commentable, :commenter, presence: true
   validates :state, inclusion: { in: ['active', 'archived', 'resolved'] }
   strip_fields :message
+
+  scope :order_by_updated_at, -> { order('created_at DESC') }
 
   def to_react_data
     { id: id, message: message, created_at: created_at_decorated, state: state, commenter: { fullName: commenter.full_name, email: commenter.email } }

@@ -11,6 +11,11 @@ en:
       destroy:
         success: Folder destroyed successfully
         failure: Couldn't delete folder
+    guests:
+      not_found: Can't find guest
+      create:
+        success: Guest created successfully
+        failure: Couldn't create guest
     sitemaps:
       not_found: Can't find sitemap
       create:

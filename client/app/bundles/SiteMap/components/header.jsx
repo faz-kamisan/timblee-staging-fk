@@ -38,7 +38,7 @@ class Header extends React.Component {
         method: 'put',
         dataType: 'JSON',
         data: { sitemap: { name: this.state.name } },
-        error: (result, b, c, d) => {
+        error: (result) => {
           document.setFlash(result.responseText)
           this.setState({name: this.props.name})
         },

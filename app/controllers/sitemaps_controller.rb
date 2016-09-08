@@ -1,5 +1,7 @@
 class SitemapsController < ApplicationController
   before_filter :fetch_sitemap, only: [:destroy, :show, :update]
+  before_filter :fetch_sitemap_from_token, only: [:public_share]
+  skip_before_filter :authenticate_user!, only: [:public_share]
 
   def create
     @sitemap = current_business.sitemaps.build(sitemap_params)
@@ -15,6 +17,16 @@ class SitemapsController < ApplicationController
 
   def show
     @sitemap_props = @sitemap.to_react_data.merge!(currentUser: { fullName: current_user.full_name, email: current_user.email })
+  end
+
+  def public_share
+    if current_user
+      @sitemap_props = @sitemap.to_react_data.merge!(currentUser: { fullName: current_user.full_name, email: current_user.email })
+    elsif current_guest
+      @sitemap_props = @sitemap.to_react_data.merge!(currentGuest: { fullName: current_guest.full_name, email: current_guest.email })
+    else
+      @sitemap_props = @sitemap.to_react_data
+    end
   end
 
   def destroy
@@ -49,11 +61,18 @@ class SitemapsController < ApplicationController
     end
   end
 
+
   private
     def fetch_sitemap
       unless @sitemap = current_business.sitemaps.find_by(id: params[:id])
         flash.now[:alert] = 'Sitemap Not Found'
         render 'shared/show_flash'
+      end
+    end
+
+    def fetch_sitemap_from_token
+      unless @sitemap = Sitemap.find_by(public_share_token: params[:token])
+        redirect_to root_path, alert: 'The share token is invalid'
       end
     end
 

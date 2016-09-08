@@ -12,6 +12,8 @@ export const ADD_GENERAL_COMMENT = 'ADD_GENERAL_COMMENT'
 export const UPDATE_PAGE_COMMENT_ID = 'UPDATE_PAGE_COMMENT_ID'
 export const UPDATE_GENERAL_COMMENT_ID = 'UPDATE_GENERAL_COMMENT_ID'
 export const CHANGE_LEFT_SIDEBAR_EXPANDED = 'CHANGE_LEFT_SIDEBAR_EXPANDED'
+export const SET_SHOW_GUEST_INFO_FORM = 'SET_SHOW_GUEST_INFO_FORM'
+export const SET_CURRENT_GUEST = 'SET_CURRENT_GUEST'
 
 export function setName(name) {
   return { type: SET_NAME, name }
@@ -67,4 +69,12 @@ export function updateGeneralCommentId(oldId, newId) {
 
 export function changeLeftSideBarExpanded(expanded) {
   return { type: CHANGE_LEFT_SIDEBAR_EXPANDED, expanded }
+}
+
+export function setShowGuestInfoForm(showGuestInfoForm) {
+  return { type: SET_SHOW_GUEST_INFO_FORM, showGuestInfoForm }
+}
+
+export function setCurrentGuest(name, email) {
+  return { type: SET_CURRENT_GUEST, name, email }
 }

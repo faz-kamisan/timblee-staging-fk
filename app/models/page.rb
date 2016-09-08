@@ -21,7 +21,7 @@ class Page < ActiveRecord::Base
       parentId: parent_id,
       position: position,
       level: level,
-      comments: comments.map(&:to_react_data),
+      comments: comments.order_by_updated_at.map(&:to_react_data),
       pageType: page_type,
       collapsed: false
     }

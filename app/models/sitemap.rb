@@ -11,12 +11,14 @@ class Sitemap < ActiveRecord::Base
   has_many :invited_users, through: :sitemap_invites, source: :user
   has_many :comments, as: :commentable
 
-  validates :business, :name, presence: true
+  validates :public_share_token, :business, :name, presence: true
   validates :state, inclusion: { in: ['on_hold', 'in_progress', 'review', 'approved'] }
   validates :name, uniqueness: { scope: :business_id, case_sensitive: false }
+  validates :public_share_token, uniqueness: true
 
   before_validation :set_state_to_in_progress, on: :create
   before_validation :set_name_to_new_sitemap, on: :create
+  before_validation :set_unique_public_share_token, on: :create
   after_create :create_associations
   strip_fields :name
 
@@ -32,7 +34,7 @@ class Sitemap < ActiveRecord::Base
       id: self.id,
       updated_at: self.updated_at.strftime('%d %b %Y'),
       pageTypes: PageType.order_by_name,
-      comments: self.comments.map(&:to_react_data),
+      comments: self.comments.order_by_updated_at.map(&:to_react_data),
       sections: sections.map(&:to_react_data),
     }
   end
@@ -55,6 +57,10 @@ class Sitemap < ActiveRecord::Base
     def create_associations
       section = sections.create(name: 'Default', default: true)
       section.pages.create(page_type: PageType.find_by_name('General 1'), name: name, sitemap_id: id)
+    end
+
+    def set_unique_public_share_token
+      self.public_share_token = Digest::SHA1.hexdigest([Time.now, rand].join)
     end
 
 end

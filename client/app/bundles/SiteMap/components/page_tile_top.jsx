@@ -16,7 +16,7 @@ const sitemapTarget = {
         method: 'put',
         dataType: 'JSON',
         data: { page: { parent_id: props.pageTree.parentId, position: (props.pageTree.position + 1) } },
-        error: (result, b, c, d) => {
+        error: (result) => {
           document.setFlash(result.responseText)
         },
         complete: (result) => {
@@ -32,7 +32,7 @@ const sitemapTarget = {
         method: 'post',
         dataType: 'JSON',
         data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: (props.pageTree.position + 1), section_id: props.pageTree.section_id } },
-        error: (result, b, c, d) => {
+        error: (result) => {
           document.setFlash(result.responseText)
         },
         success: (result) => {

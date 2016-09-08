@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
-import { setSaving, addPageComment, addGeneralComment, updatePageCommentId, updateGeneralCommentId } from '../actions'
+import { setSaving, addPageComment, addGeneralComment, updatePageCommentId, updateGeneralCommentId, setShowGuestInfoForm } from '../actions'
 import NewComment from '../components/new_comment'
 
 const mapStateToProps = (state) => {
-  return { currentUser: state.currentUser }
+  return { currentUser: state.currentUser, currentGuest: state.currentGuest }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -24,6 +24,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));
+    },
+    setShowGuestInfoForm: (showGuestInfoForm) => {
+      dispatch(setShowGuestInfoForm(showGuestInfoForm));
     }
   }
 }

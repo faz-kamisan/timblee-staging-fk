@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   }, skip: [:sessions]
 
   as :user do
-    get 'users/log-in' => 'devise/sessions#new', :as => :new_user_session
+    get 'users/log-in' => 'users/sessions#new', :as => :new_user_session
     post 'log-in' => 'devise/sessions#create', :as => :user_session
     match 'signout' => 'devise/sessions#destroy', :as => :destroy_user_session,
       :via => Devise.mappings[:user].sign_out_via
@@ -34,12 +34,15 @@ Rails.application.routes.draw do
   resources :sitemaps
   resources :comments, only: [:create, :update, :destroy]
   resources :pages, only: [:create, :update, :destroy]
+  resources :guests, only: [:create]
 
   get  'home/dashboard'
   get  'home/settings'
 
+  get '/:token' => 'sitemaps#public_share', :constraints => { :subdomain => /share/ }
+
   devise_scope :user do
-    root to: "devise/sessions#new"
+    root to: "users/sessions#new"
     post 'users/bulk_invitation' => 'users/invitations#bulk_invitation'
     get 'users/:id/re_invite' => 'users/invitations#re_invite', as: :re_invite_user
     get 'users/:id/revoke' => 'users/invitations#revoke', as: :revoke_user
@@ -63,4 +66,5 @@ Rails.application.routes.draw do
     resource :card, only: [:create]
     resource :subscription, only: [:create]
   end
+
 end
