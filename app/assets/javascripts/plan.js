@@ -7,6 +7,8 @@ var Plan = function(options) {
   this.inviteUserModal = options.inviteUserModal;
   this.editableInput = options.editableInput;
   this.settingsForm = options.settingsForm;
+  this.trialStarterUserOnInvite = options.trialStarterUserOnInvite;
+  this.trialStarterUserOnSwitchPlan = options.trialStarterUserOnSwitchPlan;
 
 };
 
@@ -38,6 +40,9 @@ Plan.prototype.bindEvents = function() {
     _this.inviteUserModal.find('form').attr('action', $(this).data('url'));
     _this.inviteUserModal.find('form').find('input#stripe_plan_id').val(PRO_STRIPE_ID);
     _this.inviteUserModal.modal('show');
+    _this.inviteUserModal.find('.go-back').removeClass('hide');
+    _this.trialStarterUserOnSwitchPlan.removeClass('hide');
+    _this.trialStarterUserOnInvite.addClass('hide');
   });
 
 };
@@ -52,7 +57,9 @@ $(function() {
     editableInput : $('.default-input'),
     settingsForm : $('form.settings-form'),
     addNewCard : $('#add-new-card'),
-    useSavedCard : $('#use-saved-card')
+    useSavedCard : $('#use-saved-card'),
+    trialStarterUserOnInvite : $('p.trial-starter-user-on-invite'),
+    trialStarterUserOnSwitchPlan : $('p.trial-starter-user-on-switch-plan')
   }
   new Plan(options).bindEvents();
 });

@@ -35,9 +35,23 @@
             </div>
           </div>
           <div class="col-xs-6 text-center">
-            <h3>You're adding <span class='pro-users-count'><%= current_business.users.count %></span> people</h3>
-            <p>On [date after their trials ends (30 or 60 day)], once your <br> trial finishes, your card ending in 4545 will be charged:</p>
-            <h1>$<span class='pro-charges'><%= Business.monthly_charge(current_business.users.count) %></span></h1>
+            <h3>You're adding <span class='added-pro-users-count' data-total-users-count=<%= current_business.users.count %>>0</span> people</h3>
+            <% if current_business.is_pro_plan? %>
+              <% if current_business.in_trial_period? %>
+                <p>On <%= current_business.trial_end_at.strftime('%d %b %Y') %>, once your <br> trial finishes, your card ending in <span class='card-last4'><%= @card.last4 %></span> will be charged:</p>
+              <% else %>
+                <p>You'll be charged $12 for each new user on a pro-rata basis immediately. Your new monthly charge is:</p>
+              <% end %>
+            <% else %>
+              <% if current_business.in_trial_period? %>
+                <p class='trial-starter-user-on-invite'>On <%= current_business.trial_end_at.strftime('%d %b %Y') %>, once your <br> trial finishes, if you switch to pro plan you will be charged:</p>
+                <p class='trial-starter-user-on-switch-plan hide'>On <%= current_business.trial_end_at.strftime('%d %b %Y') %>, once your <br> trial finishes, your card ending in <span class='card-last4'><%= @card.last4 if @card%></span> will be charged:</p>
+              <% else %>
+                <p>You'll be charged $12 for each new user on a pro-rata basis immediately. Your new monthly charge is:</p>
+              <% end %>
+            <% end %>
+
+            <h1>$<span class='new-pro-charges'><%= Business.monthly_charge(current_business.users.count) %></span></h1>
             <p>That's $19 for the first user + $12 for each <br> additional user. All prices are in USD.</p>
           </div>
           <div class="col-xs-12">
