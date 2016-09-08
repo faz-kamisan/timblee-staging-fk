@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(version: 20160907081900) do
     t.datetime "updated_at",  null: false
     t.datetime "start_at"
     t.datetime "end_at"
+    t.integer  "plan_id"
   end
 
   add_index "subscriptions", ["business_id"], name: "index_subscriptions_on_business_id", using: :btree

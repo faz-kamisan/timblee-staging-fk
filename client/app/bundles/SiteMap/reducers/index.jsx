@@ -8,6 +8,7 @@ import state from './state'
 import saving from './saving'
 import updated_at from './updated_at'
 import currentUser from './current_user'
+import leftSidebarExpanded from './left_sidebar_expanded'
 
 const sitemapAppReducer = combineReducers({
   name,
@@ -18,6 +19,7 @@ const sitemapAppReducer = combineReducers({
   state,
   saving,
   comments,
+  leftSidebarExpanded,
   currentUser
 })
 

@@ -87,7 +87,7 @@ function addPageComment(sections, id, sectionId, commenter, message, tempId) {
   var sectionsCopy = Object.assign([], sections);
   var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
   var page = getNodeById(treeCopy, id)
-  var newComment = { message: message, commenter: commenter, id: tempId }
+  var newComment = { message: message, commenter: commenter, id: tempId, created_at: 'Just now' }
   page.comments.push(newComment)
   return sectionsCopy
 }
