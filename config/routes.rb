@@ -40,7 +40,7 @@ Rails.application.routes.draw do
   get  'home/dashboard'
   get  'home/settings'
 
-  get '/:token' => 'sitemaps#public_share', :constraints => { :subdomain => /share/ }
+  get '/:token' => 'sitemaps#public_share', :constraints => { :subdomain => /share/ }, as: :sitemap_public_share
 
   devise_scope :user do
     root to: "users/sessions#new"

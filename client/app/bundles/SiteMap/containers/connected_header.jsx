@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setName, updateState, setSaving } from '../actions'
+import { setName, updateState, setSaving, showSitemapShareModal } from '../actions'
 import Header from '../components/header'
 
 const mapStateToProps = (state) => {
@@ -16,6 +16,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));
+    },
+    showSitemapShareModal: () => {
+      dispatch(showSitemapShareModal(true))
     }
   }
 }

@@ -49,7 +49,7 @@ class GuestInfoFormModal extends React.Component {
 
   render() {
     return (
-      <div className='react-modal'>
+      <div className='react-modal guest-info-modal'>
         {
           this.state.errors &&
           <div class='form-error'>

@@ -8,7 +8,8 @@ class Header extends React.Component {
     saving: PropTypes.bool.isRequired,
     setSaving: PropTypes.func.isRequired,
     onNameChange: PropTypes.func.isRequired,
-    onStateChange: PropTypes.func.isRequired
+    onStateChange: PropTypes.func.isRequired,
+    showSitemapShareModal: PropTypes.func.isRequired
   };
   constructor(props) {
     super(props);
@@ -16,6 +17,7 @@ class Header extends React.Component {
     this.handleNameInputBlur = this.handleNameInputBlur.bind(this);
     this.handleNameInputFocus = this.handleNameInputFocus.bind(this);
     this.handleMainHeaderToggle = this.handleMainHeaderToggle.bind(this);
+    this.handleSitemapShareClick = this.handleSitemapShareClick.bind(this);
     this.state = { nameFocused: false, name: props.name, showMainHeader: true }
   }
 
@@ -56,6 +58,10 @@ class Header extends React.Component {
 
   handleNameInputFocus(e) {
     this.setState({nameFocused: true})
+  }
+
+  handleSitemapShareClick(e) {
+    this.props.showSitemapShareModal();
   }
 
   componentDidUpdate() {
@@ -108,7 +114,9 @@ class Header extends React.Component {
             </span>
           </div>
           <div className="col-xs-5">
-
+            <div>
+              <a className='btn sitemap-share-btn' onClick={this.handleSitemapShareClick}>Share</a>
+            </div>
           </div>
         </div>
         <div className="toggle-header" onClick={this.handleMainHeaderToggle}>
