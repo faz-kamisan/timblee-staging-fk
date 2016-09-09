@@ -29,10 +29,11 @@ class Header extends React.Component {
     this.setState({name: name})
   }
 
+
   handleNameInputBlur(e) {
+    var _this = this
     this.setState({nameFocused: false})
     if(this.state.name != this.props.name) {
-      this.props.setSaving(true)
       $.ajax({
         url: '/sitemaps/' + this.props.id,
         method: 'put',
@@ -43,7 +44,10 @@ class Header extends React.Component {
           this.setState({name: this.props.name})
         },
         complete: (result) => {
-          this.props.setSaving(false)
+          this.props.setSaving(true)
+          setTimeout(function() {
+            _this.props.setSaving(false)
+          }, 2000)
           this.props.onNameChange(name);
         }
       });
@@ -55,6 +59,7 @@ class Header extends React.Component {
   }
 
   componentDidUpdate() {
+    var _this = this
     if(this.state.nameFocused) {
       $(this.refs.sitemapNameInput).focus()
     }
@@ -95,9 +100,7 @@ class Header extends React.Component {
           </div>
           <div className="col-xs-2 saved-status">
             <span>
-              { this.props.saving ?
-                <div>Saving</div>
-                :
+              { this.props.saving &&
                 <div>
                   <i className="icon-save-circle"></i> Saved
                 </div>
