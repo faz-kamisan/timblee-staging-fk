@@ -7,7 +7,7 @@
             <%= image_tag('close-modal.svg', class: 'close-modal') %>
           </span>
         </button>
-        <h4 class="modal-title"><%= current_business.plan ? "Switch your plan": "Choose your plan"%></h4>
+        <h4 class="modal-title"><%= current_business.has_plan ? "Switch your plan": "Choose your plan"%></h4>
         <p class="modal-message">Choose from one of two plans based on your needs. Pay only for the <br> users you need and nothing more, with simple, <br> per user per month pricing.</p>
       </div>
       <div class="modal-body">
@@ -25,7 +25,7 @@
             <% if current_business.is_pro_plan? %>
               <span class="current-plan-text">YOUR CURRENT PLAN</span>
             <% else %>
-              <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" class="btn btn-pink btn-modal-open"><%= current_business.plan ? "SWITCH TO PRO": "Choose this plan"%></a>
+              <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" class="btn btn-pink btn-modal-open"><%= current_business.has_plan ? "SWITCH TO PRO": "Choose this plan"%></a>
             <% end %>
           </div>
           <div class="starter-plan-benefits plan-benefits">
@@ -41,7 +41,7 @@
             <% if current_business.is_starter_plan? %>
               <span class="current-plan-text">YOUR CURRENT PLAN</span>
             <% else %>
-              <a href="#starter-plan-modal" data-dismiss="modal" data-toggle="modal" class="btn btn-grey btn-modal-open"><%= current_business.plan ? "DOWNGRADE TO STARTER": "Choose this plan"%></a>
+              <a href="#starter-plan-modal" data-dismiss="modal" data-toggle="modal" class="btn btn-grey btn-modal-open"><%= current_business.has_plan ? "DOWNGRADE TO STARTER": "Choose this plan"%></a>
             <% end %>
           </div>
         </div>

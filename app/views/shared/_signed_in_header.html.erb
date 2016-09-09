@@ -73,9 +73,12 @@
         </a>
       </div>
       <div class="add-sitemap-tab pull-right header-links new-sitemap">
-        <a href="javascript:void(0);" class="new-sitemap-link" data-allow-more-sitemaps= "<%= current_business.allow_more_sitemaps? ? 'true' : 'false' %>">
+        <%= form_for Sitemap.new do |f| %>
+          <%= f.hidden_field :folder_id %>
+          <a href="javascript:void(0);" class="new-sitemap-link" data-allow-more-sitemaps= "<%= current_business.allow_more_sitemaps? ? 'true' : 'false' %>">
           <span class="cus-icon-add"></span> <br>
-        </a>
+          </a>
+        <% end %>
       </div>
     </div>
   </div>

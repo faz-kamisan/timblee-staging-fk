@@ -498,3 +498,7 @@ input#toggle:checked + label:after {
     }
   }
 }
+
+.pink-text {
+  color: $primaryPink!important;
+}

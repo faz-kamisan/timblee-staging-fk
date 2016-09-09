@@ -5,9 +5,19 @@ class Business < ActiveRecord::Base
   has_many :folders, dependent: :destroy
   has_many :sitemaps, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
-  has_one :active_subscription, ->{ where('subscriptions.end_at >= :today and subscriptions.start_at <= :today', { today: Time.current}) }, class_name: :Subscription
-  has_one :plan, through: :active_subscription
-  delegate :no_of_users, to: :active_subscription
+  has_many :cards, dependent: :destroy
+  has_one :current_subscription, ->{ where('subscriptions.end_at >= :today', { today: Time.current }) }, class_name: :Subscription
+  has_one :active_card, -> { order(created_at: :desc) }, class_name: :Card
+
+  delegate :no_of_users, to: :current_subscription
+
+  def active_subscription
+    current_subscription if current_subscription.active?
+  end
+
+  def future_subscription
+    current_subscription if current_subscription.in_future?
+  end
 
   def invited_users
     users.where.not(invitation_token: nil)
@@ -22,15 +32,15 @@ class Business < ActiveRecord::Base
   end
 
   def in_trial_period_without_any_plan?
-    in_trial_period? && !plan
+    in_trial_period? && !has_plan
   end
 
   def is_pro_plan?
-    plan.try(:stripe_plan_id) == PRO_STRIPE_ID
+    is_pro
   end
 
   def is_starter_plan?
-    plan.try(:stripe_plan_id) == STARTER_STRIPE_ID
+    !is_pro && (has_plan || !in_trial_period?)
   end
 
   def allow_downgrade_to_starter?

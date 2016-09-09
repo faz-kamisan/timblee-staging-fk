@@ -2,6 +2,10 @@
 <div class="modal fade" id="invite-user-modal" tabindex="-1" role="dialog" aria-labelledby="invite-user-modalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+      <a data-toggle="modal" data-dismiss="modal" class="go-back btn-modal-open" href="#pro-plan-modal">
+        <span class="icon icon-caret"></span>
+        Back
+      </a>
       <div class="modal-header text-center">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">
@@ -9,31 +13,53 @@
           </span>
         </button>
         <h4 class="modal-title">Invite Your Team</h4>
-        <p class="modal-message">Timblee gets even better when you're not working solo. Invite unlimited <br> team members during your free trial. After that, it's just $19 for the first <br> user (you) and $12 for every subsequent user per month.</p>
+        <p class="modal-message">Timblee is designed for teams to work together. Invite team members to join <br> you so they can create and edit sitemaps, add comments, and more. Invite <br> unlimited team members free during the trial. You won't be charged until <br> after your trial period is over.</p>
       </div>
       <div class="modal-body">
-        <div>
-          <p>Enter their emails separated by commas. We'll send them a beautiful invite. You can preview the email before sending it.</p>
-          <ul id="myTags">
-          </ul>
-        </div>
-      </div>
-      <div class="modal-body border-top">
-        <div class="optional-message-container">
-          <div class="optional-message">
-            <%= form_tag 'bulk_invitation', {class: 'bulk-invitation-form'} do %>
-              <%= text_field_tag :email, nil, { autofocus: true, required: true, class: 'bulk-invite-emails-input hidden' } %>
-              <%= text_area_tag :custom_message, nil, { class: 'form-control clear-field invite-custom-message', placeholder: 'Include an optional personal message.', 'data-send' => false } %>
-              <div class="emoji-section">
-                <a href="#" class="add-message">Add my message</a>
-                <a href="javascript:void(0);" class="clear-text hidden clear-custom-message">Cancel</a>
+        <div class="row">
+          <div class="col-xs-6 p-t-b-20">
+            <ul id="myTags" data-url='<%= validate_unique_email_users_path %>'>
+            </ul>
+            <div class="optional-message-container">
+              <div class="optional-message">
+                <%= form_tag '#', { method: :post, class: 'bulk-invitation-form'} do %>
+                  <%= hidden_field_tag :stripe_plan_id %>
+                  <%= text_field_tag :email, nil, { autofocus: true, class: 'bulk-invite-emails-input hidden' } %>
+                  <%= text_area_tag :custom_message, nil, { class: 'form-control clear-field invite-custom-message', placeholder: 'Include an optional personal message.', 'data-send' => false } %>
+                  <div class="emoji-section">
+                    <a href="#" class="add-message">Add my message</a>
+                    <a href="javascript:void(0);" class="clear-text hidden clear-custom-message">Cancel</a>
+                  </div>
+                <% end %>
               </div>
-            <% end %>
+            </div>
           </div>
-        </div>
-        <div class="modal-button text-center">
-          <a href="#invite-email-preview-modal" data-dismiss="modal" data-toggle='modal' class="btn btn-transparent preview-invite-button btn-modal-open">Here's what they'll see</a>
-          <a href="#" class="btn btn-pink btn-last btn-border send-invite-button">Send the email</a>
+          <div class="col-xs-6 text-center">
+            <h3>You're adding <span class='added-pro-users-count' data-total-users-count=<%= current_business.users.count %>>0</span> people</h3>
+            <% if current_business.is_pro_plan? %>
+              <% if current_business.in_trial_period? %>
+                <p>On <%= current_business.trial_end_at.strftime('%d %b %Y') %>, once your <br> trial finishes, your card ending in <span class='card-last4'><%= @card.last4 %></span> will be charged:</p>
+              <% else %>
+                <p>You'll be charged $12 for each new user on a pro-rata basis immediately. Your new monthly charge is:</p>
+              <% end %>
+            <% else %>
+              <% if current_business.in_trial_period? %>
+                <p class='trial-starter-user-on-invite'>On <%= current_business.trial_end_at.strftime('%d %b %Y') %>, once your <br> trial finishes, if you switch to pro plan you will be charged:</p>
+                <p class='trial-starter-user-on-switch-plan hide'>On <%= current_business.trial_end_at.strftime('%d %b %Y') %>, once your <br> trial finishes, your card ending in <span class='card-last4'><%= @card.last4 if @card%></span> will be charged:</p>
+              <% else %>
+                <p>You'll be charged $12 for each new user on a pro-rata basis immediately. Your new monthly charge is:</p>
+              <% end %>
+            <% end %>
+
+            <h1>$<span class='new-pro-charges'><%= Business.monthly_charge(current_business.users.count) %></span></h1>
+            <p>That's $19 for the first user + $12 for each <br> additional user. All prices are in USD.</p>
+          </div>
+          <div class="col-xs-12">
+            <div class="modal-button text-center">
+              <a href="#invite-email-preview-modal" data-dismiss="modal" data-toggle='modal' class="btn btn-transparent preview-invite-button btn-modal-open">Here's what we'll send</a>
+              <a href="#" class="btn btn-success btn-last btn-border send-invite-button">Confirm &amp; invite users</a>
+          </div>
+          </div>
         </div>
       </div>
     </div>

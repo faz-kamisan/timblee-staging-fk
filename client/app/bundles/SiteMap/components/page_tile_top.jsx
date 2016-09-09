@@ -10,7 +10,6 @@ const sitemapTarget = {
       return;
     }
     if(item.type == 'page') {
-      props.setSaving(true)
       $.ajax({
         url: '/pages/' + item.id,
         method: 'put',
@@ -20,13 +19,15 @@ const sitemapTarget = {
           document.setFlash(result.responseText)
         },
         complete: (result) => {
-          props.setSaving(false)
+          props.setSaving(true)
+          setTimeout(function() {
+            props.setSaving(false)
+          }, 2000)
         }
       });
       props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.parentId, props.pageTree.position);
     } else if(item.type == 'PageType') {
       var timeStamp = new Date();
-      props.setSaving(true)
       $.ajax({
         url: '/pages/',
         method: 'post',
@@ -39,7 +40,10 @@ const sitemapTarget = {
           props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id)
         },
         complete: (result) => {
-          props.setSaving(false)
+          props.setSaving(true)
+          setTimeout(function() {
+            props.setSaving(false)
+          }, 2000)
         }
       });
       props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp);

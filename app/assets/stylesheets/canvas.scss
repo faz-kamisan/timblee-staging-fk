@@ -112,6 +112,7 @@
     -moz-transition: padding-left .35s;
     -webkit-transition: padding-left .35s;
     margin: 0 auto;
+    min-width: 275px;
     > .page-tile {
       margin-bottom: 75px;
       margin-left: -40px;
@@ -414,7 +415,7 @@
   left: 0;
   overflow: hidden;
   top: 222px;
-  z-index: 10;
+  z-index: 11;
   transition: .35s;
   border-top: solid 1px #171a1d;
   ~ .sitemap-sections .page-container-wrapper .page-container.level-0 {

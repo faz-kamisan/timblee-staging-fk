@@ -3,21 +3,9 @@ before_filter :configure_permitted_parameters, if: :devise_controller?
 before_filter :load_user, only: [:re_invite, :revoke]
 
   def bulk_invitation
-    valid_emails = []
     emails = params[:email].split(/\s* \s*/)
-    emails.each do |email|
-
-      unless User.find_by(email: email)
-        user = User.invite!({ email: email, business: current_business, confirmed_at: Time.current, skip_invitation: true }, current_user)
-        if user.persisted?
-          InviteMailer.delay.send_invite(user.id, user.raw_invitation_token, params[:custom_message])
-          valid_emails << email unless user.errors[:email].present?
-        end
-      end
-    end
-
-    invalid_emails = emails - valid_emails
-    set_notice(valid_emails, invalid_emails)
+    @email_categories = InvitationService.invite_users(emails, current_user, params[:custom_message])
+    set_notice
     redirect_to team_settings_users_path
   end
 
@@ -52,9 +40,10 @@ protected
     end
   end
 
-  def set_notice(valid_emails, invalid_emails)
+  def set_notice
     flash[:notice] = ''
-    flash[:notice] = t('.success', scope: :flash, emails: valid_emails.join(', ')) if valid_emails.present?
+    flash[:notice] = t('.success', scope: :flash, emails: @email_categories[:invitable_emails].join(', ')) if @email_categories[:invitable_emails].present?
+    invalid_emails = @email_categories[:already_signed_up_user_emails] + @email_categories[:invalid_emails]
     flash[:notice] += t('.failure', scope: :flash, emails: invalid_emails.join(', ')) if invalid_emails.present?
   end
 end

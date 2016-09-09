@@ -8,7 +8,7 @@ var Billing = function(options) {
   this.btn_cancel = options.btn_cancel;
   this.cardErrors = options.cardErrors;
   this.cardCVV = options.cardCVV;
-  this.starterErrorButton = options.starterErrorButton;
+  this.starterConfirmButton = options.starterConfirmButton;
   this.starterModal = options.starterModal;
   this.starterErrorModal = options.starterErrorModal;
   this.expField = options.expField;
@@ -35,7 +35,7 @@ Billing.prototype.bindExpFieldEvent = function() {
       } else if (e.charCode == 47 && this.value.match('/')) {
         e.preventDefault();
       };
-    } else {
+    } else  if(e.charCode != 0){
         e.preventDefault();
     }
   });
@@ -50,10 +50,12 @@ Billing.prototype.bindExpFieldEvent = function() {
 
 Billing.prototype.bindDowngradeErrorEvent = function() {
   var _this = this;
-  this.starterErrorButton.on('click', function(e) {
-    e.preventDefault();
-    _this.starterModal.modal('hide');
-    _this.starterErrorModal.modal('show');
+  this.starterConfirmButton.on('click', function(e) {
+    if (!$(this).data('allow-downgrade')) {
+      e.preventDefault();
+      _this.starterModal.modal('hide');
+      _this.starterErrorModal.modal('show');
+    };
   });
 };
 
@@ -93,7 +95,7 @@ $(function() {
     btn_cancel : $('.btn-to-cancel'),
     cardErrors : $('.cc-errors'),
     cardCVV : $('.cc-cvv'),
-    starterErrorButton : $('#starter-error'),
+    starterConfirmButton : $('#confirm-starter-plan'),
     starterModal : $('#starter-plan-modal'),
     starterErrorModal : $('#pro-plan-message-modal'),
     expField : $('.cc-exp')

@@ -99,6 +99,8 @@ en:
           success: Reset link sent successfully
           failure: Couldn't sent reset link
 
+    pro_plan_success: "You are now on pro plan with %{users} users"
+
   activerecord:
       errors:
         models:

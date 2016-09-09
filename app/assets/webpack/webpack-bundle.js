@@ -47401,7 +47401,6 @@
 	      return;
 	    }
 	    if (item.type == 'page') {
-	      props.setSaving(true);
 	      $.ajax({
 	        url: '/pages/' + item.id,
 	        method: 'put',
@@ -47411,13 +47410,15 @@
 	          document.setFlash(result.responseText);
 	        },
 	        complete: function complete(result) {
-	          props.setSaving(false);
+	          props.setSaving(true);
+	          setTimeout(function () {
+	            props.setSaving(false);
+	          }, 2000);
 	        }
 	      });
 	      props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.parentId, props.pageTree.position);
 	    } else if (item.type == 'PageType') {
 	      var timeStamp = new Date();
-	      props.setSaving(true);
 	      $.ajax({
 	        url: '/pages/',
 	        method: 'post',
@@ -47430,7 +47431,10 @@
 	          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id);
 	        },
 	        complete: function complete(result) {
-	          props.setSaving(false);
+	          props.setSaving(true);
+	          setTimeout(function () {
+	            props.setSaving(false);
+	          }, 2000);
 	        }
 	      });
 	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp);
@@ -47630,7 +47634,6 @@
 	      return;
 	    }
 	    if (item.type == 'page') {
-	      props.setSaving(true);
 	      $.ajax({
 	        url: '/pages/' + item.id,
 	        method: 'put',
@@ -47640,13 +47643,15 @@
 	          document.setFlash(result.responseText);
 	        },
 	        complete: function complete(result) {
-	          props.setSaving(false);
+	          props.setSaving(true);
+	          setTimeout(function () {
+	            props.setSaving(false);
+	          }, 2000);
 	        }
 	      });
 	      props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.id, 'begining');
 	    } else if (item.type == 'PageType') {
 	      var timeStamp = new Date();
-	      props.setSaving(true);
 	      $.ajax({
 	        url: '/pages/',
 	        method: 'post',
@@ -47659,7 +47664,10 @@
 	          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id);
 	        },
 	        complete: function complete(result) {
-	          props.setSaving(false);
+	          props.setSaving(true);
+	          setTimeout(function () {
+	            props.setSaving(false);
+	          }, 2000);
 	        }
 	      });
 	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp);
@@ -47825,7 +47833,6 @@
 	      return;
 	    }
 	    if (item.type == 'page') {
-	      props.setSaving(true);
 	      $.ajax({
 	        url: '/pages/' + item.id,
 	        method: 'put',
@@ -47835,12 +47842,14 @@
 	          document.setFlash(result.responseText);
 	        },
 	        complete: function complete(result) {
-	          props.setSaving(false);
+	          props.setSaving(true);
+	          setTimeout(function () {
+	            props.setSaving(false);
+	          }, 2000);
 	        }
 	      });
 	      props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.parentId, props.pageTree.position);
 	    } else if (item.type == 'PageType') {
-	      props.setSaving(true);
 	      var timeStamp = new Date();
 	      $.ajax({
 	        url: '/pages/',
@@ -47854,7 +47863,10 @@
 	          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id);
 	        },
 	        complete: function complete(result) {
-	          props.setSaving(false);
+	          props.setSaving(true);
+	          setTimeout(function () {
+	            props.setSaving(false);
+	          }, 2000);
 	        }
 	      });
 	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp);
@@ -48010,7 +48022,6 @@
 	      return;
 	    }
 	    if (item.type == 'page') {
-	      props.setSaving(true);
 	      $.ajax({
 	        url: '/pages/' + item.id,
 	        method: 'put',
@@ -48020,12 +48031,14 @@
 	          document.setFlash(result.responseText);
 	        },
 	        complete: function complete(result) {
-	          props.setSaving(false);
+	          props.setSaving(true);
+	          setTimeout(function () {
+	            props.setSaving(false);
+	          }, 2000);
 	        }
 	      });
 	      props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.parentId, props.pageTree.position);
 	    } else if (item.type == 'PageType') {
-	      props.setSaving(true);
 	      var timeStamp = new Date();
 	      $.ajax({
 	        url: '/pages/',
@@ -48039,7 +48052,10 @@
 	          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id);
 	        },
 	        complete: function complete(result) {
-	          props.setSaving(false);
+	          props.setSaving(true);
+	          setTimeout(function () {
+	            props.setSaving(false);
+	          }, 2000);
 	        }
 	      });
 	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp);
@@ -48216,9 +48232,9 @@
 	    value: function handleNameInputBlur(e) {
 	      var _this3 = this;
 	
+	      var _this = this;
 	      this.setState({ nameFocused: false });
 	      if (this.state.name != this.props.name) {
-	        this.props.setSaving(true);
 	        $.ajax({
 	          url: '/sitemaps/' + this.props.id,
 	          method: 'put',
@@ -48229,7 +48245,10 @@
 	            _this3.setState({ name: _this3.props.name });
 	          },
 	          complete: function complete(result) {
-	            _this3.props.setSaving(false);
+	            _this3.props.setSaving(true);
+	            setTimeout(function () {
+	              _this.props.setSaving(false);
+	            }, 2000);
 	            _this3.props.onNameChange(name);
 	          }
 	        });
@@ -48243,6 +48262,7 @@
 	  }, {
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate() {
+	      var _this = this;
 	      if (this.state.nameFocused) {
 	        $(this.refs.sitemapNameInput).focus();
 	      }
@@ -48309,11 +48329,7 @@
 	            _react2.default.createElement(
 	              'span',
 	              null,
-	              this.props.saving ? _react2.default.createElement(
-	                'div',
-	                null,
-	                'Saving'
-	              ) : _react2.default.createElement(
+	              this.props.saving && _react2.default.createElement(
 	                'div',
 	                null,
 	                _react2.default.createElement('i', { className: 'icon-save-circle' }),
@@ -48395,18 +48411,16 @@
 	  function State(props) {
 	    _classCallCheck(this, State);
 	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(State).call(this, props));
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(State).call(this, props));
 	
-	    _this.handleStateChange = _this.handleStateChange.bind(_this);
-	    return _this;
+	    _this2.handleStateChange = _this2.handleStateChange.bind(_this2);
+	    return _this2;
 	  }
 	
 	  _createClass(State, [{
 	    key: 'handleStateChange',
 	    value: function handleStateChange(event) {
-	      var _this2 = this;
-	
-	      this.props.setSaving(true);
+	      var _this = this;
 	      $.ajax({
 	        url: '/sitemaps/' + this.props.id,
 	        method: 'put',
@@ -48416,7 +48430,10 @@
 	          document.setFlash(result.responseText);
 	        },
 	        complete: function complete(result) {
-	          _this2.props.setSaving(false);
+	          _this.props.setSaving(true);
+	          setTimeout(function () {
+	            _this.props.setSaving(false);
+	          }, 2000);
 	        }
 	      });
 	      this.props.onStateChange(this.props.state);
@@ -49367,6 +49384,10 @@
 	              document.setFlash(result.responseText);
 	            },
 	            success: function success(result) {
+	              _this.props.setSaving(true);
+	              setTimeout(function () {
+	                _this.props.setSaving(false);
+	              }, 2000);
 	              _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, timeStamp, result.id, _this.props.sectionId);
 	            },
 	            complete: function complete(result) {
@@ -49473,7 +49494,7 @@
 	  pointerEvents: 'none',
 	  zIndex: 100,
 	  left: 0,
-	  top: 0,
+	  top: 20,
 	  width: '200px',
 	  height: '100%',
 	  transform: 'rotate(-2deg)',

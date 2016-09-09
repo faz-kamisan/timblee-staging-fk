@@ -21,9 +21,19 @@ ActiveRecord::Schema.define(version: 20160908063247) do
     t.string   "logo"
     t.string   "stripe_customer_id"
     t.integer  "owner_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.integer  "trial_days"
+    t.boolean  "has_plan",           default: false
+    t.boolean  "is_pro",             default: false
+  end
+
+  create_table "cards", force: :cascade do |t|
+    t.integer  "last4"
+    t.string   "brand"
+    t.integer  "business_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "comments", force: :cascade do |t|
@@ -115,7 +125,6 @@ ActiveRecord::Schema.define(version: 20160908063247) do
   end
 
   add_index "subscriptions", ["business_id"], name: "index_subscriptions_on_business_id", using: :btree
-  add_index "subscriptions", ["plan_id"], name: "index_subscriptions_on_plan_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
@@ -158,5 +167,4 @@ ActiveRecord::Schema.define(version: 20160908063247) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "subscriptions", "businesses"
-  add_foreign_key "subscriptions", "plans"
 end
