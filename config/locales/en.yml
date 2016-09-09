@@ -45,6 +45,13 @@ en:
         success: Page destroyed successfully
         failure: Couldn't delete page
     users:
+      update_avatar:
+        success: Avatar Updated successfully
+        failure: Avatar couldn't be updated
+      update_password:
+        success: Password Updated successfully
+        failure: Could Not Update Password
+
       confirmations:
         show:
           confirmation_token_invalid: 'Confirmation Token is Invalid'
