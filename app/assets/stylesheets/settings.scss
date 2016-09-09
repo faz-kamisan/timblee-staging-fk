@@ -203,7 +203,7 @@
   margin-right: 15px;
 }
 
-.right-text {
+.right-text, .left-text {
   width: calc(100% - 73px);
   color: $primaryLink;
   @extend .font-12;

@@ -1,3 +1,71 @@
 <div role="tabpanel" class="tab-pane" id="personalization">
+  <%= form_for current_business, html: { class: 'settings-form' } do |f| %>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-xs-6">
+          <label>BUSINESS NAME</label>
+          <%= f.text_field :name, disabled: true, class: 'editable-input', 'data-original-value' => f.object.name, placeholder: 'Untitled' %>
+        </div>
+        <div class="col-xs-6 text-right edit-info">
+          <div class="edit">
+            <a href="javascript:void(0);" class="btn btn-grey btn-edit">Edit</a>
+          </div>
+          <div class="save">
+            <button type="submit" class="btn btn-pink btn-border">Save</button>
+            <a href="javascript:void(0);" class="btn btn-grey btn-cancel">Cancel</a>
+          </div>
+        </div>
+        <div class="pull-left col-xs-9">
+          <p class="left-text">Will be used in emails, notifications and other places where your business name might appear.</p>
+        </div>
+      </div>
+    </div>
+  <% end %>
 
+  <%= form_for current_business, html: { class: 'settings-form', method: :patch, multipart: true } do |f| %>
+    <div class="form-group">
+      <div class="row row-logo-save">
+        <div class="col-xs-9">
+          <label>Your logo</label>
+          <div class="clearfix m-t-15">
+            <% if current_business.logo.present? %>
+              <%= image_tag(current_business.logo, class: 'profile-image pull-left profile-image-lg') %>
+            <% else %>
+              <%= image_tag('Timblee-icon', class: 'profile-image pull-left profile-image-lg') %>
+            <% end %>
+            <div class="right-text pull-right">
+              <p class="pull-right">Displayed on sitemaps you or your team share with others. Upload a square PNG or JPEG image at least 400 x 400px in size.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-3 text-right edit-info">
+          <div class>
+            <a href="javascript:void(0);" class="btn btn-grey btn-edit-logo">Edit</a>
+          </div>
+        </div>
+      </div>
+      <div class="row row-logo-edit hide">
+        <div class="col-xs-6">
+          <label>Your logo</label>
+          <div class="clearfix m-t-15">
+            <%= f.file_field :logo , class: 'logo-field'%>
+            <%= image_tag('Timblee-icon', class: 'preview-profile-image profile-image pull-left profile-image-lg') %>
+            <div class="right-text pull-right">
+              <p class="pull-right">
+                Upload a square PNG or JPEG image at least 400 x 400px in size. We’ll resize it automatically  and it’ll appear sharp everywhere. If you upload a non-square image, It’ll come out squished! :O
+              </p>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-xs-6 text-right edit-info">
+          <div>
+            <button type="submit" class="btn btn-pink">Save</button>
+            <a href="javascript:void(0);" class="btn btn-grey btn-cancel-edit-logo">Cancel</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>
+<%= javascript_include_tag('personalization') %>
