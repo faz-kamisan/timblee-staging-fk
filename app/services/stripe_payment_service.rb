@@ -52,7 +52,7 @@ class StripePaymentService
   def charge_customer(amount)
     Stripe::Charge.create(
       :amount => amount,
-      :currency => "aud",
+      :currency => "usd",
       :customer => @customer.id,
       :description => "Charge for final settlement"
     )

@@ -11,14 +11,9 @@ body {
   font-family: "proxima-nova",sans-serif;
   min-width: 1300px;
   padding-top: 95px;
-
   transition: padding-top .35s;
   -moz-transition: padding-top .35s;
   -webkit-transition: padding-top .35s;
-
-  &.toggle {
-    padding-top: 0;
-  }
 }
 
 .btn {
@@ -51,6 +46,10 @@ body {
 
 .p-r-0 {
   padding-right: 0;
+}
+
+.p-l-0 {
+  padding-left: 0;
 }
 
 .p-r-5 {
@@ -441,4 +440,65 @@ input#toggle:checked + label:after {
 .relative {
   position: relative;
   overflow: hidden;
+}
+
+.cus-icon-add {
+  width: 31px;
+  height: 31px;
+  background: $primaryPink;
+  position: relative;
+  @include border-radius(50%);
+  display: block;
+  padding: 0!important;
+  margin-top: 68px;
+  &:before {
+    content: ' ';
+    height: 12px;
+    width: 2px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: $primaryWhite;
+    margin: -6px 0 0 -1px;
+    z-index: 2;
+  }
+  &:after {
+    content: ' ';
+    height: 2px;
+    width: 12px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: $primaryWhite;
+    margin: -1px 0 0 -6px;
+    z-index: 2;
+  }
+}
+
+.add-sitemap-tab {
+  .cus-icon-add {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    &:before {
+      height: 8px;
+      margin-top: -4px;
+    }
+    &:after {
+      width: 8px;
+      margin-left: -4px;
+    }
+    &:hover {
+      background: $primaryWhite;
+      border: 1px solid $primaryPink;
+      &:before,
+      &:after {
+        background: $primaryPink;
+      }
+    }
+  }
+}
+
+.pink-text {
+  color: $primaryPink!important;
 }

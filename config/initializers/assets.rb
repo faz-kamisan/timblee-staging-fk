@@ -27,6 +27,7 @@ Rails.application.config.assets.precompile += %w(
   modal_fix.js
   team.js
   my_info.js
+  toggle_class.js
 )
 # Add client/assets/ folders to asset pipeline's search path.
 # If you do not want to move existing images and fonts from your Rails app

@@ -4,8 +4,12 @@ $('#pro-plan-modal').modal('hide');
   $('#invite-user-modal').find('form').attr('action', '<%= businesses_subscription_path %>');
   $('#invite-user-modal').find('form').find('input#stripe_plan_id').val('<%= PRO_STRIPE_ID %>');
   $('#invite-user-modal').modal('show');
+  $('#invite-user-modal').find('.go-back').removeClass('hide');
+  $('p.trial-starter-user-on-switch-plan').removeClass('hide');
+  $('p.trial-starter-user-on-invite').addClass('hide');
   $('.card-brand').html('<%= @card.brand %>');
   $('.card-last4').html('<%= @card.last4 %>');
   $('.default-input').val('')
   $('button#add-card').prop('disabled', false);
+  $('#pro-plan-modal').replaceWith('<%==j render "users/pro_plan_modal"%>')
 <% end %>

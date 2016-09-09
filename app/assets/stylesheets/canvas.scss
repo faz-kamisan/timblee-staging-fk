@@ -108,7 +108,11 @@
   &.level-0 {
     text-align: center;
     padding: 204px 0 0 30px;
-    transition: padding-left .2s;
+    transition: padding-left .35s;
+    -moz-transition: padding-left .35s;
+    -webkit-transition: padding-left .35s;
+    margin: 0 auto;
+    min-width: 275px;
     > .page-tile {
       margin-bottom: 75px;
       margin-left: -40px;
@@ -414,14 +418,14 @@
   z-index: 10;
   transition: .35s;
   border-top: solid 1px #171a1d;
-  ~ .page-container-wrapper .page-container.level-0 {
+  ~ .sitemap-sections .page-container-wrapper .page-container.level-0 {
     padding-left: 372px;
   }
 
   &.expand-false {
     cursor: pointer;
     width: 30px;
-    ~ .page-container-wrapper .page-container.level-0 {
+    ~ .sitemap-sections .page-container-wrapper .page-container.level-0 {
       padding-left: 40px;
     }
   }
@@ -447,6 +451,20 @@
       margin-top: -7px;
       margin-left: -19px;
       @include rotate(90deg);
+      &:before,
+      &:after {
+        content: "\e904";
+        position: absolute;
+        font-size: 10px;
+        z-index: 2;
+        font-family: 'icomoon' !important;
+        left: -25px;
+        @include rotate(180deg);
+      }
+      &:after {
+        right: -25px;
+        left: auto;
+      }
     }
     &:hover {
       span {
@@ -463,7 +481,7 @@
 .page-type-list, .page-type-preview {
   padding: 0;
   margin: 0;
-  height: calc(100vh - 195px);
+  height: calc(100vh - 320px);
   overflow-y: auto;
   li {
     float: left;
@@ -550,6 +568,9 @@
 .page-type-wrapper {
   &.dragging {
     .page-type-box {
+      border-color: #1D2124;
+      background: #1D2124;
+      @include animate(none);
       &:after {
         content: ' ';
         left: 0;
@@ -591,12 +612,12 @@
     background: #262B30;
   }
 
-  .icon-search {
+  label {
     position: absolute;
     right: 25px;
     top: 16px;
-    color: #c9cbcc;
     z-index: 2;
+    color: #c9cbcc;
     font-size: 16px;
   }
 
@@ -633,21 +654,33 @@
   height: 50px;
   color: $primaryWhite;
   padding: 15px 25px 15px 22px;
-  span {
+  span.cursor {
     color: $primaryFormColor;
     text-transform: uppercase;
+    font-size: 12px;
+    margin-top: 1px;
+    min-width: 108px;
     &:hover {
       color: $primaryWhite;
       .caret-left {
         color: $primaryWhite;
+        font-size: 12px;
       }
     }
+  }
+  span.last-updated {
+    font-size: 12px;
+    color: $primaryGrey;
+    margin-top: 1px;
+    position: absolute;
+    right: 25px;
+    min-width: 215px;
   }
   .caret-left {
     @include rotate(90deg);
     display: inline-block;
     margin-right: 3px;
-    font-size: 14px;
+    font-size: 11px;
     position: relative;
     bottom: 1px;
   }
@@ -796,7 +829,7 @@
 .legal-terms-icon {
   &.tile-right,
   .page-type-icon {
-    @include pageTypeIcon('/assets/Legal-Terms.svg');
+    @include pageTypeIcon('/assets/Legal-terms.svg');
   }
 }
 
@@ -817,7 +850,7 @@
 .login-icon {
   &.tile-right,
   .page-type-icon {
-    @include pageTypeIcon('/assets/Log-In.svg');
+    @include pageTypeIcon('/assets/Log-in.svg');
   }
 }
 
@@ -915,21 +948,21 @@
 .team-member-profile-icon {
   &.tile-right,
   .page-type-icon {
-    @include pageTypeIcon('/assets/Team-Member.svg');
+    @include pageTypeIcon('/assets/Team-member.svg');
   }
 }
 
 .team-icon {
   &.tile-right,
   .page-type-icon {
-    @include pageTypeIcon('/assets/Team.svg');
+    @include pageTypeIcon('/assets/team.svg');
   }
 }
 
 .thank-you-icon {
   &.tile-right,
   .page-type-icon {
-    @include pageTypeIcon('/assets/Thank-You.svg');
+    @include pageTypeIcon('/assets/Thank-you.svg');
   }
 }
 
@@ -1071,10 +1104,6 @@
   -moz-transition: top .35s;
   -webkit-transition: top .35s;
 
-  &.toggle {
-    top: 0;
-  }
-
   .toggle-header {
     position: absolute;
     right: 0;
@@ -1095,10 +1124,13 @@
     &:hover {
       color: $primaryPink;
     }
+    .caret-up {
+      transform: rotate(180deg);
+    }
   }
 
   .site-map-name {
-    color: #a3acb5;
+    color: #56626F;
     font-size: 30px;
     background: $transparent;
     border: 0;
@@ -1108,7 +1140,20 @@
     height: 38px;
     font-weight: 400;
     width: calc(100% - 75px);
-    margin: 0;
+    margin: 2px 0 0 0;
+    cursor: pointer;
+    &.truncate {
+      max-width: 100%;
+    }
+  }
+
+  input.site-map-name {
+    position: relative;
+    bottom: 2px;
+    border-bottom: solid 1px #56626F;
+    color: $primaryWhite;
+    width: 280px;
+    cursor: text;
   }
 
   .logo-dark {
@@ -1122,6 +1167,7 @@
   }
 
   .state-status {
+    position: relative;
     h5 {
       color: $primaryGrey;
       margin: 0;
@@ -1156,17 +1202,17 @@
         }
         &.Approved {
           &:before {
-            background: $primaryGreen;   
+            background: $primaryGreen;
           }
         }
         &.Hold {
           &:before {
-            background: #A3ACB5;  
+            background: #A3ACB5;
           }
         }
       }
       &:hover {
-       ul {
+        ul {
           visibility: visible;
           top: 30px;
           opacity: 1;
@@ -1175,11 +1221,23 @@
     }
   }
 
+  .saved-status {
+    cursor: auto;
+    padding-top: 12px;
+    color: $primaryGrey;
+    i {
+      color: $primaryPink;
+      position: relative;
+      margin: 0 3px 0 0;
+      top: 1.5px;
+    }
+  }
+
   .state-drop-down {
     position: absolute;
     width: 170px;
     background: $primaryWhite;
-    left: -21px;
+    left: -35px;
     top: 20px;
     @include animate(.35s);
     @include box-shadow(1px, 1px, 2px, rgba(106, 113, 127, .2));
@@ -1232,7 +1290,7 @@
           background: $primaryYellow;
         }
         &.Approved {
-          background: $primaryGreen; 
+          background: $primaryGreen;
         }
         &.Hold {
           background: #A3ACB5;
@@ -1241,4 +1299,18 @@
     }
   }
 
+}
+
+.hide-header {
+  padding-top: 0;
+  .main-header {
+    top: -95px;
+  }
+  .react-header {
+    top: 0;
+  }
+  .sitemap-left-sidebar {
+    top: 127px;
+    height: calc(100% - 127px);
+  }
 }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160907071016) do
+ActiveRecord::Schema.define(version: 20160907081900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,9 +42,9 @@ ActiveRecord::Schema.define(version: 20160907071016) do
     t.string   "commentable_type"
     t.integer  "commenter_id"
     t.string   "commenter_type"
-    t.string   "state"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.string   "state",            default: "active"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   create_table "folders", force: :cascade do |t|
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20160907071016) do
 
   create_table "guests", force: :cascade do |t|
     t.string   "full_name"
-    t.string   "email"
+    t.string   "logo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(version: 20160907071016) do
     t.datetime "updated_at",  null: false
     t.datetime "start_at"
     t.datetime "end_at"
+    t.integer  "plan_id"
   end
 
   add_index "subscriptions", ["business_id"], name: "index_subscriptions_on_business_id", using: :btree
@@ -138,6 +139,7 @@ ActiveRecord::Schema.define(version: 20160907071016) do
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
     t.string   "full_name"
+    t.string   "avatar"
     t.boolean  "is_admin",               default: false
     t.integer  "business_id"
     t.string   "invitation_token"
@@ -154,7 +156,6 @@ ActiveRecord::Schema.define(version: 20160907071016) do
     t.string   "unconfirmed_email"
     t.boolean  "notify_by_email",        default: true
     t.datetime "deleted_at"
-    t.string   "avatar"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

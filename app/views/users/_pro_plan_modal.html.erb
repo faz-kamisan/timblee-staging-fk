@@ -15,17 +15,24 @@
             Back
           </a>
           <h4 class="modal-title">Pro plan</h4>
-          <p class="modal-message">Awesome choice! The Pro plan is just $19 for the first user (you) and then <br> $12 per month for each additional user.</p>
+          <p class="modal-message">Awesome choice! The Pro plan is just $19 for the first user (you) and then $12 per month for each additional user. Choose or add your payment method below, then invite your team.</p>
         </div>
-        <div class="modal-body">
+        <div class="modal-body text-center">
           <div class="pay">
             <% if @card %>
               <p class="font-12-light cc-detail-save">You already have a saved card. You can continue with that, or replace it with a new card.</p>
-              <a href='javascript:void(0);' id='use-saved-card'> Use my existing card ending in <span class='card-last4'><%= @card.last4 %></span></a> <br>
-              <a href='javascript:void(0);' id='add-new-card'>Add a new card</a>
+              <ul class="select-card text-left">
+                <li class="active">
+                  <a href='javascript:void(0);' id='use-saved-card'>Use my existing card ending in <span class='card-last4'><%= @card.last4 %></span></a>
+                </li>
+                <li>
+                  <a href='javascript:void(0);' id='add-new-card'>Add a new card</a>
+                </li>
+              </ul>
               <div class="old-card-info show">
-                <div class="text-center col-xs-12">
-                  <a href='javascript:void(0);' class="btn btn-success" id='confirm-saved-card' data-url='<%= businesses_subscription_path %>'>NEXT: INVITE USERS</a>
+                <div class="text-center">
+                  <a href='javascript:void(0);' class="btn btn-pink btn-single" id='confirm-saved-card' data-url='<%= businesses_subscription_path %>'>NEXT: INVITE USERS</a>
+                  <p class="charge">We won't charge your card yet.</p>
                 </div>
               </div>
             <% end %>
@@ -42,17 +49,14 @@
                   <input type="password" class="form-control default-input cc-cvv" placeholder="CVV">
                 </div>
                 <div class="text-center col-xs-12">
-                  <button type="submit" class="btn btn-success" id="add-card">NEXT: INVITE USERS</button>
+                  <button type="submit" class="btn btn-pink btn-single" id="add-card">NEXT: INVITE USERS</button>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="text-center">
-            <p class="para-light-14">All amounts are in USD.</p>
-            <%= image_tag('stripe-payment.png') %>
           </div>
         </div>
       </div>
     <% end %>
   </div>
 </div>
+<%= javascript_include_tag('plan', 'toggle_class') %>

@@ -5,3 +5,7 @@ $('body').removeClass('modal-open');
 $('#confirm-starter-plan').data('allow-downgrade', <%= current_business.allow_downgrade_to_starter? %>)
 $('.pro-users-count').html('<%= current_business.users.count %>')
 $('.pro-charges').html('<%= current_business.monthly_charge %>')
+$('.new-pro-charges').html("<%= Business.monthly_charge(current_business.users.count) %>")
+$('.added-pro-users-count').html(0);
+$('.added-pro-users-count').data('total-users-count', <%= current_business.users.count %>);
+$('li.tagit-choice').remove();

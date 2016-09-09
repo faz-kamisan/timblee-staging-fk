@@ -10,24 +10,36 @@ class RightSidebar extends React.Component {
     sitemapId: PropTypes.number.isRequired
   };
 
+  constructor(props) {
+    super(props);
+    this.state = { currentTab: 'active' };
+    this.handleTabClick = this.handleTabClick.bind(this);
+  }
+
+  handleTabClick(e, tabName) {
+    this.setState({ currentTab: tabName })
+  }
+
   componentDidMount() {
     $('.comment-input').watermark('Add a comment...<br/>You can mention people by typing @.', {fallback: false});
   }
   render() {
-    var renderedComments = this.props.comments.map(function(comment, index) {
-      return <li key={index}><Comment message={comment.message} commenter={comment.commenter} /></li>
+    const CommentTabs = ['active', 'resolved', 'archived']
+    var _this = this;
+    var renderedComments = this.props.comments.filter(function(comment) { return(comment.state == _this.state.currentTab) }).map(function(comment, index) {
+      return <li key={index}><Comment message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} /></li>
     })
     var pageWithComments = []
     this.props.sections.forEach(function(section, index) {
       traverse(section.pageTree, function(page) {
-        if(page.comments.length > 0) {
+        if(page.comments.filter(function(comment) { return(comment.state == _this.state.currentTab) }).length > 0) {
           pageWithComments.push({ name: page.name, comments: page.comments, id: page.id, sectionId: section.id });
         }
       })
     })
     var renderedPageWithComments = pageWithComments.map(function(page, index) {
-      var renderedPageComments = page.comments.map(function(comment, index) {
-        return <li key={index}><Comment message={comment.message} commenter={comment.commenter} /></li>
+      var renderedPageComments = page.comments.filter(function(comment) { return(comment.state == _this.state.currentTab) }).map(function(comment, index) {
+        return <li key={index}><Comment message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} /></li>
       })
       return(
         <li key={index}>
@@ -40,8 +52,17 @@ class RightSidebar extends React.Component {
       )
     })
 
+    var renderedCommentTabs = CommentTabs.map(function(commentTab, index) {
+      return (<li key={index} className={ 'comment-tab' + (_this.state.currentTab == commentTab ? ' active' : '') } onClick={function(e) { _this.handleTabClick(e, commentTab) } }>{commentTab}</li>)
+    })
+
     return (
       <div className='sitemap-right-sidebar hide'>
+        <div className='sitemap-comment-tabs'>
+          <ul>
+            {renderedCommentTabs}
+          </ul>
+        </div>
         <h2>
           General Comments
         </h2>

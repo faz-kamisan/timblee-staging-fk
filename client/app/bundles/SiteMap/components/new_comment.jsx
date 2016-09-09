@@ -24,26 +24,28 @@ class NewComment extends React.Component {
   }
 
   handleAddComment(e) {
-    var _this = this;
-    var timeStamp = new Date();
-    this.props.addComment(this.props.commentableId, this.props.commentableType, this.state.newCommentMessage, this.props.currentUser, this.props.sectionId, timeStamp)
-    this.props.setSaving(true)
-    $.ajax({
-      url: '/comments/',
-      method: 'post',
-      dataType: 'JSON',
-      data: { comment: { commentable_id: this.props.commentableId, commentable_type: this.props.commentableType, message: this.state.newCommentMessage } },
-      error: (result, b, c, d) => {
-        document.setFlash(result.responseText)
-      },
-      success: (result) => {
-        _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, timeStamp, result.id, _this.props.sectionId)
-      },
-      complete: (result) => {
-        _this.props.setSaving(false)
-      }
-    });
-    this.setState({ newCommentMessage: '' })
+    if(this.state.newCommentMessage.trim().length > 0) {
+      var _this = this;
+      var timeStamp = new Date();
+      this.props.addComment(this.props.commentableId, this.props.commentableType, this.state.newCommentMessage, this.props.currentUser, this.props.sectionId, timeStamp)
+      this.props.setSaving(true)
+      $.ajax({
+        url: '/comments/',
+        method: 'post',
+        dataType: 'JSON',
+        data: { comment: { commentable_id: this.props.commentableId, commentable_type: this.props.commentableType, message: this.state.newCommentMessage } },
+        error: (result, b, c, d) => {
+          document.setFlash(result.responseText)
+        },
+        success: (result) => {
+          _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, timeStamp, result.id, _this.props.sectionId)
+        },
+        complete: (result) => {
+          _this.props.setSaving(false)
+        }
+      });
+      this.setState({ newCommentMessage: '' })
+    }
   }
 
   handleClearComment(e) {
