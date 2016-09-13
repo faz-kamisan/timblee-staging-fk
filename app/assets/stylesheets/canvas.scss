@@ -78,22 +78,49 @@
     line-height: 12px;
     text-transform: capitalize;
     word-wrap: break-word;
+    padding-right: 70px;
   }
 
   .tile-top,
   .tile-bottom {
-    padding-right: 70px;
+    padding-right: 0;
     padding-left: 22px;
     height: 42px;
     text-align: left;
     position: relative;
-    &.drag-over {
+    background: $transparent;
+    z-index: 5;
+    &:after {
+      content: ' ';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      opacity: 0;
+      height: 100%;
       background: $primaryPink;
+      z-index: 10;
+    }
+    &.drag-over {
+      &:after {
+        opacity: .9;  
+      }      
     }
   }
 
   .tile-top {
     padding-top: 12px;
+    &:after {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+  }
+
+  .tile-bottom {
+    &:after {
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
   }
 
   .tile-right {
@@ -103,6 +130,8 @@
     width: 70px;
     height: 100%;
     border-left: solid 1px #f8f9fb;
+    background: $transparent;
+    z-index: 4;
   }
 
   &.level-0 {
@@ -188,8 +217,7 @@
       }
     }
 
-    .tile-top,
-    .tile-bottom {
+    .tile-name {
       padding-right: 60px;
     }
 
@@ -210,8 +238,7 @@
       border-top-color: #24a35f;
     }
 
-    .tile-top,
-    .tile-bottom {
+    .tile-name {
       padding-right: 50px;
     }
 
@@ -232,8 +259,7 @@
       border-top-color: #8851b4;
     }
 
-    .tile-top,
-    .tile-bottom {
+    .tile-name {
       padding-right: 40px;
     }
 
@@ -254,8 +280,7 @@
       border-top-color: #00cfff;
     }
 
-    .tile-top,
-    .tile-bottom {
+    .tile-name {
       padding-right: 22px;
     }
 
@@ -276,8 +301,12 @@
     }
 
     .tile-top,
-    .tile-bottom {
-      padding-right: 22px;
+    .til-bottom {
+      padding-left: 10px;
+    }
+
+    .tile-name {
+      padding-right: 10px;
     }
 
     .tile-right {
@@ -297,8 +326,12 @@
     }
 
     .tile-top,
-    .tile-bottom {
-      padding-right: 22px;
+    .til-bottom {
+      padding-left: 10px;
+    }
+
+    .tile-name {
+      padding-right: 10px;
     }
 
     .tile-right {
@@ -318,8 +351,12 @@
     }
 
     .tile-top,
-    .tile-bottom {
-      padding-right: 22px;
+    .til-bottom {
+      padding-left: 10px;
+    }
+
+    .tile-name {
+      padding-right: 10px;
     }
 
     .tile-right {
@@ -331,8 +368,16 @@
     width: 100%;
     height: 26px;
     background: $transparent;
-    &.drag-over {
-      background: $primaryPink;
+    &.drag-over, &.again-drag-over {
+      background: url('/assets/gutter.png');
+      background-repeat: no-repeat;
+      background-position: right;
+      background-size: 100%;
+    }
+    &.with-children {
+      &.drag-over, &.again-drag-over {
+        background-size: calc(100% - 22px);   
+      }
     }
   }
 
@@ -359,8 +404,13 @@
           margin-top: -.5px;
           background: #d5d7da;
         }
-        &.drag-over {
-          background: $primaryPink;
+        &.drag-over, &.again-drag-over {
+          &:before {
+            opacity: 0;
+          }
+          background: url('/assets/level-support.png');
+          background-repeat: no-repeat;
+          background-position: center;
         }
       }
 
@@ -1322,7 +1372,7 @@
 /* Comments */
 .sitemap-right-sidebar {
   position: fixed;
-  right: 0;
+  right: -440px;
   width: 420px;
   top: 222px;
   height: calc(100% - 222px);
@@ -1342,7 +1392,7 @@
   position: fixed;
   width: 420px;
   border-top: solid 1px #171a1d;
-  right: 0;
+  right: -440px;
   top: 222px;
   background: #262b30;
   z-index: 5;

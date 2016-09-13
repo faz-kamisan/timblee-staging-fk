@@ -91,7 +91,7 @@ class Gutter extends React.Component {
   render() {
     const connectDropTarget = this.props.connectDropTarget
     return connectDropTarget(
-      <div className="gutter"></div>
+      <div className={"gutter " + ((this.props.pageTree.children.length > 0) ? 'with-children' : '') }></div>
     );
   }
 }
