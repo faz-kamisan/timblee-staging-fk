@@ -1116,7 +1116,7 @@
     text-align: center;
     text-transform: uppercase;
     font-size: 12px;
-    padding-top: 43px;
+    padding-top: 48px;
     div {
       position: relative;
       bottom: 3px;
@@ -1309,8 +1309,225 @@
   .react-header {
     top: 0;
   }
-  .sitemap-left-sidebar {
+  .sitemap-left-sidebar,
+  .sitemap-right-sidebar {
     top: 127px;
     height: calc(100% - 127px);
+  }
+  .comment-list {
+    top: 127px;
+  }
+}
+
+/* Comments */
+.sitemap-right-sidebar {
+  position: fixed;
+  right: 0;
+  width: 420px;
+  top: 222px;
+  height: calc(100% - 222px);
+  background: #262b30;
+  z-index: 5;
+  transition: .35s;
+  box-shadow: 0px 0px 20px 7px rgba(147, 147, 147, 1);
+  overflow-y: auto;
+  padding-top: 60px;
+}
+
+.comment-list {
+  height: 60px;
+  border-bottom: solid 1px #171a1d; 
+  padding: 0 63px;
+  margin: 0;
+  position: fixed;
+  width: 420px;
+  border-top: solid 1px #171a1d;
+  right: 0;
+  top: 222px;
+  background: #262b30;
+  z-index: 5;
+  @include animate(.35s);
+  .animated-bar-react {
+    position: absolute;
+    left: 63px;
+    bottom: -2px;
+    height: 3px;
+    width: 60px;
+    background: $primaryWhite;
+    z-index: 3;
+  }
+  li:not(.animated-bar-react) {
+    cursor: pointer;
+    color: $primaryFormColor;
+    @extend .font-14;
+    padding: 0 10px;
+    float: none;
+    display: inline-block;
+    width: auto;
+    text-align: center;
+    text-transform: capitalize;
+    height: 60px;
+    line-height: 60px;
+    &.active {
+      color: $primaryWhite;
+      font-weight: 700;
+    }
+    + li:not(.animated-bar-react) {
+      margin-left: 33px;
+    }
+  }
+}
+
+.comment-inner-body {
+  padding: 0 19px;
+  ul {
+    padding: 0;
+  }
+
+  .watermark_container,
+  .comment-input {
+    display: block!important;
+    color: #262b30!important;
+  }
+
+  label.watermark {
+    color: #dadada!important;
+    font-weight: 400;
+    width: calc(100% - 26px)!important;
+    margin-bottom: 0!important;
+    left: 13px!important;
+    height: calc(100% - 20px)!important;
+    top: 10px!important;
+  }
+
+  .comment-input {
+    height: 180px;
+    padding: 10px 13px;
+    width: 100%;
+    @include border-radius(4px);
+    border: 1px solid #4d4d4d;
+    resize: none;
+    margin: 24px 0;
+  }
+}
+
+.comment-type-heading {
+  padding: 0 29px;
+  color: $primaryWhite;
+  font-weight: 700;
+  @extend .font-14;
+  padding-bottom: 10px;
+  border-bottom: solid 1px #171a1d;
+  margin: 0;
+}
+
+.comment-text {
+  @extend .font-12;
+  color: $primaryGrey;
+  padding: 24px 26px;
+  margin: 0;
+}
+
+.comment-group {
+  margin: 0;
+  position: relative;
+  &:before {
+    background: #171a1d;
+    content: "";
+    height: 100%;
+    left: 40px;
+    position: absolute;
+    top: 0;
+    width: 2px;
+    z-index: 3;
+  }
+  .user-comment-image {
+    width: 36px;
+    height: 36px;
+    @include border-radius(50%);
+    border: solid 1px #171a1d;
+    position: absolute;
+    left: 23px;
+    top: 0;
+    z-index: 4;
+  }
+  li {
+    position: relative;
+    padding-left: 73px;
+    padding-right: 24px;
+    + li {
+      margin-top: 50px;
+    }
+    &:first-child {
+      margin-top: 17px;
+    }
+  }
+  h6 {
+    position: absolute;
+    right: 24px;
+    top: 0;
+    font-size: 10px;
+    color: #6a717f;
+    font-weight: 400;
+    margin: 0;
+  }
+  h4 {
+    font-size: 10px;
+    color: #6a717f;
+    margin: 0 0 3px 0;
+    font-weight: 400;
+  }
+  p {
+    @extend .font-14;
+    color: $primaryWhite;
+    margin: 0;
+  }
+}
+
+.page-comment-details {
+  padding: 15px 28px 9px 28px;
+  border-bottom: solid 1px #171a1d; 
+  .page-name {
+    color: $primaryWhite!important;
+    @extend .font-14;
+    margin: 0;
+    max-width: 185px;
+    font-weight: 700;
+  }
+  .page-id {
+    display: block;
+    font-size: 10px;
+    color: $primaryGrey;
+  }
+  label {
+    color: $primaryGrey;
+    @extend .font-14;
+    font-weight: 400;
+    margin: 0;
+    input {
+      width: 16px;
+      height: 16px;
+      margin: 0 0 0 7px;
+      background: $primaryGrey;
+      position: relative;
+      top: 1px;
+    }
+  }
+}
+
+.add-remove-comment {
+  position: absolute;
+  bottom: 32px;
+  left: 17px;
+  color: $primaryLabel;
+  .add, .cancel {
+    color: $primaryGrey;
+    @extend .font-14;
+  }
+  .or {
+    padding: 0 2px;
+  }
+  .add {
+    font-weight: 700;
   }
 }
