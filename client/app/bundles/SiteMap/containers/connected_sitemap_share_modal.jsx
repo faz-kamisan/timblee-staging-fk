@@ -3,7 +3,7 @@ import { setShowGuestInfoForm, setCurrentGuest } from '../actions'
 import SitemapShareModal from '../components/sitemap_share_modal'
 
 const mapStateToProps = (state) => {
-  return { showModal: state.showSitemapShareModal, publicShareUrl: state.publicShareUrl }
+  return { showModal: state.showSitemapShareModal, publicShareUrl: state.publicShareUrl, sitemapId: state.id }
 }
 
 const mapDispatchToProps = (dispatch) => {

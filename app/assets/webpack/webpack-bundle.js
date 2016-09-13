@@ -48726,7 +48726,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { showModal: state.showSitemapShareModal, publicShareUrl: state.publicShareUrl };
+	  return { showModal: state.showSitemapShareModal, publicShareUrl: state.publicShareUrl, sitemapId: state.id };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -48782,6 +48782,7 @@
 	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(SitemapShareModal).call(this, props));
 	
 	    _this2.copyUrl = _this2.copyUrl.bind(_this2);
+	    _this2.restoreModal = _this2.restoreModal.bind(_this2);
 	    _this2.state = { copied: false, urlView: true };
 	    return _this2;
 	  }
@@ -48796,6 +48797,14 @@
 	      window.getSelection().empty();
 	      window.getSelection().addRange(range);
 	      document.execCommand('copy');
+	    }
+	  }, {
+	    key: 'restoreModal',
+	    value: function restoreModal(e) {
+	      var _this = this;
+	      setTimeout(function () {
+	        _this.setState({ copied: false, urlView: true });
+	      }, 1000);
 	    }
 	  }, {
 	    key: 'render',
@@ -48815,7 +48824,7 @@
 	              { className: 'modal-header text-center' },
 	              _react2.default.createElement(
 	                'button',
-	                { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+	                { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close', onClick: this.restoreModal },
 	                _react2.default.createElement(
 	                  'span',
 	                  { 'aria-hidden': 'true' },
@@ -48884,7 +48893,7 @@
 	                  'Here\'s what they\'ll see.'
 	                )
 	              ),
-	              !this.state.urlView && _react2.default.createElement(_invite_user_box2.default, null)
+	              !this.state.urlView && _react2.default.createElement(_invite_user_box2.default, { sitemapId: this.props.sitemapId })
 	            )
 	          )
 	        )
@@ -48897,6 +48906,7 @@
 	
 	SitemapShareModal.propTypes = {
 	  showModal: _react.PropTypes.bool.isRequired,
+	  sitemapId: _react.PropTypes.number.isRequired,
 	  publicShareUrl: _react.PropTypes.string.isRequired
 	};
 	exports.default = SitemapShareModal;
@@ -48922,6 +48932,8 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -48934,20 +48946,77 @@
 	  function InviteUserBox(props) {
 	    _classCallCheck(this, InviteUserBox);
 	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(InviteUserBox).call(this, props));
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(InviteUserBox).call(this, props));
 	
-	    _this.state = { email: '' };
-	    _this.handleEmailChange = _this.handleEmailChange.bind(_this);
-	    return _this;
+	    _this2.state = { customMessage: '', lastFinalisedMessage: '', messageEditorActivated: true };
+	    _this2.handleEmailShare = _this2.handleEmailShare.bind(_this2);
+	    _this2.deactivateMessageEditor = _this2.deactivateMessageEditor.bind(_this2);
+	    _this2.activateMessageEditor = _this2.activateMessageEditor.bind(_this2);
+	    _this2.afterTagAdded = _this2.afterTagAdded.bind(_this2);
+	    _this2.isEmail = _this2.isEmail.bind(_this2);
+	    _this2.cancelMessageEditing = _this2.cancelMessageEditing.bind(_this2);
+	    _this2.handleOnCustomMessageChange = _this2.handleOnCustomMessageChange.bind(_this2);
+	    return _this2;
 	  }
 	
 	  _createClass(InviteUserBox, [{
 	    key: 'componentDidMount',
-	    value: function componentDidMount() {}
+	    value: function componentDidMount() {
+	      var _this = this;
+	      $(this.refs.emails).tagit({
+	        afterTagAdded: function afterTagAdded(event, ui) {
+	          _this.afterTagAdded(event, ui);
+	        }
+	      });
+	    }
 	  }, {
-	    key: 'handleEmailChange',
-	    value: function handleEmailChange(e) {
-	      this.setState({ emails: e.target.value });
+	    key: 'deactivateMessageEditor',
+	    value: function deactivateMessageEditor(e) {
+	      this.setState({ messageEditorActivated: false, lastFinalisedMessage: this.state.customMessage });
+	    }
+	  }, {
+	    key: 'activateMessageEditor',
+	    value: function activateMessageEditor(e) {
+	      this.setState({ messageEditorActivated: true, customMessage: this.state.lastFinalisedMessage });
+	    }
+	  }, {
+	    key: 'cancelMessageEditing',
+	    value: function cancelMessageEditing(e) {
+	      this.setState(_defineProperty({ customMessage: '' }, 'customMessage', this.state.lastFinalisedMessage));
+	    }
+	  }, {
+	    key: 'afterTagAdded',
+	    value: function afterTagAdded(event, ui) {
+	      var tagValue = $(ui.tag.find('span')[0]).html();
+	      if (!this.isEmail(tagValue)) {
+	        $(this.refs.emails).tagit("removeTagByLabel", tagValue);
+	      }
+	    }
+	  }, {
+	    key: 'isEmail',
+	    value: function isEmail(email) {
+	      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	      return regex.test(email);
+	    }
+	  }, {
+	    key: 'handleOnCustomMessageChange',
+	    value: function handleOnCustomMessageChange(e) {
+	      this.setState({ customMessage: e.target.value });
+	    }
+	  }, {
+	    key: 'handleEmailShare',
+	    value: function handleEmailShare(e) {
+	      console.log(this.refs.emails.value);
+	      $.ajax({
+	        url: '/sitemaps/' + this.props.sitemapId + '/share_via_email',
+	        method: 'post',
+	        dataType: 'JSON',
+	        data: { emails: this.refs.emails.value, custom_message: this.state.lastFinalisedMessage },
+	        error: function error(result) {
+	          document.setFlash(result.responseText);
+	        },
+	        complete: function complete(result) {}
+	      });
 	    }
 	  }, {
 	    key: 'render',
@@ -48956,11 +49025,54 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(
-	          'label',
-	          null,
-	          'Emails'
+	          'div',
+	          { key: 'upper' },
+	          _react2.default.createElement(
+	            'label',
+	            null,
+	            'Emails'
+	          ),
+	          _react2.default.createElement('input', { type: 'text', name: 'emails', id: 'emails', ref: 'emails' })
 	        ),
-	        _react2.default.createElement('input', { type: 'text', name: 'emails', value: this.state.emails, id: 'emails', onChange: this.handleEmailChange })
+	        !this.state.messageEditorActivated && _react2.default.createElement(
+	          'div',
+	          { key: 'lower' },
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            this.state.customMessage
+	          ),
+	          _react2.default.createElement(
+	            'a',
+	            { onClick: this.activateMessageEditor },
+	            'Edit Message'
+	          )
+	        ),
+	        this.state.messageEditorActivated && _react2.default.createElement(
+	          'div',
+	          { key: 'lower' },
+	          _react2.default.createElement('textarea', { value: this.state.customMessage, placeholder: 'Include an optional personal message.', onChange: this.handleOnCustomMessageChange }),
+	          _react2.default.createElement(
+	            'a',
+	            { onClick: this.deactivateMessageEditor },
+	            'Add message'
+	          ),
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            ' or'
+	          ),
+	          _react2.default.createElement(
+	            'a',
+	            { onClick: this.cancelMessageEditing },
+	            ' cancel'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { className: 'btn', onClick: this.handleEmailShare },
+	          'Send Email'
+	        )
 	      );
 	    }
 	  }]);
@@ -48968,7 +49080,9 @@
 	  return InviteUserBox;
 	}(_react2.default.Component);
 	
-	InviteUserBox.propTypes = {};
+	InviteUserBox.propTypes = {
+	  sitemapId: _react.PropTypes.number.isRequired
+	};
 	exports.default = InviteUserBox;
 
 /***/ },

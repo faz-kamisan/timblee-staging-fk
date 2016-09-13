@@ -4,12 +4,14 @@ import InviteUserBox from './invite_user_box'
 class SitemapShareModal extends React.Component {
   static propTypes = {
     showModal: PropTypes.bool.isRequired,
+    sitemapId: PropTypes.number.isRequired,
     publicShareUrl: PropTypes.string.isRequired
   };
 
   constructor(props) {
     super(props)
     this.copyUrl = this.copyUrl.bind(this);
+    this.restoreModal = this.restoreModal.bind(this);
     this.state = {copied: false, urlView: true}
   }
 
@@ -23,6 +25,13 @@ class SitemapShareModal extends React.Component {
     document.execCommand('copy');
   }
 
+  restoreModal(e) {
+    var _this = this;
+    setTimeout(function() {
+      _this.setState({copied: false, urlView: true})
+    }, 1000)
+  }
+
   render() {
     var _this = this;
     return (
@@ -30,7 +39,7 @@ class SitemapShareModal extends React.Component {
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header text-center">
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.restoreModal}>
                 <span aria-hidden="true">
                   <img src='/assets/close-modal.svg' className='close-modal' />
                 </span>
@@ -54,7 +63,7 @@ class SitemapShareModal extends React.Component {
               }
               {
                 !this.state.urlView &&
-                <InviteUserBox />
+                <InviteUserBox sitemapId={this.props.sitemapId} />
               }
             </div>
           </div>

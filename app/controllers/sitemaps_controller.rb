@@ -1,5 +1,5 @@
 class SitemapsController < ApplicationController
-  before_filter :fetch_sitemap, only: [:destroy, :show, :update]
+  before_filter :fetch_sitemap, only: [:destroy, :show, :update, :share_via_email]
   before_filter :fetch_sitemap_from_token, only: [:public_share]
   skip_before_filter :authenticate_user!, only: [:public_share]
 
@@ -8,7 +8,7 @@ class SitemapsController < ApplicationController
     @sitemap.business = current_business
     if @sitemap.save
       flash[:notice] = t('.success', scope: :flash)
-        redirect_to sitemap_path(@sitemap)
+      redirect_to sitemap_path(@sitemap)
     else
       flash[:error] = t('.failure', scope: :flash)
       redirect_to home_dashboard_path
@@ -28,6 +28,12 @@ class SitemapsController < ApplicationController
     elsif current_guest
       @sitemap_props = @sitemap_props.merge!(currentGuest: { fullName: current_guest.full_name, email: current_guest.email })
     end
+  end
+
+  def share_via_email
+    emails = params[:emails].split(',')
+    SitemapShareService.share_sitemap(emails, current_user, @sitemap, params[:custom_message])
+    render json: { success: 'Emails Sent Successfully' }, status: 200
   end
 
   def destroy

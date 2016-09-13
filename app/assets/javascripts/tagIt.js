@@ -11,7 +11,7 @@ TagIt.prototype.isEmail = function(email) {
 
 TagIt.prototype.afterTagAdded = function(event, ui) {
   var _this = this;
-  tagValue = ui.tag.find('input').val();
+  var tagValue = ui.tag.find('input').val();
   if (!_this.isEmail(tagValue)){
     _this.myTags.tagit("removeTagByLabel", tagValue);
   } else {

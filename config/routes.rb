@@ -32,7 +32,11 @@ Rails.application.routes.draw do
   end
 
   resources :folders
-  resources :sitemaps
+  resources :sitemaps do
+    member do
+      post :share_via_email
+    end
+  end
   resources :comments, only: [:create, :update, :destroy]
   resources :pages, only: [:create, :update, :destroy]
   resources :guests, only: [:create]
