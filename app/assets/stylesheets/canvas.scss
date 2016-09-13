@@ -1372,7 +1372,7 @@
 /* Comments */
 .sitemap-right-sidebar {
   position: fixed;
-  right: -440px;
+  right: 0;
   width: 420px;
   top: 222px;
   height: calc(100% - 222px);
@@ -1392,7 +1392,7 @@
   position: fixed;
   width: 420px;
   border-top: solid 1px #171a1d;
-  right: -440px;
+  right: 0;
   top: 222px;
   background: #262b30;
   z-index: 5;
