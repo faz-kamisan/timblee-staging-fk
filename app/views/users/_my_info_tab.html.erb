@@ -98,14 +98,14 @@
         <div class="col-xs-6">
           <label>Your image</label>
           <div class="clearfix m-t-15">
-            <%= f.file_field :avatar , class: 'avatar-field'%>
+            <%= f.file_field :avatar , class: 'hidden avatar-field'%>
             <%= image_tag(current_user.avatar, class: 'preview-profile-image profile-image pull-left profile-image-lg', 'data-original-value': current_user.avatar) %>
             <div class="right-text pull-right">
               <p class="pull-right">
                 Upload a square PNG or JPEG image at least 400 x 400px in size. We’ll resize it automatically  and it’ll appear sharp everywhere. If you upload a non-square image, It’ll come out squished! :O
               </p>
             </div>
-            <div class="dropdown">
+            <div class="">
               <span class="truncate">
                 Avatars
               </span>
@@ -115,7 +115,7 @@
                   <% (1..14).each do |index| %>
                     <label for='avatar<%=index%>' class='avatar-label'>
                       <input type='radio' id='avatar<%=index%>' value='avatar_<%=index%>.svg' name='default_avatar' class='default_avatars' />
-                        <%= image_tag('avatar_' + index.to_s + '.svg', class: "profile-image avatar-link") %>
+                        <%= image_tag('avatar_' + index.to_s + '.svg', class: "profile-image-lg pull-left profile-image avatar-link") %>
                     </label>
                   <%end%>
                 </li>

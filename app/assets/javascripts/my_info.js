@@ -37,6 +37,10 @@ MyInfo.prototype.bindEvents = function() {
     _this.avatarField.val('');
   });
 
+  this.previewProfileImage.on('click', function() {
+    _this.avatarField.click();
+  })
+
   this.eyeOpen.on('click', function() {
     _this.passwordField.attr('type', 'text');
     $(this).addClass('hide');

@@ -4,6 +4,7 @@ var Personalization = function(options) {
   this.rowSave = options.rowSave;
   this.rowEdit = options.rowEdit;
   this.logoField = options.logoField;
+  this.chooseLogo = options.chooseLogo;
 };
 
 Personalization.prototype.bindEvents = function() {
@@ -18,6 +19,10 @@ Personalization.prototype.bindEvents = function() {
     _this.rowEdit.addClass('hide');
     _this.logoField.val('');
   });
+
+  this.chooseLogo.on('click', function() {
+    _this.logoField.click();
+  });
 };
 
 
@@ -28,6 +33,7 @@ $(function() {
     rowSave : $('.row-logo-save'),
     rowEdit : $('.row-logo-edit'),
     logoField : $('.logo-field'),
+    chooseLogo : $('.choose-logo')
   }
   new Personalization(options).bindEvents();
 });
