@@ -95,10 +95,17 @@ function addPageComment(sections, id, sectionId, commenter, message, tempId) {
 function updateCommentId(sections, oldId, newId, sectionId, pageId) {
   var sectionsCopy = Object.assign([], sections);
   var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
-  var comment = treeCopy.comments.filter(function(comment) { return comment.id == oldId })[0]
   var page = getNodeById(treeCopy, pageId)
   var comment = page.comments.filter(function(comment) { return comment.id == oldId })[0]
   comment.id = newId
+  return sectionsCopy
+}
+
+function deletePageComment(sections, id, pageId, sectionId) {
+  var sectionsCopy = Object.assign([], sections);
+  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
+  var page = getNodeById(treeCopy, pageId)
+  page.comments.removeIf(function(comment) { return(comment.id == id) })
   return sectionsCopy
 }
 
@@ -144,4 +151,4 @@ function getNodeByPosition(tree, position){
 }
 
 
-export { addPage, removePage, updatePagePosition, updatePageName, traverse, updateCollapse, updatePageId, addPageComment, updateCommentId }
+export { addPage, removePage, updatePagePosition, updatePageName, traverse, updateCollapse, updatePageId, addPageComment, updateCommentId, deletePageComment }

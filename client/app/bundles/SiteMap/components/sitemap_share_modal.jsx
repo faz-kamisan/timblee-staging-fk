@@ -20,9 +20,10 @@ class SitemapShareModal extends React.Component {
     var myelement = document.getElementById('sitemap-public-share-url'),
         range = document.createRange();
     range.selectNode(myelement);
-    window.getSelection().empty()
+    window.getSelection().removeAllRanges();
     window.getSelection().addRange(range);
     document.execCommand('copy');
+    window.getSelection().removeAllRanges();
   }
 
   restoreModal(e) {

@@ -15,6 +15,8 @@ export const CHANGE_LEFT_SIDEBAR_EXPANDED = 'CHANGE_LEFT_SIDEBAR_EXPANDED'
 export const SET_SHOW_GUEST_INFO_FORM = 'SET_SHOW_GUEST_INFO_FORM'
 export const SET_CURRENT_GUEST = 'SET_CURRENT_GUEST'
 export const SHOW_SITEMAP_SHARE_MODAL = 'SHOW_SITEMAP_SHARE_MODAL'
+export const DELETE_GENERAL_COMMENT = 'DELETE_GENERAL_COMMENT'
+export const DELETE_PAGE_COMMENT = 'DELETE_PAGE_COMMENT'
 
 export function setName(name) {
   return { type: SET_NAME, name }
@@ -82,4 +84,12 @@ export function setCurrentGuest(name, email) {
 
 export function showSitemapShareModal(value) {
   return { type: SHOW_SITEMAP_SHARE_MODAL, value }
+}
+
+export function deleteGeneralComment(id) {
+  return { type: DELETE_GENERAL_COMMENT, id }
+}
+
+export function deletePageComment(id, pageId, sectionId) {
+  return { type: DELETE_PAGE_COMMENT, id, pageId, sectionId }
 }

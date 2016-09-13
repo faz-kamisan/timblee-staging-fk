@@ -1095,7 +1095,7 @@
   background: $primaryBlack;
   position: fixed;
   top: 95px;
-  z-index: 11;
+  z-index: 12;
   height: 127px;
   left: 0;
   width: 100%;
@@ -1327,7 +1327,7 @@
   top: 222px;
   height: calc(100% - 222px);
   background: #262b30;
-  z-index: 5;
+  z-index: 11;
   transition: .35s;
   box-shadow: 0px 0px 20px 7px rgba(147, 147, 147, 1);
   overflow-y: auto;
@@ -1336,7 +1336,7 @@
 
 .comment-list {
   height: 60px;
-  border-bottom: solid 1px #171a1d; 
+  border-bottom: solid 1px #171a1d;
   padding: 0 63px;
   margin: 0;
   position: fixed;
@@ -1495,7 +1495,7 @@
 
 .page-comment-details {
   padding: 15px 28px 9px 28px;
-  border-bottom: solid 1px #171a1d; 
+  border-bottom: solid 1px #171a1d;
   .page-name {
     color: $primaryWhite!important;
     @extend .font-14;

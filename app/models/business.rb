@@ -62,4 +62,13 @@ class Business < ActiveRecord::Base
   def self.monthly_charge(no_of_users)
     CHARGE_FOR_OWNER + (CHARGE_FOR_OTHER_USERS * (no_of_users - 1))
   end
+
+  def to_react_data
+    {
+      id: id,
+      logo: logo,
+      name: name,
+      users: users.map(&:to_react_data)
+    }
+  end
 end

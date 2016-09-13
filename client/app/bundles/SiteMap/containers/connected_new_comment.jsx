@@ -3,7 +3,7 @@ import { setSaving, addPageComment, addGeneralComment, updatePageCommentId, upda
 import NewComment from '../components/new_comment'
 
 const mapStateToProps = (state) => {
-  return { currentUser: state.currentUser, currentGuest: state.currentGuest, members: state.members }
+  return { currentUser: state.currentUser, currentGuest: state.currentGuest, business: state.business }
 }
 
 const mapDispatchToProps = (dispatch) => {

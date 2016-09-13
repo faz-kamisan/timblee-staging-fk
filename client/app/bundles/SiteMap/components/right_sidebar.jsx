@@ -7,7 +7,9 @@ class RightSidebar extends React.Component {
   static propTypes = {
     comments: PropTypes.array.isRequired,
     sections: PropTypes.array.isRequired,
-    sitemapId: PropTypes.number.isRequired
+    sitemapId: PropTypes.number.isRequired,
+    setDeleteCommentId: PropTypes.func.isRequired,
+    business : PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -27,7 +29,7 @@ class RightSidebar extends React.Component {
     const CommentTabs = ['active', 'resolved', 'archived']
     var _this = this;
     var renderedComments = this.props.comments.filter(function(comment) { return(comment.state == _this.state.currentTab) }).map(function(comment, index) {
-      return <li key={index}><Comment message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} /></li>
+      return <li key={index}><Comment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} setDeleteCommentId={_this.props.setDeleteCommentId} commentableType='Sitemap' /></li>
     })
     var pageWithComments = []
     this.props.sections.forEach(function(section, index) {
@@ -39,7 +41,7 @@ class RightSidebar extends React.Component {
     })
     var renderedPageWithComments = pageWithComments.map(function(page, index) {
       var renderedPageComments = page.comments.filter(function(comment) { return(comment.state == _this.state.currentTab) }).map(function(comment, index) {
-        return <li key={index}><Comment message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} /></li>
+        return <li key={index}><Comment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} setDeleteCommentId={_this.props.setDeleteCommentId} commentableType='Page' commentableId={page.id} sectionId={page.sectionId} /></li>
       })
       return(
         <li key={index}>
@@ -56,7 +58,9 @@ class RightSidebar extends React.Component {
           <ul className="comment-group">
             {renderedPageComments}
           </ul>
-          <ConnectedNewComment commentableId={page.id} commentableType='Page' sectionId={page.sectionId} />
+          { (_this.state.currentTab == 'active') &&
+            <ConnectedNewComment commentableId={page.id} commentableType='Page' sectionId={page.sectionId} />
+          }
         </li>
       )
     })
@@ -77,23 +81,27 @@ class RightSidebar extends React.Component {
           <p className="comment-text">
             {(() => {
               switch (this.state.currentTab) {
-              case "active"   : return "Anyone who has the share link can see active comments. Only [company name] team members can see resolved and deleted comments.";
-              case "resolved" : return "Resolved conversations are only visible to logged in [company name] team members.";
-              case "archived" : return "If a page with comments is deleted, the conversation is moved here. This is to ensure there is a record of all conversations. Archived conversations are only visible to logged in [company name] team members.";
+              case "active"   : return "Anyone who has the share link can see active comments. Only " + this.props.business.name + " team members can see resolved and deleted comments.";
+              case "resolved" : return "Resolved conversations are only visible to logged in " + this.props.business.name + " team members.";
+              case "archived" : return "If a page with comments is deleted, the conversation is moved here. This is to ensure there is a record of all conversations. Archived conversations are only visible to logged in " + this.props.business.name + " team members.";
               default         : return "";
             }
             })()}
           </p>
-          <h2 className="comment-type-heading">
-            General comments
-          </h2>
-          <ul className="comment-group">
-            {renderedComments}
-          </ul>
-          <ConnectedNewComment commentableId={this.props.sitemapId} commentableType='Sitemap' />
+          { (this.state.currentTab == 'active') &&
+            <div className='general-comments'>
+              <h2 className="comment-type-heading">
+                General comments
+              </h2>
+              <ul className="comment-group">
+                {renderedComments}
+              </ul>
+              <ConnectedNewComment commentableId={this.props.sitemapId} commentableType='Sitemap' />
+            </div>
+          }
           <ul>
             {renderedPageWithComments}
-          </ul>  
+          </ul>
         </div>
       </div>
     );

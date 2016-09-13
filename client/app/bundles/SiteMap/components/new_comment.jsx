@@ -10,7 +10,7 @@ class NewComment extends React.Component {
     setSaving: PropTypes.func.isRequired,
     onCommentIdUpdate: PropTypes.func.isRequired,
     setShowGuestInfoForm: PropTypes.func.isRequired,
-    members: PropTypes.array.isRequired,
+    business: PropTypes.object.isRequired,
     currentUser: PropTypes.object
   };
 
@@ -74,7 +74,7 @@ class NewComment extends React.Component {
     return (
       <div className="relative">
         <MentionsInput className='comment-input' value={this.state.newCommentMessage} onChange={this.handleCommentChange} displayTransform={function(id, display, type) { return('@' + display) }} markup={'@__display__'} ref='newComment'>
-          <Mention trigger="@" data={this.props.members} appendSpaceOnAdd={true} />
+          <Mention trigger="@" data={this.props.business.users} appendSpaceOnAdd={true} />
         </MentionsInput>
         <div className="add-remove-comment">
           <span onClick={this.handleAddComment} className='cursor add'>Add my comment </span>
