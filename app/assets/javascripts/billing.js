@@ -62,8 +62,8 @@ Billing.prototype.bindDowngradeErrorEvent = function() {
 Billing.prototype.addCardType = function() {
   var _this = this;
   this.cardNumber.on('input', function() {
-    _this.brandSpan.removeClass('visa mastercard amex');
-    _this.brandSpan.addClass($.payment.cardType(this.value));
+    $(this).siblings(_this.brandSpan).removeClass('visa mastercard amex');
+    $(this).siblings(_this.brandSpan).addClass($.payment.cardType(this.value));
   })
 };
 
@@ -80,7 +80,7 @@ Billing.prototype.toggleCardInputFields = function() {
     _this.cardDetailsrowOnSave.removeClass('hide');
     _this.cardFormDiv.addClass('hide');
     _this.cardErrors.html('');
-    _this.brandSpan.html('');
+    $(this).siblings(_this.brandSpan).removeClass('visa mastercard amex');
   });
 };
 

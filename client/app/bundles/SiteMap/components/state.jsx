@@ -14,7 +14,7 @@ class State extends React.Component {
     this.handleStateChange = this.handleStateChange.bind(this);
   }
   handleStateChange(event) {
-    this.props.setSaving(true)
+    var _this = this
     $.ajax({
       url: '/sitemaps/' + this.props.id,
       method: 'put',
@@ -24,7 +24,10 @@ class State extends React.Component {
         document.setFlash(result.responseText)
       },
       complete: (result) => {
-        this.props.setSaving(false)
+        _this.props.setSaving(true)
+        setTimeout(function() {
+          _this.props.setSaving(false)
+        }, 2000)
       }
     });
     this.props.onStateChange(this.props.state);
