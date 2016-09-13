@@ -9,13 +9,12 @@ class Comment extends React.Component {
   render() {
     return (
       <div>
-        <h3>
+        <img className="user-comment-image" src='/assets/avatar_10.svg' />
+        <h4>
           {this.props.commenter.fullName}
-        </h3>
+        </h4>
         <h6>
-          <span>
-            {this.props.createdAt}
-          </span>
+          {this.props.createdAt}
         </h6>
         <p>
           {this.props.message}

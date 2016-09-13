@@ -33,7 +33,7 @@ class RightSidebar extends React.Component {
     this.props.sections.forEach(function(section, index) {
       traverse(section.pageTree, function(page) {
         if(page.comments.filter(function(comment) { return(comment.state == _this.state.currentTab) }).length > 0) {
-          pageWithComments.push({ name: page.name, comments: page.comments, id: page.id, sectionId: section.id });
+          pageWithComments.push({ name: page.name, comments: page.comments, id: page.id, sectionId: section.id, uid: page.uid });
         }
       })
     })
@@ -43,11 +43,20 @@ class RightSidebar extends React.Component {
       })
       return(
         <li key={index}>
-          <h3>{page.name}</h3>
-          <ul>
+          <div className="page-comment-details">
+            <span className="page-id">ID: {page.uid}</span>
+            <div className="clearfix">
+              <span className="page-name truncate pull-left">{page.name}</span>
+              <label className="pull-right" htmlFor="mark-resolve">
+                Mark as resolved
+                <input type="checkbox" id="mark-resolve" />
+              </label>
+            </div>
+          </div>
+          <ul className="comment-group">
             {renderedPageComments}
-            <ConnectedNewComment commentableId={page.id} commentableType='Page' sectionId={page.sectionId} />
           </ul>
+          <ConnectedNewComment commentableId={page.id} commentableType='Page' sectionId={page.sectionId} />
         </li>
       )
     })
@@ -57,26 +66,35 @@ class RightSidebar extends React.Component {
     })
 
     return (
-      <div className='sitemap-right-sidebar hide'>
-        <div className='sitemap-comment-tabs'>
-          <ul>
+      <div className='sitemap-right-sidebar'>
+        <div className='sitemap-comment-tabs comment-header'>
+          <ul className="comment-list clearfix">
             {renderedCommentTabs}
+            <li className="animated-bar-react"></li>
           </ul>
         </div>
-        <h2>
-          General Comments
-        </h2>
-        <ul>
-          {renderedComments}
+        <div className="comment-inner-body">
+          <p className="comment-text">
+            {(() => {
+              switch (this.state.currentTab) {
+              case "active"   : return "Anyone who has the share link can see active comments. Only [company name] team members can see resolved and deleted comments.";
+              case "resolved" : return "Resolved conversations are only visible to logged in [company name] team members.";
+              case "archived" : return "If a page with comments is deleted, the conversation is moved here. This is to ensure there is a record of all conversations. Archived conversations are only visible to logged in [company name] team members.";
+              default         : return "";
+            }
+            })()}
+          </p>
+          <h2 className="comment-type-heading">
+            General comments
+          </h2>
+          <ul className="comment-group">
+            {renderedComments}
+          </ul>
           <ConnectedNewComment commentableId={this.props.sitemapId} commentableType='Sitemap' />
-        </ul>
-        <h2>
-          Page Comments
-        </h2>
-        <ul>
-          {renderedPageWithComments}
-        </ul>
-
+          <ul>
+            {renderedPageWithComments}
+          </ul>  
+        </div>
       </div>
     );
   }

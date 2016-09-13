@@ -70,12 +70,14 @@ class NewComment extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="relative">
         <textarea className='comment-input' value={this.state.newCommentMessage} onChange={this.handleCommentChange} ref='newComment'>
         </textarea>
-        <span onClick={this.handleAddComment} className='cursor'>Add my comment </span>
-        or
-        <span onClick={this.handleClearComment} className='cursor'> cancel</span>
+        <div className="add-remove-comment">
+          <span onClick={this.handleAddComment} className='cursor add'>Add my comment </span>
+          <span className="or">or</span>
+          <span onClick={this.handleClearComment} className='cursor cancel'> cancel</span>
+        </div>
       </div>
     )
   }
