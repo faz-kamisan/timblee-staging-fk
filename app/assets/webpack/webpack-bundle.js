@@ -47609,9 +47609,10 @@
 	          var domNode = (0, _reactDom.findDOMNode)(this);
 	          $(domNode).addClass('drag-over');
 	          if (this.props.pageTree.level == 1) {
-	            $(domNode).parent('.page-tile').siblings('.level-support').addClass('drag-over');
+	            // debugger
+	            $(domNode).parent('.page-tile').siblings('.level-support').addClass('again-drag-over');
 	          } else {
-	            $(domNode).parent('.page-tile').siblings('.gutter').addClass('drag-over');
+	            $(domNode).parent('.page-tile').siblings('.gutter').addClass('again-drag-over');
 	          }
 	        }
 	      }
@@ -47622,9 +47623,9 @@
 	          var domNode = (0, _reactDom.findDOMNode)(this);
 	          $(domNode).removeClass('drag-over');
 	          if (this.props.pageTree.level == 1) {
-	            $(domNode).parent('.page-tile').siblings('.level-support').removeClass('drag-over');
+	            $(domNode).parent('.page-tile').siblings('.level-support').removeClass('again-drag-over');
 	          } else {
-	            $(domNode).parent('.page-tile').siblings('.gutter').removeClass('drag-over');
+	            $(domNode).parent('.page-tile').siblings('.gutter').removeClass('again-drag-over');
 	          }
 	        }
 	      }
@@ -48226,7 +48227,7 @@
 	    key: 'render',
 	    value: function render() {
 	      var connectDropTarget = this.props.connectDropTarget;
-	      return connectDropTarget(_react2.default.createElement('div', { className: 'gutter' }));
+	      return connectDropTarget(_react2.default.createElement('div', { className: "gutter " + (this.props.pageTree.children.length > 0 ? 'with-children' : '') }));
 	    }
 	  }]);
 	
