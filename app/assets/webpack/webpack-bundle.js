@@ -39203,15 +39203,15 @@
 	
 	var _connected_sitemap_share_modal2 = _interopRequireDefault(_connected_sitemap_share_modal);
 	
-	var _connected_left_sidebar = __webpack_require__(/*! ../containers/connected_left_sidebar */ 784);
+	var _connected_left_sidebar = __webpack_require__(/*! ../containers/connected_left_sidebar */ 785);
 	
 	var _connected_left_sidebar2 = _interopRequireDefault(_connected_left_sidebar);
 	
-	var _connected_right_sidebar = __webpack_require__(/*! ../containers/connected_right_sidebar */ 788);
+	var _connected_right_sidebar = __webpack_require__(/*! ../containers/connected_right_sidebar */ 789);
 	
 	var _connected_right_sidebar2 = _interopRequireDefault(_connected_right_sidebar);
 	
-	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 793);
+	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 794);
 	
 	var _custom_drag_layer2 = _interopRequireDefault(_custom_drag_layer);
 	
@@ -48423,7 +48423,7 @@
 	              null,
 	              _react2.default.createElement(
 	                'a',
-	                { className: 'btn sitemap-share-btn', onClick: this.handleSitemapShareClick },
+	                { href: '#sitemap-share-modal', 'data-toggle': 'modal', className: 'link-regular btn-regular', onClick: this.handleSitemapShareClick },
 	                'Share'
 	              )
 	            )
@@ -48761,6 +48761,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _invite_user_box = __webpack_require__(/*! ./invite_user_box */ 784);
+	
+	var _invite_user_box2 = _interopRequireDefault(_invite_user_box);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -48775,46 +48779,113 @@
 	  function SitemapShareModal(props) {
 	    _classCallCheck(this, SitemapShareModal);
 	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SitemapShareModal).call(this, props));
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(SitemapShareModal).call(this, props));
 	
-	    _this.copyUrl = _this.copyUrl.bind(_this);
-	    _this.state = { copied: false };
-	    return _this;
+	    _this2.copyUrl = _this2.copyUrl.bind(_this2);
+	    _this2.state = { copied: false, urlView: true };
+	    return _this2;
 	  }
 	
 	  _createClass(SitemapShareModal, [{
 	    key: 'copyUrl',
 	    value: function copyUrl(e) {
 	      this.setState({ copied: true });
-	      var myelement = document.getElementById('sitemap-publi-share-url'),
+	      var myelement = document.getElementById('sitemap-public-share-url'),
 	          range = document.createRange();
 	      range.selectNode(myelement);
+	      window.getSelection().empty();
 	      window.getSelection().addRange(range);
 	      document.execCommand('copy');
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this = this;
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'react-modal sitemap-share-modal' },
-	        this.props.showModal && _react2.default.createElement(
+	        { className: 'react-modal modal fade sitemap-share-modal', id: 'sitemap-share-modal' },
+	        _react2.default.createElement(
 	          'div',
-	          null,
+	          { className: 'modal-dialog', role: 'document' },
 	          _react2.default.createElement(
-	            'span',
-	            { id: 'sitemap-publi-share-url' },
-	            this.props.publicShareUrl
-	          ),
-	          _react2.default.createElement(
-	            'button',
-	            { className: 'btn copy-link-button', onClick: this.copyUrl },
-	            this.state.copied ? 'Copied' : 'Copy'
-	          ),
-	          _react2.default.createElement(
-	            'a',
-	            { href: this.props.publicShareUrl, target: '_blank' },
-	            'Here\'s what they\'ll see.'
+	            'div',
+	            { className: 'modal-content' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'modal-header text-center' },
+	              _react2.default.createElement(
+	                'button',
+	                { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+	                _react2.default.createElement(
+	                  'span',
+	                  { 'aria-hidden': 'true' },
+	                  _react2.default.createElement('img', { src: '/assets/close-modal.svg', className: 'close-modal' })
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'h4',
+	                { className: 'modal-title' },
+	                'Share Your Sitemap'
+	              ),
+	              _react2.default.createElement(
+	                'ul',
+	                null,
+	                _react2.default.createElement(
+	                  'li',
+	                  { onClick: function onClick(e) {
+	                      _this.setState({ urlView: true });
+	                    } },
+	                  'URL'
+	                ),
+	                _react2.default.createElement(
+	                  'li',
+	                  { onClick: function onClick(e) {
+	                      _this.setState({ urlView: false });
+	                    } },
+	                  'Email'
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'modal-body' },
+	              this.state.urlView && _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                  'p',
+	                  null,
+	                  'Here\'s your sharing link.'
+	                ),
+	                '  ',
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'hide' },
+	                  '\''
+	                ),
+	                _react2.default.createElement(
+	                  'p',
+	                  null,
+	                  'Anyone with the link can view the sitemap.'
+	                ),
+	                _react2.default.createElement(
+	                  'span',
+	                  { id: 'sitemap-public-share-url' },
+	                  this.props.publicShareUrl
+	                ),
+	                _react2.default.createElement(
+	                  'button',
+	                  { className: 'btn copy-link-button', onClick: this.copyUrl },
+	                  this.state.copied ? 'Copied' : 'Copy'
+	                ),
+	                _react2.default.createElement(
+	                  'a',
+	                  { href: this.props.publicShareUrl, target: '_blank' },
+	                  'Here\'s what they\'ll see.'
+	                )
+	              ),
+	              !this.state.urlView && _react2.default.createElement(_invite_user_box2.default, null)
+	            )
 	          )
 	        )
 	      );
@@ -48832,6 +48903,76 @@
 
 /***/ },
 /* 784 */
+/*!************************************************************!*\
+  !*** ./app/bundles/SiteMap/components/invite_user_box.jsx ***!
+  \************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 301);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var InviteUserBox = function (_React$Component) {
+	  _inherits(InviteUserBox, _React$Component);
+	
+	  function InviteUserBox(props) {
+	    _classCallCheck(this, InviteUserBox);
+	
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(InviteUserBox).call(this, props));
+	
+	    _this.state = { email: '' };
+	    _this.handleEmailChange = _this.handleEmailChange.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(InviteUserBox, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {}
+	  }, {
+	    key: 'handleEmailChange',
+	    value: function handleEmailChange(e) {
+	      this.setState({ emails: e.target.value });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'label',
+	          null,
+	          'Emails'
+	        ),
+	        _react2.default.createElement('input', { type: 'text', name: 'emails', value: this.state.emails, id: 'emails', onChange: this.handleEmailChange })
+	      );
+	    }
+	  }]);
+	
+	  return InviteUserBox;
+	}(_react2.default.Component);
+	
+	InviteUserBox.propTypes = {};
+	exports.default = InviteUserBox;
+
+/***/ },
+/* 785 */
 /*!*******************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_left_sidebar.jsx ***!
   \*******************************************************************/
@@ -48847,7 +48988,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _left_sidebar = __webpack_require__(/*! ../components/left_sidebar */ 785);
+	var _left_sidebar = __webpack_require__(/*! ../components/left_sidebar */ 786);
 	
 	var _left_sidebar2 = _interopRequireDefault(_left_sidebar);
 	
@@ -48870,7 +49011,7 @@
 	exports.default = ConnectedLeftSideBar;
 
 /***/ },
-/* 785 */
+/* 786 */
 /*!*********************************************************!*\
   !*** ./app/bundles/SiteMap/components/left_sidebar.jsx ***!
   \*********************************************************/
@@ -48888,7 +49029,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _draggable_page_type = __webpack_require__(/*! ./draggable_page_type */ 786);
+	var _draggable_page_type = __webpack_require__(/*! ./draggable_page_type */ 787);
 	
 	var _draggable_page_type2 = _interopRequireDefault(_draggable_page_type);
 	
@@ -49025,7 +49166,7 @@
 	exports.default = LeftSidebar;
 
 /***/ },
-/* 786 */
+/* 787 */
 /*!****************************************************************!*\
   !*** ./app/bundles/SiteMap/components/draggable_page_type.jsx ***!
   \****************************************************************/
@@ -49049,7 +49190,7 @@
 	
 	var _reactDndHtml5Backend = __webpack_require__(/*! react-dnd-html5-backend */ 622);
 	
-	var _page_type = __webpack_require__(/*! ./page_type */ 787);
+	var _page_type = __webpack_require__(/*! ./page_type */ 788);
 	
 	var _page_type2 = _interopRequireDefault(_page_type);
 	
@@ -49118,7 +49259,7 @@
 	exports.default = DraggablePageType;
 
 /***/ },
-/* 787 */
+/* 788 */
 /*!******************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_type.jsx ***!
   \******************************************************/
@@ -49203,7 +49344,7 @@
 	exports.default = PageType;
 
 /***/ },
-/* 788 */
+/* 789 */
 /*!********************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_right_sidebar.jsx ***!
   \********************************************************************/
@@ -49217,7 +49358,7 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
 	
-	var _right_sidebar = __webpack_require__(/*! ../components/right_sidebar */ 789);
+	var _right_sidebar = __webpack_require__(/*! ../components/right_sidebar */ 790);
 	
 	var _right_sidebar2 = _interopRequireDefault(_right_sidebar);
 	
@@ -49240,7 +49381,7 @@
 	exports.default = ConnectedRightSideBar;
 
 /***/ },
-/* 789 */
+/* 790 */
 /*!**********************************************************!*\
   !*** ./app/bundles/SiteMap/components/right_sidebar.jsx ***!
   \**********************************************************/
@@ -49260,11 +49401,11 @@
 	
 	var _tree_helper = __webpack_require__(/*! ../helpers/tree_helper */ 609);
 	
-	var _comment = __webpack_require__(/*! ./comment */ 790);
+	var _comment = __webpack_require__(/*! ./comment */ 791);
 	
 	var _comment2 = _interopRequireDefault(_comment);
 	
-	var _connected_new_comment = __webpack_require__(/*! ../containers/connected_new_comment */ 791);
+	var _connected_new_comment = __webpack_require__(/*! ../containers/connected_new_comment */ 792);
 	
 	var _connected_new_comment2 = _interopRequireDefault(_connected_new_comment);
 	
@@ -49408,7 +49549,7 @@
 	exports.default = RightSidebar;
 
 /***/ },
-/* 790 */
+/* 791 */
 /*!****************************************************!*\
   !*** ./app/bundles/SiteMap/components/comment.jsx ***!
   \****************************************************/
@@ -49483,7 +49624,7 @@
 	exports.default = Comment;
 
 /***/ },
-/* 791 */
+/* 792 */
 /*!******************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_new_comment.jsx ***!
   \******************************************************************/
@@ -49499,7 +49640,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _new_comment = __webpack_require__(/*! ../components/new_comment */ 792);
+	var _new_comment = __webpack_require__(/*! ../components/new_comment */ 793);
 	
 	var _new_comment2 = _interopRequireDefault(_new_comment);
 	
@@ -49539,7 +49680,7 @@
 	exports.default = ConnectedNewComment;
 
 /***/ },
-/* 792 */
+/* 793 */
 /*!********************************************************!*\
   !*** ./app/bundles/SiteMap/components/new_comment.jsx ***!
   \********************************************************/
@@ -49670,7 +49811,7 @@
 	exports.default = NewComment;
 
 /***/ },
-/* 793 */
+/* 794 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/custom_drag_layer.jsx ***!
   \**************************************************************/
@@ -49692,11 +49833,11 @@
 	
 	var _reactDnd = __webpack_require__(/*! react-dnd */ 711);
 	
-	var _page_container_preview = __webpack_require__(/*! ./page_container_preview */ 794);
+	var _page_container_preview = __webpack_require__(/*! ./page_container_preview */ 795);
 	
 	var _page_container_preview2 = _interopRequireDefault(_page_container_preview);
 	
-	var _page_type_preview = __webpack_require__(/*! ./page_type_preview */ 795);
+	var _page_type_preview = __webpack_require__(/*! ./page_type_preview */ 796);
 	
 	var _page_type_preview2 = _interopRequireDefault(_page_type_preview);
 	
@@ -49818,7 +49959,7 @@
 	exports.default = DragLayerDecorator(CustomDragLayer);
 
 /***/ },
-/* 794 */
+/* 795 */
 /*!*******************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_container_preview.jsx ***!
   \*******************************************************************/
@@ -49901,7 +50042,7 @@
 	exports.default = PageContainerPreview;
 
 /***/ },
-/* 795 */
+/* 796 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_type_preview.jsx ***!
   \**************************************************************/
@@ -49919,7 +50060,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _page_type = __webpack_require__(/*! ./page_type */ 787);
+	var _page_type = __webpack_require__(/*! ./page_type */ 788);
 	
 	var _page_type2 = _interopRequireDefault(_page_type);
 	
