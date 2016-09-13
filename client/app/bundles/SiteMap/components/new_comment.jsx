@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { MentionsInput, Mention } from 'react-mentions'
 
 class NewComment extends React.Component {
   static propTypes = {
@@ -9,6 +10,7 @@ class NewComment extends React.Component {
     setSaving: PropTypes.func.isRequired,
     onCommentIdUpdate: PropTypes.func.isRequired,
     setShowGuestInfoForm: PropTypes.func.isRequired,
+    members: PropTypes.array.isRequired,
     currentUser: PropTypes.object
   };
 
@@ -71,8 +73,9 @@ class NewComment extends React.Component {
   render() {
     return (
       <div className="relative">
-        <textarea className='comment-input' value={this.state.newCommentMessage} onChange={this.handleCommentChange} ref='newComment'>
-        </textarea>
+        <MentionsInput className='comment-input' value={this.state.newCommentMessage} onChange={this.handleCommentChange} displayTransform={function(id, display, type) { return('@' + display) }} markup={'@__display__'} ref='newComment'>
+          <Mention trigger="@" data={this.props.members} appendSpaceOnAdd={true} />
+        </MentionsInput>
         <div className="add-remove-comment">
           <span onClick={this.handleAddComment} className='cursor add'>Add my comment </span>
           <span className="or">or</span>

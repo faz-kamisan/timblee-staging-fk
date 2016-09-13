@@ -13,6 +13,7 @@ import leftSidebarExpanded from './left_sidebar_expanded'
 import showGuestInfoForm from './show_guest_info_form'
 import showSitemapShareModal from './show_sitemap_share_modal'
 import publicShareUrl from './public_share_url'
+import members from './members'
 
 const sitemapAppReducer = combineReducers({
   name,
@@ -28,7 +29,8 @@ const sitemapAppReducer = combineReducers({
   currentGuest,
   showGuestInfoForm,
   publicShareUrl,
-  showSitemapShareModal
+  showSitemapShareModal,
+  members
 })
 
 export default sitemapAppReducer

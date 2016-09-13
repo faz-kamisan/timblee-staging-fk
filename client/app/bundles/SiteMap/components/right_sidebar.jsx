@@ -21,7 +21,7 @@ class RightSidebar extends React.Component {
   }
 
   componentDidMount() {
-    $('.comment-input').watermark('Add a comment...<br/>You can mention people by typing @.', {fallback: false});
+    $('.comment-input textarea').watermark('Add a comment...<br/>You can mention people by typing @.', {fallback: false});
   }
   render() {
     const CommentTabs = ['active', 'resolved', 'archived']

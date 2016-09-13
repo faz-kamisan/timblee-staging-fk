@@ -37,7 +37,12 @@ class Sitemap < ActiveRecord::Base
       pageTypes: PageType.order_by_name,
       comments: self.comments.order_by_updated_at.map(&:to_react_data),
       sections: sections.map(&:to_react_data),
+      members: get_all_members
     }
+  end
+
+  def get_all_members
+    (business.users + invited_users).map(&:to_react_data)
   end
 
   private
