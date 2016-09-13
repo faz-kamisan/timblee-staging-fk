@@ -79,7 +79,7 @@ class User < ActiveRecord::Base
     end
 
     def mail_user_about_role_update
-      UserMailer.delay_for(10.seconds).send_updated_role_details(id)
+      UserMailer.delay_for(10.seconds).send_updated_role_details(id) unless avatar_changed? # in add_default_avatar calling save triggers this callback after_create but it needs to be called only after_update
     end
 
     def set_is_admin
