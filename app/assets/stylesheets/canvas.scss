@@ -1314,3 +1314,10 @@
     height: calc(100% - 127px);
   }
 }
+
+.comment-input__suggestions__list {
+  border: 1px solid black;
+  .comment-input__suggestions__item--focused {
+    background: $primaryGrey;
+  }
+}

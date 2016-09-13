@@ -58,6 +58,14 @@ class User < ActiveRecord::Base
     business.owner == self
   end
 
+  def to_react_data
+    {
+      id: id,
+      full_name: full_name,
+      display: full_name,
+      email: email
+    }
+  end
   protected
     def confirmation_period_valid?
       self.class.allow_unconfirmed_access_for.nil? || (created_at && created_at.utc >= self.class.allow_unconfirmed_access_for.ago)
