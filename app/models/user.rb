@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
 
   has_many :sitemap_invites, dependent: :destroy
+  has_many :notifications, dependent: :destroy
   has_many :shared_sitemaps, through: :sitemap_invites, source: :sitemap
   has_many :comments, as: :commenter
   mount_uploader :avatar, AvatarUploader

@@ -78,9 +78,18 @@
         </a>
       </div>
       <div class="notifications-tab pull-right header-links">
-        <a href="#">
-          <span class="icon-bell"></span>
-        </a>
+        <div class="user-dropdown pull-right text-right">
+          <span class="truncate">
+            <span class="icon-bell"></span>
+          </span>
+          <ul class="p-0 m-0 user-settings">
+            <%current_user.notifications.each do |notification|%>
+              <li>
+                <%= link_to "#{notification.message}", notification.link_to %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
       </div>
       <div class="add-sitemap-tab pull-right header-links new-sitemap">
         <%= form_for Sitemap.new do |f| %>
