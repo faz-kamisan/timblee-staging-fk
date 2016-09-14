@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160907081900) do
+ActiveRecord::Schema.define(version: 20160913120700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20160907081900) do
   end
 
   create_table "cards", force: :cascade do |t|
-    t.integer  "last4"
+    t.string   "last4"
     t.string   "brand"
     t.integer  "business_id"
     t.datetime "created_at",  null: false
@@ -107,9 +107,10 @@ ActiveRecord::Schema.define(version: 20160907081900) do
     t.string   "name"
     t.integer  "folder_id"
     t.integer  "business_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.string   "state"
+    t.string   "public_share_token"
   end
 
   create_table "subscriptions", force: :cascade do |t|
@@ -120,7 +121,6 @@ ActiveRecord::Schema.define(version: 20160907081900) do
     t.datetime "updated_at",  null: false
     t.datetime "start_at"
     t.datetime "end_at"
-    t.integer  "plan_id"
   end
 
   add_index "subscriptions", ["business_id"], name: "index_subscriptions_on_business_id", using: :btree
