@@ -1,3 +1,9 @@
+#upgrade {
+  &:hover {
+    color: $primaryPink;
+  }
+}
+
 .default-input {
   background: #f9f9fa;
   &:focus {
