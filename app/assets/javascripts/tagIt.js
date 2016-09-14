@@ -23,8 +23,9 @@ TagIt.prototype.afterTagAdded = function(event, ui) {
       success: function (data) {
         _this.successCallbackForTagAdd(data, ui);
       }
-
     });
+
+    this.myTags.data("ui-tagit").tagInput.attr('placeholder', '')
   }
 };
 
@@ -53,11 +54,16 @@ TagIt.prototype.afterTagRemoved = function(event, ui) {
     _this.addedProUsersCount.data('total-users-count', numberOfUsers);
     _this.newProCharges.html(monthlyCharge);
   }
+
+  if(_this.myTags.tagit('assignedTags').length == 0) {
+    _this.myTags.data("ui-tagit").tagInput.attr('placeholder', 'Enter their emails seperated by commas.')
+  }
 };
 
 TagIt.prototype.bindEvents = function() {
   var _this = this;
   _this.myTags.tagit({
+    placeholderText: 'Enter their emails seperated by commas.',
     afterTagAdded: function(event, ui) {
       _this.afterTagAdded(event, ui);
     },

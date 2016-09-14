@@ -320,6 +320,10 @@ ul.tagit li.tagit-new {
   padding: 0;
 }
 
+ul.tagit > :first-child.tagit-new {
+  width: 320px;
+}
+
 ul.tagit input[type="text"] {
   height: 36px;
 }

@@ -2,7 +2,6 @@ class UsersController < ApplicationController
 
   def settings
     if(current_business.stripe_customer_id)
-      customer = Stripe::Customer.retrieve(current_business.stripe_customer_id)
       @card = current_business.active_card
     end
   end
