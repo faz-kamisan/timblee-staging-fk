@@ -73,8 +73,7 @@ class StripePaymentService
       LoggerExtension.stripe_log "AMOUNT TO BE REFUNDED #{amount}"
       refund = Stripe::Refund.create(
         charge: @customer.charges.first,
-        amount: amount,
-        currency: 'usd'
+        amount: amount
       )
       LoggerExtension.stripe_log "CUSTOMER CHARGE REFUNDED SUCCESSFULLY #{refund.inspect}"
     end
