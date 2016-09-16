@@ -16,6 +16,7 @@ class Businesses::CardsController < ApplicationController
     end
 
     rescue Stripe::CardError => e
+      @card = current_business.active_card
 
       respond_to do |format|
         format.html{ redirect_to billing_settings_users_path, alert: e.message }
