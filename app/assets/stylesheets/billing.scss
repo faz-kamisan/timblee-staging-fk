@@ -158,6 +158,13 @@
   .cc-number {
     background: $primaryWhite;
   }
+  .loading-image {
+    z-index: 999;
+    position: absolute;
+    background-color: rgba(150, 150, 150, 0.5);
+    display: none;
+    left: 400px;
+  }
 }
 
 #starter-plan-modal {
@@ -393,7 +400,7 @@ a#upgrade {
 
 .pro-plan-benefits {
   .current-plan-text {
-    margin-top: 33px;   
+    margin-top: 33px;
   }
 }
 

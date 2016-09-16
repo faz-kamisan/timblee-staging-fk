@@ -20,6 +20,7 @@
           <div class="col-xs-6 p-t-b-20">
             <ul id="myTags" data-url='<%= validate_unique_email_users_path %>'>
             </ul>
+            <div class='tags-error error-message'></div>
             <div class="optional-message-container">
               <div class="optional-message">
                 <%= form_tag '#', { method: :post, class: 'bulk-invitation-form'} do %>

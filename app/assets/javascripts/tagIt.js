@@ -2,6 +2,7 @@ var TagIt = function(options) {
   this.myTags = options.myTags;
   this.addedProUsersCount = options.addedProUsersCount;
   this.newProCharges = options.newProCharges;
+  this.errorsDiv = options.errorsDiv;
 };
 
 TagIt.prototype.isEmail = function(email) {
@@ -33,6 +34,10 @@ TagIt.prototype.successCallbackForTagAdd = function(data, ui) {
   var _this = this;
   if(data.existing_email){
     ui.tag.addClass("invalid-tag");
+    if (_this.myTags.find('.valid-tag').length == 0){
+      _this.errorsDiv.show();
+      _this.errorsDiv.html('All email(s) you entered here are already present in our database.')
+    }
   } else {
     ui.tag.addClass("valid-tag");
     var numberOfUsers = parseInt(_this.addedProUsersCount.data('total-users-count')) + 1,
@@ -41,6 +46,7 @@ TagIt.prototype.successCallbackForTagAdd = function(data, ui) {
     _this.addedProUsersCount.data('total-users-count', numberOfUsers);
     _this.addedProUsersCount.html(numberOfAddedUsers);
     _this.newProCharges.html(monthlyCharge);
+    _this.errorsDiv.hide();
   }
 };
 
@@ -54,10 +60,16 @@ TagIt.prototype.afterTagRemoved = function(event, ui) {
     _this.addedProUsersCount.data('total-users-count', numberOfUsers);
     _this.newProCharges.html(monthlyCharge);
   }
+  if (_this.myTags.find('.valid-tag').length == 0){
+    _this.errorsDiv.show();
+    _this.errorsDiv.html('All email(s) you entered here are already present in our database.')
+  }
 
   if(_this.myTags.tagit('assignedTags').length == 0) {
     _this.myTags.data("ui-tagit").tagInput.attr('placeholder', 'Enter their emails seperated by commas.')
+    _this.errorsDiv.hide();
   }
+
 };
 
 TagIt.prototype.bindEvents = function() {
@@ -77,7 +89,8 @@ $(function() {
   var options = {
     myTags : $("#myTags"),
     addedProUsersCount : $('.added-pro-users-count'),
-    newProCharges : $('.new-pro-charges')
+    newProCharges : $('.new-pro-charges'),
+    errorsDiv : $('.tags-error')
   },
   tagIt = new TagIt(options);
   tagIt.bindEvents();
