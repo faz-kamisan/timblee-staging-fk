@@ -49,11 +49,11 @@
           <label>Your logo</label>
           <div class="clearfix m-t-15">
             <figure class="display-image">
-              <%= f.file_field :logo , class: 'logo-field'%>
+              <%= f.file_field :logo , class: 'logo-field', required: true %>
               <% if current_business.logo.present? %>
-                <%= image_tag(current_business.logo, class: 'choose-logo profile-image pull-left profile-image-lg') %>
+                <%= image_tag(current_business.logo, class: 'choose-logo profile-image pull-left profile-image-lg', 'data-original-value': current_business.logo) %>
               <% else %>
-                <%= image_tag('business-logo.png', class: 'choose-logo profile-image pull-left profile-image-lg') %>
+                <%= image_tag('business-logo.png', class: 'choose-logo profile-image pull-left profile-image-lg', 'data-original-value': 'business-logo.png') %>
               <% end %>
               <span class="pink-image-overlay"></span>
             </figure>

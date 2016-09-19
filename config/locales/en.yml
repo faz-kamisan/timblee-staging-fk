@@ -82,7 +82,7 @@ en:
       send_destroy_request_to_superadmin:
         success: "We've received your request to delete your account. We'll shortly send you an email to confirm, and then, your account will be gone forever :("
       update:
-        success: Business update successfully.
+        success: Business updated successfully.
         failure: Business cannot be updated.
     admin:
       users:
