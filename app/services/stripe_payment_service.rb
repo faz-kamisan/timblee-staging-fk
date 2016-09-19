@@ -89,6 +89,7 @@ class StripePaymentService
       LoggerExtension.stripe_log "SUBSCRIPTION_HASH: #{subscription_hash.inspect}"
       new_subscription = Stripe::Subscription.create(subscription_hash)
       LoggerExtension.stripe_log "STRIPE SUBSCRIPTION CREATED SUCCESSFULLY: #{new_subscription.inspect}"
+      @current_business.subscriptions.last.stripe_subscriptions_id = new_subscription.id
     end
 
     def create_card(stripe_token)

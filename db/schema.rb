@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160913120700) do
+ActiveRecord::Schema.define(version: 20160919072016) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20160913120700) do
 
   create_table "guests", force: :cascade do |t|
     t.string   "full_name"
-    t.string   "logo"
+    t.string   "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -107,20 +107,20 @@ ActiveRecord::Schema.define(version: 20160913120700) do
     t.string   "name"
     t.integer  "folder_id"
     t.integer  "business_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.string   "state"
-    t.string   "public_share_token"
   end
 
   create_table "subscriptions", force: :cascade do |t|
     t.integer  "quantity"
     t.integer  "no_of_users"
     t.integer  "business_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.datetime "start_at"
     t.datetime "end_at"
+    t.string   "stripe_subscriptions_id"
   end
 
   add_index "subscriptions", ["business_id"], name: "index_subscriptions_on_business_id", using: :btree

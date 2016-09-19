@@ -16,7 +16,9 @@ class Businesses::SubscriptionsController < ApplicationController
 
   def webhook
     @event = Stripe::Event.retrieve(params['id'])
-    user = Business.find_by(stripe_customer_id: @event.data.object.customer).owner
+    business =  Business.find_by(stripe_customer_id: @event.data.object.customer)
+    LoggerExtension.stripe_log "Params:#{params}\n\Event: #{@event.inspect}\n\nBusiness: #{business.inspect}\n\n}"
+    user = business.owner
 
     if @event.type == 'charge.succeeded'
       PaymentNotifier.delay.success(user, @event)
@@ -26,12 +28,20 @@ class Businesses::SubscriptionsController < ApplicationController
 
     elsif @event.type == 'charge.failed'
       PaymentNotifier.delay.failure(user, @event)
+
+    elsif @event.type == 'customer.subscription.updated'
+      renew_subscription
     end
     render status: :ok, json: 'success'
 
   end
 
   private
+
+    def renew_subscription
+      subscription = Subscription.find_by(stripe_subscriptions_id: @event.data.object.id)
+      subscription.update_end_time(Time.at(@event.data.object.current_period_end))
+    end
 
     def activate_pro_plan
       LoggerExtension.highlight
