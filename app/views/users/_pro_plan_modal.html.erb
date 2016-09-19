@@ -23,7 +23,7 @@
               <p class="font-12-light cc-detail-save">You already have a saved card. You can continue with that, or replace it with a new card.</p>
               <ul class="select-card text-left">
                 <li class="active">
-                  <a href='javascript:void(0);' id='use-saved-card'>Use my existing card ending in <span class='card-last4'><%= @card.last4 %></span></a>
+                  <a href='javascript:void(0);' id='use-saved-card'>Use my existing card ending in [<span class='card-last4'><%= @card.last4 %></span>]</a>
                 </li>
                 <li>
                   <a href='javascript:void(0);' id='add-new-card'>Add a new card</a>
@@ -37,6 +37,9 @@
               </div>
             <% end %>
             <div class="new-card <%= @card ? 'hide' : 'show' %>">
+              <div class='loading-image'>
+                <%= image_tag('loader1.gif', class: 'load') %>
+              </div>
               <span class='cc-errors'></span>
               <div class="row">
                 <div class="form-group col-xs-12">
@@ -60,4 +63,4 @@
     <% end %>
   </div>
 </div>
-<%= javascript_include_tag('plan', 'toggle_class') %>
+<%= javascript_include_tag('plan', 'toggle_class', 'payments', 'billing') %>

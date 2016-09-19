@@ -10,9 +10,14 @@
         <h4>You can't proceed <%= image_tag('sad.png', class: 'sad') %> </h4>
         <p>You are currently on Starter plan which allows only 3 sitemaps.</p>
         <p>Want to add more sitemaps? <br>
-        <a href="#choose-plan-modal" data-toggle="modal">Switch to Pro plan</a>
+        <% if request.original_fullpath == settings_users_path %>
+          <%= link_to 'Switch to Pro plan', "#choose-plan-modal", 'data-toggle': "modal", 'data-dismiss': 'modal' %>
+        <% else %>
+          <%= link_to 'Switch to Pro plan', billing_settings_users_path %>
+        <% end %>
          instead. </p>
       </div>
     </div>
   </div>
 </div>
+

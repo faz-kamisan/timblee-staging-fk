@@ -50,7 +50,7 @@ class Business < ActiveRecord::Base
 
   def monthly_charge
     if is_pro_plan?
-      CHARGE_FOR_OWNER + (CHARGE_FOR_OTHER_USERS * (no_of_users - 1))
+      Business.monthly_charge(no_of_users)
     else
       0
     end
@@ -62,5 +62,11 @@ class Business < ActiveRecord::Base
 
   def self.monthly_charge(no_of_users)
     CHARGE_FOR_OWNER + (CHARGE_FOR_OTHER_USERS * (no_of_users - 1))
+  end
+
+  def set_new_subscription(emails)
+    new_users_count = users.count + InvitationService.get_invitable_users_count(emails)
+    subscriptions.build(no_of_users: new_users_count, quantity: Business.monthly_charge(new_users_count))
+    assign_attributes(is_pro: true, has_plan: true)
   end
 end

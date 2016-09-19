@@ -1,14 +1,18 @@
-var Payment = function(form) {
+var Payment = function(form, loading_image) {
   this.form = form;
   this.ccNumberDiv = this.form.find('.cc-number').closest('div');
   this.expDiv = this.form.find('.cc-exp').closest('div');
   this.cvvDiv = this.form.find('.cc-cvv').closest('div');
   this.errorsDiv = this.form.find('.cc-errors');
+  this.loading_image = loading_image;
 };
 
 Payment.prototype.createToken = function() {
   var _this = this;
   this.form.on('submit', function(event) {
+    if(_this.loading_image) {
+      _this.loading_image.show();
+    }
     var $form = $(this);
     $form.find('button#add-card').prop('disabled', true);
     $form.find('a#cancel').addClass('disabled');
@@ -66,15 +70,17 @@ Payment.prototype.stripeResponseHandler = function (status, response) {
     // Insert the token into the form so it gets submitted to the server
     $form.append($('<input type="hidden" name="stripeToken" />').val(token));
     // and submit
+
     $form.trigger('submit.rails');
   }
 };
 
 $(function($) {
-  var form1       = $('#add-card-form'),
-      form2       = $('#add-card-modal-form');
+  var form1         = $('#add-card-form'),
+      loading_image = $('.loading-image')
+      form2         = $('#add-card-modal-form');
 
 
-  new Payment(form1).createToken();
-  new Payment(form2).createToken();
+  new Payment(form1, null).createToken();
+  new Payment(form2, loading_image).createToken();
 });

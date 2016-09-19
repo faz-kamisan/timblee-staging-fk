@@ -16,7 +16,9 @@ class Businesses::SubscriptionsController < ApplicationController
 
   def webhook
     @event = Stripe::Event.retrieve(params['id'])
-    user = Business.find_by(stripe_customer_id: @event.data.object.customer).owner
+    business =  Business.find_by(stripe_customer_id: @event.data.object.customer)
+    LoggerExtension.stripe_log "Params:#{params}\n\Event: #{@event.inspect}\n\nBusiness: #{business.inspect}\n\n}"
+    user = business.owner
 
     if @event.type == 'charge.succeeded'
       PaymentNotifier.delay.success(user, @event)
@@ -26,6 +28,9 @@ class Businesses::SubscriptionsController < ApplicationController
 
     elsif @event.type == 'charge.failed'
       PaymentNotifier.delay.failure(user, @event)
+
+    elsif @event.type == 'customer.subscription.updated'
+      renew_subscription if @event.data.object.quantity > 0
     end
     render status: :ok, json: 'success'
 
@@ -33,24 +38,42 @@ class Businesses::SubscriptionsController < ApplicationController
 
   private
 
-    def activate_pro_plan
-      emails = params[:email].split(/\s* \s*/)
-      no_of_users = current_business.users.count + InvitationService.get_invitable_users_count(emails)
+    def renew_subscription
+      subscription = Subscription.where(stripe_subscriptions_id: @event.data.object.id).order(:created_at).last
+      subscription.update_end_time(Time.at(@event.data.object.current_period_end))
+    end
 
-      current_business.subscriptions.build(no_of_users: no_of_users, quantity: Business.monthly_charge(no_of_users))
-      current_business.is_pro = true
-      current_business.has_plan = true
+    def activate_pro_plan
+      LoggerExtension.highlight
+      LoggerExtension.stripe_log "Params:#{params}\n\nUser: #{current_user.inspect}\n\nBusiness: #{current_business.inspect}\n\nOld Subscription: #{@current_subscription.try(:inspect)}"
+
+      emails = params[:email].split(/\s* \s*/)
+      current_business.set_new_subscription(emails)
+      LoggerExtension.stripe_log "New Subscription: #{current_business.subscriptions.last.inspect}"
+
       StripePaymentService.new(current_business).update_subscription
+      LoggerExtension.stripe_log "Subscription on stripe created/updated successfully"
 
       InvitationService.invite_users(emails, current_user, params[:custom_message])
-      redirect_to team_settings_users_path, notice: t('pro_plan_success', scope: :flash, users: no_of_users)
+      LoggerExtension.stripe_log "Invitation sent to users with emails: #{emails}"
+      LoggerExtension.highlight
+
+      redirect_to team_settings_users_path, notice: t('pro_plan_success', scope: :flash, users: current_business.subscriptions.last.no_of_users)
 
       rescue Stripe::CardError => e
+        LoggerExtension.stripe_log "Stripe::CardError : #{e.inspect}"
+        LoggerExtension.highlight
+
         redirect_to billing_settings_users_path, alert: e.message
     end
 
     def activate_starter_plan
-      StripePaymentService.new(current_business).remove_old_subscription if @current_subscription
+      if @current_subscription
+        LoggerExtension.highlight
+        LoggerExtension.stripe_log "Params:#{params}\n\nUser: #{current_user.inspect}\n\nBusiness: #{current_business.inspect}\n\nOld Subscription: #{@current_subscription.try(:inspect)}"
+        StripePaymentService.new(current_business).remove_old_subscription
+        LoggerExtension.highlight
+      end
 
       current_business.update(is_pro: false, has_plan: true)
       redirect_to billing_settings_users_path, notice: t('.success', scope: :flash)
