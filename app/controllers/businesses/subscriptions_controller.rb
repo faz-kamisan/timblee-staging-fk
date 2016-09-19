@@ -30,7 +30,7 @@ class Businesses::SubscriptionsController < ApplicationController
       PaymentNotifier.delay.failure(user, @event)
 
     elsif @event.type == 'customer.subscription.updated'
-      renew_subscription
+      renew_subscription if @event.data.object.quantity > 0
     end
     render status: :ok, json: 'success'
 
@@ -39,7 +39,7 @@ class Businesses::SubscriptionsController < ApplicationController
   private
 
     def renew_subscription
-      subscription = Subscription.find_by(stripe_subscriptions_id: @event.data.object.id)
+      subscription = Subscription.where(stripe_subscriptions_id: @event.data.object.id).order(:created_at).last
       subscription.update_end_time(Time.at(@event.data.object.current_period_end))
     end
 

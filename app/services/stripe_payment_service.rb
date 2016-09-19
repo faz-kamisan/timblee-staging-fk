@@ -38,6 +38,7 @@ class StripePaymentService
       current_subscription.quantity = @current_business.subscriptions.last.quantity
       current_subscription.save
       LoggerExtension.stripe_log "UPDATED STRIPE SUBSCRIPTION: #{current_subscription.inspect}"
+      @current_business.subscriptions.last.stripe_subscriptions_id = current_subscription.id
     else
       create_subscription
     end
