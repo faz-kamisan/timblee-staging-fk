@@ -45,6 +45,13 @@ en:
         success: Page destroyed successfully
         failure: Couldn't delete page
     users:
+      update_avatar:
+        success: Avatar Updated successfully
+        failure: Avatar couldn't be updated
+      update_password:
+        success: Password Updated successfully
+        failure: Could Not Update Password
+
       confirmations:
         show:
           confirmation_token_invalid: 'Confirmation Token is Invalid'
@@ -73,8 +80,10 @@ en:
           failure: Something went wrong.
 
       send_destroy_request_to_superadmin:
-          success: "We've received your request to delete your account. We'll shortly send you an email to confirm, and then, your account will be gone forever :("
-
+        success: "We've received your request to delete your account. We'll shortly send you an email to confirm, and then, your account will be gone forever :("
+      update:
+        success: Business updated successfully.
+        failure: Business cannot be updated.
     admin:
       users:
         destroy:

@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   has_many :sitemap_invites, dependent: :destroy
   has_many :shared_sitemaps, through: :sitemap_invites, source: :sitemap
   has_many :comments, as: :commenter
-  # mount_uploader :avatar, AvatarUploader
+  mount_uploader :avatar, AvatarUploader
 
   before_create :set_is_admin, unless: :business_id
   before_create :add_business, unless: :business_id
@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   after_destroy :update_business_subscription
   before_update :restrict_owner_role_update, if: :is_admin_changed?
   after_update :mail_user_about_role_update, if: :is_admin_changed?
+  after_create :add_default_avatar
+  after_invitation_created :add_default_avatar
 
   strip_fields :full_name
 
@@ -40,7 +42,7 @@ class User < ActiveRecord::Base
   validates :password, presence: { message: 'Without a password, it\'s like leaving your door open to the whole internet.' }, if: :password_required?
   validates :password, confirmation: true, if: :password_required?
   validates :password, length: { within: password_length, message: 'Your password needs to be at least 6 characters.' }, allow_blank: true
-  # validate :minimum_image_size
+  validate :minimum_image_size, on: :update
 
   def all_sitemaps
     Sitemap.where(id: business.sitemaps.pluck(:id) + shared_sitemaps.pluck(:id)).order_by_alphanumeric_lower_name
@@ -64,15 +66,20 @@ class User < ActiveRecord::Base
     end
 
   private
-    # def minimum_image_size
-    #   image = MiniMagick::Image.open(avatar.path)
-    #   unless image[:width] >= 400 && image[:height] >= 400
-    #     errors.add :avatar, "should be 400x400px minimum!"
-    #   end
-    # end
+    def minimum_image_size
+      image = MiniMagick::Image.open(avatar.path)
+      unless image[:width] >= 100 && image[:height] >= 100
+        errors.add :avatar, "should be 100x100px minimum!"
+      end
+    end
+
+    def add_default_avatar
+      avatar.store!(File.open(File.join(Rails.root, "app/assets/images/avatar_#{[*1..14].sample}.svg")))
+      self.save(validate: false)
+    end
 
     def mail_user_about_role_update
-      UserMailer.delay_for(10.seconds).send_updated_role_details(id)
+      UserMailer.delay_for(10.seconds).send_updated_role_details(id) unless avatar_changed? # in add_default_avatar calling save triggers this callback after_create but it needs to be called only after_update
     end
 
     def set_is_admin
@@ -97,7 +104,7 @@ class User < ActiveRecord::Base
     end
 
     def restrict_owner_role_update
-      if owner?
+      if owner? && !is_admin
         errors.add(:base, I18n.t('errors.users.owner_role_update'))
         false
       end

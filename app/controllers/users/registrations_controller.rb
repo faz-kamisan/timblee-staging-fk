@@ -44,6 +44,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def configure_account_update_params
     devise_parameter_sanitizer.for(:account_update) << :full_name
+    devise_parameter_sanitizer.for(:account_update) << :avatar
     devise_parameter_sanitizer.for(:account_update) << :notify_by_email
   end
 

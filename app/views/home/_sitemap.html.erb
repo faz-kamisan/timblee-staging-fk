@@ -11,17 +11,14 @@
         </a>
         <div class="actions">
           <ul class="card-users clearfix">
-            <li>
-              <%= image_tag('card-user.jpg') %>
-            </li>
-            <li>
-              <%= image_tag('card-user.jpg') %>
-            </li>
-            <li>
-              <%= image_tag('card-user.jpg') %>
-            </li>
+            <% sitemap.users.each_with_index do |user, index| %>
+              <% break if index == 3 %>
+              <li>
+                <%= image_tag(user.avatar) %>
+              </li>
+            <% end %>
           </ul>
-          <span class="other-users">+12</span>
+          <span class="other-users"><%= "+#{sitemap.users.count - 3}" if sitemap.users.count > 3 %></span>
         </div>
         <a href="javascript:void(0);" class="more-options">
           <span></span>

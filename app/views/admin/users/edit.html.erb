@@ -16,7 +16,7 @@
             <div class="row">
               <div class="col-xs-9">
                 <div class="clearfix">
-                  <%= image_tag('profile-image.png', class: 'profile-image pull-left profile-image-lg') %>
+                  <%= image_tag(@user.avatar, class: 'profile-image pull-left profile-image-lg') %>
                   <div class="right-text pull-right margin-top-small">
 
                     <h3 class="team-member-name">
@@ -31,6 +31,7 @@
                 <div class="edit">
                   <a href="javascript:void(0);" class="btn btn-grey btn-edit">Edit</a>
                   <a href="#delete-user-modal" data-toggle="modal" class="link-regular btn-regular delete-user-modal-link" data-url= "<%= admin_user_path(@user)%>" data-name="<%= @user.full_name %>">Delete</a>
+                  <%= render 'users/delete_user_modal', user: @user %>
                 </div>
                 <div class="save small">
                   <button type="submit" class="btn btn-pink btn-border">Save</button>
@@ -136,6 +137,5 @@
 
   </div>
 </section>
-<%= render 'users/delete_user_modal' %>
 <%= javascript_include_tag('delete_user') %>
 
