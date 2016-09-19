@@ -104,6 +104,13 @@
   .truncate {
     cursor: pointer;
   }
+  .profile-image {
+    margin: 0 10px 0 0;
+    width: 25px;
+    height: 25px;
+    @include border-radius(50%);
+    vertical-align: top;
+  }
 }
 
 .header-links {

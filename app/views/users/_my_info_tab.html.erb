@@ -64,8 +64,12 @@
           </div>
           <div class="save">
             <a href="javascript:void(0);" class="">
-              <span class="icon-eye-open">eye</span>
-              <span class="icon-eye-close hide"><strike>eye</strike></span>
+              <span class="icon-eye-open">
+                <%= image_tag('eye.svg', class: 'eye') %>
+              </span>
+              <span class="icon-eye-close hide">
+                <%= image_tag('eye-close.svg', class: 'eye') %>
+              </span>
             </a>
             <button type="submit" class="btn btn-pink btn-border">Save</button>
             <a href="javascript:void(0);" class="btn btn-grey btn-cancel">Cancel</a>
@@ -94,23 +98,26 @@
           </div>
         </div>
       </div>
+
       <div class="row row-avatar-edit hide">
         <div class="col-xs-6">
           <label>Your image</label>
           <div class="clearfix m-t-15">
-            <%= f.file_field :avatar , class: 'hidden avatar-field'%>
-            <%= image_tag(current_user.avatar, class: 'preview-profile-image profile-image pull-left profile-image-lg', 'data-original-value': current_user.avatar) %>
+            <figure class="display-image">
+              <%= f.file_field :avatar , class: 'avatar-field'%>
+              <%= image_tag(current_user.avatar, class: 'preview-profile-image profile-image pull-left profile-image-lg', 'data-original-value': current_user.avatar) %>
+              <span class="pink-image-overlay"></span>
+            </figure>
             <div class="right-text pull-right">
               <p class="pull-right">
-                Upload a square PNG or JPEG image at least 400 x 400px in size. We’ll resize it automatically  and it’ll appear sharp everywhere. If you upload a non-square image, It’ll come out squished! :O
+                Upload a square PNG or JPEG image at least 400 x 400px in size. We’ll resize it automatically  and it’ll appear sharp everywhere. If you upload a non-square image, It’ll come out squished! &nbsp; <%= image_tag('surprise.png') %>
               </p>
             </div>
             <div class="">
-              <span class="truncate">
-                Avatars
+              <span class="avatar-text">
+                Avatars <span class="icon-caret"></span>
               </span>
-              <span class="icon-caret"></span>
-              <ul>
+              <ul class="clearfix avatars-list">
                 <li>
                   <% (1..14).each do |index| %>
                     <label for='avatar<%=index%>' class='avatar-label'>
@@ -119,10 +126,8 @@
                     </label>
                   <%end%>
                 </li>
-
               </ul>
             </div>
-
           </div>
         </div>
         <div class="col-xs-6 text-right edit-info">

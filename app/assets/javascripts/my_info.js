@@ -16,7 +16,6 @@ MyInfo.prototype.bindEvents = function() {
   var _this = this;
   this.btnEdit.on('click', function() {
     _this.rowEdit.removeClass('hide');
-    _this.rowSave.addClass('hide');
   });
 
   this.btnCancel.on('click', function() {

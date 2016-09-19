@@ -32,6 +32,10 @@ body {
   margin-bottom: 10px;
 }
 
+.m-t-5 {
+  margin-top: 5px;
+}
+
 .m-t-10 {
   margin-top: 10px;
 }
@@ -318,7 +322,7 @@ input#toggle + label {
   display: block;
   position: relative;
   text-indent: -5000px;
-  height: 33px;
+  height: 36px;
   width: 65px;
   border-radius: 60px;
   border: 2px solid #e4e6e7;
@@ -328,9 +332,9 @@ input#toggle + label:before {
   content: "";
   position: absolute;
   display: block;
-  height: 33px;
+  height: 32px;
   width: 33px;
-  top: -1px;
+  top: 0;
   left: 0;
   border-radius: 60px;
   background: $primaryPink;
@@ -345,7 +349,7 @@ input#toggle + label:after {
   display: block;
   height: 35px;
   width: 35px;
-  top: -3px;
+  top: -2px;
   left: -1px;
   border-radius: 60px;
   background: white;
@@ -362,7 +366,7 @@ input#toggle:checked + label:before {
 
 input#toggle:checked + label:after {
   left: 32px;
-  top: -2px;
+  top: -1.5px;
 }
 
 .logo-inner {
