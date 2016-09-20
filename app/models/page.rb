@@ -41,7 +41,6 @@ class Page < ActiveRecord::Base
     end
 
     def mark_comments_as_archived
-      debugger
       comments.update_all(state: 'archived')
     end
 
