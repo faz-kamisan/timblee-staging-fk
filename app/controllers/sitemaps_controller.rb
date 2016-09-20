@@ -52,8 +52,16 @@ class SitemapsController < ApplicationController
   private
     def fetch_sitemap
       unless @sitemap = current_business.sitemaps.find_by(id: params[:id])
-        flash.now[:alert] = 'Sitemap Not Found'
-        render 'shared/show_flash'
+        respond_to do |format|
+          format.js do
+            flash.now[:alert] = t('sitemaps.not_found', scope: :flash)
+            render 'shared/show_flash'
+          end
+          format.html do
+            flash[:alert] = t('sitemaps.not_found', scope: :flash)
+            redirect_to home_dashboard_path
+          end
+        end
       end
     end
 
