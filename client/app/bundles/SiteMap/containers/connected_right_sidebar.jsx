@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { deleteGeneralComment, deletePageComment } from '../actions'
+import { deleteGeneralComment, setSaving } from '../actions'
 import RightSideBar from '../components/right_sidebar'
 
 const mapStateToProps = (state) => {
@@ -12,15 +12,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    setDeleteCommentId: (id, commentableType, pageId, sectionId) => {
-      if(commentableType == 'Sitemap') {
-        dispatch(deleteGeneralComment(id));
-      } else if(commentableType == 'Page') {
-        dispatch(deletePageComment(id, pageId, sectionId));
-      }
-    }
-  }
 }
 
 const ConnectedRightSideBar = connect(

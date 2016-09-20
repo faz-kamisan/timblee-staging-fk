@@ -14,6 +14,13 @@ function updateId(comments, oldId, newId) {
   return commentsCopy
 }
 
+function markCommentAsArchived(comments, id) {
+  var commentsCopy = Object.assign([], comments)
+  var comment = commentsCopy.filter(function(comment) { return comment.id == id })[0]
+  comment.state = 'archived'
+  return commentsCopy
+}
+
 const comments = (state = [], action) => {
   switch (action.type) {
     case ADD_GENERAL_COMMENT:
@@ -21,7 +28,7 @@ const comments = (state = [], action) => {
     case UPDATE_GENERAL_COMMENT_ID:
       return updateId(state, action.oldId, action.newId)
     case DELETE_GENERAL_COMMENT:
-      return state.filter(function(comment) { return(comment.id != action.id) })
+      return markCommentAsArchived(state, action.id)
     default:
       return state
   }

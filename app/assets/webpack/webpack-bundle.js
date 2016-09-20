@@ -38516,7 +38516,6 @@
 	exports.setCurrentGuest = setCurrentGuest;
 	exports.showSitemapShareModal = showSitemapShareModal;
 	exports.deleteGeneralComment = deleteGeneralComment;
-	exports.deletePageComment = deletePageComment;
 	var SET_NAME = exports.SET_NAME = 'SET_NAME';
 	var ADD_NEW_PAGE = exports.ADD_NEW_PAGE = 'ADD_NEW_PAGE';
 	var REMOVE_PAGE = exports.REMOVE_PAGE = 'REMOVE_PAGE';
@@ -38535,7 +38534,6 @@
 	var SET_CURRENT_GUEST = exports.SET_CURRENT_GUEST = 'SET_CURRENT_GUEST';
 	var SHOW_SITEMAP_SHARE_MODAL = exports.SHOW_SITEMAP_SHARE_MODAL = 'SHOW_SITEMAP_SHARE_MODAL';
 	var DELETE_GENERAL_COMMENT = exports.DELETE_GENERAL_COMMENT = 'DELETE_GENERAL_COMMENT';
-	var DELETE_PAGE_COMMENT = exports.DELETE_PAGE_COMMENT = 'DELETE_PAGE_COMMENT';
 	
 	function setName(name) {
 	  return { type: SET_NAME, name: name };
@@ -38608,10 +38606,6 @@
 	function deleteGeneralComment(id) {
 	  return { type: DELETE_GENERAL_COMMENT, id: id };
 	}
-	
-	function deletePageComment(id, pageId, sectionId) {
-	  return { type: DELETE_PAGE_COMMENT, id: id, pageId: pageId, sectionId: sectionId };
-	}
 
 /***/ },
 /* 607 */
@@ -38672,8 +38666,6 @@
 	      return (0, _tree_helper.addPageComment)(state, action.id, action.sectionId, action.commenter, action.message, action.tempId);
 	    case _index.UPDATE_PAGE_COMMENT_ID:
 	      return (0, _tree_helper.updateCommentId)(state, action.oldId, action.newId, action.sectionId, action.pageId);
-	    case _index.DELETE_PAGE_COMMENT:
-	      return (0, _tree_helper.deletePageComment)(state, action.id, action.pageId, action.sectionId);
 	    default:
 	      return state;
 	  }
@@ -38822,18 +38814,6 @@
 	  return sectionsCopy;
 	}
 	
-	function deletePageComment(sections, id, pageId, sectionId) {
-	  var sectionsCopy = Object.assign([], sections);
-	  var treeCopy = sectionsCopy.filter(function (section) {
-	    return section.id == sectionId;
-	  })[0].pageTree;
-	  var page = getNodeById(treeCopy, pageId);
-	  page.comments.removeIf(function (comment) {
-	    return comment.id == id;
-	  });
-	  return sectionsCopy;
-	}
-	
 	function traverse(tree, callback) {
 	  var queue = new Queue();
 	  queue.enqueue(tree);
@@ -38884,7 +38864,6 @@
 	exports.updatePageId = updatePageId;
 	exports.addPageComment = addPageComment;
 	exports.updateCommentId = updateCommentId;
-	exports.deletePageComment = deletePageComment;
 
 /***/ },
 /* 610 */
@@ -38938,6 +38917,15 @@
 	  return commentsCopy;
 	}
 	
+	function markCommentAsArchived(comments, id) {
+	  var commentsCopy = Object.assign([], comments);
+	  var comment = commentsCopy.filter(function (comment) {
+	    return comment.id == id;
+	  })[0];
+	  comment.state = 'archived';
+	  return commentsCopy;
+	}
+	
 	var comments = function comments() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 	  var action = arguments[1];
@@ -38948,9 +38936,7 @@
 	    case _index.UPDATE_GENERAL_COMMENT_ID:
 	      return updateId(state, action.oldId, action.newId);
 	    case _index.DELETE_GENERAL_COMMENT:
-	      return state.filter(function (comment) {
-	        return comment.id != action.id;
-	      });
+	      return markCommentAsArchived(state, action.id);
 	    default:
 	      return state;
 	  }
@@ -49574,17 +49560,7 @@
 	  };
 	};
 	
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {
-	    setDeleteCommentId: function setDeleteCommentId(id, commentableType, pageId, sectionId) {
-	      if (commentableType == 'Sitemap') {
-	        dispatch((0, _actions.deleteGeneralComment)(id));
-	      } else if (commentableType == 'Page') {
-	        dispatch((0, _actions.deletePageComment)(id, pageId, sectionId));
-	      }
-	    }
-	  };
-	};
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {};
 	
 	var ConnectedRightSideBar = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_right_sidebar2.default);
 	
@@ -49637,10 +49613,14 @@
 	
 	    _this2.state = { currentTab: 'active' };
 	    _this2.handleTabClick = _this2.handleTabClick.bind(_this2);
+	    _this2.handleResolve = _this2.handleResolve.bind(_this2);
 	    return _this2;
 	  }
 	
 	  _createClass(RightSidebar, [{
+	    key: 'handleResolve',
+	    value: function handleResolve(e) {}
+	  }, {
 	    key: 'handleTabClick',
 	    value: function handleTabClick(e, tabName) {
 	      this.setState({ currentTab: tabName });
@@ -49663,7 +49643,7 @@
 	        return _react2.default.createElement(
 	          'li',
 	          { key: index },
-	          _react2.default.createElement(_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, setDeleteCommentId: _this.props.setDeleteCommentId, commentableType: 'Sitemap' })
+	          _react2.default.createElement(_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at })
 	        );
 	      });
 	      var pageWithComments = [];
@@ -49683,7 +49663,7 @@
 	          return _react2.default.createElement(
 	            'li',
 	            { key: index },
-	            _react2.default.createElement(_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, setDeleteCommentId: _this.props.setDeleteCommentId, commentableType: 'Page', commentableId: page.id, sectionId: page.sectionId })
+	            _react2.default.createElement(_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at })
 	          );
 	        });
 	        return _react2.default.createElement(
@@ -49706,11 +49686,11 @@
 	                { className: 'page-name truncate pull-left' },
 	                page.name
 	              ),
-	              _react2.default.createElement(
+	              _this.state.currentTab == 'active' && _react2.default.createElement(
 	                'label',
 	                { className: 'pull-right', htmlFor: 'mark-resolve' },
 	                'Mark as resolved',
-	                _react2.default.createElement('input', { type: 'checkbox', id: 'mark-resolve' })
+	                _react2.default.createElement('input', { type: 'checkbox', id: 'mark-resolve', onChange: this.handleResolve })
 	              )
 	            )
 	          ),
@@ -49797,7 +49777,6 @@
 	  comments: _react.PropTypes.array.isRequired,
 	  sections: _react.PropTypes.array.isRequired,
 	  sitemapId: _react.PropTypes.number.isRequired,
-	  setDeleteCommentId: _react.PropTypes.func.isRequired,
 	  business: _react.PropTypes.object.isRequired
 	};
 	exports.default = RightSidebar;
@@ -49832,21 +49811,13 @@
 	var Comment = function (_React$Component) {
 	  _inherits(Comment, _React$Component);
 	
-	  function Comment(props) {
+	  function Comment() {
 	    _classCallCheck(this, Comment);
 	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Comment).call(this, props));
-	
-	    _this.showCommentDeleteConfirmation = _this.showCommentDeleteConfirmation.bind(_this);
-	    return _this;
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Comment).apply(this, arguments));
 	  }
 	
 	  _createClass(Comment, [{
-	    key: 'showCommentDeleteConfirmation',
-	    value: function showCommentDeleteConfirmation(e) {
-	      this.props.setDeleteCommentId(this.props.id, this.props.commentableType, this.props.commentableId, this.props.sectionId);
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -49867,15 +49838,6 @@
 	          'p',
 	          null,
 	          this.props.message
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          _react2.default.createElement(
-	            'a',
-	            { onClick: this.showCommentDeleteConfirmation },
-	            'Delete'
-	          )
 	        )
 	      );
 	    }
@@ -49888,7 +49850,6 @@
 	  commenter: _react.PropTypes.object.isRequired,
 	  message: _react.PropTypes.string.isRequired,
 	  id: _react.PropTypes.number.isRequired,
-	  setDeleteCommentId: _react.PropTypes.func.isRequired,
 	  createdAt: _react.PropTypes.string.isRequired
 	};
 	exports.default = Comment;
