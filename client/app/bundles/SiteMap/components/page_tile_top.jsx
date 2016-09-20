@@ -72,26 +72,6 @@ class PageTileTop extends React.Component {
     sitemapId: PropTypes.number.isRequired
   };
 
-  constructor(props) {
-    super(props);
-    this.state = { nameChangeDisabled: true }
-    this.handleNameChange = this.handleNameChange.bind(this);
-  }
-
-  handleNameChange(event) {
-    var name = event.target.value
-    $.ajax({
-      url: '/pages/' + this.props.pageTree.id,
-      method: 'put',
-      dataType: 'JSON',
-      data: { page: { name: name } },
-      error: (result) => {
-        document.setFlash(result.responseText)
-      }
-    });
-    this.props.onNameChange(this.props.pageTree.id, name);
-  }
-
   componentWillReceiveProps(nextProps) {
     if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
       if(this.props.pageTree.parentId) {
@@ -126,8 +106,6 @@ class PageTileTop extends React.Component {
       <div className="tile-top">
         <h1 className="tile-name">
           <span className="tile-number">{this.props.sitemapNumber}</span>
-          {this.state.nameChangeDisabled && this.props.name}
-          {!(this.state.nameChangeDisabled) && <textarea value = {this.props.name} onChange={this.handleNameChange} disabled={this.state.nameChangeDisabled}></textarea>}
         </h1>
       </div>
     );
