@@ -1,6 +1,5 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
-  get 'hello_world', to: 'hello_world#index'
   mount Sidekiq::Web, at: '/sidekiq'
 
   devise_scope :user do
@@ -17,6 +16,7 @@ Rails.application.routes.draw do
 
   as :user do
     get 'users/log-in' => 'devise/sessions#new', :as => :new_user_session
+    get 'log-in' => 'devise/sessions#new'
     post 'log-in' => 'devise/sessions#create', :as => :user_session
     match 'signout' => 'devise/sessions#destroy', :as => :destroy_user_session,
       :via => Devise.mappings[:user].sign_out_via
@@ -57,7 +57,7 @@ Rails.application.routes.draw do
 
   resources :businesses, only: [:update] do
     member do
-      get 'send_destroy_request_to_superadmin'
+      get 'delete_account'
     end
   end
 

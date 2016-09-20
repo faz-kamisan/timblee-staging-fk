@@ -1,8 +1,9 @@
 class Comment < ActiveRecord::Base
+  STATES = ['active', 'archived', 'resolved']
   belongs_to :commentable, polymorphic: true
   belongs_to :commenter, class_name: :User
   validates :message, :commentable, :commenter, presence: true
-  validates :state, inclusion: { in: ['active', 'archived', 'resolved'] }
+  validates :state, inclusion: { in:  STATES }
   strip_fields :message
 
   def to_react_data
@@ -13,13 +14,13 @@ class Comment < ActiveRecord::Base
     diff_seconds = Time.current - created_at
     case diff_seconds
       when 0 .. 59
-        return "#{diff_seconds.to_i} seconds ago"
+        return "#{diff_seconds.to_i} #{'second'.pluralize(diff_seconds.to_i)} ago"
       when 60 .. (3600-1)
-        return "#{(diff_seconds/60).to_i} minutes ago"
+        return "#{(diff_seconds/60).to_i} #{'minute'.pluralize((diff_seconds/60).to_i)} ago"
       when 3600 .. (3600*24-1)
-        return "#{(diff_seconds/3600).to_i} hours ago"
+        return "#{(diff_seconds/3600).to_i} #{'hour'.pluralize((diff_seconds/3600).to_i)} ago"
       when (3600*24) .. (3600*24*30)
-        return "#{(diff_seconds/(3600*24)).to_i} days ago"
+        return "#{(diff_seconds/(3600*24)).to_i} #{'day'.pluralize((diff_seconds/(3600*24)).to_i)} ago"
       else
         return start_time.strftime('%d %b %Y')
     end

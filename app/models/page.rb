@@ -1,5 +1,6 @@
 class Page < ActiveRecord::Base
   extend ActsAsTree::TreeView
+
   belongs_to :sitemap
   belongs_to :section
   belongs_to :page_type
@@ -31,8 +32,10 @@ class Page < ActiveRecord::Base
   end
 
   private
+
     def set_uid
       highest_uid = sitemap.pages.maximum('uid')
       self.uid = highest_uid.to_i + 1
     end
+
 end
