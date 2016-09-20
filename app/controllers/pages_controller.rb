@@ -29,7 +29,6 @@ class PagesController < ApplicationController
   private
     def fetch_page
       unless @page = Page.find_by(id: params[:id])
-        flash.now[:alert] = 'Page Not Found'
         render json: t('.not_found', scope: :flash) , status: 422
       end
     end

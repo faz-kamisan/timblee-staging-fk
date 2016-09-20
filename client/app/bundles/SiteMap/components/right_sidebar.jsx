@@ -8,7 +8,6 @@ class RightSidebar extends React.Component {
     comments: PropTypes.array.isRequired,
     sections: PropTypes.array.isRequired,
     sitemapId: PropTypes.number.isRequired,
-    setDeleteCommentId: PropTypes.func.isRequired,
     business : PropTypes.object.isRequired
   };
 
@@ -16,6 +15,11 @@ class RightSidebar extends React.Component {
     super(props);
     this.state = { currentTab: 'active' };
     this.handleTabClick = this.handleTabClick.bind(this);
+    this.handleResolve = this.handleResolve.bind(this);
+  }
+
+  handleResolve(e) {
+
   }
 
   handleTabClick(e, tabName) {
@@ -29,7 +33,7 @@ class RightSidebar extends React.Component {
     const CommentTabs = ['active', 'resolved', 'archived']
     var _this = this;
     var renderedComments = this.props.comments.filter(function(comment) { return(comment.state == _this.state.currentTab) }).map(function(comment, index) {
-      return <li key={index}><Comment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} setDeleteCommentId={_this.props.setDeleteCommentId} commentableType='Sitemap' /></li>
+      return <li key={index}><Comment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} /></li>
     })
     var pageWithComments = []
     this.props.sections.forEach(function(section, index) {
@@ -41,7 +45,7 @@ class RightSidebar extends React.Component {
     })
     var renderedPageWithComments = pageWithComments.map(function(page, index) {
       var renderedPageComments = page.comments.filter(function(comment) { return(comment.state == _this.state.currentTab) }).map(function(comment, index) {
-        return <li key={index}><Comment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} setDeleteCommentId={_this.props.setDeleteCommentId} commentableType='Page' commentableId={page.id} sectionId={page.sectionId} /></li>
+        return <li key={index}><Comment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} /></li>
       })
       return(
         <li key={index}>
@@ -49,10 +53,12 @@ class RightSidebar extends React.Component {
             <span className="page-id">ID: {page.uid}</span>
             <div className="clearfix">
               <span className="page-name truncate pull-left">{page.name}</span>
-              <label className="pull-right" htmlFor="mark-resolve">
-                Mark as resolved
-                <input type="checkbox" id="mark-resolve" />
-              </label>
+              { (_this.state.currentTab == 'active') &&
+                <label className="pull-right" htmlFor="mark-resolve">
+                  Mark as resolved
+                  <input type="checkbox" id="mark-resolve" onChange={_this.handleResolve} />
+                </label>
+              }
             </div>
           </div>
           <ul className="comment-group">
