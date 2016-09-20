@@ -50065,7 +50065,7 @@
 	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name }),
 	          _react2.default.createElement(
 	            'h1',
-	            { className: 'tile-name' },
+	            { className: 'tile-name-edit' },
 	            this.state.nameChangeDisabled && _react2.default.createElement(
 	              'div',
 	              { onClick: this.enableNameChangeInput },
@@ -50122,7 +50122,7 @@
 	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name }),
 	          _react2.default.createElement(
 	            'h1',
-	            { className: 'tile-name' },
+	            { className: 'tile-name-edit' },
 	            this.state.nameChangeDisabled && _react2.default.createElement(
 	              'div',
 	              { onClick: this.enableNameChangeInput },

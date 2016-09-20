@@ -61,7 +61,7 @@ class PageTile extends React.Component {
       return (
         <div className={"page-tile " + (((this.props.pageTree.level == 0) && (this.props.childrenLength % 2 == 0)) ? 'even-tree' : 'odd-tree') } onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber} name={this.props.name} />
-          <h1 className="tile-name">
+          <h1 className="tile-name-edit">
             {this.state.nameChangeDisabled && <div onClick={this.enableNameChangeInput}> {this.props.name}</div>}
             {!(this.state.nameChangeDisabled) && <textarea className="form-control" value = {this.props.name} onChange={this.handleNameChange} onBlur={this.disableNameChangeInput}></textarea>}
           </h1>
@@ -100,7 +100,7 @@ class PageTile extends React.Component {
       return (
         <div className="page-tile" onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber}  name={this.props.name} />
-          <h1 className="tile-name">
+          <h1 className="tile-name-edit">
             {this.state.nameChangeDisabled && <div onClick={this.enableNameChangeInput}> {this.props.name}</div>}
             {!(this.state.nameChangeDisabled) && <textarea className="form-control" value = {this.props.name} onChange={this.handleNameChange} onBlur={this.disableNameChangeInput}></textarea>}
           </h1>
