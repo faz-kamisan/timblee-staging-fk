@@ -53,6 +53,12 @@
         }
       }
     }
+    &:hover {
+      .tile-right-hover {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
   }
 
   .tile-number {
@@ -123,6 +129,22 @@
     }
   }
 
+  .tile-right-hover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    width: 69px;
+    right: 0;
+    top: 0;
+    background: $primaryWhite;
+    @include animate(.25s);
+    opacity: 0;
+    text-align: center;
+    transform: scale(0);
+    border-left: 1px solid #f8f9fb;
+  }
+
   .tile-right {
     position: absolute;
     right: 0;
@@ -132,6 +154,65 @@
     border-left: solid 1px #f8f9fb;
     background: $transparent;
     z-index: 4;
+    overflow: hidden;
+  }
+
+  .tile-more {
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    li {
+      text-align: center;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 50%;
+      &.second-item {
+        top: 50%;
+      }
+      .tile-icons {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin: -18px 0 0 -13px;
+        z-index: 1;
+      }
+      .more-option {
+        width: 21px;
+        height: 21px;
+        @include border-radius(50%);
+        border: 1px solid $primaryLink;
+        margin: -6px 0 0 -10px;
+        &:hover {
+          border-color: $primaryPink;
+          span {
+            background: $primaryPink;
+          }
+        }
+        span {
+          width: 2px;
+          height: 2px;
+          @include border-radius(50%);
+          background: $primaryLink;
+          display: inline-block;
+          margin: 0 1px;
+          position: relative;
+          top: -16px;
+        }
+      }
+    }
+    .tile-icons {
+      font-size: 26px;
+      color: $primaryLink;
+      &:hover {
+        color: $primaryPink;
+      }
+    }
   }
 
   &.level-0 {
@@ -224,6 +305,10 @@
     .tile-right {
       width: 60px;
     }
+
+    .tile-right-hover {
+      width: 60px;
+    }
   }
 
   &.level-3 {
@@ -245,6 +330,10 @@
     .tile-right {
       width: 50px;
     }
+
+    .tile-right-hover {
+      width: 50px;
+    }
   }
 
   &.level-4 {
@@ -264,6 +353,10 @@
     }
 
     .tile-right {
+      width: 40px;
+    }
+
+    .tile-right-hover {
       width: 40px;
     }
   }
@@ -503,7 +596,7 @@
       @include rotate(90deg);
       &:before,
       &:after {
-        content: "\e904";
+        content: "\e908";
         position: absolute;
         font-size: 10px;
         z-index: 2;
@@ -654,11 +747,12 @@
   input {
     font-size: 14px;
     color: $primaryWhite;
-    height: 48px;
+    height: 22px;
     padding: 0 50px 0 25px;
-    line-height: 48px;
+    line-height: 22px;
     width: 100%;
     border: 0;
+    margin: 13px 0;
     background: #262B30;
   }
 
@@ -1367,12 +1461,15 @@
   .comment-list {
     top: 127px;
   }
+  .page-type-list {
+    height: calc(100vh - 225px);
+  }
 }
 
 /* Comments */
 .sitemap-right-sidebar {
   position: fixed;
-  right: 0;
+  right: -435px;
   width: 420px;
   top: 222px;
   height: calc(100% - 222px);
@@ -1392,7 +1489,7 @@
   position: fixed;
   width: 420px;
   border-top: solid 1px #171a1d;
-  right: 0;
+  right: -435px;
   top: 222px;
   background: #262b30;
   z-index: 5;
@@ -1596,6 +1693,93 @@
   .comment-input__suggestions__item {
     &.comment-input__suggestions__item--focused {
       background: $primaryGrey;
+    }
+  }
+}
+
+.card-overlay {
+  position: absolute;
+  text-align: right;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  transform: scale(0);
+  background: $primaryWhite;
+  z-index: 6;
+  padding: 47px 23px 10px 5px;
+  @include animate(.35s);
+  a {
+    font-size: 25px;
+    display: inline-block;
+    color: $primaryGrey;
+    + a {
+      margin-left: 8px;
+    }
+    &:hover {
+      color: $primaryPink;
+    }
+  }
+  &.overlay-in {
+    right: 0;
+    transform: scale(1);
+  }
+}
+
+.close-card-overlay {
+  position: absolute;
+  right: 25px;
+  top: 17px;
+  a {
+    color: $primaryGrey;
+    font-size: 21px;
+    &:hover {
+      color: $primaryLink;
+    }
+  }
+
+}
+
+.level-4 {
+  .card-overlay {
+    padding-right: 10px;
+  }
+  .close-card-overlay {
+    right: 12px;
+  }
+}
+
+.level-5 {
+  .card-overlay {
+    padding-right: 5px;
+    a + a {
+      margin-left: 5px;
+    }
+  }
+  .close-card-overlay {
+    right: 7px;
+  }
+}
+
+.level-6 {
+  .card-overlay {
+    padding-top: 45px;
+    a {
+      font-size: 20px;
+    }
+  }
+  .close-card-overlay {
+    top: 17px;
+    a {
+      font-size: 17px;
+    }
+  }
+}
+
+.level-7 {
+  .card-overlay {
+    a + a {
+      margin-left: 0;
     }
   }
 }

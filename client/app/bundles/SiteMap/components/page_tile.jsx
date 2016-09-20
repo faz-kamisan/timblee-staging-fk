@@ -17,7 +17,7 @@ class PageTile extends React.Component {
     this.handleOnCollapsedChanged = this.handleOnCollapsedChanged.bind(this)
     this.mouseOver = this.mouseOver.bind(this)
     this.mouseOut = this.mouseOut.bind(this)
-    this.state = {hover: false}
+    this.state = {hover: false, showOverLay: true}
   }
 
   mouseOver(e) {
@@ -38,9 +38,32 @@ class PageTile extends React.Component {
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber} name={this.props.name} />
           <ConnectedPageTileBottom pageTree={this.props.pageTree} />
           <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }>
-            <div className={ "tile-right-hover " + (this.state.hover ? 'hovered' : '') }>
-            </div>
           </div>
+          <div className={ "tile-right-hover " + (this.state.hover ? 'hovered' : '') }>
+            <ul className="tile-more">
+              <li className="first-item">
+                <span className="more-option tile-icons">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>    
+              </li>
+              <li className="second-item">
+                <span className="icon-page-comments tile-icons"></span>    
+              </li>
+            </ul>
+          </div>
+          { this.state.showOverLay &&
+            <div className="card-overlay">
+              <div className="close-card-overlay">
+                <a href="#" className="icon-close"></a>  
+              </div>
+              <a href="#" className="icon-page-comments"></a>
+              <a href="#" className="icon-page-change"></a>
+              <a href="#" className="icon-page-new"></a>
+              <a href="#" className="icon-page-delete"></a>
+            </div>
+          }
           <div className={ "collapse-open" + (this.props.collapsed ? ' collapse-close' : '') } onClick={this.handleOnCollapsedChanged}></div>
         </div>
       );
@@ -50,9 +73,32 @@ class PageTile extends React.Component {
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber}  name={this.props.name} />
           <ConnectedPageTileBottom pageTree={this.props.pageTree} />
           <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }>
-            <div className={ "tile-right-hover " + (this.state.hover ? 'hovered' : '') }>
-            </div>
           </div>
+          <div className={ "tile-right-hover " + (this.state.hover ? 'hovered' : '') }>
+            <ul className="tile-more">
+              <li className="first-item">
+                <span className="more-option tile-icons">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>    
+              </li>
+              <li className="second-item">
+                <span className="icon-page-comments tile-icons"></span>    
+              </li>
+            </ul>
+          </div>
+          { this.state.showOverLay &&
+            <div className="card-overlay">
+              <div className="close-card-overlay">
+                <a href="#" className="icon-close"></a>  
+              </div>
+              <a href="#" className="icon-page-comments"></a>
+              <a href="#" className="icon-page-change"></a>
+              <a href="#" className="icon-page-new"></a>
+              <a href="#" className="icon-page-delete"></a>
+            </div>
+          }
         </div>
       );
     }
