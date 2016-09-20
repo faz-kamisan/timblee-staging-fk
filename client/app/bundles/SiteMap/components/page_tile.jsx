@@ -17,7 +17,32 @@ class PageTile extends React.Component {
     this.handleOnCollapsedChanged = this.handleOnCollapsedChanged.bind(this)
     this.mouseOver = this.mouseOver.bind(this)
     this.mouseOut = this.mouseOut.bind(this)
-    this.state = {hover: false}
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.enableNameChangeInput = this.enableNameChangeInput.bind(this);
+    this.disableNameChangeInput = this.disableNameChangeInput.bind(this);
+    this.state = { nameChangeDisabled: true, hover: false }
+  }
+
+  enableNameChangeInput(e) {
+    this.setState({ nameChangeDisabled: false })
+  }
+
+  disableNameChangeInput(e) {
+    this.setState({ nameChangeDisabled: true })
+  }
+
+  handleNameChange(event) {
+    var name = event.target.value
+    $.ajax({
+      url: '/pages/' + this.props.pageTree.id,
+      method: 'put',
+      dataType: 'JSON',
+      data: { page: { name: name } },
+      error: (result) => {
+        document.setFlash(result.responseText)
+      }
+    });
+    this.props.onNameChange(this.props.pageTree.id, this.props.pageTree.section_id, name);
   }
 
   mouseOver(e) {
@@ -36,6 +61,10 @@ class PageTile extends React.Component {
       return (
         <div className={"page-tile " + (((this.props.pageTree.level == 0) && (this.props.childrenLength % 2 == 0)) ? 'even-tree' : 'odd-tree') } onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber} name={this.props.name} />
+          <h1 className="tile-name">
+            {this.state.nameChangeDisabled && <div onClick={this.enableNameChangeInput}> {this.props.name}</div>}
+            {!(this.state.nameChangeDisabled) && <textarea className="form-control" value = {this.props.name} onChange={this.handleNameChange} onBlur={this.disableNameChangeInput}></textarea>}
+          </h1>
           <ConnectedPageTileBottom pageTree={this.props.pageTree} />
           <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }>
             <div className={ "tile-right-hover " + (this.state.hover ? 'hovered' : '') }>
@@ -48,6 +77,10 @@ class PageTile extends React.Component {
       return (
         <div className="page-tile" onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber}  name={this.props.name} />
+          <h1 className="tile-name">
+            {this.state.nameChangeDisabled && <div onClick={this.enableNameChangeInput}> {this.props.name}</div>}
+            {!(this.state.nameChangeDisabled) && <textarea className="form-control" value = {this.props.name} onChange={this.handleNameChange} onBlur={this.disableNameChangeInput}></textarea>}
+          </h1>
           <ConnectedPageTileBottom pageTree={this.props.pageTree} />
           <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }>
             <div className={ "tile-right-hover " + (this.state.hover ? 'hovered' : '') }>

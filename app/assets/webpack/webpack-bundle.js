@@ -47313,6 +47313,9 @@
 	    onCollapsedChanged: function onCollapsedChanged(id, sectionId) {
 	      dispatch((0, _actions.changeCollapse)(id, sectionId));
 	    },
+	    onNameChange: function onNameChange(id, sectionId, name) {
+	      dispatch((0, _actions.updatePageName)(id, sectionId, name));
+	    },
 	    setSaving: function setSaving(saving) {
 	      dispatch((0, _actions.setSaving)(saving));
 	    }
@@ -47369,11 +47372,39 @@
 	    _this.handleOnCollapsedChanged = _this.handleOnCollapsedChanged.bind(_this);
 	    _this.mouseOver = _this.mouseOver.bind(_this);
 	    _this.mouseOut = _this.mouseOut.bind(_this);
-	    _this.state = { hover: false };
+	    _this.handleNameChange = _this.handleNameChange.bind(_this);
+	    _this.enableNameChangeInput = _this.enableNameChangeInput.bind(_this);
+	    _this.disableNameChangeInput = _this.disableNameChangeInput.bind(_this);
+	    _this.state = { nameChangeDisabled: true, hover: false };
 	    return _this;
 	  }
 	
 	  _createClass(PageTile, [{
+	    key: 'enableNameChangeInput',
+	    value: function enableNameChangeInput(e) {
+	      this.setState({ nameChangeDisabled: false });
+	    }
+	  }, {
+	    key: 'disableNameChangeInput',
+	    value: function disableNameChangeInput(e) {
+	      this.setState({ nameChangeDisabled: true });
+	    }
+	  }, {
+	    key: 'handleNameChange',
+	    value: function handleNameChange(event) {
+	      var name = event.target.value;
+	      $.ajax({
+	        url: '/pages/' + this.props.pageTree.id,
+	        method: 'put',
+	        dataType: 'JSON',
+	        data: { page: { name: name } },
+	        error: function error(result) {
+	          document.setFlash(result.responseText);
+	        }
+	      });
+	      this.props.onNameChange(this.props.pageTree.id, this.props.pageTree.section_id, name);
+	    }
+	  }, {
 	    key: 'mouseOver',
 	    value: function mouseOver(e) {
 	      this.setState({ hover: true });
@@ -47396,6 +47427,17 @@
 	          'div',
 	          { className: "page-tile " + (this.props.pageTree.level == 0 && this.props.childrenLength % 2 == 0 ? 'even-tree' : 'odd-tree'), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut },
 	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name }),
+	          _react2.default.createElement(
+	            'h1',
+	            { className: 'tile-name' },
+	            this.state.nameChangeDisabled && _react2.default.createElement(
+	              'div',
+	              { onClick: this.enableNameChangeInput },
+	              ' ',
+	              this.props.name
+	            ),
+	            !this.state.nameChangeDisabled && _react2.default.createElement('textarea', { className: 'form-control', value: this.props.name, onChange: this.handleNameChange, onBlur: this.disableNameChangeInput })
+	          ),
 	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement(
 	            'div',
@@ -47409,6 +47451,17 @@
 	          'div',
 	          { className: 'page-tile', onMouseOver: this.mouseOver, onMouseOut: this.mouseOut },
 	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name }),
+	          _react2.default.createElement(
+	            'h1',
+	            { className: 'tile-name' },
+	            this.state.nameChangeDisabled && _react2.default.createElement(
+	              'div',
+	              { onClick: this.enableNameChangeInput },
+	              ' ',
+	              this.props.name
+	            ),
+	            !this.state.nameChangeDisabled && _react2.default.createElement('textarea', { className: 'form-control', value: this.props.name, onChange: this.handleNameChange, onBlur: this.disableNameChangeInput })
+	          ),
 	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement(
 	            'div',
@@ -47470,9 +47523,6 @@
 	    },
 	    onPageIdUpdate: function onPageIdUpdate(id, sectionId, newId) {
 	      dispatch((0, _actions.updateId)(id, sectionId, newId));
-	    },
-	    onNameChange: function onNameChange(id, sectionId, name) {
-	      dispatch((0, _actions.updatePageName)(id, sectionId, name));
 	    },
 	    setSaving: function setSaving(saving) {
 	      dispatch((0, _actions.setSaving)(saving));
@@ -47576,32 +47626,13 @@
 	var PageTileTop = function (_React$Component) {
 	  _inherits(PageTileTop, _React$Component);
 	
-	  function PageTileTop(props) {
+	  function PageTileTop() {
 	    _classCallCheck(this, PageTileTop);
 	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PageTileTop).call(this, props));
-	
-	    _this.state = { nameChangeDisabled: true };
-	    _this.handleNameChange = _this.handleNameChange.bind(_this);
-	    return _this;
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(PageTileTop).apply(this, arguments));
 	  }
 	
 	  _createClass(PageTileTop, [{
-	    key: 'handleNameChange',
-	    value: function handleNameChange(event) {
-	      var name = event.target.value;
-	      $.ajax({
-	        url: '/pages/' + this.props.pageTree.id,
-	        method: 'put',
-	        dataType: 'JSON',
-	        data: { page: { name: name } },
-	        error: function error(result) {
-	          document.setFlash(result.responseText);
-	        }
-	      });
-	      this.props.onNameChange(this.props.pageTree.id, name);
-	    }
-	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
 	      if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
@@ -47644,9 +47675,7 @@
 	            'span',
 	            { className: 'tile-number' },
 	            this.props.sitemapNumber
-	          ),
-	          this.state.nameChangeDisabled && this.props.name,
-	          !this.state.nameChangeDisabled && _react2.default.createElement('textarea', { value: this.props.name, onChange: this.handleNameChange, disabled: this.state.nameChangeDisabled })
+	          )
 	        )
 	      ));
 	    }

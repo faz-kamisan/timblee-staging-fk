@@ -103,8 +103,8 @@
     }
     &.drag-over {
       &:after {
-        opacity: .9;  
-      }      
+        opacity: .9;
+      }
     }
   }
 
@@ -376,7 +376,7 @@
     }
     &.with-children {
       &.drag-over, &.again-drag-over {
-        background-size: calc(100% - 22px);   
+        background-size: calc(100% - 22px);
       }
     }
   }
