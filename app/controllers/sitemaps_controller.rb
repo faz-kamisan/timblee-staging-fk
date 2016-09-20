@@ -40,10 +40,10 @@ class SitemapsController < ApplicationController
       respond_to do |format|
         format.js do
           flash.now[:alert] = t('.failure', scope: :flash)
-          render 'shared/show_flash', status: 522
+          render 'shared/show_flash', status: 422
         end
         format.json do
-          render json: t('.failure', scope: :flash) , status: 522
+          render json: t('.failure', scope: :flash) , status: 422
         end
       end
     end

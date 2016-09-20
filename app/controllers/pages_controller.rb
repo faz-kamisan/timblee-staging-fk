@@ -30,7 +30,7 @@ class PagesController < ApplicationController
     def fetch_page
       unless @page = Page.find_by(id: params[:id])
         flash.now[:alert] = 'Page Not Found'
-        render json: t('.not_found', scope: :flash) , status: 422
+        render json: t('.not_found', scope: :flash) , status: 404
       end
     end
 
@@ -42,7 +42,7 @@ class PagesController < ApplicationController
       if condition
         render json: @page.as_json, status: 200
       else
-        render json: t('.failure', scope: :flash) , status: 522
+        render json: t('.failure', scope: :flash) , status: 422
       end
     end
 end

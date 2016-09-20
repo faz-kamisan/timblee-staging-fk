@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
     if @comment.save
       render json: @comment.as_json, status: 200
     else
-      render json: t('.failure', scope: :flash) , status: 522
+      render json: t('.failure', scope: :flash) , status: 422
     end
   end
 
