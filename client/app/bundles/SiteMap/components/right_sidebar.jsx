@@ -56,7 +56,7 @@ class RightSidebar extends React.Component {
               { (_this.state.currentTab == 'active') &&
                 <label className="pull-right" htmlFor="mark-resolve">
                   Mark as resolved
-                  <input type="checkbox" id="mark-resolve" onChange={this.handleResolve} />
+                  <input type="checkbox" id="mark-resolve" onChange={_this.handleResolve} />
                 </label>
               }
             </div>

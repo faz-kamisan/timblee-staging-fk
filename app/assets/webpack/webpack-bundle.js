@@ -47406,6 +47406,13 @@
 	      this.props.onCollapsedChanged(this.props.pageTree.id, this.props.pageTree.section_id);
 	    }
 	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate(props, state) {
+	      if (!state.nameChangeDisabled) {
+	        $(this.refs.nameInput).focus();
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      if (this.props.childrenLength > 0) {
@@ -47416,13 +47423,13 @@
 	          _react2.default.createElement(
 	            'h1',
 	            { className: 'tile-name' },
-	            this.state.nameChangeDisabled && _react2.default.createElement(
+	            _react2.default.createElement(
 	              'div',
-	              { onClick: this.enableNameChangeInput },
+	              { onClick: this.enableNameChangeInput, className: this.state.nameChangeDisabled ? '' : 'hide' },
 	              ' ',
 	              this.props.name
 	            ),
-	            !this.state.nameChangeDisabled && _react2.default.createElement('textarea', { className: 'form-control', value: this.props.name, onChange: this.handleNameChange, onBlur: this.disableNameChangeInput })
+	            _react2.default.createElement('input', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', value: this.props.name, onChange: this.handleNameChange, onBlur: this.disableNameChangeInput })
 	          ),
 	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement(
@@ -47440,13 +47447,13 @@
 	          _react2.default.createElement(
 	            'h1',
 	            { className: 'tile-name' },
-	            this.state.nameChangeDisabled && _react2.default.createElement(
+	            _react2.default.createElement(
 	              'div',
-	              { onClick: this.enableNameChangeInput },
+	              { onClick: this.enableNameChangeInput, className: this.state.nameChangeDisabled ? '' : 'hide' },
 	              ' ',
 	              this.props.name
 	            ),
-	            !this.state.nameChangeDisabled && _react2.default.createElement('textarea', { className: 'form-control', value: this.props.name, onChange: this.handleNameChange, onBlur: this.disableNameChangeInput })
+	            _react2.default.createElement('input', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', value: this.props.name, onChange: this.handleNameChange, onBlur: this.disableNameChangeInput })
 	          ),
 	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement(
@@ -49560,7 +49567,9 @@
 	  };
 	};
 	
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {};
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {};
+	};
 	
 	var ConnectedRightSideBar = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_right_sidebar2.default);
 	
@@ -49690,7 +49699,7 @@
 	                'label',
 	                { className: 'pull-right', htmlFor: 'mark-resolve' },
 	                'Mark as resolved',
-	                _react2.default.createElement('input', { type: 'checkbox', id: 'mark-resolve', onChange: this.handleResolve })
+	                _react2.default.createElement('input', { type: 'checkbox', id: 'mark-resolve', onChange: _this.handleResolve })
 	              )
 	            )
 	          ),
