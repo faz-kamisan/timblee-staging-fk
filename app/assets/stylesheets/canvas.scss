@@ -1742,7 +1742,7 @@
   top: 0;
   transform: scale(0);
   background: $primaryWhite;
-  z-index: 6;
+  z-index: 11;
   padding: 47px 23px 10px 5px;
   @include animate(.35s);
   a {
