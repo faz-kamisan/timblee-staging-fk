@@ -500,14 +500,14 @@
     width: 100%;
     height: 26px;
     background: $transparent;
-    &.drag-over, &.again-drag-over {
+    &.drag-over, &.again-drag-over, &.again-2-drag-over {
       background: url('/assets/gutter.png');
       background-repeat: no-repeat;
       background-position: right;
       background-size: 100%;
     }
     &.with-children {
-      &.drag-over, &.again-drag-over {
+      &.drag-over, &.again-drag-over, &.again-2-drag-over {
         background-size: calc(100% - 22px);
       }
     }

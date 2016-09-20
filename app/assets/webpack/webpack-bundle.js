@@ -47985,17 +47985,14 @@
 	      if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
 	        var domNode = (0, _reactDom.findDOMNode)(this);
 	        $(domNode).addClass('drag-over');
+	        $(domNode).parent('.page-tile').siblings('.gutter').addClass('again-2-drag-over');
 	      }
 	
 	      if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
 	        // You can use this as leave handler
 	        var domNode = (0, _reactDom.findDOMNode)(this);
 	        $(domNode).removeClass('drag-over');
-	      }
-	
-	      if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
-	        // You can be more specific and track enter/leave
-	        // shallowly, not including nested targets
+	        $(domNode).parent('.page-tile').siblings('.gutter').removeClass('again-2-drag-over');
 	      }
 	    }
 	  }, {
