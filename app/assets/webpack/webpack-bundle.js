@@ -47416,7 +47416,7 @@
 	    _this.closeOverLay = _this.closeOverLay.bind(_this);
 	    _this.openOverLay = _this.openOverLay.bind(_this);
 	    _this.showPageDeletionModal = _this.showPageDeletionModal.bind(_this);
-	    _this.state = { nameChangeDisabled: true, hover: false, showOverLay: false };
+	    _this.state = { nameChangeDisabled: true, hover: false, showOverLay: false, name: _this.props.name, originalName: _this.props.name };
 	    return _this;
 	  }
 	
@@ -47428,7 +47428,22 @@
 	  }, {
 	    key: 'disableNameChangeInput',
 	    value: function disableNameChangeInput(e) {
-	      this.setState({ nameChangeDisabled: true });
+	      var name = this.state.name;
+	      if (name.length > 0) {
+	        $.ajax({
+	          url: '/pages/' + this.props.pageTree.id,
+	          method: 'put',
+	          dataType: 'JSON',
+	          data: { page: { name: name } },
+	          error: function error(result) {
+	            document.setFlash(result.responseText);
+	          }
+	        });
+	        this.props.onNameChange(this.props.pageTree.id, this.props.pageTree.section_id, name);
+	        this.setState({ nameChangeDisabled: true });
+	      } else {
+	        this.setState({ name: this.state.originalName, nameChangeDisabled: true });
+	      }
 	    }
 	  }, {
 	    key: 'showPageDeletionModal',
@@ -47439,16 +47454,7 @@
 	    key: 'handleNameChange',
 	    value: function handleNameChange(event) {
 	      var name = event.target.value;
-	      $.ajax({
-	        url: '/pages/' + this.props.pageTree.id,
-	        method: 'put',
-	        dataType: 'JSON',
-	        data: { page: { name: name } },
-	        error: function error(result) {
-	          document.setFlash(result.responseText);
-	        }
-	      });
-	      this.props.onNameChange(this.props.pageTree.id, this.props.pageTree.section_id, name);
+	      this.setState({ name: name });
 	    }
 	  }, {
 	    key: 'closeOverLay',
@@ -47499,7 +47505,7 @@
 	              ' ',
 	              this.props.name
 	            ),
-	            _react2.default.createElement('textarea', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', value: this.props.name, onChange: this.handleNameChange, onBlur: this.disableNameChangeInput })
+	            _react2.default.createElement('textarea', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', value: this.state.name, onChange: this.handleNameChange, onBlur: this.disableNameChangeInput })
 	          ),
 	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement('div', { className: "tile-right " + this.props.pageTree.pageType.icon_name }),
@@ -47556,7 +47562,7 @@
 	              ' ',
 	              this.props.name
 	            ),
-	            _react2.default.createElement('textarea', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', value: this.props.name, onChange: this.handleNameChange, onBlur: this.disableNameChangeInput })
+	            _react2.default.createElement('textarea', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', value: this.state.name, onChange: this.handleNameChange, onBlur: this.disableNameChangeInput })
 	          ),
 	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement('div', { className: "tile-right " + this.props.pageTree.pageType.icon_name }),

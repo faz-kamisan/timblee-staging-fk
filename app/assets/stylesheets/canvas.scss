@@ -58,6 +58,9 @@
         opacity: 1;
         transform: scale(1);
       }
+      .tile-name-edit {
+        z-index: 6;
+      }
     }
   }
 
@@ -96,7 +99,7 @@
     line-height: 14px;
     position: absolute;
     top: 27px;
-    z-index: 6;
+    z-index: 4;
     width: 100%;
     word-wrap: break-word;
     textarea {

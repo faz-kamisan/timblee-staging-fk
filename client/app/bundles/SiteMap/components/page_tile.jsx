@@ -23,7 +23,7 @@ class PageTile extends React.Component {
     this.closeOverLay = this.closeOverLay.bind(this);
     this.openOverLay = this.openOverLay.bind(this);
     this.showPageDeletionModal = this.showPageDeletionModal.bind(this);
-    this.state = { nameChangeDisabled: true, hover: false, showOverLay: false }
+    this.state = { nameChangeDisabled: true, hover: false, showOverLay: false, name: this.props.name, originalName: this.props.name }
   }
 
   enableNameChangeInput(e) {
@@ -31,7 +31,22 @@ class PageTile extends React.Component {
   }
 
   disableNameChangeInput(e) {
-    this.setState({ nameChangeDisabled: true })
+    var name = this.state.name
+    if(name.length > 0) {
+      $.ajax({
+        url: '/pages/' + this.props.pageTree.id,
+        method: 'put',
+        dataType: 'JSON',
+        data: { page: { name: name } },
+        error: (result) => {
+          document.setFlash(result.responseText)
+        }
+      });
+      this.props.onNameChange(this.props.pageTree.id, this.props.pageTree.section_id, name);
+      this.setState({ nameChangeDisabled: true })
+    } else {
+      this.setState({name: this.state.originalName, nameChangeDisabled: true })
+    }
   }
 
   showPageDeletionModal(e) {
@@ -40,16 +55,7 @@ class PageTile extends React.Component {
 
   handleNameChange(event) {
     var name = event.target.value
-    $.ajax({
-      url: '/pages/' + this.props.pageTree.id,
-      method: 'put',
-      dataType: 'JSON',
-      data: { page: { name: name } },
-      error: (result) => {
-        document.setFlash(result.responseText)
-      }
-    });
-    this.props.onNameChange(this.props.pageTree.id, this.props.pageTree.section_id, name);
+    this.setState({name: name})
   }
 
   closeOverLay(e) {
@@ -84,7 +90,7 @@ class PageTile extends React.Component {
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber} name={this.props.name} />
           <h1 className="tile-name-edit">
             <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
-            <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' value = {this.props.name} onChange={this.handleNameChange} onBlur={this.disableNameChangeInput}></textarea>
+            <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' value = {this.state.name} onChange={this.handleNameChange} onBlur={this.disableNameChangeInput}></textarea>
           </h1>
           <ConnectedPageTileBottom pageTree={this.props.pageTree} />
           <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }>
@@ -121,7 +127,7 @@ class PageTile extends React.Component {
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber}  name={this.props.name} />
           <h1 className="tile-name-edit">
             <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
-            <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' value = {this.props.name} onChange={this.handleNameChange} onBlur={this.disableNameChangeInput}></textarea>
+            <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' value = {this.state.name} onChange={this.handleNameChange} onBlur={this.disableNameChangeInput}></textarea>
           </h1>
           <ConnectedPageTileBottom pageTree={this.props.pageTree} />
           <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }>
