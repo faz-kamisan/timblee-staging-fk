@@ -82,9 +82,9 @@ class PageTile extends React.Component {
       return (
         <div className={"page-tile " + (((this.props.pageTree.level == 0) && (this.props.childrenLength % 2 == 0)) ? 'even-tree' : 'odd-tree') } onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber} name={this.props.name} />
-          <h1 className="tile-name">
+          <h1 className="tile-name-edit">
             <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
-            <input className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' value = {this.props.name} onChange={this.handleNameChange} onBlur={this.disableNameChangeInput}></input>
+            <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' value = {this.props.name} onChange={this.handleNameChange} onBlur={this.disableNameChangeInput}></textarea>
           </h1>
           <ConnectedPageTileBottom pageTree={this.props.pageTree} />
           <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }>
@@ -119,9 +119,9 @@ class PageTile extends React.Component {
       return (
         <div className="page-tile" onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber}  name={this.props.name} />
-          <h1 className="tile-name">
+          <h1 className="tile-name-edit">
             <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
-            <input className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' value = {this.props.name} onChange={this.handleNameChange} onBlur={this.disableNameChangeInput}></input>
+            <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' value = {this.props.name} onChange={this.handleNameChange} onBlur={this.disableNameChangeInput}></textarea>
           </h1>
           <ConnectedPageTileBottom pageTree={this.props.pageTree} />
           <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }>
