@@ -47361,7 +47361,7 @@
 	    _this.handleNameChange = _this.handleNameChange.bind(_this);
 	    _this.enableNameChangeInput = _this.enableNameChangeInput.bind(_this);
 	    _this.disableNameChangeInput = _this.disableNameChangeInput.bind(_this);
-	    _this.state = { nameChangeDisabled: true, hover: false };
+	    _this.state = { nameChangeDisabled: true, hover: false, showOverLay: true };
 	    return _this;
 	  }
 	
@@ -47432,10 +47432,43 @@
 	            _react2.default.createElement('input', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', value: this.props.name, onChange: this.handleNameChange, onBlur: this.disableNameChangeInput })
 	          ),
 	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree }),
+	          _react2.default.createElement('div', { className: "tile-right " + this.props.pageTree.pageType.icon_name }),
 	          _react2.default.createElement(
 	            'div',
-	            { className: "tile-right " + this.props.pageTree.pageType.icon_name },
-	            _react2.default.createElement('div', { className: "tile-right-hover " + (this.state.hover ? 'hovered' : '') })
+	            { className: "tile-right-hover " + (this.state.hover ? 'hovered' : '') },
+	            _react2.default.createElement(
+	              'ul',
+	              { className: 'tile-more' },
+	              _react2.default.createElement(
+	                'li',
+	                { className: 'first-item' },
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'more-option tile-icons' },
+	                  _react2.default.createElement('span', null),
+	                  _react2.default.createElement('span', null),
+	                  _react2.default.createElement('span', null)
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                { className: 'second-item' },
+	                _react2.default.createElement('span', { className: 'icon-page-comments tile-icons' })
+	              )
+	            )
+	          ),
+	          this.state.showOverLay && _react2.default.createElement(
+	            'div',
+	            { className: 'card-overlay' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'close-card-overlay' },
+	              _react2.default.createElement('a', { href: '#', className: 'icon-close' })
+	            ),
+	            _react2.default.createElement('a', { href: '#', className: 'icon-page-comments' }),
+	            _react2.default.createElement('a', { href: '#', className: 'icon-page-change' }),
+	            _react2.default.createElement('a', { href: '#', className: 'icon-page-new' }),
+	            _react2.default.createElement('a', { href: '#', className: 'icon-page-delete' })
 	          ),
 	          _react2.default.createElement('div', { className: "collapse-open" + (this.props.collapsed ? ' collapse-close' : ''), onClick: this.handleOnCollapsedChanged })
 	        );
@@ -47456,10 +47489,43 @@
 	            _react2.default.createElement('input', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', value: this.props.name, onChange: this.handleNameChange, onBlur: this.disableNameChangeInput })
 	          ),
 	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree }),
+	          _react2.default.createElement('div', { className: "tile-right " + this.props.pageTree.pageType.icon_name }),
 	          _react2.default.createElement(
 	            'div',
-	            { className: "tile-right " + this.props.pageTree.pageType.icon_name },
-	            _react2.default.createElement('div', { className: "tile-right-hover " + (this.state.hover ? 'hovered' : '') })
+	            { className: "tile-right-hover " + (this.state.hover ? 'hovered' : '') },
+	            _react2.default.createElement(
+	              'ul',
+	              { className: 'tile-more' },
+	              _react2.default.createElement(
+	                'li',
+	                { className: 'first-item' },
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'more-option tile-icons' },
+	                  _react2.default.createElement('span', null),
+	                  _react2.default.createElement('span', null),
+	                  _react2.default.createElement('span', null)
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                { className: 'second-item' },
+	                _react2.default.createElement('span', { className: 'icon-page-comments tile-icons' })
+	              )
+	            )
+	          ),
+	          this.state.showOverLay && _react2.default.createElement(
+	            'div',
+	            { className: 'card-overlay' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'close-card-overlay' },
+	              _react2.default.createElement('a', { href: '#', className: 'icon-close' })
+	            ),
+	            _react2.default.createElement('a', { href: '#', className: 'icon-page-comments' }),
+	            _react2.default.createElement('a', { href: '#', className: 'icon-page-change' }),
+	            _react2.default.createElement('a', { href: '#', className: 'icon-page-new' }),
+	            _react2.default.createElement('a', { href: '#', className: 'icon-page-delete' })
 	          )
 	        );
 	      }

@@ -3,6 +3,39 @@
   line-height: 18px;
 }
 
+.more-options {
+  position: absolute;
+  bottom: 16px;
+  right: 15px;
+  z-index: 1;
+  width: 28px;
+  height: 28px;
+  background: $transparent;
+  @include border-radius(50%);
+  border: 1px solid #DADBDD;
+  display: inline-block;
+  text-align: center;
+  span {
+    width: 3px;
+    height: 3px;
+    @include border-radius(50%);
+    background: #DADBDD;
+    display: inline-block;
+    margin: 0 -.5px;
+    position: relative;
+    top: .5px;
+    &:first-child {
+      margin-left: .5px;
+    }
+  }
+  &:hover {
+    border-color: $primaryPink;
+    span {
+      background: $primaryPink;
+    }
+  }
+}
+
 .user-dashboard {
   padding-top: 100px;
   padding-bottom: 100px;
@@ -106,38 +139,6 @@
       width: 28px;
       height: 28px;
       @include border-radius(50%);
-    }
-  }
-  .more-options {
-    position: absolute;
-    bottom: 16px;
-    right: 15px;
-    z-index: 1;
-    width: 28px;
-    height: 28px;
-    background: $transparent;
-    @include border-radius(50%);
-    border: 1px solid #DADBDD;
-    display: inline-block;
-    text-align: center;
-    span {
-      width: 3px;
-      height: 3px;
-      @include border-radius(50%);
-      background: #DADBDD;
-      display: inline-block;
-      margin: 0 -.5px;
-      position: relative;
-      top: .5px;
-      &:first-child {
-        margin-left: .5px;
-      }
-    }
-    &:hover {
-      border-color: $primaryPink;
-      span {
-        background: $primaryPink;
-      }
     }
   }
   .actions-overlay {

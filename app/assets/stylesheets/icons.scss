@@ -21,81 +21,93 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-page-change:before {
+  content: "\e900";
+}
+.icon-page-comments:before {
+  content: "\e901";
+}
+.icon-page-delete:before {
+  content: "\e902";
+}
+.icon-page-new:before {
+  content: "\e903";
+}
 .icon-settings:before {
   content: "\e920";
 }
 .icon-add:before {
-  content: "\e900";
-}
-.icon-all-folders:before {
-  content: "\e901";
-}
-.icon-bell:before {
-  content: "\e902";
-}
-.icon-binoculars:before {
-  content: "\e903";
-}
-.icon-caret:before {
   content: "\e904";
 }
-.icon-close:before {
+.icon-all-folders:before {
   content: "\e905";
 }
-.icon-comment-circle:before {
+.icon-bell:before {
   content: "\e906";
 }
-.icon-comment:before {
+.icon-binoculars:before {
   content: "\e907";
 }
-.icon-conversation:before {
+.icon-caret:before {
   content: "\e908";
 }
-.icon-default:before {
+.icon-close:before {
   content: "\e909";
 }
-.icon-delete-circle:before {
+.icon-comment-circle:before {
   content: "\e90a";
 }
-.icon-edit-circle:before {
+.icon-comment:before {
   content: "\e90b";
 }
-.icon-folder-light:before {
+.icon-conversation:before {
   content: "\e90c";
 }
-.icon-gateway:before {
+.icon-default:before {
   content: "\e90d";
 }
-.icon-heart:before {
+.icon-delete-circle:before {
   content: "\e90e";
 }
-.icon-invite-female .path1:before {
+.icon-edit-circle:before {
   content: "\e90f";
+}
+.icon-folder-light:before {
+  content: "\e913";
+}
+.icon-gateway:before {
+  content: "\e912";
+}
+.icon-heart:before {
+  content: "\e911";
+}
+.icon-invite-female .path1:before {
+  content: "\e910";
   color: $primaryGrey;
 }
 .icon-invite-female .path2:before {
-  content: "\e910";
+  content: "\e921";
   color: $primaryWhite;
   position: absolute;
   left: 0;
   top: -15px;
 }
 .icon-invite-female .path3:before {
-  content: "\e911";
+  content: "\e922";
   color: $primaryGrey;
   position: absolute;
   left: 0;
   top: -15px;
 }
 .icon-invite-female .path4:before {
-  content: "\e912";
+  content: "\e923";
   color: $primaryGrey;
   position: absolute;
   left: 0;
   top: -15px;
 }
 .icon-invite-female .path5:before {
-  content: "\e913";
+  content: "\e924";
   color: $primaryGrey;
   position: absolute;
   left: 0;
