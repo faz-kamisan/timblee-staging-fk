@@ -17,7 +17,7 @@
         <div class="text-center">
           <div class="business-name-to-delete">
             <div class="user-name-to-delete">
-              <%= image_tag('profile-image.png', class: 'profile-image with-delete') %>
+              <%= image_tag(current_business.logo || current_user.avatar, class: 'profile-image with-delete') %>
               <span><%= current_user.full_name %></span>
             </div>
           </div>

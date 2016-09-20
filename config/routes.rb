@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       get 'settings'
       get 'progress'
       patch 'update_password'
+      patch 'update_avatar'
       get 'validate_unique_email'
     end
   end
@@ -54,7 +55,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :businesses, only: [] do
+  resources :businesses, only: [:update] do
     member do
       get 'send_destroy_request_to_superadmin'
     end

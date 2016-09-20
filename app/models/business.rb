@@ -8,6 +8,7 @@ class Business < ActiveRecord::Base
   has_many :cards, dependent: :destroy
   has_one :current_subscription, ->{ where('subscriptions.end_at >= :today', { today: Time.current }) }, class_name: :Subscription
   has_one :active_card, -> { order(created_at: :desc) }, class_name: :Card
+  mount_uploader :logo, AvatarUploader
 
   delegate :no_of_users, to: :current_subscription
 
@@ -49,7 +50,7 @@ class Business < ActiveRecord::Base
 
   def monthly_charge
     if is_pro_plan?
-      CHARGE_FOR_OWNER + (CHARGE_FOR_OTHER_USERS * (no_of_users - 1))
+      Business.monthly_charge(no_of_users)
     else
       0
     end
@@ -61,5 +62,11 @@ class Business < ActiveRecord::Base
 
   def self.monthly_charge(no_of_users)
     CHARGE_FOR_OWNER + (CHARGE_FOR_OTHER_USERS * (no_of_users - 1))
+  end
+
+  def set_new_subscription(emails)
+    new_users_count = users.count + InvitationService.get_invitable_users_count(emails)
+    subscriptions.build(no_of_users: new_users_count, quantity: Business.monthly_charge(new_users_count))
+    assign_attributes(is_pro: true, has_plan: true)
   end
 end

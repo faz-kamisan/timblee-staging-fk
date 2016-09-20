@@ -23,6 +23,7 @@ gem 'acts_as_tree'
 gem 'pdfkit'
 gem 'wkhtmltopdf-binary'
 gem 'acts_as_list'
+gem 'mini_magick'
 
 group :development, :test do
   gem 'byebug', '~> 9.0.5'

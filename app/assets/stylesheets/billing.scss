@@ -1,3 +1,9 @@
+#upgrade {
+  &:hover {
+    color: $primaryPink;
+  }
+}
+
 .default-input {
   background: #f9f9fa;
   &:focus {
@@ -151,6 +157,12 @@
   }
   .cc-number {
     background: $primaryWhite;
+  }
+  .loading-image {
+    z-index: 999;
+    position: absolute;
+    display: none;
+    left: 400px;
   }
 }
 
@@ -387,7 +399,7 @@ a#upgrade {
 
 .pro-plan-benefits {
   .current-plan-text {
-    margin-top: 33px;   
+    margin-top: 33px;
   }
 }
 

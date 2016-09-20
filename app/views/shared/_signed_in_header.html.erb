@@ -21,6 +21,7 @@
     <div class="col-xs-6 p-r-5">
       <div class="user-dropdown pull-right text-right">
         <span class="truncate">
+          <%= image_tag(current_user.avatar, class: 'profile-image') %>
           <%= current_user.full_name %>
         </span>
         <span class="icon-caret"></span>
@@ -85,3 +86,4 @@
 </header>
 <%= javascript_include_tag('sitemaps') %>
 
+<%= render 'sitemaps/sitemap_error_modal'%>

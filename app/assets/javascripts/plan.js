@@ -2,6 +2,7 @@ var Plan = function(options) {
   this.addNewCard = options.addNewCard;
   this.useSavedCard = options.useSavedCard;
   this.cardErrors = options.cardErrors;
+  this.brandSpan = options.brandSpan;
   this.confirmSavedCard = options.confirmSavedCard;
   this.proPlanModal = options.proPlanModal;
   this.inviteUserModal = options.inviteUserModal;
@@ -23,6 +24,7 @@ Plan.prototype.bindEvents = function() {
     _this.cardErrors.html('');
     $parent.find(_this.editableInput).attr('disabled', true);
     $parent.find(_this.editableInput).val('');
+    $parent.find(_this.brandSpan).removeClass('visa mastercard amex');
   });
 
   this.addNewCard.on('click', function() {
@@ -51,6 +53,7 @@ Plan.prototype.bindEvents = function() {
 $(function() {
   var options = {
     cardErrors : $('.cc-errors'),
+    brandSpan : $('.cc-brand'),
     confirmSavedCard : $('#confirm-saved-card'),
     proPlanModal : $('#pro-plan-modal'),
     inviteUserModal : $('#invite-user-modal'),
