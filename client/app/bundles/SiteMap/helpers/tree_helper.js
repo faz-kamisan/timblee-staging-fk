@@ -77,9 +77,8 @@ function updatePagePosition(sections, id, sectionId, newParentId, position) {
 function removePage(sections, id, sectionId) {
   var sectionsCopy = Object.assign([], sections);
   var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
-  var page = getNodeById(treeCopy, id),
-      parentPage = getNodeById(treeCopy, page.parentId);
-  parentPage.children.removeIf(function(elem, idx) { return elem.id == id });
+  var page = getNodeById(treeCopy, id)
+  page.deleted = true
   return sectionsCopy
 }
 

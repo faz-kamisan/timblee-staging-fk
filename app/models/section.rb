@@ -7,7 +7,7 @@ class Section < ActiveRecord::Base
   validates :name, uniqueness: { scope: :sitemap_id }
 
   def get_page_tree
-    root_page ? root_page.get_tree(pages.includes(:page_type, :comments)) : {}
+    root_page ? root_page.get_tree(pages.with_deleted.includes(:page_type, :comments)) : {}
   end
 
   def to_react_data

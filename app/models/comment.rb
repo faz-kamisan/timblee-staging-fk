@@ -5,7 +5,7 @@ class Comment < ActiveRecord::Base
   validates :state, inclusion: { in: ['active', 'archived', 'resolved'] }
   strip_fields :message
 
-  scope :order_by_updated_at, -> { order('created_at ASC') }
+  scope :order_by_created_at, -> { order('created_at ASC') }
 
   def to_react_data
     { id: id, message: message, created_at: created_at_decorated, state: state, commenter: { fullName: commenter.full_name, email: commenter.email } }

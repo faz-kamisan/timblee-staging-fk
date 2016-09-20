@@ -38435,6 +38435,10 @@
 	
 	var _business2 = _interopRequireDefault(_business);
 	
+	var _page_to_delete = __webpack_require__(/*! ./page_to_delete */ 1003);
+	
+	var _page_to_delete2 = _interopRequireDefault(_page_to_delete);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var sitemapAppReducer = (0, _redux.combineReducers)({
@@ -38452,7 +38456,8 @@
 	  showGuestInfoForm: _show_guest_info_form2.default,
 	  publicShareUrl: _public_share_url2.default,
 	  showSitemapShareModal: _show_sitemap_share_modal2.default,
-	  business: _business2.default
+	  business: _business2.default,
+	  pageToDelete: _page_to_delete2.default
 	});
 	
 	exports.default = sitemapAppReducer;
@@ -38516,6 +38521,7 @@
 	exports.setCurrentGuest = setCurrentGuest;
 	exports.showSitemapShareModal = showSitemapShareModal;
 	exports.deleteGeneralComment = deleteGeneralComment;
+	exports.setPageToDelete = setPageToDelete;
 	var SET_NAME = exports.SET_NAME = 'SET_NAME';
 	var ADD_NEW_PAGE = exports.ADD_NEW_PAGE = 'ADD_NEW_PAGE';
 	var REMOVE_PAGE = exports.REMOVE_PAGE = 'REMOVE_PAGE';
@@ -38534,6 +38540,7 @@
 	var SET_CURRENT_GUEST = exports.SET_CURRENT_GUEST = 'SET_CURRENT_GUEST';
 	var SHOW_SITEMAP_SHARE_MODAL = exports.SHOW_SITEMAP_SHARE_MODAL = 'SHOW_SITEMAP_SHARE_MODAL';
 	var DELETE_GENERAL_COMMENT = exports.DELETE_GENERAL_COMMENT = 'DELETE_GENERAL_COMMENT';
+	var SET_PAGE_TO_DELETE = exports.SET_PAGE_TO_DELETE = 'SET_PAGE_TO_DELETE';
 	
 	function setName(name) {
 	  return { type: SET_NAME, name: name };
@@ -38605,6 +38612,10 @@
 	
 	function deleteGeneralComment(id) {
 	  return { type: DELETE_GENERAL_COMMENT, id: id };
+	}
+	
+	function setPageToDelete(page) {
+	  return { type: SET_PAGE_TO_DELETE, page: page };
 	}
 
 /***/ },
@@ -38782,11 +38793,8 @@
 	  var treeCopy = sectionsCopy.filter(function (section) {
 	    return section.id == sectionId;
 	  })[0].pageTree;
-	  var page = getNodeById(treeCopy, id),
-	      parentPage = getNodeById(treeCopy, page.parentId);
-	  parentPage.children.removeIf(function (elem, idx) {
-	    return elem.id == id;
-	  });
+	  var page = getNodeById(treeCopy, id);
+	  page.deleted = true;
 	  return sectionsCopy;
 	}
 	
@@ -39251,6 +39259,10 @@
 	
 	var _connected_right_sidebar2 = _interopRequireDefault(_connected_right_sidebar);
 	
+	var _connected_delete_page_modal = __webpack_require__(/*! ../containers/connected_delete_page_modal */ 1002);
+	
+	var _connected_delete_page_modal2 = _interopRequireDefault(_connected_delete_page_modal);
+	
 	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 997);
 	
 	var _custom_drag_layer2 = _interopRequireDefault(_custom_drag_layer);
@@ -39284,7 +39296,8 @@
 	        _react2.default.createElement(_connected_section_container2.default, { sitemapNumber: '' }),
 	        _react2.default.createElement(_custom_drag_layer2.default, null),
 	        _react2.default.createElement(_connected_guest_info_form_modal2.default, null),
-	        _react2.default.createElement(_connected_sitemap_share_modal2.default, null)
+	        _react2.default.createElement(_connected_sitemap_share_modal2.default, null),
+	        _react2.default.createElement(_connected_delete_page_modal2.default, null)
 	      );
 	    }
 	  }]);
@@ -47112,8 +47125,12 @@
 	      var isDragging = this.props.isDragging;
 	      var _this = this;
 	      var children;
-	      if (this.props.pageTree.children != null) {
-	        children = this.props.pageTree.children.map(function (pageTree, index) {
+	      if (this.props.pageTree.children.filter(function (page) {
+	        return !page.deleted;
+	      }) != null) {
+	        children = this.props.pageTree.children.filter(function (page) {
+	          return !page.deleted;
+	        }).map(function (pageTree, index) {
 	          if (pageTree.level == 1) {
 	            var sitemapNumber = (index + 1).toString() + '.0';
 	          } else if (pageTree.level == 2) {
@@ -47221,17 +47238,20 @@
 	  _createClass(PageContainer, [{
 	    key: 'render',
 	    value: function render() {
+	      var children = this.props.pageTree.children.filter(function (page) {
+	        return !page.deleted;
+	      });
 	      if (this.props.pageTree.level == 0) {
 	        if (this.props.leftSidebarExpanded) {
-	          var width = (this.props.pageTree.children.length * 240 + 432).toString() + 'px';
+	          var width = (children.length * 240 + 432).toString() + 'px';
 	        } else {
-	          var width = (this.props.pageTree.children.length * 240 + 60).toString() + 'px';
+	          var width = (children.length * 240 + 60).toString() + 'px';
 	        }
 	
 	        return _react2.default.createElement(
 	          'div',
 	          { 'data-level': this.props.pageTree.level, className: 'page-container level-' + this.props.pageTree.level.toString(), style: { width: width } },
-	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: this.props.pageTree.children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name }),
+	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name }),
 	          _react2.default.createElement(_connected_gutter2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement(_connected_level_support2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement(
@@ -47244,7 +47264,7 @@
 	        return _react2.default.createElement(
 	          'div',
 	          { 'data-level': this.props.pageTree.level, className: 'page-container level-' + this.props.pageTree.level.toString() },
-	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: this.props.pageTree.children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name }),
+	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name }),
 	          _react2.default.createElement(_connected_gutter2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement(_connected_level_support2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement(
@@ -47301,6 +47321,9 @@
 	    },
 	    onNameChange: function onNameChange(id, sectionId, name) {
 	      dispatch((0, _actions.updatePageName)(id, sectionId, name));
+	    },
+	    setPageToDelete: function setPageToDelete(page) {
+	      dispatch((0, _actions.setPageToDelete)(page));
 	    },
 	    setSaving: function setSaving(saving) {
 	      dispatch((0, _actions.setSaving)(saving));
@@ -47361,7 +47384,10 @@
 	    _this.handleNameChange = _this.handleNameChange.bind(_this);
 	    _this.enableNameChangeInput = _this.enableNameChangeInput.bind(_this);
 	    _this.disableNameChangeInput = _this.disableNameChangeInput.bind(_this);
-	    _this.state = { nameChangeDisabled: true, hover: false, showOverLay: true };
+	    _this.closeOverLay = _this.closeOverLay.bind(_this);
+	    _this.openOverLay = _this.openOverLay.bind(_this);
+	    _this.showPageDeletionModal = _this.showPageDeletionModal.bind(_this);
+	    _this.state = { nameChangeDisabled: true, hover: false, showOverLay: false };
 	    return _this;
 	  }
 	
@@ -47374,6 +47400,11 @@
 	    key: 'disableNameChangeInput',
 	    value: function disableNameChangeInput(e) {
 	      this.setState({ nameChangeDisabled: true });
+	    }
+	  }, {
+	    key: 'showPageDeletionModal',
+	    value: function showPageDeletionModal(e) {
+	      this.props.setPageToDelete(this.props.pageTree);
 	    }
 	  }, {
 	    key: 'handleNameChange',
@@ -47389,6 +47420,16 @@
 	        }
 	      });
 	      this.props.onNameChange(this.props.pageTree.id, this.props.pageTree.section_id, name);
+	    }
+	  }, {
+	    key: 'closeOverLay',
+	    value: function closeOverLay(e) {
+	      this.setState({ showOverLay: false });
+	    }
+	  }, {
+	    key: 'openOverLay',
+	    value: function openOverLay(e) {
+	      this.setState({ showOverLay: true });
 	    }
 	  }, {
 	    key: 'mouseOver',
@@ -47444,7 +47485,7 @@
 	                { className: 'first-item' },
 	                _react2.default.createElement(
 	                  'span',
-	                  { className: 'more-option tile-icons' },
+	                  { className: 'more-option tile-icons', onClick: this.openOverLay },
 	                  _react2.default.createElement('span', null),
 	                  _react2.default.createElement('span', null),
 	                  _react2.default.createElement('span', null)
@@ -47457,18 +47498,18 @@
 	              )
 	            )
 	          ),
-	          this.state.showOverLay && _react2.default.createElement(
+	          _react2.default.createElement(
 	            'div',
-	            { className: 'card-overlay' },
+	            { className: "card-overlay" + (this.state.showOverLay ? ' overlay-in' : '') },
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'close-card-overlay' },
-	              _react2.default.createElement('a', { href: '#', className: 'icon-close' })
+	              _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-close', onClick: this.closeOverLay })
 	            ),
-	            _react2.default.createElement('a', { href: '#', className: 'icon-page-comments' }),
-	            _react2.default.createElement('a', { href: '#', className: 'icon-page-change' }),
-	            _react2.default.createElement('a', { href: '#', className: 'icon-page-new' }),
-	            _react2.default.createElement('a', { href: '#', className: 'icon-page-delete' })
+	            _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-page-comments' }),
+	            _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-page-change' }),
+	            _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-page-new' }),
+	            this.props.pageTree.parentId != null && _react2.default.createElement('a', { href: '#delete-page-modal', className: 'icon-page-delete', onClick: this.showPageDeletionModal, 'data-toggle': 'modal' })
 	          ),
 	          _react2.default.createElement('div', { className: "collapse-open" + (this.props.collapsed ? ' collapse-close' : ''), onClick: this.handleOnCollapsedChanged })
 	        );
@@ -47501,7 +47542,7 @@
 	                { className: 'first-item' },
 	                _react2.default.createElement(
 	                  'span',
-	                  { className: 'more-option tile-icons' },
+	                  { className: 'more-option tile-icons', onClick: this.openOverLay },
 	                  _react2.default.createElement('span', null),
 	                  _react2.default.createElement('span', null),
 	                  _react2.default.createElement('span', null)
@@ -47514,18 +47555,18 @@
 	              )
 	            )
 	          ),
-	          this.state.showOverLay && _react2.default.createElement(
+	          _react2.default.createElement(
 	            'div',
-	            { className: 'card-overlay' },
+	            { className: "card-overlay" + (this.state.showOverLay ? ' overlay-in' : '') },
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'close-card-overlay' },
-	              _react2.default.createElement('a', { href: '#', className: 'icon-close' })
+	              _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-close', onClick: this.closeOverLay })
 	            ),
-	            _react2.default.createElement('a', { href: '#', className: 'icon-page-comments' }),
-	            _react2.default.createElement('a', { href: '#', className: 'icon-page-change' }),
-	            _react2.default.createElement('a', { href: '#', className: 'icon-page-new' }),
-	            _react2.default.createElement('a', { href: '#', className: 'icon-page-delete' })
+	            _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-page-comments' }),
+	            _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-page-change' }),
+	            _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-page-new' }),
+	            this.props.pageTree.parentId != null && _react2.default.createElement('a', { href: '#delete-page-modal', className: 'icon-page-delete', onClick: this.showPageDeletionModal, 'data-toggle': 'modal' })
 	          )
 	        );
 	      }
@@ -47699,7 +47740,6 @@
 	          var domNode = (0, _reactDom.findDOMNode)(this);
 	          $(domNode).addClass('drag-over');
 	          if (this.props.pageTree.level == 1) {
-	            // debugger
 	            $(domNode).parent('.page-tile').siblings('.level-support').addClass('again-drag-over');
 	          } else {
 	            $(domNode).parent('.page-tile').siblings('.gutter').addClass('again-drag-over');
@@ -60620,6 +60660,202 @@
 	  iconName: _react.PropTypes.string.isRequired
 	};
 	exports.default = PageTypePreview;
+
+/***/ },
+/* 1000 */
+/*!**************************************************************!*\
+  !*** ./app/bundles/SiteMap/components/delete_page_modal.jsx ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 301);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var DeletePageModal = function (_React$Component) {
+	  _inherits(DeletePageModal, _React$Component);
+	
+	  function DeletePageModal(props) {
+	    _classCallCheck(this, DeletePageModal);
+	
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(DeletePageModal).call(this, props));
+	
+	    _this2.deletePage = _this2.deletePage.bind(_this2);
+	    return _this2;
+	  }
+	
+	  _createClass(DeletePageModal, [{
+	    key: 'deletePage',
+	    value: function deletePage(e) {
+	      $.ajax({
+	        url: '/pages/' + this.props.pageTree.id,
+	        method: 'delete',
+	        dataType: 'JSON',
+	        error: function error(result) {
+	          document.setFlash(result.responseText);
+	        },
+	        complete: function complete(result) {
+	          props.setSaving(true);
+	          setTimeout(function () {
+	            props.setSaving(false);
+	          }, 2000);
+	        }
+	      });
+	      this.props.onPageDelete(this.props.pageTree);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this = this;
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'modal fade', id: 'delete-page-modal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'delete-page-modalLabel' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'modal-dialog', role: 'document' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'modal-content' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'modal-header text-center' },
+	              _react2.default.createElement(
+	                'button',
+	                { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+	                _react2.default.createElement(
+	                  'span',
+	                  { 'aria-hidden': 'true' },
+	                  _react2.default.createElement('img', { src: '/assets/close-modal.svg', className: 'close-modal hide-delete-modal' })
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'h4',
+	                { className: 'modal-title' },
+	                'Delete page'
+	              ),
+	              _react2.default.createElement(
+	                'p',
+	                { className: 'modal-message' },
+	                "You're about to delete the " + this.props.pageTree.name + " page. Any comments for this page will be archived and available via the comments sidebar."
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'modal-body' },
+	              _react2.default.createElement('div', { className: 'site-map-clone' }),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'modal-button text-center' },
+	                _react2.default.createElement(
+	                  'a',
+	                  { href: '#', 'data-dismiss': 'modal', className: 'btn btn-red', onClick: this.deletePage },
+	                  'Delete Page'
+	                ),
+	                _react2.default.createElement(
+	                  'a',
+	                  { href: '#', 'data-dismiss': 'modal', className: 'btn btn-transparent btn-last' },
+	                  'Cancel'
+	                )
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return DeletePageModal;
+	}(_react2.default.Component);
+	
+	DeletePageModal.propTypes = {
+	  pageTree: _react.PropTypes.object.isRequired
+	};
+	exports.default = DeletePageModal;
+
+/***/ },
+/* 1001 */,
+/* 1002 */
+/*!************************************************************************!*\
+  !*** ./app/bundles/SiteMap/containers/connected_delete_page_modal.jsx ***!
+  \************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
+	
+	var _actions = __webpack_require__(/*! ../actions */ 606);
+	
+	var _delete_page_modal = __webpack_require__(/*! ../components/delete_page_modal */ 1000);
+	
+	var _delete_page_modal2 = _interopRequireDefault(_delete_page_modal);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return { pageTree: state.pageToDelete };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    onPageDelete: function onPageDelete(pageTree) {
+	      dispatch((0, _actions.removePage)(pageTree.id, pageTree.section_id));
+	    }
+	  };
+	};
+	
+	var ConnectedDeletePageModal = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_delete_page_modal2.default);
+	
+	exports.default = ConnectedDeletePageModal;
+
+/***/ },
+/* 1003 */
+/*!*********************************************************!*\
+  !*** ./app/bundles/SiteMap/reducers/page_to_delete.jsx ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _index = __webpack_require__(/*! ../actions/index */ 606);
+	
+	var pageToDelete = function pageToDelete() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case _index.SET_PAGE_TO_DELETE:
+	      return action.page;
+	    default:
+	      return state;
+	  }
+	};
+	
+	exports.default = pageToDelete;
 
 /***/ }
 /******/ ]);

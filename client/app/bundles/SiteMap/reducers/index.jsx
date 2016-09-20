@@ -14,6 +14,7 @@ import showGuestInfoForm from './show_guest_info_form'
 import showSitemapShareModal from './show_sitemap_share_modal'
 import publicShareUrl from './public_share_url'
 import business from './business'
+import pageToDelete from './page_to_delete'
 
 const sitemapAppReducer = combineReducers({
   name,
@@ -30,7 +31,8 @@ const sitemapAppReducer = combineReducers({
   showGuestInfoForm,
   publicShareUrl,
   showSitemapShareModal,
-  business
+  business,
+  pageToDelete
 })
 
 export default sitemapAppReducer

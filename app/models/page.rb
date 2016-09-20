@@ -6,8 +6,11 @@ class Page < ActiveRecord::Base
   has_many :comments, as: :commentable
   acts_as_tree order: :position
   acts_as_list scope: :parent
+  acts_as_paranoid
 
   before_validation :set_uid, on: :create
+  before_destroy :check_page_is_not_root
+  before_destroy :mark_comments_as_archived
 
   validates :name, :section, :page_type, :sitemap, :uid, presence: true
   validates :uid, uniqueness: { scope: :sitemap_id }
@@ -21,9 +24,10 @@ class Page < ActiveRecord::Base
       parentId: parent_id,
       position: position,
       level: level,
-      comments: comments.order_by_updated_at.map(&:to_react_data),
+      comments: comments.sort_by(&:created_at).map(&:to_react_data),
       pageType: page_type,
-      collapsed: false
+      collapsed: false,
+      deleted: deleted?
     }
     child_pages = collection.select {|page| page.parent_id == self.id}.sort_by(&:position)
     tree.merge!({ children: child_pages.map { |child_page| child_page.get_tree(collection, level + 1) } })
@@ -34,5 +38,14 @@ class Page < ActiveRecord::Base
     def set_uid
       highest_uid = sitemap.pages.maximum('uid')
       self.uid = highest_uid.to_i + 1
+    end
+
+    def mark_comments_as_archived
+      debugger
+      comments.update_all(state: 'archived')
+    end
+
+    def check_page_is_not_root
+      parent.present?
     end
 end

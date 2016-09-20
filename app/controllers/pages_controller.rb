@@ -11,19 +11,7 @@ class PagesController < ApplicationController
   end
 
   def update
-    # @page.assign_attributes(page_params)
-    # if(params[:page][:position].present?)
-    #   @previous_page = Page.where(parent_id: @page.parent_id, position: params[:page][:postion])
-
-    # end
-    # if(@page.update(page_params))
-    #   if(params[:page][:position].present?)
-
-    #   end
-    # else
-    # end
-      # send_conditional_json_response(false)
-      send_conditional_json_response(@page.update(page_params))
+    send_conditional_json_response(@page.update(page_params))
   end
 
   private

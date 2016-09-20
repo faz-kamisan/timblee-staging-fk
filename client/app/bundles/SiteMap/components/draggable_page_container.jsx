@@ -55,8 +55,8 @@ class DraggedPageContainer extends React.Component {
     const isDragging = this.props.isDragging;
     var _this = this;
     var children;
-    if (this.props.pageTree.children != null) {
-      children = this.props.pageTree.children.map(function(pageTree, index) {
+    if (this.props.pageTree.children.filter(function(page) { return(!page.deleted) }) != null) {
+      children = this.props.pageTree.children.filter(function(page) { return(!page.deleted) }).map(function(pageTree, index) {
         if(pageTree.level == 1) {
           var sitemapNumber = (index + 1).toString() + '.0';
         } else if(pageTree.level == 2) {

@@ -20,7 +20,10 @@ class PageTile extends React.Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.enableNameChangeInput = this.enableNameChangeInput.bind(this);
     this.disableNameChangeInput = this.disableNameChangeInput.bind(this);
-    this.state = { nameChangeDisabled: true, hover: false, showOverLay: true }
+    this.closeOverLay = this.closeOverLay.bind(this);
+    this.openOverLay = this.openOverLay.bind(this);
+    this.showPageDeletionModal = this.showPageDeletionModal.bind(this);
+    this.state = { nameChangeDisabled: true, hover: false, showOverLay: false }
   }
 
   enableNameChangeInput(e) {
@@ -29,6 +32,10 @@ class PageTile extends React.Component {
 
   disableNameChangeInput(e) {
     this.setState({ nameChangeDisabled: true })
+  }
+
+  showPageDeletionModal(e) {
+    this.props.setPageToDelete(this.props.pageTree)
   }
 
   handleNameChange(event) {
@@ -43,6 +50,14 @@ class PageTile extends React.Component {
       }
     });
     this.props.onNameChange(this.props.pageTree.id, this.props.pageTree.section_id, name);
+  }
+
+  closeOverLay(e) {
+    this.setState({showOverLay: false})
+  }
+
+  openOverLay(e) {
+    this.setState({showOverLay: true})
   }
 
   mouseOver(e) {
@@ -77,28 +92,26 @@ class PageTile extends React.Component {
           <div className={ "tile-right-hover " + (this.state.hover ? 'hovered' : '') }>
             <ul className="tile-more">
               <li className="first-item">
-                <span className="more-option tile-icons">
+                <span className="more-option tile-icons" onClick={this.openOverLay}>
                   <span></span>
                   <span></span>
                   <span></span>
-                </span>    
+                </span>
               </li>
               <li className="second-item">
-                <span className="icon-page-comments tile-icons"></span>    
+                <span className="icon-page-comments tile-icons"></span>
               </li>
             </ul>
           </div>
-          { this.state.showOverLay &&
-            <div className="card-overlay">
-              <div className="close-card-overlay">
-                <a href="#" className="icon-close"></a>  
-              </div>
-              <a href="#" className="icon-page-comments"></a>
-              <a href="#" className="icon-page-change"></a>
-              <a href="#" className="icon-page-new"></a>
-              <a href="#" className="icon-page-delete"></a>
+          <div className={"card-overlay" + (this.state.showOverLay ? ' overlay-in' : '')}>
+            <div className="close-card-overlay">
+              <a href="javascript:void(0)" className="icon-close" onClick={this.closeOverLay}></a>
             </div>
-          }
+            <a href="javascript:void(0)" className="icon-page-comments"></a>
+            <a href="javascript:void(0)" className="icon-page-change"></a>
+            <a href="javascript:void(0)" className="icon-page-new"></a>
+            { (this.props.pageTree.parentId != null) && <a href="#delete-page-modal" className="icon-page-delete" onClick={this.showPageDeletionModal} data-toggle='modal'></a> }
+          </div>
           <div className={ "collapse-open" + (this.props.collapsed ? ' collapse-close' : '') } onClick={this.handleOnCollapsedChanged}></div>
         </div>
       );
@@ -116,28 +129,26 @@ class PageTile extends React.Component {
           <div className={ "tile-right-hover " + (this.state.hover ? 'hovered' : '') }>
             <ul className="tile-more">
               <li className="first-item">
-                <span className="more-option tile-icons">
+                <span className="more-option tile-icons" onClick={this.openOverLay}>
                   <span></span>
                   <span></span>
                   <span></span>
-                </span>    
+                </span>
               </li>
               <li className="second-item">
-                <span className="icon-page-comments tile-icons"></span>    
+                <span className="icon-page-comments tile-icons"></span>
               </li>
             </ul>
           </div>
-          { this.state.showOverLay &&
-            <div className="card-overlay">
-              <div className="close-card-overlay">
-                <a href="#" className="icon-close"></a>  
-              </div>
-              <a href="#" className="icon-page-comments"></a>
-              <a href="#" className="icon-page-change"></a>
-              <a href="#" className="icon-page-new"></a>
-              <a href="#" className="icon-page-delete"></a>
+          <div className={"card-overlay" + (this.state.showOverLay ? ' overlay-in' : '')}>
+            <div className="close-card-overlay">
+              <a href="javascript:void(0)" className="icon-close" onClick={this.closeOverLay}></a>
             </div>
-          }
+            <a href="javascript:void(0)" className="icon-page-comments"></a>
+            <a href="javascript:void(0)" className="icon-page-change"></a>
+            <a href="javascript:void(0)" className="icon-page-new"></a>
+            { (this.props.pageTree.parentId != null) && <a href="#delete-page-modal" className="icon-page-delete" onClick={this.showPageDeletionModal} data-toggle='modal'></a> }
+          </div>
         </div>
       );
     }

@@ -78,7 +78,6 @@ class PageTileTop extends React.Component {
         var domNode = findDOMNode(this);
         $(domNode).addClass('drag-over' )
         if(this.props.pageTree.level == 1) {
-          // debugger
           $(domNode).parent('.page-tile').siblings('.level-support').addClass('again-drag-over')
         } else {
           $(domNode).parent('.page-tile').siblings('.gutter').addClass('again-drag-over')

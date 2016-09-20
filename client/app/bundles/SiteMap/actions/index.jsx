@@ -16,6 +16,7 @@ export const SET_SHOW_GUEST_INFO_FORM = 'SET_SHOW_GUEST_INFO_FORM'
 export const SET_CURRENT_GUEST = 'SET_CURRENT_GUEST'
 export const SHOW_SITEMAP_SHARE_MODAL = 'SHOW_SITEMAP_SHARE_MODAL'
 export const DELETE_GENERAL_COMMENT = 'DELETE_GENERAL_COMMENT'
+export const SET_PAGE_TO_DELETE = 'SET_PAGE_TO_DELETE'
 
 export function setName(name) {
   return { type: SET_NAME, name }
@@ -87,4 +88,8 @@ export function showSitemapShareModal(value) {
 
 export function deleteGeneralComment(id) {
   return { type: DELETE_GENERAL_COMMENT, id }
+}
+
+export function setPageToDelete(page) {
+  return { type: SET_PAGE_TO_DELETE, page }
 }
