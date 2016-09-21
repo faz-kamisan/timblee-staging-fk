@@ -60,22 +60,24 @@ class PageChangeModal extends React.Component {
                   </span>
                 </button>
                 <h4 className="modal-title">Change the page type</h4>
-                <p className="modal-message">{"You're about to delete the " + this.props.pageTree.name + " page. Any comments for this page will be archived and available via the comments sidebar."}</p>
               </div>
               <div className="modal-body">
-                <div className='current-page-type'>
-                  <PageType name={this.props.pageTree.pageType.name} iconName={this.props.pageTree.pageType.icon_name} id={this.props.pageTree.pageType.id} />
-                </div>
-                <div className="page-types">
-                  <form className="search-page-type">
-                    <label htmlFor="page-type">
-                      <i className="icon-search"></i>
-                    </label>
-                    <input type="search" id="page-type" name="page-type" placeholder="Page Type" onChange={this.handleSearch} />
-                  </form>
-                  <ul className="page-type-list clearfix">
-                    {pageTypeComponents}
-                  </ul>
+                <div className="clearfix">
+                  <div className='current-page-type pull-left'>
+                    <span>Current page type:</span>
+                    <PageType name={this.props.pageTree.pageType.name} iconName={this.props.pageTree.pageType.icon_name} id={this.props.pageTree.pageType.id} />
+                  </div>
+                  <div className="page-types pull-left">
+                    <form className="search-page-type">
+                      <label htmlFor="page-type">
+                        <i className="icon-search"></i>
+                      </label>
+                      <input type="search" id="page-type" name="page-type" placeholder="Find your page type" onChange={this.handleSearch} />
+                    </form>
+                    <ul className="page-type-list clearfix">
+                      {pageTypeComponents}
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
