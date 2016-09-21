@@ -113,10 +113,21 @@ class PageTile extends React.Component {
             <div className="close-card-overlay">
               <a href="javascript:void(0)" className="icon-close" onClick={this.closeOverLay}></a>
             </div>
-            <a href="javascript:void(0)" className="icon-page-comments"></a>
-            <a href="javascript:void(0)" className="icon-page-change"></a>
-            <a href="#page-change-modal" className="icon-page-new" onClick={this.setSelectedPage} data-toggle='modal'></a>
-            { (this.props.pageTree.parentId != null) && <a href="#delete-page-modal" className="icon-page-delete" onClick={this.setSelectedPage} data-toggle='modal'></a> }
+            <a href="javascript:void(0)" className="icon-page-comments">
+              <span className="card-tooltip">View Comments</span>
+            </a>
+            <a href="#page-change-modal" className="icon-page-change" onClick={this.setSelectedPage} data-toggle='modal'>
+              <span className="card-tooltip">Change Page</span>
+            </a>
+            <a href="javascript:void(0)" className="icon-page-new">
+              <span className="card-tooltip">New Section</span>
+            </a>
+            {
+              (this.props.pageTree.parentId != null) &&
+              <a href="#delete-page-modal" className="icon-page-delete" onClick={this.showPageDeletionModal} data-toggle='modal'>
+                <span className="card-tooltip">Delete Page</span>
+              </a>
+            }
           </div>
           <div className={ "collapse-open" + (this.props.collapsed ? ' collapse-close' : '') } onClick={this.handleOnCollapsedChanged}></div>
         </div>
@@ -150,10 +161,20 @@ class PageTile extends React.Component {
             <div className="close-card-overlay">
               <a href="javascript:void(0)" className="icon-close" onClick={this.closeOverLay}></a>
             </div>
-            <a href="javascript:void(0)" className="icon-page-comments"></a>
-            <a href="javascript:void(0)" className="icon-page-change"></a>
-            <a href="#page-change-modal" className="icon-page-new" onClick={this.setSelectedPage} data-toggle='modal'></a>
-            { (this.props.pageTree.parentId != null) && <a href="#delete-page-modal" className="icon-page-delete" onClick={this.setSelectedPage} data-toggle='modal'></a> }
+            <a href="javascript:void(0)" className="icon-page-comments">
+              <span className="card-tooltip">View Comments</span>
+            </a>
+            <a href="#page-change-modal" className="icon-page-change" onClick={this.setSelectedPage} data-toggle='modal'>
+              <span className="card-tooltip">Change Page</span>
+            </a>
+            <a href="javascript:void(0)" className="icon-page-new">
+              <span className="card-tooltip">New Section</span>
+            </a>
+            { (this.props.pageTree.parentId != null) &&
+              <a href="#delete-page-modal" className="icon-page-delete" onClick={this.showPageDeletionModal} data-toggle='modal'>
+                <span className="card-tooltip">Delete Page</span>
+              </a>
+            }
           </div>
         </div>
       );

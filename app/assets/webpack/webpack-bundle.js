@@ -47565,10 +47565,42 @@
 	              { className: 'close-card-overlay' },
 	              _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-close', onClick: this.closeOverLay })
 	            ),
-	            _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-page-comments' }),
-	            _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-page-change' }),
-	            _react2.default.createElement('a', { href: '#page-change-modal', className: 'icon-page-new', onClick: this.setSelectedPage, 'data-toggle': 'modal' }),
-	            this.props.pageTree.parentId != null && _react2.default.createElement('a', { href: '#delete-page-modal', className: 'icon-page-delete', onClick: this.setSelectedPage, 'data-toggle': 'modal' })
+	            _react2.default.createElement(
+	              'a',
+	              { href: 'javascript:void(0)', className: 'icon-page-comments' },
+	              _react2.default.createElement(
+	                'span',
+	                { className: 'card-tooltip' },
+	                'View Comments'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'a',
+	              { href: '#page-change-modal', className: 'icon-page-change', onClick: this.setSelectedPage, 'data-toggle': 'modal' },
+	              _react2.default.createElement(
+	                'span',
+	                { className: 'card-tooltip' },
+	                'Change Page'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'a',
+	              { href: 'javascript:void(0)', className: 'icon-page-new' },
+	              _react2.default.createElement(
+	                'span',
+	                { className: 'card-tooltip' },
+	                'New Section'
+	              )
+	            ),
+	            this.props.pageTree.parentId != null && _react2.default.createElement(
+	              'a',
+	              { href: '#delete-page-modal', className: 'icon-page-delete', onClick: this.showPageDeletionModal, 'data-toggle': 'modal' },
+	              _react2.default.createElement(
+	                'span',
+	                { className: 'card-tooltip' },
+	                'Delete Page'
+	              )
+	            )
 	          ),
 	          _react2.default.createElement('div', { className: "collapse-open" + (this.props.collapsed ? ' collapse-close' : ''), onClick: this.handleOnCollapsedChanged })
 	        );
@@ -47622,10 +47654,42 @@
 	              { className: 'close-card-overlay' },
 	              _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-close', onClick: this.closeOverLay })
 	            ),
-	            _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-page-comments' }),
-	            _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-page-change' }),
-	            _react2.default.createElement('a', { href: '#page-change-modal', className: 'icon-page-new', onClick: this.setSelectedPage, 'data-toggle': 'modal' }),
-	            this.props.pageTree.parentId != null && _react2.default.createElement('a', { href: '#delete-page-modal', className: 'icon-page-delete', onClick: this.setSelectedPage, 'data-toggle': 'modal' })
+	            _react2.default.createElement(
+	              'a',
+	              { href: 'javascript:void(0)', className: 'icon-page-comments' },
+	              _react2.default.createElement(
+	                'span',
+	                { className: 'card-tooltip' },
+	                'View Comments'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'a',
+	              { href: '#page-change-modal', className: 'icon-page-change', onClick: this.setSelectedPage, 'data-toggle': 'modal' },
+	              _react2.default.createElement(
+	                'span',
+	                { className: 'card-tooltip' },
+	                'Change Page'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'a',
+	              { href: 'javascript:void(0)', className: 'icon-page-new' },
+	              _react2.default.createElement(
+	                'span',
+	                { className: 'card-tooltip' },
+	                'New Section'
+	              )
+	            ),
+	            this.props.pageTree.parentId != null && _react2.default.createElement(
+	              'a',
+	              { href: '#delete-page-modal', className: 'icon-page-delete', onClick: this.showPageDeletionModal, 'data-toggle': 'modal' },
+	              _react2.default.createElement(
+	                'span',
+	                { className: 'card-tooltip' },
+	                'Delete Page'
+	              )
+	            )
 	          )
 	        );
 	      }
