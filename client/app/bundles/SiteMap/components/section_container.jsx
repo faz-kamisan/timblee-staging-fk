@@ -40,7 +40,7 @@ class SectionContainer extends React.Component {
 
     return (
       <div className='sitemap-sections'>
-        <ul>
+        <ul className="section-list clearfix">
           {renderedSectionTabs}
         </ul>
         {renderedSections}

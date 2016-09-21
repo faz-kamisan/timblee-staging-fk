@@ -119,9 +119,12 @@ class PageTile extends React.Component {
             <a href="#page-change-modal" className="icon-page-change" onClick={this.setSelectedPage} data-toggle='modal'>
               <span className="card-tooltip">Change Page</span>
             </a>
-            <a href="#new-section-modal" className="icon-page-new" onClick={this.setSelectedPage} data-toggle='modal'>
-              <span className="card-tooltip">New Section</span>
-            </a>
+            {
+              (this.props.pageTree.parentId != null) &&
+              <a href="#new-section-modal" className="icon-page-new" onClick={this.setSelectedPage} data-toggle='modal'>
+                <span className="card-tooltip">New Section</span>
+              </a>
+            }
             {
               (this.props.pageTree.parentId != null) &&
               <a href="#delete-page-modal" className="icon-page-delete" onClick={this.showPageDeletionModal} data-toggle='modal'>
@@ -167,10 +170,14 @@ class PageTile extends React.Component {
             <a href="#page-change-modal" className="icon-page-change" onClick={this.setSelectedPage} data-toggle='modal'>
               <span className="card-tooltip">Change Page</span>
             </a>
-            <a href="#new-section-modal" className="icon-page-new" onClick={this.setSelectedPage} data-toggle='modal'>
-              <span className="card-tooltip">New Section</span>
-            </a>
-            { (this.props.pageTree.parentId != null) &&
+            {
+              (this.props.pageTree.parentId != null) &&
+              <a href="#new-section-modal" className="icon-page-new" onClick={this.setSelectedPage} data-toggle='modal'>
+                <span className="card-tooltip">New Section</span>
+              </a>
+            }
+            {
+              (this.props.pageTree.parentId != null) &&
               <a href="#delete-page-modal" className="icon-page-delete" onClick={this.showPageDeletionModal} data-toggle='modal'>
                 <span className="card-tooltip">Delete Page</span>
               </a>
