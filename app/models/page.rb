@@ -26,6 +26,7 @@ class Page < ActiveRecord::Base
       comments: comments.sort_by(&:created_at).map(&:to_react_data),
       pageType: page_type,
       collapsed: false,
+      sitemapId: sitemap_id,
       deleted: deleted?
     }
     child_pages = collection.select {|page| page.parent_id == self.id}.sort_by(&:position)

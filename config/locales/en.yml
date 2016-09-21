@@ -49,6 +49,17 @@ en:
       destroy:
         success: Page destroyed successfully
         failure: Couldn't delete page
+    sections:
+      not_found: Can't find section
+      create:
+        success: Section created successfully
+        failure: Couldn't create section
+      update:
+        success: Section updated successfully
+        failure: Couldn't update section
+      destroy:
+        success: Section destroyed successfully
+        failure: Couldn't delete section
     users:
       confirmations:
         show:

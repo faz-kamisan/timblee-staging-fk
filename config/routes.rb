@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   end
   resources :comments, only: [:create, :update, :destroy]
   resources :pages, only: [:create, :update, :destroy]
+  resources :sections, only: [:create, :destroy]
   resources :guests, only: [:create]
 
   get  'home/dashboard'

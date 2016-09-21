@@ -38523,6 +38523,7 @@
 	exports.deleteGeneralComment = deleteGeneralComment;
 	exports.setSelectedPage = setSelectedPage;
 	exports.changePageType = changePageType;
+	exports.createNewSection = createNewSection;
 	var SET_NAME = exports.SET_NAME = 'SET_NAME';
 	var ADD_NEW_PAGE = exports.ADD_NEW_PAGE = 'ADD_NEW_PAGE';
 	var REMOVE_PAGE = exports.REMOVE_PAGE = 'REMOVE_PAGE';
@@ -38543,6 +38544,7 @@
 	var DELETE_GENERAL_COMMENT = exports.DELETE_GENERAL_COMMENT = 'DELETE_GENERAL_COMMENT';
 	var SET_SELECTED_PAGE = exports.SET_SELECTED_PAGE = 'SET_SELECTED_PAGE';
 	var CHANGE_PAGE_TYPE = exports.CHANGE_PAGE_TYPE = 'CHANGE_PAGE_TYPE';
+	var CREATE_NEW_SECTION = exports.CREATE_NEW_SECTION = 'CREATE_NEW_SECTION';
 	
 	function setName(name) {
 	  return { type: SET_NAME, name: name };
@@ -38623,6 +38625,10 @@
 	function changePageType(pageId, sectionId, pageType) {
 	  return { type: CHANGE_PAGE_TYPE, pageId: pageId, sectionId: sectionId, pageType: pageType };
 	}
+	
+	function createNewSection(pageId, sectionId, newSectionName, timeStamp) {
+	  return { type: CREATE_NEW_SECTION, pageId: pageId, sectionId: sectionId, newSectionName: newSectionName, timeStamp: timeStamp };
+	}
 
 /***/ },
 /* 607 */
@@ -38685,6 +38691,8 @@
 	      return (0, _tree_helper.updateCommentId)(state, action.oldId, action.newId, action.sectionId, action.pageId);
 	    case _index.CHANGE_PAGE_TYPE:
 	      return (0, _tree_helper.updatePageType)(state, action.pageId, action.sectionId, action.pageType);
+	    case _index.CREATE_NEW_SECTION:
+	      return (0, _tree_helper.createNewSection)(state, action.pageId, action.sectionId, action.newSectionName, action.timeStamp);
 	    default:
 	      return state;
 	  }
@@ -38840,6 +38848,21 @@
 	  return sectionsCopy;
 	}
 	
+	function createNewSection(sections, id, sectionId, newSectionName, timeStamp) {
+	  var sectionsCopy = Object.assign([], sections);
+	  var treeCopy = sectionsCopy.filter(function (section) {
+	    return section.id == sectionId;
+	  })[0].pageTree;
+	  var page = getNodeById(treeCopy, id);
+	  var parentPage = getNodeById(treeCopy, page.parentId);
+	  parentPage.children.removeIf(function (elem, idx) {
+	    return elem.id == id;
+	  });
+	  var newSection = { default: false, name: newSectionName, pageTree: page, id: timeStamp };
+	  sectionsCopy.push(newSection);
+	  return sectionsCopy;
+	}
+	
 	function traverse(tree, callback) {
 	  var queue = new Queue();
 	  queue.enqueue(tree);
@@ -38891,6 +38914,7 @@
 	exports.addPageComment = addPageComment;
 	exports.updateCommentId = updateCommentId;
 	exports.updatePageType = updatePageType;
+	exports.createNewSection = createNewSection;
 
 /***/ },
 /* 610 */
@@ -39315,6 +39339,10 @@
 	
 	var _connected_page_change_modal2 = _interopRequireDefault(_connected_page_change_modal);
 	
+	var _connected_new_section_modal = __webpack_require__(/*! ../containers/connected_new_section_modal */ 1005);
+	
+	var _connected_new_section_modal2 = _interopRequireDefault(_connected_new_section_modal);
+	
 	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 1002);
 	
 	var _custom_drag_layer2 = _interopRequireDefault(_custom_drag_layer);
@@ -39350,7 +39378,8 @@
 	        _react2.default.createElement(_connected_guest_info_form_modal2.default, null),
 	        _react2.default.createElement(_connected_sitemap_share_modal2.default, null),
 	        _react2.default.createElement(_connected_delete_page_modal2.default, null),
-	        _react2.default.createElement(_connected_page_change_modal2.default, null)
+	        _react2.default.createElement(_connected_page_change_modal2.default, null),
+	        _react2.default.createElement(_connected_new_section_modal2.default, null)
 	      );
 	    }
 	  }]);
@@ -47585,7 +47614,7 @@
 	            ),
 	            _react2.default.createElement(
 	              'a',
-	              { href: 'javascript:void(0)', className: 'icon-page-new' },
+	              { href: '#new-section-modal', className: 'icon-page-new', onClick: this.setSelectedPage, 'data-toggle': 'modal' },
 	              _react2.default.createElement(
 	                'span',
 	                { className: 'card-tooltip' },
@@ -47674,7 +47703,7 @@
 	            ),
 	            _react2.default.createElement(
 	              'a',
-	              { href: 'javascript:void(0)', className: 'icon-page-new' },
+	              { href: '#new-section-modal', className: 'icon-page-new', onClick: this.setSelectedPage, 'data-toggle': 'modal' },
 	              _react2.default.createElement(
 	                'span',
 	                { className: 'card-tooltip' },
@@ -61158,6 +61187,192 @@
 	  iconName: _react.PropTypes.string.isRequired
 	};
 	exports.default = PageTypePreview;
+
+/***/ },
+/* 1005 */
+/*!************************************************************************!*\
+  !*** ./app/bundles/SiteMap/containers/connected_new_section_modal.jsx ***!
+  \************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
+	
+	var _actions = __webpack_require__(/*! ../actions */ 606);
+	
+	var _new_section_modal = __webpack_require__(/*! ../components/new_section_modal */ 1006);
+	
+	var _new_section_modal2 = _interopRequireDefault(_new_section_modal);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return { pageTree: state.selectedPage };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    onCreateSection: function onCreateSection(pageTree, sectionName, timeStamp) {
+	      dispatch((0, _actions.createNewSection)(pageTree.id, pageTree.section_id, sectionName, timeStamp));
+	    },
+	    setSaving: function setSaving(saving) {
+	      dispatch((0, _actions.setSaving)(saving));
+	    }
+	  };
+	};
+	
+	var ConnectedNewSectionModal = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_new_section_modal2.default);
+	
+	exports.default = ConnectedNewSectionModal;
+
+/***/ },
+/* 1006 */
+/*!**************************************************************!*\
+  !*** ./app/bundles/SiteMap/components/new_section_modal.jsx ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 301);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _page_type = __webpack_require__(/*! ./page_type */ 790);
+	
+	var _page_type2 = _interopRequireDefault(_page_type);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var NewSectionModal = function (_React$Component) {
+	  _inherits(NewSectionModal, _React$Component);
+	
+	  function NewSectionModal(props) {
+	    _classCallCheck(this, NewSectionModal);
+	
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(NewSectionModal).call(this, props));
+	
+	    _this2.createSection = _this2.createSection.bind(_this2);
+	    _this2.handleSectionNameChange = _this2.handleSectionNameChange.bind(_this2);
+	    _this2.state = { sectionName: '' };
+	    return _this2;
+	  }
+	
+	  _createClass(NewSectionModal, [{
+	    key: 'handleSectionNameChange',
+	    value: function handleSectionNameChange(e) {
+	      this.setState({ sectionName: e.target.value });
+	    }
+	  }, {
+	    key: 'createSection',
+	    value: function createSection(e) {
+	      var _this = this;
+	      var timeStamp = new Date();
+	      this.props.onCreateSection(this.props.pageTree, this.state.sectionName, timeStamp);
+	      $.ajax({
+	        url: '/sections',
+	        method: 'post',
+	        dataType: 'JSON',
+	        data: { page_id: this.props.pageTree.id, section: { name: this.state.sectionName } },
+	        error: function error(result) {
+	          document.setFlash(result.responseText);
+	        },
+	        complete: function complete(result) {
+	          _this.props.setSaving(true);
+	          setTimeout(function () {
+	            _this.props.setSaving(false);
+	          }, 2000);
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this = this;
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'modal fade new-section-modal', id: 'new-section-modal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'new-section-modalLabel' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'modal-dialog', role: 'document' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'modal-content' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'modal-header text-center' },
+	              _react2.default.createElement(
+	                'button',
+	                { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+	                _react2.default.createElement(
+	                  'span',
+	                  { 'aria-hidden': 'true' },
+	                  _react2.default.createElement('img', { src: '/assets/close-modal.svg', className: 'close-modal hide-delete-modal' })
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'modal-body' },
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                'Give this section a name'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'page-types' },
+	                _react2.default.createElement(
+	                  'form',
+	                  { className: 'search-page-type' },
+	                  _react2.default.createElement('input', { type: 'text', id: 'new-section-name', name: 'new-section-name', onChange: this.handleSectionNameChange })
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'modal-button text-center' },
+	                _react2.default.createElement(
+	                  'a',
+	                  { href: '#', 'data-dismiss': 'modal', className: 'btn btn-red', onClick: this.createSection },
+	                  'Create section'
+	                ),
+	                _react2.default.createElement(
+	                  'a',
+	                  { href: '#', 'data-dismiss': 'modal', className: 'btn btn-transparent btn-last' },
+	                  'Cancel'
+	                )
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return NewSectionModal;
+	}(_react2.default.Component);
+	
+	NewSectionModal.propTypes = {
+	  pageTree: _react.PropTypes.object.isRequired
+	};
+	exports.default = NewSectionModal;
 
 /***/ }
 /******/ ]);

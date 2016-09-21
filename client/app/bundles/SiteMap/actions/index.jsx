@@ -18,6 +18,7 @@ export const SHOW_SITEMAP_SHARE_MODAL = 'SHOW_SITEMAP_SHARE_MODAL'
 export const DELETE_GENERAL_COMMENT = 'DELETE_GENERAL_COMMENT'
 export const SET_SELECTED_PAGE = 'SET_SELECTED_PAGE'
 export const CHANGE_PAGE_TYPE = 'CHANGE_PAGE_TYPE'
+export const CREATE_NEW_SECTION = 'CREATE_NEW_SECTION'
 
 export function setName(name) {
   return { type: SET_NAME, name }
@@ -97,4 +98,8 @@ export function setSelectedPage(page) {
 
 export function changePageType(pageId, sectionId, pageType) {
   return { type: CHANGE_PAGE_TYPE, pageId, sectionId, pageType }
+}
+
+export function createNewSection(pageId, sectionId, newSectionName, timeStamp) {
+  return { type: CREATE_NEW_SECTION, pageId, sectionId, newSectionName, timeStamp }
 }

@@ -119,7 +119,7 @@ class PageTile extends React.Component {
             <a href="#page-change-modal" className="icon-page-change" onClick={this.setSelectedPage} data-toggle='modal'>
               <span className="card-tooltip">Change Page</span>
             </a>
-            <a href="javascript:void(0)" className="icon-page-new">
+            <a href="#new-section-modal" className="icon-page-new" onClick={this.setSelectedPage} data-toggle='modal'>
               <span className="card-tooltip">New Section</span>
             </a>
             {
@@ -167,7 +167,7 @@ class PageTile extends React.Component {
             <a href="#page-change-modal" className="icon-page-change" onClick={this.setSelectedPage} data-toggle='modal'>
               <span className="card-tooltip">Change Page</span>
             </a>
-            <a href="javascript:void(0)" className="icon-page-new">
+            <a href="#new-section-modal" className="icon-page-new" onClick={this.setSelectedPage} data-toggle='modal'>
               <span className="card-tooltip">New Section</span>
             </a>
             { (this.props.pageTree.parentId != null) &&
