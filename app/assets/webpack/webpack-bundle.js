@@ -39339,11 +39339,11 @@
 	
 	var _connected_page_change_modal2 = _interopRequireDefault(_connected_page_change_modal);
 	
-	var _connected_new_section_modal = __webpack_require__(/*! ../containers/connected_new_section_modal */ 1005);
+	var _connected_new_section_modal = __webpack_require__(/*! ../containers/connected_new_section_modal */ 1002);
 	
 	var _connected_new_section_modal2 = _interopRequireDefault(_connected_new_section_modal);
 	
-	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 1002);
+	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 1004);
 	
 	var _custom_drag_layer2 = _interopRequireDefault(_custom_drag_layer);
 	
@@ -60841,11 +60841,6 @@
 	                  'h4',
 	                  { className: 'modal-title' },
 	                  'Change the page type'
-	                ),
-	                _react2.default.createElement(
-	                  'p',
-	                  { className: 'modal-message' },
-	                  "You're about to delete the " + this.props.pageTree.name + " page. Any comments for this page will be archived and available via the comments sidebar."
 	                )
 	              ),
 	              _react2.default.createElement(
@@ -60853,26 +60848,35 @@
 	                { className: 'modal-body' },
 	                _react2.default.createElement(
 	                  'div',
-	                  { className: 'current-page-type' },
-	                  _react2.default.createElement(_page_type2.default, { name: this.props.pageTree.pageType.name, iconName: this.props.pageTree.pageType.icon_name, id: this.props.pageTree.pageType.id })
-	                ),
-	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'page-types' },
+	                  { className: 'clearfix' },
 	                  _react2.default.createElement(
-	                    'form',
-	                    { className: 'search-page-type' },
+	                    'div',
+	                    { className: 'current-page-type pull-left' },
 	                    _react2.default.createElement(
-	                      'label',
-	                      { htmlFor: 'page-type' },
-	                      _react2.default.createElement('i', { className: 'icon-search' })
+	                      'span',
+	                      null,
+	                      'Current page type:'
 	                    ),
-	                    _react2.default.createElement('input', { type: 'search', id: 'page-type', name: 'page-type', placeholder: 'Page Type', onChange: this.handleSearch })
+	                    _react2.default.createElement(_page_type2.default, { name: this.props.pageTree.pageType.name, iconName: this.props.pageTree.pageType.icon_name, id: this.props.pageTree.pageType.id })
 	                  ),
 	                  _react2.default.createElement(
-	                    'ul',
-	                    { className: 'page-type-list clearfix' },
-	                    pageTypeComponents
+	                    'div',
+	                    { className: 'page-types pull-left' },
+	                    _react2.default.createElement(
+	                      'form',
+	                      { className: 'search-page-type' },
+	                      _react2.default.createElement(
+	                        'label',
+	                        { htmlFor: 'page-type' },
+	                        _react2.default.createElement('i', { className: 'icon-search' })
+	                      ),
+	                      _react2.default.createElement('input', { type: 'search', id: 'page-type', name: 'page-type', placeholder: 'Find your page type', onChange: this.handleSearch })
+	                    ),
+	                    _react2.default.createElement(
+	                      'ul',
+	                      { className: 'page-type-list clearfix' },
+	                      pageTypeComponents
+	                    )
 	                  )
 	                )
 	              )
@@ -60895,301 +60899,6 @@
 
 /***/ },
 /* 1002 */
-/*!**************************************************************!*\
-  !*** ./app/bundles/SiteMap/components/custom_drag_layer.jsx ***!
-  \**************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 301);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _constants = __webpack_require__(/*! ../dnd/constants */ 767);
-	
-	var _reactDnd = __webpack_require__(/*! react-dnd */ 713);
-	
-	var _page_container_preview = __webpack_require__(/*! ./page_container_preview */ 1003);
-	
-	var _page_container_preview2 = _interopRequireDefault(_page_container_preview);
-	
-	var _page_type_preview = __webpack_require__(/*! ./page_type_preview */ 1004);
-	
-	var _page_type_preview2 = _interopRequireDefault(_page_type_preview);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var layerStyles = {
-	  position: 'fixed',
-	  pointerEvents: 'none',
-	  zIndex: 100,
-	  left: 0,
-	  top: 20,
-	  width: '200px',
-	  height: '100%',
-	  transform: 'rotate(-2deg)',
-	  WebkitTransform: 'rotate(-2deg)'
-	};
-	
-	function getItemStyles(props) {
-	  var initialOffset = props.initialOffset;
-	  var currentOffset = props.currentOffset;
-	
-	  if (!initialOffset || !currentOffset) {
-	    return {
-	      display: 'none'
-	    };
-	  }
-	  var x = currentOffset.x;
-	  var y = currentOffset.y;
-	
-	  var transform = 'translate(' + x + 'px,' + y + 'px)';
-	  return {
-	    transform: transform,
-	    WebkitTransform: transform
-	  };
-	}
-	
-	var DragLayerDecorator = (0, _reactDnd.DragLayer)(function (monitor) {
-	  return {
-	    item: monitor.getItem(),
-	    itemType: monitor.getItemType(),
-	    initialOffset: monitor.getInitialSourceClientOffset(),
-	    currentOffset: monitor.getSourceClientOffset(),
-	    currentPointerOffset: monitor.getClientOffset(),
-	    isDragging: monitor.isDragging()
-	  };
-	});
-	
-	var CustomDragLayer = function (_Component) {
-	  _inherits(CustomDragLayer, _Component);
-	
-	  function CustomDragLayer() {
-	    _classCallCheck(this, CustomDragLayer);
-	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(CustomDragLayer).apply(this, arguments));
-	  }
-	
-	  _createClass(CustomDragLayer, [{
-	    key: 'renderItem',
-	    value: function renderItem(type, item) {
-	      var itemtypes = _constants.ItemTypes;
-	      switch (type) {
-	        case _constants.ItemTypes.PAGE_CONTAINER:
-	          return _react2.default.createElement(_page_container_preview2.default, { pageTree: item.pageTree, sitemapNumber: item.sitemapNumber });
-	        case _constants.ItemTypes.PAGE_TYPE:
-	          return _react2.default.createElement(_page_type_preview2.default, { name: item.name, iconName: item.iconName });
-	        default:
-	          return null;
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _props = this.props;
-	      var item = _props.item;
-	      var itemType = _props.itemType;
-	      var isDragging = _props.isDragging;
-	
-	      if (!isDragging) {
-	        return null;
-	      }
-	      return _react2.default.createElement(
-	        'div',
-	        { style: layerStyles },
-	        _react2.default.createElement(
-	          'div',
-	          { style: getItemStyles(this.props) },
-	          this.renderItem(itemType, item)
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return CustomDragLayer;
-	}(_react.Component);
-	
-	CustomDragLayer.propTypes = {
-	  item: _react.PropTypes.object,
-	  itemType: _react.PropTypes.string,
-	  initialOffset: _react.PropTypes.shape({
-	    x: _react.PropTypes.number.isRequired,
-	    y: _react.PropTypes.number.isRequired
-	  }),
-	  currentOffset: _react.PropTypes.shape({
-	    x: _react.PropTypes.number.isRequired,
-	    y: _react.PropTypes.number.isRequired
-	  }),
-	  currentPointerOffset: _react.PropTypes.shape({
-	    x: _react.PropTypes.number.isRequired,
-	    y: _react.PropTypes.number.isRequired
-	  }),
-	  isDragging: _react.PropTypes.bool.isRequired
-	};
-	exports.default = DragLayerDecorator(CustomDragLayer);
-
-/***/ },
-/* 1003 */
-/*!*******************************************************************!*\
-  !*** ./app/bundles/SiteMap/components/page_container_preview.jsx ***!
-  \*******************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 301);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _page_container = __webpack_require__(/*! ./page_container */ 768);
-	
-	var _page_container2 = _interopRequireDefault(_page_container);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var styles = {
-	  display: 'inline-block'
-	};
-	
-	var PageContainerPreview = function (_Component) {
-	  _inherits(PageContainerPreview, _Component);
-	
-	  function PageContainerPreview() {
-	    _classCallCheck(this, PageContainerPreview);
-	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(PageContainerPreview).apply(this, arguments));
-	  }
-	
-	  _createClass(PageContainerPreview, [{
-	    key: 'render',
-	    value: function render() {
-	      var pageTree = this.props.pageTree;
-	
-	
-	      var _this = this;
-	      var children;
-	      if (this.props.pageTree.children != null) {
-	        children = pageTree.children.map(function (pageTree, index) {
-	          if (pageTree.level == 2) {
-	            var sitemapNumber = parseInt(_this.props.sitemapNumber).toString() + '.' + (index + 1);
-	          } else {
-	            var sitemapNumber = _this.props.sitemapNumber + '.' + (index + 1);
-	          }
-	          return _react2.default.createElement(
-	            'div',
-	            { className: 'test', key: pageTree.id },
-	            _react2.default.createElement(PageContainerPreview, { pageTree: pageTree, sitemapNumber: sitemapNumber })
-	          );
-	        });
-	      }
-	
-	      return _react2.default.createElement(
-	        'div',
-	        { style: styles, className: 'custom-drag-preview' },
-	        _react2.default.createElement(_page_container2.default, { pageTree: pageTree, children: children, sitemapNumber: this.props.sitemapNumber })
-	      );
-	    }
-	  }]);
-	
-	  return PageContainerPreview;
-	}(_react.Component);
-	
-	PageContainerPreview.propTypes = {
-	  pageTree: _react.PropTypes.object.isRequired
-	};
-	exports.default = PageContainerPreview;
-
-/***/ },
-/* 1004 */
-/*!**************************************************************!*\
-  !*** ./app/bundles/SiteMap/components/page_type_preview.jsx ***!
-  \**************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 301);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _page_type = __webpack_require__(/*! ./page_type */ 790);
-	
-	var _page_type2 = _interopRequireDefault(_page_type);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var styles = {
-	  display: 'inline-block'
-	};
-	
-	var PageTypePreview = function (_Component) {
-	  _inherits(PageTypePreview, _Component);
-	
-	  function PageTypePreview() {
-	    _classCallCheck(this, PageTypePreview);
-	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(PageTypePreview).apply(this, arguments));
-	  }
-	
-	  _createClass(PageTypePreview, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { style: styles, className: 'page-type-preview' },
-	        _react2.default.createElement(_page_type2.default, { name: this.props.name, iconName: this.props.iconName, isDragPrview: true })
-	      );
-	    }
-	  }]);
-	
-	  return PageTypePreview;
-	}(_react.Component);
-	
-	PageTypePreview.propTypes = {
-	  name: _react.PropTypes.string.isRequired,
-	  iconName: _react.PropTypes.string.isRequired
-	};
-	exports.default = PageTypePreview;
-
-/***/ },
-/* 1005 */
 /*!************************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_new_section_modal.jsx ***!
   \************************************************************************/
@@ -61205,7 +60914,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _new_section_modal = __webpack_require__(/*! ../components/new_section_modal */ 1006);
+	var _new_section_modal = __webpack_require__(/*! ../components/new_section_modal */ 1003);
 	
 	var _new_section_modal2 = _interopRequireDefault(_new_section_modal);
 	
@@ -61231,7 +60940,7 @@
 	exports.default = ConnectedNewSectionModal;
 
 /***/ },
-/* 1006 */
+/* 1003 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/new_section_modal.jsx ***!
   \**************************************************************/
@@ -61373,6 +61082,301 @@
 	  pageTree: _react.PropTypes.object.isRequired
 	};
 	exports.default = NewSectionModal;
+
+/***/ },
+/* 1004 */
+/*!**************************************************************!*\
+  !*** ./app/bundles/SiteMap/components/custom_drag_layer.jsx ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 301);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _constants = __webpack_require__(/*! ../dnd/constants */ 767);
+	
+	var _reactDnd = __webpack_require__(/*! react-dnd */ 713);
+	
+	var _page_container_preview = __webpack_require__(/*! ./page_container_preview */ 1005);
+	
+	var _page_container_preview2 = _interopRequireDefault(_page_container_preview);
+	
+	var _page_type_preview = __webpack_require__(/*! ./page_type_preview */ 1006);
+	
+	var _page_type_preview2 = _interopRequireDefault(_page_type_preview);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var layerStyles = {
+	  position: 'fixed',
+	  pointerEvents: 'none',
+	  zIndex: 100,
+	  left: 0,
+	  top: 20,
+	  width: '200px',
+	  height: '100%',
+	  transform: 'rotate(-2deg)',
+	  WebkitTransform: 'rotate(-2deg)'
+	};
+	
+	function getItemStyles(props) {
+	  var initialOffset = props.initialOffset;
+	  var currentOffset = props.currentOffset;
+	
+	  if (!initialOffset || !currentOffset) {
+	    return {
+	      display: 'none'
+	    };
+	  }
+	  var x = currentOffset.x;
+	  var y = currentOffset.y;
+	
+	  var transform = 'translate(' + x + 'px,' + y + 'px)';
+	  return {
+	    transform: transform,
+	    WebkitTransform: transform
+	  };
+	}
+	
+	var DragLayerDecorator = (0, _reactDnd.DragLayer)(function (monitor) {
+	  return {
+	    item: monitor.getItem(),
+	    itemType: monitor.getItemType(),
+	    initialOffset: monitor.getInitialSourceClientOffset(),
+	    currentOffset: monitor.getSourceClientOffset(),
+	    currentPointerOffset: monitor.getClientOffset(),
+	    isDragging: monitor.isDragging()
+	  };
+	});
+	
+	var CustomDragLayer = function (_Component) {
+	  _inherits(CustomDragLayer, _Component);
+	
+	  function CustomDragLayer() {
+	    _classCallCheck(this, CustomDragLayer);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(CustomDragLayer).apply(this, arguments));
+	  }
+	
+	  _createClass(CustomDragLayer, [{
+	    key: 'renderItem',
+	    value: function renderItem(type, item) {
+	      var itemtypes = _constants.ItemTypes;
+	      switch (type) {
+	        case _constants.ItemTypes.PAGE_CONTAINER:
+	          return _react2.default.createElement(_page_container_preview2.default, { pageTree: item.pageTree, sitemapNumber: item.sitemapNumber });
+	        case _constants.ItemTypes.PAGE_TYPE:
+	          return _react2.default.createElement(_page_type_preview2.default, { name: item.name, iconName: item.iconName });
+	        default:
+	          return null;
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props;
+	      var item = _props.item;
+	      var itemType = _props.itemType;
+	      var isDragging = _props.isDragging;
+	
+	      if (!isDragging) {
+	        return null;
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { style: layerStyles },
+	        _react2.default.createElement(
+	          'div',
+	          { style: getItemStyles(this.props) },
+	          this.renderItem(itemType, item)
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return CustomDragLayer;
+	}(_react.Component);
+	
+	CustomDragLayer.propTypes = {
+	  item: _react.PropTypes.object,
+	  itemType: _react.PropTypes.string,
+	  initialOffset: _react.PropTypes.shape({
+	    x: _react.PropTypes.number.isRequired,
+	    y: _react.PropTypes.number.isRequired
+	  }),
+	  currentOffset: _react.PropTypes.shape({
+	    x: _react.PropTypes.number.isRequired,
+	    y: _react.PropTypes.number.isRequired
+	  }),
+	  currentPointerOffset: _react.PropTypes.shape({
+	    x: _react.PropTypes.number.isRequired,
+	    y: _react.PropTypes.number.isRequired
+	  }),
+	  isDragging: _react.PropTypes.bool.isRequired
+	};
+	exports.default = DragLayerDecorator(CustomDragLayer);
+
+/***/ },
+/* 1005 */
+/*!*******************************************************************!*\
+  !*** ./app/bundles/SiteMap/components/page_container_preview.jsx ***!
+  \*******************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 301);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _page_container = __webpack_require__(/*! ./page_container */ 768);
+	
+	var _page_container2 = _interopRequireDefault(_page_container);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var styles = {
+	  display: 'inline-block'
+	};
+	
+	var PageContainerPreview = function (_Component) {
+	  _inherits(PageContainerPreview, _Component);
+	
+	  function PageContainerPreview() {
+	    _classCallCheck(this, PageContainerPreview);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(PageContainerPreview).apply(this, arguments));
+	  }
+	
+	  _createClass(PageContainerPreview, [{
+	    key: 'render',
+	    value: function render() {
+	      var pageTree = this.props.pageTree;
+	
+	
+	      var _this = this;
+	      var children;
+	      if (this.props.pageTree.children != null) {
+	        children = pageTree.children.map(function (pageTree, index) {
+	          if (pageTree.level == 2) {
+	            var sitemapNumber = parseInt(_this.props.sitemapNumber).toString() + '.' + (index + 1);
+	          } else {
+	            var sitemapNumber = _this.props.sitemapNumber + '.' + (index + 1);
+	          }
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'test', key: pageTree.id },
+	            _react2.default.createElement(PageContainerPreview, { pageTree: pageTree, sitemapNumber: sitemapNumber })
+	          );
+	        });
+	      }
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { style: styles, className: 'custom-drag-preview' },
+	        _react2.default.createElement(_page_container2.default, { pageTree: pageTree, children: children, sitemapNumber: this.props.sitemapNumber })
+	      );
+	    }
+	  }]);
+	
+	  return PageContainerPreview;
+	}(_react.Component);
+	
+	PageContainerPreview.propTypes = {
+	  pageTree: _react.PropTypes.object.isRequired
+	};
+	exports.default = PageContainerPreview;
+
+/***/ },
+/* 1006 */
+/*!**************************************************************!*\
+  !*** ./app/bundles/SiteMap/components/page_type_preview.jsx ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 301);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _page_type = __webpack_require__(/*! ./page_type */ 790);
+	
+	var _page_type2 = _interopRequireDefault(_page_type);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var styles = {
+	  display: 'inline-block'
+	};
+	
+	var PageTypePreview = function (_Component) {
+	  _inherits(PageTypePreview, _Component);
+	
+	  function PageTypePreview() {
+	    _classCallCheck(this, PageTypePreview);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(PageTypePreview).apply(this, arguments));
+	  }
+	
+	  _createClass(PageTypePreview, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { style: styles, className: 'page-type-preview' },
+	        _react2.default.createElement(_page_type2.default, { name: this.props.name, iconName: this.props.iconName, isDragPrview: true })
+	      );
+	    }
+	  }]);
+	
+	  return PageTypePreview;
+	}(_react.Component);
+	
+	PageTypePreview.propTypes = {
+	  name: _react.PropTypes.string.isRequired,
+	  iconName: _react.PropTypes.string.isRequired
+	};
+	exports.default = PageTypePreview;
 
 /***/ }
 /******/ ]);
