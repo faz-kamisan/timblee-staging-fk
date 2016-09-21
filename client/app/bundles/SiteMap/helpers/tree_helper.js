@@ -113,6 +113,16 @@ function createNewSection(sections, id, sectionId, newSectionName, timeStamp) {
   var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
   var page = getNodeById(treeCopy, id)
   var parentPage = getNodeById(treeCopy, page.parentId)
+  page.parentId = null
+  page.position = 1
+  page.level = 0
+  traverse(page, function(node) {
+    if(node.parentId) {
+      var parentNode = getNodeById(treeCopy, node.parentId);
+      node.level = parentNode.level + 1
+    }
+    node.sectionId = timeStamp
+  })
   parentPage.children.removeIf(function(elem, idx) { return elem.id == id });
   var newSection = { default: false, name: newSectionName, pageTree: page, id: timeStamp }
   sectionsCopy.push(newSection);

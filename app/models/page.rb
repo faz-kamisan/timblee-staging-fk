@@ -10,6 +10,7 @@ class Page < ActiveRecord::Base
 
   before_validation :set_uid, on: :create
   before_destroy :mark_comments_as_archived
+  before_update :update_children_section_id, if: :section_id_changed?
 
   validates :name, :section, :page_type, :sitemap, :uid, presence: true
   validates :uid, uniqueness: { scope: :sitemap_id }
@@ -34,7 +35,14 @@ class Page < ActiveRecord::Base
     tree
   end
 
+
   private
+    def update_children_section_id
+      children.each do |child|
+        child.update(section_id: self.section_id)
+      end
+    end
+
     def set_uid
       highest_uid = sitemap.pages.maximum('uid')
       self.uid = highest_uid.to_i + 1
