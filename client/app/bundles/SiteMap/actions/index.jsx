@@ -16,7 +16,8 @@ export const SET_SHOW_GUEST_INFO_FORM = 'SET_SHOW_GUEST_INFO_FORM'
 export const SET_CURRENT_GUEST = 'SET_CURRENT_GUEST'
 export const SHOW_SITEMAP_SHARE_MODAL = 'SHOW_SITEMAP_SHARE_MODAL'
 export const DELETE_GENERAL_COMMENT = 'DELETE_GENERAL_COMMENT'
-export const SET_PAGE_TO_DELETE = 'SET_PAGE_TO_DELETE'
+export const SET_SELECTED_PAGE = 'SET_SELECTED_PAGE'
+export const CHANGE_PAGE_TYPE = 'CHANGE_PAGE_TYPE'
 
 export function setName(name) {
   return { type: SET_NAME, name }
@@ -90,6 +91,10 @@ export function deleteGeneralComment(id) {
   return { type: DELETE_GENERAL_COMMENT, id }
 }
 
-export function setPageToDelete(page) {
-  return { type: SET_PAGE_TO_DELETE, page }
+export function setSelectedPage(page) {
+  return { type: SET_SELECTED_PAGE, page }
+}
+
+export function changePageType(pageId, sectionId, pageType) {
+  return { type: CHANGE_PAGE_TYPE, pageId, sectionId, pageType }
 }

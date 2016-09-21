@@ -38435,9 +38435,9 @@
 	
 	var _business2 = _interopRequireDefault(_business);
 	
-	var _page_to_delete = __webpack_require__(/*! ./page_to_delete */ 622);
+	var _selected_page = __webpack_require__(/*! ./selected_page */ 622);
 	
-	var _page_to_delete2 = _interopRequireDefault(_page_to_delete);
+	var _selected_page2 = _interopRequireDefault(_selected_page);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -38457,7 +38457,7 @@
 	  publicShareUrl: _public_share_url2.default,
 	  showSitemapShareModal: _show_sitemap_share_modal2.default,
 	  business: _business2.default,
-	  pageToDelete: _page_to_delete2.default
+	  selectedPage: _selected_page2.default
 	});
 	
 	exports.default = sitemapAppReducer;
@@ -38521,7 +38521,8 @@
 	exports.setCurrentGuest = setCurrentGuest;
 	exports.showSitemapShareModal = showSitemapShareModal;
 	exports.deleteGeneralComment = deleteGeneralComment;
-	exports.setPageToDelete = setPageToDelete;
+	exports.setSelectedPage = setSelectedPage;
+	exports.changePageType = changePageType;
 	var SET_NAME = exports.SET_NAME = 'SET_NAME';
 	var ADD_NEW_PAGE = exports.ADD_NEW_PAGE = 'ADD_NEW_PAGE';
 	var REMOVE_PAGE = exports.REMOVE_PAGE = 'REMOVE_PAGE';
@@ -38540,7 +38541,8 @@
 	var SET_CURRENT_GUEST = exports.SET_CURRENT_GUEST = 'SET_CURRENT_GUEST';
 	var SHOW_SITEMAP_SHARE_MODAL = exports.SHOW_SITEMAP_SHARE_MODAL = 'SHOW_SITEMAP_SHARE_MODAL';
 	var DELETE_GENERAL_COMMENT = exports.DELETE_GENERAL_COMMENT = 'DELETE_GENERAL_COMMENT';
-	var SET_PAGE_TO_DELETE = exports.SET_PAGE_TO_DELETE = 'SET_PAGE_TO_DELETE';
+	var SET_SELECTED_PAGE = exports.SET_SELECTED_PAGE = 'SET_SELECTED_PAGE';
+	var CHANGE_PAGE_TYPE = exports.CHANGE_PAGE_TYPE = 'CHANGE_PAGE_TYPE';
 	
 	function setName(name) {
 	  return { type: SET_NAME, name: name };
@@ -38614,8 +38616,12 @@
 	  return { type: DELETE_GENERAL_COMMENT, id: id };
 	}
 	
-	function setPageToDelete(page) {
-	  return { type: SET_PAGE_TO_DELETE, page: page };
+	function setSelectedPage(page) {
+	  return { type: SET_SELECTED_PAGE, page: page };
+	}
+	
+	function changePageType(pageId, sectionId, pageType) {
+	  return { type: CHANGE_PAGE_TYPE, pageId: pageId, sectionId: sectionId, pageType: pageType };
 	}
 
 /***/ },
@@ -38677,6 +38683,8 @@
 	      return (0, _tree_helper.addPageComment)(state, action.id, action.sectionId, action.commenter, action.message, action.tempId);
 	    case _index.UPDATE_PAGE_COMMENT_ID:
 	      return (0, _tree_helper.updateCommentId)(state, action.oldId, action.newId, action.sectionId, action.pageId);
+	    case _index.CHANGE_PAGE_TYPE:
+	      return (0, _tree_helper.updatePageType)(state, action.pageId, action.sectionId, action.pageType);
 	    default:
 	      return state;
 	  }
@@ -38822,6 +38830,16 @@
 	  return sectionsCopy;
 	}
 	
+	function updatePageType(sections, id, sectionId, pageType) {
+	  var sectionsCopy = Object.assign([], sections);
+	  var treeCopy = sectionsCopy.filter(function (section) {
+	    return section.id == sectionId;
+	  })[0].pageTree;
+	  var page = getNodeById(treeCopy, id);
+	  page.pageType = pageType;
+	  return sectionsCopy;
+	}
+	
 	function traverse(tree, callback) {
 	  var queue = new Queue();
 	  queue.enqueue(tree);
@@ -38872,6 +38890,7 @@
 	exports.updatePageId = updatePageId;
 	exports.addPageComment = addPageComment;
 	exports.updateCommentId = updateCommentId;
+	exports.updatePageType = updatePageType;
 
 /***/ },
 /* 610 */
@@ -39212,9 +39231,9 @@
 
 /***/ },
 /* 622 */
-/*!*********************************************************!*\
-  !*** ./app/bundles/SiteMap/reducers/page_to_delete.jsx ***!
-  \*********************************************************/
+/*!********************************************************!*\
+  !*** ./app/bundles/SiteMap/reducers/selected_page.jsx ***!
+  \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39225,19 +39244,19 @@
 	
 	var _index = __webpack_require__(/*! ../actions/index */ 606);
 	
-	var pageToDelete = function pageToDelete() {
+	var selectedPage = function selectedPage() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 	  var action = arguments[1];
 	
 	  switch (action.type) {
-	    case _index.SET_PAGE_TO_DELETE:
+	    case _index.SET_SELECTED_PAGE:
 	      return action.page;
 	    default:
 	      return state;
 	  }
 	};
 	
-	exports.default = pageToDelete;
+	exports.default = selectedPage;
 
 /***/ },
 /* 623 */
@@ -39292,7 +39311,11 @@
 	
 	var _connected_delete_page_modal2 = _interopRequireDefault(_connected_delete_page_modal);
 	
-	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 1000);
+	var _connected_page_change_modal = __webpack_require__(/*! ../containers/connected_page_change_modal */ 1000);
+	
+	var _connected_page_change_modal2 = _interopRequireDefault(_connected_page_change_modal);
+	
+	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 1002);
 	
 	var _custom_drag_layer2 = _interopRequireDefault(_custom_drag_layer);
 	
@@ -39326,7 +39349,8 @@
 	        _react2.default.createElement(_custom_drag_layer2.default, null),
 	        _react2.default.createElement(_connected_guest_info_form_modal2.default, null),
 	        _react2.default.createElement(_connected_sitemap_share_modal2.default, null),
-	        _react2.default.createElement(_connected_delete_page_modal2.default, null)
+	        _react2.default.createElement(_connected_delete_page_modal2.default, null),
+	        _react2.default.createElement(_connected_page_change_modal2.default, null)
 	      );
 	    }
 	  }]);
@@ -47351,8 +47375,8 @@
 	    onNameChange: function onNameChange(id, sectionId, name) {
 	      dispatch((0, _actions.updatePageName)(id, sectionId, name));
 	    },
-	    setPageToDelete: function setPageToDelete(page) {
-	      dispatch((0, _actions.setPageToDelete)(page));
+	    setSelectedPage: function setSelectedPage(page) {
+	      dispatch((0, _actions.setSelectedPage)(page));
 	    },
 	    setSaving: function setSaving(saving) {
 	      dispatch((0, _actions.setSaving)(saving));
@@ -47415,7 +47439,7 @@
 	    _this.disableNameChangeInput = _this.disableNameChangeInput.bind(_this);
 	    _this.closeOverLay = _this.closeOverLay.bind(_this);
 	    _this.openOverLay = _this.openOverLay.bind(_this);
-	    _this.showPageDeletionModal = _this.showPageDeletionModal.bind(_this);
+	    _this.setSelectedPage = _this.setSelectedPage.bind(_this);
 	    _this.state = { nameChangeDisabled: true, hover: false, showOverLay: false, name: _this.props.name, originalName: _this.props.name };
 	    return _this;
 	  }
@@ -47446,9 +47470,9 @@
 	      }
 	    }
 	  }, {
-	    key: 'showPageDeletionModal',
-	    value: function showPageDeletionModal(e) {
-	      this.props.setPageToDelete(this.props.pageTree);
+	    key: 'setSelectedPage',
+	    value: function setSelectedPage(e) {
+	      this.props.setSelectedPage(this.props.pageTree);
 	    }
 	  }, {
 	    key: 'handleNameChange',
@@ -47543,8 +47567,8 @@
 	            ),
 	            _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-page-comments' }),
 	            _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-page-change' }),
-	            _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-page-new' }),
-	            this.props.pageTree.parentId != null && _react2.default.createElement('a', { href: '#delete-page-modal', className: 'icon-page-delete', onClick: this.showPageDeletionModal, 'data-toggle': 'modal' })
+	            _react2.default.createElement('a', { href: '#page-change-modal', className: 'icon-page-new', onClick: this.setSelectedPage, 'data-toggle': 'modal' }),
+	            this.props.pageTree.parentId != null && _react2.default.createElement('a', { href: '#delete-page-modal', className: 'icon-page-delete', onClick: this.setSelectedPage, 'data-toggle': 'modal' })
 	          ),
 	          _react2.default.createElement('div', { className: "collapse-open" + (this.props.collapsed ? ' collapse-close' : ''), onClick: this.handleOnCollapsedChanged })
 	        );
@@ -47600,8 +47624,8 @@
 	            ),
 	            _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-page-comments' }),
 	            _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-page-change' }),
-	            _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-page-new' }),
-	            this.props.pageTree.parentId != null && _react2.default.createElement('a', { href: '#delete-page-modal', className: 'icon-page-delete', onClick: this.showPageDeletionModal, 'data-toggle': 'modal' })
+	            _react2.default.createElement('a', { href: '#page-change-modal', className: 'icon-page-new', onClick: this.setSelectedPage, 'data-toggle': 'modal' }),
+	            this.props.pageTree.parentId != null && _react2.default.createElement('a', { href: '#delete-page-modal', className: 'icon-page-delete', onClick: this.setSelectedPage, 'data-toggle': 'modal' })
 	          )
 	        );
 	      }
@@ -60422,13 +60446,16 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { pageTree: state.pageToDelete };
+	  return { pageTree: state.selectedPage };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    onPageDelete: function onPageDelete(pageTree) {
 	      dispatch((0, _actions.removePage)(pageTree.id, pageTree.section_id));
+	    },
+	    setSaving: function setSaving(saving) {
+	      dispatch((0, _actions.setSaving)(saving));
 	    }
 	  };
 	};
@@ -60479,6 +60506,7 @@
 	  _createClass(DeletePageModal, [{
 	    key: 'deletePage',
 	    value: function deletePage(e) {
+	      var _this = this;
 	      $.ajax({
 	        url: '/pages/' + this.props.pageTree.id,
 	        method: 'delete',
@@ -60487,9 +60515,9 @@
 	          document.setFlash(result.responseText);
 	        },
 	        complete: function complete(result) {
-	          props.setSaving(true);
+	          _this.props.setSaving(true);
 	          setTimeout(function () {
-	            props.setSaving(false);
+	            _this.props.setSaving(false);
 	          }, 2000);
 	        }
 	      });
@@ -60566,6 +60594,214 @@
 
 /***/ },
 /* 1000 */
+/*!************************************************************************!*\
+  !*** ./app/bundles/SiteMap/containers/connected_page_change_modal.jsx ***!
+  \************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
+	
+	var _actions = __webpack_require__(/*! ../actions */ 606);
+	
+	var _page_change_modal = __webpack_require__(/*! ../components/page_change_modal */ 1001);
+	
+	var _page_change_modal2 = _interopRequireDefault(_page_change_modal);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return { pageTree: state.selectedPage, currentPageType: state.selectedPage.pageType, pageTypes: state.pageTypes };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    onPageTypeChange: function onPageTypeChange(pageTree, pageType) {
+	      dispatch((0, _actions.changePageType)(pageTree.id, pageTree.section_id, pageType));
+	    },
+	    setSaving: function setSaving(saving) {
+	      dispatch((0, _actions.setSaving)(saving));
+	    }
+	  };
+	};
+	
+	var ConnectedPageChangeModal = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_page_change_modal2.default);
+	
+	exports.default = ConnectedPageChangeModal;
+
+/***/ },
+/* 1001 */
+/*!**************************************************************!*\
+  !*** ./app/bundles/SiteMap/components/page_change_modal.jsx ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 301);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _page_type = __webpack_require__(/*! ./page_type */ 790);
+	
+	var _page_type2 = _interopRequireDefault(_page_type);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var PageChangeModal = function (_React$Component) {
+	  _inherits(PageChangeModal, _React$Component);
+	
+	  function PageChangeModal(props) {
+	    _classCallCheck(this, PageChangeModal);
+	
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(PageChangeModal).call(this, props));
+	
+	    _this2.setPageType = _this2.setPageType.bind(_this2);
+	    _this2.handleSearch = _this2.handleSearch.bind(_this2);
+	    _this2.state = { searchQuery: '' };
+	    return _this2;
+	  }
+	
+	  _createClass(PageChangeModal, [{
+	    key: 'handleSearch',
+	    value: function handleSearch(e) {
+	      this.setState({ searchQuery: e.target.value });
+	    }
+	  }, {
+	    key: 'setPageType',
+	    value: function setPageType(pageType) {
+	      var _this = this;
+	      $.ajax({
+	        url: '/pages/' + this.props.pageTree.id,
+	        method: 'put',
+	        dataType: 'JSON',
+	        data: { page: { page_type_id: pageType.id } },
+	        error: function error(result) {
+	          document.setFlash(result.responseText);
+	        },
+	        complete: function complete(result) {
+	          _this.props.setSaving(true);
+	          setTimeout(function () {
+	            _this.props.setSaving(false);
+	          }, 2000);
+	        }
+	      });
+	      this.setState({ currentPageType: pageType });
+	      this.props.onPageTypeChange(this.props.pageTree, pageType);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this = this;
+	      var filteredPageTypes = this.props.pageTypes.filter(function (pageType) {
+	        return pageType.name.toLowerCase().indexOf(_this.state.searchQuery.toLowerCase()) !== -1;
+	      });
+	      var pageTypeComponents = filteredPageTypes.map(function (pageType, index) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: index, onClick: function onClick(e) {
+	              _this.setPageType(pageType);
+	            } },
+	          _react2.default.createElement(_page_type2.default, { name: pageType.name, iconName: pageType.icon_name, id: pageType.id })
+	        );
+	      });
+	      if (this.props.pageTree.pageType) {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'modal fade page-change-modal', id: 'page-change-modal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'page-change-modalLabel' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'modal-dialog', role: 'document' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'modal-content' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'modal-header text-center' },
+	                _react2.default.createElement(
+	                  'button',
+	                  { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+	                  _react2.default.createElement(
+	                    'span',
+	                    { 'aria-hidden': 'true' },
+	                    _react2.default.createElement('img', { src: '/assets/close-modal.svg', className: 'close-modal hide-delete-modal' })
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  'h4',
+	                  { className: 'modal-title' },
+	                  'Change the page type'
+	                ),
+	                _react2.default.createElement(
+	                  'p',
+	                  { className: 'modal-message' },
+	                  "You're about to delete the " + this.props.pageTree.name + " page. Any comments for this page will be archived and available via the comments sidebar."
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'modal-body' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'current-page-type' },
+	                  _react2.default.createElement(_page_type2.default, { name: this.props.pageTree.pageType.name, iconName: this.props.pageTree.pageType.icon_name, id: this.props.pageTree.pageType.id })
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'page-types' },
+	                  _react2.default.createElement(
+	                    'form',
+	                    { className: 'search-page-type' },
+	                    _react2.default.createElement(
+	                      'label',
+	                      { htmlFor: 'page-type' },
+	                      _react2.default.createElement('i', { className: 'icon-search' })
+	                    ),
+	                    _react2.default.createElement('input', { type: 'search', id: 'page-type', name: 'page-type', placeholder: 'Page Type', onChange: this.handleSearch })
+	                  ),
+	                  _react2.default.createElement(
+	                    'ul',
+	                    { className: 'page-type-list clearfix' },
+	                    pageTypeComponents
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        );
+	      } else {
+	        return _react2.default.createElement('div', null);
+	      }
+	    }
+	  }]);
+	
+	  return PageChangeModal;
+	}(_react2.default.Component);
+	
+	PageChangeModal.propTypes = {
+	  pageTree: _react.PropTypes.object.isRequired
+	};
+	exports.default = PageChangeModal;
+
+/***/ },
+/* 1002 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/custom_drag_layer.jsx ***!
   \**************************************************************/
@@ -60587,11 +60823,11 @@
 	
 	var _reactDnd = __webpack_require__(/*! react-dnd */ 713);
 	
-	var _page_container_preview = __webpack_require__(/*! ./page_container_preview */ 1001);
+	var _page_container_preview = __webpack_require__(/*! ./page_container_preview */ 1003);
 	
 	var _page_container_preview2 = _interopRequireDefault(_page_container_preview);
 	
-	var _page_type_preview = __webpack_require__(/*! ./page_type_preview */ 1002);
+	var _page_type_preview = __webpack_require__(/*! ./page_type_preview */ 1004);
 	
 	var _page_type_preview2 = _interopRequireDefault(_page_type_preview);
 	
@@ -60713,7 +60949,7 @@
 	exports.default = DragLayerDecorator(CustomDragLayer);
 
 /***/ },
-/* 1001 */
+/* 1003 */
 /*!*******************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_container_preview.jsx ***!
   \*******************************************************************/
@@ -60796,7 +61032,7 @@
 	exports.default = PageContainerPreview;
 
 /***/ },
-/* 1002 */
+/* 1004 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_type_preview.jsx ***!
   \**************************************************************/

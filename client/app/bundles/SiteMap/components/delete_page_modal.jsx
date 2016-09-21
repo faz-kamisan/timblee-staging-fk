@@ -11,6 +11,7 @@ class DeletePageModal extends React.Component {
   }
 
   deletePage(e) {
+    var _this = this
     $.ajax({
       url: '/pages/' + this.props.pageTree.id,
       method: 'delete',
@@ -19,9 +20,9 @@ class DeletePageModal extends React.Component {
         document.setFlash(result.responseText)
       },
       complete: (result) => {
-        props.setSaving(true)
+        _this.props.setSaving(true)
         setTimeout(function() {
-          props.setSaving(false)
+          _this.props.setSaving(false)
         }, 2000)
       }
     });

@@ -5,7 +5,7 @@ class Sitemap < ActiveRecord::Base
   belongs_to :folder
   belongs_to :business
   has_many :pages
-  has_many :sections, dependent: :destroy
+  has_many :sections
   has_one :default_section, ->{ where(default: true) }, class_name: :Section
   has_many :sitemap_invites, dependent: :destroy
   has_many :invited_users, through: :sitemap_invites, source: :user
@@ -20,6 +20,7 @@ class Sitemap < ActiveRecord::Base
   before_validation :set_state_to_in_progress, on: :create
   before_validation :set_name_to_new_sitemap, on: :create
   before_validation :set_unique_public_share_token, on: :create
+  before_destroy :hard_delete_sections_and_pages
   after_create :create_associations
   strip_fields :name
 
@@ -71,4 +72,10 @@ class Sitemap < ActiveRecord::Base
       self.public_share_token = Digest::SHA1.hexdigest([Time.now, rand].join)
     end
 
+    def hard_delete_sections_and_pages
+      sections.each do |section|
+        section.really_destroy_root_page = true
+        section.destroy!
+      end
+    end
 end

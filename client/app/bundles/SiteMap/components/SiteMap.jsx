@@ -5,10 +5,11 @@ import ConnectedSecionContainer from '../containers/connected_section_container'
 import ConnectedHeader from '../containers/connected_header';
 import ConnectedGuestInfoFormModal from '../containers/connected_guest_info_form_modal';
 import ConnectedSitemapShareModal from '../containers/connected_sitemap_share_modal';
-
 import ConnectedLeftSidebar from '../containers/connected_left_sidebar';
 import ConnectedRightSidebar from '../containers/connected_right_sidebar';
 import ConnectedDeletePageModal from '../containers/connected_delete_page_modal';
+import ConnectedPageChangeModal from '../containers/connected_page_change_modal';
+
 import CustomDragLayer from '../components/custom_drag_layer';
 
 class SiteMap extends React.Component {
@@ -23,6 +24,7 @@ class SiteMap extends React.Component {
           <ConnectedGuestInfoFormModal />
           <ConnectedSitemapShareModal />
           <ConnectedDeletePageModal />
+          <ConnectedPageChangeModal />
         </div>
     );
   }

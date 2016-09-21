@@ -9,7 +9,6 @@ class Page < ActiveRecord::Base
   acts_as_paranoid
 
   before_validation :set_uid, on: :create
-  before_destroy :check_page_is_not_root
   before_destroy :mark_comments_as_archived
 
   validates :name, :section, :page_type, :sitemap, :uid, presence: true
@@ -17,7 +16,7 @@ class Page < ActiveRecord::Base
 
   def get_tree(collection, level = 0)
     tree = {
-      name: name,
+      name: name.to_s,
       id: id,
       uid: uid,
       section_id: section_id,
@@ -42,9 +41,5 @@ class Page < ActiveRecord::Base
 
     def mark_comments_as_archived
       comments.update_all(state: 'archived')
-    end
-
-    def check_page_is_not_root
-      parent.present?
     end
 end
