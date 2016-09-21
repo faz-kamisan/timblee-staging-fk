@@ -47631,7 +47631,7 @@
 	              )
 	            )
 	          ),
-	          _react2.default.createElement('div', { className: "collapse-open" + (this.props.collapsed ? ' collapse-close' : ''), onClick: this.handleOnCollapsedChanged })
+	          this.props.pageTree.parentId && _react2.default.createElement('div', { className: "collapse-open" + (this.props.collapsed ? ' collapse-close' : ''), onClick: this.handleOnCollapsedChanged })
 	        );
 	      } else {
 	        return _react2.default.createElement(
@@ -60655,7 +60655,7 @@
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'modal-body' },
-	              _react2.default.createElement('div', { className: 'site-map-clone' }),
+	              _react2.default.createElement('div', { className: 'page-tile-clone' }),
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'modal-button text-center' },
