@@ -132,7 +132,7 @@ class PageTile extends React.Component {
               </a>
             }
           </div>
-          <div className={ "collapse-open" + (this.props.collapsed ? ' collapse-close' : '') } onClick={this.handleOnCollapsedChanged}></div>
+          {this.props.pageTree.parentId && <div className={ "collapse-open" + (this.props.collapsed ? ' collapse-close' : '') } onClick={this.handleOnCollapsedChanged}></div>}
         </div>
       );
     } else {
