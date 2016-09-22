@@ -29,7 +29,7 @@ class RightSidebar extends React.Component {
     const CommentTabs = ['active', 'resolved', 'archived']
     var _this = this;
     var renderedComments = this.props.comments.map(function(comment, index) {
-      return <li key={index}><ConnectedComment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} editable={true} commentableId={this.props.sitemapId} commentableType='Sitemap' /></li>
+      return <li key={index}><ConnectedComment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} editable={true} commentableId={_this.props.sitemapId} commentableType='Sitemap' /></li>
     })
     var pageWithComments = []
     this.props.sections.forEach(function(section, index) {

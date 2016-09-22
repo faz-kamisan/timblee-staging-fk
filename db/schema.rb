@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 20160922065340) do
 
   create_table "guests", force: :cascade do |t|
     t.string   "full_name"
-    t.string   "email"
+    t.string   "logo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -117,11 +117,10 @@ ActiveRecord::Schema.define(version: 20160922065340) do
     t.integer  "quantity"
     t.integer  "no_of_users"
     t.integer  "business_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.datetime "start_at"
     t.datetime "end_at"
-    t.string   "stripe_subscriptions_id"
   end
 
   add_index "subscriptions", ["business_id"], name: "index_subscriptions_on_business_id", using: :btree
@@ -157,7 +156,6 @@ ActiveRecord::Schema.define(version: 20160922065340) do
     t.string   "unconfirmed_email"
     t.boolean  "notify_by_email",        default: true
     t.datetime "deleted_at"
-    t.boolean  "is_super_admin",         default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

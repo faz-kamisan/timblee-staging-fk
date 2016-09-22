@@ -52600,7 +52600,7 @@
 	        return _react2.default.createElement(
 	          'li',
 	          { key: index },
-	          _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: true, commentableId: this.props.sitemapId, commentableType: 'Sitemap' })
+	          _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: true, commentableId: _this.props.sitemapId, commentableType: 'Sitemap' })
 	        );
 	      });
 	      var pageWithComments = [];
