@@ -23,6 +23,11 @@ class PageCommentsModal extends React.Component {
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-body">
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">
+                    <img src='/assets/close-modal.svg' className='close-modal hide-delete-modalx'></img>
+                  </span>
+                </button>
                 <div className='page-comments'>
                   <div className="page-comment-details">
                     <span className="page-id">ID: {this.props.pageTree.uid}</span>

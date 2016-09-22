@@ -49737,7 +49737,11 @@
 	          { key: section.id, className: 'sitemap-section-tab' + (_this.state.currentSectionId == section.id ? ' active' : ''), onClick: function onClick(e) {
 	              _this.changeCurrentSectionId(section.id);
 	            }, style: { width: tabWidth } },
-	          section.name
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'truncate' },
+	            section.name
+	          )
 	        );
 	      });
 	      var renderedSections = this.props.sections.map(function (section, index) {
@@ -66493,6 +66497,15 @@
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'modal-body' },
+	                _react2.default.createElement(
+	                  'button',
+	                  { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+	                  _react2.default.createElement(
+	                    'span',
+	                    { 'aria-hidden': 'true' },
+	                    _react2.default.createElement('img', { src: '/assets/close-modal.svg', className: 'close-modal hide-delete-modalx' })
+	                  )
+	                ),
 	                _react2.default.createElement(
 	                  'div',
 	                  { className: 'page-comments' },
