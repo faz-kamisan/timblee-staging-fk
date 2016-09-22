@@ -255,6 +255,9 @@
     > .page-tile {
       margin-bottom: 75px;
       margin-left: -40px;
+      &.odd-tree {
+        margin-bottom: 70px;
+      }
       + .gutter {
         display: none;
       }
@@ -1315,7 +1318,7 @@
 
   .site-map-name {
     color: #56626F;
-    font-size: 30px;
+    font-size: 27px;
     background: $transparent;
     border: 0;
     padding: 0;
@@ -1324,7 +1327,8 @@
     height: 38px;
     font-weight: 400;
     width: calc(100% - 75px);
-    margin: 2px 0 0 0;
+    padding-top: 3px;
+    margin: 0;
     cursor: pointer;
     &.truncate {
       max-width: 100%;
@@ -1499,7 +1503,7 @@
     height: calc(100% - 80px);
   }
   .comment-list {
-    top: 127px;
+    top: 80px;
   }
   .page-type-list {
     height: calc(100vh - 182px);
@@ -1514,8 +1518,8 @@
   position: fixed;
   right: -435px;
   width: 420px;
-  top: 222px;
-  height: calc(100% - 222px);
+  top: 175px;
+  height: calc(100% - 175px);
   background: #262b30;
   z-index: 11;
   transition: .35s;
@@ -1533,7 +1537,7 @@
   width: 420px;
   border-top: solid 1px #171a1d;
   right: -435px;
-  top: 222px;
+  top: 175px;
   background: #262b30;
   z-index: 5;
   @include animate(.35s);
@@ -2093,5 +2097,36 @@
       background: #F9FAFC;
       border-bottom: solid 1px #EEEEEE;
     }
+  }
+}
+
+#new-section-modal {
+  .modal-body {
+    @include border-radius(6px);
+    padding: 41px 80px 35px 80px;
+  }
+  button.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    opacity: 1;
+  }
+  .modal-button {
+    margin-top: 35px;
+  }
+  .btn-red {
+    background: #25a45f;
+    &:hover {
+      background: #158c4c;
+    }
+  }
+  .create-section-heading {
+    @extend .font-14;
+    color: #62717f;
+    margin-bottom: 16px;
+  }
+  .btn {
+    font-size: 12px;
+    text-transform: none;
   }
 }

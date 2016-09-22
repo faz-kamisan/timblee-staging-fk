@@ -44,25 +44,23 @@ class NewSectionModal extends React.Component {
       <div className="modal fade new-section-modal" id="new-section-modal" tabIndex="-1" role="dialog" aria-labelledby="new-section-modalLabel">
         <div className="modal-dialog" role="document">
           <div className="modal-content">
-            <div className="modal-header text-center">
+            <div className="modal-body">
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">
                   <img src='/assets/close-modal.svg' className='close-modal hide-delete-modal'></img>
                 </span>
               </button>
-            </div>
-            <div className="modal-body">
-              <div>
+              <div className="create-section-heading">
                 Give this section a name
               </div>
               <div className="page-types">
-                <form className="search-page-type">
-                  <input type="text" id="new-section-name" name="new-section-name" onChange={this.handleSectionNameChange} />
+                <form>
+                  <input className="form-control" type="text" id="new-section-name" name="new-section-name" onChange={this.handleSectionNameChange} />
                 </form>
               </div>
-              <div className="modal-button text-center">
-                <a href="#" data-dismiss="modal" className="btn btn-red" onClick={this.createSection}>Create section</a>
-                <a href="#" data-dismiss="modal" className="btn btn-transparent btn-last">Cancel</a>
+              <div className="modal-button">
+                <a href="javascript:void(0);" data-dismiss="modal" className="btn btn-red" onClick={this.createSection}>Create section</a>
+                <a href="javascript:void(0);" data-dismiss="modal" className="btn btn-grey btn-last">Cancel</a>
               </div>
             </div>
           </div>

@@ -185,3 +185,9 @@
     @include alignCenter(-470px, -317px);
   }
 }
+
+#new-section-modal {
+  .modal-dialog {
+    @include alignCenter(-310px, -118px);
+  } 
+}
