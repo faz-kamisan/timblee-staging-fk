@@ -38439,6 +38439,10 @@
 	
 	var _selected_page2 = _interopRequireDefault(_selected_page);
 	
+	var _selected_comment = __webpack_require__(/*! ./selected_comment */ 1014);
+	
+	var _selected_comment2 = _interopRequireDefault(_selected_comment);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var sitemapAppReducer = (0, _redux.combineReducers)({
@@ -38457,7 +38461,8 @@
 	  publicShareUrl: _public_share_url2.default,
 	  showSitemapShareModal: _show_sitemap_share_modal2.default,
 	  business: _business2.default,
-	  selectedPage: _selected_page2.default
+	  selectedPage: _selected_page2.default,
+	  selectedComment: _selected_comment2.default
 	});
 	
 	exports.default = sitemapAppReducer;
@@ -38523,6 +38528,7 @@
 	exports.deleteGeneralComment = deleteGeneralComment;
 	exports.deletePageComment = deletePageComment;
 	exports.setSelectedPage = setSelectedPage;
+	exports.setSelectedComment = setSelectedComment;
 	exports.changePageType = changePageType;
 	exports.createNewSection = createNewSection;
 	exports.updatePageState = updatePageState;
@@ -38546,6 +38552,7 @@
 	var DELETE_GENERAL_COMMENT = exports.DELETE_GENERAL_COMMENT = 'DELETE_GENERAL_COMMENT';
 	var DELETE_PAGE_COMMENT = exports.DELETE_PAGE_COMMENT = 'DELETE_PAGE_COMMENT';
 	var SET_SELECTED_PAGE = exports.SET_SELECTED_PAGE = 'SET_SELECTED_PAGE';
+	var SET_SELECTED_COMMENT = exports.SET_SELECTED_COMMENT = 'SET_SELECTED_COMMENT';
 	var CHANGE_PAGE_TYPE = exports.CHANGE_PAGE_TYPE = 'CHANGE_PAGE_TYPE';
 	var CREATE_NEW_SECTION = exports.CREATE_NEW_SECTION = 'CREATE_NEW_SECTION';
 	var UPDATE_PAGE_STATE = exports.UPDATE_PAGE_STATE = 'UPDATE_PAGE_STATE';
@@ -38625,8 +38632,13 @@
 	function deletePageComment(commentId, pageId, sectionId) {
 	  return { type: DELETE_PAGE_COMMENT, commentId: commentId, pageId: pageId, sectionId: sectionId };
 	}
+	
 	function setSelectedPage(page) {
 	  return { type: SET_SELECTED_PAGE, page: page };
+	}
+	
+	function setSelectedComment(comment) {
+	  return { type: SET_SELECTED_COMMENT, comment: comment };
 	}
 	
 	function changePageType(pageId, sectionId, pageType) {
@@ -39386,6 +39398,10 @@
 	
 	var _connected_delete_page_modal2 = _interopRequireDefault(_connected_delete_page_modal);
 	
+	var _connected_comment_delete_modal = __webpack_require__(/*! ../containers/connected_comment_delete_modal */ 1012);
+	
+	var _connected_comment_delete_modal2 = _interopRequireDefault(_connected_comment_delete_modal);
+	
 	var _connected_page_change_modal = __webpack_require__(/*! ../containers/connected_page_change_modal */ 1003);
 	
 	var _connected_page_change_modal2 = _interopRequireDefault(_connected_page_change_modal);
@@ -39435,7 +39451,8 @@
 	        _react2.default.createElement(_connected_delete_page_modal2.default, null),
 	        _react2.default.createElement(_connected_page_change_modal2.default, null),
 	        _react2.default.createElement(_connected_new_section_modal2.default, null),
-	        _react2.default.createElement(_connected_page_comments_modal2.default, null)
+	        _react2.default.createElement(_connected_page_comments_modal2.default, null),
+	        _react2.default.createElement(_connected_comment_delete_modal2.default, null)
 	      );
 	    }
 	  }]);
@@ -49877,7 +49894,8 @@
 	    comments: state.comments,
 	    sitemapId: state.id,
 	    sections: state.sections,
-	    business: state.business
+	    business: state.business,
+	    name: state.name
 	  };
 	};
 	
@@ -49964,7 +49982,7 @@
 	        return _react2.default.createElement(
 	          'li',
 	          { key: index },
-	          _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: true, commentableId: this.props.sitemapId, commentableType: 'Sitemap' })
+	          _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: true, commentableId: _this.props.sitemapId, commentableType: 'Sitemap', commentableName: this.props.name })
 	        );
 	      });
 	      var pageWithComments = [];
@@ -49982,7 +50000,7 @@
 	          return _react2.default.createElement(
 	            'li',
 	            { key: index },
-	            _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: page.state == 'active', commentableId: page.id, commentableType: 'Page', sectionId: page.sectionId })
+	            _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: page.state == 'active', commentableId: page.id, commentableType: 'Page', sectionId: page.sectionId, commentableName: page.name })
 	          );
 	        });
 	        return _react2.default.createElement(
@@ -50091,6 +50109,7 @@
 	  comments: _react.PropTypes.array.isRequired,
 	  sections: _react.PropTypes.array.isRequired,
 	  sitemapId: _react.PropTypes.number.isRequired,
+	  name: _react.PropTypes.string.isRequired,
 	  business: _react.PropTypes.object.isRequired
 	};
 	exports.default = RightSidebar;
@@ -50124,12 +50143,8 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    deleteComment: function deleteComment(id, commentableId, commentableType, sectionId) {
-	      if (commentableType == 'Page') {
-	        dispatch((0, _actions.deletePageComment)(id, commentableId, sectionId));
-	      } else {
-	        dispatch((0, _actions.deleteGeneralComment)(id));
-	      }
+	    setSelectedComment: function setSelectedComment(comment) {
+	      dispatch((0, _actions.setSelectedComment)(comment));
 	    },
 	    setSaving: function setSaving(saving) {
 	      dispatch((0, _actions.setSaving)(saving));
@@ -50176,14 +50191,24 @@
 	
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Comment).call(this, props));
 	
-	    _this.deleteComment = _this.deleteComment.bind(_this);
+	    _this.setSelectedComment = _this.setSelectedComment.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(Comment, [{
-	    key: 'deleteComment',
-	    value: function deleteComment(e) {
-	      this.props.deleteComment(this.props.id, this.props.commentableId, this.props.commentableType, this.props.sectionId);
+	    key: 'setSelectedComment',
+	    value: function setSelectedComment(e) {
+	      var comment = {
+	        id: this.props.id,
+	        commentableId: this.props.commentableId,
+	        commentableType: this.props.commentableType,
+	        commentableName: this.props.commentableName,
+	        sectionId: this.props.sectionId,
+	        commenter: this.props.commenter,
+	        message: this.props.message,
+	        createdAt: this.props.createdAt
+	      };
+	      this.props.setSelectedComment(comment);
 	    }
 	  }, {
 	    key: 'render',
@@ -50191,7 +50216,7 @@
 	      if (this.props.currentUser && this.props.commenter.email == this.props.currentUser.email || this.props.currentGuest && this.props.commenter.email == this.props.currentGuest.email) {
 	        return _react2.default.createElement(
 	          'div',
-	          null,
+	          { className: 'comment-block' },
 	          _react2.default.createElement('img', { className: 'user-comment-image', src: '/assets/avatar_10.svg' }),
 	          _react2.default.createElement(
 	            'h4',
@@ -50208,7 +50233,7 @@
 	              ' |',
 	              _react2.default.createElement(
 	                'a',
-	                { className: 'comment-delete-link cursor', onClick: this.deleteComment },
+	                { href: '#comment-delete-modal', className: 'comment-delete-link cursor btn-modal-open', 'data-dismiss': 'modal', onClick: this.setSelectedComment, 'data-toggle': 'modal' },
 	                ' Delete'
 	              )
 	            )
@@ -50255,6 +50280,7 @@
 	Comment.propTypes = {
 	  commentableId: _react.PropTypes.number.isRequired,
 	  commentableType: _react.PropTypes.string.isRequired,
+	  commentableName: _react.PropTypes.string.isRequired,
 	  sectionId: _react.PropTypes.number,
 	  commenter: _react.PropTypes.object.isRequired,
 	  message: _react.PropTypes.string.isRequired,
@@ -61462,7 +61488,7 @@
 	          return _react2.default.createElement(
 	            'li',
 	            { key: index },
-	            _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: _this.props.pageTree.state == 'active', commentableId: _this.props.pageTree.id, commentableType: 'Page', sectionId: _this.props.pageTree.section_id })
+	            _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: _this.props.pageTree.state == 'active', commentableId: _this.props.pageTree.id, commentableType: 'Page', sectionId: _this.props.pageTree.section_id, commentableName: _this.props.pageTree.name })
 	          );
 	        });
 	
@@ -61829,6 +61855,219 @@
 	  iconName: _react.PropTypes.string.isRequired
 	};
 	exports.default = PageTypePreview;
+
+/***/ },
+/* 1012 */
+/*!***************************************************************************!*\
+  !*** ./app/bundles/SiteMap/containers/connected_comment_delete_modal.jsx ***!
+  \***************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
+	
+	var _actions = __webpack_require__(/*! ../actions */ 606);
+	
+	var _comment_delete_modal = __webpack_require__(/*! ../components/comment_delete_modal */ 1013);
+	
+	var _comment_delete_modal2 = _interopRequireDefault(_comment_delete_modal);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return { comment: state.selectedComment };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    deleteComment: function deleteComment(id, commentableId, commentableType, sectionId) {
+	      if (commentableType == 'Page') {
+	        dispatch((0, _actions.deletePageComment)(id, commentableId, sectionId));
+	      } else {
+	        dispatch((0, _actions.deleteGeneralComment)(id));
+	      }
+	    },
+	    setSaving: function setSaving(saving) {
+	      dispatch((0, _actions.setSaving)(saving));
+	    }
+	  };
+	};
+	
+	var ConnectedCommentDeleteModal = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_comment_delete_modal2.default);
+	
+	exports.default = ConnectedCommentDeleteModal;
+
+/***/ },
+/* 1013 */
+/*!*****************************************************************!*\
+  !*** ./app/bundles/SiteMap/components/comment_delete_modal.jsx ***!
+  \*****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 301);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _connected_comment = __webpack_require__(/*! ../containers/connected_comment */ 793);
+	
+	var _connected_comment2 = _interopRequireDefault(_connected_comment);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var CommentDeleteModal = function (_React$Component) {
+	  _inherits(CommentDeleteModal, _React$Component);
+	
+	  function CommentDeleteModal(props) {
+	    _classCallCheck(this, CommentDeleteModal);
+	
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentDeleteModal).call(this, props));
+	
+	    _this2.deleteComment = _this2.deleteComment.bind(_this2);
+	    return _this2;
+	  }
+	
+	  _createClass(CommentDeleteModal, [{
+	    key: 'deleteComment',
+	    value: function deleteComment(e) {
+	      var _this3 = this;
+	
+	      var _this = this;
+	      this.props.deleteComment(this.props.comment.id, this.props.comment.commentableId, this.props.comment.commentableType, this.props.comment.sectionId);
+	      $.ajax({
+	        url: '/comments/' + this.props.id,
+	        method: 'delete',
+	        dataType: 'JSON',
+	        error: function error(result) {
+	          document.setFlash(result.responseText);
+	        },
+	        complete: function complete(result) {
+	          _this3.props.setSaving(true);
+	          setTimeout(function () {
+	            _this.props.setSaving(false);
+	          }, 2000);
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this = this;
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'modal fade', id: 'comment-delete-modal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'comment-delete-modalLabel' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'modal-dialog', role: 'document' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'modal-content' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'modal-header text-center' },
+	              _react2.default.createElement(
+	                'button',
+	                { type: 'button', className: 'close btn-modal-open', 'data-dismiss': 'modal', 'data-target': '#page-comments-modal', 'data-toggle': 'modal', 'aria-label': 'Close' },
+	                _react2.default.createElement(
+	                  'span',
+	                  { 'aria-hidden': 'true' },
+	                  _react2.default.createElement('img', { src: '/assets/close-modal.svg', className: 'close-modal hide-delete-modal' })
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'h4',
+	                { className: 'modal-title' },
+	                'Delete comment'
+	              ),
+	              _react2.default.createElement(
+	                'p',
+	                { className: 'modal-message' },
+	                'You are about to delete this comment on ' + this.props.comment.commentableName
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'modal-body' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'page-tile-clone' },
+	                this.props.comment.commenter && _react2.default.createElement(_connected_comment2.default, { id: this.props.comment.id, message: this.props.comment.message, commenter: this.props.comment.commenter, createdAt: this.props.comment.createdAt, editable: false })
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'modal-button text-center' },
+	                _react2.default.createElement(
+	                  'a',
+	                  { href: '#', 'data-dismiss': 'modal', 'data-target': '#page-comments-modal', 'data-toggle': 'modal', className: 'btn btn-red btn-modal-open', onClick: this.deleteComment },
+	                  'Delete Comment'
+	                ),
+	                _react2.default.createElement(
+	                  'a',
+	                  { href: '#', 'data-dismiss': 'modal', 'data-target': '#page-comments-modal', 'data-toggle': 'modal', className: 'btn btn-transparent btn-last btn-modal-open' },
+	                  'Cancel'
+	                )
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return CommentDeleteModal;
+	}(_react2.default.Component);
+	
+	CommentDeleteModal.propTypes = {
+	  comment: _react.PropTypes.object.isRequired
+	};
+	exports.default = CommentDeleteModal;
+
+/***/ },
+/* 1014 */
+/*!***********************************************************!*\
+  !*** ./app/bundles/SiteMap/reducers/selected_comment.jsx ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _index = __webpack_require__(/*! ../actions/index */ 606);
+	
+	var selectedComment = function selectedComment() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case _index.SET_SELECTED_COMMENT:
+	      return action.comment;
+	    default:
+	      return state;
+	  }
+	};
+	
+	exports.default = selectedComment;
 
 /***/ }
 /******/ ]);

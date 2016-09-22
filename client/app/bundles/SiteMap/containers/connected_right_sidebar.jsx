@@ -6,7 +6,8 @@ const mapStateToProps = (state) => {
     comments: state.comments,
     sitemapId: state.id,
     sections: state.sections,
-    business: state.business
+    business: state.business,
+    name: state.name
   }
 }
 

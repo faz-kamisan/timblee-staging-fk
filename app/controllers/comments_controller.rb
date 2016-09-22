@@ -1,25 +1,45 @@
 class CommentsController < ApplicationController
 
-  skip_before_action :authenticate_user!, only: [:create]
-  before_action :fetch_user_or_guest, only: [:create]
+  skip_before_action :authenticate_user!, only: [:create, :update]
+  before_action :fetch_user_or_guest, only: [:create, :update, :destroy]
+  before_filter :fetch_comment, only: [:destroy, :update]
 
   def create
     @comment = @commenter.comments.build(comment_params)
-    if @comment.save
-      render json: @comment.as_json, status: 200
-    else
-      render json: t('.failure', scope: :flash) , status: 522
-    end
+    send_conditional_json_response(@comment.save)
+  end
+
+  def update
+    @comment
+  end
+
+  def destroy
+    send_conditional_json_response(@comment.destroy)
   end
 
   private
+
+    def send_conditional_json_response(condition)
+      if condition
+        render json: @comment.as_json, status: 200
+      else
+        render json: t('.failure', scope: :flash) , status: 422
+      end
+    end
+
+    def fetch_comment
+      unless @comment = @commenter.comments.find_by(id: params[:id])
+        render json: t('.not_found', scope: :flash) , status: 404
+      end
+    end
+
     def comment_params
       params.require(:comment).permit(:message, :commentable_id, :commentable_type)
     end
 
     def fetch_user_or_guest
       unless @commenter = current_user || current_guest
-        redirect_to root_path
+        render json: 'Not Authorized' , status: 403
       end
     end
 end
