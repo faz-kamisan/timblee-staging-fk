@@ -600,7 +600,7 @@
   left: 0;
   overflow: hidden;
   top: 175px;
-  z-index: 11;
+  z-index: 13;
   transition: .35s;
   border-top: solid 1px #171a1d;
   ~ .sitemap-sections .page-container-wrapper .page-container.level-0 {
@@ -1282,7 +1282,7 @@
   background: $primaryBlack;
   position: fixed;
   top: 95px;
-  z-index: 12;
+  z-index: 13;
   height: 80px;
   left: 0;
   width: 100%;
@@ -1290,6 +1290,24 @@
   transition: top .35s;
   -moz-transition: top .35s;
   -webkit-transition: top .35s;
+
+  .btn-share {
+    height: 33px;
+    width: 113px;
+    color: #56626f;
+    border-color: #56626f;
+    background: transparent;
+    line-height: 32px;
+    text-transform: uppercase;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 12px;
+    margin-top: 3px;
+    &:hover {
+      color: $primaryPink;
+      border-color: $primaryPink;
+    }
+  }
 
   .toggle-header {
     position: absolute;

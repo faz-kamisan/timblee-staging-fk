@@ -114,8 +114,8 @@ class Header extends React.Component {
             </span>
           </div>
           <div className="col-xs-5">
-            <div>
-              <a href="#sitemap-share-modal" data-toggle="modal" className="link-regular btn-regular" onClick={this.handleSitemapShareClick}>Share</a>
+            <div className="pull-left">
+              <a href="#sitemap-share-modal" data-toggle="modal" className="btn btn-share" onClick={this.handleSitemapShareClick}>Share</a>
             </div>
           </div>
         </div>
