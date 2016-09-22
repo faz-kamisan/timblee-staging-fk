@@ -10,7 +10,7 @@ class PageContainer extends React.Component {
     children: PropTypes.array.isRequired
   };
   render() {
-    var children = this.props.pageTree.children.filter(function(page) { return(!page.deleted) })
+    var children = this.props.pageTree.children.filter(function(page) { return(page.state != 'archived') })
     if(this.props.pageTree.level == 0) {
       if(this.props.leftSidebarExpanded) {
         var width = ((children.length * 240) + 432).toString() + 'px'

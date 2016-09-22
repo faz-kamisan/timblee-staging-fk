@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160920131403) do
+ActiveRecord::Schema.define(version: 20160922065340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,9 +42,8 @@ ActiveRecord::Schema.define(version: 20160920131403) do
     t.string   "commentable_type"
     t.integer  "commenter_id"
     t.string   "commenter_type"
-    t.string   "state",            default: "active"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "folders", force: :cascade do |t|
@@ -73,12 +72,12 @@ ActiveRecord::Schema.define(version: 20160920131403) do
     t.integer  "sitemap_id"
     t.integer  "page_type_id"
     t.integer  "parent_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.integer  "position"
     t.integer  "uid"
     t.integer  "section_id"
-    t.datetime "deleted_at"
+    t.string   "state",        default: "active"
   end
 
   create_table "plans", force: :cascade do |t|

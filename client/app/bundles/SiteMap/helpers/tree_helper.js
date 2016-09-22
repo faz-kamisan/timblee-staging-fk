@@ -78,7 +78,10 @@ function removePage(sections, id, sectionId) {
   var sectionsCopy = Object.assign([], sections);
   var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
   var page = getNodeById(treeCopy, id)
-  page.deleted = true
+  page.state = 'archived'
+  traverse(page, function(node) {
+    node.state = 'archived'
+  })
   return sectionsCopy
 }
 
@@ -142,6 +145,14 @@ function traverse(tree, callback) {
   }
 }
 
+function updatePageState(sections, pageId, sectionId, state) {
+  var sectionsCopy = Object.assign([], sections);
+  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
+  var page = getNodeById(treeCopy, pageId)
+  page.state = state
+  return sectionsCopy
+}
+
 function getNodeById(tree, id){
   if(tree.id == id){
     return tree;
@@ -171,4 +182,4 @@ function getNodeByPosition(tree, position){
 }
 
 
-export { addPage, removePage, updatePagePosition, updatePageName, traverse, updateCollapse, updatePageId, addPageComment, updateCommentId, updatePageType, createNewSection }
+export { addPage, removePage, updatePagePosition, updatePageName, traverse, updateCollapse, updatePageId, addPageComment, updateCommentId, updatePageType, createNewSection, updatePageState }

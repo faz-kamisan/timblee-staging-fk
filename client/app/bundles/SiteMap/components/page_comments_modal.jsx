@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Comment from './comment'
+import ConnectedMarkAsResolvedCheck from '../containers/connected_mark_as_resolved_check'
 import ConnectedNewComment from '../containers/connected_new_comment'
 
 class PageCommentsModal extends React.Component {
@@ -28,16 +29,15 @@ class PageCommentsModal extends React.Component {
                     <span className="page-id">ID: {this.props.pageTree.uid}</span>
                     <div className="clearfix">
                       <span className="page-name truncate pull-left">{this.props.pageTree.name}</span>
-                      <label className="pull-right" htmlFor="mark-resolve">
-                        Mark as resolved
-                        <input type="checkbox" id="mark-resolve" />
-                      </label>
+                      <ConnectedMarkAsResolvedCheck page={this.props.pageTree} pageState={this.props.pageTree.state} />
                     </div>
                   </div>
                   <ul className="comment-group">
                     {renderedPageComments}
                   </ul>
-                  <ConnectedNewComment commentableId={this.props.pageTree.id} commentableType='Page' sectionId={this.props.pageTree.sectionId} />
+                  { (this.props.pageTree.state == 'active') &&
+                    <ConnectedNewComment commentableId={this.props.pageTree.id} commentableType='Page' sectionId={this.props.pageTree.sectionId} />
+                  }
                 </div>
               </div>
             </div>

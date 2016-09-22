@@ -11,7 +11,7 @@ class Section < ActiveRecord::Base
   attr_accessor :really_destroy_root_page
 
   def get_page_tree
-    root_page ? root_page.get_tree(pages.with_deleted.includes(:page_type, :comments)) : {}
+    root_page ? root_page.get_tree(pages.includes(:page_type, :comments)) : {}
   end
 
   def to_react_data
@@ -20,9 +20,9 @@ class Section < ActiveRecord::Base
 
   def destroy_root_page
     if really_destroy_root_page
-      root_page.really_destroy!
-    else
       root_page.destroy
+    else
+      pages.update_all(state: 'archived')
     end
   end
 end

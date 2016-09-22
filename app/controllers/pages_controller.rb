@@ -7,7 +7,7 @@ class PagesController < ApplicationController
   end
 
   def destroy
-    send_conditional_json_response(@page.destroy)
+    send_conditional_json_response(@page.update(state: 'archived'))
   end
 
   def update
@@ -22,7 +22,7 @@ class PagesController < ApplicationController
     end
 
     def page_params
-      params.require(:page).permit(:name, :sitemap_id, :parent_id, :page_type_id, :position, :section_id)
+      params.require(:page).permit(:name, :sitemap_id, :parent_id, :page_type_id, :position, :section_id, :state)
     end
 
     def send_conditional_json_response(condition)

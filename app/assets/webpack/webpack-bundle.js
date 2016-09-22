@@ -38524,6 +38524,7 @@
 	exports.setSelectedPage = setSelectedPage;
 	exports.changePageType = changePageType;
 	exports.createNewSection = createNewSection;
+	exports.updatePageState = updatePageState;
 	var SET_NAME = exports.SET_NAME = 'SET_NAME';
 	var ADD_NEW_PAGE = exports.ADD_NEW_PAGE = 'ADD_NEW_PAGE';
 	var REMOVE_PAGE = exports.REMOVE_PAGE = 'REMOVE_PAGE';
@@ -38545,6 +38546,7 @@
 	var SET_SELECTED_PAGE = exports.SET_SELECTED_PAGE = 'SET_SELECTED_PAGE';
 	var CHANGE_PAGE_TYPE = exports.CHANGE_PAGE_TYPE = 'CHANGE_PAGE_TYPE';
 	var CREATE_NEW_SECTION = exports.CREATE_NEW_SECTION = 'CREATE_NEW_SECTION';
+	var UPDATE_PAGE_STATE = exports.UPDATE_PAGE_STATE = 'UPDATE_PAGE_STATE';
 	
 	function setName(name) {
 	  return { type: SET_NAME, name: name };
@@ -38629,6 +38631,11 @@
 	function createNewSection(pageId, sectionId, newSectionName, timeStamp) {
 	  return { type: CREATE_NEW_SECTION, pageId: pageId, sectionId: sectionId, newSectionName: newSectionName, timeStamp: timeStamp };
 	}
+	
+	function updatePageState(pageId, sectionId, state) {
+	  return { type: UPDATE_PAGE_STATE, pageId: pageId, sectionId: sectionId, state: state };
+	}
+	updatePageState;
 
 /***/ },
 /* 607 */
@@ -38693,6 +38700,8 @@
 	      return (0, _tree_helper.updatePageType)(state, action.pageId, action.sectionId, action.pageType);
 	    case _index.CREATE_NEW_SECTION:
 	      return (0, _tree_helper.createNewSection)(state, action.pageId, action.sectionId, action.newSectionName, action.timeStamp);
+	    case _index.UPDATE_PAGE_STATE:
+	      return (0, _tree_helper.updatePageState)(state, action.pageId, action.sectionId, action.state);
 	    default:
 	      return state;
 	  }
@@ -38810,7 +38819,10 @@
 	    return section.id == sectionId;
 	  })[0].pageTree;
 	  var page = getNodeById(treeCopy, id);
-	  page.deleted = true;
+	  page.state = 'archived';
+	  traverse(page, function (node) {
+	    node.state = 'archived';
+	  });
 	  return sectionsCopy;
 	}
 	
@@ -38886,6 +38898,16 @@
 	  }
 	}
 	
+	function updatePageState(sections, pageId, sectionId, state) {
+	  var sectionsCopy = Object.assign([], sections);
+	  var treeCopy = sectionsCopy.filter(function (section) {
+	    return section.id == sectionId;
+	  })[0].pageTree;
+	  var page = getNodeById(treeCopy, pageId);
+	  page.state = state;
+	  return sectionsCopy;
+	}
+	
 	function getNodeById(tree, id) {
 	  if (tree.id == id) {
 	    return tree;
@@ -38925,6 +38947,7 @@
 	exports.updateCommentId = updateCommentId;
 	exports.updatePageType = updatePageType;
 	exports.createNewSection = createNewSection;
+	exports.updatePageState = updatePageState;
 
 /***/ },
 /* 610 */
@@ -39353,11 +39376,11 @@
 	
 	var _connected_new_section_modal2 = _interopRequireDefault(_connected_new_section_modal);
 	
-	var _connected_page_comments_modal = __webpack_require__(/*! ../containers/connected_page_comments_modal */ 1007);
+	var _connected_page_comments_modal = __webpack_require__(/*! ../containers/connected_page_comments_modal */ 1004);
 	
 	var _connected_page_comments_modal2 = _interopRequireDefault(_connected_page_comments_modal);
 	
-	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 1004);
+	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 1006);
 	
 	var _custom_drag_layer2 = _interopRequireDefault(_custom_drag_layer);
 	
@@ -47224,10 +47247,10 @@
 	      var _this = this;
 	      var children;
 	      if (this.props.pageTree.children.filter(function (page) {
-	        return !page.deleted;
+	        return page.state != 'archived';
 	      }) != null) {
 	        children = this.props.pageTree.children.filter(function (page) {
-	          return !page.deleted;
+	          return page.state != 'archived';
 	        }).map(function (pageTree, index) {
 	          if (pageTree.level == 1) {
 	            var sitemapNumber = (index + 1).toString() + '.0';
@@ -47337,7 +47360,7 @@
 	    key: 'render',
 	    value: function render() {
 	      var children = this.props.pageTree.children.filter(function (page) {
-	        return !page.deleted;
+	        return page.state != 'archived';
 	      });
 	      if (this.props.pageTree.level == 0) {
 	        if (this.props.leftSidebarExpanded) {
@@ -47639,7 +47662,7 @@
 	            ),
 	            this.props.pageTree.parentId != null && _react2.default.createElement(
 	              'a',
-	              { href: '#delete-page-modal', className: 'icon-page-delete', onClick: this.showPageDeletionModal, 'data-toggle': 'modal' },
+	              { href: '#delete-page-modal', className: 'icon-page-delete', onClick: this.setSelectedPage, 'data-toggle': 'modal' },
 	              _react2.default.createElement(
 	                'span',
 	                { className: 'card-tooltip' },
@@ -47728,7 +47751,7 @@
 	            ),
 	            this.props.pageTree.parentId != null && _react2.default.createElement(
 	              'a',
-	              { href: '#delete-page-modal', className: 'icon-page-delete', onClick: this.showPageDeletionModal, 'data-toggle': 'modal' },
+	              { href: '#delete-page-modal', className: 'icon-page-delete', onClick: this.setSelectedPage, 'data-toggle': 'modal' },
 	              _react2.default.createElement(
 	                'span',
 	                { className: 'card-tooltip' },
@@ -49821,8 +49844,6 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
 	
-	var _actions = __webpack_require__(/*! ../actions */ 606);
-	
 	var _right_sidebar = __webpack_require__(/*! ../components/right_sidebar */ 792);
 	
 	var _right_sidebar2 = _interopRequireDefault(_right_sidebar);
@@ -49871,6 +49892,10 @@
 	
 	var _comment2 = _interopRequireDefault(_comment);
 	
+	var _connected_mark_as_resolved_check = __webpack_require__(/*! ../containers/connected_mark_as_resolved_check */ 1010);
+	
+	var _connected_mark_as_resolved_check2 = _interopRequireDefault(_connected_mark_as_resolved_check);
+	
 	var _connected_new_comment = __webpack_require__(/*! ../containers/connected_new_comment */ 794);
 	
 	var _connected_new_comment2 = _interopRequireDefault(_connected_new_comment);
@@ -49893,14 +49918,10 @@
 	
 	    _this2.state = { currentTab: 'active' };
 	    _this2.handleTabClick = _this2.handleTabClick.bind(_this2);
-	    _this2.handleResolve = _this2.handleResolve.bind(_this2);
 	    return _this2;
 	  }
 	
 	  _createClass(RightSidebar, [{
-	    key: 'handleResolve',
-	    value: function handleResolve(e) {}
-	  }, {
 	    key: 'handleTabClick',
 	    value: function handleTabClick(e, tabName) {
 	      this.setState({ currentTab: tabName });
@@ -49929,17 +49950,15 @@
 	      var pageWithComments = [];
 	      this.props.sections.forEach(function (section, index) {
 	        (0, _tree_helper.traverse)(section.pageTree, function (page) {
-	          if (page.comments.filter(function (comment) {
-	            return comment.state == _this.state.currentTab;
-	          }).length > 0) {
-	            pageWithComments.push({ name: page.name, comments: page.comments, id: page.id, sectionId: section.id, uid: page.uid });
+	          if (page.comments.length > 0) {
+	            pageWithComments.push({ name: page.name, comments: page.comments, id: page.id, sectionId: section.id, uid: page.uid, state: page.state });
 	          }
 	        });
 	      });
-	      var renderedPageWithComments = pageWithComments.map(function (page, index) {
-	        var renderedPageComments = page.comments.filter(function (comment) {
-	          return comment.state == _this.state.currentTab;
-	        }).map(function (comment, index) {
+	      var renderedPageWithComments = pageWithComments.filter(function (page) {
+	        return page.state == _this.state.currentTab;
+	      }).map(function (page, index) {
+	        var renderedPageComments = page.comments.map(function (comment, index) {
 	          return _react2.default.createElement(
 	            'li',
 	            { key: index },
@@ -49966,12 +49985,7 @@
 	                { className: 'page-name truncate pull-left' },
 	                page.name
 	              ),
-	              _this.state.currentTab == 'active' && _react2.default.createElement(
-	                'label',
-	                { className: 'pull-right', htmlFor: 'mark-resolve' },
-	                'Mark as resolved',
-	                _react2.default.createElement('input', { type: 'checkbox', id: 'mark-resolve', onChange: _this.handleResolve })
-	              )
+	              _react2.default.createElement(_connected_mark_as_resolved_check2.default, { page: page })
 	            )
 	          ),
 	          _react2.default.createElement(
@@ -61101,6 +61115,166 @@
 
 /***/ },
 /* 1004 */
+/*!**************************************************************************!*\
+  !*** ./app/bundles/SiteMap/containers/connected_page_comments_modal.jsx ***!
+  \**************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
+	
+	var _actions = __webpack_require__(/*! ../actions */ 606);
+	
+	var _page_comments_modal = __webpack_require__(/*! ../components/page_comments_modal */ 1005);
+	
+	var _page_comments_modal2 = _interopRequireDefault(_page_comments_modal);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return { pageTree: state.selectedPage, commentsLength: state.selectedPage.comments ? state.selectedPage.comments.length : 0, pageState: state.selectedPage.state };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    setSaving: function setSaving(saving) {
+	      dispatch((0, _actions.setSaving)(saving));
+	    }
+	  };
+	};
+	
+	var ConnectedPageCommentsModal = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_page_comments_modal2.default);
+	
+	exports.default = ConnectedPageCommentsModal;
+
+/***/ },
+/* 1005 */
+/*!****************************************************************!*\
+  !*** ./app/bundles/SiteMap/components/page_comments_modal.jsx ***!
+  \****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 301);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _comment = __webpack_require__(/*! ./comment */ 793);
+	
+	var _comment2 = _interopRequireDefault(_comment);
+	
+	var _connected_mark_as_resolved_check = __webpack_require__(/*! ../containers/connected_mark_as_resolved_check */ 1010);
+	
+	var _connected_mark_as_resolved_check2 = _interopRequireDefault(_connected_mark_as_resolved_check);
+	
+	var _connected_new_comment = __webpack_require__(/*! ../containers/connected_new_comment */ 794);
+	
+	var _connected_new_comment2 = _interopRequireDefault(_connected_new_comment);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var PageCommentsModal = function (_React$Component) {
+	  _inherits(PageCommentsModal, _React$Component);
+	
+	  function PageCommentsModal(props) {
+	    _classCallCheck(this, PageCommentsModal);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(PageCommentsModal).call(this, props));
+	  }
+	
+	  _createClass(PageCommentsModal, [{
+	    key: 'render',
+	    value: function render() {
+	      var _this = this;
+	      if (this.props.pageTree.comments) {
+	        var renderedPageComments = this.props.pageTree.comments.map(function (comment, index) {
+	          return _react2.default.createElement(
+	            'li',
+	            { key: index },
+	            _react2.default.createElement(_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at })
+	          );
+	        });
+	
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'modal fade', id: 'page-comments-modal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'page-comments-modalLabel' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'modal-dialog', role: 'document' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'modal-content' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'modal-body' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'page-comments' },
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'page-comment-details' },
+	                    _react2.default.createElement(
+	                      'span',
+	                      { className: 'page-id' },
+	                      'ID: ',
+	                      this.props.pageTree.uid
+	                    ),
+	                    _react2.default.createElement(
+	                      'div',
+	                      { className: 'clearfix' },
+	                      _react2.default.createElement(
+	                        'span',
+	                        { className: 'page-name truncate pull-left' },
+	                        this.props.pageTree.name
+	                      ),
+	                      _react2.default.createElement(_connected_mark_as_resolved_check2.default, { page: this.props.pageTree, pageState: this.props.pageTree.state })
+	                    )
+	                  ),
+	                  _react2.default.createElement(
+	                    'ul',
+	                    { className: 'comment-group' },
+	                    renderedPageComments
+	                  ),
+	                  this.props.pageTree.state == 'active' && _react2.default.createElement(_connected_new_comment2.default, { commentableId: this.props.pageTree.id, commentableType: 'Page', sectionId: this.props.pageTree.sectionId })
+	                )
+	              )
+	            )
+	          )
+	        );
+	      } else {
+	        return _react2.default.createElement('div', null);
+	      }
+	    }
+	  }]);
+	
+	  return PageCommentsModal;
+	}(_react2.default.Component);
+	
+	PageCommentsModal.propTypes = {
+	  pageTree: _react.PropTypes.object.isRequired
+	};
+	exports.default = PageCommentsModal;
+
+/***/ },
+/* 1006 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/custom_drag_layer.jsx ***!
   \**************************************************************/
@@ -61122,11 +61296,11 @@
 	
 	var _reactDnd = __webpack_require__(/*! react-dnd */ 713);
 	
-	var _page_container_preview = __webpack_require__(/*! ./page_container_preview */ 1005);
+	var _page_container_preview = __webpack_require__(/*! ./page_container_preview */ 1007);
 	
 	var _page_container_preview2 = _interopRequireDefault(_page_container_preview);
 	
-	var _page_type_preview = __webpack_require__(/*! ./page_type_preview */ 1006);
+	var _page_type_preview = __webpack_require__(/*! ./page_type_preview */ 1008);
 	
 	var _page_type_preview2 = _interopRequireDefault(_page_type_preview);
 	
@@ -61248,7 +61422,7 @@
 	exports.default = DragLayerDecorator(CustomDragLayer);
 
 /***/ },
-/* 1005 */
+/* 1007 */
 /*!*******************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_container_preview.jsx ***!
   \*******************************************************************/
@@ -61331,7 +61505,7 @@
 	exports.default = PageContainerPreview;
 
 /***/ },
-/* 1006 */
+/* 1008 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_type_preview.jsx ***!
   \**************************************************************/
@@ -61395,49 +61569,10 @@
 	exports.default = PageTypePreview;
 
 /***/ },
-/* 1007 */
-/*!**************************************************************************!*\
-  !*** ./app/bundles/SiteMap/containers/connected_page_comments_modal.jsx ***!
-  \**************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
-	
-	var _actions = __webpack_require__(/*! ../actions */ 606);
-	
-	var _page_comments_modal = __webpack_require__(/*! ../components/page_comments_modal */ 1008);
-	
-	var _page_comments_modal2 = _interopRequireDefault(_page_comments_modal);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var mapStateToProps = function mapStateToProps(state) {
-	  return { pageTree: state.selectedPage };
-	};
-	
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {
-	    setSaving: function setSaving(saving) {
-	      dispatch((0, _actions.setSaving)(saving));
-	    }
-	  };
-	};
-	
-	var ConnectedPageCommentsModal = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_page_comments_modal2.default);
-	
-	exports.default = ConnectedPageCommentsModal;
-
-/***/ },
-/* 1008 */
-/*!****************************************************************!*\
-  !*** ./app/bundles/SiteMap/components/page_comments_modal.jsx ***!
-  \****************************************************************/
+/* 1009 */
+/*!*******************************************************************!*\
+  !*** ./app/bundles/SiteMap/components/mark_as_resolved_check.jsx ***!
+  \*******************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61452,13 +61587,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _comment = __webpack_require__(/*! ./comment */ 793);
-	
-	var _comment2 = _interopRequireDefault(_comment);
-	
-	var _connected_new_comment = __webpack_require__(/*! ../containers/connected_new_comment */ 794);
-	
-	var _connected_new_comment2 = _interopRequireDefault(_connected_new_comment);
+	var _reactMentions = __webpack_require__(/*! react-mentions */ 796);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -61468,92 +61597,117 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var PageCommentsModal = function (_React$Component) {
-	  _inherits(PageCommentsModal, _React$Component);
+	var MarkAsResolvedCheck = function (_React$Component) {
+	  _inherits(MarkAsResolvedCheck, _React$Component);
 	
-	  function PageCommentsModal(props) {
-	    _classCallCheck(this, PageCommentsModal);
+	  function MarkAsResolvedCheck(props) {
+	    _classCallCheck(this, MarkAsResolvedCheck);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(PageCommentsModal).call(this, props));
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(MarkAsResolvedCheck).call(this, props));
+	
+	    _this2.updatePageState = _this2.updatePageState.bind(_this2);
+	    return _this2;
 	  }
 	
-	  _createClass(PageCommentsModal, [{
+	  _createClass(MarkAsResolvedCheck, [{
+	    key: 'updatePageState',
+	    value: function updatePageState(state) {
+	      var _this3 = this;
+	
+	      var _this = this;
+	      this.props.updatePageState(this.props.page.id, this.props.page.sectionId || this.props.page.section_id, state);
+	      $.ajax({
+	        url: '/pages/' + this.props.page.id,
+	        method: 'put',
+	        dataType: 'JSON',
+	        data: { page: { state: state } },
+	        error: function error(result) {
+	          document.setFlash(result.responseText);
+	        },
+	        complete: function complete(result) {
+	          _this3.props.setSaving(true);
+	          setTimeout(function () {
+	            _this.props.setSaving(false);
+	          }, 2000);
+	        }
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this = this;
-	      if (this.props.pageTree.comments) {
-	        var renderedPageComments = this.props.pageTree.comments.map(function (comment, index) {
-	          return _react2.default.createElement(
-	            'li',
-	            { key: index },
-	            _react2.default.createElement(_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at })
-	          );
-	        });
-	
+	      if (this.props.page.state == 'active') {
 	        return _react2.default.createElement(
-	          'div',
-	          { className: 'modal fade', id: 'page-comments-modal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'page-comments-modalLabel' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'modal-dialog', role: 'document' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'modal-content' },
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'modal-body' },
-	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'page-comments' },
-	                  _react2.default.createElement(
-	                    'div',
-	                    { className: 'page-comment-details' },
-	                    _react2.default.createElement(
-	                      'span',
-	                      { className: 'page-id' },
-	                      'ID: ',
-	                      this.props.pageTree.uid
-	                    ),
-	                    _react2.default.createElement(
-	                      'div',
-	                      { className: 'clearfix' },
-	                      _react2.default.createElement(
-	                        'span',
-	                        { className: 'page-name truncate pull-left' },
-	                        this.props.pageTree.name
-	                      ),
-	                      _react2.default.createElement(
-	                        'label',
-	                        { className: 'pull-right', htmlFor: 'mark-resolve' },
-	                        'Mark as resolved',
-	                        _react2.default.createElement('input', { type: 'checkbox', id: 'mark-resolve' })
-	                      )
-	                    )
-	                  ),
-	                  _react2.default.createElement(
-	                    'ul',
-	                    { className: 'comment-group' },
-	                    renderedPageComments
-	                  ),
-	                  _react2.default.createElement(_connected_new_comment2.default, { commentableId: this.props.pageTree.id, commentableType: 'Page', sectionId: this.props.pageTree.sectionId })
-	                )
-	              )
-	            )
-	          )
+	          'label',
+	          { className: 'pull-right', htmlFor: 'mark-resolve' },
+	          'Mark as resolved',
+	          _react2.default.createElement('input', { type: 'checkbox', id: 'mark-resolve', onChange: function onChange(e) {
+	              _this.updatePageState('resolved');
+	            } })
 	        );
 	      } else {
-	        return _react2.default.createElement('div', null);
+	        return _react2.default.createElement(
+	          'label',
+	          { className: 'pull-right', htmlFor: 'mark-unresolve' },
+	          'Unresolve',
+	          _react2.default.createElement('input', { type: 'checkbox', id: 'mark-unresolve', onChange: function onChange(e) {
+	              _this.updatePageState('active');
+	            } })
+	        );
 	      }
 	    }
 	  }]);
 	
-	  return PageCommentsModal;
+	  return MarkAsResolvedCheck;
 	}(_react2.default.Component);
 	
-	PageCommentsModal.propTypes = {
-	  pageTree: _react.PropTypes.object.isRequired
+	MarkAsResolvedCheck.propTypes = {
+	  page: _react.PropTypes.object.isRequired,
+	  updatePageState: _react.PropTypes.func.isRequired
 	};
-	exports.default = PageCommentsModal;
+	exports.default = MarkAsResolvedCheck;
+
+/***/ },
+/* 1010 */
+/*!*****************************************************************************!*\
+  !*** ./app/bundles/SiteMap/containers/connected_mark_as_resolved_check.jsx ***!
+  \*****************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
+	
+	var _actions = __webpack_require__(/*! ../actions */ 606);
+	
+	var _mark_as_resolved_check = __webpack_require__(/*! ../components/mark_as_resolved_check */ 1009);
+	
+	var _mark_as_resolved_check2 = _interopRequireDefault(_mark_as_resolved_check);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {};
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    updatePageState: function updatePageState(pageId, sectionId, state) {
+	      dispatch((0, _actions.updatePageState)(pageId, sectionId, state));
+	    },
+	    setSaving: function setSaving(saving) {
+	      dispatch((0, _actions.setSaving)(saving));
+	    }
+	  };
+	};
+	
+	var ConnectedMarkAsResolvedCheck = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_mark_as_resolved_check2.default);
+	
+	exports.default = ConnectedMarkAsResolvedCheck;
 
 /***/ }
 /******/ ]);

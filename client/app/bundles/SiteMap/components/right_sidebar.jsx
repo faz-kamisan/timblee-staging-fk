@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { traverse } from '../helpers/tree_helper'
 import Comment from './comment'
+import ConnectedMarkAsResolvedCheck from '../containers/connected_mark_as_resolved_check'
 import ConnectedNewComment from '../containers/connected_new_comment'
 
 class RightSidebar extends React.Component {
@@ -15,11 +16,6 @@ class RightSidebar extends React.Component {
     super(props);
     this.state = { currentTab: 'active' };
     this.handleTabClick = this.handleTabClick.bind(this);
-    this.handleResolve = this.handleResolve.bind(this);
-  }
-
-  handleResolve(e) {
-
   }
 
   handleTabClick(e, tabName) {
@@ -38,13 +34,13 @@ class RightSidebar extends React.Component {
     var pageWithComments = []
     this.props.sections.forEach(function(section, index) {
       traverse(section.pageTree, function(page) {
-        if(page.comments.filter(function(comment) { return(comment.state == _this.state.currentTab) }).length > 0) {
-          pageWithComments.push({ name: page.name, comments: page.comments, id: page.id, sectionId: section.id, uid: page.uid });
+        if(page.comments.length > 0) {
+          pageWithComments.push({ name: page.name, comments: page.comments, id: page.id, sectionId: section.id, uid: page.uid, state: page.state });
         }
       })
     })
-    var renderedPageWithComments = pageWithComments.map(function(page, index) {
-      var renderedPageComments = page.comments.filter(function(comment) { return(comment.state == _this.state.currentTab) }).map(function(comment, index) {
+    var renderedPageWithComments = pageWithComments.filter(function(page) { return(page.state == _this.state.currentTab) }).map(function(page, index) {
+      var renderedPageComments = page.comments.map(function(comment, index) {
         return <li key={index}><Comment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} /></li>
       })
       return(
@@ -53,12 +49,7 @@ class RightSidebar extends React.Component {
             <span className="page-id">ID: {page.uid}</span>
             <div className="clearfix">
               <span className="page-name truncate pull-left">{page.name}</span>
-              { (_this.state.currentTab == 'active') &&
-                <label className="pull-right" htmlFor="mark-resolve">
-                  Mark as resolved
-                  <input type="checkbox" id="mark-resolve" onChange={_this.handleResolve} />
-                </label>
-              }
+              <ConnectedMarkAsResolvedCheck page={page} />
             </div>
           </div>
           <ul className="comment-group">
