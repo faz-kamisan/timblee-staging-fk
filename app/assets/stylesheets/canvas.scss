@@ -1534,7 +1534,7 @@
 /* Comments */
 .sitemap-right-sidebar {
   position: fixed;
-  right: -435px;
+  right: 0;
   width: 420px;
   top: 175px;
   height: calc(100% - 175px);
@@ -2277,7 +2277,7 @@
   }
   .comment-input {
     textarea {
-      border: 1px solid #d4d4d4!important;  
+      border: 1px solid #d4d4d4!important;
     }
   }
 }

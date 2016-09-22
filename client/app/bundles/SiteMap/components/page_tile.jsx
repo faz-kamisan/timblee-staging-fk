@@ -127,7 +127,7 @@ class PageTile extends React.Component {
             }
             {
               (this.props.pageTree.parentId != null) &&
-              <a href="#delete-page-modal" className="icon-page-delete" onClick={this.showPageDeletionModal} data-toggle='modal'>
+              <a href="#delete-page-modal" className="icon-page-delete" onClick={this.setSelectedPage} data-toggle='modal'>
                 <span className="card-tooltip">Delete Page</span>
               </a>
             }
@@ -178,7 +178,7 @@ class PageTile extends React.Component {
             }
             {
               (this.props.pageTree.parentId != null) &&
-              <a href="#delete-page-modal" className="icon-page-delete" onClick={this.showPageDeletionModal} data-toggle='modal'>
+              <a href="#delete-page-modal" className="icon-page-delete" onClick={this.setSelectedPage} data-toggle='modal'>
                 <span className="card-tooltip">Delete Page</span>
               </a>
             }

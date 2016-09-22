@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import { deleteGeneralComment, setSaving } from '../actions'
 import RightSideBar from '../components/right_sidebar'
 
 const mapStateToProps = (state) => {
@@ -12,7 +11,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+  }
 }
 
 const ConnectedRightSideBar = connect(
