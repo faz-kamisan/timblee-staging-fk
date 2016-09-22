@@ -51408,10 +51408,10 @@
 	            { className: 'col-xs-5' },
 	            _react2.default.createElement(
 	              'div',
-	              null,
+	              { className: 'pull-left' },
 	              _react2.default.createElement(
 	                'a',
-	                { href: '#sitemap-share-modal', 'data-toggle': 'modal', className: 'link-regular btn-regular', onClick: this.handleSitemapShareClick },
+	                { href: '#sitemap-share-modal', 'data-toggle': 'modal', className: 'btn btn-share', onClick: this.handleSitemapShareClick },
 	                'Share'
 	              )
 	            )
