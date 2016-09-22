@@ -23,9 +23,10 @@ class SectionContainer extends React.Component {
 
   render() {
     var _this = this;
+    var tabWidth = (100 / this.props.sections.length).toString() + '%'
     var renderedSectionTabs = this.props.sections.map(function(section, index) {
       return (
-        <li key={section.id} className={'sitemap-section-tab' + (_this.state.currentSectionId == section.id ? ' active' : '')} onClick={function(e) { _this.changeCurrentSectionId(section.id) } }>
+        <li key={section.id} className={'sitemap-section-tab' + (_this.state.currentSectionId == section.id ? ' active' : '')} onClick={function(e) { _this.changeCurrentSectionId(section.id) } } style={ {width: tabWidth} }>
           {section.name}
         </li>
       )
@@ -40,7 +41,7 @@ class SectionContainer extends React.Component {
 
     return (
       <div className='sitemap-sections'>
-        <ul className="section-list clearfix">
+        <ul className={"section-list clearfix" + (this.props.leftSidebarExpanded? ' left-bar-expanded' : ' left-bar-contracted')}>
           {renderedSectionTabs}
         </ul>
         {renderedSections}

@@ -10,6 +10,7 @@ import ConnectedRightSidebar from '../containers/connected_right_sidebar';
 import ConnectedDeletePageModal from '../containers/connected_delete_page_modal';
 import ConnectedPageChangeModal from '../containers/connected_page_change_modal';
 import ConnectedNewSectionModal from '../containers/connected_new_section_modal';
+import ConnectedPageCommentsModal from '../containers/connected_page_comments_modal';
 
 import CustomDragLayer from '../components/custom_drag_layer';
 
@@ -27,6 +28,7 @@ class SiteMap extends React.Component {
           <ConnectedDeletePageModal />
           <ConnectedPageChangeModal />
           <ConnectedNewSectionModal />
+          <ConnectedPageCommentsModal />
         </div>
     );
   }
