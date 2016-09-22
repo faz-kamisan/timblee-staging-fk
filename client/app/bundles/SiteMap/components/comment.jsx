@@ -4,6 +4,7 @@ class Comment extends React.Component {
   static propTypes = {
     commentableId: PropTypes.number.isRequired,
     commentableType: PropTypes.string.isRequired,
+    commentableName: PropTypes.string.isRequired,
     sectionId: PropTypes.number,
     commenter: PropTypes.object.isRequired,
     message: PropTypes.string.isRequired,
@@ -13,25 +14,35 @@ class Comment extends React.Component {
   };
 
   constructor(props) {
-    super(props)
-    this.deleteComment = this.deleteComment.bind(this);
+    super(props);
+    this.setSelectedComment = this.setSelectedComment.bind(this);
   }
 
-  deleteComment(e) {
-    this.props.deleteComment(this.props.id, this.props.commentableId, this.props.commentableType, this.props.sectionId)
+  setSelectedComment(e) {
+    var comment = {
+                    id: this.props.id,
+                    commentableId: this.props.commentableId,
+                    commentableType: this.props.commentableType,
+                    commentableName: this.props.commentableName,
+                    sectionId: this.props.sectionId,
+                    commenter: this.props.commenter,
+                    message: this.props.message,
+                    createdAt: this.props.createdAt
+                  }
+    this.props.setSelectedComment(comment)
   }
 
   render() {
     if((this.props.currentUser && (this.props.commenter.email == this.props.currentUser.email)) || (this.props.currentGuest && (this.props.commenter.email == this.props.currentGuest.email))) {
       return (
-        <div>
+        <div className='comment-block'>
           <img className="user-comment-image" src='/assets/avatar_10.svg' />
           <h4>
             You
             { this.props.editable &&
               <span className='comment-action-links'>
                 <a className='comment-edit-link cursor'> Edit</a> |
-                <a className='comment-delete-link cursor' onClick={this.deleteComment}> Delete</a>
+                <a href="#comment-delete-modal" className='comment-delete-link cursor btn-modal-open' data-dismiss="modal" onClick={this.setSelectedComment} data-toggle='modal'> Delete</a>
               </span>
             }
           </h4>
