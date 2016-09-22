@@ -45,7 +45,7 @@ class MarkAsResolvedCheck extends React.Component {
       return (
         <label className="pull-right" htmlFor="mark-unresolve">
           Unresolve
-          <input type="checkbox" id="mark-unresolve" onChange={function(e) { _this.updatePageState('active') }} />
+          <input type="checkbox" checked='checked' id="mark-unresolve" onChange={function(e) { _this.updatePageState('active') }} />
         </label>
       )
     }

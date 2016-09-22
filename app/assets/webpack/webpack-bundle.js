@@ -38521,6 +38521,7 @@
 	exports.setCurrentGuest = setCurrentGuest;
 	exports.showSitemapShareModal = showSitemapShareModal;
 	exports.deleteGeneralComment = deleteGeneralComment;
+	exports.deletePageComment = deletePageComment;
 	exports.setSelectedPage = setSelectedPage;
 	exports.changePageType = changePageType;
 	exports.createNewSection = createNewSection;
@@ -38543,6 +38544,7 @@
 	var SET_CURRENT_GUEST = exports.SET_CURRENT_GUEST = 'SET_CURRENT_GUEST';
 	var SHOW_SITEMAP_SHARE_MODAL = exports.SHOW_SITEMAP_SHARE_MODAL = 'SHOW_SITEMAP_SHARE_MODAL';
 	var DELETE_GENERAL_COMMENT = exports.DELETE_GENERAL_COMMENT = 'DELETE_GENERAL_COMMENT';
+	var DELETE_PAGE_COMMENT = exports.DELETE_PAGE_COMMENT = 'DELETE_PAGE_COMMENT';
 	var SET_SELECTED_PAGE = exports.SET_SELECTED_PAGE = 'SET_SELECTED_PAGE';
 	var CHANGE_PAGE_TYPE = exports.CHANGE_PAGE_TYPE = 'CHANGE_PAGE_TYPE';
 	var CREATE_NEW_SECTION = exports.CREATE_NEW_SECTION = 'CREATE_NEW_SECTION';
@@ -38620,6 +38622,9 @@
 	  return { type: DELETE_GENERAL_COMMENT, id: id };
 	}
 	
+	function deletePageComment(commentId, pageId, sectionId) {
+	  return { type: DELETE_PAGE_COMMENT, commentId: commentId, pageId: pageId, sectionId: sectionId };
+	}
 	function setSelectedPage(page) {
 	  return { type: SET_SELECTED_PAGE, page: page };
 	}
@@ -38635,7 +38640,6 @@
 	function updatePageState(pageId, sectionId, state) {
 	  return { type: UPDATE_PAGE_STATE, pageId: pageId, sectionId: sectionId, state: state };
 	}
-	updatePageState;
 
 /***/ },
 /* 607 */
@@ -38702,6 +38706,8 @@
 	      return (0, _tree_helper.createNewSection)(state, action.pageId, action.sectionId, action.newSectionName, action.timeStamp);
 	    case _index.UPDATE_PAGE_STATE:
 	      return (0, _tree_helper.updatePageState)(state, action.pageId, action.sectionId, action.state);
+	    case _index.DELETE_PAGE_COMMENT:
+	      return (0, _tree_helper.deletePageComment)(state, action.commentId, action.pageId, action.sectionId);
 	    default:
 	      return state;
 	  }
@@ -38885,6 +38891,18 @@
 	  return sectionsCopy;
 	}
 	
+	function deletePageComment(sections, commentId, pageId, sectionId) {
+	  var sectionsCopy = Object.assign([], sections);
+	  var treeCopy = sectionsCopy.filter(function (section) {
+	    return section.id == sectionId;
+	  })[0].pageTree;
+	  var page = getNodeById(treeCopy, pageId);
+	  page.comments.removeIf(function (comment) {
+	    return comment.id == commentId;
+	  });
+	  return sectionsCopy;
+	}
+	
 	function traverse(tree, callback) {
 	  var queue = new Queue();
 	  queue.enqueue(tree);
@@ -38948,6 +38966,7 @@
 	exports.updatePageType = updatePageType;
 	exports.createNewSection = createNewSection;
 	exports.updatePageState = updatePageState;
+	exports.deletePageComment = deletePageComment;
 
 /***/ },
 /* 610 */
@@ -39001,12 +39020,11 @@
 	  return commentsCopy;
 	}
 	
-	function markCommentAsArchived(comments, id) {
+	function deleteComment(comments, id) {
 	  var commentsCopy = Object.assign([], comments);
-	  var comment = commentsCopy.filter(function (comment) {
+	  commentsCopy.removeIf(function (comment) {
 	    return comment.id == id;
-	  })[0];
-	  comment.state = 'archived';
+	  });
 	  return commentsCopy;
 	}
 	
@@ -39020,7 +39038,7 @@
 	    case _index.UPDATE_GENERAL_COMMENT_ID:
 	      return updateId(state, action.oldId, action.newId);
 	    case _index.DELETE_GENERAL_COMMENT:
-	      return markCommentAsArchived(state, action.id);
+	      return deleteComment(state, action.id);
 	    default:
 	      return state;
 	  }
@@ -49888,9 +49906,9 @@
 	
 	var _tree_helper = __webpack_require__(/*! ../helpers/tree_helper */ 609);
 	
-	var _comment = __webpack_require__(/*! ./comment */ 793);
+	var _connected_comment = __webpack_require__(/*! ../containers/connected_comment */ 1011);
 	
-	var _comment2 = _interopRequireDefault(_comment);
+	var _connected_comment2 = _interopRequireDefault(_connected_comment);
 	
 	var _connected_mark_as_resolved_check = __webpack_require__(/*! ../containers/connected_mark_as_resolved_check */ 1010);
 	
@@ -49938,13 +49956,11 @@
 	
 	      var CommentTabs = ['active', 'resolved', 'archived'];
 	      var _this = this;
-	      var renderedComments = this.props.comments.filter(function (comment) {
-	        return comment.state == _this.state.currentTab;
-	      }).map(function (comment, index) {
+	      var renderedComments = this.props.comments.map(function (comment, index) {
 	        return _react2.default.createElement(
 	          'li',
 	          { key: index },
-	          _react2.default.createElement(_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at })
+	          _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: true, commentableId: this.props.sitemapId, commentableType: 'Sitemap' })
 	        );
 	      });
 	      var pageWithComments = [];
@@ -49962,7 +49978,7 @@
 	          return _react2.default.createElement(
 	            'li',
 	            { key: index },
-	            _react2.default.createElement(_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at })
+	            _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: page.state == 'active', commentableId: page.id, commentableType: 'Page', sectionId: page.sectionId })
 	          );
 	        });
 	        return _react2.default.createElement(
@@ -50105,35 +50121,81 @@
 	var Comment = function (_React$Component) {
 	  _inherits(Comment, _React$Component);
 	
-	  function Comment() {
+	  function Comment(props) {
 	    _classCallCheck(this, Comment);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Comment).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Comment).call(this, props));
+	
+	    _this.deleteComment = _this.deleteComment.bind(_this);
+	    return _this;
 	  }
 	
 	  _createClass(Comment, [{
+	    key: 'deleteComment',
+	    value: function deleteComment(e) {
+	      this.props.deleteComment(this.props.id, this.props.commentableId, this.props.commentableType, this.props.sectionId);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement('img', { className: 'user-comment-image', src: '/assets/avatar_10.svg' }),
-	        _react2.default.createElement(
-	          'h4',
+	      if (this.props.currentUser && this.props.commenter.email == this.props.currentUser.email || this.props.currentGuest && this.props.commenter.email == this.props.currentGuest.email) {
+	        return _react2.default.createElement(
+	          'div',
 	          null,
-	          this.props.commenter.fullName
-	        ),
-	        _react2.default.createElement(
-	          'h6',
+	          _react2.default.createElement('img', { className: 'user-comment-image', src: '/assets/avatar_10.svg' }),
+	          _react2.default.createElement(
+	            'h4',
+	            null,
+	            'You',
+	            this.props.editable && _react2.default.createElement(
+	              'span',
+	              { className: 'comment-action-links' },
+	              _react2.default.createElement(
+	                'a',
+	                { className: 'comment-edit-link cursor' },
+	                ' Edit'
+	              ),
+	              ' |',
+	              _react2.default.createElement(
+	                'a',
+	                { className: 'comment-delete-link cursor', onClick: this.deleteComment },
+	                ' Delete'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'h6',
+	            null,
+	            this.props.createdAt
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            this.props.message
+	          )
+	        );
+	      } else {
+	        return _react2.default.createElement(
+	          'div',
 	          null,
-	          this.props.createdAt
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          this.props.message
-	        )
-	      );
+	          _react2.default.createElement('img', { className: 'user-comment-image', src: '/assets/avatar_10.svg' }),
+	          _react2.default.createElement(
+	            'h4',
+	            null,
+	            this.props.commenter.fullName
+	          ),
+	          _react2.default.createElement(
+	            'h6',
+	            null,
+	            this.props.createdAt
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            this.props.message
+	          )
+	        );
+	      }
 	    }
 	  }]);
 	
@@ -50141,9 +50203,13 @@
 	}(_react2.default.Component);
 	
 	Comment.propTypes = {
+	  commentableId: _react.PropTypes.number.isRequired,
+	  commentableType: _react.PropTypes.string.isRequired,
+	  sectionId: _react.PropTypes.number,
 	  commenter: _react.PropTypes.object.isRequired,
 	  message: _react.PropTypes.string.isRequired,
 	  id: _react.PropTypes.number.isRequired,
+	  editable: _react.PropTypes.bool.isRequired,
 	  createdAt: _react.PropTypes.string.isRequired
 	};
 	exports.default = Comment;
@@ -61171,9 +61237,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _comment = __webpack_require__(/*! ./comment */ 793);
+	var _connected_comment = __webpack_require__(/*! ../containers/connected_comment */ 1011);
 	
-	var _comment2 = _interopRequireDefault(_comment);
+	var _connected_comment2 = _interopRequireDefault(_connected_comment);
 	
 	var _connected_mark_as_resolved_check = __webpack_require__(/*! ../containers/connected_mark_as_resolved_check */ 1010);
 	
@@ -61209,7 +61275,7 @@
 	          return _react2.default.createElement(
 	            'li',
 	            { key: index },
-	            _react2.default.createElement(_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at })
+	            _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: _this.props.pageTree.state == 'active', commentableId: _this.props.pageTree.id, commentableType: 'Page', sectionId: _this.props.pageTree.section_id })
 	          );
 	        });
 	
@@ -61253,7 +61319,7 @@
 	                    { className: 'comment-group' },
 	                    renderedPageComments
 	                  ),
-	                  this.props.pageTree.state == 'active' && _react2.default.createElement(_connected_new_comment2.default, { commentableId: this.props.pageTree.id, commentableType: 'Page', sectionId: this.props.pageTree.sectionId })
+	                  this.props.pageTree.state == 'active' && _react2.default.createElement(_connected_new_comment2.default, { commentableId: this.props.pageTree.id, commentableType: 'Page', sectionId: this.props.pageTree.section_id })
 	                )
 	              )
 	            )
@@ -61650,7 +61716,7 @@
 	          'label',
 	          { className: 'pull-right', htmlFor: 'mark-unresolve' },
 	          'Unresolve',
-	          _react2.default.createElement('input', { type: 'checkbox', id: 'mark-unresolve', onChange: function onChange(e) {
+	          _react2.default.createElement('input', { type: 'checkbox', checked: 'checked', id: 'mark-unresolve', onChange: function onChange(e) {
 	              _this.updatePageState('active');
 	            } })
 	        );
@@ -61708,6 +61774,52 @@
 	var ConnectedMarkAsResolvedCheck = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_mark_as_resolved_check2.default);
 	
 	exports.default = ConnectedMarkAsResolvedCheck;
+
+/***/ },
+/* 1011 */
+/*!**************************************************************!*\
+  !*** ./app/bundles/SiteMap/containers/connected_comment.jsx ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
+	
+	var _actions = __webpack_require__(/*! ../actions */ 606);
+	
+	var _comment = __webpack_require__(/*! ../components/comment */ 793);
+	
+	var _comment2 = _interopRequireDefault(_comment);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return { currentUser: state.currentUser, currentGuest: state.currentGuest };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    deleteComment: function deleteComment(id, commentableId, commentableType, sectionId) {
+	      if (commentableType == 'Page') {
+	        dispatch((0, _actions.deletePageComment)(id, commentableId, sectionId));
+	      } else {
+	        dispatch((0, _actions.deleteGeneralComment)(id));
+	      }
+	    },
+	    setSaving: function setSaving(saving) {
+	      dispatch((0, _actions.setSaving)(saving));
+	    }
+	  };
+	};
+	
+	var ConnectedComment = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_comment2.default);
+	
+	exports.default = ConnectedComment;
 
 /***/ }
 /******/ ]);

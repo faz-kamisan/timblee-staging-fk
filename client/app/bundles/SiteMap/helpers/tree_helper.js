@@ -132,6 +132,14 @@ function createNewSection(sections, id, sectionId, newSectionName, timeStamp) {
   return sectionsCopy
 }
 
+function deletePageComment(sections, commentId, pageId, sectionId) {
+  var sectionsCopy = Object.assign([], sections);
+  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
+  var page = getNodeById(treeCopy, pageId)
+  page.comments.removeIf(function(comment) { return comment.id == commentId })
+  return sectionsCopy
+}
+
 function traverse(tree, callback) {
   var queue = new Queue();
   queue.enqueue(tree);
@@ -182,4 +190,4 @@ function getNodeByPosition(tree, position){
 }
 
 
-export { addPage, removePage, updatePagePosition, updatePageName, traverse, updateCollapse, updatePageId, addPageComment, updateCommentId, updatePageType, createNewSection, updatePageState }
+export { addPage, removePage, updatePagePosition, updatePageName, traverse, updateCollapse, updatePageId, addPageComment, updateCommentId, updatePageType, createNewSection, updatePageState, deletePageComment }

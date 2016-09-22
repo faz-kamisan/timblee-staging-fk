@@ -1,5 +1,5 @@
 import { ADD_NEW_PAGE, REMOVE_PAGE, UPDATE_PAGE_NAME, UPDATE_PAGE_POSITION, CHANGE_COLLAPSE, UPDATE_ID, ADD_PAGE_COMMENT, UPDATE_PAGE_COMMENT_ID, DELETE_PAGE_COMMENT, DELETE_PAGE, CHANGE_PAGE_TYPE, CREATE_NEW_SECTION, UPDATE_PAGE_STATE } from '../actions/index'
-import { addPage, removePage, updatePagePosition, updatePageName, updateCollapse, updatePageId, addPageComment, updateCommentId, deletePage, updatePageType, createNewSection, updatePageState } from '../helpers/tree_helper'
+import { addPage, removePage, updatePagePosition, updatePageName, updateCollapse, updatePageId, addPageComment, updateCommentId, deletePage, updatePageType, createNewSection, updatePageState, deletePageComment } from '../helpers/tree_helper'
 
 const sections = (state = [], action) => {
   switch (action.type) {
@@ -25,6 +25,8 @@ const sections = (state = [], action) => {
       return createNewSection(state, action.pageId, action.sectionId, action.newSectionName, action.timeStamp)
     case UPDATE_PAGE_STATE:
       return updatePageState(state, action.pageId, action.sectionId, action.state)
+    case DELETE_PAGE_COMMENT:
+      return deletePageComment(state, action.commentId, action.pageId, action.sectionId)
     default:
       return state
   }
