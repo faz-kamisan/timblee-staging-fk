@@ -105,7 +105,7 @@ class PageTile extends React.Component {
                 </span>
               </li>
               <li className="second-item">
-                <span className="icon-page-comments tile-icons"></span>
+                <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'></span>
               </li>
             </ul>
           </div>
@@ -113,7 +113,7 @@ class PageTile extends React.Component {
             <div className="close-card-overlay">
               <a href="javascript:void(0)" className="icon-close" onClick={this.closeOverLay}></a>
             </div>
-            <a href="javascript:void(0)" className="icon-page-comments">
+            <a href="#page-comments-modal" className="icon-page-comments" onClick={this.setSelectedPage} data-toggle='modal'>
               <span className="card-tooltip">View Comments</span>
             </a>
             <a href="#page-change-modal" className="icon-page-change" onClick={this.setSelectedPage} data-toggle='modal'>
@@ -156,7 +156,7 @@ class PageTile extends React.Component {
                 </span>
               </li>
               <li className="second-item">
-                <span className="icon-page-comments tile-icons"></span>
+                <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'></span>
               </li>
             </ul>
           </div>
@@ -164,7 +164,7 @@ class PageTile extends React.Component {
             <div className="close-card-overlay">
               <a href="javascript:void(0)" className="icon-close" onClick={this.closeOverLay}></a>
             </div>
-            <a href="javascript:void(0)" className="icon-page-comments">
+            <a href="#page-comments-modal" className="icon-page-comments" onClick={this.setSelectedPage} data-toggle='modal'>
               <span className="card-tooltip">View Comments</span>
             </a>
             <a href="#page-change-modal" className="icon-page-change" onClick={this.setSelectedPage} data-toggle='modal'>

@@ -39477,7 +39477,11 @@
 	
 	var _connected_new_section_modal2 = _interopRequireDefault(_connected_new_section_modal);
 	
-	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 1155);
+	var _connected_page_comments_modal = __webpack_require__(/*! ../containers/connected_page_comments_modal */ 1155);
+	
+	var _connected_page_comments_modal2 = _interopRequireDefault(_connected_page_comments_modal);
+	
+	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 1157);
 	
 	var _custom_drag_layer2 = _interopRequireDefault(_custom_drag_layer);
 	
@@ -39513,7 +39517,8 @@
 	        _react2.default.createElement(_connected_sitemap_share_modal2.default, null),
 	        _react2.default.createElement(_connected_delete_page_modal2.default, null),
 	        _react2.default.createElement(_connected_page_change_modal2.default, null),
-	        _react2.default.createElement(_connected_new_section_modal2.default, null)
+	        _react2.default.createElement(_connected_new_section_modal2.default, null),
+	        _react2.default.createElement(_connected_page_comments_modal2.default, null)
 	      );
 	    }
 	  }]);
@@ -49725,12 +49730,13 @@
 	    key: 'render',
 	    value: function render() {
 	      var _this = this;
+	      var tabWidth = (100 / this.props.sections.length).toString() + '%';
 	      var renderedSectionTabs = this.props.sections.map(function (section, index) {
 	        return _react2.default.createElement(
 	          'li',
 	          { key: section.id, className: 'sitemap-section-tab' + (_this.state.currentSectionId == section.id ? ' active' : ''), onClick: function onClick(e) {
 	              _this.changeCurrentSectionId(section.id);
-	            } },
+	            }, style: { width: tabWidth } },
 	          section.name
 	        );
 	      });
@@ -49747,7 +49753,7 @@
 	        { className: 'sitemap-sections' },
 	        _react2.default.createElement(
 	          'ul',
-	          { className: 'section-list clearfix' },
+	          { className: "section-list clearfix" + (this.props.leftSidebarExpanded ? ' left-bar-expanded' : ' left-bar-contracted') },
 	          renderedSectionTabs
 	        ),
 	        renderedSections
@@ -50228,7 +50234,7 @@
 	              _react2.default.createElement(
 	                'li',
 	                { className: 'second-item' },
-	                _react2.default.createElement('span', { className: 'icon-page-comments tile-icons' })
+	                _react2.default.createElement('span', { className: 'icon-page-comments tile-icons', onClick: this.setSelectedPage, 'data-toggle': 'modal', 'data-target': '#page-comments-modal' })
 	              )
 	            )
 	          ),
@@ -50242,7 +50248,7 @@
 	            ),
 	            _react2.default.createElement(
 	              'a',
-	              { href: 'javascript:void(0)', className: 'icon-page-comments' },
+	              { href: '#page-comments-modal', className: 'icon-page-comments', onClick: this.setSelectedPage, 'data-toggle': 'modal' },
 	              _react2.default.createElement(
 	                'span',
 	                { className: 'card-tooltip' },
@@ -50317,7 +50323,7 @@
 	              _react2.default.createElement(
 	                'li',
 	                { className: 'second-item' },
-	                _react2.default.createElement('span', { className: 'icon-page-comments tile-icons' })
+	                _react2.default.createElement('span', { className: 'icon-page-comments tile-icons', onClick: this.setSelectedPage, 'data-toggle': 'modal', 'data-target': '#page-comments-modal' })
 	              )
 	            )
 	          ),
@@ -50331,7 +50337,7 @@
 	            ),
 	            _react2.default.createElement(
 	              'a',
-	              { href: 'javascript:void(0)', className: 'icon-page-comments' },
+	              { href: '#page-comments-modal', className: 'icon-page-comments', onClick: this.setSelectedPage, 'data-toggle': 'modal' },
 	              _react2.default.createElement(
 	                'span',
 	                { className: 'card-tooltip' },
@@ -66381,6 +66387,167 @@
 
 /***/ },
 /* 1155 */
+/*!**************************************************************************!*\
+  !*** ./app/bundles/SiteMap/containers/connected_page_comments_modal.jsx ***!
+  \**************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 578);
+	
+	var _actions = __webpack_require__(/*! ../actions */ 608);
+	
+	var _page_comments_modal = __webpack_require__(/*! ../components/page_comments_modal */ 1156);
+	
+	var _page_comments_modal2 = _interopRequireDefault(_page_comments_modal);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return { pageTree: state.selectedPage };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    setSaving: function setSaving(saving) {
+	      dispatch((0, _actions.setSaving)(saving));
+	    }
+	  };
+	};
+	
+	var ConnectedPageCommentsModal = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_page_comments_modal2.default);
+	
+	exports.default = ConnectedPageCommentsModal;
+
+/***/ },
+/* 1156 */
+/*!****************************************************************!*\
+  !*** ./app/bundles/SiteMap/components/page_comments_modal.jsx ***!
+  \****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 301);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _comment = __webpack_require__(/*! ./comment */ 865);
+	
+	var _comment2 = _interopRequireDefault(_comment);
+	
+	var _connected_new_comment = __webpack_require__(/*! ../containers/connected_new_comment */ 866);
+	
+	var _connected_new_comment2 = _interopRequireDefault(_connected_new_comment);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var PageCommentsModal = function (_React$Component) {
+	  _inherits(PageCommentsModal, _React$Component);
+	
+	  function PageCommentsModal(props) {
+	    _classCallCheck(this, PageCommentsModal);
+	
+	    return _possibleConstructorReturn(this, (PageCommentsModal.__proto__ || Object.getPrototypeOf(PageCommentsModal)).call(this, props));
+	  }
+	
+	  _createClass(PageCommentsModal, [{
+	    key: 'render',
+	    value: function render() {
+	      var _this = this;
+	      if (this.props.pageTree.comments) {
+	        var renderedPageComments = this.props.pageTree.comments.map(function (comment, index) {
+	          return _react2.default.createElement(
+	            'li',
+	            { key: index },
+	            _react2.default.createElement(_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at })
+	          );
+	        });
+	
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'modal fade', id: 'page-comments-modal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'page-comments-modalLabel' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'modal-dialog', role: 'document' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'modal-content' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'modal-body' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'page-comments' },
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'page-comment-details' },
+	                    _react2.default.createElement(
+	                      'span',
+	                      { className: 'page-id' },
+	                      'ID: ',
+	                      this.props.pageTree.uid
+	                    ),
+	                    _react2.default.createElement(
+	                      'div',
+	                      { className: 'clearfix' },
+	                      _react2.default.createElement(
+	                        'span',
+	                        { className: 'page-name truncate pull-left' },
+	                        this.props.pageTree.name
+	                      ),
+	                      _react2.default.createElement(
+	                        'label',
+	                        { className: 'pull-right', htmlFor: 'mark-resolve' },
+	                        'Mark as resolved',
+	                        _react2.default.createElement('input', { type: 'checkbox', id: 'mark-resolve' })
+	                      )
+	                    )
+	                  ),
+	                  _react2.default.createElement(
+	                    'ul',
+	                    { className: 'comment-group' },
+	                    renderedPageComments
+	                  ),
+	                  _react2.default.createElement(_connected_new_comment2.default, { commentableId: this.props.pageTree.id, commentableType: 'Page', sectionId: this.props.pageTree.sectionId })
+	                )
+	              )
+	            )
+	          )
+	        );
+	      } else {
+	        return _react2.default.createElement('div', null);
+	      }
+	    }
+	  }]);
+	
+	  return PageCommentsModal;
+	}(_react2.default.Component);
+	
+	PageCommentsModal.propTypes = {
+	  pageTree: _react.PropTypes.object.isRequired
+	};
+	exports.default = PageCommentsModal;
+
+/***/ },
+/* 1157 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/custom_drag_layer.jsx ***!
   \**************************************************************/
@@ -66402,11 +66569,11 @@
 	
 	var _reactDnd = __webpack_require__(/*! react-dnd */ 717);
 	
-	var _page_container_preview = __webpack_require__(/*! ./page_container_preview */ 1156);
+	var _page_container_preview = __webpack_require__(/*! ./page_container_preview */ 1158);
 	
 	var _page_container_preview2 = _interopRequireDefault(_page_container_preview);
 	
-	var _page_type_preview = __webpack_require__(/*! ./page_type_preview */ 1157);
+	var _page_type_preview = __webpack_require__(/*! ./page_type_preview */ 1159);
 	
 	var _page_type_preview2 = _interopRequireDefault(_page_type_preview);
 	
@@ -66528,7 +66695,7 @@
 	exports.default = DragLayerDecorator(CustomDragLayer);
 
 /***/ },
-/* 1156 */
+/* 1158 */
 /*!*******************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_container_preview.jsx ***!
   \*******************************************************************/
@@ -66611,7 +66778,7 @@
 	exports.default = PageContainerPreview;
 
 /***/ },
-/* 1157 */
+/* 1159 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_type_preview.jsx ***!
   \**************************************************************/

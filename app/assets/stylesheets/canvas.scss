@@ -1908,10 +1908,10 @@
     margin-left: -45px;
     &:before {
       border-color: transparent transparent #DE2833 transparent;
-    } 
+    }
   }
   &:hover {
-    color: #DE2833!important;  
+    color: #DE2833!important;
   }
 }
 
@@ -2084,6 +2084,9 @@
   width: 100%;
   margin: 0;
   z-index: 5;
+  &.left-bar-contracted {
+    padding-left: 30px;
+  }
   @include animate(.35s);
   li {
     float: left;
