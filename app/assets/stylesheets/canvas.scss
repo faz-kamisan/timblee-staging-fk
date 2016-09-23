@@ -653,7 +653,7 @@
     }
     &:hover {
       span {
-        color: $primaryWhite;
+        color: $primaryPink;
       }
     }
   }
@@ -847,10 +847,9 @@
     margin-top: 1px;
     min-width: 108px;
     &:hover {
-      color: $primaryWhite;
+      color: $primaryPink;
       .caret-left {
-        color: $primaryWhite;
-        font-size: 12px;
+        color: $primaryPink;
       }
     }
   }
