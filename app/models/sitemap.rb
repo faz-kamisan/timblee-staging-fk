@@ -3,6 +3,8 @@ class Sitemap < ActiveRecord::Base
 
   LENGTH_TO_TRUNCATE = 44
   DEFAULT_NAME_PREFIX = 'New Sitemap'
+  DEFAULT_SECTION_NAME = 'Default'
+  GENERAL_PAGE_TYPE_NAME = 'General 1'
 
   belongs_to :folder
   belongs_to :business
@@ -55,8 +57,8 @@ class Sitemap < ActiveRecord::Base
     end
 
     def create_default_section_and_page
-      section = sections.create(name: 'Default', default: true)
-      section.pages.create(page_type: PageType.find_by_name('General 1'), name: name, sitemap_id: id)
+      section = sections.create(name: DEFAULT_SECTION_NAME, default: true)
+      section.pages.create(page_type: PageType.find_by_name(GENERAL_PAGE_TYPE_NAME), name: name, sitemap_id: id)
     end
 
 end

@@ -133,5 +133,3 @@ en:
     users:
       owner_destroy: Owner cannot be destroyed.
       owner_role_update: Owner role cannot be updated.
-
-  taken: has already been taken
