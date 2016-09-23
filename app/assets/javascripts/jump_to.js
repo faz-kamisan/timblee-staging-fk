@@ -12,7 +12,9 @@ $(function () {
       $("#search-sitemap-form").submit();
     },
     close: function (event, ui) {
-      $("#search-sitemap-form").addClass('hide');
+      if(event.originalEvent && event.originalEvent.type == 'blur'){
+        $("#search-sitemap-form").addClass('hide');
+      }
     }
   }).autocomplete( "widget" ).addClass( "dropdown-menu sitemap-names-dropdown");
 
