@@ -1,0 +1,76 @@
+.intro {
+  width: 575px;
+  margin: 0 auto;
+  text-align: center;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+.flex-control-nav li {
+  margin: 0 4px;
+}
+
+.flex-control-paging li a {
+  box-shadow: 0 0 0 transparent;
+  height: 9px;
+  width: 9px;
+  border-radius: 50%;
+  background: #A3ACB5;
+}
+
+.flex-control-paging li a.flex-active,
+.flex-control-paging li a:hover {
+  background: #EB008B;
+}
+
+.intro h4 {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  height: 60px;
+}
+
+.intro .slides li img {
+  border: 1px solid #B3BAC2;
+}
+
+.timblee-icon {
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.timblee-icon img {
+  width: 34px;
+  height: 34px;
+  vertical-align: top;
+}
+
+.intro-options {
+  text-align: center;
+  margin-top: 130px;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.intro-options a {
+  display: inline-block;
+}
+
+.flex-control-nav {
+  position: relative;
+  bottom: auto;
+  margin-top: 37px;
+}
+
+.replay {
+  display: none;
+}
+
+.skip,
+.replay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+}

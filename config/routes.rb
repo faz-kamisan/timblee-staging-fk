@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   resources :pages, only: [:create, :update, :destroy]
 
   get  'home/dashboard'
+  get  'home/intro'
   get  'home/settings'
 
   devise_scope :user do
