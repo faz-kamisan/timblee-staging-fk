@@ -62483,7 +62483,15 @@
 	    key: 'render',
 	    value: function render() {
 	      var connectDropTarget = this.props.connectDropTarget;
-	      return connectDropTarget(_react2.default.createElement('div', { className: 'first-page-droppable' + (this.props.leftSidebarExpanded ? '' : ' left-sidebar-contracted') }));
+	      return connectDropTarget(_react2.default.createElement(
+	        'div',
+	        { className: 'first-page-droppable' + (this.props.leftSidebarExpanded ? '' : ' left-sidebar-contracted') },
+	        _react2.default.createElement(
+	          'span',
+	          null,
+	          'Drag and drop page tiles here to start building  your sitemap'
+	        )
+	      ));
 	    }
 	  }]);
 	

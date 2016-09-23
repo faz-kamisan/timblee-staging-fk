@@ -70,6 +70,7 @@ class FirstPageDroppable extends React.Component {
     const connectDropTarget = this.props.connectDropTarget
     return connectDropTarget(
       <div className={'first-page-droppable' + (this.props.leftSidebarExpanded ? '' : ' left-sidebar-contracted')}>
+        <span>Drag and drop page tiles here to start building  your sitemap</span>
       </div>
     );
   }

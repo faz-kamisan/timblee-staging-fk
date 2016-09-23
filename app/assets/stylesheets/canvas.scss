@@ -594,16 +594,21 @@
 .first-page-droppable {
   position: fixed;
   width: 200px;
-  height: 85px;
+  height: 87px;
   background: transparent;
   border: 1px dashed $primaryGrey;
   left: 825px;
+  text-align: center;
   transition: .35s;
   &.drag-over {
     border: 1px solid $primaryGrey;
   }
   &.left-sidebar-contracted {
     left: 604px;
+  }
+  span {
+    vertical-align: middle;
+    font-weight: 500;
   }
 }
 
