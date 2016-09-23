@@ -30,7 +30,7 @@ class Comment < ActiveRecord::Base
       when (3600*24*2) .. (3600*24*30)
         return "#{(diff_seconds/(3600*24)).to_i} days ago"
       else
-        return start_time.strftime('%d %b %Y')
+        return created_at.strftime('%d %b %Y')
     end
   end
 end
