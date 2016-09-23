@@ -30,6 +30,10 @@ class Sitemap < ActiveRecord::Base
   scope :approved, -> { where(state: 'approved') }
   scope :order_by_alphanumeric_lower_name, -> { order("SUBSTRING(name FROM '(^[0-9]+)')::BIGINT ASC, lower(name)") }
 
+  def users
+    business.users + invited_users
+  end
+
   def to_react_data
     { name: self.name,
       state: state.titleize,

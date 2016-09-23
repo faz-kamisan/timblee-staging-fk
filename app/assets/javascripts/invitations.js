@@ -10,7 +10,10 @@ var Invitations = function(options) {
 Invitations.prototype.bindEvents = function() {
   var _this = this;
   this.sendInviteButton.on('click', function() {
-    var tags = $('#myTags').tagit('assignedTags')
+    var tags = [];
+    $('#myTags .valid-tag .tagit-label').each(function() {
+      tags.push(this.innerHTML);
+    })
     _this.inviteEmailsInput.val(tags.join(' '));
     if(!_this.inviteCustomMessage.data('send')) {
       _this.inviteCustomMessage.val('');

@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       get 'settings'
       get 'progress'
       patch 'update_password'
+      patch 'update_avatar'
       get 'validate_unique_email'
     end
   end
@@ -36,6 +37,8 @@ Rails.application.routes.draw do
     member do
       post :share_via_email
     end
+    patch 'rename'
+    post 'rename'
   end
   resources :comments, only: [:create, :update, :destroy]
   resources :pages, only: [:create, :update, :destroy]
@@ -43,6 +46,7 @@ Rails.application.routes.draw do
   resources :guests, only: [:create]
 
   get  'home/dashboard'
+  get  'home/intro'
   get  'home/settings'
 
   get '/:token' => 'sitemaps#public_share', :constraints => { :subdomain => /share/ }, as: :sitemap_public_share
@@ -62,7 +66,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :businesses, only: [] do
+  resources :businesses, only: [:update] do
     member do
       get 'send_destroy_request_to_superadmin'
     end

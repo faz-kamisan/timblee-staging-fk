@@ -34,9 +34,6 @@ set :ssh_options, {
   paranoid: true
 }
 
-# Default value for linked_dirs is []
-set :linked_dirs, fetch(:linked_dirs, []).push('tmp/pids')
-
 set :passenger_restart_with_touch, true
 
 set :sidekiq_config, "#{current_path}/config/sidekiq.yml"

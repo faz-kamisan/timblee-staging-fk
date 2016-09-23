@@ -2,6 +2,7 @@ class SitemapsController < ApplicationController
   before_filter :fetch_sitemap, only: [:destroy, :show, :update, :share_via_email]
   before_filter :fetch_sitemap_from_token, only: [:public_share]
   skip_before_filter :authenticate_user!, only: [:public_share]
+  before_filter :fetch_sitemap_for_rename, only: [:rename]
 
   def create
     @sitemap = current_business.sitemaps.build(sitemap_params)
@@ -50,6 +51,7 @@ class SitemapsController < ApplicationController
     if @sitemap.update(sitemap_params)
       respond_to do |format|
         format.js do
+          flash.now[:success] = t('.success', scope: :flash)
           render 'shared/show_flash'
         end
         format.json do
@@ -60,21 +62,43 @@ class SitemapsController < ApplicationController
       respond_to do |format|
         format.js do
           flash.now[:alert] = t('.failure', scope: :flash)
-          render 'shared/show_flash', status: 522
+          render 'shared/show_flash', status: 422
         end
         format.json do
-          render json: t('.failure', scope: :flash) , status: 522
+          render json: t('.failure', scope: :flash) , status: 422
         end
       end
     end
   end
 
+  def rename
+    if @sitemap.update(rename_params)
+      flash.now[:success] = t('.success', scope: :flash)
+    else
+      flash.now[:alert] = t('.failure', scope: :flash)
+    end
+
+  end
 
   private
     def fetch_sitemap
       unless @sitemap = current_business.sitemaps.find_by(id: params[:id])
-        flash.now[:alert] = 'Sitemap Not Found'
-        render 'shared/show_flash'
+        respond_to do |format|
+          format.js do
+            flash.now[:alert] = t('sitemaps.not_found', scope: :flash)
+            render 'shared/show_flash'
+          end
+          format.html do
+            flash[:alert] = t('sitemaps.not_found', scope: :flash)
+            redirect_to home_dashboard_path
+          end
+        end
+      end
+    end
+
+    def fetch_sitemap_for_rename
+      unless @sitemap = current_business.sitemaps.find_by(id: params[:sitemap_id])
+        flash.now[:alert] = t('sitemaps.not_found', scope: :flash)
       end
     end
 
@@ -86,5 +110,9 @@ class SitemapsController < ApplicationController
 
     def sitemap_params
       params.require(:sitemap).permit(:name, :folder_id, :state)
+    end
+
+    def rename_params
+      params.require(:sitemap).permit(:name)
     end
 end

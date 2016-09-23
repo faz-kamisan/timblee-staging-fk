@@ -110,6 +110,7 @@
     margin: 0;
     padding: 45px 0 5px 0;
     font-weight: 400;
+    word-wrap: break-word;
   }
   .updated {
     font-size: 10px;
@@ -409,4 +410,9 @@
   .modal-dialog {
     @include alignCenter(-310px, -264px);
   }
+}
+
+#sitemap_name {
+  width: 100%;
+  border: 0;
 }

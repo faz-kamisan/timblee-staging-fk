@@ -30,3 +30,5 @@
 //= require constants
 //= require modal_fix
 //= require toggle_class
+//= require jquery.flexslider-min
+//= require script

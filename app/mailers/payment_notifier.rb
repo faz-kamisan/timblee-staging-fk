@@ -4,7 +4,7 @@ class PaymentNotifier < ActionMailer::Base
   def success(user, event)
     @event = event
     @user = user
-    @amount = @event.data.object.amount / 100
+    @amount = @event.data.object.amount / 100.to_f
     attachments['invoice.pdf'] = PdfGeneratorService.new("#{ Rails.root }/app/views/payment_notifier/success_invoice.html.erb", binding).generate_pdf
     mail to: user.email, subject: 'Payment successfull for Pro subscription!'
   end
@@ -12,7 +12,7 @@ class PaymentNotifier < ActionMailer::Base
   def refund(user, event)
     @event = event
     @user = user
-    @amount_refunded = @event.data.object.amount_refunded / 100
+    @amount_refunded = @event.data.object.amount_refunded / 100.to_f
     attachments['invoice.pdf'] = PdfGeneratorService.new("#{ Rails.root }/app/views/payment_notifier/refund_invoice.html.erb", binding).generate_pdf
     mail to: user.email, subject: 'Payment refunded for Pro subscription!'
   end
