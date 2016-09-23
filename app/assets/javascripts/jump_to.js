@@ -10,6 +10,9 @@ $(function () {
       $("#search-sitemap").attr('disabled', true);
       $("#search-sitemap").hide();
       $("#search-sitemap-form").submit();
+    },
+    close: function (event, ui) {
+      $("#search-sitemap-form").addClass('hide');
     }
   }).autocomplete( "widget" ).addClass( "dropdown-menu sitemap-names-dropdown");
 
