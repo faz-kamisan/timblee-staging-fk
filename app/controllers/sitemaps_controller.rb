@@ -1,5 +1,6 @@
 class SitemapsController < ApplicationController
   before_filter :fetch_sitemap, only: [:destroy, :show, :update]
+  before_filter :fetch_sitemap_for_rename, only: [:rename]
 
   def create
     @sitemap = current_business.sitemaps.build(sitemap_params)
@@ -30,6 +31,7 @@ class SitemapsController < ApplicationController
     if @sitemap.update(sitemap_params)
       respond_to do |format|
         format.js do
+          flash.now[:success] = t('.success', scope: :flash)
           render 'shared/show_flash'
         end
         format.json do
@@ -49,6 +51,15 @@ class SitemapsController < ApplicationController
     end
   end
 
+  def rename
+    if @sitemap.update(rename_params)
+      flash.now[:success] = t('.success', scope: :flash)
+    else
+      flash.now[:alert] = t('.failure', scope: :flash)
+    end
+
+  end
+
   private
     def fetch_sitemap
       unless @sitemap = current_business.sitemaps.find_by(id: params[:id])
@@ -65,7 +76,17 @@ class SitemapsController < ApplicationController
       end
     end
 
+    def fetch_sitemap_for_rename
+      unless @sitemap = current_business.sitemaps.find_by(id: params[:sitemap_id])
+        flash.now[:alert] = t('sitemaps.not_found', scope: :flash)
+      end
+    end
+
     def sitemap_params
       params.require(:sitemap).permit(:name, :folder_id, :state)
+    end
+
+    def rename_params
+      params.require(:sitemap).permit(:name)
     end
 end
