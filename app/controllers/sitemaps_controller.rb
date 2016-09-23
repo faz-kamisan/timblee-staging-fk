@@ -41,7 +41,7 @@ class SitemapsController < ApplicationController
 
   def destroy
     if @sitemap.destroy
-      Notification.delay.delete_sitemap_notification(@sitemap, current_user, home_dashboard_path)
+      Notification.delay.delete_sitemap_notification(@sitemap, current_user)
       flash[:notice] = t('.success', scope: :flash)
     else
       flash[:error] = t('.failure', scope: :flash)
@@ -51,7 +51,7 @@ class SitemapsController < ApplicationController
 
   def update
     if @sitemap.update(sitemap_params)
-      Notification.delay.sitemap_status_update_notification(@sitemap, current_user, progress_users_path) if sitemap_params.has_key?('state')
+      Notification.delay.sitemap_status_update_notification(@sitemap, current_user) if sitemap_params.has_key?('state')
 
       respond_to do |format|
         format.js do

@@ -83,7 +83,7 @@
             <span class="icon-bell"></span>
           </span>
           <ul class="p-0 m-0 user-settings">
-            <%current_user.notifications.each do |notification|%>
+            <% current_user.notifications.order(created_at: :desc).limit(10).each do |notification|%>
               <li>
                 <%= link_to "#{notification.message}", notification.link_to %>
               </li>
