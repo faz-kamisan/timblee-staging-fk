@@ -6,6 +6,8 @@ class Comment < ActiveRecord::Base
   strip_fields :message
 
   scope :order_by_created_at, -> { order('created_at ASC') }
+  after_create :create_comment_notification
+  after_update :resolved_comment_notification, if: Proc.new { |c| c.state_changed? && c.state == 'resolved'}
 
   def to_react_data
     { id: id, message: message, created_at: created_at_decorated, commenter: { fullName: commenter.full_name, email: commenter.email } }
@@ -28,4 +30,14 @@ class Comment < ActiveRecord::Base
         return created_at.strftime('%d %b %Y')
     end
   end
+
+  private
+
+    def create_comment_notification
+      Notification.add_comment_notification(self, :create)
+    end
+
+    def resolved_comment_notification
+      Notification.add_comment_notification(self, :resolved)
+    end
 end
