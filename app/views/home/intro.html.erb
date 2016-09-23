@@ -1,36 +1,39 @@
-<div class="text-center timblee-icon">
-  <%= image_tag("Timblee-icon.svg", alt: " ") %>
-</div>
-
-<div class="flexslider intro">
-  <ul class="slides">
-    <li>
-      <h4>Drag and drop page types to build beautiful visual sitemaps faster.</h4>
-      <%= image_tag("Intro1.png", alt: "Screen 1") %>
-    </li>
-    <li>
-      <h4>Easily share your sitemap with clients &amp; co-workers to get organised, contextual feedback.</h4>
-      <%= image_tag("Intro2.png", alt: "Screen 2") %>
-    </li>
-    <li>
-      <h4>Have rich conversations with clients and co-workers and implement feedback easily.</h4>
-      <%= image_tag("Intro3.png", alt: "Screen 3") %>
-    </li>
-    <li>
-      <h4>Track and change sitemap statues visually via the progress board.</h4>
-      <%= image_tag("Intro4.png", alt: "Screen 4") %>
-    </li>
-  </ul>
-</div>
-
-<div class="intro-options">
-  <div class="skip">
-    <%= link_to 'Skip Introduction', home_dashboard_path %>
+<div class="intro-container">
+  <div class="text-center timblee-icon">
+    <%= image_tag("Timblee-icon.svg", alt: " ") %>
   </div>
-  <div class="replay">
-    <%= link_to 'Start Creating sitemaps', home_dashboard_path %>
-    <br>
-    <a href="javascript:void(0);" id="replay_intro">Replay Introduction</a>
+
+  <div class="flexslider intro">
+    <ul class="slides">
+      <li>
+        <h4>Drag and drop page types to build beautiful visual sitemaps faster.</h4>
+        <%= image_tag("Intro1.png", alt: "Screen 1") %>
+      </li>
+      <li>
+        <h4>Easily share your sitemap with clients &amp; co-workers to get organised, contextual feedback.</h4>
+        <%= image_tag("Intro2.png", alt: "Screen 2") %>
+      </li>
+      <li>
+        <h4>Have rich conversations with clients and co-workers and implement <br> feedback easily.</h4>
+        <%= image_tag("Intro3.png", alt: "Screen 3") %>
+      </li>
+      <li>
+        <h4>Track and change sitemap statues visually via the progress board.</h4>
+        <%= image_tag("Intro4.png", alt: "Screen 4") %>
+      </li>
+    </ul>
+  </div>
+
+  <div class="intro-options">
+    <div class="skip">
+      <%= link_to 'Skip Introduction', home_dashboard_path %>
+    </div>
+    <div class="replay">
+      <%= link_to 'Start Creating sitemaps', home_dashboard_path, class: 'btn btn-pink' %>
+      <a href="javascript:void(0);" id="replay_intro">
+        <i class="icon-reload"></i>
+        Replay Introduction
+      </a>
+    </div>
   </div>
 </div>
-

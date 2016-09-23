@@ -1,3 +1,7 @@
+.intro-container {
+  margin-top: -65px;
+}
+
 .intro {
   width: 575px;
   margin: 0 auto;
@@ -8,7 +12,7 @@
 }
 
 .flex-control-nav li {
-  margin: 0 4px;
+  margin: 0 3px;
 }
 
 .flex-control-paging li a {
@@ -28,7 +32,7 @@
   margin: 0;
   font-size: 16px;
   line-height: 24px;
-  height: 60px;
+  margin-bottom: 40px;
 }
 
 .intro .slides li img {
@@ -48,9 +52,23 @@
 
 .intro-options {
   text-align: center;
-  margin-top: 130px;
-  margin-bottom: 25px;
+  margin-top: 100px;
   position: relative;
+  height: 95px;
+  .btn-pink {
+    width: 220px;
+    height: 35px;
+    font-size: 8px;
+    padding-top: 0;
+    padding-bottom: 0;
+    background: $primaryPink;
+    color: $primaryWhite;
+    line-height: 33px;
+    &:hover {
+      background: $primaryWhite;
+      color: $primaryPink;
+    }
+  }
 }
 
 .intro-options a {
@@ -73,4 +91,31 @@
   left: 0;
   top: 0;
   width: 100%;
+}
+
+.skip {
+  a {
+    color: $primaryLink;
+    font-size: 11px;
+    &:hover {
+      color: $primaryPink;
+    }
+  }
+}
+
+#replay_intro {
+  color: $primaryLink;
+  font-size: 11px;
+  &:hover {
+    color: $primaryPink;
+  }
+  .icon-reload {
+    font-size: 16px;
+    position: relative;
+    font-size: 17px;
+    margin-right: 3px;
+    display: inline-block;
+    top: 4px;
+    @include rotate(180deg);
+  }
 }
