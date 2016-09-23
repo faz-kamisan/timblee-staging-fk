@@ -144,3 +144,80 @@
     }
   }
 }
+
+#jump-to {
+  .icon-caret {
+    display: inline-block;
+    font-size: 12px;
+    padding-left: 6px;
+    position: relative;
+    top: 1px;
+  }
+}
+
+#search-sitemap-form {
+  width: 135px;
+  max-height: 320px;
+  overflow-y: auto;
+  background: $primaryWhite;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin: 10px 0 0 -30px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.35);
+  font-family: "proxima-nova",sans-serif!important;
+  position: relative;
+  .ui-widget-content {
+    position: relative;
+    background: transparent!important;
+    min-width: 1px!important;
+    border: 0;
+    width: 100%!important;
+    padding-bottom: 20px;
+    li {
+      min-height: 30px;
+      font-size: 10px;
+      padding: 5px 13px;
+      line-height: 18px;
+      color: #646464;
+      background: #fff;
+      + li {
+        border-top: solid 1px #F9FAFC;
+      }
+      &:hover {
+        color: $primaryPink;
+      }
+    }
+    .ui-state-focus,
+    .ui-state-active {
+      margin: 0!important;
+      border: 0;
+      border-top: solid 1px #F9FAFC;
+      background: transparent; 
+      &:first-child {
+        border: 0!important; 
+      }
+    }
+  }
+  #search-sitemap {
+    height: 30px;
+    border: 0;
+    font-size: 10px;
+    color: $primaryLink;
+    width: 100%;
+    padding: 0 13px 0 27px;
+    position: relative;
+    font-family: "proxima-nova",sans-serif!important;
+  }
+  .icon-search {
+    font-size: 10px;
+    left: 13px;
+    position: absolute;
+    top: 9px;
+    z-index: 5;
+    color: $primaryLink;
+  }
+  ::-webkit-input-placeholder { color: $primaryLink; opacity: 1; font-size: 10px; }
+  :-moz-placeholder { color: red; color: $primaryLink; opacity: 1; font-size: 10px; }
+  ::-moz-placeholder { color: red; color: $primaryLink; opacity: 1; font-size: 10px; }
+  :-ms-input-placeholder { color: red; color: $primaryLink; opacity: 1; font-size: 10px; }
+}
