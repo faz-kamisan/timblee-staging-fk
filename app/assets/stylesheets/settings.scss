@@ -374,11 +374,13 @@ ul.tagit li.tagit-choice-editable {
     height: 45px!important;
     margin-bottom: 0;
     @extend .font-14;
-    @include border-radius(1px);
     text-transform: uppercase;
   }
   .modal-message, p {
     color: $primaryGrey;
+  }
+  .btn-success:hover {
+    border-color: #449D44;
   }
 }
 
@@ -389,12 +391,18 @@ ul.tagit li.tagit-choice-editable {
     color: $primaryGrey;
     font-weight: 700;
     line-height: 20px;
+    &:hover {
+      color: $primaryPink;
+    }
   }
   .clear-text {
     font-size: 14px;
     color: $primaryLink;
     font-weight: 400;
     line-height: 20px;
+    &:hover {
+      color: $primaryPink;
+    } 
   }
   .or {
     color: #d6d8da;
