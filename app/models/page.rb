@@ -1,5 +1,6 @@
 class Page < ActiveRecord::Base
-  extend ActsAsTree::TreeView
+  STATES = ['active', 'archived', 'resolved']
+
   belongs_to :sitemap
   belongs_to :section
   belongs_to :page_type
@@ -12,7 +13,7 @@ class Page < ActiveRecord::Base
   before_update :archive_children_pages, if: :state_changed?
 
   validates :name, :section, :page_type, :sitemap, :uid, presence: true
-  validates :state, inclusion: { in: ['active', 'archived', 'resolved'] }
+  validates :state, inclusion: { in: STATES }
   validates :uid, uniqueness: { scope: :sitemap_id }
 
   def get_tree(collection, level = 0)
@@ -37,6 +38,7 @@ class Page < ActiveRecord::Base
 
 
   private
+
     def update_children_section_id
       children.each do |child|
         child.update(section_id: self.section_id)
@@ -55,4 +57,5 @@ class Page < ActiveRecord::Base
       highest_uid = sitemap.pages.maximum('uid')
       self.uid = highest_uid.to_i + 1
     end
+
 end

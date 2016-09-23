@@ -63,9 +63,9 @@ class StripePaymentService
       LoggerExtension.stripe_log "AMOUNT TO BE CHARGED #{amount}"
       charge = Stripe::Charge.create(
         :amount => amount,
-        :currency => "usd",
+        :currency => STRIPE_CURRENCY,
         :customer => @customer.id,
-        :description => "Charge for final settlement"
+        :description => STRIPE_SETTLEMENT_DESCRIPTION
       )
       LoggerExtension.stripe_log "CUSTOMER CHARGED SUCCESSFULLY #{charge.inspect}"
     end
