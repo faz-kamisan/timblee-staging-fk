@@ -60,7 +60,7 @@ class Comment extends React.Component {
             You
             { this.state.editable &&
               <span className='comment-action-links'>
-                <a className='comment-edit-link cursor' onClick={this.showEditor}> Edit</a> |
+                <a className='comment-edit-link cursor' onClick={this.showEditor}> Edit</a> <span className="divider">|</span>
                 <a href="#comment-delete-modal" className='comment-delete-link cursor btn-modal-open' data-dismiss="modal" onClick={this.setSelectedComment} data-toggle='modal'> Delete</a>
               </span>
             }

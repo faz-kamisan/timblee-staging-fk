@@ -46,9 +46,13 @@ class CommentDeleteModal extends React.Component {
               <p className="modal-message">{'You are about to delete this comment on ' + this.props.comment.commentableName}</p>
             </div>
             <div className="modal-body">
-              <div className="page-tile-clone">
+              <div className="comment-clone">
                 {this.props.comment.commenter &&
-                  <ConnectedComment id={this.props.comment.id} message={this.props.comment.message} commenter={this.props.comment.commenter} createdAt={this.props.comment.createdAt} editable={false} commentableId={this.props.comment.commentableId} commentableType='Page' sectionId={this.props.comment.sectionId} commentableName={ this.props.comment.commentableName } modalView={false} />
+                  <ul className="comment-group">
+                    <li>
+                      <ConnectedComment id={this.props.comment.id} message={this.props.comment.message} commenter={this.props.comment.commenter} createdAt={this.props.comment.createdAt} editable={false} commentableId={this.props.comment.commentableId} commentableType='Page' sectionId={this.props.comment.sectionId} commentableName={ this.props.comment.commentableName } modalView={false} />
+                    </li>
+                  </ul>
                 }
               </div>
               <div className="modal-button text-center">

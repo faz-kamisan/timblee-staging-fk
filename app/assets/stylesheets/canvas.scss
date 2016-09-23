@@ -1571,6 +1571,22 @@
   &.open {
     right: 0;
   }
+
+  .comment-group {
+    li:last-child {
+      position: relative;
+      &:before {
+        content: ' ';
+        height: 98%;
+        background: #262b30;
+        width: 2px;
+        z-index: 4;
+        left: 40px;
+        top: 2%;
+        position: absolute;
+      }
+    }
+  }
 }
 
 .comment-list {
@@ -2308,6 +2324,64 @@
   .comment-input {
     textarea {
       border: 1px solid #d4d4d4!important;
+    }
+  }
+}
+
+.comment-action-links {
+  color: $primaryWhite;
+  padding-left: 5px;
+  font-size: 10px;
+  .divider {
+    padding: 0 2px;
+  }
+  a {
+    color: $primaryWhite;
+    font-size: 10px;
+    &:hover {
+      color: $primaryPink;
+    }
+  }
+}
+
+#comment-delete-modal {
+  .modal-body {
+    padding: 35px 80px 50px 80px;
+  }
+  .comment-group {
+    padding-left: 0;
+    .comment-block {
+      padding: 35px 40px;
+      background: $primaryWhite;
+      @include border-radius(4px);
+      border: 1px solid #d4d4d4;
+      margin-bottom: 32px;
+    }
+    &:before {
+      display: none;
+    }
+    li {
+      padding: 0;
+      margin: 0;
+      img {
+        top: 40px;
+        left: 43px;
+      }
+      h4,p {
+        padding-left: 50px;
+      }
+      h4 {
+        margin-bottom: 0;
+      }
+      h6 {
+        top: 35px;
+        right: 55px;
+      }
+    }
+  }
+  .comment-block {
+    p {
+      color: #62717f;
     }
   }
 }

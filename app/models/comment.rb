@@ -25,7 +25,7 @@ class Comment < ActiveRecord::Base
       when (3600*24) .. (3600*24*30)
         return "#{(diff_seconds/(3600*24)).to_i} #{'day'.pluralize((diff_seconds/(3600*24)).to_i)} ago"
       else
-        return start_time.strftime('%d %b %Y')
+        return created_at.strftime('%d %b %Y')
     end
   end
 end
