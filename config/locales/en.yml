@@ -82,7 +82,7 @@ en:
           plan_not_found: Plan not found
           failure: Something went wrong.
 
-      send_destroy_request_to_superadmin:
+      delete_account:
         success: "We've received your request to delete your account. We'll shortly send you an email to confirm, and then, your account will be gone forever :("
       update:
         success: Business updated successfully.
