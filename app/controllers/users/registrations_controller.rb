@@ -57,4 +57,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
       redirect_to settings_users_path, alert: 'Need to verify email before updating'
     end
   end
+
+  private
+
+    def after_sign_up_path_for(resource)
+      home_intro_path
+    end
 end

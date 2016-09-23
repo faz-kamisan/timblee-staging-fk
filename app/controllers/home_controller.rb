@@ -1,5 +1,7 @@
 class HomeController < ApplicationController
 
+  layout 'intro', only: :intro
+
   def dashboard
     if current_business
       @folders = current_business.folders.order_by_alphanumeric_lower_name.includes(:sitemaps)
@@ -10,4 +12,6 @@ class HomeController < ApplicationController
   def settings
   end
 
+  def intro
+  end
 end
