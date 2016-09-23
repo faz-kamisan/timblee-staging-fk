@@ -33,11 +33,15 @@ Rails.application.routes.draw do
   end
 
   resources :folders
-  resources :sitemaps
+  resources :sitemaps do
+    patch 'rename'
+    post 'rename'
+  end
   resources :comments, only: [:create, :update, :destroy]
   resources :pages, only: [:create, :update, :destroy]
 
   get  'home/dashboard'
+  get  'home/intro'
   get  'home/settings'
 
   devise_scope :user do

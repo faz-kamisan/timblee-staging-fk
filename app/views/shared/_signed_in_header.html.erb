@@ -13,7 +13,16 @@
             <li class="nav-item">
               <%= link_to 'Progress', progress_users_path %>
             </li>
-            <li class="nav-item"><a href="javascript:void(0);">Jump to</a></li>
+            <li class="nav-item", id='jump-to', tabindex="3">
+              <a href="javascript:void(0);">
+                Jump to
+                <span class="icon-caret"></span>
+              </a>
+              <%= form_tag sitemaps_path, method: :get, id: 'search-sitemap-form', enforce_utf8: false, class: 'hide' do %>
+                <span class="icon-search"></span>
+                <%= text_field_tag "sitemap_params", nil, id: 'search-sitemap', data: { source: current_business.sitemaps.map {|s| {label: s.name, value: s.id}} }, placeholder: 'Search for sitemaps', autocomplete: 'on' %>
+              <% end %>
+            </li>
           </ul>
         </div>
       </div>
@@ -83,7 +92,8 @@
       </div>
     </div>
   </div>
+
 </header>
-<%= javascript_include_tag('sitemaps') %>
+<%= javascript_include_tag('sitemaps', 'jump_to') %>
 
 <%= render 'sitemaps/sitemap_error_modal'%>

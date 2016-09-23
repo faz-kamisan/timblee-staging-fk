@@ -22,6 +22,9 @@ en:
       destroy:
         success: Sitemap destroyed successfully
         failure: Couldn't delete sitemap
+      rename:
+        success: Sitemap renamed successfully
+        failure: Couldn't rename sitemap
     comments:
       not_found: Can't find comment
       create:
@@ -121,7 +124,7 @@ en:
 
   devise:
     invitations:
-      invitation_token_invalid: "Either the invitation token provided is invalid or Admin has revoked your invitation!"
+      invitation_token_invalid: "Your invitation has been revoked by an administrator of this account. Please ask them to invite you again."
 
   errors:
     messages:
