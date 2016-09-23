@@ -47183,6 +47183,10 @@
 	
 	var _draggable_page_container2 = _interopRequireDefault(_draggable_page_container);
 	
+	var _connected_first_page_droppable = __webpack_require__(/*! ../containers/connected_first_page_droppable */ 1017);
+	
+	var _connected_first_page_droppable2 = _interopRequireDefault(_connected_first_page_droppable);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -47238,7 +47242,14 @@
 	        return _react2.default.createElement(
 	          'div',
 	          { key: section.id, className: 'sitemap-section' + (_this.state.currentSectionId == section.id ? ' active' : ' hide') },
-	          _react2.default.createElement(_draggable_page_container2.default, { pageTree: section.pageTree, sitemapNumber: '', sitemapId: _this.props.sitemapId, leftSidebarExpanded: _this.props.leftSidebarExpanded })
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(_draggable_page_container2.default, { pageTree: section.pageTree, sitemapNumber: '', sitemapId: _this.props.sitemapId, leftSidebarExpanded: _this.props.leftSidebarExpanded })
+	          ),
+	          section.pageTree.children.filter(function (page) {
+	            return page.state != 'archived';
+	          }).length == 0 && _react2.default.createElement(_connected_first_page_droppable2.default, { pageTree: section.pageTree, leftSidebarExpanded: _this.props.leftSidebarExpanded })
 	        );
 	      });
 	
@@ -48762,7 +48773,8 @@
 	    _this2.handleNameInputFocus = _this2.handleNameInputFocus.bind(_this2);
 	    _this2.handleMainHeaderToggle = _this2.handleMainHeaderToggle.bind(_this2);
 	    _this2.handleSitemapShareClick = _this2.handleSitemapShareClick.bind(_this2);
-	    _this2.state = { nameFocused: false, name: props.name, showMainHeader: true };
+	    _this2.toggleCommentState = _this2.toggleCommentState.bind(_this2);
+	    _this2.state = { nameFocused: false, name: props.name, showMainHeader: true, commentSidebarOpen: false };
 	    return _this2;
 	  }
 	
@@ -48822,6 +48834,13 @@
 	      if (this.state.nameFocused) {
 	        $(this.refs.sitemapNameInput).focus();
 	      }
+	    }
+	  }, {
+	    key: 'toggleCommentState',
+	    value: function toggleCommentState(e) {
+	      this.setState({ commentSidebarOpen: !this.state.commentSidebarOpen });
+	      $('.sitemap-right-sidebar').toggleClass('open');
+	      $('.comment-list').toggleClass('open');
 	    }
 	  }, {
 	    key: 'render',
@@ -48903,6 +48922,15 @@
 	                'a',
 	                { href: '#sitemap-share-modal', 'data-toggle': 'modal', className: 'btn btn-share', onClick: this.handleSitemapShareClick },
 	                'Share'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'pull-left' },
+	              _react2.default.createElement(
+	                'a',
+	                { href: 'javascript:void(0)', className: 'btn btn-toggle-comments', onClick: this.toggleCommentState },
+	                'Comments'
 	              )
 	            )
 	          )
@@ -62308,6 +62336,173 @@
 	  iconName: _react.PropTypes.string.isRequired
 	};
 	exports.default = PageTypePreview;
+
+/***/ },
+/* 1017 */
+/*!***************************************************************************!*\
+  !*** ./app/bundles/SiteMap/containers/connected_first_page_droppable.jsx ***!
+  \***************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
+	
+	var _actions = __webpack_require__(/*! ../actions */ 606);
+	
+	var _first_page_droppable = __webpack_require__(/*! ../components/first_page_droppable */ 1018);
+	
+	var _first_page_droppable2 = _interopRequireDefault(_first_page_droppable);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return { sitemapId: state.id };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    onPageDrop: function onPageDrop(id, sectionId, newParentId, position) {
+	      dispatch((0, _actions.updatePagePosition)(id, sectionId, newParentId, position));
+	    },
+	    onPageTypeDrop: function onPageTypeDrop(sectionId, pageType, parentId, position, timeStamp) {
+	      dispatch((0, _actions.addNewPage)(sectionId, pageType, parentId, position, timeStamp));
+	    },
+	    onPageIdUpdate: function onPageIdUpdate(id, sectionId, newId) {
+	      dispatch((0, _actions.updateId)(id, sectionId, newId));
+	    },
+	    setSaving: function setSaving(saving) {
+	      dispatch((0, _actions.setSaving)(saving));
+	    }
+	  };
+	};
+	
+	var ConnectedFirstPageDroppable = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_first_page_droppable2.default);
+	
+	exports.default = ConnectedFirstPageDroppable;
+
+/***/ },
+/* 1018 */
+/*!*****************************************************************!*\
+  !*** ./app/bundles/SiteMap/components/first_page_droppable.jsx ***!
+  \*****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 301);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _constants = __webpack_require__(/*! ../dnd/constants */ 768);
+	
+	var _reactDnd = __webpack_require__(/*! react-dnd */ 714);
+	
+	var _reactDom = __webpack_require__(/*! react-dom */ 379);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var sitemapTarget = {
+	  drop: function drop(props, monitor, component) {
+	    var item = monitor.getItem();
+	    if (monitor.didDrop() || item.pageType == 'page') {
+	      return;
+	    }
+	    if (item.type == 'PageType') {
+	      var timeStamp = new Date();
+	      $.ajax({
+	        url: '/pages/',
+	        method: 'post',
+	        dataType: 'JSON',
+	        data: { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: item.name, position: 1, section_id: props.pageTree.section_id } },
+	        error: function error(result) {
+	          document.setFlash(result.responseText);
+	        },
+	        success: function success(result) {
+	          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id);
+	        },
+	        complete: function complete(result) {
+	          props.setSaving(true);
+	          setTimeout(function () {
+	            props.setSaving(false);
+	          }, 2000);
+	        }
+	      });
+	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp);
+	    }
+	  }
+	};
+	
+	var DropTargetDecorator = (0, _reactDnd.DropTarget)([_constants.ItemTypes.PAGE_CONTAINER, _constants.ItemTypes.PAGE_TYPE], sitemapTarget, function (connect, monitor) {
+	  return {
+	    connectDropTarget: connect.dropTarget(),
+	    isOverCurrent: monitor.isOver({ shallow: true }),
+	    isOver: monitor.isOver()
+	  };
+	});
+	
+	var FirstPageDroppable = function (_React$Component) {
+	  _inherits(FirstPageDroppable, _React$Component);
+	
+	  function FirstPageDroppable() {
+	    _classCallCheck(this, FirstPageDroppable);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(FirstPageDroppable).apply(this, arguments));
+	  }
+	
+	  _createClass(FirstPageDroppable, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
+	        var domNode = (0, _reactDom.findDOMNode)(this);
+	        $(domNode).addClass('drag-over');
+	      }
+	
+	      if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
+	        var domNode = (0, _reactDom.findDOMNode)(this);
+	        $(domNode).removeClass('drag-over');
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var connectDropTarget = this.props.connectDropTarget;
+	      return connectDropTarget(_react2.default.createElement('div', { className: 'first-page-droppable' + (this.props.leftSidebarExpanded ? '' : ' left-sidebar-contracted') }));
+	    }
+	  }]);
+	
+	  return FirstPageDroppable;
+	}(_react2.default.Component);
+	
+	FirstPageDroppable.propTypes = {
+	  onPageDrop: _react.PropTypes.func.isRequired,
+	  onPageTypeDrop: _react.PropTypes.func.isRequired,
+	  onPageIdUpdate: _react.PropTypes.func.isRequired,
+	  setSaving: _react.PropTypes.func.isRequired,
+	  pageTree: _react.PropTypes.object.isRequired,
+	  sitemapId: _react.PropTypes.number.isRequired,
+	  leftSidebarExpanded: _react.PropTypes.bool.isRequired
+	};
+	
+	
+	var DroppableFirstPageDroppable = DropTargetDecorator(FirstPageDroppable);
+	exports.default = DroppableFirstPageDroppable;
 
 /***/ }
 /******/ ]);

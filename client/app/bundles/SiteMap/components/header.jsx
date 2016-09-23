@@ -18,7 +18,8 @@ class Header extends React.Component {
     this.handleNameInputFocus = this.handleNameInputFocus.bind(this);
     this.handleMainHeaderToggle = this.handleMainHeaderToggle.bind(this);
     this.handleSitemapShareClick = this.handleSitemapShareClick.bind(this);
-    this.state = { nameFocused: false, name: props.name, showMainHeader: true }
+    this.toggleCommentState = this.toggleCommentState.bind(this);
+    this.state = { nameFocused: false, name: props.name, showMainHeader: true, commentSidebarOpen: false }
   }
 
   handleMainHeaderToggle(e) {
@@ -71,6 +72,12 @@ class Header extends React.Component {
     }
   }
 
+  toggleCommentState(e) {
+    this.setState({commentSidebarOpen: !this.state.commentSidebarOpen})
+    $('.sitemap-right-sidebar').toggleClass('open')
+    $('.comment-list').toggleClass('open')
+  }
+
   render() {
     var _this = this;
     var renderStates = ['In Progress', 'Review', 'Approved', 'On Hold'].map(function(state, index) {
@@ -116,6 +123,9 @@ class Header extends React.Component {
           <div className="col-xs-5">
             <div className="pull-left">
               <a href="#sitemap-share-modal" data-toggle="modal" className="btn btn-share" onClick={this.handleSitemapShareClick}>Share</a>
+            </div>
+            <div className="pull-left">
+              <a href="javascript:void(0)" className="btn btn-toggle-comments" onClick={this.toggleCommentState}>Comments</a>
             </div>
           </div>
         </div>

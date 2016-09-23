@@ -591,6 +591,26 @@
   }
 }
 
+.first-page-droppable {
+  position: fixed;
+  width: 200px;
+  height: 85px;
+  background: transparent;
+  border: 1px dashed $primaryGrey;
+  left: 825px;
+  transition: .35s;
+  &.drag-over {
+    border: 1px solid $primaryGrey;
+  }
+  &.left-sidebar-contracted {
+    left: 604px;
+  }
+}
+
+.page-container.level-0 {
+  transition: .35s;
+}
+
 .sitemap-left-sidebar {
   position: fixed;
   width: 372px;
@@ -1534,7 +1554,7 @@
 /* Comments */
 .sitemap-right-sidebar {
   position: fixed;
-  right: 0;
+  right: -435px;
   width: 420px;
   top: 175px;
   height: calc(100% - 175px);
@@ -1544,6 +1564,9 @@
   box-shadow: 0px 0px 20px 7px rgba(147, 147, 147, 1);
   overflow-y: auto;
   padding-top: 60px;
+  &.open {
+    right: 0;
+  }
 }
 
 .comment-list {
@@ -1554,10 +1577,13 @@
   position: fixed;
   width: 420px;
   border-top: solid 1px #171a1d;
-  right: 0;
+  right: -435px;
   top: 175px;
   background: #262b30;
   z-index: 5;
+  &.open {
+    right: 0;
+  }
   @include animate(.35s);
   .animated-bar-react {
     position: absolute;

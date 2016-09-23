@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { traverse } from '../helpers/tree_helper'
 import DraggablePageContainer from './draggable_page_container'
+import ConnectedFirstPageDroppable from '../containers/connected_first_page_droppable'
 
 class SectionContainer extends React.Component {
   static propTypes = {
@@ -34,7 +35,12 @@ class SectionContainer extends React.Component {
     var renderedSections = this.props.sections.map(function(section, index) {
       return (
         <div key={section.id} className={'sitemap-section' + (_this.state.currentSectionId == section.id ? ' active' : ' hide')}>
-          <DraggablePageContainer pageTree={section.pageTree} sitemapNumber='' sitemapId={_this.props.sitemapId} leftSidebarExpanded={_this.props.leftSidebarExpanded} />
+          <div>
+            <DraggablePageContainer pageTree={section.pageTree} sitemapNumber='' sitemapId={_this.props.sitemapId} leftSidebarExpanded={_this.props.leftSidebarExpanded} />
+          </div>
+          { (section.pageTree.children.filter(function(page) { return(page.state != 'archived') }).length == 0) &&
+            <ConnectedFirstPageDroppable pageTree={section.pageTree} leftSidebarExpanded={_this.props.leftSidebarExpanded} />
+          }
         </div>
       )
     })
