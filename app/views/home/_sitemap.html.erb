@@ -50,7 +50,7 @@
             </li>
             <li>
               <% if current_business.is_starter_plan? && !current_business.in_trial_period? %>
-                <a href="#invite-error-modal" data-toggle="modal" class="action invite-user-modal-link">
+                <a class="action invite-user-modal-link invite-error-link">
                   <span class="icon icon-invite-female">
                     <span class="path1"></span>
                     <span class="path2"></span>
@@ -85,7 +85,7 @@
               </a>
             </li>
             <li>
-              <%= link_to "#delete-sitemap-modal", 'data-toggle': 'modal', class: 'action delete-sitemap-modal-link', 'data-url': sitemap_path(sitemap), 'data-name': sitemap.name do %>
+              <%= link_to "javascript:void(0))", class: 'action delete-sitemap-modal-link', 'data-url': sitemap_path(sitemap), 'data-name': sitemap.name do %>
                 <span class="icon icon-delete-circle"></span>
                 <span class="link-text">Delete</span>
               <% end %>
