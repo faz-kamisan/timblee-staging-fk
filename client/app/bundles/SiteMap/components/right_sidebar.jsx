@@ -30,7 +30,7 @@ class RightSidebar extends React.Component {
     const CommentTabs = ['active', 'resolved', 'archived']
     var _this = this;
     var renderedComments = this.props.comments.map(function(comment, index) {
-      return <li key={index}><ConnectedComment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} editable={true} commentableId={_this.props.sitemapId} commentableType='Sitemap' commentableName={ this.props.name } /></li>
+      return <li key={index}><ConnectedComment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} editable={true} commentableId={_this.props.sitemapId} commentableType='Sitemap' commentableName={ _this.props.name } modalView={false} /></li>
     })
     var pageWithComments = []
     this.props.sections.forEach(function(section, index) {
@@ -42,7 +42,7 @@ class RightSidebar extends React.Component {
     })
     var renderedPageWithComments = pageWithComments.filter(function(page) { return(page.state == _this.state.currentTab) }).map(function(page, index) {
       var renderedPageComments = page.comments.map(function(comment, index) {
-        return <li key={index}><ConnectedComment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} editable={(page.state == 'active')} commentableId={page.id} commentableType='Page' sectionId={page.sectionId} commentableName={ page.name } /></li>
+        return <li key={index}><ConnectedComment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} editable={(page.state == 'active')} commentableId={page.id} commentableType='Page' sectionId={page.sectionId} commentableName={ page.name } modalView={false} /></li>
       })
       return(
         <li key={index}>

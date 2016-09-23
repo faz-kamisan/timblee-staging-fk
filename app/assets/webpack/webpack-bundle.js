@@ -38525,6 +38525,8 @@
 	exports.setShowGuestInfoForm = setShowGuestInfoForm;
 	exports.setCurrentGuest = setCurrentGuest;
 	exports.showSitemapShareModal = showSitemapShareModal;
+	exports.updateGeneralComment = updateGeneralComment;
+	exports.updatePageComment = updatePageComment;
 	exports.deleteGeneralComment = deleteGeneralComment;
 	exports.deletePageComment = deletePageComment;
 	exports.setSelectedPage = setSelectedPage;
@@ -38549,6 +38551,8 @@
 	var SET_SHOW_GUEST_INFO_FORM = exports.SET_SHOW_GUEST_INFO_FORM = 'SET_SHOW_GUEST_INFO_FORM';
 	var SET_CURRENT_GUEST = exports.SET_CURRENT_GUEST = 'SET_CURRENT_GUEST';
 	var SHOW_SITEMAP_SHARE_MODAL = exports.SHOW_SITEMAP_SHARE_MODAL = 'SHOW_SITEMAP_SHARE_MODAL';
+	var UPDATE_GENERAL_COMMENT = exports.UPDATE_GENERAL_COMMENT = 'UPDATE_GENERAL_COMMENT';
+	var UPDATE_PAGE_COMMENT = exports.UPDATE_PAGE_COMMENT = 'UPDATE_PAGE_COMMENT';
 	var DELETE_GENERAL_COMMENT = exports.DELETE_GENERAL_COMMENT = 'DELETE_GENERAL_COMMENT';
 	var DELETE_PAGE_COMMENT = exports.DELETE_PAGE_COMMENT = 'DELETE_PAGE_COMMENT';
 	var SET_SELECTED_PAGE = exports.SET_SELECTED_PAGE = 'SET_SELECTED_PAGE';
@@ -38623,6 +38627,14 @@
 	
 	function showSitemapShareModal(value) {
 	  return { type: SHOW_SITEMAP_SHARE_MODAL, value: value };
+	}
+	
+	function updateGeneralComment(id, message) {
+	  return { type: UPDATE_GENERAL_COMMENT, id: id, message: message };
+	}
+	
+	function updatePageComment(id, pageId, message, sectionId) {
+	  return { type: UPDATE_PAGE_COMMENT, id: id, pageId: pageId, message: message, sectionId: sectionId };
 	}
 	
 	function deleteGeneralComment(id) {
@@ -38712,6 +38724,8 @@
 	      return (0, _tree_helper.addPageComment)(state, action.id, action.sectionId, action.commenter, action.message, action.tempId);
 	    case _index.UPDATE_PAGE_COMMENT_ID:
 	      return (0, _tree_helper.updateCommentId)(state, action.oldId, action.newId, action.sectionId, action.pageId);
+	    case _index.UPDATE_PAGE_COMMENT:
+	      return (0, _tree_helper.updatePageComment)(state, action.id, action.message, action.sectionId, action.pageId);
 	    case _index.CHANGE_PAGE_TYPE:
 	      return (0, _tree_helper.updatePageType)(state, action.pageId, action.sectionId, action.pageType);
 	    case _index.CREATE_NEW_SECTION:
@@ -38868,6 +38882,19 @@
 	  return sectionsCopy;
 	}
 	
+	function updatePageComment(sections, id, message, sectionId, pageId) {
+	  var sectionsCopy = Object.assign([], sections);
+	  var treeCopy = sectionsCopy.filter(function (section) {
+	    return section.id == sectionId;
+	  })[0].pageTree;
+	  var page = getNodeById(treeCopy, pageId);
+	  var comment = page.comments.filter(function (comment) {
+	    return comment.id == id;
+	  })[0];
+	  comment.message = message;
+	  return sectionsCopy;
+	}
+	
 	function updatePageType(sections, id, sectionId, pageType) {
 	  var sectionsCopy = Object.assign([], sections);
 	  var treeCopy = sectionsCopy.filter(function (section) {
@@ -38979,6 +39006,7 @@
 	exports.createNewSection = createNewSection;
 	exports.updatePageState = updatePageState;
 	exports.deletePageComment = deletePageComment;
+	exports.updatePageComment = updatePageComment;
 
 /***/ },
 /* 610 */
@@ -39032,6 +39060,15 @@
 	  return commentsCopy;
 	}
 	
+	function updateCommentMessage(comments, id, message) {
+	  var commentsCopy = Object.assign([], comments);
+	  var comment = commentsCopy.filter(function (comment) {
+	    return comment.id == id;
+	  })[0];
+	  comment.message = message;
+	  return commentsCopy;
+	}
+	
 	function deleteComment(comments, id) {
 	  var commentsCopy = Object.assign([], comments);
 	  commentsCopy.removeIf(function (comment) {
@@ -39049,6 +39086,8 @@
 	      return addGeneralComment(state, action.message, action.commenter, action.tempId);
 	    case _index.UPDATE_GENERAL_COMMENT_ID:
 	      return updateId(state, action.oldId, action.newId);
+	    case _index.UPDATE_GENERAL_COMMENT:
+	      return updateCommentMessage(state, action.id, action.message);
 	    case _index.DELETE_GENERAL_COMMENT:
 	      return deleteComment(state, action.id);
 	    default:
@@ -39423,27 +39462,27 @@
 	
 	var _connected_right_sidebar2 = _interopRequireDefault(_connected_right_sidebar);
 	
-	var _connected_delete_page_modal = __webpack_require__(/*! ../containers/connected_delete_page_modal */ 1002);
+	var _connected_delete_page_modal = __webpack_require__(/*! ../containers/connected_delete_page_modal */ 1004);
 	
 	var _connected_delete_page_modal2 = _interopRequireDefault(_connected_delete_page_modal);
 	
-	var _connected_comment_delete_modal = __webpack_require__(/*! ../containers/connected_comment_delete_modal */ 1004);
+	var _connected_comment_delete_modal = __webpack_require__(/*! ../containers/connected_comment_delete_modal */ 1006);
 	
 	var _connected_comment_delete_modal2 = _interopRequireDefault(_connected_comment_delete_modal);
 	
-	var _connected_page_change_modal = __webpack_require__(/*! ../containers/connected_page_change_modal */ 1006);
+	var _connected_page_change_modal = __webpack_require__(/*! ../containers/connected_page_change_modal */ 1008);
 	
 	var _connected_page_change_modal2 = _interopRequireDefault(_connected_page_change_modal);
 	
-	var _connected_new_section_modal = __webpack_require__(/*! ../containers/connected_new_section_modal */ 1008);
+	var _connected_new_section_modal = __webpack_require__(/*! ../containers/connected_new_section_modal */ 1010);
 	
 	var _connected_new_section_modal2 = _interopRequireDefault(_connected_new_section_modal);
 	
-	var _connected_page_comments_modal = __webpack_require__(/*! ../containers/connected_page_comments_modal */ 1010);
+	var _connected_page_comments_modal = __webpack_require__(/*! ../containers/connected_page_comments_modal */ 1012);
 	
 	var _connected_page_comments_modal2 = _interopRequireDefault(_connected_page_comments_modal);
 	
-	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 1012);
+	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 1014);
 	
 	var _custom_drag_layer2 = _interopRequireDefault(_custom_drag_layer);
 	
@@ -48213,7 +48252,6 @@
 	      }
 	
 	      if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
-	        // You can use this as leave handler
 	        var domNode = (0, _reactDom.findDOMNode)(this);
 	        $(domNode).removeClass('drag-over');
 	        $(domNode).parent('.page-tile').siblings('.gutter').removeClass('again-2-drag-over');
@@ -48230,6 +48268,7 @@
 	        _react2.default.createElement(
 	          'span',
 	          { className: 'tile-id' },
+	          this.props.pageTree.comments.length > 0 && _react2.default.createElement('span', { className: 'dummy-state' }),
 	          'ID: ',
 	          formattedUid
 	        )
@@ -49961,11 +50000,11 @@
 	
 	var _connected_comment2 = _interopRequireDefault(_connected_comment);
 	
-	var _connected_mark_as_resolved_check = __webpack_require__(/*! ../containers/connected_mark_as_resolved_check */ 796);
+	var _connected_mark_as_resolved_check = __webpack_require__(/*! ../containers/connected_mark_as_resolved_check */ 1000);
 	
 	var _connected_mark_as_resolved_check2 = _interopRequireDefault(_connected_mark_as_resolved_check);
 	
-	var _connected_new_comment = __webpack_require__(/*! ../containers/connected_new_comment */ 1000);
+	var _connected_new_comment = __webpack_require__(/*! ../containers/connected_new_comment */ 1002);
 	
 	var _connected_new_comment2 = _interopRequireDefault(_connected_new_comment);
 	
@@ -50011,7 +50050,7 @@
 	        return _react2.default.createElement(
 	          'li',
 	          { key: index },
-	          _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: true, commentableId: _this.props.sitemapId, commentableType: 'Sitemap', commentableName: this.props.name })
+	          _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: true, commentableId: _this.props.sitemapId, commentableType: 'Sitemap', commentableName: _this.props.name, modalView: false })
 	        );
 	      });
 	      var pageWithComments = [];
@@ -50029,7 +50068,7 @@
 	          return _react2.default.createElement(
 	            'li',
 	            { key: index },
-	            _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: page.state == 'active', commentableId: page.id, commentableType: 'Page', sectionId: page.sectionId, commentableName: page.name })
+	            _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: page.state == 'active', commentableId: page.id, commentableType: 'Page', sectionId: page.sectionId, commentableName: page.name, modalView: false })
 	          );
 	        });
 	        return _react2.default.createElement(
@@ -50204,6 +50243,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _connected_comment_editor = __webpack_require__(/*! ../containers/connected_comment_editor */ 796);
+	
+	var _connected_comment_editor2 = _interopRequireDefault(_connected_comment_editor);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -50220,11 +50263,30 @@
 	
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Comment).call(this, props));
 	
+	    _this.state = { editMode: false, editable: _this.props.editable, message: _this.props.message };
 	    _this.setSelectedComment = _this.setSelectedComment.bind(_this);
+	    _this.showEditor = _this.showEditor.bind(_this);
+	    _this.closeEditor = _this.closeEditor.bind(_this);
+	    _this.editMessage = _this.editMessage.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(Comment, [{
+	    key: 'showEditor',
+	    value: function showEditor(e) {
+	      this.setState({ editMode: true, editable: false });
+	    }
+	  }, {
+	    key: 'closeEditor',
+	    value: function closeEditor(e) {
+	      this.setState({ editMode: false, editable: this.props.editable });
+	    }
+	  }, {
+	    key: 'editMessage',
+	    value: function editMessage(message) {
+	      this.setState({ message: message });
+	    }
+	  }, {
 	    key: 'setSelectedComment',
 	    value: function setSelectedComment(e) {
 	      var comment = {
@@ -50235,7 +50297,8 @@
 	        sectionId: this.props.sectionId,
 	        commenter: this.props.commenter,
 	        message: this.props.message,
-	        createdAt: this.props.createdAt
+	        createdAt: this.props.createdAt,
+	        modalView: this.props.modalView
 	      };
 	      this.props.setSelectedComment(comment);
 	    }
@@ -50251,12 +50314,12 @@
 	            'h4',
 	            null,
 	            'You',
-	            this.props.editable && _react2.default.createElement(
+	            this.state.editable && _react2.default.createElement(
 	              'span',
 	              { className: 'comment-action-links' },
 	              _react2.default.createElement(
 	                'a',
-	                { className: 'comment-edit-link cursor' },
+	                { className: 'comment-edit-link cursor', onClick: this.showEditor },
 	                ' Edit'
 	              ),
 	              ' |',
@@ -50272,10 +50335,11 @@
 	            null,
 	            this.props.createdAt
 	          ),
-	          _react2.default.createElement(
+	          this.state.editMode && _react2.default.createElement(_connected_comment_editor2.default, { message: this.state.message, commentableId: this.props.commentableId, commentableType: this.props.commentableType, sectionId: this.props.sectionId, id: this.props.id, closeEditor: this.closeEditor, modalView: this.props.modalView, editMessage: this.editMessage }),
+	          !this.state.editMode && _react2.default.createElement(
 	            'p',
 	            null,
-	            this.props.message
+	            this.state.message
 	          )
 	        );
 	      } else {
@@ -50296,7 +50360,7 @@
 	          _react2.default.createElement(
 	            'p',
 	            null,
-	            this.props.message
+	            this.state.message
 	          )
 	        );
 	      }
@@ -50315,15 +50379,16 @@
 	  message: _react.PropTypes.string.isRequired,
 	  id: _react.PropTypes.number.isRequired,
 	  editable: _react.PropTypes.bool.isRequired,
+	  modalView: _react.PropTypes.bool.isRequired,
 	  createdAt: _react.PropTypes.string.isRequired
 	};
 	exports.default = Comment;
 
 /***/ },
 /* 796 */
-/*!*****************************************************************************!*\
-  !*** ./app/bundles/SiteMap/containers/connected_mark_as_resolved_check.jsx ***!
-  \*****************************************************************************/
+/*!*********************************************************************!*\
+  !*** ./app/bundles/SiteMap/containers/connected_comment_editor.jsx ***!
+  \*********************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50336,20 +50401,24 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _mark_as_resolved_check = __webpack_require__(/*! ../components/mark_as_resolved_check */ 797);
+	var _comment_editor = __webpack_require__(/*! ../components/comment_editor */ 797);
 	
-	var _mark_as_resolved_check2 = _interopRequireDefault(_mark_as_resolved_check);
+	var _comment_editor2 = _interopRequireDefault(_comment_editor);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return {};
+	  return { business: state.business };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    updatePageState: function updatePageState(pageId, sectionId, state) {
-	      dispatch((0, _actions.updatePageState)(pageId, sectionId, state));
+	    updateComment: function updateComment(id, commentableId, commentableType, message, sectionId) {
+	      if (commentableType == 'Page') {
+	        dispatch((0, _actions.updatePageComment)(id, commentableId, message, sectionId));
+	      } else if (commentableType == 'Sitemap') {
+	        dispatch((0, _actions.updateGeneralComment)(id, message));
+	      }
 	    },
 	    setSaving: function setSaving(saving) {
 	      dispatch((0, _actions.setSaving)(saving));
@@ -50357,15 +50426,15 @@
 	  };
 	};
 	
-	var ConnectedMarkAsResolvedCheck = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_mark_as_resolved_check2.default);
+	var ConnectedCommentEditor = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_comment_editor2.default);
 	
-	exports.default = ConnectedMarkAsResolvedCheck;
+	exports.default = ConnectedCommentEditor;
 
 /***/ },
 /* 797 */
-/*!*******************************************************************!*\
-  !*** ./app/bundles/SiteMap/components/mark_as_resolved_check.jsx ***!
-  \*******************************************************************/
+/*!***********************************************************!*\
+  !*** ./app/bundles/SiteMap/components/comment_editor.jsx ***!
+  \***********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50390,75 +50459,116 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var MarkAsResolvedCheck = function (_React$Component) {
-	  _inherits(MarkAsResolvedCheck, _React$Component);
+	var CommentEditor = function (_React$Component) {
+	  _inherits(CommentEditor, _React$Component);
 	
-	  function MarkAsResolvedCheck(props) {
-	    _classCallCheck(this, MarkAsResolvedCheck);
+	  function CommentEditor(props) {
+	    _classCallCheck(this, CommentEditor);
 	
-	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(MarkAsResolvedCheck).call(this, props));
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentEditor).call(this, props));
 	
-	    _this2.updatePageState = _this2.updatePageState.bind(_this2);
+	    _this2.state = { commentMessage: _this2.props.message };
+	    _this2.handleCommentChange = _this2.handleCommentChange.bind(_this2);
+	    _this2.handleUpdateComment = _this2.handleUpdateComment.bind(_this2);
+	    _this2.handleClearComment = _this2.handleClearComment.bind(_this2);
 	    return _this2;
 	  }
 	
-	  _createClass(MarkAsResolvedCheck, [{
-	    key: 'updatePageState',
-	    value: function updatePageState(state) {
-	      var _this3 = this;
-	
-	      var _this = this;
-	      this.props.updatePageState(this.props.page.id, this.props.page.sectionId || this.props.page.section_id, state);
-	      $.ajax({
-	        url: '/pages/' + this.props.page.id,
-	        method: 'put',
-	        dataType: 'JSON',
-	        data: { page: { state: state } },
-	        error: function error(result) {
-	          document.setFlash(result.responseText);
-	        },
-	        complete: function complete(result) {
-	          _this3.props.setSaving(true);
-	          setTimeout(function () {
-	            _this.props.setSaving(false);
-	          }, 2000);
-	        }
-	      });
+	  _createClass(CommentEditor, [{
+	    key: 'handleCommentChange',
+	    value: function handleCommentChange(e) {
+	      this.setState({ commentMessage: e.target.value, showGuestInfoForm: false });
+	    }
+	  }, {
+	    key: 'handleUpdateComment',
+	    value: function handleUpdateComment(e) {
+	      if (this.state.commentMessage.trim() != this.props.message.trim()) {
+	        var _this = this;
+	        this.props.updateComment(this.props.id, this.props.commentableId, this.props.commentableType, this.state.commentMessage, this.props.sectionId);
+	        $.ajax({
+	          url: '/comments/' + this.props.id,
+	          method: 'put',
+	          dataType: 'JSON',
+	          data: { comment: { message: this.state.commentMessage } },
+	          error: function error(result) {
+	            document.setFlash(result.responseText);
+	          },
+	          success: function success(result) {
+	            _this.props.setSaving(true);
+	            setTimeout(function () {
+	              _this.props.setSaving(false);
+	            }, 2000);
+	          }
+	        });
+	        this.props.editMessage(this.state.commentMessage);
+	      }
+	      this.props.closeEditor();
+	    }
+	  }, {
+	    key: 'handleClearComment',
+	    value: function handleClearComment(e) {
+	      this.setState({ commentMessage: this.props.message });
+	      this.props.closeEditor();
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate(e) {
+	      if (this.state.commentMessage == '') {
+	        $(this.refs.newComment).focus();
+	        $(this.refs.newComment).blur();
+	      }
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this = this;
-	      if (this.props.page.state == 'active') {
-	        return _react2.default.createElement(
-	          'label',
-	          { className: 'pull-right', htmlFor: 'mark-resolve' },
-	          'Mark as resolved',
-	          _react2.default.createElement('input', { type: 'checkbox', id: 'mark-resolve', onChange: function onChange(e) {
-	              _this.updatePageState('resolved');
-	            } })
-	        );
-	      } else {
-	        return _react2.default.createElement(
-	          'label',
-	          { className: 'pull-right', htmlFor: 'mark-unresolve' },
-	          'Unresolve',
-	          _react2.default.createElement('input', { type: 'checkbox', checked: 'checked', id: 'mark-unresolve', onChange: function onChange(e) {
-	              _this.updatePageState('active');
-	            } })
-	        );
-	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'relative' },
+	        _react2.default.createElement(
+	          _reactMentions.MentionsInput,
+	          { className: 'comment-input', value: this.state.commentMessage, onChange: this.handleCommentChange, displayTransform: function displayTransform(id, display, type) {
+	              return '@' + display;
+	            }, markup: '@__display__', ref: 'newComment' },
+	          _react2.default.createElement(_reactMentions.Mention, { trigger: '@', data: this.props.business.users, appendSpaceOnAdd: true })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'add-remove-comment' },
+	          _react2.default.createElement(
+	            'span',
+	            { onClick: this.handleUpdateComment, className: 'cursor add' },
+	            'Update my comment '
+	          ),
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'or' },
+	            'or'
+	          ),
+	          _react2.default.createElement(
+	            'span',
+	            { onClick: this.handleClearComment, className: 'cursor cancel' },
+	            ' cancel'
+	          )
+	        )
+	      );
 	    }
 	  }]);
 	
-	  return MarkAsResolvedCheck;
+	  return CommentEditor;
 	}(_react2.default.Component);
 	
-	MarkAsResolvedCheck.propTypes = {
-	  page: _react.PropTypes.object.isRequired,
-	  updatePageState: _react.PropTypes.func.isRequired
+	CommentEditor.propTypes = {
+	  id: _react.PropTypes.number.isRequired,
+	  commentableId: _react.PropTypes.number.isRequired,
+	  commentableType: _react.PropTypes.string.isRequired,
+	  message: _react.PropTypes.string.isRequired,
+	  sectionId: _react.PropTypes.number,
+	  updateComment: _react.PropTypes.func.isRequired,
+	  setSaving: _react.PropTypes.func.isRequired,
+	  editMessage: _react.PropTypes.func.isRequired,
+	  business: _react.PropTypes.object.isRequired
 	};
-	exports.default = MarkAsResolvedCheck;
+	exports.default = CommentEditor;
 
 /***/ },
 /* 798 */
@@ -60655,6 +60765,147 @@
 
 /***/ },
 /* 1000 */
+/*!*****************************************************************************!*\
+  !*** ./app/bundles/SiteMap/containers/connected_mark_as_resolved_check.jsx ***!
+  \*****************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
+	
+	var _actions = __webpack_require__(/*! ../actions */ 606);
+	
+	var _mark_as_resolved_check = __webpack_require__(/*! ../components/mark_as_resolved_check */ 1001);
+	
+	var _mark_as_resolved_check2 = _interopRequireDefault(_mark_as_resolved_check);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {};
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    updatePageState: function updatePageState(pageId, sectionId, state) {
+	      dispatch((0, _actions.updatePageState)(pageId, sectionId, state));
+	    },
+	    setSaving: function setSaving(saving) {
+	      dispatch((0, _actions.setSaving)(saving));
+	    }
+	  };
+	};
+	
+	var ConnectedMarkAsResolvedCheck = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_mark_as_resolved_check2.default);
+	
+	exports.default = ConnectedMarkAsResolvedCheck;
+
+/***/ },
+/* 1001 */
+/*!*******************************************************************!*\
+  !*** ./app/bundles/SiteMap/components/mark_as_resolved_check.jsx ***!
+  \*******************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 301);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactMentions = __webpack_require__(/*! react-mentions */ 798);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var MarkAsResolvedCheck = function (_React$Component) {
+	  _inherits(MarkAsResolvedCheck, _React$Component);
+	
+	  function MarkAsResolvedCheck(props) {
+	    _classCallCheck(this, MarkAsResolvedCheck);
+	
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(MarkAsResolvedCheck).call(this, props));
+	
+	    _this2.updatePageState = _this2.updatePageState.bind(_this2);
+	    return _this2;
+	  }
+	
+	  _createClass(MarkAsResolvedCheck, [{
+	    key: 'updatePageState',
+	    value: function updatePageState(state) {
+	      var _this3 = this;
+	
+	      var _this = this;
+	      this.props.updatePageState(this.props.page.id, this.props.page.sectionId || this.props.page.section_id, state);
+	      $.ajax({
+	        url: '/pages/' + this.props.page.id,
+	        method: 'put',
+	        dataType: 'JSON',
+	        data: { page: { state: state } },
+	        error: function error(result) {
+	          document.setFlash(result.responseText);
+	        },
+	        complete: function complete(result) {
+	          _this3.props.setSaving(true);
+	          setTimeout(function () {
+	            _this.props.setSaving(false);
+	          }, 2000);
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this = this;
+	      if (this.props.page.state == 'active') {
+	        return _react2.default.createElement(
+	          'label',
+	          { className: 'pull-right', htmlFor: 'mark-resolve' },
+	          'Mark as resolved',
+	          _react2.default.createElement('input', { type: 'checkbox', checked: false, id: 'mark-resolve', onChange: function onChange(e) {
+	              _this.updatePageState('resolved');
+	            } })
+	        );
+	      } else {
+	        return _react2.default.createElement(
+	          'label',
+	          { className: 'pull-right', htmlFor: 'mark-unresolve' },
+	          'Unresolve',
+	          _react2.default.createElement('input', { type: 'checkbox', checked: 'checked', id: 'mark-unresolve', onChange: function onChange(e) {
+	              _this.updatePageState('active');
+	            } })
+	        );
+	      }
+	    }
+	  }]);
+	
+	  return MarkAsResolvedCheck;
+	}(_react2.default.Component);
+	
+	MarkAsResolvedCheck.propTypes = {
+	  page: _react.PropTypes.object.isRequired,
+	  updatePageState: _react.PropTypes.func.isRequired
+	};
+	exports.default = MarkAsResolvedCheck;
+
+/***/ },
+/* 1002 */
 /*!******************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_new_comment.jsx ***!
   \******************************************************************/
@@ -60670,7 +60921,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _new_comment = __webpack_require__(/*! ../components/new_comment */ 1001);
+	var _new_comment = __webpack_require__(/*! ../components/new_comment */ 1003);
 	
 	var _new_comment2 = _interopRequireDefault(_new_comment);
 	
@@ -60710,7 +60961,7 @@
 	exports.default = ConnectedNewComment;
 
 /***/ },
-/* 1001 */
+/* 1003 */
 /*!********************************************************!*\
   !*** ./app/bundles/SiteMap/components/new_comment.jsx ***!
   \********************************************************/
@@ -60766,7 +61017,6 @@
 	          var _this = this;
 	          var timeStamp = new Date();
 	          this.props.addComment(this.props.commentableId, this.props.commentableType, this.state.newCommentMessage, this.props.currentUser || this.props.currentGuest, this.props.sectionId, timeStamp);
-	          this.props.setSaving(true);
 	          $.ajax({
 	            url: '/comments/',
 	            method: 'post',
@@ -60781,9 +61031,6 @@
 	                _this.props.setSaving(false);
 	              }, 2000);
 	              _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, timeStamp, result.id, _this.props.sectionId);
-	            },
-	            complete: function complete(result) {
-	              _this.props.setSaving(false);
 	            }
 	          });
 	          this.setState({ newCommentMessage: '' });
@@ -60858,7 +61105,7 @@
 	exports.default = NewComment;
 
 /***/ },
-/* 1002 */
+/* 1004 */
 /*!************************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_delete_page_modal.jsx ***!
   \************************************************************************/
@@ -60874,7 +61121,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _delete_page_modal = __webpack_require__(/*! ../components/delete_page_modal */ 1003);
+	var _delete_page_modal = __webpack_require__(/*! ../components/delete_page_modal */ 1005);
 	
 	var _delete_page_modal2 = _interopRequireDefault(_delete_page_modal);
 	
@@ -60900,7 +61147,7 @@
 	exports.default = ConnectedDeletePageModal;
 
 /***/ },
-/* 1003 */
+/* 1005 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/delete_page_modal.jsx ***!
   \**************************************************************/
@@ -61028,7 +61275,7 @@
 	exports.default = DeletePageModal;
 
 /***/ },
-/* 1004 */
+/* 1006 */
 /*!***************************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_comment_delete_modal.jsx ***!
   \***************************************************************************/
@@ -61044,7 +61291,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _comment_delete_modal = __webpack_require__(/*! ../components/comment_delete_modal */ 1005);
+	var _comment_delete_modal = __webpack_require__(/*! ../components/comment_delete_modal */ 1007);
 	
 	var _comment_delete_modal2 = _interopRequireDefault(_comment_delete_modal);
 	
@@ -61074,7 +61321,7 @@
 	exports.default = ConnectedCommentDeleteModal;
 
 /***/ },
-/* 1005 */
+/* 1007 */
 /*!*****************************************************************!*\
   !*** ./app/bundles/SiteMap/components/comment_delete_modal.jsx ***!
   \*****************************************************************/
@@ -61156,7 +61403,7 @@
 	              { className: 'modal-header text-center' },
 	              _react2.default.createElement(
 	                'button',
-	                { type: 'button', className: 'close btn-modal-open', 'data-dismiss': 'modal', 'data-target': '#page-comments-modal', 'data-toggle': 'modal', 'aria-label': 'Close' },
+	                { type: 'button', className: 'close btn-modal-open', 'data-dismiss': 'modal', 'data-target': '#page-comments-modal', 'data-toggle': this.props.comment.modalView ? 'modal' : '', 'aria-label': 'Close' },
 	                _react2.default.createElement(
 	                  'span',
 	                  { 'aria-hidden': 'true' },
@@ -61180,19 +61427,19 @@
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'page-tile-clone' },
-	                this.props.comment.commenter && _react2.default.createElement(_connected_comment2.default, { id: this.props.comment.id, message: this.props.comment.message, commenter: this.props.comment.commenter, createdAt: this.props.comment.createdAt, editable: false })
+	                this.props.comment.commenter && _react2.default.createElement(_connected_comment2.default, { id: this.props.comment.id, message: this.props.comment.message, commenter: this.props.comment.commenter, createdAt: this.props.comment.createdAt, editable: false, commentableId: this.props.comment.commentableId, commentableType: 'Page', sectionId: this.props.comment.sectionId, commentableName: this.props.comment.commentableName, modalView: false })
 	              ),
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'modal-button text-center' },
 	                _react2.default.createElement(
 	                  'a',
-	                  { href: '#', 'data-dismiss': 'modal', 'data-target': '#page-comments-modal', 'data-toggle': 'modal', className: 'btn btn-red btn-modal-open', onClick: this.deleteComment },
+	                  { href: '#', 'data-dismiss': 'modal', 'data-target': '#page-comments-modal', 'data-toggle': this.props.comment.modalView ? 'modal' : '', className: 'btn btn-red btn-modal-open', onClick: this.deleteComment },
 	                  'Delete Comment'
 	                ),
 	                _react2.default.createElement(
 	                  'a',
-	                  { href: '#', 'data-dismiss': 'modal', 'data-target': '#page-comments-modal', 'data-toggle': 'modal', className: 'btn btn-transparent btn-last btn-modal-open' },
+	                  { href: '#', 'data-dismiss': 'modal', 'data-target': '#page-comments-modal', 'data-toggle': this.props.comment.modalView ? 'modal' : '', className: 'btn btn-transparent btn-last btn-modal-open' },
 	                  'Cancel'
 	                )
 	              )
@@ -61212,7 +61459,7 @@
 	exports.default = CommentDeleteModal;
 
 /***/ },
-/* 1006 */
+/* 1008 */
 /*!************************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_page_change_modal.jsx ***!
   \************************************************************************/
@@ -61228,7 +61475,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _page_change_modal = __webpack_require__(/*! ../components/page_change_modal */ 1007);
+	var _page_change_modal = __webpack_require__(/*! ../components/page_change_modal */ 1009);
 	
 	var _page_change_modal2 = _interopRequireDefault(_page_change_modal);
 	
@@ -61254,7 +61501,7 @@
 	exports.default = ConnectedPageChangeModal;
 
 /***/ },
-/* 1007 */
+/* 1009 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_change_modal.jsx ***!
   \**************************************************************/
@@ -61341,77 +61588,73 @@
 	          _react2.default.createElement(_page_type2.default, { name: pageType.name, iconName: pageType.icon_name, id: pageType.id })
 	        );
 	      });
-	      if (this.props.pageTree.pageType) {
-	        return _react2.default.createElement(
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'modal fade page-change-modal', id: 'page-change-modal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'page-change-modalLabel' },
+	        _react2.default.createElement(
 	          'div',
-	          { className: 'modal fade page-change-modal', id: 'page-change-modal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'page-change-modalLabel' },
+	          { className: 'modal-dialog', role: 'document' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'modal-dialog', role: 'document' },
+	            { className: 'modal-content' },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'modal-content' },
+	              { className: 'modal-header text-center' },
 	              _react2.default.createElement(
-	                'div',
-	                { className: 'modal-header text-center' },
+	                'button',
+	                { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
 	                _react2.default.createElement(
-	                  'button',
-	                  { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
-	                  _react2.default.createElement(
-	                    'span',
-	                    { 'aria-hidden': 'true' },
-	                    _react2.default.createElement('img', { src: '/assets/close-modal.svg', className: 'close-modal hide-delete-modal' })
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  'h4',
-	                  { className: 'modal-title' },
-	                  'Change the page type'
+	                  'span',
+	                  { 'aria-hidden': 'true' },
+	                  _react2.default.createElement('img', { src: '/assets/close-modal.svg', className: 'close-modal hide-delete-modal' })
 	                )
 	              ),
 	              _react2.default.createElement(
+	                'h4',
+	                { className: 'modal-title' },
+	                'Change the page type'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'modal-body' },
+	              _react2.default.createElement(
 	                'div',
-	                { className: 'modal-body' },
+	                { className: 'clearfix' },
 	                _react2.default.createElement(
 	                  'div',
-	                  { className: 'clearfix' },
+	                  { className: 'current-page-type pull-left' },
 	                  _react2.default.createElement(
-	                    'div',
-	                    { className: 'current-page-type pull-left' },
+	                    'span',
+	                    null,
+	                    'Current page type:'
+	                  ),
+	                  this.props.pageTree.pageType && _react2.default.createElement(_page_type2.default, { name: this.props.pageTree.pageType.name, iconName: this.props.pageTree.pageType.icon_name, id: this.props.pageTree.pageType.id })
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'page-types pull-left' },
+	                  _react2.default.createElement(
+	                    'form',
+	                    { className: 'search-page-type' },
 	                    _react2.default.createElement(
-	                      'span',
-	                      null,
-	                      'Current page type:'
+	                      'label',
+	                      { htmlFor: 'page-type' },
+	                      _react2.default.createElement('i', { className: 'icon-search' })
 	                    ),
-	                    _react2.default.createElement(_page_type2.default, { name: this.props.pageTree.pageType.name, iconName: this.props.pageTree.pageType.icon_name, id: this.props.pageTree.pageType.id })
+	                    _react2.default.createElement('input', { type: 'search', id: 'page-type', name: 'page-type', placeholder: 'Find your page type', onChange: this.handleSearch })
 	                  ),
 	                  _react2.default.createElement(
-	                    'div',
-	                    { className: 'page-types pull-left' },
-	                    _react2.default.createElement(
-	                      'form',
-	                      { className: 'search-page-type' },
-	                      _react2.default.createElement(
-	                        'label',
-	                        { htmlFor: 'page-type' },
-	                        _react2.default.createElement('i', { className: 'icon-search' })
-	                      ),
-	                      _react2.default.createElement('input', { type: 'search', id: 'page-type', name: 'page-type', placeholder: 'Find your page type', onChange: this.handleSearch })
-	                    ),
-	                    _react2.default.createElement(
-	                      'ul',
-	                      { className: 'page-type-list clearfix' },
-	                      pageTypeComponents
-	                    )
+	                    'ul',
+	                    { className: 'page-type-list clearfix' },
+	                    pageTypeComponents
 	                  )
 	                )
 	              )
 	            )
 	          )
-	        );
-	      } else {
-	        return _react2.default.createElement('div', null);
-	      }
+	        )
+	      );
 	    }
 	  }]);
 	
@@ -61424,7 +61667,7 @@
 	exports.default = PageChangeModal;
 
 /***/ },
-/* 1008 */
+/* 1010 */
 /*!************************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_new_section_modal.jsx ***!
   \************************************************************************/
@@ -61440,7 +61683,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _new_section_modal = __webpack_require__(/*! ../components/new_section_modal */ 1009);
+	var _new_section_modal = __webpack_require__(/*! ../components/new_section_modal */ 1011);
 	
 	var _new_section_modal2 = _interopRequireDefault(_new_section_modal);
 	
@@ -61466,7 +61709,7 @@
 	exports.default = ConnectedNewSectionModal;
 
 /***/ },
-/* 1009 */
+/* 1011 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/new_section_modal.jsx ***!
   \**************************************************************/
@@ -61606,7 +61849,7 @@
 	exports.default = NewSectionModal;
 
 /***/ },
-/* 1010 */
+/* 1012 */
 /*!**************************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_page_comments_modal.jsx ***!
   \**************************************************************************/
@@ -61622,7 +61865,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _page_comments_modal = __webpack_require__(/*! ../components/page_comments_modal */ 1011);
+	var _page_comments_modal = __webpack_require__(/*! ../components/page_comments_modal */ 1013);
 	
 	var _page_comments_modal2 = _interopRequireDefault(_page_comments_modal);
 	
@@ -61645,7 +61888,7 @@
 	exports.default = ConnectedPageCommentsModal;
 
 /***/ },
-/* 1011 */
+/* 1013 */
 /*!****************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_comments_modal.jsx ***!
   \****************************************************************/
@@ -61667,11 +61910,11 @@
 	
 	var _connected_comment2 = _interopRequireDefault(_connected_comment);
 	
-	var _connected_mark_as_resolved_check = __webpack_require__(/*! ../containers/connected_mark_as_resolved_check */ 796);
+	var _connected_mark_as_resolved_check = __webpack_require__(/*! ../containers/connected_mark_as_resolved_check */ 1000);
 	
 	var _connected_mark_as_resolved_check2 = _interopRequireDefault(_connected_mark_as_resolved_check);
 	
-	var _connected_new_comment = __webpack_require__(/*! ../containers/connected_new_comment */ 1000);
+	var _connected_new_comment = __webpack_require__(/*! ../containers/connected_new_comment */ 1002);
 	
 	var _connected_new_comment2 = _interopRequireDefault(_connected_new_comment);
 	
@@ -61701,68 +61944,65 @@
 	          return _react2.default.createElement(
 	            'li',
 	            { key: index },
-	            _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: _this.props.pageTree.state == 'active', commentableId: _this.props.pageTree.id, commentableType: 'Page', sectionId: _this.props.pageTree.section_id, commentableName: _this.props.pageTree.name })
+	            _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: _this.props.pageTree.state == 'active', commentableId: _this.props.pageTree.id, commentableType: 'Page', sectionId: _this.props.pageTree.section_id, commentableName: _this.props.pageTree.name, modalView: true })
 	          );
 	        });
-	
-	        return _react2.default.createElement(
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'modal fade', id: 'page-comments-modal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'page-comments-modalLabel' },
+	        _react2.default.createElement(
 	          'div',
-	          { className: 'modal fade', id: 'page-comments-modal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'page-comments-modalLabel' },
+	          { className: 'modal-dialog', role: 'document' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'modal-dialog', role: 'document' },
+	            { className: 'modal-content' },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'modal-content' },
+	              { className: 'modal-body' },
+	              _react2.default.createElement(
+	                'button',
+	                { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+	                _react2.default.createElement(
+	                  'span',
+	                  { 'aria-hidden': 'true' },
+	                  _react2.default.createElement('img', { src: '/assets/close-modal.svg', className: 'close-modal hide-delete-modalx' })
+	                )
+	              ),
 	              _react2.default.createElement(
 	                'div',
-	                { className: 'modal-body' },
+	                { className: 'page-comments' },
 	                _react2.default.createElement(
-	                  'button',
-	                  { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+	                  'div',
+	                  { className: 'page-comment-details' },
 	                  _react2.default.createElement(
 	                    'span',
-	                    { 'aria-hidden': 'true' },
-	                    _react2.default.createElement('img', { src: '/assets/close-modal.svg', className: 'close-modal hide-delete-modalx' })
+	                    { className: 'page-id' },
+	                    'ID: ',
+	                    this.props.pageTree.uid
+	                  ),
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'clearfix' },
+	                    _react2.default.createElement(
+	                      'span',
+	                      { className: 'page-name truncate pull-left' },
+	                      this.props.pageTree.name
+	                    ),
+	                    _react2.default.createElement(_connected_mark_as_resolved_check2.default, { page: this.props.pageTree, pageState: this.props.pageTree.state })
 	                  )
 	                ),
 	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'page-comments' },
-	                  _react2.default.createElement(
-	                    'div',
-	                    { className: 'page-comment-details' },
-	                    _react2.default.createElement(
-	                      'span',
-	                      { className: 'page-id' },
-	                      'ID: ',
-	                      this.props.pageTree.uid
-	                    ),
-	                    _react2.default.createElement(
-	                      'div',
-	                      { className: 'clearfix' },
-	                      _react2.default.createElement(
-	                        'span',
-	                        { className: 'page-name truncate pull-left' },
-	                        this.props.pageTree.name
-	                      ),
-	                      _react2.default.createElement(_connected_mark_as_resolved_check2.default, { page: this.props.pageTree, pageState: this.props.pageTree.state })
-	                    )
-	                  ),
-	                  _react2.default.createElement(
-	                    'ul',
-	                    { className: 'comment-group' },
-	                    renderedPageComments
-	                  ),
-	                  this.props.pageTree.state == 'active' && _react2.default.createElement(_connected_new_comment2.default, { commentableId: this.props.pageTree.id, commentableType: 'Page', sectionId: this.props.pageTree.section_id })
-	                )
+	                  'ul',
+	                  { className: 'comment-group' },
+	                  this.props.pageTree && renderedPageComments
+	                ),
+	                this.props.pageTree.state == 'active' && _react2.default.createElement(_connected_new_comment2.default, { commentableId: this.props.pageTree.id, commentableType: 'Page', sectionId: this.props.pageTree.section_id })
 	              )
 	            )
 	          )
-	        );
-	      } else {
-	        return _react2.default.createElement('div', null);
-	      }
+	        )
+	      );
 	    }
 	  }]);
 	
@@ -61775,7 +62015,7 @@
 	exports.default = PageCommentsModal;
 
 /***/ },
-/* 1012 */
+/* 1014 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/custom_drag_layer.jsx ***!
   \**************************************************************/
@@ -61797,11 +62037,11 @@
 	
 	var _reactDnd = __webpack_require__(/*! react-dnd */ 714);
 	
-	var _page_container_preview = __webpack_require__(/*! ./page_container_preview */ 1013);
+	var _page_container_preview = __webpack_require__(/*! ./page_container_preview */ 1015);
 	
 	var _page_container_preview2 = _interopRequireDefault(_page_container_preview);
 	
-	var _page_type_preview = __webpack_require__(/*! ./page_type_preview */ 1014);
+	var _page_type_preview = __webpack_require__(/*! ./page_type_preview */ 1016);
 	
 	var _page_type_preview2 = _interopRequireDefault(_page_type_preview);
 	
@@ -61923,7 +62163,7 @@
 	exports.default = DragLayerDecorator(CustomDragLayer);
 
 /***/ },
-/* 1013 */
+/* 1015 */
 /*!*******************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_container_preview.jsx ***!
   \*******************************************************************/
@@ -62006,7 +62246,7 @@
 	exports.default = PageContainerPreview;
 
 /***/ },
-/* 1014 */
+/* 1016 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_type_preview.jsx ***!
   \**************************************************************/

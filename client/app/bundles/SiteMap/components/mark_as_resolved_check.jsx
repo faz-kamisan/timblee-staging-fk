@@ -38,7 +38,7 @@ class MarkAsResolvedCheck extends React.Component {
       return (
         <label className="pull-right" htmlFor="mark-resolve">
           Mark as resolved
-          <input type="checkbox" id="mark-resolve" onChange={function(e) { _this.updatePageState('resolved') }} />
+          <input type="checkbox" checked={false} id="mark-resolve" onChange={function(e) { _this.updatePageState('resolved') }} />
         </label>
       )
     } else {

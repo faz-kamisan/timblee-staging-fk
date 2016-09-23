@@ -54,7 +54,7 @@ class Sitemap < ActiveRecord::Base
     end
 
     def set_name_to_new_sitemap
-      new_site_map_numbers = self.business.sitemaps.where("name ILIKE 'new sitemap%'").pluck(:name).map {|name| name.match(/\d*$/)[0].to_i}.sort
+      new_site_map_numbers = self.business.sitemaps.where("name ~* '^New Sitemap \\d+$'").pluck(:name).map {|name| name.match(/\d*$/)[0].to_i}.sort
       if(new_site_map_numbers[0] == 1)
         first_unoccupied_number = (new_site_map_numbers.select.with_index { |number, index| number == index + 1 }[-1]) + 1
         self.name = 'New Sitemap ' + first_unoccupied_number.to_s

@@ -78,7 +78,6 @@ class PageTileBottom extends React.Component {
     }
 
     if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
-      // You can use this as leave handler
       var domNode = findDOMNode(this);
       $(domNode).removeClass('drag-over');
       $(domNode).parent('.page-tile').siblings('.gutter').removeClass('again-2-drag-over');
@@ -91,6 +90,9 @@ class PageTileBottom extends React.Component {
     return connectDropTarget(
       <div className="tile-bottom">
         <span className="tile-id">
+          { (this.props.pageTree.comments.length > 0) &&
+            <span className="dummy-state"></span>
+          }
           ID: { formattedUid }
         </span>
       </div>

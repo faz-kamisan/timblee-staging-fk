@@ -13,13 +13,21 @@ class Comment < ActiveRecord::Base
   def created_at_decorated
     diff_seconds = Time.current - created_at
     case diff_seconds
+      when 1
+        return "#{diff_seconds.to_i} second ago"
       when 0 .. 59
         return "#{diff_seconds.to_i} seconds ago"
-      when 60 .. (3600-1)
+      when 60 .. 119
+        return "#{(diff_seconds/60).to_i} minute ago"
+      when 120 .. (3600-1)
         return "#{(diff_seconds/60).to_i} minutes ago"
-      when 3600 .. (3600*24-1)
+      when 3600 .. 7199
+        return "#{(diff_seconds/3600).to_i} hour ago"
+      when 7200 .. (3600*24-1)
         return "#{(diff_seconds/3600).to_i} hours ago"
-      when (3600*24) .. (3600*24*30)
+      when (3600*24) .. ((3600*24*2) - 1)
+        return "#{(diff_seconds/(3600*24)).to_i} day ago"
+      when (3600*24*2) .. (3600*24*30)
         return "#{(diff_seconds/(3600*24)).to_i} days ago"
       else
         return start_time.strftime('%d %b %Y')

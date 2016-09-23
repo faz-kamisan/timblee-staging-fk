@@ -32,7 +32,6 @@ class NewComment extends React.Component {
         var _this = this;
         var timeStamp = new Date();
         this.props.addComment(this.props.commentableId, this.props.commentableType, this.state.newCommentMessage, (this.props.currentUser || this.props.currentGuest), this.props.sectionId, timeStamp)
-        this.props.setSaving(true)
         $.ajax({
           url: '/comments/',
           method: 'post',
@@ -47,9 +46,6 @@ class NewComment extends React.Component {
               _this.props.setSaving(false)
             }, 2000)
             _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, timeStamp, result.id, _this.props.sectionId)
-          },
-          complete: (result) => {
-            _this.props.setSaving(false)
           }
         });
         this.setState({ newCommentMessage: '' })

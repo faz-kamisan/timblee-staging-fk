@@ -10,7 +10,7 @@ class CommentsController < ApplicationController
   end
 
   def update
-    @comment
+    send_conditional_json_response(@comment.update(comment_params))
   end
 
   def destroy

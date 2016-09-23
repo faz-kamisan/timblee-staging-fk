@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import ConnectedCommentEditor from '../containers/connected_comment_editor'
 
 class Comment extends React.Component {
   static propTypes = {
@@ -10,12 +11,29 @@ class Comment extends React.Component {
     message: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
     editable: PropTypes.bool.isRequired,
+    modalView: PropTypes.bool.isRequired,
     createdAt: PropTypes.string.isRequired
   };
 
   constructor(props) {
     super(props);
+    this.state = {editMode: false, editable: this.props.editable, message: this.props.message }
     this.setSelectedComment = this.setSelectedComment.bind(this);
+    this.showEditor = this.showEditor.bind(this);
+    this.closeEditor = this.closeEditor.bind(this);
+    this.editMessage = this.editMessage.bind(this);
+  }
+
+  showEditor(e) {
+    this.setState({editMode: true, editable: false})
+  }
+
+  closeEditor(e) {
+    this.setState({editMode: false, editable: this.props.editable})
+  }
+
+  editMessage(message) {
+    this.setState({message: message})
   }
 
   setSelectedComment(e) {
@@ -27,7 +45,8 @@ class Comment extends React.Component {
                     sectionId: this.props.sectionId,
                     commenter: this.props.commenter,
                     message: this.props.message,
-                    createdAt: this.props.createdAt
+                    createdAt: this.props.createdAt,
+                    modalView: this.props.modalView
                   }
     this.props.setSelectedComment(comment)
   }
@@ -39,9 +58,9 @@ class Comment extends React.Component {
           <img className="user-comment-image" src='/assets/avatar_10.svg' />
           <h4>
             You
-            { this.props.editable &&
+            { this.state.editable &&
               <span className='comment-action-links'>
-                <a className='comment-edit-link cursor'> Edit</a> |
+                <a className='comment-edit-link cursor' onClick={this.showEditor}> Edit</a> |
                 <a href="#comment-delete-modal" className='comment-delete-link cursor btn-modal-open' data-dismiss="modal" onClick={this.setSelectedComment} data-toggle='modal'> Delete</a>
               </span>
             }
@@ -49,9 +68,14 @@ class Comment extends React.Component {
           <h6>
             {this.props.createdAt}
           </h6>
-          <p>
-            {this.props.message}
-          </p>
+          {this.state.editMode &&
+            <ConnectedCommentEditor message={ this.state.message } commentableId={this.props.commentableId} commentableType={this.props.commentableType} sectionId={this.props.sectionId} id={this.props.id} closeEditor={this.closeEditor} modalView={this.props.modalView} editMessage={this.editMessage} />
+          }
+          {!this.state.editMode &&
+            <p>
+              {this.state.message}
+            </p>
+          }
         </div>
       );
     } else {
@@ -65,7 +89,7 @@ class Comment extends React.Component {
             {this.props.createdAt}
           </h6>
           <p>
-            {this.props.message}
+            {this.state.message}
           </p>
         </div>
       );

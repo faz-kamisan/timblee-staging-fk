@@ -48,45 +48,43 @@ class PageChangeModal extends React.Component {
         </li>
       )
     })
-    if(this.props.pageTree.pageType) {
-      return (
-        <div className="modal fade page-change-modal" id="page-change-modal" tabIndex="-1" role="dialog" aria-labelledby="page-change-modalLabel">
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header text-center">
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">
-                    <img src='/assets/close-modal.svg' className='close-modal hide-delete-modal'></img>
-                  </span>
-                </button>
-                <h4 className="modal-title">Change the page type</h4>
-              </div>
-              <div className="modal-body">
-                <div className="clearfix">
-                  <div className='current-page-type pull-left'>
-                    <span>Current page type:</span>
+    return (
+      <div className="modal fade page-change-modal" id="page-change-modal" tabIndex="-1" role="dialog" aria-labelledby="page-change-modalLabel">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header text-center">
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">
+                  <img src='/assets/close-modal.svg' className='close-modal hide-delete-modal'></img>
+                </span>
+              </button>
+              <h4 className="modal-title">Change the page type</h4>
+            </div>
+            <div className="modal-body">
+              <div className="clearfix">
+                <div className='current-page-type pull-left'>
+                  <span>Current page type:</span>
+                  { this.props.pageTree.pageType &&
                     <PageType name={this.props.pageTree.pageType.name} iconName={this.props.pageTree.pageType.icon_name} id={this.props.pageTree.pageType.id} />
-                  </div>
-                  <div className="page-types pull-left">
-                    <form className="search-page-type">
-                      <label htmlFor="page-type">
-                        <i className="icon-search"></i>
-                      </label>
-                      <input type="search" id="page-type" name="page-type" placeholder="Find your page type" onChange={this.handleSearch} />
-                    </form>
-                    <ul className="page-type-list clearfix">
-                      {pageTypeComponents}
-                    </ul>
-                  </div>
+                  }
+                </div>
+                <div className="page-types pull-left">
+                  <form className="search-page-type">
+                    <label htmlFor="page-type">
+                      <i className="icon-search"></i>
+                    </label>
+                    <input type="search" id="page-type" name="page-type" placeholder="Find your page type" onChange={this.handleSearch} />
+                  </form>
+                  <ul className="page-type-list clearfix">
+                    {pageTypeComponents}
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      )
-    } else {
-      return(<div></div>)
-    }
+      </div>
+    )
   }
 }
 
