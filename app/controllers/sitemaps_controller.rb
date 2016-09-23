@@ -18,11 +18,12 @@ class SitemapsController < ApplicationController
   def show
     @sitemap_props = @sitemap.to_react_data.merge!(currentUser: { fullName: current_user.full_name,
                                                    email: current_user.email },
-                                                   publicShareUrl: (sitemap_public_share_url(@sitemap.public_share_token).gsub(/(?<protocol>http(s?):\/\/)/, '\k<protocol>share.')))
+                                                   publicShareUrl: (sitemap_public_share_url(@sitemap.public_share_token).gsub(/(?<protocol>http(s?):\/\/)/, '\k<protocol>share.')),
+                                                   publicShare: false)
   end
 
   def public_share
-    @sitemap_props = @sitemap.to_react_data
+    @sitemap_props = @sitemap.to_react_data.merge(publicShare: true)
     if current_user
       @sitemap_props = @sitemap_props.merge!(currentUser: { fullName: current_user.full_name, email: current_user.email })
     elsif current_guest

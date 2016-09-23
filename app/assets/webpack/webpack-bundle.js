@@ -36709,9 +36709,9 @@
 	
 	var _index2 = _interopRequireDefault(_index);
 	
-	var _sitemap = __webpack_require__(/*! ../components/sitemap */ 624);
+	var _connected_sitemap = __webpack_require__(/*! ../containers/connected_sitemap */ 1020);
 	
-	var _sitemap2 = _interopRequireDefault(_sitemap);
+	var _connected_sitemap2 = _interopRequireDefault(_connected_sitemap);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -36725,7 +36725,7 @@
 	  var reactComponent = _react2.default.createElement(
 	    _reactRedux.Provider,
 	    { store: store },
-	    _react2.default.createElement(_sitemap2.default, null)
+	    _react2.default.createElement(_connected_sitemap2.default, null)
 	  );
 	  return reactComponent;
 	};
@@ -38443,6 +38443,10 @@
 	
 	var _selected_comment2 = _interopRequireDefault(_selected_comment);
 	
+	var _public_share = __webpack_require__(/*! ./public_share */ 1019);
+	
+	var _public_share2 = _interopRequireDefault(_public_share);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var sitemapAppReducer = (0, _redux.combineReducers)({
@@ -38462,7 +38466,8 @@
 	  showSitemapShareModal: _show_sitemap_share_modal2.default,
 	  business: _business2.default,
 	  selectedPage: _selected_page2.default,
-	  selectedComment: _selected_comment2.default
+	  selectedComment: _selected_comment2.default,
+	  publicShare: _public_share2.default
 	});
 	
 	exports.default = sitemapAppReducer;
@@ -39508,9 +39513,9 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        null,
-	        _react2.default.createElement(_connected_header2.default, null),
-	        _react2.default.createElement(_connected_left_sidebar2.default, null),
+	        { className: this.props.publicShare ? 'shared-view' : '' },
+	        !this.props.publicShare && _react2.default.createElement(_connected_header2.default, null),
+	        !this.props.publicShare && _react2.default.createElement(_connected_left_sidebar2.default, null),
 	        _react2.default.createElement(_connected_right_sidebar2.default, null),
 	        _react2.default.createElement(_connected_section_container2.default, { sitemapNumber: '' }),
 	        _react2.default.createElement(_custom_drag_layer2.default, null),
@@ -47151,7 +47156,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { sections: state.sections, sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded };
+	  return { sections: state.sections, sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, publicShare: state.publicShare };
 	};
 	
 	var ConnectedSecionContainer = (0, _reactRedux.connect)(mapStateToProps)(_section_container2.default);
@@ -47245,7 +47250,7 @@
 	          _react2.default.createElement(
 	            'div',
 	            null,
-	            _react2.default.createElement(_draggable_page_container2.default, { pageTree: section.pageTree, sitemapNumber: '', sitemapId: _this.props.sitemapId, leftSidebarExpanded: _this.props.leftSidebarExpanded })
+	            _react2.default.createElement(_draggable_page_container2.default, { pageTree: section.pageTree, sitemapNumber: '', sitemapId: _this.props.sitemapId, leftSidebarExpanded: _this.props.leftSidebarExpanded, publicShare: _this.props.publicShare })
 	          ),
 	          section.pageTree.children.filter(function (page) {
 	            return page.state != 'archived';
@@ -47318,7 +47323,7 @@
 	    return { id: props.pageTree.id, parentId: props.pageTree.parentId, type: 'page', pageTree: props.pageTree, sitemapNumber: props.sitemapNumber };
 	  },
 	  canDrag: function canDrag(props, monitor) {
-	    return props.pageTree.level != 0;
+	    return !props.publicShare && props.pageTree.level != 0;
 	  }
 	};
 	
@@ -47380,7 +47385,7 @@
 	          return _react2.default.createElement(
 	            'div',
 	            { className: 'child-page', key: pageTree.parentId.toString() + pageTree.position.toString() },
-	            _react2.default.createElement(DraggablePageContainer, { pageTree: pageTree, onPageDrop: _this.props.onPageDrop, onPageTypeDrop: _this.props.onPageTypeDrop, sitemapId: _this.props.sitemapId, sitemapNumber: sitemapNumber })
+	            _react2.default.createElement(DraggablePageContainer, { pageTree: pageTree, onPageDrop: _this.props.onPageDrop, onPageTypeDrop: _this.props.onPageTypeDrop, sitemapId: _this.props.sitemapId, sitemapNumber: sitemapNumber, publicShare: _this.props.publicShare })
 	          );
 	        });
 	      }
@@ -47550,7 +47555,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return {};
+	  return { publicShare: state.publicShare };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -47725,7 +47730,7 @@
 	            _react2.default.createElement(
 	              'ul',
 	              { className: 'tile-more' },
-	              _react2.default.createElement(
+	              !this.props.publicShare && _react2.default.createElement(
 	                'li',
 	                { className: 'first-item' },
 	                _react2.default.createElement(
@@ -47814,7 +47819,7 @@
 	            _react2.default.createElement(
 	              'ul',
 	              { className: 'tile-more' },
-	              _react2.default.createElement(
+	              !this.props.publicShare && _react2.default.createElement(
 	                'li',
 	                { className: 'first-item' },
 	                _react2.default.createElement(
@@ -62511,6 +62516,60 @@
 	
 	var DroppableFirstPageDroppable = DropTargetDecorator(FirstPageDroppable);
 	exports.default = DroppableFirstPageDroppable;
+
+/***/ },
+/* 1019 */
+/*!*******************************************************!*\
+  !*** ./app/bundles/SiteMap/reducers/public_share.jsx ***!
+  \*******************************************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var publicShare = function publicShare() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+	  var action = arguments[1];
+	
+	  return state;
+	};
+	
+	exports.default = publicShare;
+
+/***/ },
+/* 1020 */
+/*!**************************************************************!*\
+  !*** ./app/bundles/SiteMap/containers/connected_sitemap.jsx ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
+	
+	var _sitemap = __webpack_require__(/*! ../components/sitemap */ 624);
+	
+	var _sitemap2 = _interopRequireDefault(_sitemap);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return { publicShare: state.publicShare };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {};
+	};
+	
+	var ConnectedSitemap = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_sitemap2.default);
+	
+	exports.default = ConnectedSitemap;
 
 /***/ }
 /******/ ]);

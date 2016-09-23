@@ -10,7 +10,7 @@ const sitemapSource = {
     return {id: props.pageTree.id, parentId: props.pageTree.parentId, type: 'page', pageTree: props.pageTree, sitemapNumber: props.sitemapNumber};
   },
   canDrag(props, monitor) {
-    return(props.pageTree.level != 0)
+    return((!props.publicShare) && (props.pageTree.level != 0))
   }
 };
 
@@ -66,7 +66,7 @@ class DraggedPageContainer extends React.Component {
         }
         return (
           <div className='child-page' key={pageTree.parentId.toString() + pageTree.position.toString()}>
-            <DraggablePageContainer pageTree={pageTree} onPageDrop={_this.props.onPageDrop} onPageTypeDrop={_this.props.onPageTypeDrop} sitemapId={_this.props.sitemapId} sitemapNumber={sitemapNumber} />
+            <DraggablePageContainer pageTree={pageTree} onPageDrop={_this.props.onPageDrop} onPageTypeDrop={_this.props.onPageTypeDrop} sitemapId={_this.props.sitemapId} sitemapNumber={sitemapNumber}  publicShare={_this.props.publicShare} />
           </div>
         )
       });

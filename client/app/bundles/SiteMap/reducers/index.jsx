@@ -16,6 +16,7 @@ import publicShareUrl from './public_share_url'
 import business from './business'
 import selectedPage from './selected_page'
 import selectedComment from './selected_comment'
+import publicShare from './public_share'
 
 const sitemapAppReducer = combineReducers({
   name,
@@ -34,7 +35,8 @@ const sitemapAppReducer = combineReducers({
   showSitemapShareModal,
   business,
   selectedPage,
-  selectedComment
+  selectedComment,
+  publicShare
 })
 
 export default sitemapAppReducer

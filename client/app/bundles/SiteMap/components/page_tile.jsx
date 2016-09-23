@@ -97,13 +97,15 @@ class PageTile extends React.Component {
           </div>
           <div className={ "tile-right-hover " + (this.state.hover ? 'hovered' : '') }>
             <ul className="tile-more">
-              <li className="first-item">
-                <span className="more-option tile-icons" onClick={this.openOverLay}>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </span>
-              </li>
+              { !this.props.publicShare &&
+                <li className="first-item">
+                  <span className="more-option tile-icons" onClick={this.openOverLay}>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </span>
+                </li>
+              }
               <li className="second-item">
                 <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'></span>
               </li>
@@ -148,13 +150,15 @@ class PageTile extends React.Component {
           </div>
           <div className={ "tile-right-hover " + (this.state.hover ? 'hovered' : '') }>
             <ul className="tile-more">
-              <li className="first-item">
-                <span className="more-option tile-icons" onClick={this.openOverLay}>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </span>
-              </li>
+              { !this.props.publicShare &&
+                <li className="first-item">
+                  <span className="more-option tile-icons" onClick={this.openOverLay}>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </span>
+                </li>
+              }
               <li className="second-item">
                 <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'></span>
               </li>

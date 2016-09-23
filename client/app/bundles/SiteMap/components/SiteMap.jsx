@@ -18,20 +18,24 @@ import CustomDragLayer from '../components/custom_drag_layer';
 class SiteMap extends React.Component {
   render() {
     return (
-        <div>
+      <div className={this.props.publicShare ? 'shared-view' : ''}>
+        { !this.props.publicShare &&
           <ConnectedHeader />
+        }
+        { !this.props.publicShare &&
           <ConnectedLeftSidebar />
-          <ConnectedRightSidebar />
-          <ConnectedSecionContainer sitemapNumber='' />
-          <CustomDragLayer />
-          <ConnectedGuestInfoFormModal />
-          <ConnectedSitemapShareModal />
-          <ConnectedDeletePageModal />
-          <ConnectedPageChangeModal />
-          <ConnectedNewSectionModal />
-          <ConnectedPageCommentsModal />
-          <ConnectedCommentDeleteModal />
-        </div>
+        }
+        <ConnectedRightSidebar />
+        <ConnectedSecionContainer sitemapNumber='' />
+        <CustomDragLayer />
+        <ConnectedGuestInfoFormModal />
+        <ConnectedSitemapShareModal />
+        <ConnectedDeletePageModal />
+        <ConnectedPageChangeModal />
+        <ConnectedNewSectionModal />
+        <ConnectedPageCommentsModal />
+        <ConnectedCommentDeleteModal />
+      </div>
     );
   }
 }

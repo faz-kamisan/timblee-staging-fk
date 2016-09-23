@@ -3,7 +3,7 @@ import { changeCollapse, updatePageName, setSaving, setSelectedPage } from '../a
 import PageTile from '../components/page_tile'
 
 const mapStateToProps = (state) => {
-  return {}
+  return {publicShare: state.publicShare}
 }
 
 const mapDispatchToProps = (dispatch) => {
