@@ -50,7 +50,9 @@ class RightSidebar extends React.Component {
             <span className="page-id">ID: {page.uid}</span>
             <div className="clearfix">
               <span className="page-name truncate pull-left">{page.name}</span>
-              <ConnectedMarkAsResolvedCheck page={page} />
+              { page.state != 'archived' &&
+                <ConnectedMarkAsResolvedCheck page={page} />
+              }
             </div>
           </div>
           <ul className="comment-group">
