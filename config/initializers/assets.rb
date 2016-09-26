@@ -31,6 +31,7 @@ Rails.application.config.assets.precompile += %w(
   personalization.js
   jump_to.js
   rename_sitemap.js
+  canvas_body.scss
 )
 # Add client/assets/ folders to asset pipeline's search path.
 # If you do not want to move existing images and fonts from your Rails app
