@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import ConnectedPageTile from '../containers/connected_page_tile'
 
 class DeletePageModal extends React.Component {
   static propTypes = {
@@ -42,15 +43,17 @@ class DeletePageModal extends React.Component {
                 </span>
               </button>
               <h4 className="modal-title">Delete page</h4>
-              <p className="modal-message">{"You're about to delete the " + this.props.pageTree.name + " page. Any comments for this page will be archived and available via the comments sidebar."}</p>
+              <p className="modal-message">{"You're about to delete the " + this.props.pageTree.name + " page. Any comments about this page will be archived and available via the comments sidebar."}</p>
             </div>
             <div className="modal-body">
-              <div className="page-tile-clone">
-
+              <div className="page-tile-clone text-center">
+                {this.props.pageTree.pageType &&
+                  <ConnectedPageTile pageTree={this.props.pageTree} collapsed={true} childrenLength={0} name={this.props.pageTree.name} />
+                }
               </div>
               <div className="modal-button text-center">
-                <a href="#" data-dismiss="modal" className="btn btn-red" onClick={this.deletePage}>Delete Page</a>
-                <a href="#" data-dismiss="modal" className="btn btn-transparent btn-last">Cancel</a>
+                <a href="javascript:void(0);" data-dismiss="modal" className="btn btn-red" onClick={this.deletePage}>Delete Page</a>
+                <a href="javascript:void(0);" data-dismiss="modal" className="btn btn-grey btn-last">Cancel</a>
               </div>
             </div>
           </div>
