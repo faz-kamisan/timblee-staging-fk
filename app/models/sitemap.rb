@@ -40,6 +40,7 @@ class Sitemap < ActiveRecord::Base
       id: self.id,
       updated_at: self.updated_at.strftime('%d %b %Y'),
       pageTypes: PageType.order_by_name,
+      footerPages: pages.where(footer: true),
       comments: self.comments.order_by_created_at.map(&:to_react_data),
       sections: sections.map(&:to_react_data),
       business:  business.to_react_data

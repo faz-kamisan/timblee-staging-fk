@@ -7,6 +7,7 @@ import ConnectedGuestInfoFormModal from '../containers/connected_guest_info_form
 import ConnectedSitemapShareModal from '../containers/connected_sitemap_share_modal';
 import ConnectedLeftSidebar from '../containers/connected_left_sidebar';
 import ConnectedRightSidebar from '../containers/connected_right_sidebar';
+import ConnectedFooter from '../containers/connected_footer';
 import ConnectedDeletePageModal from '../containers/connected_delete_page_modal';
 import ConnectedCommentDeleteModal from '../containers/connected_comment_delete_modal';
 import ConnectedPageChangeModal from '../containers/connected_page_change_modal';
@@ -27,6 +28,7 @@ class SiteMap extends React.Component {
         }
         <ConnectedRightSidebar />
         <ConnectedSecionContainer sitemapNumber='' />
+        <ConnectedFooter />
         <CustomDragLayer />
         <ConnectedGuestInfoFormModal />
         <ConnectedSitemapShareModal />

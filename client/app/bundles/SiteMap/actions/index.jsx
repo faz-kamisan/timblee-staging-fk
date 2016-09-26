@@ -24,6 +24,8 @@ export const SET_SELECTED_COMMENT = 'SET_SELECTED_COMMENT'
 export const CHANGE_PAGE_TYPE = 'CHANGE_PAGE_TYPE'
 export const CREATE_NEW_SECTION = 'CREATE_NEW_SECTION'
 export const UPDATE_PAGE_STATE = 'UPDATE_PAGE_STATE'
+export const ADD_NEW_FOOTER_PAGE = 'ADD_NEW_FOOTER_PAGE'
+export const UPDATE_FOOTER_PAGE_ID = 'UPDATE_FOOTER_PAGE_ID'
 
 export function setName(name) {
   return { type: SET_NAME, name }
@@ -129,3 +131,10 @@ export function updatePageState(pageId, sectionId, state) {
   return { type: UPDATE_PAGE_STATE, pageId, sectionId, state }
 }
 
+export function addNewFooterPage(pageType, timeStamp) {
+  return { type: ADD_NEW_FOOTER_PAGE, pageType, timeStamp }
+}
+
+export function updateFooterPageId(oldId, newId) {
+  return { type: UPDATE_FOOTER_PAGE_ID, oldId, newId }
+}

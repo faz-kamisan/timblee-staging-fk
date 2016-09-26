@@ -12,7 +12,8 @@ class Page < ActiveRecord::Base
   before_update :update_children_section_id, if: :section_id_changed?
   before_update :archive_children_pages, if: :state_changed?
 
-  validates :name, :section, :page_type, :sitemap, :uid, presence: true
+  validates :name, :page_type, :sitemap, :uid, presence: true
+  validates :section, presence: true, unless: :footer?
   validates :state, inclusion: { in: STATES }
   validates :uid, uniqueness: { scope: :sitemap_id }
 
@@ -29,7 +30,8 @@ class Page < ActiveRecord::Base
       pageType: page_type,
       collapsed: false,
       sitemapId: sitemap_id,
-      state: state
+      state: state,
+      footer: footer
     }
     child_pages = collection.select {|page| page.parent_id == self.id}.sort_by(&:position)
     tree.merge!({ children: child_pages.map { |child_page| child_page.get_tree(collection, level + 1) } })
