@@ -57,14 +57,26 @@ class Businesses::SubscriptionsController < ApplicationController
       InvitationService.invite_users(emails, current_user, params[:custom_message])
       LoggerExtension.stripe_log "Invitation sent to users with emails: #{emails}"
       LoggerExtension.highlight
-
-      redirect_to team_settings_users_path, notice: t('pro_plan_success', scope: :flash, users: current_business.subscriptions.last.no_of_users)
+      respond_to do |format|
+        format.html do
+          redirect_to team_settings_users_path, notice: t('pro_plan_success', scope: :flash, users: current_business.subscriptions.last.no_of_users)
+        end
+        format.js do
+          render js: ("document.setFlash(" + "'#{t('pro_plan_success', scope: :flash, users: current_business.subscriptions.last.no_of_users)}'" + ")")
+        end
+      end
 
       rescue Stripe::CardError => e
         LoggerExtension.stripe_log "Stripe::CardError : #{e.inspect}"
         LoggerExtension.highlight
-
-        redirect_to billing_settings_users_path, alert: e.message
+        respond_to do |format|
+          format.html do
+            redirect_to billing_settings_users_path, alert: e.message
+          end
+          format.js do
+            render js: ("document.setFlash(" + "'#{e.message}'" + ")")
+          end
+        end
     end
 
     def activate_starter_plan
@@ -76,7 +88,14 @@ class Businesses::SubscriptionsController < ApplicationController
       end
 
       current_business.update(is_pro: false, has_plan: true)
-      redirect_to billing_settings_users_path, notice: t('.success', scope: :flash)
+      respond_to do |format|
+        format.html do
+          redirect_to billing_settings_users_path, notice: t('.success', scope: :flash)
+        end
+        format.js do
+          render js: ("document.setFlash(" + "'#{t('.success', scope: :flash)}'" + ")")
+        end
+      end
     end
 
     def load_plan

@@ -21,6 +21,9 @@ class SitemapsController < ApplicationController
                                                    email: current_user.email },
                                                    publicShareUrl: (sitemap_public_share_url(@sitemap.public_share_token).gsub(/(?<protocol>http(s?):\/\/)/, '\k<protocol>share.')),
                                                    publicShare: false)
+    if(current_business.stripe_customer_id)
+      @card = current_business.active_card
+    end
   end
 
   def public_share

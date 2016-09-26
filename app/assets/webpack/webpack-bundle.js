@@ -49074,7 +49074,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { name: state.name, id: state.id, state: state.state, saving: state.saving };
+	  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -49173,15 +49173,16 @@
 	          dataType: 'JSON',
 	          data: { sitemap: { name: this.state.name } },
 	          error: function error(result) {
+	            var name = _this.props.name;
 	            document.setFlash(result.responseText);
-	            _this3.setState({ name: _this3.props.name });
+	            _this3.setState({ name: name });
 	          },
-	          complete: function complete(result) {
+	          success: function success(result) {
 	            _this3.props.setSaving(true);
 	            setTimeout(function () {
 	              _this.props.setSaving(false);
 	            }, 2000);
-	            _this3.props.onNameChange(name);
+	            _this3.props.onNameChange(_this.state.name);
 	          }
 	        });
 	      }
@@ -49223,6 +49224,14 @@
 	          _react2.default.createElement(_state2.default, { state: state, id: _this.props.id, onStateChange: _this.props.onStateChange, setSaving: _this.props.setSaving })
 	        );
 	      });
+	      var renderUsers = this.props.business.users.slice(0, 3).map(function (user, index) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: index },
+	          _react2.default.createElement('img', { src: user.avatarUrl })
+	        );
+	      });
+	      var otherUsersLength = this.props.business.users.length - 3;
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'react-header' },
@@ -49300,6 +49309,38 @@
 	                'a',
 	                { href: 'javascript:void(0)', className: 'btn btn-toggle-comments', onClick: this.toggleCommentState },
 	                'Comments'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'pull-left users-block' },
+	              _react2.default.createElement(
+	                'span',
+	                { className: 'icon-invite-female user-invite invite-link cursor', 'data-url': '/users/bulk_invitation', 'data-remote': true },
+	                _react2.default.createElement('span', { className: 'path1' }),
+	                _react2.default.createElement('span', { className: 'path2' }),
+	                _react2.default.createElement('span', { className: 'path3' }),
+	                _react2.default.createElement('span', { className: 'path4' }),
+	                _react2.default.createElement('span', { className: 'path5' })
+	              ),
+	              _react2.default.createElement(
+	                'ul',
+	                { className: 'users-list' },
+	                renderUsers
+	              ),
+	              otherUsersLength > 1 && _react2.default.createElement(
+	                'a',
+	                { className: 'other-users cursor' },
+	                '+ ',
+	                otherUsersLength,
+	                ' others'
+	              ),
+	              otherUsersLength == 1 && _react2.default.createElement(
+	                'a',
+	                { className: 'other-users cursor' },
+	                '+ ',
+	                otherUsersLength,
+	                ' other'
 	              )
 	            )
 	          )

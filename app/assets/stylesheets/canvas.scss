@@ -1314,6 +1314,55 @@
   transition: top .35s;
   -moz-transition: top .35s;
   -webkit-transition: top .35s;
+  .users-block {
+    .users-list {
+      display: inline-block;
+      li {
+        display: inline-block;
+        img {
+          width: 30px;
+          height: 30px;
+        }
+      }
+    }
+    .other-users {
+      color: #62717f;
+    }
+    .user-invite {
+      font-size: 32px;
+      display: inline-block;
+      margin-top: 4px;
+      .path1:before,
+      .path3:before,
+      .path4:before,
+      .path5:before {
+        color: #62717f;
+        top: 0;
+        left: 16px;
+      }
+      .path2:before {
+        top: 0;
+        left: 16px;
+      }
+      .path1::before,
+      .path2::before,
+      .path3::before,
+      .path4::before,
+      .path5::before, {
+        top: 4px;
+        left: 221px;
+      }
+      &:hover {
+        .path1:before,
+        .path3:before,
+        .path4:before,
+        .path5:before {
+          color: $primaryPink;
+        }
+      }
+    }
+  }
+
 
   .btn-share {
     height: 33px;

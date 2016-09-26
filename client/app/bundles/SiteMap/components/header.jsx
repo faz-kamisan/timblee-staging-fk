@@ -43,15 +43,16 @@ class Header extends React.Component {
         dataType: 'JSON',
         data: { sitemap: { name: this.state.name } },
         error: (result) => {
+          var name = _this.props.name
           document.setFlash(result.responseText)
-          this.setState({name: this.props.name})
+          this.setState({name: name})
         },
-        complete: (result) => {
+        success: (result) => {
           this.props.setSaving(true)
           setTimeout(function() {
             _this.props.setSaving(false)
           }, 2000)
-          this.props.onNameChange(name);
+          this.props.onNameChange(_this.state.name);
         }
       });
     }
@@ -88,6 +89,14 @@ class Header extends React.Component {
         </li>
       )
     })
+    var renderUsers = this.props.business.users.slice(0,3).map(function(user, index) {
+      return(
+        <li key={index}>
+          <img src={user.avatarUrl} />
+        </li>
+      )
+    })
+    var otherUsersLength = this.props.business.users.length - 3
     return (
       <div className="react-header">
         <div className="row">
@@ -126,6 +135,28 @@ class Header extends React.Component {
             </div>
             <div className="pull-left">
               <a href="javascript:void(0)" className="btn btn-toggle-comments" onClick={this.toggleCommentState}>Comments</a>
+            </div>
+            <div className="pull-left users-block">
+              <span className="icon-invite-female user-invite invite-link cursor" data-url='/users/bulk_invitation' data-remote={true}>
+                <span className="path1"></span>
+                <span className="path2"></span>
+                <span className="path3"></span>
+                <span className="path4"></span>
+                <span className="path5"></span>
+              </span>
+              <ul className='users-list'>
+                {renderUsers}
+              </ul>
+              {(otherUsersLength > 1) &&
+                <a className='other-users cursor'>
+                  + { otherUsersLength } others
+                </a>
+              }
+              {(otherUsersLength == 1) &&
+                <a className='other-users cursor'>
+                  + { otherUsersLength } other
+                </a>
+              }
             </div>
           </div>
         </div>

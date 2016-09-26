@@ -3,7 +3,7 @@ import { setName, updateState, setSaving, showSitemapShareModal } from '../actio
 import Header from '../components/header'
 
 const mapStateToProps = (state) => {
-  return { name: state.name, id: state.id, state: state.state, saving: state.saving }
+  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving }
 }
 
 const mapDispatchToProps = (dispatch) => {
