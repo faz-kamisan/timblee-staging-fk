@@ -61796,7 +61796,7 @@
 	              _react2.default.createElement(
 	                'p',
 	                { className: 'modal-message' },
-	                "You're about to delete the " + this.props.pageTree.name + " page. Any comments for this page will be archived and available via the comments sidebar."
+	                "You're about to delete the " + this.props.pageTree.name + " page. Any comments about this page will be archived and available via the comments sidebar."
 	              )
 	            ),
 	            _react2.default.createElement(
@@ -61804,7 +61804,7 @@
 	              { className: 'modal-body' },
 	              _react2.default.createElement(
 	                'div',
-	                { className: 'page-tile-clone' },
+	                { className: 'page-tile-clone text-center' },
 	                this.props.pageTree.pageType && _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: true, childrenLength: 0, name: this.props.pageTree.name })
 	              ),
 	              _react2.default.createElement(
@@ -61812,12 +61812,12 @@
 	                { className: 'modal-button text-center' },
 	                _react2.default.createElement(
 	                  'a',
-	                  { href: '#', 'data-dismiss': 'modal', className: 'btn btn-red', onClick: this.deletePage },
+	                  { href: 'javascript:void(0);', 'data-dismiss': 'modal', className: 'btn btn-red', onClick: this.deletePage },
 	                  'Delete Page'
 	                ),
 	                _react2.default.createElement(
 	                  'a',
-	                  { href: '#', 'data-dismiss': 'modal', className: 'btn btn-transparent btn-last' },
+	                  { href: 'javascript:void(0);', 'data-dismiss': 'modal', className: 'btn btn-grey btn-last' },
 	                  'Cancel'
 	                )
 	              )
