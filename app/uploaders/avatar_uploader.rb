@@ -2,7 +2,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   storage :file
   include CarrierWave::MiniMagick
 
-  process resize_to_fit: [100, 100], :if => :is_not_svg?
+  # process resize_to_fit: [100, 100], :if => :is_not_svg?
 
   def is_not_svg?(picture)
     true unless picture.content_type == "image/svg+xml"
