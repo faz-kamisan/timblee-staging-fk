@@ -1,5 +1,7 @@
 class Notification < ActiveRecord::Base
 
+  belongs_to :user
+
   scope :not_mailed, -> { where(email_sent: false) }
 
   def self.delete_sitemap_notification(sitemap, user)
@@ -16,9 +18,10 @@ class Notification < ActiveRecord::Base
 
   def self.add_comment_notification(comment, state)
     user = comment.commenter
-    sitemap = comment.commentable
+    sitemap = comment.commentable_type == 'Sitemap' ? comment.commentable : comment.commentable.sitemap
     path = Rails.application.routes.url_helpers.sitemap_path(sitemap)
-    partial_message = state == :create ? " added a comment on sitemap #{sitemap.name}" : " resolved a comment on sitemap #{sitemap.name}"
+    partial_message = (state == :create ? " added " : " resolved ") + "a comment on " +
+                      (comment.commentable_type == 'Sitemap' ? '' : "#{comment.commentable.name} page of ") + "#{sitemap.name} sitemap"
     add_notifications(user, sitemap, path, partial_message)
   end
 
