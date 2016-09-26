@@ -11,6 +11,9 @@ class BusinessesController < ApplicationController
     if @business.update(business_params)
       flash[:notice] = t('.success', scope: :flash)
     else
+      Rails.logger.info('*'*100)
+      Rails.logger.info(@business.errors)
+      Rails.logger.info('*'*100)
       flash[:alert] = t('.failure', scope: :flash)
     end
     redirect_to personalization_settings_users_path
