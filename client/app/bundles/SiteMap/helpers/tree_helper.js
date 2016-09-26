@@ -1,4 +1,4 @@
-function addPage(sections, sectionId, pageType, parentId, position, tempId) {
+function addPage(sections, sectionId, pageType, parentId, position, tempId, uid) {
   var sectionsCopy = Object.assign([], sections);
   var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
   var pageTypeCopy = Object.assign({}, pageType);
@@ -6,12 +6,7 @@ function addPage(sections, sectionId, pageType, parentId, position, tempId) {
   delete(pageTypeCopy.iconName)
   var parentPage = getNodeById(treeCopy, parentId),
       parentLevel = parentPage.level;
-  var uids = []
-  traverse(treeCopy, function(node) {
-    uids.push(node.uid)
-  })
-  var newUid = Math.max.apply(null, uids) + 1
-  var newPage = { name: pageTypeCopy.name, pageType: pageTypeCopy, parentId: parentId, level: (parentLevel + 1), children: [], comments: [], collapsed: false, state: 'active', id: tempId, uid: newUid, section_id: sectionId, footer: false};
+  var newPage = { name: pageTypeCopy.name, pageType: pageTypeCopy, parentId: parentId, level: (parentLevel + 1), children: [], comments: [], collapsed: false, state: 'active', id: tempId, uid: uid, section_id: sectionId, footer: false};
   if(position == 'begining') {
     parentPage.children.unshift(newPage)
   } else {

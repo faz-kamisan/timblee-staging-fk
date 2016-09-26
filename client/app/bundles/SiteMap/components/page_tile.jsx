@@ -5,7 +5,7 @@ import ConnectedPageTileBottom from '../containers/connected_page_tile_bottom';
 class PageTile extends React.Component {
   static propTypes = {
     pageTree: PropTypes.object.isRequired,
-    sitemapNumber: PropTypes.string.isRequired,
+    sitemapNumber: PropTypes.string,
     name: PropTypes.string.isRequired,
     collapsed: PropTypes.bool.isRequired,
     childrenLength: PropTypes.number.isRequired,

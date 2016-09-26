@@ -4,7 +4,7 @@ import { addPage, removePage, updatePagePosition, updatePageName, updateCollapse
 const sections = (state = [], action) => {
   switch (action.type) {
     case ADD_NEW_PAGE:
-      return addPage(state, action.sectionId, action.pageType, action.parentId, action.position, action.timeStamp)
+      return addPage(state, action.sectionId, action.pageType, action.parentId, action.position, action.timeStamp, action.uid)
     case REMOVE_PAGE:
       return removePage(state, action.id, action.sectionId)
     case UPDATE_PAGE_POSITION:

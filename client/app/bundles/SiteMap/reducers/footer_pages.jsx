@@ -1,16 +1,7 @@
 import { ADD_NEW_FOOTER_PAGE, UPDATE_FOOTER_PAGE_ID, UPDATE_GENERAL_COMMENT, DELETE_GENERAL_COMMENT } from '../actions/index'
-function addFooterPage(footerPages, pageType, tempId) {
+function addFooterPage(footerPages, pageType, tempId, uid) {
   var footerPagesCopy = Object.assign([], footerPages)
-  if(footerPagesCopy.length > 0) {
-    var uids = []
-    footerPagesCopy.forEach(function(footerPage, index) {
-      uids.push(node.uid)
-    })
-    var newUid = Math.max.apply(null, uids) + 1
-  } else {
-    var newUid = 1
-  }
-  var newFooterPage = { name: pageType.name, footer: true, pageType: pageType, children: [], comments: [], collapsed: false, state: 'active', id: tempId, uid: newUid};
+  var newFooterPage = { name: pageType.name, footer: true, pageType: pageType, children: [], comments: [], collapsed: false, state: 'active', id: tempId, uid: uid};
   footerPagesCopy.push(newFooterPage)
   return footerPagesCopy
 }
@@ -38,7 +29,7 @@ function deleteComment(footerPages, id) {
 const footerPages = (state = [], action) => {
   switch (action.type) {
     case ADD_NEW_FOOTER_PAGE:
-      return addFooterPage(state, action.pageType, action.timeStamp)
+      return addFooterPage(state, action.pageType, action.timeStamp, action.uid)
     case UPDATE_FOOTER_PAGE_ID:
       return updateId(state, action.oldId, action.newId)
     // case UPDATE_GENERAL_COMMENT:

@@ -8,7 +8,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onPageDelete: (pageTree) => {
+    onPageDelete: (pageTree, maxPageUid) => {
       dispatch(removePage(pageTree.id, pageTree.section_id))
     },
     setSaving: (saving) => {

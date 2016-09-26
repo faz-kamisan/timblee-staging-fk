@@ -21,7 +21,7 @@ const sitemapTarget = {
           document.setFlash(result.responseText)
         },
         success: (result) => {
-          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id)
+          props.onPageIdUpdate(timeStamp, result.id)
         },
         complete: (result) => {
           props.setSaving(true)
@@ -30,7 +30,7 @@ const sitemapTarget = {
           }, 2000)
         }
       });
-      props.onPageTypeDrop(item, timeStamp);
+      props.onPageTypeDrop(item, timeStamp, props.maxPageUid);
     }
   }
 };
@@ -50,6 +50,7 @@ class Footer extends React.Component {
     onPageIdUpdate: PropTypes.func.isRequired,
     setSaving: PropTypes.func.isRequired,
     sitemapId: PropTypes.number.isRequired,
+    maxPageUid: PropTypes.number.isRequired,
     leftSidebarExpanded: PropTypes.bool.isRequired
   };
 

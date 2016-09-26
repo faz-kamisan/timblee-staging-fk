@@ -26,13 +26,14 @@ export const CREATE_NEW_SECTION = 'CREATE_NEW_SECTION'
 export const UPDATE_PAGE_STATE = 'UPDATE_PAGE_STATE'
 export const ADD_NEW_FOOTER_PAGE = 'ADD_NEW_FOOTER_PAGE'
 export const UPDATE_FOOTER_PAGE_ID = 'UPDATE_FOOTER_PAGE_ID'
+export const SET_MAX_PAGE_UID = 'SET_MAX_PAGE_UID'
 
 export function setName(name) {
   return { type: SET_NAME, name }
 }
 
-export function addNewPage(sectionId, pageType, parentId, position, timeStamp) {
-  return { type: ADD_NEW_PAGE, sectionId, pageType, parentId, position, timeStamp }
+export function addNewPage(sectionId, pageType, parentId, position, timeStamp, uid) {
+  return { type: ADD_NEW_PAGE, sectionId, pageType, parentId, position, timeStamp, uid }
 }
 
 export function removePage(id, sectionId) {
@@ -131,10 +132,14 @@ export function updatePageState(pageId, sectionId, state) {
   return { type: UPDATE_PAGE_STATE, pageId, sectionId, state }
 }
 
-export function addNewFooterPage(pageType, timeStamp) {
-  return { type: ADD_NEW_FOOTER_PAGE, pageType, timeStamp }
+export function addNewFooterPage(pageType, timeStamp, uid) {
+  return { type: ADD_NEW_FOOTER_PAGE, pageType, timeStamp, uid }
 }
 
 export function updateFooterPageId(oldId, newId) {
   return { type: UPDATE_FOOTER_PAGE_ID, oldId, newId }
+}
+
+export function setMaxPageUid(uid) {
+  return {type: SET_MAX_PAGE_UID, uid}
 }

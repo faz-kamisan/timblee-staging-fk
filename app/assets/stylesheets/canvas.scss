@@ -2394,6 +2394,10 @@
   bottom: 0px;
   width: 100%;
   background: #f9fafc;
-  z-index: 1;
+  z-index: 3;
   text-align: center;
+  .footer-page {
+    display: inline-block;
+    padding-left: 20px;
+  }
 }

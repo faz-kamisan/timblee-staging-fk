@@ -38451,6 +38451,10 @@
 	
 	var _footer_pages2 = _interopRequireDefault(_footer_pages);
 	
+	var _max_page_uid = __webpack_require__(/*! ./max_page_uid */ 1024);
+	
+	var _max_page_uid2 = _interopRequireDefault(_max_page_uid);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var sitemapAppReducer = (0, _redux.combineReducers)({
@@ -38472,7 +38476,8 @@
 	  selectedPage: _selected_page2.default,
 	  selectedComment: _selected_comment2.default,
 	  publicShare: _public_share2.default,
-	  footerPages: _footer_pages2.default
+	  footerPages: _footer_pages2.default,
+	  maxPageUid: _max_page_uid2.default
 	});
 	
 	exports.default = sitemapAppReducer;
@@ -38546,6 +38551,7 @@
 	exports.updatePageState = updatePageState;
 	exports.addNewFooterPage = addNewFooterPage;
 	exports.updateFooterPageId = updateFooterPageId;
+	exports.setMaxPageUid = setMaxPageUid;
 	var SET_NAME = exports.SET_NAME = 'SET_NAME';
 	var ADD_NEW_PAGE = exports.ADD_NEW_PAGE = 'ADD_NEW_PAGE';
 	var REMOVE_PAGE = exports.REMOVE_PAGE = 'REMOVE_PAGE';
@@ -38574,13 +38580,14 @@
 	var UPDATE_PAGE_STATE = exports.UPDATE_PAGE_STATE = 'UPDATE_PAGE_STATE';
 	var ADD_NEW_FOOTER_PAGE = exports.ADD_NEW_FOOTER_PAGE = 'ADD_NEW_FOOTER_PAGE';
 	var UPDATE_FOOTER_PAGE_ID = exports.UPDATE_FOOTER_PAGE_ID = 'UPDATE_FOOTER_PAGE_ID';
+	var SET_MAX_PAGE_UID = exports.SET_MAX_PAGE_UID = 'SET_MAX_PAGE_UID';
 	
 	function setName(name) {
 	  return { type: SET_NAME, name: name };
 	}
 	
-	function addNewPage(sectionId, pageType, parentId, position, timeStamp) {
-	  return { type: ADD_NEW_PAGE, sectionId: sectionId, pageType: pageType, parentId: parentId, position: position, timeStamp: timeStamp };
+	function addNewPage(sectionId, pageType, parentId, position, timeStamp, uid) {
+	  return { type: ADD_NEW_PAGE, sectionId: sectionId, pageType: pageType, parentId: parentId, position: position, timeStamp: timeStamp, uid: uid };
 	}
 	
 	function removePage(id, sectionId) {
@@ -38679,12 +38686,16 @@
 	  return { type: UPDATE_PAGE_STATE, pageId: pageId, sectionId: sectionId, state: state };
 	}
 	
-	function addNewFooterPage(pageType, timeStamp) {
-	  return { type: ADD_NEW_FOOTER_PAGE, pageType: pageType, timeStamp: timeStamp };
+	function addNewFooterPage(pageType, timeStamp, uid) {
+	  return { type: ADD_NEW_FOOTER_PAGE, pageType: pageType, timeStamp: timeStamp, uid: uid };
 	}
 	
 	function updateFooterPageId(oldId, newId) {
 	  return { type: UPDATE_FOOTER_PAGE_ID, oldId: oldId, newId: newId };
+	}
+	
+	function setMaxPageUid(uid) {
+	  return { type: SET_MAX_PAGE_UID, uid: uid };
 	}
 
 /***/ },
@@ -38731,7 +38742,7 @@
 	
 	  switch (action.type) {
 	    case _index.ADD_NEW_PAGE:
-	      return (0, _tree_helper.addPage)(state, action.sectionId, action.pageType, action.parentId, action.position, action.timeStamp);
+	      return (0, _tree_helper.addPage)(state, action.sectionId, action.pageType, action.parentId, action.position, action.timeStamp, action.uid);
 	    case _index.REMOVE_PAGE:
 	      return (0, _tree_helper.removePage)(state, action.id, action.sectionId);
 	    case _index.UPDATE_PAGE_POSITION:
@@ -38775,7 +38786,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	function addPage(sections, sectionId, pageType, parentId, position, tempId) {
+	function addPage(sections, sectionId, pageType, parentId, position, tempId, uid) {
 	  var sectionsCopy = Object.assign([], sections);
 	  var treeCopy = sectionsCopy.filter(function (section) {
 	    return section.id == sectionId;
@@ -38785,12 +38796,7 @@
 	  delete pageTypeCopy.iconName;
 	  var parentPage = getNodeById(treeCopy, parentId),
 	      parentLevel = parentPage.level;
-	  var uids = [];
-	  traverse(treeCopy, function (node) {
-	    uids.push(node.uid);
-	  });
-	  var newUid = Math.max.apply(null, uids) + 1;
-	  var newPage = { name: pageTypeCopy.name, pageType: pageTypeCopy, parentId: parentId, level: parentLevel + 1, children: [], comments: [], collapsed: false, state: 'active', id: tempId, uid: newUid, section_id: sectionId, footer: false };
+	  var newPage = { name: pageTypeCopy.name, pageType: pageTypeCopy, parentId: parentId, level: parentLevel + 1, children: [], comments: [], collapsed: false, state: 'active', id: tempId, uid: uid, section_id: sectionId, footer: false };
 	  if (position == 'begining') {
 	    parentPage.children.unshift(newPage);
 	  } else {
@@ -39471,18 +39477,9 @@
 	
 	var _index = __webpack_require__(/*! ../actions/index */ 606);
 	
-	function addFooterPage(footerPages, pageType, tempId) {
+	function addFooterPage(footerPages, pageType, tempId, uid) {
 	  var footerPagesCopy = Object.assign([], footerPages);
-	  if (footerPagesCopy.length > 0) {
-	    var uids = [];
-	    footerPagesCopy.forEach(function (footerPage, index) {
-	      uids.push(node.uid);
-	    });
-	    var newUid = Math.max.apply(null, uids) + 1;
-	  } else {
-	    var newUid = 1;
-	  }
-	  var newFooterPage = { name: pageType.name, footer: true, pageType: pageType, children: [], comments: [], collapsed: false, state: 'active', id: tempId, uid: newUid };
+	  var newFooterPage = { name: pageType.name, footer: true, pageType: pageType, children: [], comments: [], collapsed: false, state: 'active', id: tempId, uid: uid };
 	  footerPagesCopy.push(newFooterPage);
 	  return footerPagesCopy;
 	}
@@ -39519,7 +39516,7 @@
 	
 	  switch (action.type) {
 	    case _index.ADD_NEW_FOOTER_PAGE:
-	      return addFooterPage(state, action.pageType, action.timeStamp);
+	      return addFooterPage(state, action.pageType, action.timeStamp, action.uid);
 	    case _index.UPDATE_FOOTER_PAGE_ID:
 	      return updateId(state, action.oldId, action.newId);
 	    // case UPDATE_GENERAL_COMMENT:
@@ -48045,7 +48042,7 @@
 	
 	PageTile.propTypes = {
 	  pageTree: _react.PropTypes.object.isRequired,
-	  sitemapNumber: _react.PropTypes.string.isRequired,
+	  sitemapNumber: _react.PropTypes.string,
 	  name: _react.PropTypes.string.isRequired,
 	  collapsed: _react.PropTypes.bool.isRequired,
 	  childrenLength: _react.PropTypes.number.isRequired,
@@ -48077,7 +48074,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { sitemapId: state.id };
+	  return { sitemapId: state.id, maxPageUid: state.maxPageUid };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -48085,8 +48082,9 @@
 	    onPageDrop: function onPageDrop(id, sectionId, newParentId, position) {
 	      dispatch((0, _actions.updatePagePosition)(id, sectionId, newParentId, position));
 	    },
-	    onPageTypeDrop: function onPageTypeDrop(sectionId, pageType, parentId, position, timeStamp) {
-	      dispatch((0, _actions.addNewPage)(sectionId, pageType, parentId, position, timeStamp));
+	    onPageTypeDrop: function onPageTypeDrop(sectionId, pageType, parentId, position, timeStamp, maxPageUid) {
+	      dispatch((0, _actions.addNewPage)(sectionId, pageType, parentId, position, timeStamp, maxPageUid + 1));
+	      dispatch((0, _actions.setMaxPageUid)(maxPageUid + 1));
 	    },
 	    onPageIdUpdate: function onPageIdUpdate(id, sectionId, newId) {
 	      dispatch((0, _actions.updateId)(id, sectionId, newId));
@@ -48177,7 +48175,7 @@
 	          }, 2000);
 	        }
 	      });
-	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp);
+	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp, props.maxPageUid);
 	    }
 	  }
 	};
@@ -48256,9 +48254,10 @@
 	  onPageIdUpdate: _react.PropTypes.func.isRequired,
 	  setSaving: _react.PropTypes.func.isRequired,
 	  pageTree: _react.PropTypes.object.isRequired,
-	  sitemapNumber: _react.PropTypes.string.isRequired,
+	  sitemapNumber: _react.PropTypes.string,
 	  name: _react.PropTypes.string.isRequired,
-	  sitemapId: _react.PropTypes.number.isRequired
+	  sitemapId: _react.PropTypes.number.isRequired,
+	  maxPageUid: _react.PropTypes.number.isRequired
 	};
 	
 	
@@ -48289,7 +48288,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { sitemapId: state.id };
+	  return { sitemapId: state.id, maxPageUid: state.maxPageUid };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -48297,8 +48296,9 @@
 	    onPageDrop: function onPageDrop(id, sectionId, newParentId, position) {
 	      dispatch((0, _actions.updatePagePosition)(id, sectionId, newParentId, position));
 	    },
-	    onPageTypeDrop: function onPageTypeDrop(sectionId, pageType, parentId, position, timeStamp) {
-	      dispatch((0, _actions.addNewPage)(sectionId, pageType, parentId, position, timeStamp));
+	    onPageTypeDrop: function onPageTypeDrop(sectionId, pageType, parentId, position, timeStamp, maxPageUid) {
+	      dispatch((0, _actions.addNewPage)(sectionId, pageType, parentId, position, timeStamp, maxPageUid + 1));
+	      dispatch((0, _actions.setMaxPageUid)(maxPageUid + 1));
 	    },
 	    onPageIdUpdate: function onPageIdUpdate(id, sectionId, newId) {
 	      dispatch((0, _actions.updateId)(id, sectionId, newId));
@@ -48389,7 +48389,7 @@
 	          }, 2000);
 	        }
 	      });
-	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp);
+	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
 	    }
 	  }
 	};
@@ -48454,7 +48454,8 @@
 	  onPageIdUpdate: _react.PropTypes.func.isRequired,
 	  setSaving: _react.PropTypes.func.isRequired,
 	  pageTree: _react.PropTypes.object.isRequired,
-	  sitemapId: _react.PropTypes.number.isRequired
+	  sitemapId: _react.PropTypes.number.isRequired,
+	  maxPageUid: _react.PropTypes.number.isRequired
 	};
 	
 	
@@ -48485,7 +48486,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { sitemapId: state.id };
+	  return { sitemapId: state.id, maxPageUid: state.maxPageUid };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -48493,8 +48494,9 @@
 	    onPageDrop: function onPageDrop(id, sectionId, newParentId, position) {
 	      dispatch((0, _actions.updatePagePosition)(id, sectionId, newParentId, position));
 	    },
-	    onPageTypeDrop: function onPageTypeDrop(sectionId, pageType, parentId, position, timeStamp) {
-	      dispatch((0, _actions.addNewPage)(sectionId, pageType, parentId, position, timeStamp));
+	    onPageTypeDrop: function onPageTypeDrop(sectionId, pageType, parentId, position, timeStamp, maxPageUid) {
+	      dispatch((0, _actions.addNewPage)(sectionId, pageType, parentId, position, timeStamp, maxPageUid + 1));
+	      dispatch((0, _actions.setMaxPageUid)(maxPageUid + 1));
 	    },
 	    onPageIdUpdate: function onPageIdUpdate(id, sectionId, newId) {
 	      dispatch((0, _actions.updateId)(id, sectionId, newId));
@@ -48585,7 +48587,7 @@
 	          }, 2000);
 	        }
 	      });
-	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp);
+	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp, props.maxPageUid);
 	    }
 	  }
 	};
@@ -48643,7 +48645,8 @@
 	  onPageIdUpdate: _react.PropTypes.func.isRequired,
 	  setSaving: _react.PropTypes.func.isRequired,
 	  pageTree: _react.PropTypes.object.isRequired,
-	  sitemapId: _react.PropTypes.number.isRequired
+	  sitemapId: _react.PropTypes.number.isRequired,
+	  maxPageUid: _react.PropTypes.number.isRequired
 	};
 	
 	
@@ -48674,7 +48677,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { sitemapId: state.id };
+	  return { sitemapId: state.id, maxPageUid: state.maxPageUid };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -48682,8 +48685,9 @@
 	    onPageDrop: function onPageDrop(id, sectionId, newParentId, position) {
 	      dispatch((0, _actions.updatePagePosition)(id, sectionId, newParentId, position));
 	    },
-	    onPageTypeDrop: function onPageTypeDrop(sectionId, pageType, parentId, position, timeStamp) {
-	      dispatch((0, _actions.addNewPage)(sectionId, pageType, parentId, position, timeStamp));
+	    onPageTypeDrop: function onPageTypeDrop(sectionId, pageType, parentId, position, timeStamp, maxPageUid) {
+	      dispatch((0, _actions.addNewPage)(sectionId, pageType, parentId, position, timeStamp, maxPageUid + 1));
+	      dispatch((0, _actions.setMaxPageUid)(maxPageUid + 1));
 	    },
 	    onPageIdUpdate: function onPageIdUpdate(id, sectionId, newId) {
 	      dispatch((0, _actions.updateId)(id, sectionId, newId));
@@ -48774,7 +48778,7 @@
 	          }, 2000);
 	        }
 	      });
-	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp);
+	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp, props.maxPageUid);
 	    }
 	  }
 	};
@@ -48832,7 +48836,8 @@
 	  onPageIdUpdate: _react.PropTypes.func.isRequired,
 	  setSaving: _react.PropTypes.func.isRequired,
 	  pageTree: _react.PropTypes.object.isRequired,
-	  sitemapId: _react.PropTypes.number.isRequired
+	  sitemapId: _react.PropTypes.number.isRequired,
+	  maxPageUid: _react.PropTypes.number.isRequired
 	};
 	
 	
@@ -48863,7 +48868,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { sitemapId: state.id };
+	  return { sitemapId: state.id, maxPageUid: state.maxPageUid };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -48871,8 +48876,9 @@
 	    onPageDrop: function onPageDrop(id, sectionId, newParentId, position) {
 	      dispatch((0, _actions.updatePagePosition)(id, sectionId, newParentId, position));
 	    },
-	    onPageTypeDrop: function onPageTypeDrop(sectionId, pageType, parentId, position, timeStamp) {
-	      dispatch((0, _actions.addNewPage)(sectionId, pageType, parentId, position, timeStamp));
+	    onPageTypeDrop: function onPageTypeDrop(sectionId, pageType, parentId, position, timeStamp, maxPageUid) {
+	      dispatch((0, _actions.addNewPage)(sectionId, pageType, parentId, position, timeStamp, maxPageUid + 1));
+	      dispatch((0, _actions.setMaxPageUid)(maxPageUid + 1));
 	    },
 	    onPageIdUpdate: function onPageIdUpdate(id, sectionId, newId) {
 	      dispatch((0, _actions.updateId)(id, sectionId, newId));
@@ -48946,7 +48952,7 @@
 	          }, 2000);
 	        }
 	      });
-	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp);
+	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
 	    }
 	  }
 	};
@@ -49007,7 +49013,8 @@
 	  setSaving: _react.PropTypes.func.isRequired,
 	  pageTree: _react.PropTypes.object.isRequired,
 	  sitemapId: _react.PropTypes.number.isRequired,
-	  leftSidebarExpanded: _react.PropTypes.bool.isRequired
+	  leftSidebarExpanded: _react.PropTypes.bool.isRequired,
+	  maxPageUid: _react.PropTypes.number.isRequired
 	};
 	
 	
@@ -61496,13 +61503,14 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, footerPages: state.footerPages };
+	  return { sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, footerPages: state.footerPages, maxPageUid: state.maxPageUid };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    onPageTypeDrop: function onPageTypeDrop(pageType, timeStamp) {
-	      dispatch((0, _actions.addNewFooterPage)(pageType, timeStamp));
+	    onPageTypeDrop: function onPageTypeDrop(pageType, timeStamp, maxPageUid) {
+	      dispatch((0, _actions.addNewFooterPage)(pageType, timeStamp, maxPageUid + 1));
+	      dispatch((0, _actions.setMaxPageUid)(maxPageUid + 1));
 	    },
 	    onPageIdUpdate: function onPageIdUpdate(id, newId) {
 	      dispatch((0, _actions.updateFooterPageId)(id, newId));
@@ -61571,7 +61579,7 @@
 	          document.setFlash(result.responseText);
 	        },
 	        success: function success(result) {
-	          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id);
+	          props.onPageIdUpdate(timeStamp, result.id);
 	        },
 	        complete: function complete(result) {
 	          props.setSaving(true);
@@ -61580,7 +61588,7 @@
 	          }, 2000);
 	        }
 	      });
-	      props.onPageTypeDrop(item, timeStamp);
+	      props.onPageTypeDrop(item, timeStamp, props.maxPageUid);
 	    }
 	  }
 	};
@@ -61651,6 +61659,7 @@
 	  onPageIdUpdate: _react.PropTypes.func.isRequired,
 	  setSaving: _react.PropTypes.func.isRequired,
 	  sitemapId: _react.PropTypes.number.isRequired,
+	  maxPageUid: _react.PropTypes.number.isRequired,
 	  leftSidebarExpanded: _react.PropTypes.bool.isRequired
 	};
 	
@@ -61687,7 +61696,7 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    onPageDelete: function onPageDelete(pageTree) {
+	    onPageDelete: function onPageDelete(pageTree, maxPageUid) {
 	      dispatch((0, _actions.removePage)(pageTree.id, pageTree.section_id));
 	    },
 	    setSaving: function setSaving(saving) {
@@ -62878,6 +62887,35 @@
 	  iconName: _react.PropTypes.string.isRequired
 	};
 	exports.default = PageTypePreview;
+
+/***/ },
+/* 1024 */
+/*!*******************************************************!*\
+  !*** ./app/bundles/SiteMap/reducers/max_page_uid.jsx ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _index = __webpack_require__(/*! ../actions/index */ 606);
+	
+	var maxPageUid = function maxPageUid() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case _index.SET_MAX_PAGE_UID:
+	      return action.uid;
+	    default:
+	      return state;
+	  }
+	};
+	
+	exports.default = maxPageUid;
 
 /***/ }
 /******/ ]);
