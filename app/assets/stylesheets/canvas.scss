@@ -1,4 +1,4 @@
-.page-container {
+.page-container, .page-tile-clone {
   .page-tile {
     width: 200px;
     height: 87px;
@@ -2383,5 +2383,28 @@
     p {
       color: #62717f;
     }
+  }
+}
+
+#delete-page-modal {
+  .modal-message {
+    padding: 0 80px;
+    color: #62717f;
+  }
+  .modal-body {
+    padding-top: 27px;
+    padding-bottom: 35px;
+  }
+  .page-tile-clone {
+    margin-bottom: 22px;
+  }
+  .page-tile {
+    pointer-events: none;
+  }
+  .btn {
+    font-size: 12px;
+  }
+  .btn-grey {
+    text-transform: capitalize;
   }
 }

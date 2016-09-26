@@ -191,3 +191,9 @@
     @include alignCenter(-310px, -118px);
   } 
 }
+
+#delete-page-modal {
+  .modal-dialog {
+    @include alignCenter(-310px, -183px);
+  } 
+}
