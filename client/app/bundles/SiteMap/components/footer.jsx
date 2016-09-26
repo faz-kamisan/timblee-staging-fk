@@ -10,28 +10,28 @@ const sitemapTarget = {
     if (monitor.didDrop() || (item.pageType == 'page')) {
       return;
     }
-    // if(item.type == 'PageType') {
-    //   var timeStamp = new Date();
-    //   $.ajax({
-    //     url: '/pages/',
-    //     method: 'post',
-    //     dataType: 'JSON',
-    //     data: { page: { page_type_id: item.id, footer: true, sitemap_id: props.sitemapId, name: item.name } },
-    //     error: (result) => {
-    //       document.setFlash(result.responseText)
-    //     },
-    //     success: (result) => {
-    //       props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id)
-    //     },
-    //     complete: (result) => {
-    //       props.setSaving(true)
-    //       setTimeout(function() {
-    //         props.setSaving(false)
-    //       }, 2000)
-    //     }
-    //   });
-    //   props.onPageTypeDrop(item, timeStamp);
-    // }
+    if(item.type == 'PageType') {
+      var timeStamp = new Date();
+      $.ajax({
+        url: '/pages/',
+        method: 'post',
+        dataType: 'JSON',
+        data: { page: { page_type_id: item.id, footer: true, sitemap_id: props.sitemapId, name: item.name } },
+        error: (result) => {
+          document.setFlash(result.responseText)
+        },
+        success: (result) => {
+          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id)
+        },
+        complete: (result) => {
+          props.setSaving(true)
+          setTimeout(function() {
+            props.setSaving(false)
+          }, 2000)
+        }
+      });
+      props.onPageTypeDrop(item, timeStamp);
+    }
   }
 };
 
@@ -68,9 +68,9 @@ class Footer extends React.Component {
   render() {
     const connectDropTarget = this.props.connectDropTarget
     var renderedFooterPages = this.props.footerPages.map(function(footerPage, index) {
-      render(
+      return(
         <li key={index} className='footer-page'>
-          <ConnectedPageTile pageTree={this.props.footerPage} collapsed={true} childrenLength={0} name={this.props.pageTree.name} />
+          <ConnectedPageTile pageTree={footerPage} collapsed={true} childrenLength={0} name={footerPage.name} />
         </li>
       )
     })

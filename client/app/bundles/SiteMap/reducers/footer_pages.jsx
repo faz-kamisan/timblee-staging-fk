@@ -1,11 +1,15 @@
 import { ADD_NEW_FOOTER_PAGE, UPDATE_FOOTER_PAGE_ID, UPDATE_GENERAL_COMMENT, DELETE_GENERAL_COMMENT } from '../actions/index'
 function addFooterPage(footerPages, pageType, tempId) {
   var footerPagesCopy = Object.assign([], footerPages)
-  var uids = []
-  footerPagesCopy.each(function(footerPage, index) {
-    uids.push(node.uid)
-  })
-  var newUid = Math.max.apply(null, uids) + 1
+  if(footerPagesCopy.length > 0) {
+    var uids = []
+    footerPagesCopy.forEach(function(footerPage, index) {
+      uids.push(node.uid)
+    })
+    var newUid = Math.max.apply(null, uids) + 1
+  } else {
+    var newUid = 1
+  }
   var newFooterPage = { name: pageType.name, footer: true, pageType: pageType, children: [], comments: [], collapsed: false, state: 'active', id: tempId, uid: newUid};
   footerPagesCopy.push(newFooterPage)
   return footerPagesCopy

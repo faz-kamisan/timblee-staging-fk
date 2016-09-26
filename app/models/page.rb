@@ -18,14 +18,20 @@ class Page < ActiveRecord::Base
   validates :uid, uniqueness: { scope: :sitemap_id }
 
   def get_tree(collection, level = 0)
-    tree = {
+    tree = to_react_data.merge(level: level)
+    child_pages = collection.select {|page| page.parent_id == self.id}.sort_by(&:position)
+    tree.merge!({ children: child_pages.map { |child_page| child_page.get_tree(collection, level + 1) } })
+    tree
+  end
+
+  def to_react_data
+    {
       name: name.to_s,
       id: id,
       uid: uid,
       section_id: section_id,
       parentId: parent_id,
       position: position,
-      level: level,
       comments: comments.sort_by(&:created_at).map(&:to_react_data),
       pageType: page_type,
       collapsed: false,
@@ -33,11 +39,7 @@ class Page < ActiveRecord::Base
       state: state,
       footer: footer
     }
-    child_pages = collection.select {|page| page.parent_id == self.id}.sort_by(&:position)
-    tree.merge!({ children: child_pages.map { |child_page| child_page.get_tree(collection, level + 1) } })
-    tree
   end
-
 
   private
 
