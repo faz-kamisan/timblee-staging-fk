@@ -44,11 +44,11 @@
           <ul class="p-0 m-0">
             <li>
               <%= form_for sitemap, url: sitemap_duplicate_path(sitemap), html: { remote: true, method: :post } do |f| %>
+                <a href="javascript:void(0);" class="action duplicate-sitemap-link">
+                  <span class="icon icon-wand"></span>
+                  <span class="link-text">Duplicate</span>
+                </a>
               <% end %>
-              <a href="<%= sitemap_duplicate_path(sitemap) %>" class="action duplicate-sitemap-link">
-                <span class="icon icon-wand"></span>
-                <span class="link-text">Dulpicate</span>
-              </a>
             </li>
             <li>
               <a href="javascript:void(0);" class="action rename-sitemap-link">
