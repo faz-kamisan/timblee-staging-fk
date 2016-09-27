@@ -26,14 +26,14 @@
         </div>
         <div class="actions">
           <ul class="card-users clearfix">
-            <% sitemap.users.each_with_index do |user, index| %>
-              <% break if index == 3 %>
+          <% users = sitemap.active_users %>
+            <% users.sample(3).each do |user| %>
               <li>
                 <%= image_tag(user.avatar) %>
               </li>
             <% end %>
           </ul>
-          <span class="other-users"><%= "+#{sitemap.users.count - 3}" if sitemap.users.count > 3 %></span>
+          <span class="other-users"><%= "+#{users.count - 3}" if users.count > 3 %></span>
         </div>
         <a href="javascript:void(0);" class="more-options">
           <span></span>

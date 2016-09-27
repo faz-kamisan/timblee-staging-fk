@@ -52,6 +52,10 @@ class Sitemap < ActiveRecord::Base
     business.users + invited_users
   end
 
+  def active_users
+    users - User.where(id: users.map(&:id)).invitation_not_accepted
+  end
+
   def to_react_data
     { name: self.name,
       state: state.titleize,
