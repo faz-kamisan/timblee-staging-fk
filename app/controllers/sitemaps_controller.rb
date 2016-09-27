@@ -85,6 +85,7 @@ class SitemapsController < ApplicationController
       flash.now[:success] = t('.success', scope: :flash)
     else
       flash.now[:alert] = t('.failure', scope: :flash)
+      render 'shared/show_flash'
     end
   end
 
