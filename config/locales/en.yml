@@ -29,7 +29,8 @@ en:
         failure: Couldn't delete sitemap
       rename:
         success: Sitemap renamed successfully
-        failure: Couldn't rename sitemap
+        failure: Whoops! Looks like you have another sitemap with the same name so we couldn't rename the sitemap. Try another name.
+        blank:   Sitename can't be blank
       duplicate:
         success: Duplicate Sitemap created successfully
         failure: Couldn't duplicate sitemap

@@ -60,13 +60,18 @@ class SitemapsController < ApplicationController
         end
       end
     else
+      if sitemap_params.include?(:name) && @sitemap.name.present?
+        flash = t('sitemaps.rename.failure', scope: :flash) || t('.failure', scope: :flash)
+      else
+        flash = t('.blank', scope: :flash) || t('.failure', scope: :flash)
+      end
       respond_to do |format|
         format.js do
-          flash.now[:alert] = t('.failure', scope: :flash)
+          flash.now[:alert] = flash
           render 'shared/show_flash', status: 422
         end
         format.json do
-          render json: t('.failure', scope: :flash) , status: 422
+          render json: flash , status: 422
         end
       end
     end
@@ -76,7 +81,11 @@ class SitemapsController < ApplicationController
     if @sitemap.update(rename_params)
       flash.now[:success] = t('.success', scope: :flash)
     else
-      flash.now[:alert] = t('.failure', scope: :flash)
+      if @sitemap.name.present?
+        flash.now[:alert] = t('.failure', scope: :flash)
+      else
+        flash.now[:alert] = t('.blank', scope: :flash)
+      end
     end
   end
 
