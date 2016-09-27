@@ -1,18 +1,20 @@
 var DuplicateSitemap = function(options) {
+  this.sitemapsListing = options.sitemapsListing;
   this.duplicateSitemapLink = options.duplicateSitemapLink;
 };
 
 DuplicateSitemap.prototype.bindEvents = function() {
   var _this = this;
-  _this.duplicateSitemapLink.on('click', function (e) {
-    $(this).closest('.actions-overlay').find('.close-action-overlay').click();
-    $(this).closest('form').submit();
+  _this.sitemapsListing.on('click', _this.duplicateSitemapLink, function (e) {
+    $(e.target).closest('.actions-overlay').find('.close-action-overlay').click();
+    $(e.target).closest('form').submit();
   });
 };
 
 $(function() {
   var options = {
-    duplicateSitemapLink : $('.duplicate-sitemap-link')
+    sitemapsListing : $('.sitemaps-listing'),
+    duplicateSitemapLink : '.duplicate-sitemap-link'
   }
   var duplicateSitemap = new DuplicateSitemap(options);
   duplicateSitemap.bindEvents();
