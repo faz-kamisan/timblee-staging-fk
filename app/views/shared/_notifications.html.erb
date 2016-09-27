@@ -1,0 +1,9 @@
+<ul class="p-0 m-0 user-settings notifications-listing">
+  <% current_user.notifications.order(created_at: :desc).limit(10).each do |notification|%>
+    <li>
+      <%= image_tag(notification.user.try(:avatar) || 'profile-image.png', class: 'profile-image') %>
+      <%= link_to "#{notification.message}", notification.link_to %>
+      <%= time_ago_in_words(notification.created_at) + ' ago' %>
+    </li>
+  <% end %>
+</ul>
