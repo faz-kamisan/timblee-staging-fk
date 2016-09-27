@@ -4,17 +4,28 @@ class Page < ActiveRecord::Base
   belongs_to :sitemap
   belongs_to :section
   belongs_to :page_type
+  has_many :child_pages, class_name: 'Page', foreign_key: :parent_id, primary_key: :id
   has_many :comments, as: :commentable, dependent: :destroy
   acts_as_tree order: :position
   acts_as_list scope: :parent
 
-  before_validation :set_uid, on: :create
+  before_validation :set_uid, on: :create, unless: :uid
   before_update :update_children_section_id, if: :section_id_changed?
   before_update :archive_children_pages, if: :state_changed?
 
   validates :name, :section, :page_type, :sitemap, :uid, presence: true
   validates :state, inclusion: { in: STATES }
   validates :uid, uniqueness: { scope: :sitemap_id }
+
+  def duplicate(duplicate_section, duplicate_parent_id)
+    duplicate = dup
+    duplicate.section = duplicate_section
+    duplicate.parent_id = duplicate_parent_id
+    duplicate.sitemap = duplicate_section.sitemap
+    duplicate.save
+    child_pages.order(:position).each { |page| page.duplicate(duplicate_section, duplicate.id)}
+
+  end
 
   def get_tree(collection, level = 0)
     tree = {

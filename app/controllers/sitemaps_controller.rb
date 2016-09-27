@@ -2,7 +2,7 @@ class SitemapsController < ApplicationController
   before_filter :fetch_sitemap, only: [:destroy, :show, :update, :share_via_email]
   before_filter :fetch_sitemap_from_token, only: [:public_share]
   skip_before_filter :authenticate_user!, only: [:public_share]
-  before_filter :fetch_sitemap_for_rename, only: [:rename]
+  before_filter :fetch_sitemap_for_rename, only: [:rename, :duplicate]
 
   def create
     @sitemap = current_business.sitemaps.build(sitemap_params)
@@ -11,6 +11,7 @@ class SitemapsController < ApplicationController
       flash[:notice] = t('.success', scope: :flash)
       redirect_to sitemap_path(@sitemap)
     else
+      debugger
       flash[:error] = t('.failure', scope: :flash)
       redirect_to home_dashboard_path
     end
@@ -77,7 +78,16 @@ class SitemapsController < ApplicationController
     else
       flash.now[:alert] = t('.failure', scope: :flash)
     end
+  end
 
+  def duplicate
+    @duplicate = @sitemap.duplicate
+    if @duplicate.persisted?
+      flash[:success] = t('.success', scope: :flash)
+    else
+      flash[:alert] = t('.failure', scope: :flash)
+    end
+    redirect_to home_dashboard_path
   end
 
   private

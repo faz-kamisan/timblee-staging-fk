@@ -39,6 +39,7 @@ Rails.application.routes.draw do
     end
     patch 'rename'
     post 'rename'
+    get 'duplicate'
   end
   resources :comments, only: [:create, :update, :destroy]
   resources :pages, only: [:create, :update, :destroy]

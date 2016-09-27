@@ -11,13 +11,13 @@
 
 <body>
   <% if current_user %>
-
-  <%= render 'shared/signed_in_header' %>
-
+      <%= render 'shared/signed_in_header' %>
   <% end %>
-    <div class= 'flash-message'>
-      <%= render 'shared/flash_message.html.erb' %>
-    </div>
+
+  <div class= 'flash-message'>
+    <%= render 'shared/flash_message.html.erb' %>
+  </div>
+
   <%= yield %>
 
 </body>
