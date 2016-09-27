@@ -1,5 +1,5 @@
 class Comment < ActiveRecord::Base
-  belongs_to :commentable, polymorphic: true
+  belongs_to :commentable, polymorphic: true, touch: true
   belongs_to :commenter, polymorphic: true
   validates :message, :commentable, :commenter, presence: true
 

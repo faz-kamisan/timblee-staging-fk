@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setSaving, updatePageComment, updateGeneralComment } from '../actions'
+import { setSaving, changeUpdatedAt, updatePageComment, updateGeneralComment } from '../actions'
 import CommentEditor from '../components/comment_editor'
 
 const mapStateToProps = (state) => {
@@ -17,6 +17,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));
+      dispatch(changeUpdatedAt());
     }
   }
 }

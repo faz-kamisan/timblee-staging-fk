@@ -1,5 +1,5 @@
 class Section < ActiveRecord::Base
-  belongs_to :sitemap
+  belongs_to :sitemap, touch: true
   has_many :pages
   has_one :root_page, ->{ where(parent_id: nil) }, class_name: :Page
 

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { addNewFooterPage, updateFooterPageId, setSaving, setMaxPageUid } from '../actions'
+import { addNewFooterPage, changeUpdatedAt, updateFooterPageId, setSaving, setMaxPageUid } from '../actions'
 import DroppableFooter from '../components/footer'
 
 const mapStateToProps = (state) => {
@@ -17,6 +17,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));
+      dispatch(changeUpdatedAt());
     }
   }
 }

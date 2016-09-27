@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setSaving, addPageComment, addGeneralComment, updatePageCommentId, updateGeneralCommentId, setShowGuestInfoForm } from '../actions'
+import { setSaving, changeUpdatedAt, addPageComment, addGeneralComment, updatePageCommentId, updateGeneralCommentId, setShowGuestInfoForm } from '../actions'
 import NewComment from '../components/new_comment'
 
 const mapStateToProps = (state) => {
@@ -24,6 +24,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));
+      dispatch(changeUpdatedAt());
     },
     setShowGuestInfoForm: (showGuestInfoForm) => {
       dispatch(setShowGuestInfoForm(showGuestInfoForm));

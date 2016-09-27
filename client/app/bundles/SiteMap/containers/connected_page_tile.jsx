@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { changeCollapse, updatePageName, setSaving, setSelectedPage } from '../actions'
+import { changeCollapse, updatePageName, changeUpdatedAt, setSaving, setSelectedPage } from '../actions'
 import PageTile from '../components/page_tile'
 
 const mapStateToProps = (state) => {
@@ -19,6 +19,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));
+      dispatch(changeUpdatedAt());
     }
   }
 }

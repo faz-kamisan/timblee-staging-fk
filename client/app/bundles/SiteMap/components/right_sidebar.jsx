@@ -10,7 +10,8 @@ class RightSidebar extends React.Component {
     sections: PropTypes.array.isRequired,
     sitemapId: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    business : PropTypes.object.isRequired
+    business : PropTypes.object.isRequired,
+    publicShare: PropTypes.bool.isRequired
   };
 
   constructor(props) {
@@ -23,9 +24,6 @@ class RightSidebar extends React.Component {
     this.setState({ currentTab: tabName })
   }
 
-  componentDidMount() {
-    $('.comment-input textarea').watermark('Add a comment...<br/>You can mention people by typing @.', {fallback: false});
-  }
   render() {
     const CommentTabs = ['active', 'resolved', 'archived']
     var _this = this;
@@ -71,23 +69,27 @@ class RightSidebar extends React.Component {
 
     return (
       <div className='sitemap-right-sidebar'>
-        <div className='sitemap-comment-tabs comment-header'>
-          <ul className="comment-list clearfix">
-            {renderedCommentTabs}
-            <li className="animated-bar-react"></li>
-          </ul>
-        </div>
+        {!this.props.publicShare &&
+          <div className='sitemap-comment-tabs comment-header'>
+            <ul className="comment-list clearfix">
+              {renderedCommentTabs}
+              <li className="animated-bar-react"></li>
+            </ul>
+          </div>
+        }
         <div className="comment-inner-body">
-          <p className="comment-text">
-            {(() => {
-              switch (this.state.currentTab) {
-              case "active"   : return "Anyone who has the share link can see active comments. Only " + this.props.business.name + " team members can see resolved and deleted comments.";
-              case "resolved" : return "Resolved conversations are only visible to logged in " + this.props.business.name + " team members.";
-              case "archived" : return "If a page with comments is deleted, the conversation is moved here. This is to ensure there is a record of all conversations. Archived conversations are only visible to logged in " + this.props.business.name + " team members.";
-              default         : return "";
-            }
-            })()}
-          </p>
+          {!this.props.publicShare &&
+            <p className="comment-text">
+              {(() => {
+                switch (this.state.currentTab) {
+                case "active"   : return "Anyone who has the share link can see active comments. Only " + this.props.business.name + " team members can see resolved and deleted comments.";
+                case "resolved" : return "Resolved conversations are only visible to logged in " + this.props.business.name + " team members.";
+                case "archived" : return "If a page with comments is deleted, the conversation is moved here. This is to ensure there is a record of all conversations. Archived conversations are only visible to logged in " + this.props.business.name + " team members.";
+                default         : return "";
+              }
+              })()}
+            </p>
+          }
           { (this.state.currentTab == 'active') &&
             <div className='general-comments'>
               <h2 className="comment-type-heading">

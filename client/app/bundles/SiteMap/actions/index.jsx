@@ -7,6 +7,7 @@ export const CHANGE_COLLAPSE = 'CHANGE_COLLAPSE'
 export const UPDATE_ID = 'UPDATE_ID'
 export const CHANGE_STATE = 'CHANGE_STATE'
 export const SET_SAVING = 'SET_SAVING'
+export const CHANGE_UPDATED_AT = 'CHANGE_UPDATED_AT'
 export const ADD_PAGE_COMMENT = 'ADD_PAGE_COMMENT'
 export const ADD_GENERAL_COMMENT = 'ADD_GENERAL_COMMENT'
 export const UPDATE_PAGE_COMMENT_ID = 'UPDATE_PAGE_COMMENT_ID'
@@ -62,6 +63,10 @@ export function updateState(state) {
 
 export function setSaving(saving) {
   return { type: SET_SAVING, saving }
+}
+
+export function changeUpdatedAt() {
+  return { type: CHANGE_UPDATED_AT }
 }
 
 export function addPageComment(id, message, commenter, sectionId, tempId) {

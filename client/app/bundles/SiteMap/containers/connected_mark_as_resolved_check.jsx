@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
-import { updatePageState, setSaving } from '../actions'
+import { updatePageState, changeUpdatedAt, setSaving } from '../actions'
 import MarkAsResolvedCheck from '../components/mark_as_resolved_check'
 
 const mapStateToProps = (state) => {
-  return { }
+  return { publicShare: state.publicShare }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -13,6 +13,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));
+      dispatch(changeUpdatedAt());
     }
   }
 }

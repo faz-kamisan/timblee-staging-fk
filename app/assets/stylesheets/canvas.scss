@@ -1638,6 +1638,23 @@
   }
 }
 
+.sitemap-induction-sidebar {
+  position: fixed;
+  right: -435px;
+  width: 420px;
+  top: 80px;
+  height: 100%;
+  background: #262b30;
+  z-index: 14;
+  transition: .35s;
+  box-shadow: 0px 0px 20px 7px rgba(147, 147, 147, 1);
+  overflow-y: auto;
+  padding-top: 20px;
+  &.open {
+    right: 0;
+  }
+}
+
 .comment-list {
   height: 60px;
   border-bottom: solid 1px #171a1d;
@@ -1691,11 +1708,7 @@
     padding: 0;
   }
 
-  .watermark_container,
-  .comment-input {
-    display: block!important;
-    color: #262b30!important;
-  }
+
 
   label.watermark {
     z-index: 4;
@@ -1707,6 +1720,16 @@
     left: 15px!important;
     color: #dadada!important;
   }
+}
+
+.watermark_container,
+.comment-input {
+  display: block!important;
+  color: #262b30!important;
+}
+
+.watermark_container {
+  width: 100%
 }
 
 .comment-input {
@@ -1919,6 +1942,10 @@
   left: 0;
   top: 0;
   transform: scale(0);
+  -ms-transform: scale(0);
+  -webkit-transform: scale(0);
+  -moz-transform: scale(0);
+  -o-transform: scale(0);
   background: $primaryWhite;
   z-index: 11;
   padding: 47px 23px 10px 5px;
@@ -1943,6 +1970,10 @@
   &.overlay-in {
     right: 0;
     transform: scale(1);
+    -ms-transform: scale(1);
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
   }
 }
 
@@ -2253,6 +2284,9 @@
   z-index: 12;
   &.left-bar-contracted {
     padding-left: 30px;
+    &.public-share {
+      padding-left: 0;
+    }
   }
   @include animate(.35s);
   li {
@@ -2443,7 +2477,7 @@
   bottom: 0px;
   width: 100%;
   background: #f9fafc;
-  z-index: 3;
+  z-index: 7;
   text-align: center;
   .footer-page {
     display: inline-block;
@@ -2471,5 +2505,24 @@
   }
   .btn-grey {
     text-transform: capitalize;
+  }
+}
+
+.react-public-header {
+  background: #ffffff;
+  position: fixed;
+  top: 0px;
+  z-index: 15;
+  height: 80px;
+  left: 0;
+  width: 100%;
+  padding: 20px 30px;
+  span.last-updated {
+    font-size: 12px;
+    color: #62717f;
+    margin-top: 1px;
+    position: absolute;
+    right: 25px;
+    min-width: 215px;
   }
 }

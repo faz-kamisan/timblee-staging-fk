@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { updatePagePosition, addNewPage, setMaxPageUid, updateId, setSaving } from '../actions'
+import { updatePagePosition, addNewPage, setMaxPageUid, changeUpdatedAt, updateId, setSaving } from '../actions'
 import DroppableGutter from '../components/gutter'
 
 const mapStateToProps = (state) => {
@@ -20,6 +20,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));
+      dispatch(changeUpdatedAt());
     }
   }
 }

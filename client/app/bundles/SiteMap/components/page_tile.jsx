@@ -40,6 +40,12 @@ class PageTile extends React.Component {
         data: { page: { name: name } },
         error: (result) => {
           document.setFlash(result.responseText)
+        },
+        success: (result) => {
+          this.props.setSaving(true)
+          setTimeout(function() {
+            _this.props.setSaving(false)
+          }, 2000)
         }
       });
       this.props.onNameChange(this.props.pageTree.id, this.props.pageTree.section_id, name);

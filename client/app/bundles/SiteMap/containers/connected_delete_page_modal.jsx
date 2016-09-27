@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { removePage, setSaving } from '../actions'
+import { removePage, changeUpdatedAt, setSaving } from '../actions'
 import DeletePageModal from '../components/delete_page_modal'
 
 const mapStateToProps = (state) => {
@@ -13,6 +13,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));
+      dispatch(changeUpdatedAt());
     }
   }
 }

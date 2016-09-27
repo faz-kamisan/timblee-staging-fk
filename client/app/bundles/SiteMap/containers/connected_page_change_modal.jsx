@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { changePageType, setSaving } from '../actions'
+import { changePageType, changeUpdatedAt, setSaving } from '../actions'
 import PageChangeModal from '../components/page_change_modal'
 
 const mapStateToProps = (state) => {
@@ -13,6 +13,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));
+      dispatch(changeUpdatedAt());
     }
   }
 }

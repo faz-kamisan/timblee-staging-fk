@@ -2,7 +2,7 @@ class Page < ActiveRecord::Base
   STATES = ['active', 'archived', 'resolved']
 
   belongs_to :sitemap
-  belongs_to :section
+  belongs_to :section, touch: true
   belongs_to :page_type
   has_many :comments, as: :commentable, dependent: :destroy
   acts_as_tree order: :position
