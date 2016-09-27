@@ -3,6 +3,7 @@ class SitemapsController < ApplicationController
   before_filter :fetch_sitemap_from_token, only: [:public_share]
   skip_before_filter :authenticate_user!, only: [:public_share]
   before_filter :fetch_sitemap_from_sitemap_id, only: [:rename, :duplicate]
+  around_action :wrap_in_transaction, only: :duplicate
 
   def create
     @sitemap = current_business.sitemaps.build(sitemap_params)
@@ -123,5 +124,15 @@ class SitemapsController < ApplicationController
 
     def rename_params
       params.require(:sitemap).permit(:name)
+    end
+
+    def wrap_in_transaction
+      begin
+        ActiveRecord::Base.transaction do
+          yield
+        end
+      rescue
+        redirect_to home_dashboard_path, alert: t('.failure', scope: :flash)
+      end
     end
 end

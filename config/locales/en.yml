@@ -30,6 +30,9 @@ en:
       rename:
         success: Sitemap renamed successfully
         failure: Couldn't rename sitemap
+      duplicate:
+        success: Duplicate Sitemap created successfully
+        failure: Couldn't duplicate sitemap
     comments:
       not_found: Can't find comment
       create:
