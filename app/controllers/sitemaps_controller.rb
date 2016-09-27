@@ -132,7 +132,7 @@ class SitemapsController < ApplicationController
           yield
         end
       rescue
-        redirect_to home_dashboard_path, alert: t('.failure', scope: :flash)
+        flash.now[:alert] = t('.failure', scope: :flash)
       end
     end
 end
