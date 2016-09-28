@@ -1,13 +1,25 @@
-<div class='row'>
-<div class='col-md-3'></div>
-<div class='col-md-6'>
-  <%= form_tag admin_impersonate_path do %>
-    <%= select_tag :business_id, options_for_select(@businesses.map { |business| [(business.name.present? ? business.name : business.owner.email), business.id] }), prompt: '', class: 'business-selector' %>
-    <%= submit_tag 'lets go' %>
-  <% end %>
-</div>
-<div class='col-md-3'></div>
-</div>
+<main class="main">
+  <section class="user-entry super-admin">
+    <div class="panel">
+      <div class="panel-body text-center">
+        <div class="logo">
+          <%= image_tag('Timblee-icon.svg', class: 'logo-inner') %>
+        </div>
+        <h1 class="modal-heading">
+          Super Admin Login
+        </h1>
+        <p class="small">With great power, comes great responsibility. <br> Which account do you want to access? </p>
+        <%= form_tag admin_impersonate_path, class: 'user-form' do %>
+          <div class="form-group">
+            <%= select_tag :business_id, options_for_select(@businesses.map { |business| [(business.name.present? ? business.name : business.owner.email), business.id] }), prompt: '', class: 'business-selector' %>
+          </div>
+          <%= submit_tag "Let's go", class: 'btn btn-pink btn-block' %>
+        <% end %>
+      </div>
+    </div>
+  </section>
+</main>
+
 <script type="text/javascript">
   $(document).ready(function() {
     $(".business-selector").select2({
