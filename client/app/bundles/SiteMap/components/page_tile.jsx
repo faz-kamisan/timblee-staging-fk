@@ -23,7 +23,7 @@ class PageTile extends React.Component {
     this.closeOverLay = this.closeOverLay.bind(this);
     this.openOverLay = this.openOverLay.bind(this);
     this.setSelectedPage = this.setSelectedPage.bind(this);
-    this.state = { nameChangeDisabled: true, hover: false, showOverLay: false, name: this.props.name, originalName: this.props.name }
+    this.state = { nameChangeDisabled: !props.pageTree.newRecord, hover: false, showOverLay: false, name: this.props.name, originalName: this.props.name }
   }
 
   enableNameChangeInput(e) {
@@ -49,10 +49,19 @@ class PageTile extends React.Component {
           }, 2000)
         }
       });
-      this.props.onNameChange(this.props.pageTree.id, this.props.pageTree.section_id, name);
-      this.setState({ nameChangeDisabled: true })
+      this.props.onNameChange(this.props.pageTree.id, this.props.pageTree.footer, this.props.pageTree.section_id, name);
+
+      if(this.props.pageTree.newRecord) {
+        this.props.updatePagePersitence(this.props.pageTree.id, this.props.pageTree.footer, this.props.pageTree.section_id)
+      } else {
+        this.setState({ nameChangeDisabled: true })
+      }
     } else {
-      this.setState({name: this.state.originalName, nameChangeDisabled: true })
+      if(this.props.pageTree.newRecord) {
+        this.props.updatePagePersitence(this.props.pageTree.id, this.props.pageTree.footer, this.props.pageTree.section_id)
+      } else {
+        this.setState({name: this.state.originalName, nameChangeDisabled: true })
+      }
     }
   }
 
@@ -85,11 +94,12 @@ class PageTile extends React.Component {
     this.props.onCollapsedChanged(this.props.pageTree.id, this.props.pageTree.section_id)
   }
 
-  componentDidUpdate(props, state) {
-    if(!state.nameChangeDisabled) {
+  componentDidMount() {
+    if(this.props.pageTree.newRecord) {
       $(this.refs.nameInput).focus();
     }
   }
+
   render() {
     if(this.props.childrenLength > 0) {
       return (
@@ -135,7 +145,7 @@ class PageTile extends React.Component {
               </a>
             }
             {
-              (this.props.pageTree.parentId != null) &&
+              ((this.props.pageTree.parentId != null) || (this.props.pageTree.footer)) &&
               <a href="#delete-page-modal" className="icon-page-delete" onClick={this.setSelectedPage} data-toggle='modal'>
                 <span className="card-tooltip">Delete Page</span>
               </a>
@@ -188,7 +198,7 @@ class PageTile extends React.Component {
               </a>
             }
             {
-              (this.props.pageTree.parentId != null) &&
+              ((this.props.pageTree.parentId != null) || (this.props.pageTree.footer)) &&
               <a href="#delete-page-modal" className="icon-page-delete" onClick={this.setSelectedPage} data-toggle='modal'>
                 <span className="card-tooltip">Delete Page</span>
               </a>

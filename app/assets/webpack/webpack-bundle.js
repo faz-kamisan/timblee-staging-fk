@@ -38650,7 +38650,11 @@
 	exports.setName = setName;
 	exports.addNewPage = addNewPage;
 	exports.removePage = removePage;
+	exports.removeFooterPage = removeFooterPage;
 	exports.updatePageName = updatePageName;
+	exports.updateFooterPageName = updateFooterPageName;
+	exports.updatePagePersitence = updatePagePersitence;
+	exports.updateFooterPagePersitence = updateFooterPagePersitence;
 	exports.updatePagePosition = updatePagePosition;
 	exports.changeCollapse = changeCollapse;
 	exports.updateId = updateId;
@@ -38658,8 +38662,10 @@
 	exports.setSaving = setSaving;
 	exports.changeUpdatedAt = changeUpdatedAt;
 	exports.addPageComment = addPageComment;
+	exports.addFooterPageComment = addFooterPageComment;
 	exports.addGeneralComment = addGeneralComment;
 	exports.updatePageCommentId = updatePageCommentId;
+	exports.updateFooterPageCommentId = updateFooterPageCommentId;
 	exports.updateGeneralCommentId = updateGeneralCommentId;
 	exports.changeLeftSideBarExpanded = changeLeftSideBarExpanded;
 	exports.setShowGuestInfoForm = setShowGuestInfoForm;
@@ -38667,29 +38673,39 @@
 	exports.showSitemapShareModal = showSitemapShareModal;
 	exports.updateGeneralComment = updateGeneralComment;
 	exports.updatePageComment = updatePageComment;
+	exports.updateFooterPageComment = updateFooterPageComment;
 	exports.deleteGeneralComment = deleteGeneralComment;
 	exports.deletePageComment = deletePageComment;
+	exports.deleteFooterPageComment = deleteFooterPageComment;
 	exports.setSelectedPage = setSelectedPage;
 	exports.setSelectedComment = setSelectedComment;
 	exports.changePageType = changePageType;
+	exports.changeFooterPageType = changeFooterPageType;
 	exports.createNewSection = createNewSection;
 	exports.updatePageState = updatePageState;
+	exports.updateFooterPageState = updateFooterPageState;
 	exports.addNewFooterPage = addNewFooterPage;
 	exports.updateFooterPageId = updateFooterPageId;
 	exports.setMaxPageUid = setMaxPageUid;
 	var SET_NAME = exports.SET_NAME = 'SET_NAME';
 	var ADD_NEW_PAGE = exports.ADD_NEW_PAGE = 'ADD_NEW_PAGE';
 	var REMOVE_PAGE = exports.REMOVE_PAGE = 'REMOVE_PAGE';
+	var REMOVE_FOOTER_PAGE = exports.REMOVE_FOOTER_PAGE = 'REMOVE_FOOTER_PAGE';
 	var UPDATE_PAGE_POSITION = exports.UPDATE_PAGE_POSITION = 'UPDATE_PAGE_POSITION';
 	var UPDATE_PAGE_NAME = exports.UPDATE_PAGE_NAME = 'UPDATE_PAGE_NAME';
+	var UPDATE_FOOTER_PAGE_NAME = exports.UPDATE_FOOTER_PAGE_NAME = 'UPDATE_FOOTER_PAGE_NAME';
+	var UPDATE_PAGE_PERSISTENCE = exports.UPDATE_PAGE_PERSISTENCE = 'UPDATE_PAGE_PERSISTENCE';
+	var UPDATE_FOOTER_PAGE_PERSISTENCE = exports.UPDATE_FOOTER_PAGE_PERSISTENCE = 'UPDATE_FOOTER_PAGE_PERSISTENCE';
 	var CHANGE_COLLAPSE = exports.CHANGE_COLLAPSE = 'CHANGE_COLLAPSE';
 	var UPDATE_ID = exports.UPDATE_ID = 'UPDATE_ID';
 	var CHANGE_STATE = exports.CHANGE_STATE = 'CHANGE_STATE';
 	var SET_SAVING = exports.SET_SAVING = 'SET_SAVING';
 	var CHANGE_UPDATED_AT = exports.CHANGE_UPDATED_AT = 'CHANGE_UPDATED_AT';
 	var ADD_PAGE_COMMENT = exports.ADD_PAGE_COMMENT = 'ADD_PAGE_COMMENT';
+	var ADD_FOOTER_PAGE_COMMENT = exports.ADD_FOOTER_PAGE_COMMENT = 'ADD_FOOTER_PAGE_COMMENT';
 	var ADD_GENERAL_COMMENT = exports.ADD_GENERAL_COMMENT = 'ADD_GENERAL_COMMENT';
 	var UPDATE_PAGE_COMMENT_ID = exports.UPDATE_PAGE_COMMENT_ID = 'UPDATE_PAGE_COMMENT_ID';
+	var UPDATE_FOOTER_PAGE_COMMENT_ID = exports.UPDATE_FOOTER_PAGE_COMMENT_ID = 'UPDATE_FOOTER_PAGE_COMMENT_ID';
 	var UPDATE_GENERAL_COMMENT_ID = exports.UPDATE_GENERAL_COMMENT_ID = 'UPDATE_GENERAL_COMMENT_ID';
 	var CHANGE_LEFT_SIDEBAR_EXPANDED = exports.CHANGE_LEFT_SIDEBAR_EXPANDED = 'CHANGE_LEFT_SIDEBAR_EXPANDED';
 	var SET_SHOW_GUEST_INFO_FORM = exports.SET_SHOW_GUEST_INFO_FORM = 'SET_SHOW_GUEST_INFO_FORM';
@@ -38697,13 +38713,17 @@
 	var SHOW_SITEMAP_SHARE_MODAL = exports.SHOW_SITEMAP_SHARE_MODAL = 'SHOW_SITEMAP_SHARE_MODAL';
 	var UPDATE_GENERAL_COMMENT = exports.UPDATE_GENERAL_COMMENT = 'UPDATE_GENERAL_COMMENT';
 	var UPDATE_PAGE_COMMENT = exports.UPDATE_PAGE_COMMENT = 'UPDATE_PAGE_COMMENT';
+	var UPDATE_FOOTER_PAGE_COMMENT = exports.UPDATE_FOOTER_PAGE_COMMENT = 'UPDATE_FOOTER_PAGE_COMMENT';
 	var DELETE_GENERAL_COMMENT = exports.DELETE_GENERAL_COMMENT = 'DELETE_GENERAL_COMMENT';
 	var DELETE_PAGE_COMMENT = exports.DELETE_PAGE_COMMENT = 'DELETE_PAGE_COMMENT';
+	var DELETE_FOOTER_PAGE_COMMENT = exports.DELETE_FOOTER_PAGE_COMMENT = 'DELETE_FOOTER_PAGE_COMMENT';
 	var SET_SELECTED_PAGE = exports.SET_SELECTED_PAGE = 'SET_SELECTED_PAGE';
 	var SET_SELECTED_COMMENT = exports.SET_SELECTED_COMMENT = 'SET_SELECTED_COMMENT';
 	var CHANGE_PAGE_TYPE = exports.CHANGE_PAGE_TYPE = 'CHANGE_PAGE_TYPE';
+	var CHANGE_FOOTER_PAGE_TYPE = exports.CHANGE_FOOTER_PAGE_TYPE = 'CHANGE_FOOTER_PAGE_TYPE';
 	var CREATE_NEW_SECTION = exports.CREATE_NEW_SECTION = 'CREATE_NEW_SECTION';
 	var UPDATE_PAGE_STATE = exports.UPDATE_PAGE_STATE = 'UPDATE_PAGE_STATE';
+	var UPDATE_FOOTER_PAGE_STATE = exports.UPDATE_FOOTER_PAGE_STATE = 'UPDATE_FOOTER_PAGE_STATE';
 	var ADD_NEW_FOOTER_PAGE = exports.ADD_NEW_FOOTER_PAGE = 'ADD_NEW_FOOTER_PAGE';
 	var UPDATE_FOOTER_PAGE_ID = exports.UPDATE_FOOTER_PAGE_ID = 'UPDATE_FOOTER_PAGE_ID';
 	var SET_MAX_PAGE_UID = exports.SET_MAX_PAGE_UID = 'SET_MAX_PAGE_UID';
@@ -38720,8 +38740,24 @@
 	  return { type: REMOVE_PAGE, id: id, sectionId: sectionId };
 	}
 	
+	function removeFooterPage(id) {
+	  return { type: REMOVE_FOOTER_PAGE, id: id };
+	}
+	
 	function updatePageName(id, sectionId, name) {
 	  return { type: UPDATE_PAGE_NAME, id: id, sectionId: sectionId, name: name };
+	}
+	
+	function updateFooterPageName(id, name) {
+	  return { type: UPDATE_FOOTER_PAGE_NAME, id: id, name: name };
+	}
+	
+	function updatePagePersitence(id, sectionId) {
+	  return { type: UPDATE_PAGE_PERSISTENCE, id: id, sectionId: sectionId };
+	}
+	
+	function updateFooterPagePersitence(id, sectionId) {
+	  return { type: UPDATE_FOOTER_PAGE_PERSISTENCE, id: id };
 	}
 	
 	function updatePagePosition(id, sectionId, newParentId, position) {
@@ -38752,12 +38788,20 @@
 	  return { type: ADD_PAGE_COMMENT, id: id, message: message, commenter: commenter, sectionId: sectionId, tempId: tempId };
 	}
 	
+	function addFooterPageComment(id, message, commenter, tempId) {
+	  return { type: ADD_FOOTER_PAGE_COMMENT, id: id, message: message, commenter: commenter, tempId: tempId };
+	}
+	
 	function addGeneralComment(message, commenter, tempId) {
 	  return { type: ADD_GENERAL_COMMENT, message: message, commenter: commenter, tempId: tempId };
 	}
 	
 	function updatePageCommentId(oldId, newId, sectionId, pageId) {
 	  return { type: UPDATE_PAGE_COMMENT_ID, oldId: oldId, newId: newId, sectionId: sectionId, pageId: pageId };
+	}
+	
+	function updateFooterPageCommentId(oldId, newId, pageId) {
+	  return { type: UPDATE_FOOTER_PAGE_COMMENT_ID, oldId: oldId, newId: newId, pageId: pageId };
 	}
 	
 	function updateGeneralCommentId(oldId, newId) {
@@ -38788,12 +38832,20 @@
 	  return { type: UPDATE_PAGE_COMMENT, id: id, pageId: pageId, message: message, sectionId: sectionId };
 	}
 	
+	function updateFooterPageComment(id, pageId, message) {
+	  return { type: UPDATE_FOOTER_PAGE_COMMENT, id: id, pageId: pageId, message: message };
+	}
+	
 	function deleteGeneralComment(id) {
 	  return { type: DELETE_GENERAL_COMMENT, id: id };
 	}
 	
 	function deletePageComment(commentId, pageId, sectionId) {
 	  return { type: DELETE_PAGE_COMMENT, commentId: commentId, pageId: pageId, sectionId: sectionId };
+	}
+	
+	function deleteFooterPageComment(commentId, pageId) {
+	  return { type: DELETE_FOOTER_PAGE_COMMENT, commentId: commentId, pageId: pageId };
 	}
 	
 	function setSelectedPage(page) {
@@ -38808,12 +38860,20 @@
 	  return { type: CHANGE_PAGE_TYPE, pageId: pageId, sectionId: sectionId, pageType: pageType };
 	}
 	
+	function changeFooterPageType(pageId, pageType) {
+	  return { type: CHANGE_FOOTER_PAGE_TYPE, pageId: pageId, pageType: pageType };
+	}
+	
 	function createNewSection(pageId, sectionId, newSectionName, timeStamp) {
 	  return { type: CREATE_NEW_SECTION, pageId: pageId, sectionId: sectionId, newSectionName: newSectionName, timeStamp: timeStamp };
 	}
 	
 	function updatePageState(pageId, sectionId, state) {
 	  return { type: UPDATE_PAGE_STATE, pageId: pageId, sectionId: sectionId, state: state };
+	}
+	
+	function updateFooterPageState(pageId, state) {
+	  return { type: UPDATE_FOOTER_PAGE_STATE, pageId: pageId, state: state };
 	}
 	
 	function addNewFooterPage(pageType, timeStamp, uid) {
@@ -38879,6 +38939,8 @@
 	      return (0, _tree_helper.updatePagePosition)(state, action.id, action.sectionId, action.newParentId, action.position);
 	    case _index.UPDATE_PAGE_NAME:
 	      return (0, _tree_helper.updatePageName)(state, action.id, action.sectionId, action.name);
+	    case _index.UPDATE_PAGE_PERSISTENCE:
+	      return (0, _tree_helper.updatePagePersitence)(state, action.id, action.sectionId);
 	    case _index.CHANGE_COLLAPSE:
 	      return (0, _tree_helper.updateCollapse)(state, action.id, action.sectionId);
 	    case _index.UPDATE_ID:
@@ -38926,7 +38988,7 @@
 	  delete pageTypeCopy.iconName;
 	  var parentPage = getNodeById(treeCopy, parentId),
 	      parentLevel = parentPage.level;
-	  var newPage = { name: pageTypeCopy.name, pageType: pageTypeCopy, parentId: parentId, level: parentLevel + 1, children: [], comments: [], collapsed: false, state: 'active', id: tempId, uid: uid, section_id: sectionId, footer: false };
+	  var newPage = { name: pageTypeCopy.name, pageType: pageTypeCopy, parentId: parentId, level: parentLevel + 1, children: [], comments: [], collapsed: false, state: 'active', id: tempId, uid: uid, section_id: sectionId, footer: false, newRecord: true };
 	  if (position == 'begining') {
 	    parentPage.children.unshift(newPage);
 	  } else {
@@ -38948,6 +39010,16 @@
 	  })[0].pageTree;
 	  var page = getNodeById(treeCopy, id);
 	  page.name = name;
+	  return sectionsCopy;
+	}
+	
+	function updatePagePersitence(sections, id, sectionId) {
+	  var sectionsCopy = Object.assign([], sections);
+	  var treeCopy = sectionsCopy.filter(function (section) {
+	    return section.id == sectionId;
+	  })[0].pageTree;
+	  var page = getNodeById(treeCopy, id);
+	  page.newRecord = false;
 	  return sectionsCopy;
 	}
 	
@@ -39165,6 +39237,7 @@
 	exports.updatePageState = updatePageState;
 	exports.deletePageComment = deletePageComment;
 	exports.updatePageComment = updatePageComment;
+	exports.updatePagePersitence = updatePagePersitence;
 
 /***/ },
 /* 612 */
@@ -39331,10 +39404,9 @@
 	function getUpdatedAt() {
 	  var updatedAt = new Date(),
 	      day = ("0" + updatedAt.getDate()).slice(-2),
-	      month = updatedAt.toLocaleString('en-us', { month: "short" }),
+	      month = updatedAt.getMonthName(),
 	      year = updatedAt.getFullYear(),
 	      updatedAtFormatted = day + ' ' + month + ' ' + year;
-	
 	  return updatedAtFormatted;
 	}
 	
@@ -39627,7 +39699,9 @@
 	
 	function addFooterPage(footerPages, pageType, tempId, uid) {
 	  var footerPagesCopy = Object.assign([], footerPages);
-	  var newFooterPage = { name: pageType.name, footer: true, pageType: pageType, children: [], comments: [], collapsed: false, state: 'active', id: tempId, uid: uid };
+	  var pageTypeCopy = Object.assign({}, pageType);
+	  pageTypeCopy.icon_name = pageTypeCopy.iconName;
+	  var newFooterPage = { name: pageType.name, footer: true, pageType: pageTypeCopy, children: [], comments: [], collapsed: false, state: 'active', id: tempId, uid: uid, newRecord: true };
 	  footerPagesCopy.push(newFooterPage);
 	  return footerPagesCopy;
 	}
@@ -39641,20 +39715,93 @@
 	  return footerPagesCopy;
 	}
 	
-	function updateCommentMessage(footerPages, id, message) {
+	function updatePageName(footerPages, id, name) {
 	  var footerPagesCopy = Object.assign([], footerPages);
-	  var comment = footerPagesCopy.filter(function (comment) {
-	    return comment.id == id;
+	  var footerPage = footerPagesCopy.filter(function (footerPage) {
+	    return footerPage.id == id;
+	  })[0];
+	  footerPage.name = name;
+	  return footerPagesCopy;
+	}
+	
+	function updatePagePersistence(footerPages, id) {
+	  var footerPagesCopy = Object.assign([], footerPages);
+	  var footerPage = footerPagesCopy.filter(function (footerPage) {
+	    return footerPage.id == id;
+	  })[0];
+	  footerPage.newRecord = false;
+	  return footerPagesCopy;
+	}
+	
+	function updatePageType(footerPages, id, pageType) {
+	  var footerPagesCopy = Object.assign([], footerPages);
+	  var footerPage = footerPagesCopy.filter(function (footerPage) {
+	    return footerPage.id == id;
+	  })[0];
+	  footerPage.pageType = pageType;
+	  return footerPagesCopy;
+	}
+	
+	function updatePageState(footerPages, id, state) {
+	  var footerPagesCopy = Object.assign([], footerPages);
+	  var footerPage = footerPagesCopy.filter(function (footerPage) {
+	    return footerPage.id == id;
+	  })[0];
+	  footerPage.state = state;
+	  return footerPagesCopy;
+	}
+	
+	function addPageComment(footerPages, id, commenter, message, tempId) {
+	  var footerPagesCopy = Object.assign([], footerPages);
+	  var footerPage = footerPagesCopy.filter(function (footerPage) {
+	    return footerPage.id == id;
+	  })[0];
+	  var newComment = { message: message, commenter: commenter, id: tempId, created_at: 'Just now' };
+	  footerPage.comments.push(newComment);
+	  return footerPagesCopy;
+	}
+	
+	function updatePageCommentId(footerPages, oldId, newId, pageId) {
+	  var footerPagesCopy = Object.assign([], footerPages);
+	  var footerPage = footerPagesCopy.filter(function (footerPage) {
+	    return footerPage.id == pageId;
+	  })[0];
+	  var comment = footerPage.comments.filter(function (comment) {
+	    return comment.id == oldId;
+	  })[0];
+	  comment.id = newId;
+	  return footerPagesCopy;
+	}
+	
+	function deleteFootePageComment(footerPages, commentId, pageId) {
+	  var footerPagesCopy = Object.assign([], footerPages);
+	  var footerPage = footerPagesCopy.filter(function (footerPage) {
+	    return footerPage.id == pageId;
+	  })[0];
+	  footerPage.comments.removeIf(function (comment) {
+	    return comment.id == commentId;
+	  });
+	  return footerPagesCopy;
+	}
+	
+	function updateFooterPageComment(footerPages, commentId, pageId, message) {
+	  var footerPagesCopy = Object.assign([], footerPages);
+	  var footerPage = footerPagesCopy.filter(function (footerPage) {
+	    return footerPage.id == pageId;
+	  })[0];
+	  var comment = footerPage.comments.filter(function (comment) {
+	    return comment.id == commentId;
 	  })[0];
 	  comment.message = message;
 	  return footerPagesCopy;
 	}
 	
-	function deleteComment(footerPages, id) {
+	function removePage(footerPages, id) {
 	  var footerPagesCopy = Object.assign([], footerPages);
-	  footerPagesCopy.removeIf(function (comment) {
-	    return comment.id == id;
-	  });
+	  var footerPage = footerPagesCopy.filter(function (footerPage) {
+	    return footerPage.id == id;
+	  })[0];
+	  footerPage.state = 'archived';
 	  return footerPagesCopy;
 	}
 	
@@ -39667,10 +39814,24 @@
 	      return addFooterPage(state, action.pageType, action.timeStamp, action.uid);
 	    case _index.UPDATE_FOOTER_PAGE_ID:
 	      return updateId(state, action.oldId, action.newId);
-	    // case UPDATE_GENERAL_COMMENT:
-	    //   return updateCommentMessage(state, action.id, action.message)
-	    // case DELETE_GENERAL_COMMENT:
-	    //   return deleteComment(state, action.id)
+	    case _index.UPDATE_FOOTER_PAGE_NAME:
+	      return updatePageName(state, action.id, action.name);
+	    case _index.UPDATE_FOOTER_PAGE_PERSISTENCE:
+	      return updatePagePersistence(state, action.id);
+	    case _index.CHANGE_FOOTER_PAGE_TYPE:
+	      return updatePageType(state, action.pageId, action.pageType);
+	    case _index.UPDATE_FOOTER_PAGE_STATE:
+	      return updatePageState(state, action.pageId, action.state);
+	    case _index.ADD_FOOTER_PAGE_COMMENT:
+	      return addPageComment(state, action.id, action.commenter, action.message, action.tempId);
+	    case _index.UPDATE_FOOTER_PAGE_COMMENT_ID:
+	      return updatePageCommentId(state, action.oldId, action.newId, action.pageId);
+	    case _index.DELETE_FOOTER_PAGE_COMMENT:
+	      return deleteFootePageComment(state, action.commentId, action.pageId);
+	    case _index.UPDATE_FOOTER_PAGE_COMMENT:
+	      return updateFooterPageComment(state, action.id, action.pageId, action.message);
+	    case _index.REMOVE_FOOTER_PAGE:
+	      return removePage(state, action.id);
 	    default:
 	      return state;
 	  }
@@ -50237,7 +50398,7 @@
 	          }
 	          return _react2.default.createElement(
 	            'div',
-	            { className: 'child-page', key: pageTree.parentId.toString() + pageTree.position.toString() },
+	            { className: 'child-page', key: pageTree.id },
 	            _react2.default.createElement(DraggablePageContainer, { pageTree: pageTree, onPageDrop: _this.props.onPageDrop, onPageTypeDrop: _this.props.onPageTypeDrop, sitemapId: _this.props.sitemapId, sitemapNumber: sitemapNumber, publicShare: _this.props.publicShare })
 	          );
 	        });
@@ -50416,8 +50577,19 @@
 	    onCollapsedChanged: function onCollapsedChanged(id, sectionId) {
 	      dispatch((0, _actions.changeCollapse)(id, sectionId));
 	    },
-	    onNameChange: function onNameChange(id, sectionId, name) {
-	      dispatch((0, _actions.updatePageName)(id, sectionId, name));
+	    onNameChange: function onNameChange(id, footer, sectionId, name) {
+	      if (footer) {
+	        dispatch((0, _actions.updateFooterPageName)(id, name));
+	      } else {
+	        dispatch((0, _actions.updatePageName)(id, sectionId, name));
+	      }
+	    },
+	    updatePagePersitence: function updatePagePersitence(id, footer, sectionId) {
+	      if (footer) {
+	        dispatch((0, _actions.updateFooterPagePersitence)(id));
+	      } else {
+	        dispatch((0, _actions.updatePagePersitence)(id, sectionId));
+	      }
 	    },
 	    setSelectedPage: function setSelectedPage(page) {
 	      dispatch((0, _actions.setSelectedPage)(page));
@@ -50485,7 +50657,7 @@
 	    _this2.closeOverLay = _this2.closeOverLay.bind(_this2);
 	    _this2.openOverLay = _this2.openOverLay.bind(_this2);
 	    _this2.setSelectedPage = _this2.setSelectedPage.bind(_this2);
-	    _this2.state = { nameChangeDisabled: true, hover: false, showOverLay: false, name: _this2.props.name, originalName: _this2.props.name };
+	    _this2.state = { nameChangeDisabled: !props.pageTree.newRecord, hover: false, showOverLay: false, name: _this2.props.name, originalName: _this2.props.name };
 	    return _this2;
 	  }
 	
@@ -50517,10 +50689,19 @@
 	            }, 2000);
 	          }
 	        });
-	        this.props.onNameChange(this.props.pageTree.id, this.props.pageTree.section_id, name);
-	        this.setState({ nameChangeDisabled: true });
+	        this.props.onNameChange(this.props.pageTree.id, this.props.pageTree.footer, this.props.pageTree.section_id, name);
+	
+	        if (this.props.pageTree.newRecord) {
+	          this.props.updatePagePersitence(this.props.pageTree.id, this.props.pageTree.footer, this.props.pageTree.section_id);
+	        } else {
+	          this.setState({ nameChangeDisabled: true });
+	        }
 	      } else {
-	        this.setState({ name: this.state.originalName, nameChangeDisabled: true });
+	        if (this.props.pageTree.newRecord) {
+	          this.props.updatePagePersitence(this.props.pageTree.id, this.props.pageTree.footer, this.props.pageTree.section_id);
+	        } else {
+	          this.setState({ name: this.state.originalName, nameChangeDisabled: true });
+	        }
 	      }
 	    }
 	  }, {
@@ -50560,9 +50741,9 @@
 	      this.props.onCollapsedChanged(this.props.pageTree.id, this.props.pageTree.section_id);
 	    }
 	  }, {
-	    key: 'componentDidUpdate',
-	    value: function componentDidUpdate(props, state) {
-	      if (!state.nameChangeDisabled) {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      if (this.props.pageTree.newRecord) {
 	        $(this.refs.nameInput).focus();
 	      }
 	    }
@@ -50646,7 +50827,7 @@
 	                'New Section'
 	              )
 	            ),
-	            this.props.pageTree.parentId != null && _react2.default.createElement(
+	            (this.props.pageTree.parentId != null || this.props.pageTree.footer) && _react2.default.createElement(
 	              'a',
 	              { href: '#delete-page-modal', className: 'icon-page-delete', onClick: this.setSelectedPage, 'data-toggle': 'modal' },
 	              _react2.default.createElement(
@@ -50735,7 +50916,7 @@
 	                'New Section'
 	              )
 	            ),
-	            this.props.pageTree.parentId != null && _react2.default.createElement(
+	            (this.props.pageTree.parentId != null || this.props.pageTree.footer) && _react2.default.createElement(
 	              'a',
 	              { href: '#delete-page-modal', className: 'icon-page-delete', onClick: this.setSelectedPage, 'data-toggle': 'modal' },
 	              _react2.default.createElement(
@@ -51917,7 +52098,7 @@
 	      var renderUsers = this.props.business.users.slice(0, 3).map(function (user, index) {
 	        return _react2.default.createElement(
 	          'li',
-	          { key: index },
+	          { key: user.id },
 	          _react2.default.createElement('img', { src: user.avatarUrl })
 	        );
 	      });
@@ -51997,7 +52178,7 @@
 	              { className: 'toggle-comments' },
 	              _react2.default.createElement(
 	                'a',
-	                { href: 'javascript:void(0)', className: 'btn-toggle-comments', onClick: this.toggleCommentState },
+	                { href: 'javascript:void(0)', className: "btn-toggle-comments" + (this.state.commentSidebarOpen ? ' active' : ''), onClick: this.toggleCommentState },
 	                _react2.default.createElement('span', { className: 'icon-comment' }),
 	                'Comments',
 	                _react2.default.createElement(
@@ -52188,7 +52369,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving, updatedAt: state.updated_at, sections: state.sections };
+	  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving, updatedAt: state.updated_at, sections: state.sections, footerPages: state.footerPages };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -52281,8 +52462,16 @@
 	      var pageCount = 0;
 	      this.props.sections.forEach(function (section, index) {
 	        (0, _tree_helper.traverse)(section.pageTree, function (page) {
-	          pageCount++;
+	          if (page.state != 'archived') {
+	            pageCount++;
+	          }
 	        });
+	      });
+	
+	      this.props.footerPages.forEach(function (page, index) {
+	        if (page.state != 'archived') {
+	          pageCount++;
+	        }
 	      });
 	      return pageCount;
 	    }
@@ -52372,6 +52561,8 @@
 	PublicHeader.propTypes = {
 	  name: _react.PropTypes.string.isRequired,
 	  id: _react.PropTypes.number.isRequired,
+	  sections: _react.PropTypes.array.isRequired,
+	  footerPages: _react.PropTypes.array.isRequired,
 	  state: _react.PropTypes.string.isRequired,
 	  updatedAt: _react.PropTypes.string.isRequired
 	};
@@ -52569,7 +52760,8 @@
 	        commenter: this.props.commenter,
 	        message: this.props.message,
 	        createdAt: this.props.createdAt,
-	        modalView: this.props.modalView
+	        modalView: this.props.modalView,
+	        footer: this.props.footer
 	      };
 	      this.props.setSelectedComment(comment);
 	    }
@@ -52587,7 +52779,7 @@
 	            'You',
 	            this.state.editable && _react2.default.createElement(
 	              'span',
-	              { className: 'comment-action-links' },
+	              { className: 'comment-action-links' + (this.props.modalView ? ' modal-view' : '') },
 	              _react2.default.createElement(
 	                'a',
 	                { className: 'comment-edit-link cursor', onClick: this.showEditor },
@@ -52611,7 +52803,7 @@
 	            null,
 	            this.props.createdAt
 	          ),
-	          this.state.editMode && _react2.default.createElement(_connected_comment_editor2.default, { message: this.state.message, commentableId: this.props.commentableId, commentableType: this.props.commentableType, sectionId: this.props.sectionId, id: this.props.id, closeEditor: this.closeEditor, modalView: this.props.modalView, editMessage: this.editMessage }),
+	          this.state.editMode && _react2.default.createElement(_connected_comment_editor2.default, { message: this.state.message, commentableId: this.props.commentableId, commentableType: this.props.commentableType, sectionId: this.props.sectionId, id: this.props.id, closeEditor: this.closeEditor, modalView: this.props.modalView, editMessage: this.editMessage, footer: this.props.footer }),
 	          !this.state.editMode && _react2.default.createElement(
 	            'p',
 	            null,
@@ -52656,6 +52848,7 @@
 	  id: _react.PropTypes.number.isRequired,
 	  editable: _react.PropTypes.bool.isRequired,
 	  modalView: _react.PropTypes.bool.isRequired,
+	  footer: _react.PropTypes.bool.isRequired,
 	  createdAt: _react.PropTypes.string.isRequired
 	};
 	exports.default = Comment;
@@ -52689,9 +52882,13 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    updateComment: function updateComment(id, commentableId, commentableType, message, sectionId) {
+	    updateComment: function updateComment(id, commentableId, commentableType, footer, message, sectionId) {
 	      if (commentableType == 'Page') {
-	        dispatch((0, _actions.updatePageComment)(id, commentableId, message, sectionId));
+	        if (footer) {
+	          dispatch((0, _actions.updateFooterPageComment)(id, commentableId, message));
+	        } else {
+	          dispatch((0, _actions.updatePageComment)(id, commentableId, message, sectionId));
+	        }
 	      } else if (commentableType == 'Sitemap') {
 	        dispatch((0, _actions.updateGeneralComment)(id, message));
 	      }
@@ -52761,7 +52958,7 @@
 	    value: function handleUpdateComment(e) {
 	      if (this.state.commentMessage.trim() != this.props.message.trim()) {
 	        var _this = this;
-	        this.props.updateComment(this.props.id, this.props.commentableId, this.props.commentableType, this.state.commentMessage, this.props.sectionId);
+	        this.props.updateComment(this.props.id, this.props.commentableId, this.props.commentableType, this.props.footer, this.state.commentMessage, this.props.sectionId);
 	        $.ajax({
 	          url: '/comments/' + this.props.id,
 	          method: 'put',
@@ -52843,6 +53040,7 @@
 	  updateComment: _react.PropTypes.func.isRequired,
 	  setSaving: _react.PropTypes.func.isRequired,
 	  editMessage: _react.PropTypes.func.isRequired,
+	  footer: _react.PropTypes.bool.isRequired,
 	  business: _react.PropTypes.object.isRequired
 	};
 	exports.default = CommentEditor;
@@ -65723,8 +65921,12 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    updatePageState: function updatePageState(pageId, sectionId, state) {
-	      dispatch((0, _actions.updatePageState)(pageId, sectionId, state));
+	    updatePageState: function updatePageState(pageId, footer, sectionId, state) {
+	      if (footer) {
+	        dispatch((0, _actions.updateFooterPageState)(pageId, state));
+	      } else {
+	        dispatch((0, _actions.updatePageState)(pageId, sectionId, state));
+	      }
 	    },
 	    setSaving: function setSaving(saving) {
 	      dispatch((0, _actions.setSaving)(saving));
@@ -65784,7 +65986,7 @@
 	      var _this3 = this;
 	
 	      var _this = this;
-	      this.props.updatePageState(this.props.page.id, this.props.page.sectionId || this.props.page.section_id, state);
+	      this.props.updatePageState(this.props.page.id, this.props.page.footer, this.props.page.sectionId || this.props.page.section_id, state);
 	      $.ajax({
 	        url: '/pages/' + this.props.page.id,
 	        method: 'put',
@@ -65869,16 +66071,24 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    addComment: function addComment(commentableId, commentableType, message, commenter, sectionId, tempId) {
+	    addComment: function addComment(commentableId, commentableType, footer, message, commenter, sectionId, tempId) {
 	      if (commentableType == 'Page') {
-	        dispatch((0, _actions.addPageComment)(commentableId, message, commenter, sectionId, tempId));
+	        if (footer) {
+	          dispatch((0, _actions.addFooterPageComment)(commentableId, message, commenter, tempId));
+	        } else {
+	          dispatch((0, _actions.addPageComment)(commentableId, message, commenter, sectionId, tempId));
+	        }
 	      } else if (commentableType == 'Sitemap') {
 	        dispatch((0, _actions.addGeneralComment)(message, commenter, tempId));
 	      }
 	    },
-	    onCommentIdUpdate: function onCommentIdUpdate(commentableType, commentableId, oldId, newId, sectionId) {
+	    onCommentIdUpdate: function onCommentIdUpdate(commentableType, commentableId, footer, oldId, newId, sectionId) {
 	      if (commentableType == 'Page') {
-	        dispatch((0, _actions.updatePageCommentId)(oldId, newId, sectionId, commentableId));
+	        if (footer) {
+	          dispatch((0, _actions.updateFooterPageCommentId)(oldId, newId, commentableId));
+	        } else {
+	          dispatch((0, _actions.updatePageCommentId)(oldId, newId, sectionId, commentableId));
+	        }
 	      } else if (commentableType == 'Sitemap') {
 	        dispatch((0, _actions.updateGeneralCommentId)(oldId, newId));
 	      }
@@ -65958,7 +66168,7 @@
 	        if (this.state.newCommentMessage.trim().length > 0) {
 	          var _this = this;
 	          var timeStamp = new Date();
-	          this.props.addComment(this.props.commentableId, this.props.commentableType, this.state.newCommentMessage, this.props.currentUser || this.props.currentGuest, this.props.sectionId, timeStamp);
+	          this.props.addComment(this.props.commentableId, this.props.commentableType, _this.props.footer, this.state.newCommentMessage, this.props.currentUser || this.props.currentGuest, this.props.sectionId, timeStamp);
 	          $.ajax({
 	            url: '/comments/',
 	            method: 'post',
@@ -65972,7 +66182,7 @@
 	              setTimeout(function () {
 	                _this.props.setSaving(false);
 	              }, 2000);
-	              _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, timeStamp, result.id, _this.props.sectionId);
+	              _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, _this.props.footer, timeStamp, result.id, _this.props.sectionId);
 	            }
 	          });
 	          this.setState({ newCommentMessage: '' });
@@ -66036,6 +66246,7 @@
 	NewComment.propTypes = {
 	  commentableId: _react.PropTypes.number.isRequired,
 	  commentableType: _react.PropTypes.string.isRequired,
+	  footer: _react.PropTypes.bool.isRequired,
 	  sectionId: _react.PropTypes.number,
 	  addComment: _react.PropTypes.func.isRequired,
 	  setSaving: _react.PropTypes.func.isRequired,
@@ -66644,7 +66855,7 @@
 	          { className: 'bottom-btns text-center' },
 	          _react2.default.createElement(
 	            'a',
-	            { href: 'javascript:void(0);', className: 'btn btn-grey' },
+	            { href: '#sitemap-share-preview-modal', 'data-dismiss': 'modal', 'data-toggle': 'modal', className: 'btn btn-grey btn-modal-open' },
 	            'Here\'s what they\'ll see'
 	          ),
 	          _react2.default.createElement(
@@ -66689,7 +66900,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { pageTypes: state.pageTypes, sections: state.sections, updatedAt: state.updated_at, leftSidebarExpanded: state.leftSidebarExpanded };
+	  return { pageTypes: state.pageTypes, sections: state.sections, updatedAt: state.updated_at, leftSidebarExpanded: state.leftSidebarExpanded, footerPages: state.footerPages };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -66769,8 +66980,16 @@
 	      var pageCount = 0;
 	      this.props.sections.forEach(function (section, index) {
 	        (0, _tree_helper.traverse)(section.pageTree, function (page) {
-	          pageCount++;
+	          if (page.state != 'archived') {
+	            pageCount++;
+	          }
 	        });
+	      });
+	
+	      this.props.footerPages.forEach(function (page, index) {
+	        if (page.state != 'archived') {
+	          pageCount++;
+	        }
 	      });
 	      return pageCount;
 	    }
@@ -66784,7 +67003,7 @@
 	      var pageTypeComponents = filteredPageTypes.map(function (pageType, index) {
 	        return _react2.default.createElement(
 	          'li',
-	          { key: index },
+	          { key: pageType.id },
 	          _react2.default.createElement(_draggable_page_type2.default, { name: pageType.name, iconName: pageType.icon_name, id: pageType.id })
 	        );
 	      });
@@ -66855,6 +67074,7 @@
 	LeftSidebar.propTypes = {
 	  pageTypes: _react.PropTypes.array.isRequired,
 	  sections: _react.PropTypes.array.isRequired,
+	  footerPages: _react.PropTypes.array.isRequired,
 	  updatedAt: _react.PropTypes.string.isRequired,
 	  leftSidebarExpanded: _react.PropTypes.bool.isRequired,
 	  toggleLeftSideBarExpanded: _react.PropTypes.func.isRequired
@@ -67067,7 +67287,8 @@
 	    sections: state.sections,
 	    business: state.business,
 	    name: state.name,
-	    publicShare: state.publicShare
+	    publicShare: state.publicShare,
+	    footerPages: state.footerPages
 	  };
 	};
 	
@@ -67148,31 +67369,38 @@
 	      var renderedComments = this.props.comments.map(function (comment, index) {
 	        return _react2.default.createElement(
 	          'li',
-	          { key: index },
-	          _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: true, commentableId: _this.props.sitemapId, commentableType: 'Sitemap', commentableName: _this.props.name, modalView: false })
+	          { key: comment.id },
+	          _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: true, commentableId: _this.props.sitemapId, commentableType: 'Sitemap', commentableName: _this.props.name, modalView: false, footer: false })
 	        );
 	      });
 	      var pageWithComments = [];
 	      this.props.sections.forEach(function (section, index) {
 	        (0, _tree_helper.traverse)(section.pageTree, function (page) {
 	          if (page.comments.length > 0) {
-	            pageWithComments.push({ name: page.name, comments: page.comments, id: page.id, sectionId: section.id, uid: page.uid, state: page.state });
+	            pageWithComments.push({ name: page.name, comments: page.comments, id: page.id, sectionId: section.id, uid: page.uid, state: page.state, footer: page.footer });
 	          }
 	        });
 	      });
+	      this.props.footerPages.forEach(function (page, index) {
+	        if (page.comments.length > 0) {
+	          pageWithComments.push({ name: page.name, comments: page.comments, id: page.id, sectionId: page.section_id, uid: page.uid, state: page.state, footer: page.footer });
+	        }
+	      });
 	      var renderedPageWithComments = pageWithComments.filter(function (page) {
 	        return page.state == _this.state.currentTab;
+	      }).sort(function (page, nextPage) {
+	        return page.uid - nextPage.uid;
 	      }).map(function (page, index) {
 	        var renderedPageComments = page.comments.map(function (comment, index) {
 	          return _react2.default.createElement(
 	            'li',
-	            { key: index },
-	            _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: page.state == 'active', commentableId: page.id, commentableType: 'Page', sectionId: page.sectionId, commentableName: page.name, modalView: false })
+	            { key: comment.id },
+	            _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: page.state == 'active', commentableId: page.id, commentableType: 'Page', sectionId: page.sectionId, commentableName: page.name, modalView: false, footer: page.footer })
 	          );
 	        });
 	        return _react2.default.createElement(
 	          'li',
-	          { key: index },
+	          { key: page.id },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'page-comment-details' },
@@ -67198,7 +67426,7 @@
 	            { className: 'comment-group' },
 	            renderedPageComments
 	          ),
-	          _this.state.currentTab == 'active' && _react2.default.createElement(_connected_new_comment2.default, { commentableId: page.id, commentableType: 'Page', sectionId: page.sectionId })
+	          _this.state.currentTab == 'active' && _react2.default.createElement(_connected_new_comment2.default, { commentableId: page.id, commentableType: 'Page', sectionId: page.sectionId, footer: page.footer })
 	        );
 	      });
 	
@@ -67257,7 +67485,7 @@
 	              { className: 'comment-group' },
 	              renderedComments
 	            ),
-	            _react2.default.createElement(_connected_new_comment2.default, { commentableId: this.props.sitemapId, commentableType: 'Sitemap' })
+	            _react2.default.createElement(_connected_new_comment2.default, { commentableId: this.props.sitemapId, commentableType: 'Sitemap', footer: false })
 	          ),
 	          _react2.default.createElement(
 	            'ul',
@@ -67275,6 +67503,7 @@
 	RightSidebar.propTypes = {
 	  comments: _react.PropTypes.array.isRequired,
 	  sections: _react.PropTypes.array.isRequired,
+	  footerPages: _react.PropTypes.array.isRequired,
 	  sitemapId: _react.PropTypes.number.isRequired,
 	  name: _react.PropTypes.string.isRequired,
 	  business: _react.PropTypes.object.isRequired,
@@ -67431,10 +67660,12 @@
 	    key: 'render',
 	    value: function render() {
 	      var connectDropTarget = this.props.connectDropTarget;
-	      var renderedFooterPages = this.props.footerPages.map(function (footerPage, index) {
+	      var renderedFooterPages = this.props.footerPages.filter(function (page) {
+	        return page.state != 'archived';
+	      }).map(function (footerPage, index) {
 	        return _react2.default.createElement(
 	          'li',
-	          { key: index, className: 'footer-page' },
+	          { key: footerPage.id, className: 'footer-page' },
 	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: footerPage, collapsed: true, childrenLength: 0, name: footerPage.name })
 	        );
 	      });
@@ -67501,7 +67732,11 @@
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    onPageDelete: function onPageDelete(pageTree, maxPageUid) {
-	      dispatch((0, _actions.removePage)(pageTree.id, pageTree.section_id));
+	      if (pageTree.footer) {
+	        dispatch((0, _actions.removeFooterPage)(pageTree.id));
+	      } else {
+	        dispatch((0, _actions.removePage)(pageTree.id, pageTree.section_id));
+	      }
 	    },
 	    setSaving: function setSaving(saving) {
 	      dispatch((0, _actions.setSaving)(saving));
@@ -67679,9 +67914,13 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    deleteComment: function deleteComment(id, commentableId, commentableType, sectionId) {
+	    deleteComment: function deleteComment(id, commentableId, commentableType, footer, sectionId) {
 	      if (commentableType == 'Page') {
-	        dispatch((0, _actions.deletePageComment)(id, commentableId, sectionId));
+	        if (footer) {
+	          dispatch((0, _actions.deleteFooterPageComment)(id, commentableId));
+	        } else {
+	          dispatch((0, _actions.deletePageComment)(id, commentableId, sectionId));
+	        }
 	      } else {
 	        dispatch((0, _actions.deleteGeneralComment)(id));
 	      }
@@ -67746,9 +67985,9 @@
 	      var _this3 = this;
 	
 	      var _this = this;
-	      this.props.deleteComment(this.props.comment.id, this.props.comment.commentableId, this.props.comment.commentableType, this.props.comment.sectionId);
+	      this.props.deleteComment(this.props.comment.id, this.props.comment.commentableId, this.props.comment.commentableType, this.props.comment.footer, this.props.comment.sectionId);
 	      $.ajax({
-	        url: '/comments/' + this.props.id,
+	        url: '/comments/' + this.props.comment.id,
 	        method: 'delete',
 	        dataType: 'JSON',
 	        error: function error(result) {
@@ -67873,7 +68112,11 @@
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    onPageTypeChange: function onPageTypeChange(pageTree, pageType) {
-	      dispatch((0, _actions.changePageType)(pageTree.id, pageTree.section_id, pageType));
+	      if (pageTree.footer) {
+	        dispatch((0, _actions.changeFooterPageType)(pageTree.id, pageType));
+	      } else {
+	        dispatch((0, _actions.changePageType)(pageTree.id, pageTree.section_id, pageType));
+	      }
 	    },
 	    setSaving: function setSaving(saving) {
 	      dispatch((0, _actions.setSaving)(saving));
@@ -67968,7 +68211,7 @@
 	      var pageTypeComponents = filteredPageTypes.map(function (pageType, index) {
 	        return _react2.default.createElement(
 	          'li',
-	          { key: index, onClick: function onClick(e) {
+	          { key: pageType.id, onClick: function onClick(e) {
 	              _this.setPageType(pageType);
 	            } },
 	          _react2.default.createElement(_page_type2.default, { name: pageType.name, iconName: pageType.icon_name, id: pageType.id })
@@ -68331,8 +68574,8 @@
 	        var renderedPageComments = this.props.pageTree.comments.map(function (comment, index) {
 	          return _react2.default.createElement(
 	            'li',
-	            { key: index },
-	            _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: _this.props.pageTree.state == 'active', commentableId: _this.props.pageTree.id, commentableType: 'Page', sectionId: _this.props.pageTree.section_id, commentableName: _this.props.pageTree.name, modalView: true })
+	            { key: comment.id },
+	            _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: _this.props.pageTree.state == 'active', commentableId: _this.props.pageTree.id, commentableType: 'Page', sectionId: _this.props.pageTree.section_id, commentableName: _this.props.pageTree.name, modalView: true, footer: _this.props.pageTree.footer })
 	          );
 	        });
 	      }
@@ -68385,7 +68628,7 @@
 	                  { className: 'comment-group' },
 	                  this.props.pageTree && renderedPageComments
 	                ),
-	                this.props.pageTree.state == 'active' && _react2.default.createElement(_connected_new_comment2.default, { commentableId: this.props.pageTree.id, commentableType: 'Page', sectionId: this.props.pageTree.section_id })
+	                this.props.pageTree.state == 'active' && _react2.default.createElement(_connected_new_comment2.default, { commentableId: this.props.pageTree.id, commentableType: 'Page', footer: this.props.pageTree.footer, sectionId: this.props.pageTree.section_id })
 	              )
 	            )
 	          )

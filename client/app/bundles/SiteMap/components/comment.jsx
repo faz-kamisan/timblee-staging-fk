@@ -12,6 +12,7 @@ class Comment extends React.Component {
     id: PropTypes.number.isRequired,
     editable: PropTypes.bool.isRequired,
     modalView: PropTypes.bool.isRequired,
+    footer: PropTypes.bool.isRequired,
     createdAt: PropTypes.string.isRequired
   };
 
@@ -46,7 +47,8 @@ class Comment extends React.Component {
                     commenter: this.props.commenter,
                     message: this.props.message,
                     createdAt: this.props.createdAt,
-                    modalView: this.props.modalView
+                    modalView: this.props.modalView,
+                    footer: this.props.footer
                   }
     this.props.setSelectedComment(comment)
   }
@@ -59,7 +61,7 @@ class Comment extends React.Component {
           <h4>
             You
             { this.state.editable &&
-              <span className='comment-action-links'>
+              <span className={'comment-action-links' + (this.props.modalView ? ' modal-view' : '')}>
                 <a className='comment-edit-link cursor' onClick={this.showEditor}> Edit</a> <span className="divider">|</span>
                 <a href="#comment-delete-modal" className='comment-delete-link cursor btn-modal-open' data-dismiss="modal" onClick={this.setSelectedComment} data-toggle='modal'> Delete</a>
               </span>
@@ -69,7 +71,7 @@ class Comment extends React.Component {
             {this.props.createdAt}
           </h6>
           {this.state.editMode &&
-            <ConnectedCommentEditor message={ this.state.message } commentableId={this.props.commentableId} commentableType={this.props.commentableType} sectionId={this.props.sectionId} id={this.props.id} closeEditor={this.closeEditor} modalView={this.props.modalView} editMessage={this.editMessage} />
+            <ConnectedCommentEditor message={ this.state.message } commentableId={this.props.commentableId} commentableType={this.props.commentableType} sectionId={this.props.sectionId} id={this.props.id} closeEditor={this.closeEditor} modalView={this.props.modalView} editMessage={this.editMessage} footer={this.props.footer} />
           }
           {!this.state.editMode &&
             <p>

@@ -91,7 +91,7 @@ class Header extends React.Component {
     })
     var renderUsers = this.props.business.users.slice(0,3).map(function(user, index) {
       return(
-        <li key={index}>
+        <li key={user.id}>
           <img src={user.avatarUrl} />
         </li>
       )
@@ -134,7 +134,7 @@ class Header extends React.Component {
               <a href="#sitemap-share-modal" data-toggle="modal" className="btn btn-share" onClick={this.handleSitemapShareClick}>Share</a>
             </div>
             <div className="toggle-comments">
-              <a href="javascript:void(0)" className="btn-toggle-comments" onClick={this.toggleCommentState}>
+              <a href="javascript:void(0)" className={"btn-toggle-comments" + (this.state.commentSidebarOpen ? ' active' : '')} onClick={this.toggleCommentState}>
                 <span className="icon-comment"></span>
                 Comments
                 <span>click to toggle</span>

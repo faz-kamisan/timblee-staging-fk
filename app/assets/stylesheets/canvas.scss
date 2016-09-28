@@ -613,7 +613,7 @@
 }
 
 .page-container.level-0 {
-  transition: .35s;
+  /*transition: .35s;*/
 }
 
 .sitemap-left-sidebar {
@@ -1433,7 +1433,7 @@
       color: $primaryPink;
     }
     .caret-up {
-      transform: rotate(180deg);
+      @include rotate(180deg);
     }
   }
 
@@ -1971,11 +1971,7 @@
   height: 100%;
   left: 0;
   top: 0;
-  transform: scale(0);
-  -ms-transform: scale(0);
-  -webkit-transform: scale(0);
-  -moz-transform: scale(0);
-  -o-transform: scale(0);
+  @include scale(0);
   background: $primaryWhite;
   z-index: 11;
   padding: 47px 23px 10px 5px;
@@ -1999,11 +1995,7 @@
   }
   &.overlay-in {
     right: 0;
-    transform: scale(1);
-    -ms-transform: scale(1);
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    -o-transform: scale(1);
+    @include scale(1);
   }
 }
 
@@ -2455,6 +2447,12 @@
       color: $primaryPink;
     }
   }
+  &.modal-view {
+    color: #6a717f;
+    a {
+      color: #6a717f;
+    }
+  }
 }
 
 #comment-delete-modal {
@@ -2559,7 +2557,7 @@
         color: $primaryPink;
       }
       &.active {
-        color: $primaryPink; 
+        color: $primaryPink;
       }
     }
   }
@@ -2724,10 +2722,6 @@
     right: 25px;
     min-width: 215px;
   }
-}
-
-.sitemap-footer {
-  display: none;
 }
 
 @media (max-width: 1300px) {

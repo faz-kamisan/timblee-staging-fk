@@ -5,6 +5,7 @@ class NewComment extends React.Component {
   static propTypes = {
     commentableId: PropTypes.number.isRequired,
     commentableType: PropTypes.string.isRequired,
+    footer: PropTypes.bool.isRequired,
     sectionId: PropTypes.number,
     addComment: PropTypes.func.isRequired,
     setSaving: PropTypes.func.isRequired,
@@ -35,7 +36,7 @@ class NewComment extends React.Component {
       if(this.state.newCommentMessage.trim().length > 0) {
         var _this = this;
         var timeStamp = new Date();
-        this.props.addComment(this.props.commentableId, this.props.commentableType, this.state.newCommentMessage, (this.props.currentUser || this.props.currentGuest), this.props.sectionId, timeStamp)
+        this.props.addComment(this.props.commentableId, this.props.commentableType, _this.props.footer, this.state.newCommentMessage, (this.props.currentUser || this.props.currentGuest), this.props.sectionId, timeStamp)
         $.ajax({
           url: '/comments/',
           method: 'post',
@@ -49,7 +50,7 @@ class NewComment extends React.Component {
             setTimeout(function() {
               _this.props.setSaving(false)
             }, 2000)
-            _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, timeStamp, result.id, _this.props.sectionId)
+            _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, _this.props.footer, timeStamp, result.id, _this.props.sectionId)
           }
         });
         this.setState({ newCommentMessage: '' })

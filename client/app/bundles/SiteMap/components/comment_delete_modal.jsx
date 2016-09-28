@@ -13,9 +13,9 @@ class CommentDeleteModal extends React.Component {
 
   deleteComment(e) {
     var _this = this
-    this.props.deleteComment(this.props.comment.id, this.props.comment.commentableId, this.props.comment.commentableType, this.props.comment.sectionId)
+    this.props.deleteComment(this.props.comment.id, this.props.comment.commentableId, this.props.comment.commentableType, this.props.comment.footer, this.props.comment.sectionId)
     $.ajax({
-      url: '/comments/' + this.props.id,
+      url: '/comments/' + this.props.comment.id,
       method: 'delete',
       dataType: 'JSON',
       error: (result) => {

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { changePageType, changeUpdatedAt, setSaving } from '../actions'
+import { changePageType, changeFooterPageType, changeUpdatedAt, setSaving } from '../actions'
 import PageChangeModal from '../components/page_change_modal'
 
 const mapStateToProps = (state) => {
@@ -9,7 +9,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onPageTypeChange: (pageTree, pageType) => {
-      dispatch(changePageType(pageTree.id, pageTree.section_id, pageType))
+      if(pageTree.footer) {
+        dispatch(changeFooterPageType(pageTree.id, pageType))
+      } else {
+        dispatch(changePageType(pageTree.id, pageTree.section_id, pageType))
+      }
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { updatePageState, changeUpdatedAt, setSaving } from '../actions'
+import { updatePageState, updateFooterPageState, changeUpdatedAt, setSaving } from '../actions'
 import MarkAsResolvedCheck from '../components/mark_as_resolved_check'
 
 const mapStateToProps = (state) => {
@@ -8,8 +8,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updatePageState: (pageId, sectionId, state) => {
-      dispatch(updatePageState(pageId, sectionId, state))
+    updatePageState: (pageId, footer, sectionId, state) => {
+      if(footer) {
+        dispatch(updateFooterPageState(pageId, state))
+      } else {
+        dispatch(updatePageState(pageId, sectionId, state))
+      }
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));

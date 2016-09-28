@@ -48,7 +48,8 @@ class Page < ActiveRecord::Base
       collapsed: false,
       sitemapId: sitemap_id,
       state: state,
-      footer: footer
+      footer: footer,
+      newRecord: false
     }
   end
 

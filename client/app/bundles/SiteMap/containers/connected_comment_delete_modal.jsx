@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { deletePageComment, changeUpdatedAt, deleteGeneralComment, setSaving } from '../actions'
+import { deletePageComment, deleteFooterPageComment, changeUpdatedAt, deleteGeneralComment, setSaving } from '../actions'
 import CommentDeleteModal from '../components/comment_delete_modal'
 
 const mapStateToProps = (state) => {
@@ -8,9 +8,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteComment: (id, commentableId, commentableType, sectionId) => {
+    deleteComment: (id, commentableId, commentableType, footer, sectionId) => {
       if(commentableType == 'Page') {
-        dispatch(deletePageComment(id, commentableId, sectionId))
+        if(footer) {
+          dispatch(deleteFooterPageComment(id, commentableId))
+        } else {
+          dispatch(deletePageComment(id, commentableId, sectionId))
+        }
       } else {
         dispatch(deleteGeneralComment(id))
       }

@@ -3,10 +3,9 @@ import { CHANGE_UPDATED_AT } from '../actions/index'
 function getUpdatedAt() {
   var updatedAt = new Date,
     day = ("0" + updatedAt.getDate()).slice(-2),
-    month = updatedAt.toLocaleString('en-us', { month: "short" }),
+    month = updatedAt.getMonthName(),
     year = updatedAt.getFullYear(),
     updatedAtFormatted = day + ' ' + month + ' ' + year
-
   return updatedAtFormatted;
 }
 

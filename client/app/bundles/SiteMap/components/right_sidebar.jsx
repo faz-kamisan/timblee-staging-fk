@@ -8,6 +8,7 @@ class RightSidebar extends React.Component {
   static propTypes = {
     comments: PropTypes.array.isRequired,
     sections: PropTypes.array.isRequired,
+    footerPages: PropTypes.array.isRequired,
     sitemapId: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     business : PropTypes.object.isRequired,
@@ -28,22 +29,27 @@ class RightSidebar extends React.Component {
     const CommentTabs = ['active', 'resolved', 'archived']
     var _this = this;
     var renderedComments = this.props.comments.map(function(comment, index) {
-      return <li key={index}><ConnectedComment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} editable={true} commentableId={_this.props.sitemapId} commentableType='Sitemap' commentableName={ _this.props.name } modalView={false} /></li>
+      return <li key={comment.id}><ConnectedComment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} editable={true} commentableId={_this.props.sitemapId} commentableType='Sitemap' commentableName={ _this.props.name } modalView={false} footer={false} /></li>
     })
     var pageWithComments = []
     this.props.sections.forEach(function(section, index) {
       traverse(section.pageTree, function(page) {
         if(page.comments.length > 0) {
-          pageWithComments.push({ name: page.name, comments: page.comments, id: page.id, sectionId: section.id, uid: page.uid, state: page.state });
+          pageWithComments.push({ name: page.name, comments: page.comments, id: page.id, sectionId: section.id, uid: page.uid, state: page.state, footer: page.footer });
         }
       })
     })
-    var renderedPageWithComments = pageWithComments.filter(function(page) { return(page.state == _this.state.currentTab) }).map(function(page, index) {
+    this.props.footerPages.forEach(function(page, index) {
+      if(page.comments.length > 0) {
+        pageWithComments.push({ name: page.name, comments: page.comments, id: page.id, sectionId: page.section_id, uid: page.uid, state: page.state, footer: page.footer });
+      }
+    })
+    var renderedPageWithComments = pageWithComments.filter(function(page) { return(page.state == _this.state.currentTab) }).sort(function(page, nextPage) { return(page.uid - nextPage.uid) }).map(function(page, index) {
       var renderedPageComments = page.comments.map(function(comment, index) {
-        return <li key={index}><ConnectedComment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} editable={(page.state == 'active')} commentableId={page.id} commentableType='Page' sectionId={page.sectionId} commentableName={ page.name } modalView={false} /></li>
+        return <li key={comment.id}><ConnectedComment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} editable={(page.state == 'active')} commentableId={page.id} commentableType='Page' sectionId={page.sectionId} commentableName={ page.name } modalView={false} footer={page.footer} /></li>
       })
       return(
-        <li key={index}>
+        <li key={page.id}>
           <div className="page-comment-details">
             <span className="page-id">ID: {page.uid}</span>
             <div className="clearfix">
@@ -57,7 +63,7 @@ class RightSidebar extends React.Component {
             {renderedPageComments}
           </ul>
           { (_this.state.currentTab == 'active') &&
-            <ConnectedNewComment commentableId={page.id} commentableType='Page' sectionId={page.sectionId} />
+            <ConnectedNewComment commentableId={page.id} commentableType='Page' sectionId={page.sectionId} footer={page.footer} />
           }
         </li>
       )
@@ -98,7 +104,7 @@ class RightSidebar extends React.Component {
               <ul className="comment-group">
                 {renderedComments}
               </ul>
-              <ConnectedNewComment commentableId={this.props.sitemapId} commentableType='Sitemap' />
+              <ConnectedNewComment commentableId={this.props.sitemapId} commentableType='Sitemap' footer={false} />
             </div>
           }
           <ul>
