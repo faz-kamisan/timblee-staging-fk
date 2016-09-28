@@ -17,7 +17,7 @@
           <span class='sitemap-link'>
             <h2 class="card-name edit-card-name">
 
-              <%= form_for sitemap, url: sitemap_rename_path(sitemap), html: { remote: true } do |f| %>
+              <%= form_for sitemap, url: sitemap_rename_path(sitemap), html: { remote: true, method: :patch } do |f| %>
                 <%= f.text_field :name, disabled: false, class: 'editable-input sitemap-rename-input', 'data-original-value' => f.object.name %>
               <% end %>
             </h2>
@@ -26,14 +26,14 @@
         </div>
         <div class="actions">
           <ul class="card-users clearfix">
-            <% sitemap.users.each_with_index do |user, index| %>
-              <% break if index == 3 %>
+          <% users = sitemap.active_users %>
+            <% users.sample(3).each do |user| %>
               <li>
                 <%= image_tag(user.avatar) %>
               </li>
             <% end %>
           </ul>
-          <span class="other-users"><%= "+#{sitemap.users.count - 3}" if sitemap.users.count > 3 %></span>
+          <span class="other-users"><%= "+#{users.count - 3}" if users.count > 3 %></span>
         </div>
         <a href="javascript:void(0);" class="more-options">
           <span></span>
@@ -42,6 +42,14 @@
         </a>
         <div class="actions-overlay" data-id=<%= sitemap.id %>>
           <ul class="p-0 m-0">
+            <li>
+              <%= form_for sitemap, url: sitemap_duplicate_path(sitemap), html: { remote: true, method: :post } do |f| %>
+                <a href="javascript:void(0);" class="action duplicate-sitemap-link">
+                  <span class="icon icon-wand"></span>
+                  <span class="link-text">Duplicate</span>
+                </a>
+              <% end %>
+            </li>
             <li>
               <a href="javascript:void(0);" class="action rename-sitemap-link">
                 <span class="icon icon-edit-circle"></span>

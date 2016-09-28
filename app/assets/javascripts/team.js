@@ -9,10 +9,12 @@ Team.prototype.bindEvents = function() {
   var _this = this;
   this.inviteLink.on('click', function(e) {
     e.preventDefault();
-    _this.inviteModal.find('form').attr('action', $(this).data('url'));
     _this.inviteModal.find('form .bulk-invite-emails-input').attr('required', true);
     _this.inviteModal.find('form').find('input#stripe_plan_id').val(PRO_STRIPE_ID);
     _this.inviteModal.find('.go-back').addClass('hide');
+    if($(this).data('remote')) {
+      _this.inviteModal.find('form').data('remote', true);
+    }
     _this.trialStarterUserOnSwitchPlan.addClass('hide');
     _this.trialStarterUserOnInvite.removeClass('hide');
     _this.inviteModal.modal('show');

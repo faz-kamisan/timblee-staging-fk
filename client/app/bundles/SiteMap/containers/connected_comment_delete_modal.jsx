@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { deletePageComment, deleteGeneralComment, setSaving } from '../actions'
+import { deletePageComment, changeUpdatedAt, deleteGeneralComment, setSaving } from '../actions'
 import CommentDeleteModal from '../components/comment_delete_modal'
 
 const mapStateToProps = (state) => {
@@ -17,6 +17,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));
+      dispatch(changeUpdatedAt());
     }
   }
 }

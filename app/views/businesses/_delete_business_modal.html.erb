@@ -18,7 +18,7 @@
           <div class="business-name-to-delete">
             <div class="user-name-to-delete">
               <%= image_tag(current_business.logo || current_user.avatar, class: 'profile-image with-delete') %>
-              <span><%= current_user.full_name %></span>
+              <span><%= current_business.name || current_user.full_name %></span>
             </div>
           </div>
         </div>

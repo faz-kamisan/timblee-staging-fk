@@ -26,6 +26,10 @@ class NewComment extends React.Component {
     this.setState({ newCommentMessage: e.target.value, showGuestInfoForm: false })
   }
 
+  componentDidMount() {
+    $(this.refs.newComment.refs.container).find('textarea').watermark('Add a comment...<br/>You can mention people by typing @.', {fallback: false});
+  }
+
   handleAddComment(e) {
     if(this.props.currentUser || this.props.currentGuest) {
       if(this.state.newCommentMessage.trim().length > 0) {

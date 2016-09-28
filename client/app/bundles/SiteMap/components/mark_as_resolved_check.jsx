@@ -34,20 +34,24 @@ class MarkAsResolvedCheck extends React.Component {
 
   render() {
     var _this = this;
-    if(this.props.page.state == 'active') {
-      return (
-        <label className="pull-right" htmlFor="mark-resolve">
-          Mark as resolved
-          <input type="checkbox" checked={false} id="mark-resolve" onChange={function(e) { _this.updatePageState('resolved') }} />
-        </label>
-      )
+    if(this.props.publicShare) {
+      return <div />
     } else {
-      return (
-        <label className="pull-right" htmlFor="mark-unresolve">
-          Unresolve
-          <input type="checkbox" checked='checked' id="mark-unresolve" onChange={function(e) { _this.updatePageState('active') }} />
-        </label>
-      )
+      if(this.props.page.state == 'active') {
+        return (
+          <label className="pull-right" htmlFor="mark-resolve">
+            Mark as resolved
+            <input type="checkbox" checked={false} id="mark-resolve" onChange={function(e) { _this.updatePageState('resolved') }} />
+          </label>
+        )
+      } else {
+        return (
+          <label className="pull-right" htmlFor="mark-unresolve">
+            Unresolve
+            <input type="checkbox" checked='checked' id="mark-unresolve" onChange={function(e) { _this.updatePageState('active') }} />
+          </label>
+        )
+      }
     }
   }
 }

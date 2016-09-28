@@ -29,7 +29,7 @@ const sitemapTarget = {
           }, 2000)
         }
       });
-      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp);
+      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
     }
   }
 };
@@ -51,7 +51,8 @@ class FirstPageDroppable extends React.Component {
     setSaving: PropTypes.func.isRequired,
     pageTree: PropTypes.object.isRequired,
     sitemapId: PropTypes.number.isRequired,
-    leftSidebarExpanded: PropTypes.bool.isRequired
+    leftSidebarExpanded: PropTypes.bool.isRequired,
+    maxPageUid: PropTypes.number.isRequired
   };
 
   componentWillReceiveProps(nextProps) {

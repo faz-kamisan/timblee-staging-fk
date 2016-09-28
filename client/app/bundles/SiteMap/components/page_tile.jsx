@@ -5,7 +5,7 @@ import ConnectedPageTileBottom from '../containers/connected_page_tile_bottom';
 class PageTile extends React.Component {
   static propTypes = {
     pageTree: PropTypes.object.isRequired,
-    sitemapNumber: PropTypes.string.isRequired,
+    sitemapNumber: PropTypes.string,
     name: PropTypes.string.isRequired,
     collapsed: PropTypes.bool.isRequired,
     childrenLength: PropTypes.number.isRequired,
@@ -31,6 +31,7 @@ class PageTile extends React.Component {
   }
 
   disableNameChangeInput(e) {
+    var _this = this;
     var name = this.state.name
     if(name.length > 0) {
       $.ajax({
@@ -40,6 +41,12 @@ class PageTile extends React.Component {
         data: { page: { name: name } },
         error: (result) => {
           document.setFlash(result.responseText)
+        },
+        success: (result) => {
+          this.props.setSaving(true)
+          setTimeout(function() {
+            _this.props.setSaving(false)
+          }, 2000)
         }
       });
       this.props.onNameChange(this.props.pageTree.id, this.props.pageTree.section_id, name);

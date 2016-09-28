@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { removePage, setSaving } from '../actions'
+import { changeUpdatedAt, setSaving } from '../actions'
 import PageCommentsModal from '../components/page_comments_modal'
 
 const mapStateToProps = (state) => {
@@ -10,6 +10,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setSaving: (saving) => {
       dispatch(setSaving(saving));
+      dispatch(changeUpdatedAt());
     }
   }
 }

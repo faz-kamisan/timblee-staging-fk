@@ -46,7 +46,7 @@ const sitemapTarget = {
           }, 2000)
         }
       });
-      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp);
+      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp, props.maxPageUid);
     }
   }
 };
@@ -67,7 +67,8 @@ class Gutter extends React.Component {
     onPageIdUpdate: PropTypes.func.isRequired,
     setSaving: PropTypes.func.isRequired,
     pageTree: PropTypes.object.isRequired,
-    sitemapId: PropTypes.number.isRequired
+    sitemapId: PropTypes.number.isRequired,
+    maxPageUid: PropTypes.number.isRequired
   };
 
   componentWillReceiveProps(nextProps) {

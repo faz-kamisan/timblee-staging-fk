@@ -2,42 +2,26 @@ import React, { PropTypes } from 'react';
 import { ItemTypes } from '../dnd/constants';
 import { DropTarget } from 'react-dnd';
 import { findDOMNode } from 'react-dom';
+import ConnectedPageTile from '../containers/connected_page_tile'
 
 const sitemapTarget = {
   drop: function(props, monitor, component) {
     const item = monitor.getItem();
-    if (monitor.didDrop() || !(props.pageTree.id)) {
+    if (monitor.didDrop() || (item.pageType == 'page')) {
       return;
     }
-    if(item.type == 'page') {
-      $.ajax({
-        url: '/pages/' + item.id,
-        method: 'put',
-        dataType: 'JSON',
-        data: { page: { parent_id: props.pageTree.parentId, position: (props.pageTree.position + 1) } },
-        error: (result) => {
-          document.setFlash(result.responseText)
-        },
-        complete: (result) => {
-          props.setSaving(true)
-          setTimeout(function() {
-            props.setSaving(false)
-          }, 2000)
-        }
-      });
-      props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.parentId, props.pageTree.position);
-    } else if(item.type == 'PageType') {
+    if(item.type == 'PageType') {
       var timeStamp = new Date();
       $.ajax({
         url: '/pages/',
         method: 'post',
         dataType: 'JSON',
-        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: (props.pageTree.position + 1), section_id: props.pageTree.section_id } },
+        data: { page: { page_type_id: item.id, footer: true, sitemap_id: props.sitemapId, name: item.name } },
         error: (result) => {
           document.setFlash(result.responseText)
         },
         success: (result) => {
-          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id)
+          props.onPageIdUpdate(timeStamp, result.id)
         },
         complete: (result) => {
           props.setSaving(true)
@@ -46,11 +30,10 @@ const sitemapTarget = {
           }, 2000)
         }
       });
-      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp, props.maxPageUid);
+      props.onPageTypeDrop(item, timeStamp, props.maxPageUid);
     }
   }
 };
-
 
 var DropTargetDecorator = DropTarget([ItemTypes.PAGE_CONTAINER, ItemTypes.PAGE_TYPE], sitemapTarget,
   function(connect, monitor) {
@@ -61,15 +44,14 @@ var DropTargetDecorator = DropTarget([ItemTypes.PAGE_CONTAINER, ItemTypes.PAGE_T
     };
 });
 
-class LevelSupport extends React.Component {
+class Footer extends React.Component {
   static propTypes = {
-    onPageDrop: PropTypes.func.isRequired,
     onPageTypeDrop: PropTypes.func.isRequired,
     onPageIdUpdate: PropTypes.func.isRequired,
     setSaving: PropTypes.func.isRequired,
-    pageTree: PropTypes.object.isRequired,
     sitemapId: PropTypes.number.isRequired,
-    maxPageUid: PropTypes.number.isRequired
+    maxPageUid: PropTypes.number.isRequired,
+    leftSidebarExpanded: PropTypes.bool.isRequired
   };
 
   componentWillReceiveProps(nextProps) {
@@ -79,24 +61,30 @@ class LevelSupport extends React.Component {
     }
 
     if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
-      // You can use this as leave handler
       var domNode = findDOMNode(this);
       $(domNode).removeClass('drag-over')
-    }
-
-    if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
-      // You can be more specific and track enter/leave
-      // shallowly, not including nested targets
     }
   }
 
   render() {
     const connectDropTarget = this.props.connectDropTarget
+    var renderedFooterPages = this.props.footerPages.map(function(footerPage, index) {
+      return(
+        <li key={index} className='footer-page'>
+          <ConnectedPageTile pageTree={footerPage} collapsed={true} childrenLength={0} name={footerPage.name} />
+        </li>
+      )
+    })
     return connectDropTarget(
-      <div className="level-support"></div>
+      <div className={'sitemap-footer' + (this.props.leftSidebarExpanded ? '' : ' left-sidebar-contracted')}>
+        <span>Footer</span>
+        <ul className='footer-page-list'>
+          {renderedFooterPages}
+        </ul>
+      </div>
     );
   }
 }
 
-var DroppableLevelSupport = DropTargetDecorator(LevelSupport)
-export default DroppableLevelSupport
+var DroppableFooter = DropTargetDecorator(Footer)
+export default DroppableFooter

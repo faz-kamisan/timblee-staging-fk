@@ -283,7 +283,7 @@ input:-webkit-autofill {
   top: 10px;
   right: 5px;
   @include border-radius(6px);
-  z-index: 15;
+  z-index: 150;
 }
 
 .flash .close {

@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
-import { setName, updateState, setSaving, showSitemapShareModal } from '../actions'
+import { setName, changeUpdatedAt, updateState, setSaving, showSitemapShareModal } from '../actions'
 import Header from '../components/header'
 
 const mapStateToProps = (state) => {
-  return { name: state.name, id: state.id, state: state.state, saving: state.saving }
+  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -16,6 +16,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));
+      dispatch(changeUpdatedAt());
     },
     showSitemapShareModal: () => {
       dispatch(showSitemapShareModal(true))

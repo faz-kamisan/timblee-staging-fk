@@ -7,7 +7,8 @@ const mapStateToProps = (state) => {
     sitemapId: state.id,
     sections: state.sections,
     business: state.business,
-    name: state.name
+    name: state.name,
+    publicShare: state.publicShare
   }
 }
 

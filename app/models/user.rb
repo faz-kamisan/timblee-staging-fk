@@ -64,6 +64,7 @@ class User < ActiveRecord::Base
       id: id,
       full_name: full_name,
       display: full_name,
+      avatarUrl: avatar.url,
       email: email
     }
   end
