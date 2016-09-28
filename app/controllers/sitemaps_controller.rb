@@ -2,7 +2,8 @@ class SitemapsController < ApplicationController
   before_filter :fetch_sitemap, only: [:destroy, :show, :update, :share_via_email]
   before_filter :fetch_sitemap_from_token, only: [:public_share]
   skip_before_filter :authenticate_user!, only: [:public_share]
-  before_filter :fetch_sitemap_for_rename, only: [:rename]
+  before_filter :fetch_sitemap_from_sitemap_id, only: [:rename, :duplicate]
+  around_action :wrap_in_transaction, only: :duplicate
 
   def create
     @sitemap = current_business.sitemaps.build(sitemap_params)
@@ -62,13 +63,18 @@ class SitemapsController < ApplicationController
         end
       end
     else
+      if sitemap_params.include?(:name) && @sitemap.name.present?
+        flash = t('sitemaps.rename.failure', scope: :flash) || t('.failure', scope: :flash)
+      else
+        flash = t('.blank', scope: :flash) || t('.failure', scope: :flash)
+      end
       respond_to do |format|
         format.js do
-          flash.now[:alert] = t('.failure', scope: :flash)
+          flash.now[:alert] = flash
           render 'shared/show_flash', status: 422
         end
         format.json do
-          render json: t('.failure', scope: :flash) , status: 422
+          render json: flash , status: 422
         end
       end
     end
@@ -78,9 +84,22 @@ class SitemapsController < ApplicationController
     if @sitemap.update(rename_params)
       flash.now[:success] = t('.success', scope: :flash)
     else
-      flash.now[:alert] = t('.failure', scope: :flash)
+      if @sitemap.name.present?
+        flash.now[:alert] = t('.failure', scope: :flash)
+      else
+        flash.now[:alert] = t('.blank', scope: :flash)
+      end
     end
+  end
 
+  def duplicate
+    @duplicate = @sitemap.duplicate
+    if @duplicate.persisted?
+      flash.now[:success] = t('.success', scope: :flash)
+    else
+      flash.now[:alert] = t('.failure', scope: :flash)
+      render 'shared/show_flash'
+    end
   end
 
   private
@@ -99,7 +118,7 @@ class SitemapsController < ApplicationController
       end
     end
 
-    def fetch_sitemap_for_rename
+    def fetch_sitemap_from_sitemap_id
       unless @sitemap = current_business.sitemaps.find_by(id: params[:sitemap_id])
         flash.now[:alert] = t('sitemaps.not_found', scope: :flash)
       end
@@ -117,5 +136,15 @@ class SitemapsController < ApplicationController
 
     def rename_params
       params.require(:sitemap).permit(:name)
+    end
+
+    def wrap_in_transaction
+      begin
+        ActiveRecord::Base.transaction do
+          yield
+        end
+      rescue
+        flash.now[:alert] = t('.failure', scope: :flash)
+      end
     end
 end

@@ -10,6 +10,13 @@ class Section < ActiveRecord::Base
 
   attr_accessor :really_destroy_root_page
 
+  def duplicate(duplicate_sitemap)
+    duplicate = dup
+    duplicate.sitemap = duplicate_sitemap
+    duplicate.save
+    root_page.duplicate(duplicate, nil)
+  end
+
   def get_page_tree
     root_page ? root_page.get_tree(pages.includes(:page_type, :comments)) : {}
   end

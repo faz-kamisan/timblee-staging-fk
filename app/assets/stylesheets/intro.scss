@@ -83,6 +83,9 @@
 
 .replay {
   display: none;
+  + .replay {
+    top: 50px;
+  }
 }
 
 .skip,

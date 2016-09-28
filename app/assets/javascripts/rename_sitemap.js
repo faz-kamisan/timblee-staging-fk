@@ -23,6 +23,6 @@ $(function() {
     renameSitemapLink : $('.rename-sitemap-link'),
     sitemapNameInputField: $('.sitemap-rename-input')
   }
-  var rename_sitemap = new RenameSitemap(options);
-  rename_sitemap.bindEvents();
+  var renameSitemap = new RenameSitemap(options);
+  renameSitemap.bindEvents();
 });

@@ -31,6 +31,7 @@ class PageTile extends React.Component {
   }
 
   disableNameChangeInput(e) {
+    var _this = this;
     var name = this.state.name
     if(name.length > 0) {
       $.ajax({

@@ -52,6 +52,7 @@ class GuestInfoFormModal extends React.Component {
 
   componentDidUpdate(e) {
     if(this.props.showForm) {
+      $('.modal').modal('hide');
       $('#guest-info-modal').modal('show');
     }
   }

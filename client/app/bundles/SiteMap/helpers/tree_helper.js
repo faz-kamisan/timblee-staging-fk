@@ -128,7 +128,7 @@ function createNewSection(sections, id, sectionId, newSectionName, timeStamp) {
       var parentNode = getNodeById(treeCopy, node.parentId);
       node.level = parentNode.level + 1
     }
-    node.sectionId = timeStamp
+    node.section_id = timeStamp
   })
   parentPage.children.removeIf(function(elem, idx) { return elem.id == id });
   var newSection = { default: false, name: newSectionName, pageTree: page, id: timeStamp }
