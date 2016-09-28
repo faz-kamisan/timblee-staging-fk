@@ -1,4 +1,6 @@
 $("div.flash-message").html("<%==j render partial: 'shared/flash_message' %>");
+$("ul.notifications-listing").replaceWith("<%==j render 'shared/notifications' %>");
+
 
 <% if @destroyed %>
   $('.all-sitemap-folder .folder-items').html('<%= current_user.all_sitemaps.count %>')
