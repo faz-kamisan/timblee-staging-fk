@@ -95,7 +95,7 @@ class Sitemap < ActiveRecord::Base
     end
 
     def set_unique_public_share_token
-      self.public_share_token = Digest::SHA1.hexdigest([Time.now, rand].join)
+      self.public_share_token = Digest::SHA1.hexdigest([Time.now, rand].join)[0,10]
     end
 
     def hard_delete_sections_and_pages
