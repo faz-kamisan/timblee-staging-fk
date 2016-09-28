@@ -9,4 +9,14 @@ class UserMailer < ActionMailer::Base
       subject: "Role Updated"
     )
   end
+
+  def send_pending_notification(user_id, notification_ids)
+    @user = User.find_by_id(user_id)
+    @notifications = Notification.where(id: notification_ids)
+    mail(
+      to: @user.email,
+      subject: "Notifications"
+    )
+  end
+
 end

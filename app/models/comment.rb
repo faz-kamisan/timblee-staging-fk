@@ -6,9 +6,15 @@ class Comment < ActiveRecord::Base
   strip_fields :message
 
   scope :order_by_created_at, -> { order('created_at ASC') }
+  after_create :create_comment_notification
+  after_update :update_comment_notification, if: Proc.new { |c| c.message_changed? }
 
   def to_react_data
     { id: id, message: message, created_at: created_at_decorated, commenter: { fullName: commenter.full_name, email: commenter.email } }
+  end
+
+  def sitemap
+    commentable_type == 'Sitemap' ? commentable : commentable.sitemap
   end
 
   def created_at_decorated
@@ -28,4 +34,23 @@ class Comment < ActiveRecord::Base
         return created_at.strftime('%d %b %Y')
     end
   end
+
+  private
+
+    def create_comment_notification
+      Notification.add_comment_notification(self, :added)
+      notify_mentioned_user if message.match('@')
+    end
+
+    def update_comment_notification
+      Notification.add_comment_notification(self, :updated)
+      notify_mentioned_user if message.match('@')
+    end
+
+    def notify_mentioned_user
+      sitemap.users.each do |user|
+        message.match("@#{user.full_name}")
+        Notification.user_mention_notification(self, user)
+      end
+    end
 end

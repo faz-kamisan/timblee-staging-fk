@@ -1,0 +1,13 @@
+<ul class="p-0 m-0 notifications-listing">
+  <% current_user.notifications.order(created_at: :desc).limit(10).each do |notification|%>
+    <li class="clearfix notification-item">
+      <div class="pull-left notification-image">
+        <%= image_tag(notification.user.try(:avatar) || 'profile-image.png', class: 'profile-image') %>  
+      </div>
+      <div class="pull-left notification-content">
+        <span class="notification-message"><%= notification.message %></span>
+        <span class="notification-time"><%= time_ago_in_words(notification.created_at) + ' ago' %></span>  
+      </div>
+    </li>
+  <% end %>
+</ul>
