@@ -7,16 +7,20 @@ class User < ActiveRecord::Base
 
 
   has_many :sitemap_invites, dependent: :destroy
+  has_many :notifications, foreign_key: :recipient_id, dependent: :destroy
   has_many :shared_sitemaps, through: :sitemap_invites, source: :sitemap
   has_many :comments, as: :commenter
-  # mount_uploader :avatar, AvatarUploader
+  mount_uploader :avatar, AvatarUploader
 
   before_create :set_is_admin, unless: :business_id
   before_create :add_business, unless: :business_id
   after_create :set_confirmation_instructions_to_be_sent, unless: :confirmed?
   before_destroy :restrict_owner_destroy
+  after_destroy :update_business_subscription
   before_update :restrict_owner_role_update, if: :is_admin_changed?
   after_update :mail_user_about_role_update, if: :is_admin_changed?
+  after_create :add_default_avatar
+  after_invitation_created :add_default_avatar
 
   strip_fields :full_name
 
@@ -39,7 +43,6 @@ class User < ActiveRecord::Base
   validates :password, presence: { message: 'Without a password, it\'s like leaving your door open to the whole internet.' }, if: :password_required?
   validates :password, confirmation: true, if: :password_required?
   validates :password, length: { within: password_length, message: 'Your password needs to be at least 6 characters.' }, allow_blank: true
-  # validate :minimum_image_size
 
   def all_sitemaps
     Sitemap.where(id: business.sitemaps.pluck(:id) + shared_sitemaps.pluck(:id)).order_by_alphanumeric_lower_name
@@ -57,21 +60,29 @@ class User < ActiveRecord::Base
     business.owner == self
   end
 
+  def to_react_data
+    {
+      id: id,
+      full_name: full_name,
+      display: full_name,
+      avatarUrl: avatar.url,
+      email: email
+    }
+  end
   protected
     def confirmation_period_valid?
       self.class.allow_unconfirmed_access_for.nil? || (created_at && created_at.utc >= self.class.allow_unconfirmed_access_for.ago)
     end
 
   private
-    # def minimum_image_size
-    #   image = MiniMagick::Image.open(avatar.path)
-    #   unless image[:width] >= 400 && image[:height] >= 400
-    #     errors.add :avatar, "should be 400x400px minimum!"
-    #   end
-    # end
+
+    def add_default_avatar
+      avatar.store!(File.open(File.join(Rails.root, "app/assets/images/avatar_#{[*1..14].sample}.svg")))
+      self.save(validate: false)
+    end
 
     def mail_user_about_role_update
-      UserMailer.delay_for(10.seconds).send_updated_role_details(id)
+      UserMailer.delay_for(10.seconds).send_updated_role_details(id) unless avatar_changed? # in add_default_avatar calling save triggers this callback after_create but it needs to be called only after_update
     end
 
     def set_is_admin
@@ -96,7 +107,7 @@ class User < ActiveRecord::Base
     end
 
     def restrict_owner_role_update
-      if owner?
+      if owner? && !is_admin
         errors.add(:base, I18n.t('errors.users.owner_role_update'))
         false
       end
@@ -104,5 +115,13 @@ class User < ActiveRecord::Base
 
     def email_required?
       false
+    end
+
+    def update_business_subscription
+      if business.is_pro_plan?
+        business.current_subscription.update(end_at: Time.current)
+        business.subscriptions.build(no_of_users: business.users.count, quantity: Business.monthly_charge(business.users.count))
+        StripePaymentService.new(business).update_subscription
+      end
     end
 end

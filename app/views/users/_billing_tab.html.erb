@@ -12,14 +12,14 @@
               You're on the free trial till  <%= current_business.trial_end_at.strftime('%d %b %Y') %> with no restrictions. To keep using Timblee after that, we'll ask you to choose a plan and add a credit card. Our pricing is simple – $19 per month for the first user and $12 for every subsequent user. If you’ll only need to plan websites ocassionally and work alone, there's also a free plan.
 
             <% elsif current_business.in_trial_period? && current_business.is_pro_plan? %>
-              You're on the Pro plan with <%= current_business.no_of_users %> users. Your monthly charge is $<%= current_business.monthly_charge%>. To add more users, click on the 'Team' tab above.
+              You're on the Pro plan with <span class='pro-users-count'><%= current_business.no_of_users %></span> users. Your monthly charge is $<span class='pro-charges'><%= current_business.monthly_charge%></span>. To add more users, click on the 'Team' tab above.
               You're on the free trial till  <%= current_business.trial_end_at.strftime('%d %b %Y') %>.
             <% elsif current_business.in_trial_period? && current_business.is_starter_plan? %>
               You're on the Starter plan with one user and a maximum of three sitemaps. This is a free plan.
               <a href="#choose-plan-modal" data-toggle="modal" data-dismiss="modal" id="upgrade">Upgrade to the Pro plan</a> for only $19 to have unlimited sitemaps.
               You're on the free trial till  <%= current_business.trial_end_at.strftime('%d %b %Y') %> with no restrictions.
             <% elsif current_business.is_pro_plan? %>
-              You're on the Pro plan with <%= current_business.no_of_users %> users. Your monthly charge is $<%= current_business.monthly_charge%>. To add more users, click on the 'Team' tab above.
+              You're on the Pro plan with <span class='pro-users-count'><%= current_business.no_of_users %></span> users. Your monthly charge is $<span class='pro-charges'><%= current_business.monthly_charge%></span>. To add more users, click on the 'Team' tab above.
 
             <% else %>
               You're on the Starter plan with one user and a maximum of three sitemaps. This is a free plan.
@@ -45,9 +45,9 @@
             <label>Credit Card</label>
             <p class="font-12-light cc-detail-save">
               <% if current_business.is_starter_plan? %>
-                We currently have your <%= @card.brand %> ending in <%= @card.last4 %> on file. We're not charging it because you're on the Starter plan, which is free. You can change your saved card at any time.
+                We currently have your <span class='card-brand'><%= @card.brand %></span> ending in <span class='card-last4'><%= @card.last4 %></span> on file. We're not charging it because you're on the Starter plan, which is free. You can change your saved card at any time.
               <% else %>
-                We're currently charging your <%= @card.brand %> ending in <%= @card.last4 %>. You can change your saved card at any time.
+                We're currently charging your <span class='card-brand'><%= @card.brand %></span> ending in <span class='card-last4'><%= @card.last4 %></span>. You can change your saved card at any time.
               <% end %>
             </p>
           </div>
@@ -63,9 +63,9 @@
             <label>Credit Card</label>
             <p class="font-12-light cc-detail-edit">
               <% if current_business.is_starter_plan? %>
-                We currently have your <%= @card.brand %> ending in <%= @card.last4 %> on file. We're not charging it because you're on the Starter plan, which is free. We'll never charge it without your permission. We accept MasterCard, Visa and American Express – with no additional fees or charges.
+                We currently have your <span class='card-brand'><%= @card.brand %></span> ending in <span class='card-last4'><%= @card.last4 %></span> on file. We're not charging it because you're on the Starter plan, which is free. We'll never charge it without your permission. We accept MasterCard, Visa and American Express – with no additional fees or charges.
               <% else %>
-                We're currently charging your <%= @card.brand %> ending in <%= @card.last4 %>. We'll never charge it without your permission. We accept MasterCard, Visa and American Express – with no additional fees or charges.
+                We're currently charging your <span class='card-brand'><%= @card.brand %></span> ending in <span class='card-last4'><%= @card.last4 %></span>. We'll never charge it without your permission. We accept MasterCard, Visa and American Express – with no additional fees or charges.
               <% end %>
             </p>
           </div>
@@ -171,7 +171,7 @@
 <%= render 'businesses/delete_business_modal' %>
 
 <!-- Thanks Modal -->
-<div class="modal fade" id="thanks-modal" tabindex="-1" role="dialog" aria-labelledby="thanks-modalLabel">
+<div class="modal fade" id="thanks-modal" tabindex="-1" role="dialog" aria-labelledby="thanks-modalLabel" data-show= <%= current_business.is_pro_plan? && flash[:notice] == I18n.t('pro_plan_success', scope: :flash, users: current_business.no_of_users) && current_business.subscriptions.count == 1 ? true : false %>>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
@@ -180,12 +180,15 @@
             <%= image_tag('close-modal.svg', class: 'close-modal') %>
           </span>
         </button>
-        <h4>Thanks [First Name]</h4>
+        <h4>Thanks <%= current_user.full_name %></h4>
         <p>We're so excited to have you on board! If you ever have a question or <br> need a hand with anything, we're just a click away via the settings menu <br> and would love to help!</p>
         <p>Lots of Love,</p>
         <%= image_tag('team.svg', class: 'team-logo') %>
         <div class="modal-button text-center">
-          <a href="#" class="btn btn-pink">Create a sitemap</a>
+          <%= form_for Sitemap.new do |f| %>
+            <%= f.hidden_field :folder_id %>
+            <a href="javascript:void(0);" class="btn btn-pink new-sitemap-link" data-allow-more-sitemaps= "<%= current_business.allow_more_sitemaps? ? 'true' : 'false' %>">Create a sitemap</a>
+          <% end %>
         </div>
       </div>
     </div>
@@ -203,4 +206,3 @@
 <script type="text/javascript">
   Stripe.setPublishableKey('<%= STRIPE_PUBLISHABLE_KEY %>');
 </script>
-<%= javascript_include_tag('payments', 'billing', 'plan') %>

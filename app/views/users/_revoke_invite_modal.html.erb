@@ -14,12 +14,12 @@
       <div class="modal-body">
         <div class="text-center">
           <div class="invite-name-to-revoke">
-            <%= image_tag('profile-image.png', class: 'profile-image with-delete') %>
+            <%= image_tag(user.avatar, class: 'profile-image with-delete') %>
             <span> <%= user.email %></span>
           </div>
         </div>
         <div class="modal-button text-center">
-          <%= link_to "Revoke Invite", revoke_user_path(user), class: "btn btn-red", remote: true %>
+          <%= link_to "Revoke Invite", revoke_user_path(user), class: "btn btn-red", remote: true, data: { disable_with: 'Please Wait...' }  %>
           <a href="#" data-dismiss="modal" class="btn btn-transparent btn-last">Cancel</a>
         </div>
       </div>

@@ -13,7 +13,16 @@
             <li class="nav-item">
               <%= link_to 'Progress', progress_users_path %>
             </li>
-            <li class="nav-item"><a href="javascript:void(0);">Jump to</a></li>
+            <li class="nav-item", id='jump-to', tabindex="3">
+              <a href="javascript:void(0);">
+                Jump to
+                <span class="icon-caret"></span>
+              </a>
+              <%= form_tag sitemaps_path, method: :get, id: 'search-sitemap-form', enforce_utf8: false, class: 'hide' do %>
+                <span class="icon-search"></span>
+                <%= text_field_tag "sitemap_params", nil, id: 'search-sitemap', data: { source: current_user.all_sitemaps.map {|s| {label: s.name, value: s.id}} }, placeholder: 'Search for sitemaps', autocomplete: 'on' %>
+              <% end %>
+            </li>
           </ul>
         </div>
       </div>
@@ -21,6 +30,7 @@
     <div class="col-xs-6 p-r-5">
       <div class="user-dropdown pull-right text-right">
         <span class="truncate">
+          <%= image_tag(current_user.avatar, class: 'profile-image') %>
           <%= current_user.full_name %>
         </span>
         <span class="icon-caret"></span>
@@ -68,17 +78,23 @@
         </a>
       </div>
       <div class="notifications-tab pull-right header-links">
-        <a href="#">
+        <a href="javascript:void(0);">
           <span class="icon-bell"></span>
         </a>
+        <%= render 'shared/notifications'%>
       </div>
       <div class="add-sitemap-tab pull-right header-links new-sitemap">
-        <a href="javascript:void(0);" class="new-sitemap-link" data-allow-more-sitemaps= "<%= current_business.allow_more_sitemaps? ? 'true' : 'false' %>">
-          <span class="icon-add"></span> <br>
-        </a>
+        <%= form_for Sitemap.new do |f| %>
+          <%= f.hidden_field :folder_id %>
+          <a href="javascript:void(0);" class="new-sitemap-link" data-allow-more-sitemaps= "<%= current_business.allow_more_sitemaps? ? 'true' : 'false' %>">
+          <span class="cus-icon-add"></span> <br>
+          </a>
+        <% end %>
       </div>
     </div>
   </div>
-</header>
-<%= javascript_include_tag('sitemaps') %>
 
+</header>
+<%= javascript_include_tag('sitemaps', 'jump_to') %>
+
+<%= render 'sitemaps/sitemap_error_modal'%>

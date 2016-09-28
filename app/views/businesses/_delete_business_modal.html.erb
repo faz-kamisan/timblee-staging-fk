@@ -17,13 +17,13 @@
         <div class="text-center">
           <div class="business-name-to-delete">
             <div class="user-name-to-delete">
-              <%= image_tag('profile-image.png', class: 'profile-image with-delete') %>
-              <span><%= current_user.full_name %></span>
+              <%= image_tag(current_business.logo || current_user.avatar, class: 'profile-image with-delete') %>
+              <span><%= current_business.name || current_user.full_name %></span>
             </div>
           </div>
         </div>
         <div class="modal-button text-center">
-          <%= link_to "Request Deletion", send_destroy_request_to_superadmin_business_path(current_business), class: "btn btn-red", id: 'delete-business-link', data: { disable_with: 'Please wait...' } %>
+          <%= link_to "Request Deletion", delete_account_business_path(current_business), class: "btn btn-red", id: 'delete-business-link', data: { disable_with: 'Please wait...' } %>
           <a href="#" data-dismiss="modal" class="btn btn-transparent btn-last">Cancel</a>
         </div>
       </div>

@@ -15,7 +15,7 @@ RSpec.describe Sitemap, type: :model do
   end
 
   describe 'Callbacks' do
-    it { is_expected.to callback(:set_state_to_in_progress).before(:validation).on(:create) }
+    it { is_expected.to callback(:set_default_state).before(:validation).on(:create) }
   end
 
   describe 'Scopes' do

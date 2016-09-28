@@ -1,11 +1,12 @@
-function addPage(tree, pageType, parentId, position, tempId) {
-  var treeCopy = Object.assign({}, tree);
+function addPage(sections, sectionId, pageType, parentId, position, tempId, uid) {
+  var sectionsCopy = Object.assign([], sections);
+  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
   var pageTypeCopy = Object.assign({}, pageType);
   pageTypeCopy.icon_name = pageTypeCopy.iconName
   delete(pageTypeCopy.iconName)
   var parentPage = getNodeById(treeCopy, parentId),
       parentLevel = parentPage.level;
-  var newPage = { name: pageTypeCopy.name, pageType: pageTypeCopy, parentId: parentId, level: (parentLevel + 1), children: [], comments: [], collapsed: false, id: tempId};
+  var newPage = { name: pageTypeCopy.name, pageType: pageTypeCopy, parentId: parentId, level: (parentLevel + 1), children: [], comments: [], collapsed: false, state: 'active', id: tempId, uid: uid, section_id: sectionId, footer: false, newRecord: true};
   if(position == 'begining') {
     parentPage.children.unshift(newPage)
   } else {
@@ -15,32 +16,44 @@ function addPage(tree, pageType, parentId, position, tempId) {
   for(var index = 0; index < parentPage.children.length; index++){
     parentPage.children[index].position = index + 1
   }
-  return treeCopy
+  return sectionsCopy
 }
 
-function updatePageName(tree, id, name) {
-  var treeCopy = Object.assign({}, tree);
+function updatePageName(sections, id, sectionId, name) {
+  var sectionsCopy = Object.assign([], sections);
+  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
   var page = getNodeById(treeCopy, id);
   page.name = name;
-  return treeCopy
+  return sectionsCopy
 }
 
-function updatePageId(tree, id, newId) {
-  var treeCopy = Object.assign({}, tree);
+function updatePagePersitence(sections, id, sectionId) {
+  var sectionsCopy = Object.assign([], sections);
+  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
+  var page = getNodeById(treeCopy, id);
+  page.newRecord = false;
+  return sectionsCopy
+}
+
+function updatePageId(sections, id, sectionId, newId) {
+  var sectionsCopy = Object.assign([], sections);
+  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
   var page = getNodeById(treeCopy, id);
   page.id = newId;
-  return treeCopy
+  return sectionsCopy
 }
 
-function updateCollapse(tree, id) {
-  var treeCopy = Object.assign({}, tree);
+function updateCollapse(sections, id, sectionId) {
+  var sectionsCopy = Object.assign([], sections);
+  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
   var page = getNodeById(treeCopy, id);
   page.collapsed = !page.collapsed;
-  return treeCopy
+  return sectionsCopy
 }
 
-function updatePagePosition(tree, id, newParentId, position) {
-  var treeCopy = Object.assign({}, tree);
+function updatePagePosition(sections, id, sectionId, newParentId, position) {
+  var sectionsCopy = Object.assign([], sections);
+  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
   var page = getNodeById(treeCopy, id),
       newParentPage = getNodeById(treeCopy, newParentId),
       oldParentPage = getNodeById(treeCopy, page.parentId);
@@ -61,15 +74,82 @@ function updatePagePosition(tree, id, newParentId, position) {
     var parentNode = getNodeById(treeCopy, node.parentId);
     node.level = parentNode.level + 1
   })
-  return treeCopy
+  return sectionsCopy
 }
 
-function removePage(tree, id) {
-  var treeCopy = Object.assign({}, tree);
-  var page = getNodeById(treeCopy, id),
-      parentPage = getNodeById(treeCopy, page.parentId);
+function removePage(sections, id, sectionId) {
+  var sectionsCopy = Object.assign([], sections);
+  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
+  var page = getNodeById(treeCopy, id)
+  page.state = 'archived'
+  traverse(page, function(node) {
+    node.state = 'archived'
+  })
+  return sectionsCopy
+}
+
+function addPageComment(sections, id, sectionId, commenter, message, tempId) {
+  var sectionsCopy = Object.assign([], sections);
+  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
+  var page = getNodeById(treeCopy, id)
+  var newComment = { message: message, commenter: commenter, id: tempId, created_at: 'Just now', state: 'active' }
+  page.comments.push(newComment)
+  return sectionsCopy
+}
+
+function updateCommentId(sections, oldId, newId, sectionId, pageId) {
+  var sectionsCopy = Object.assign([], sections);
+  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
+  var page = getNodeById(treeCopy, pageId)
+  var comment = page.comments.filter(function(comment) { return comment.id == oldId })[0]
+  comment.id = newId
+  return sectionsCopy
+}
+
+function updatePageComment(sections, id, message, sectionId, pageId) {
+  var sectionsCopy = Object.assign([], sections);
+  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
+  var page = getNodeById(treeCopy, pageId)
+  var comment = page.comments.filter(function(comment) { return comment.id == id })[0]
+  comment.message = message
+  return sectionsCopy
+}
+
+function updatePageType(sections, id, sectionId, pageType) {
+  var sectionsCopy = Object.assign([], sections);
+  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
+  var page = getNodeById(treeCopy, id)
+  page.pageType = pageType
+  return sectionsCopy
+}
+
+function createNewSection(sections, id, sectionId, newSectionName, timeStamp) {
+  var sectionsCopy = Object.assign([], sections);
+  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
+  var page = getNodeById(treeCopy, id)
+  var parentPage = getNodeById(treeCopy, page.parentId)
+  page.parentId = null
+  page.position = 1
+  page.level = 0
+  traverse(page, function(node) {
+    if(node.parentId) {
+      var parentNode = getNodeById(treeCopy, node.parentId);
+      node.level = parentNode.level + 1
+    }
+    node.section_id = timeStamp
+  })
   parentPage.children.removeIf(function(elem, idx) { return elem.id == id });
-  return treeCopy
+  var newSection = { default: false, name: newSectionName, pageTree: page, id: timeStamp }
+  sectionsCopy.push(newSection);
+  return sectionsCopy
+}
+
+function deletePageComment(sections, commentId, pageId, sectionId) {
+  var sectionsCopy = Object.assign([], sections);
+  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
+  var page = getNodeById(treeCopy, pageId)
+  page.comments.removeIf(function(comment) { return comment.id == commentId })
+  return sectionsCopy
 }
 
 function traverse(tree, callback) {
@@ -83,6 +163,14 @@ function traverse(tree, callback) {
     callback(currentTree);
     currentTree = queue.dequeue();
   }
+}
+
+function updatePageState(sections, pageId, sectionId, state) {
+  var sectionsCopy = Object.assign([], sections);
+  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
+  var page = getNodeById(treeCopy, pageId)
+  page.state = state
+  return sectionsCopy
 }
 
 function getNodeById(tree, id){
@@ -114,4 +202,4 @@ function getNodeByPosition(tree, position){
 }
 
 
-export { addPage, removePage, updatePagePosition, updatePageName, traverse, updateCollapse, updatePageId }
+export { addPage, removePage, updatePagePosition, updatePageName, traverse, updateCollapse, updatePageId, addPageComment, updateCommentId, updatePageType, createNewSection, updatePageState, deletePageComment, updatePageComment, updatePagePersitence }

@@ -1,21 +1,26 @@
 import { connect } from 'react-redux'
-import { updatePagePosition, addNewPage, updateId } from '../actions'
+import { updatePagePosition, changeUpdatedAt, addNewPage, setMaxPageUid, updateId, setSaving } from '../actions'
 import DroppableLevelSupport from '../components/level_support'
 
 const mapStateToProps = (state) => {
-  return { sitemapId: state.id }
+  return { sitemapId: state.id, maxPageUid: state.maxPageUid }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onPageDrop: (id, newParentId, position) => {
-      dispatch(updatePagePosition(id, newParentId, position));
+    onPageDrop: (id, sectionId, newParentId, position) => {
+      dispatch(updatePagePosition(id,sectionId,  newParentId, position));
     },
-    onPageTypeDrop: (pageType, parentId, position, timeStamp) => {
-      dispatch(addNewPage(pageType, parentId, position, timeStamp));
+    onPageTypeDrop: (sectionId, pageType, parentId, position, timeStamp, maxPageUid) => {
+      dispatch(addNewPage(sectionId, pageType, parentId, position, timeStamp, maxPageUid + 1));
+      dispatch(setMaxPageUid(maxPageUid + 1))
     },
-    onPageIdUpdate: (id, newId) => {
-      dispatch(updateId(id, newId));
+    onPageIdUpdate: (id, sectionId, newId) => {
+      dispatch(updateId(id, sectionId, newId));
+    },
+    setSaving: (saving) => {
+      dispatch(setSaving(saving));
+      dispatch(changeUpdatedAt());
     }
   }
 }

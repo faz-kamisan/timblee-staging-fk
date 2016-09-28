@@ -10,6 +10,10 @@ body {
   background: $pageBackground;
   font-family: "proxima-nova",sans-serif;
   min-width: 1300px;
+  padding-top: 95px;
+  transition: padding-top .35s;
+  -moz-transition: padding-top .35s;
+  -webkit-transition: padding-top .35s;
 }
 
 .btn {
@@ -28,6 +32,10 @@ body {
   margin-bottom: 10px;
 }
 
+.m-t-5 {
+  margin-top: 5px;
+}
+
 .m-t-10 {
   margin-top: 10px;
 }
@@ -42,6 +50,10 @@ body {
 
 .p-r-0 {
   padding-right: 0;
+}
+
+.p-l-0 {
+  padding-left: 0;
 }
 
 .p-r-5 {
@@ -203,7 +215,7 @@ input:-webkit-autofill {
 .modal-content {
   @include box-shadow(0, 0, 0, $transparent);
   border: 1px solid $primaryLabel;
-  @include border-radius(10px);
+  @include border-radius(12px);
 }
 
 .modal-header {
@@ -271,7 +283,7 @@ input:-webkit-autofill {
   top: 10px;
   right: 5px;
   @include border-radius(6px);
-  z-index: 15;
+  z-index: 150;
 }
 
 .flash .close {
@@ -310,7 +322,7 @@ input#toggle + label {
   display: block;
   position: relative;
   text-indent: -5000px;
-  height: 33px;
+  height: 36px;
   width: 65px;
   border-radius: 60px;
   border: 2px solid #e4e6e7;
@@ -320,9 +332,9 @@ input#toggle + label:before {
   content: "";
   position: absolute;
   display: block;
-  height: 33px;
+  height: 32px;
   width: 33px;
-  top: -1px;
+  top: 0;
   left: 0;
   border-radius: 60px;
   background: $primaryPink;
@@ -337,7 +349,7 @@ input#toggle + label:after {
   display: block;
   height: 35px;
   width: 35px;
-  top: -3px;
+  top: -2px;
   left: -1px;
   border-radius: 60px;
   background: white;
@@ -354,7 +366,7 @@ input#toggle:checked + label:before {
 
 input#toggle:checked + label:after {
   left: 32px;
-  top: -2px;
+  top: -1.5px;
 }
 
 .logo-inner {
@@ -432,4 +444,81 @@ input#toggle:checked + label:after {
 .relative {
   position: relative;
   overflow: hidden;
+}
+
+.cus-icon-add {
+  width: 31px;
+  height: 31px;
+  background: $primaryPink;
+  position: relative;
+  @include border-radius(50%);
+  display: block;
+  padding: 0!important;
+  margin-top: 68px;
+  &:before {
+    content: ' ';
+    height: 12px;
+    width: 2px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: $primaryWhite;
+    margin: -6px 0 0 -1px;
+    z-index: 2;
+  }
+  &:after {
+    content: ' ';
+    height: 2px;
+    width: 12px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: $primaryWhite;
+    margin: -1px 0 0 -6px;
+    z-index: 2;
+  }
+}
+
+.add-sitemap-tab {
+  .cus-icon-add {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    &:before {
+      height: 8px;
+      margin-top: -4px;
+    }
+    &:after {
+      width: 8px;
+      margin-left: -4px;
+    }
+    &:hover {
+      background: $primaryWhite;
+      border: 1px solid $primaryPink;
+      &:before,
+      &:after {
+        background: $primaryPink;
+      }
+    }
+  }
+}
+
+.pink-text {
+  color: $primaryPink!important;
+}
+
+.go-back {
+  &:hover {
+    color: $primaryPink;
+  }
+}
+
+.btn-pink-hover {
+  color: $primaryWhite;
+  background: $primaryPink;
+  border-color: $primaryPink;
+  &:hover {
+    color: $primaryPink;
+    background: $transparent;
+  }
 }

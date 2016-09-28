@@ -6,7 +6,6 @@ import { findDOMNode } from 'react-dom';
 const sitemapTarget = {
   drop: function(props, monitor, component) {
     const item = monitor.getItem();
-    var _this = this;
     if (monitor.didDrop() || !(props.pageTree.id)) {
       return;
     }
@@ -16,26 +15,38 @@ const sitemapTarget = {
         method: 'put',
         dataType: 'JSON',
         data: { page: { parent_id: props.pageTree.parentId, position: (props.pageTree.position + 1) } },
-        error: (result, b, c, d) => {
+        error: (result) => {
           document.setFlash(result.responseText)
+        },
+        complete: (result) => {
+          props.setSaving(true)
+          setTimeout(function() {
+            props.setSaving(false)
+          }, 2000)
         }
       });
-      props.onPageDrop(item.id, props.pageTree.parentId, (props.pageTree.position));
+      props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.parentId, props.pageTree.position);
     } else if(item.type == 'PageType') {
       var timeStamp = new Date();
       $.ajax({
         url: '/pages/',
         method: 'post',
         dataType: 'JSON',
-        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: (props.pageTree.position + 1) } },
-        error: (result, b, c, d) => {
+        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: (props.pageTree.position + 1), section_id: props.pageTree.section_id } },
+        error: (result) => {
           document.setFlash(result.responseText)
         },
         success: (result) => {
-          props.onPageIdUpdate(timeStamp, result.id)
+          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id)
+        },
+        complete: (result) => {
+          props.setSaving(true)
+          setTimeout(function() {
+            props.setSaving(false)
+          }, 2000)
         }
       });
-      props.onPageTypeDrop(item, props.pageTree.parentId, (props.pageTree.position), timeStamp);
+      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp, props.maxPageUid);
     }
   }
 };
@@ -54,9 +65,12 @@ class PageTileTop extends React.Component {
     onPageDrop: PropTypes.func.isRequired,
     onPageTypeDrop: PropTypes.func.isRequired,
     onPageIdUpdate: PropTypes.func.isRequired,
+    setSaving: PropTypes.func.isRequired,
     pageTree: PropTypes.object.isRequired,
-    sitemapNumber: PropTypes.string.isRequired,
-    sitemapId: PropTypes.number.isRequired
+    sitemapNumber: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    sitemapId: PropTypes.number.isRequired,
+    maxPageUid: PropTypes.number.isRequired
   };
 
   componentWillReceiveProps(nextProps) {
@@ -65,9 +79,9 @@ class PageTileTop extends React.Component {
         var domNode = findDOMNode(this);
         $(domNode).addClass('drag-over' )
         if(this.props.pageTree.level == 1) {
-          $(domNode).parent('.page-tile').siblings('.level-support').addClass('drag-over')
+          $(domNode).parent('.page-tile').siblings('.level-support').addClass('again-drag-over')
         } else {
-          $(domNode).parent('.page-tile').siblings('.gutter').addClass('drag-over')
+          $(domNode).parent('.page-tile').siblings('.gutter').addClass('again-drag-over')
         }
       }
     }
@@ -78,9 +92,9 @@ class PageTileTop extends React.Component {
         var domNode = findDOMNode(this);
         $(domNode).removeClass('drag-over')
         if(this.props.pageTree.level == 1) {
-          $(domNode).parent('.page-tile').siblings('.level-support').removeClass('drag-over')
+          $(domNode).parent('.page-tile').siblings('.level-support').removeClass('again-drag-over')
         } else {
-          $(domNode).parent('.page-tile').siblings('.gutter').removeClass('drag-over')
+          $(domNode).parent('.page-tile').siblings('.gutter').removeClass('again-drag-over')
         }
       }
     }
@@ -92,7 +106,6 @@ class PageTileTop extends React.Component {
       <div className="tile-top">
         <h1 className="tile-name">
           <span className="tile-number">{this.props.sitemapNumber}</span>
-          { this.props.pageTree.name }
         </h1>
       </div>
     );

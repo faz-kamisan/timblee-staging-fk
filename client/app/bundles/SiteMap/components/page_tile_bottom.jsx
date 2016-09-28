@@ -17,24 +17,36 @@ const sitemapTarget = {
         data: { page: { parent_id: props.pageTree.id, position: 1 } },
         error: (result) => {
           document.setFlash(result.responseText)
+        },
+        complete: (result) => {
+          props.setSaving(true)
+          setTimeout(function() {
+            props.setSaving(false)
+          }, 2000)
         }
       });
-      props.onPageDrop(item.id, props.pageTree.id, 'begining');
+      props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.id, 'begining');
     } else if(item.type == 'PageType') {
       var timeStamp = new Date();
       $.ajax({
         url: '/pages/',
         method: 'post',
         dataType: 'JSON',
-        data: { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: item.name, position: 1 } },
+        data: { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: item.name, position: 1, section_id: props.pageTree.section_id } },
         error: (result) => {
           document.setFlash(result.responseText)
         },
         success: (result) => {
-          props.onPageIdUpdate(timeStamp, result.id)
+          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id)
+        },
+        complete: (result) => {
+          props.setSaving(true)
+          setTimeout(function() {
+            props.setSaving(false)
+          }, 2000)
         }
       });
-      props.onPageTypeDrop(item, props.pageTree.id, 'begining', timeStamp);
+      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
     }
   }
 };
@@ -53,34 +65,36 @@ class PageTileBottom extends React.Component {
     onPageDrop: PropTypes.func.isRequired,
     onPageTypeDrop: PropTypes.func.isRequired,
     onPageIdUpdate: PropTypes.func.isRequired,
+    setSaving: PropTypes.func.isRequired,
     pageTree: PropTypes.object.isRequired,
-    sitemapId: PropTypes.number.isRequired
+    sitemapId: PropTypes.number.isRequired,
+    maxPageUid: PropTypes.number.isRequired
   };
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
       var domNode = findDOMNode(this);
-      $(domNode).addClass('drag-over' )
+      $(domNode).addClass('drag-over' );
+      $(domNode).parent('.page-tile').siblings('.gutter').addClass('again-2-drag-over');
     }
 
     if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
-      // You can use this as leave handler
       var domNode = findDOMNode(this);
-      $(domNode).removeClass('drag-over')
-    }
-
-    if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
-      // You can be more specific and track enter/leave
-      // shallowly, not including nested targets
+      $(domNode).removeClass('drag-over');
+      $(domNode).parent('.page-tile').siblings('.gutter').removeClass('again-2-drag-over');
     }
   }
 
   render() {
     const connectDropTarget = this.props.connectDropTarget
+    var formattedUid = (this.props.pageTree.uid.toString().length < 3 ? (('000' + this.props.pageTree.uid).substr(-3)) : this.props.pageTree.uid )
     return connectDropTarget(
       <div className="tile-bottom">
         <span className="tile-id">
-          ID: 001
+          { (this.props.pageTree.comments.length > 0) &&
+            <span className="dummy-state"></span>
+          }
+          ID: { formattedUid }
         </span>
       </div>
     );

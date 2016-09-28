@@ -7,7 +7,7 @@ var ModalFix = function(options) {
 
 ModalFix.prototype.fixScroll = function() {
   var _this = this;
-  this.modalBtn.on('click', function() {
+  $('body').on('click', '.btn-modal-open', function() {
     setTimeout(function() {
       _this.target.addClass(_this.targetClass);
     }, _this.delayTime);

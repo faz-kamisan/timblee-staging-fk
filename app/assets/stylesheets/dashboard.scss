@@ -3,6 +3,39 @@
   line-height: 18px;
 }
 
+.more-options {
+  position: absolute;
+  bottom: 16px;
+  right: 15px;
+  z-index: 1;
+  width: 28px;
+  height: 28px;
+  background: $transparent;
+  @include border-radius(50%);
+  border: 1px solid #DADBDD;
+  display: inline-block;
+  text-align: center;
+  span {
+    width: 3px;
+    height: 3px;
+    @include border-radius(50%);
+    background: #DADBDD;
+    display: inline-block;
+    margin: 0 -.5px;
+    position: relative;
+    top: .5px;
+    &:first-child {
+      margin-left: .5px;
+    }
+  }
+  &:hover {
+    border-color: $primaryPink;
+    span {
+      background: $primaryPink;
+    }
+  }
+}
+
 .user-dashboard {
   padding-top: 100px;
   padding-bottom: 100px;
@@ -77,6 +110,7 @@
     margin: 0;
     padding: 45px 0 5px 0;
     font-weight: 400;
+    word-wrap: break-word;
   }
   .updated {
     font-size: 10px;
@@ -106,38 +140,6 @@
       width: 28px;
       height: 28px;
       @include border-radius(50%);
-    }
-  }
-  .more-options {
-    position: absolute;
-    bottom: 16px;
-    right: 15px;
-    z-index: 1;
-    width: 28px;
-    height: 28px;
-    background: $transparent;
-    @include border-radius(50%);
-    border: 1px solid #DADBDD;
-    display: inline-block;
-    text-align: center;
-    span {
-      width: 3px;
-      height: 3px;
-      @include border-radius(50%);
-      background: #DADBDD;
-      display: inline-block;
-      margin: 0 -.5px;
-      position: relative;
-      top: .5px;
-      &:first-child {
-        margin-left: .5px;
-      }
-    }
-    &:hover {
-      border-color: $primaryPink;
-      span {
-        background: $primaryPink;
-      }
     }
   }
   .actions-overlay {
@@ -175,7 +177,7 @@
       margin: -1px 6px 0 0;
     }
     li + li {
-      margin-top: 25px;
+      margin-top: 13px;
     }
   }
   .other-users {
@@ -408,4 +410,9 @@
   .modal-dialog {
     @include alignCenter(-310px, -264px);
   }
+}
+
+#sitemap_name {
+  width: 100%;
+  border: 0;
 }

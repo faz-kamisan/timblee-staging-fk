@@ -11,6 +11,11 @@ en:
       destroy:
         success: Folder destroyed successfully
         failure: Couldn't delete folder
+    guests:
+      not_found: Can't find guest
+      create:
+        success: Guest created successfully
+        failure: Couldn't create guest
     sitemaps:
       not_found: Can't find sitemap
       create:
@@ -19,9 +24,28 @@ en:
       update:
         success: Sitemap updated successfully
         failure: Couldn't update sitemap
+        folder : "%{sitemap_name} successfully moved under %{folder_name}"
       destroy:
         success: Sitemap destroyed successfully
         failure: Couldn't delete sitemap
+      rename:
+        success: Sitemap renamed successfully
+        failure: Whoops! Looks like you have another sitemap with the same name so we couldn't rename the sitemap. Try another name.
+        blank:   Sitename can't be blank
+      duplicate:
+        success: Duplicate Sitemap created successfully
+        failure: Couldn't duplicate sitemap
+    comments:
+      not_found: Can't find comment
+      create:
+        success: Comment created successfully
+        failure: Couldn't create comment
+      update:
+        success: Comment updated successfully
+        failure: Couldn't update comment
+      destroy:
+        success: Comment destroyed successfully
+        failure: Couldn't delete comment
     pages:
       not_found: Can't find page
       create:
@@ -33,7 +57,25 @@ en:
       destroy:
         success: Page destroyed successfully
         failure: Couldn't delete page
+    sections:
+      not_found: Can't find section
+      create:
+        success: Section created successfully
+        failure: Couldn't create section
+      update:
+        success: Section updated successfully
+        failure: Couldn't update section
+      destroy:
+        success: Section destroyed successfully
+        failure: Couldn't delete section
     users:
+      update_avatar:
+        success: Avatar Updated successfully
+        failure: Avatar couldn't be updated
+      update_password:
+        success: Password Updated successfully
+        failure: Could Not Update Password
+
       confirmations:
         show:
           confirmation_token_invalid: 'Confirmation Token is Invalid'
@@ -61,9 +103,11 @@ en:
           plan_not_found: Plan not found
           failure: Something went wrong.
 
-      send_destroy_request_to_superadmin:
-          success: "We've received your request to delete your account. We'll shortly send you an email to confirm, and then, your account will be gone forever :("
-
+      delete_account:
+        success: "We've received your request to delete your account. We'll shortly send you an email to confirm, and then, your account will be gone forever :("
+      update:
+        success: Business updated successfully.
+        failure: Business cannot be updated.
     admin:
       users:
         destroy:
@@ -83,6 +127,8 @@ en:
           success: Reset link sent successfully
           failure: Couldn't sent reset link
 
+    pro_plan_success: "You are now on pro plan with %{users} users"
+
   activerecord:
       errors:
         models:
@@ -99,7 +145,7 @@ en:
 
   devise:
     invitations:
-      invitation_token_invalid: "Either the invitation token provided is invalid or Admin has revoked your invitation!"
+      invitation_token_invalid: "Your invitation has been revoked by an administrator of this account. Please ask them to invite you again."
 
   errors:
     messages:

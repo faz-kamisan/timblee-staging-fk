@@ -5,23 +5,35 @@
         <% if sitemap.comments.exists? %>
           <span class='state'></span>
         <% end %>
-        <a href=<%= '/sitemaps/' + sitemap.id.to_s %> class='sitemap-link'>
-          <h2 class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></h2>
-          <p class="updated">Last updated <%= pretty_time(sitemap.updated_at) %></p>
-        </a>
+        <div class="saved-sitemap-name">
+          <a href=<%= '/sitemaps/' + sitemap.id.to_s %> class='sitemap-link'>
+            <h2 class="card-name saved-card-name">
+              <%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %>
+            </h2>
+            <p class="updated">Last updated <%= pretty_time(sitemap.updated_at) %></p>
+          </a>
+        </div>
+        <div class="edit-sitemap-name hide">
+          <span class='sitemap-link'>
+            <h2 class="card-name edit-card-name">
+
+              <%= form_for sitemap, url: sitemap_rename_path(sitemap), html: { remote: true, method: :patch } do |f| %>
+                <%= f.text_field :name, disabled: false, class: 'editable-input sitemap-rename-input', 'data-original-value' => f.object.name %>
+              <% end %>
+            </h2>
+            <p class="updated">Last updated <%= pretty_time(sitemap.updated_at) %></p>
+          </span>
+        </div>
         <div class="actions">
           <ul class="card-users clearfix">
-            <li>
-              <%= image_tag('card-user.jpg') %>
-            </li>
-            <li>
-              <%= image_tag('card-user.jpg') %>
-            </li>
-            <li>
-              <%= image_tag('card-user.jpg') %>
-            </li>
+          <% users = sitemap.active_users %>
+            <% users.sample(3).each do |user| %>
+              <li>
+                <%= image_tag(user.avatar) %>
+              </li>
+            <% end %>
           </ul>
-          <span class="other-users">+12</span>
+          <span class="other-users"><%= "+#{users.count - 3}" if users.count > 3 %></span>
         </div>
         <a href="javascript:void(0);" class="more-options">
           <span></span>
@@ -31,22 +43,48 @@
         <div class="actions-overlay" data-id=<%= sitemap.id %>>
           <ul class="p-0 m-0">
             <li>
-              <a href="javascript:void(0);" class="action">
+              <%= form_for sitemap, url: sitemap_duplicate_path(sitemap), html: { remote: true, method: :post } do |f| %>
+                <a href="javascript:void(0);" class="action duplicate-sitemap-link">
+                  <span class="icon icon-wand"></span>
+                  <span class="link-text">Duplicate</span>
+                </a>
+              <% end %>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="action rename-sitemap-link">
                 <span class="icon icon-edit-circle"></span>
                 <span class="link-text">Rename</span>
               </a>
             </li>
             <li>
-              <a href="javascript:void(0);" class="action">
-                <span class="icon icon-invite-female">
-                  <span class="path1"></span>
-                  <span class="path2"></span>
-                  <span class="path3"></span>
-                  <span class="path4"></span>
-                  <span class="path5"></span>
-                </span>
-                <span class="link-text">Invite a team member</span>
-              </a>
+              <% if current_business.is_starter_plan? && !current_business.in_trial_period? %>
+                <a class="action invite-user-modal-link invite-error-link">
+                  <span class="icon icon-invite-female">
+                    <span class="path1"></span>
+                    <span class="path2"></span>
+                    <span class="path3"></span>
+                    <span class="path4"></span>
+                    <span class="path5"></span>
+                  </span>
+                  <span class="link-text">
+                    Invite a team member
+                  </span>
+                </a>
+              <% else %>
+                <% url = current_business.is_pro_plan? ? businesses_subscription_path : users_bulk_invitation_path %>
+                <a data-toggle="modal" class="action invite-user-modal-link invite-link" data-url='<%= url %>'>
+                  <span class="icon icon-invite-female">
+                    <span class="path1"></span>
+                    <span class="path2"></span>
+                    <span class="path3"></span>
+                    <span class="path4"></span>
+                    <span class="path5"></span>
+                  </span>
+                  <span class="link-text">
+                    Invite a team member
+                  </span>
+                </a>
+              <% end %>
             </li>
             <li>
               <a href="javascript:void(0);" class="action">
@@ -55,7 +93,7 @@
               </a>
             </li>
             <li>
-              <%= link_to "#delete-sitemap-modal", 'data-toggle': 'modal', class: 'action delete-sitemap-modal-link', 'data-url': sitemap_path(sitemap), 'data-name': sitemap.name do %>
+              <%= link_to "javascript:void(0))", class: 'action delete-sitemap-modal-link', 'data-url': sitemap_path(sitemap), 'data-name': sitemap.name do %>
                 <span class="icon icon-delete-circle"></span>
                 <span class="link-text">Delete</span>
               <% end %>

@@ -1,0 +1,26 @@
+<div class='pull-right'>
+  Invoice No: <%= @event.id %>
+</div>
+<h2>TIMBLEE</h2>
+<br />
+
+<div class='col-md-3'>
+  <b>Customer:</b> <%= @user.full_name %><br />
+  <b>email:</b> <%= @user.email %>
+</div>
+<br />
+<hr />
+<table>
+  <tr>
+    <th class='col-md-offset-3 col-md-3'>Subscription</th>
+    <th class='col-md-3'>Amount Refunded</th>
+  </tr>
+  <tr>
+    <td class='col-md-offset-3 col-md-3'>Timblee PRO</td>
+    <td class='col-md-3'>$<%= @amount_refunded %></td>
+  </tr>
+</table>
+<hr />
+<div class='pull-right'>
+  <b>Total:</b>   $<%= @amount_refunded %>
+</div>

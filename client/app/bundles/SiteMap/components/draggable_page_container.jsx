@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 import { ItemTypes } from '../dnd/constants';
 import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
@@ -9,7 +10,7 @@ const sitemapSource = {
     return {id: props.pageTree.id, parentId: props.pageTree.parentId, type: 'page', pageTree: props.pageTree, sitemapNumber: props.sitemapNumber};
   },
   canDrag(props, monitor) {
-    return(props.pageTree.level != 0)
+    return((!props.publicShare) && (props.pageTree.level != 0))
   }
 };
 
@@ -32,8 +33,21 @@ class DraggedPageContainer extends React.Component {
     sitemapId: PropTypes.number.isRequired
   };
 
+
   componentDidMount() {
     this.props.connectDragPreview(getEmptyImage(), {});
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.isDragging && nextProps.isDragging) {
+      var domNode = findDOMNode(this);
+      $(domNode).parent('.child-page').addClass('dragging')
+    }
+    if (this.props.isDragging && !nextProps.isDragging) {
+      // You can use this as leave handler
+      var domNode = findDOMNode(this);
+      $(domNode).parent('.child-page').removeClass('dragging')
+    }
   }
 
   render() {
@@ -41,8 +55,8 @@ class DraggedPageContainer extends React.Component {
     const isDragging = this.props.isDragging;
     var _this = this;
     var children;
-    if (this.props.pageTree.children != null) {
-      children = this.props.pageTree.children.map(function(pageTree, index) {
+    if (this.props.pageTree.children.filter(function(page) { return(page.state != 'archived') }) != null) {
+      children = this.props.pageTree.children.filter(function(page) { return(page.state != 'archived') }).map(function(pageTree, index) {
         if(pageTree.level == 1) {
           var sitemapNumber = (index + 1).toString() + '.0';
         } else if(pageTree.level == 2) {
@@ -51,8 +65,8 @@ class DraggedPageContainer extends React.Component {
           var sitemapNumber = _this.props.sitemapNumber + '.' + (index + 1)
         }
         return (
-          <div className='test' key={pageTree.parentId.toString() + pageTree.position.toString()}>
-            <DraggablePageContainer pageTree={pageTree} onPageDrop={_this.props.onPageDrop} onPageTypeDrop={_this.props.onPageTypeDrop} sitemapId={_this.props.sitemapId} sitemapNumber={sitemapNumber} />
+          <div className='child-page' key={pageTree.id}>
+            <DraggablePageContainer pageTree={pageTree} onPageDrop={_this.props.onPageDrop} onPageTypeDrop={_this.props.onPageTypeDrop} sitemapId={_this.props.sitemapId} sitemapNumber={sitemapNumber}  publicShare={_this.props.publicShare} />
           </div>
         )
       });
@@ -60,7 +74,7 @@ class DraggedPageContainer extends React.Component {
     // TODO: Have to fix passing of collapse separately.
     return connectDragSource(
       <div className={'page-container-wrapper' + (isDragging ? ' dragging' : '')} >
-        <PageContainer pageTree={this.props.pageTree} children={children} sitemapNumber={this.props.sitemapNumber} />
+        <PageContainer pageTree={this.props.pageTree} children={children} sitemapNumber={this.props.sitemapNumber}  leftSidebarExpanded={this.props.leftSidebarExpanded} />
       </div>
     );
   }

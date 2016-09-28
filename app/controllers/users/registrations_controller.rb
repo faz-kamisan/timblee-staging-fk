@@ -44,6 +44,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def configure_account_update_params
     devise_parameter_sanitizer.for(:account_update) << :full_name
+    devise_parameter_sanitizer.for(:account_update) << :avatar
     devise_parameter_sanitizer.for(:account_update) << :notify_by_email
   end
 
@@ -56,4 +57,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
       redirect_to settings_users_path, alert: 'Need to verify email before updating'
     end
   end
+
+  private
+
+    def after_sign_up_path_for(resource)
+      home_intro_path
+    end
 end

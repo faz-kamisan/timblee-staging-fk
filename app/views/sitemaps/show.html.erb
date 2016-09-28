@@ -1,1 +1,6 @@
 <%= react_component("SitemapApp", props: @sitemap_props, prerender: false) %>
+<%= render 'users/invite_user_modal' %>
+<%= render 'users/sitemap_share_preview_modal' %>
+<%= render 'users/invite_user_preview_modal' %>
+<%= javascript_include_tag('invitations', 'team') %>
+<%= stylesheet_link_tag 'canvas_body' %>

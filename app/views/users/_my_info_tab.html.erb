@@ -63,6 +63,14 @@
             <a href="javascript:void(0);" class="btn btn-grey btn-edit">Edit</a>
           </div>
           <div class="save">
+            <a href="javascript:void(0);" class="">
+              <span class="icon-eye-open">
+                <%= image_tag('eye.svg', class: 'eye') %>
+              </span>
+              <span class="icon-eye-close hide">
+                <%= image_tag('eye-close.svg', class: 'eye') %>
+              </span>
+            </a>
             <button type="submit" class="btn btn-pink btn-border">Save</button>
             <a href="javascript:void(0);" class="btn btn-grey btn-cancel">Cancel</a>
           </div>
@@ -72,26 +80,65 @@
   <% end %>
 
   <!-- Static Avatar For Now -->
-  <form class="settings-form">
+  <%= form_for current_user, url: update_avatar_users_path, html: { class: 'settings-form', method: :patch, multipart: true } do |f| %>
     <div class="form-group">
-      <div class="row">
+      <div class="row row-avatar-save">
         <div class="col-xs-9">
           <label>Your image</label>
           <div class="clearfix m-t-15">
-            <%= image_tag('profile-image.png', class: 'profile-image pull-left profile-image-lg') %>
+            <%= image_tag(current_user.avatar, class: 'profile-image pull-left profile-image-lg') %>
             <div class="right-text pull-right">
               <p class="pull-right">Helps you better collaborate with clients &amp; co-workers by making your notifications and comments more personal since it will include your image. We highly recommend it.</p>
             </div>
           </div>
         </div>
         <div class="col-xs-3 text-right edit-info">
-          <div class="edit">
-            <a href="javascript:void(0);" class="btn btn-grey">Edit</a>
+          <div class>
+            <a href="javascript:void(0);" class="btn btn-grey btn-edit-avatar">Edit</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row row-avatar-edit hide">
+        <div class="col-xs-6">
+          <label>Your image</label>
+          <div class="clearfix m-t-15">
+            <figure class="display-image">
+              <%= f.file_field :avatar , class: 'avatar-field'%>
+              <%= image_tag(current_user.avatar, class: 'preview-profile-image profile-image pull-left profile-image-lg', 'data-original-value': current_user.avatar) %>
+              <span class="pink-image-overlay"></span>
+            </figure>
+            <div class="right-text pull-right">
+              <p class="pull-right">
+                Upload a square PNG or JPEG image at least 400 x 400px in size. We’ll resize it automatically  and it’ll appear sharp everywhere. If you upload a non-square image, It’ll come out squished! &nbsp; <%= image_tag('surprise.png') %>
+              </p>
+            </div>
+            <div class="">
+              <span class="avatar-text">
+                Avatars <span class="icon-caret"></span>
+              </span>
+              <ul class="clearfix avatars-list">
+                <li>
+                  <% (1..14).each do |index| %>
+                    <label for='avatar<%=index%>' class='avatar-label'>
+                      <input type='radio' id='avatar<%=index%>' value='avatar_<%=index%>.svg' name='default_avatar' class='default_avatars' />
+                        <%= image_tag('avatar_' + index.to_s + '.svg', class: "profile-image-lg pull-left profile-image avatar-link") %>
+                    </label>
+                  <%end%>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-6 text-right edit-info">
+          <div>
+            <button type="submit" class="btn btn-pink">Save</button>
+            <a href="javascript:void(0);" class="btn btn-grey btn-cancel-edit-avatar">Cancel</a>
           </div>
         </div>
       </div>
     </div>
-  </form>
+  <% end %>
   <!-- Static Avatar For Now -->
 
   <div class="notification">
@@ -110,4 +157,6 @@
     </div>
   </div>
 </div>
+<%= javascript_include_tag('my_info') %>
+
 <!-- My Info Tab End -->

@@ -1,0 +1,8 @@
+<p>Hello <%= @user.full_name %></p>
+
+<p>Your notifications</p>
+<% @notifications.each do |notification| %>
+  <p><%= notification.message %></p>
+<% end %>
+Thanks and Regards
+Timblee

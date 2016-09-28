@@ -17,10 +17,12 @@
 //= require jquery-ui
 //= require bootstrap.min
 //= require tag-it.min
+//= require jquery.watermark.min
 //= require Queue
 //= require flash
 //= require array_decorator
 //= require document_decorator
+//= require date_decorator
 //= require editFields
 //= require twemoji-picker
 //= require select2.min
@@ -29,3 +31,13 @@
 //= require settings
 //= require constants
 //= require modal_fix
+//= require toggle_class
+//= require jquery.flexslider-min
+//= require script
+//= require animated-bar
+
+$(window).on('load resize', function() {
+  if($('.first-page-droppable').length) {
+    $('.first-page-droppable').css('left', $('.page-container.level-0 > .page-tile').offset().left);
+  }
+});

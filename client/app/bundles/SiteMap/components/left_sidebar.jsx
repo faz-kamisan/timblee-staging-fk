@@ -1,15 +1,20 @@
 import React, { PropTypes } from 'react';
 import DraggablePageType from './draggable_page_type'
+import { traverse } from '../helpers/tree_helper'
 
 class LeftSidebar extends React.Component {
   static propTypes = {
-    pageTypes: PropTypes.array.isRequired
+    pageTypes: PropTypes.array.isRequired,
+    sections: PropTypes.array.isRequired,
+    footerPages: PropTypes.array.isRequired,
+    updatedAt: PropTypes.string.isRequired,
+    leftSidebarExpanded: PropTypes.bool.isRequired,
+    toggleLeftSideBarExpanded: PropTypes.func.isRequired
   };
 
   constructor(props) {
     super(props)
     this.state = {
-      expand: false,
       searchQuery: ''
     }
     this.toogleExpand = this.toogleExpand.bind(this)
@@ -17,35 +22,60 @@ class LeftSidebar extends React.Component {
   }
 
   toogleExpand() {
-    this.setState({expand: !this.state.expand});
+    this.props.toggleLeftSideBarExpanded(!this.props.leftSidebarExpanded)
   }
 
   handleSearch(e) {
     this.setState({searchQuery: e.target.value})
   }
 
+  getPageCount() {
+    var pageCount = 0
+    this.props.sections.forEach(function(section, index) {
+      traverse(section.pageTree, function(page) {
+        if(page.state != 'archived') {
+          pageCount ++
+        }
+      })
+    })
+
+    this.props.footerPages.forEach(function(page, index) {
+      if(page.state != 'archived') {
+        pageCount ++
+      }
+    })
+    return pageCount
+  }
+
   render() {
     var _this = this;
     var filteredPageTypes = this.props.pageTypes.filter(function(pageType) { return(pageType.name.toLowerCase().indexOf(_this.state.searchQuery.toLowerCase()) !== -1) })
     var pageTypeComponents = filteredPageTypes.map(function(pageType, index) {
-      return <li key={index}><DraggablePageType name={pageType.name} iconName={pageType.icon_name} id={pageType.id} /></li>
+      return <li key={pageType.id}><DraggablePageType name={pageType.name} iconName={pageType.icon_name} id={pageType.id} /></li>
     })
     return (
-      <div className={'sitemap-left-sidebar' + (this.state.expand ? '' : ' expand-false')}>
+      <div className={'sitemap-left-sidebar' + (this.props.leftSidebarExpanded ? '' : ' expand-false')}>
         {
-          this.state.expand ?
+          this.props.leftSidebarExpanded ?
           <div>
             <div className="close-left-bar">
-              <span className="cursor" onClick={this.toogleExpand}>
-                <span className="caret-left">
-                  <i className="icon-caret"></i>
+              <div className="row">
+                <span className="cursor col-xs-4 p-r-0" onClick={this.toogleExpand}>
+                  <span className="caret-left">
+                    <i className="icon-caret"></i>
+                  </span>
+                  Hide Sidebar
                 </span>
-                Hide Sidebar
-              </span>
+                <span className="last-updated col-xs-8 p-r-0 text-right">
+                  {this.getPageCount()} {(this.getPageCount() == 1) ? 'Page' : 'Pages'} | Last updated {this.props.updatedAt}
+                </span>
+              </div>
             </div>
             <form className="search-page-type">
-              <input type="search" placeholder="Page Type" onChange={this.handleSearch} />
-              <i className="icon-search"></i>
+              <label htmlFor="page-type">
+                <i className="icon-search"></i>
+              </label>
+              <input type="search" id="page-type" name="page-type" placeholder="Page Type" onChange={this.handleSearch} />
             </form>
             <ul className="page-type-list clearfix">
               {pageTypeComponents}

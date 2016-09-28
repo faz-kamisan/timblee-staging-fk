@@ -22,4 +22,10 @@ class ApplicationController < ActionController::Base
     new_user_session_path
   end
 
+  def current_guest
+    if(session[:guest_user_id])
+      Guest.find_by(id: session[:guest_user_id])
+    end
+  end
+
 end
