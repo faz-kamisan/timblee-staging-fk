@@ -45,7 +45,7 @@ class Business < ActiveRecord::Base
   end
 
   def allow_downgrade_to_starter?
-    users.count == 1 && sitemaps.count <= 3
+    in_trial_period? || (users.count == 1 && sitemaps.count <= 3)
   end
 
   def monthly_charge

@@ -29,6 +29,7 @@ class UsersController < ApplicationController
       if current_user.update(avatar_update_params)
         redirect_to settings_users_path, notice: t('.success', scope: :flash)
       else
+        Rails.logger.info "#{current_user.errors.full_messages}"
         redirect_to settings_users_path, alert: t('.failure', scope: :flash)
       end
     else

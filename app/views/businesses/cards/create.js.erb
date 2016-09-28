@@ -1,4 +1,6 @@
 $("div.flash-message").html("<%==j render partial: 'shared/flash_message' %>");
+$("ul.notifications-listing").replaceWith("<%==j render 'shared/notifications' %>");
+
 $('#pro-plan-modal').modal('hide');
 <% if flash[:notice].present? %>
   $('#invite-user-modal').find('form').attr('action', '<%= businesses_subscription_path %>');

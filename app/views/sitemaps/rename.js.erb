@@ -1,4 +1,6 @@
 $("div.flash-message").html("<%==j render partial: 'shared/flash_message' %>");
+$("ul.notifications-listing").replaceWith("<%==j render 'shared/notifications' %>");
+
 $('div.sitemap-container[data-id=<%= @sitemap.id %>]').find('.saved-sitemap-name').removeClass('hide');
 $('div.sitemap-container[data-id=<%= @sitemap.id %>]').find('.edit-sitemap-name').addClass('hide');
 $('div.sitemap-container[data-id=<%= @sitemap.id %>]').find('.saved-card-name').html('<%= @sitemap.reload.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %>')

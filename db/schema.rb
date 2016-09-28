@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160926065831) do
+ActiveRecord::Schema.define(version: 20160927112649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 20160926065831) do
 
   create_table "guests", force: :cascade do |t|
     t.string   "full_name"
-    t.string   "logo"
+    t.string   "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -64,9 +64,10 @@ ActiveRecord::Schema.define(version: 20160926065831) do
     t.string   "message"
     t.string   "link_to"
     t.integer  "user_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.boolean  "email_sent", default: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.boolean  "email_sent",   default: false
+    t.integer  "recipient_id"
   end
 
   create_table "page_types", force: :cascade do |t|
@@ -167,6 +168,7 @@ ActiveRecord::Schema.define(version: 20160926065831) do
     t.string   "unconfirmed_email"
     t.boolean  "notify_by_email",        default: true
     t.datetime "deleted_at"
+    t.boolean  "is_super_admin",         default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
