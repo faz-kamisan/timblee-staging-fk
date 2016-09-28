@@ -28,7 +28,7 @@ class Users::PasswordsController < Devise::PasswordsController
 
   # The path used after sending reset password instructions
   def after_sending_reset_password_instructions_path_for(resource_name)
-    new_user_session_path(modal: true)
+    new_user_session_path(modal: true, email: resource.email)
   end
 
   def restrict_users_with_invitation_not_accepted
