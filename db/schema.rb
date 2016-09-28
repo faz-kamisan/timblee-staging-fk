@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160923103827) do
+ActiveRecord::Schema.define(version: 20160927112649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 20160923103827) do
 
   create_table "guests", force: :cascade do |t|
     t.string   "full_name"
-    t.string   "email"
+    t.string   "logo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -64,9 +64,10 @@ ActiveRecord::Schema.define(version: 20160923103827) do
     t.string   "message"
     t.string   "link_to"
     t.integer  "user_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.boolean  "email_sent", default: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.boolean  "email_sent",   default: false
+    t.integer  "recipient_id"
   end
 
   create_table "page_types", force: :cascade do |t|
@@ -87,6 +88,7 @@ ActiveRecord::Schema.define(version: 20160923103827) do
     t.integer  "uid"
     t.integer  "section_id"
     t.string   "state",        default: "active"
+    t.boolean  "footer",       default: false
   end
 
   create_table "plans", force: :cascade do |t|

@@ -78,12 +78,10 @@
         </a>
       </div>
       <div class="notifications-tab pull-right header-links">
-        <div class="user-dropdown pull-right text-right">
-          <span class="truncate">
-            <span class="icon-bell"></span>
-          </span>
-          <%= render 'shared/notifications'%>
-        </div>
+        <a href="javascript:void(0);">
+          <span class="icon-bell"></span>
+        </a>
+        <%= render 'shared/notifications'%>
       </div>
       <div class="add-sitemap-tab pull-right header-links new-sitemap">
         <%= form_for Sitemap.new do |f| %>

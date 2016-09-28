@@ -43,6 +43,21 @@
   }
 }
 
+.dropdown-helper {
+  position: absolute;
+  min-width: 295px;
+  background: $primaryWhite;
+  @include box-shadow(0, 0, 3px, rgba(0, 0, 0, 0.35));
+  top: 30px;
+  right: -12px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  z-index: 3;
+  visibility: hidden;
+  opacity: 0;
+  @include animate(.35s);
+}
+
 .user-dropdown {
   position: relative;
   font-size: 16px;
@@ -50,18 +65,8 @@
   color: #535353;
   padding: 2px 0 10px 0;
   .user-settings {
-    position: absolute;
     min-width: 295px;
-    background: $primaryWhite;
-    @include box-shadow(0, 0, 3px, rgba(0, 0, 0, 0.35));
-    top: 30px;
-    right: -12px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    z-index: 3;
-    visibility: hidden;
-    opacity: 0;
-    @include animate(.35s);
+    @extend .dropdown-helper;
     a {
       display: block;
       height: 82px;
@@ -221,4 +226,53 @@
   :-moz-placeholder { color: red; color: $primaryLink; opacity: 1; font-size: 10px; }
   ::-moz-placeholder { color: red; color: $primaryLink; opacity: 1; font-size: 10px; }
   :-ms-input-placeholder { color: red; color: $primaryLink; opacity: 1; font-size: 10px; }
+}
+
+.notifications-tab {
+  position: relative;
+  .notifications-listing {
+    @extend .dropdown-helper;
+    width: 382px;
+    max-height: 455px;
+    overflow-y: auto;
+    left: 50%;
+    margin-left: -191px;
+  }
+  &:hover {
+    .notifications-listing {
+      visibility: visible;
+      opacity: 1;
+      top: 40px;
+    }
+  }
+  .notification-item {
+    padding: 22px 34px 22px 22px;
+    min-height: 80px;
+    + .notification-item {
+      border-top: solid 1px #eeeeee 
+    }
+  }
+  .notification-image {
+    width: 32px;
+    margin-right: 18px;
+  }
+  .profile-image {
+    margin-top: 1px;
+  }
+  .notification-content {
+    width: 276px;
+  }
+  .notification-message,
+  .notification-time {
+    display: block;
+  }
+  .notification-message {
+    color: #62717f;
+    @extend .font-12;
+  }
+  .notification-time {
+    font-size: 10px;
+    color: #d6d8da;
+    line-height: 16px;
+  }
 }
