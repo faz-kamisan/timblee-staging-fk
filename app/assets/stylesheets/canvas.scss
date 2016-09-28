@@ -613,7 +613,7 @@
 }
 
 .page-container.level-0 {
-  transition: .35s;
+  /*transition: .35s;*/
 }
 
 .sitemap-left-sidebar {
@@ -2447,6 +2447,12 @@
       color: $primaryPink;
     }
   }
+  &.modal-view {
+    color: #6a717f;
+    a {
+      color: #6a717f;
+    }
+  }
 }
 
 #comment-delete-modal {
@@ -2711,10 +2717,6 @@
     right: 25px;
     min-width: 215px;
   }
-}
-
-.sitemap-footer {
-  display: none;
 }
 
 @media (max-width: 1300px) {

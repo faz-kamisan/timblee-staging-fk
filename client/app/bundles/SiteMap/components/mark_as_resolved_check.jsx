@@ -14,7 +14,7 @@ class MarkAsResolvedCheck extends React.Component {
 
   updatePageState(state) {
     var _this = this
-    this.props.updatePageState(this.props.page.id, (this.props.page.sectionId || this.props.page.section_id), state);
+    this.props.updatePageState(this.props.page.id, this.props.page.footer, (this.props.page.sectionId || this.props.page.section_id), state);
     $.ajax({
       url: '/pages/' + this.props.page.id,
       method: 'put',

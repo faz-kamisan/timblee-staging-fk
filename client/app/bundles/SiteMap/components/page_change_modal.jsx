@@ -43,7 +43,7 @@ class PageChangeModal extends React.Component {
     var filteredPageTypes = this.props.pageTypes.filter(function(pageType) { return(pageType.name.toLowerCase().indexOf(_this.state.searchQuery.toLowerCase()) !== -1) })
     var pageTypeComponents = filteredPageTypes.map(function(pageType, index) {
       return(
-        <li key={index} onClick={ function(e) { _this.setPageType(pageType) } }>
+        <li key={pageType.id} onClick={ function(e) { _this.setPageType(pageType) } }>
           <PageType name={pageType.name} iconName={pageType.icon_name} id={pageType.id} />
         </li>
       )

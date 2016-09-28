@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setSaving, changeUpdatedAt, updatePageComment, updateGeneralComment } from '../actions'
+import { setSaving, changeUpdatedAt, updatePageComment, updateFooterPageComment, updateGeneralComment } from '../actions'
 import CommentEditor from '../components/comment_editor'
 
 const mapStateToProps = (state) => {
@@ -8,9 +8,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateComment: (id, commentableId, commentableType, message, sectionId) => {
+    updateComment: (id, commentableId, commentableType, footer, message, sectionId) => {
       if(commentableType == 'Page') {
-        dispatch(updatePageComment(id, commentableId, message, sectionId));
+        if(footer) {
+          dispatch(updateFooterPageComment(id, commentableId, message));
+        } else {
+          dispatch(updatePageComment(id, commentableId, message, sectionId));
+        }
       } else if(commentableType == 'Sitemap') {
         dispatch(updateGeneralComment(id, message));
       }

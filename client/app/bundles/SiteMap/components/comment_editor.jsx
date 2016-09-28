@@ -11,6 +11,7 @@ class CommentEditor extends React.Component {
     updateComment: PropTypes.func.isRequired,
     setSaving: PropTypes.func.isRequired,
     editMessage: PropTypes.func.isRequired,
+    footer: PropTypes.bool.isRequired,
     business: PropTypes.object.isRequired
   };
 
@@ -29,7 +30,7 @@ class CommentEditor extends React.Component {
   handleUpdateComment(e) {
     if(this.state.commentMessage.trim() != this.props.message.trim()) {
       var _this = this;
-      this.props.updateComment(this.props.id, this.props.commentableId, this.props.commentableType, this.state.commentMessage, this.props.sectionId)
+      this.props.updateComment(this.props.id, this.props.commentableId, this.props.commentableType, this.props.footer, this.state.commentMessage, this.props.sectionId)
       $.ajax({
         url: '/comments/' + this.props.id,
         method: 'put',

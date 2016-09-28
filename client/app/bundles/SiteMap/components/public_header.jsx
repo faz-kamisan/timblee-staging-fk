@@ -5,6 +5,8 @@ class PublicHeader extends React.Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
+    sections: PropTypes.array.isRequired,
+    footerPages: PropTypes.array.isRequired,
     state: PropTypes.string.isRequired,
     updatedAt: PropTypes.string.isRequired
   };
@@ -47,8 +49,16 @@ class PublicHeader extends React.Component {
     var pageCount = 0
     this.props.sections.forEach(function(section, index) {
       traverse(section.pageTree, function(page) {
-        pageCount ++
+        if(page.state != 'archived') {
+          pageCount ++
+        }
       })
+    })
+
+    this.props.footerPages.forEach(function(page, index) {
+      if(page.state != 'archived') {
+        pageCount ++
+      }
     })
     return pageCount
   }

@@ -68,9 +68,9 @@ class Footer extends React.Component {
 
   render() {
     const connectDropTarget = this.props.connectDropTarget
-    var renderedFooterPages = this.props.footerPages.map(function(footerPage, index) {
+    var renderedFooterPages = this.props.footerPages.filter(function(page) { return(page.state != 'archived') }).map(function(footerPage, index) {
       return(
-        <li key={index} className='footer-page'>
+        <li key={footerPage.id} className='footer-page'>
           <ConnectedPageTile pageTree={footerPage} collapsed={true} childrenLength={0} name={footerPage.name} />
         </li>
       )

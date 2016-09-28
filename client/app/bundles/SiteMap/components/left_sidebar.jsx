@@ -6,6 +6,7 @@ class LeftSidebar extends React.Component {
   static propTypes = {
     pageTypes: PropTypes.array.isRequired,
     sections: PropTypes.array.isRequired,
+    footerPages: PropTypes.array.isRequired,
     updatedAt: PropTypes.string.isRequired,
     leftSidebarExpanded: PropTypes.bool.isRequired,
     toggleLeftSideBarExpanded: PropTypes.func.isRequired
@@ -32,8 +33,16 @@ class LeftSidebar extends React.Component {
     var pageCount = 0
     this.props.sections.forEach(function(section, index) {
       traverse(section.pageTree, function(page) {
-        pageCount ++
+        if(page.state != 'archived') {
+          pageCount ++
+        }
       })
+    })
+
+    this.props.footerPages.forEach(function(page, index) {
+      if(page.state != 'archived') {
+        pageCount ++
+      }
     })
     return pageCount
   }
@@ -42,7 +51,7 @@ class LeftSidebar extends React.Component {
     var _this = this;
     var filteredPageTypes = this.props.pageTypes.filter(function(pageType) { return(pageType.name.toLowerCase().indexOf(_this.state.searchQuery.toLowerCase()) !== -1) })
     var pageTypeComponents = filteredPageTypes.map(function(pageType, index) {
-      return <li key={index}><DraggablePageType name={pageType.name} iconName={pageType.icon_name} id={pageType.id} /></li>
+      return <li key={pageType.id}><DraggablePageType name={pageType.name} iconName={pageType.icon_name} id={pageType.id} /></li>
     })
     return (
       <div className={'sitemap-left-sidebar' + (this.props.leftSidebarExpanded ? '' : ' expand-false')}>

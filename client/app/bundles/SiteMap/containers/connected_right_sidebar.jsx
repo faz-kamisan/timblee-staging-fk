@@ -8,7 +8,8 @@ const mapStateToProps = (state) => {
     sections: state.sections,
     business: state.business,
     name: state.name,
-    publicShare: state.publicShare
+    publicShare: state.publicShare,
+    footerPages: state.footerPages
   }
 }
 

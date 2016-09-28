@@ -49,16 +49,16 @@ class PageTile extends React.Component {
           }, 2000)
         }
       });
-      this.props.onNameChange(this.props.pageTree.id, this.props.pageTree.section_id, name);
+      this.props.onNameChange(this.props.pageTree.id, this.props.pageTree.footer, this.props.pageTree.section_id, name);
 
       if(this.props.pageTree.newRecord) {
-        this.props.updatePagePersitence(this.props.pageTree.id, this.props.pageTree.section_id)
+        this.props.updatePagePersitence(this.props.pageTree.id, this.props.pageTree.footer, this.props.pageTree.section_id)
       } else {
         this.setState({ nameChangeDisabled: true })
       }
     } else {
       if(this.props.pageTree.newRecord) {
-        this.props.updatePagePersitence(this.props.pageTree.id, this.props.pageTree.section_id)
+        this.props.updatePagePersitence(this.props.pageTree.id, this.props.pageTree.footer, this.props.pageTree.section_id)
       } else {
         this.setState({name: this.state.originalName, nameChangeDisabled: true })
       }
@@ -145,7 +145,7 @@ class PageTile extends React.Component {
               </a>
             }
             {
-              (this.props.pageTree.parentId != null) &&
+              ((this.props.pageTree.parentId != null) || (this.props.pageTree.footer)) &&
               <a href="#delete-page-modal" className="icon-page-delete" onClick={this.setSelectedPage} data-toggle='modal'>
                 <span className="card-tooltip">Delete Page</span>
               </a>
@@ -198,7 +198,7 @@ class PageTile extends React.Component {
               </a>
             }
             {
-              (this.props.pageTree.parentId != null) &&
+              ((this.props.pageTree.parentId != null) || (this.props.pageTree.footer)) &&
               <a href="#delete-page-modal" className="icon-page-delete" onClick={this.setSelectedPage} data-toggle='modal'>
                 <span className="card-tooltip">Delete Page</span>
               </a>

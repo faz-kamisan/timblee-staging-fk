@@ -16,7 +16,7 @@ class PageCommentsModal extends React.Component {
     var _this = this;
     if(this.props.pageTree.comments) {
       var renderedPageComments = this.props.pageTree.comments.map(function(comment, index) {
-        return <li key={index}><ConnectedComment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} editable={(_this.props.pageTree.state == 'active')} commentableId={_this.props.pageTree.id} commentableType='Page' sectionId={_this.props.pageTree.section_id} commentableName={ _this.props.pageTree.name } modalView={true} /></li>
+        return <li key={comment.id}><ConnectedComment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} editable={(_this.props.pageTree.state == 'active')} commentableId={_this.props.pageTree.id} commentableType='Page' sectionId={_this.props.pageTree.section_id} commentableName={ _this.props.pageTree.name } modalView={true} footer={_this.props.pageTree.footer} /></li>
       })
     }
     return (
@@ -41,7 +41,7 @@ class PageCommentsModal extends React.Component {
                   {this.props.pageTree && renderedPageComments}
                 </ul>
                 { (this.props.pageTree.state == 'active') &&
-                  <ConnectedNewComment commentableId={this.props.pageTree.id} commentableType='Page' sectionId={this.props.pageTree.section_id} />
+                  <ConnectedNewComment commentableId={this.props.pageTree.id} commentableType='Page' footer={this.props.pageTree.footer} sectionId={this.props.pageTree.section_id} />
                 }
               </div>
             </div>
