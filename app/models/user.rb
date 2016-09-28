@@ -3,9 +3,9 @@ class User < ActiveRecord::Base
 
   acts_as_paranoid
 
+  attr_accessor :admin_access
+
   belongs_to :business, autosave: true
-
-
   has_many :sitemap_invites, dependent: :destroy
   has_many :notifications, foreign_key: :recipient_id, dependent: :destroy
   has_many :shared_sitemaps, through: :sitemap_invites, source: :sitemap
@@ -111,6 +111,10 @@ class User < ActiveRecord::Base
         errors.add(:base, I18n.t('errors.users.owner_role_update'))
         false
       end
+    end
+
+    def active_for_authentication?
+      admin_access || super
     end
 
     def email_required?

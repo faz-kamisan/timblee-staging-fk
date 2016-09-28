@@ -10,6 +10,7 @@ class SuperAdmin::MainController < ApplicationController
 
   def impersonate
     user = @business.owner
+    user.admin_access = true
     sign_in(user, bypass: true)
     redirect_to root_path
   end
