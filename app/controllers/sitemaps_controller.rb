@@ -52,29 +52,25 @@ class SitemapsController < ApplicationController
   def update
     if @sitemap.update(sitemap_params)
       Notification.delay.sitemap_status_update_notification(@sitemap, current_user) if sitemap_params.has_key?('state')
-
+      flash_message = sitemap_params.include?(:folder_id) ? t('.folder', scope: :flash, sitemap_name: @sitemap.name, folder_name: @sitemap.folder.name) : t('.success', scope: :flash)
       respond_to do |format|
         format.js do
-          flash.now[:success] = t('.success', scope: :flash)
+          flash.now[:success] = flash_message
           render 'shared/show_flash'
         end
         format.json do
-          render json: { success: t('.success', scope: :flash) }, status: 200
+          render json: { success: flash_message }, status: 200
         end
       end
     else
-      if sitemap_params.include?(:name) && @sitemap.name.present?
-        flash = t('sitemaps.rename.failure', scope: :flash) || t('.failure', scope: :flash)
-      else
-        flash = t('.blank', scope: :flash) || t('.failure', scope: :flash)
-      end
+      flash_message = sitemap_params.include?(:name) ? set_flash_message_for_rename_failure : t('.failure', scope: :flash)
       respond_to do |format|
         format.js do
-          flash.now[:alert] = flash
+          flash.now[:alert] = flash_message
           render 'shared/show_flash', status: 422
         end
         format.json do
-          render json: flash , status: 422
+          render json: flash_message , status: 422
         end
       end
     end
@@ -84,11 +80,7 @@ class SitemapsController < ApplicationController
     if @sitemap.update(rename_params)
       flash.now[:success] = t('.success', scope: :flash)
     else
-      if @sitemap.name.present?
-        flash.now[:alert] = t('.failure', scope: :flash)
-      else
-        flash.now[:alert] = t('.blank', scope: :flash)
-      end
+      flash.now[:alert] = set_flash_message_for_rename_failure
     end
   end
 
@@ -103,6 +95,15 @@ class SitemapsController < ApplicationController
   end
 
   private
+
+    def set_flash_message_for_rename_failure
+      if @sitemap.name.present?
+        t('sitemaps.rename.failure', scope: :flash)
+      else
+        t('sitemaps.rename.blank', scope: :flash)
+      end
+    end
+
     def fetch_sitemap
       unless @sitemap = current_business.sitemaps.find_by(id: params[:id])
         respond_to do |format|
