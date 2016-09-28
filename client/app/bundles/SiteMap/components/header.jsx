@@ -157,7 +157,7 @@ class Header extends React.Component {
                 </a>
               }
               {(otherUsersLength == 1) &&
-                <a className='other-users cursor'>
+                <a className='other-users'>
                   + { otherUsersLength } other
                 </a>
               }
