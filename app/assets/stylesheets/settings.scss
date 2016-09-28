@@ -421,7 +421,7 @@ ul.tagit li.tagit-choice-editable {
 }
 
 
-#invite-email-preview-modal {
+#sitemap-share-preview-modal, #invite-user-preview-modal {
   .modal-body {
     @include border-radius(10px);
     padding: 120px 80px 0 80px;

@@ -3,6 +3,7 @@ export const ADD_NEW_PAGE = 'ADD_NEW_PAGE'
 export const REMOVE_PAGE = 'REMOVE_PAGE'
 export const UPDATE_PAGE_POSITION = 'UPDATE_PAGE_POSITION'
 export const UPDATE_PAGE_NAME = 'UPDATE_PAGE_NAME'
+export const UPDATE_PAGE_PERSISTENCE = 'UPDATE_PAGE_PERSISTENCE'
 export const CHANGE_COLLAPSE = 'CHANGE_COLLAPSE'
 export const UPDATE_ID = 'UPDATE_ID'
 export const CHANGE_STATE = 'CHANGE_STATE'
@@ -43,6 +44,10 @@ export function removePage(id, sectionId) {
 
 export function updatePageName(id, sectionId, name) {
   return { type: UPDATE_PAGE_NAME, id, sectionId, name }
+}
+
+export function updatePagePersitence(id, sectionId) {
+  return { type: UPDATE_PAGE_PERSISTENCE, id, sectionId }
 }
 
 export function updatePagePosition(id, sectionId, newParentId, position) {

@@ -92,7 +92,7 @@ class InviteUserBox extends React.Component {
           </div>
         }
         <div className="bottom-btns text-center">
-          <a href="javascript:void(0);" className="btn btn-grey">Here's what they'll see</a>
+          <a href="#sitemap-share-preview-modal" data-dismiss="modal" data-toggle='modal' className="btn btn-grey btn-modal-open">Here's what they'll see</a>
           <button className='btn btn-pink-hover' onClick={this.handleEmailShare}>Send the email</button>
         </div>
       </div>

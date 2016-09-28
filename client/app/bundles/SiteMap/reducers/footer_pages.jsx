@@ -1,7 +1,7 @@
 import { ADD_NEW_FOOTER_PAGE, UPDATE_FOOTER_PAGE_ID, UPDATE_GENERAL_COMMENT, DELETE_GENERAL_COMMENT } from '../actions/index'
 function addFooterPage(footerPages, pageType, tempId, uid) {
   var footerPagesCopy = Object.assign([], footerPages)
-  var newFooterPage = { name: pageType.name, footer: true, pageType: pageType, children: [], comments: [], collapsed: false, state: 'active', id: tempId, uid: uid};
+  var newFooterPage = { name: pageType.name, footer: true, pageType: pageType, children: [], comments: [], collapsed: false, state: 'active', id: tempId, uid: uid, newRecord: true};
   footerPagesCopy.push(newFooterPage)
   return footerPagesCopy
 }
