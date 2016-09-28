@@ -19,13 +19,13 @@ class SuperAdmin::MainController < ApplicationController
 
     def check_user_is_super_admin
       unless current_user.is_super_admin
-        redirect_to root_path, error: 'You have to be a super admin for this.'
+        redirect_to home_dashboard_path, alert: 'You have to be a super admin for this.'
       end
     end
 
     def fetch_business
       unless @business = Business.find_by(id: params[:business_id])
-        redirect_to admin_dashboard_path, error: 'Business not found'
+        redirect_to admin_dashboard_path, alert: 'Business not found'
       end
     end
 end
