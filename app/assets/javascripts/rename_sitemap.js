@@ -1,6 +1,7 @@
 var RenameSitemap = function(options) {
   this.renameSitemapLink = options.renameSitemapLink;
   this.sitemapNameInputField = options.sitemapNameInputField;
+  this.flag = true;
 };
 
 RenameSitemap.prototype.bindEvents = function() {
@@ -13,12 +14,16 @@ RenameSitemap.prototype.bindEvents = function() {
   });
 
   _this.sitemapNameInputField.focusout(function (e) {
-    $(this).closest('form').submit();
+    if(_this.flag) {
+      $(this).closest('form').submit();
+    } else {
+      _this.flag = true;
+    }
   });
 
   _this.sitemapNameInputField.keypress(function (e) {
     if(e.which == 13) {
-      e.preventDefault();
+      _this.flag = false;
     }
   });
 };
