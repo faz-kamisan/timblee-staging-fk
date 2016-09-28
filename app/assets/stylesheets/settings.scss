@@ -66,6 +66,7 @@
       color: $primaryGrey;
       font-weight: 700;
       @extend .font-12;
+      margin: 0;
       text-transform: uppercase;
       border: 0;
       @include border-radius(0);
@@ -86,12 +87,14 @@
         }
       }
     }
-    .animated-bar {
+    .animated-bar-rails {
       position: absolute;
       bottom: 0;
       height: 3px;
       background: $primaryPink;
       margin: 0;
+      left: 0;
+      width: 49px;
     }
   }
 }

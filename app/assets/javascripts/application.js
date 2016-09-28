@@ -32,7 +32,10 @@
 //= require toggle_class
 //= require jquery.flexslider-min
 //= require script
+//= require animated-bar
 
 $(window).on('load resize', function() {
-  $('.first-page-droppable').css('left', $('.page-container.level-0 > .page-tile').offset().left);
+  if($('.first-page-droppable').length) {
+    $('.first-page-droppable').css('left', $('.page-container.level-0 > .page-tile').offset().left);
+  }
 });

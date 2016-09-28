@@ -67205,7 +67205,7 @@
 	      var renderedCommentTabs = CommentTabs.map(function (commentTab, index) {
 	        return _react2.default.createElement(
 	          'li',
-	          { key: index, className: 'comment-tab' + (_this.state.currentTab == commentTab ? ' active' : ''), onClick: function onClick(e) {
+	          { key: index, className: 'comment-tab animated-tab' + (_this.state.currentTab == commentTab ? ' active' : ''), onClick: function onClick(e) {
 	              _this.handleTabClick(e, commentTab);
 	            } },
 	          commentTab

@@ -2675,6 +2675,7 @@
 .toggle-comments {
   position: absolute;
   right: 103px;
+  cursor: pointer;
   span:not(.icon-comment) {
     display: block;
     text-transform: uppercase;
@@ -2687,12 +2688,16 @@
     top: 6px;
     left: -5px;
   }
+  &:hover {
+    .btn-toggle-comments {
+      color: $primaryPink;  
+    }    
+  }
 }
 
 .btn-toggle-comments {
   color: #56626f;
   font-size: 12px;
-  &:hover,
   &:focus {
     color: $primaryPink;
   }

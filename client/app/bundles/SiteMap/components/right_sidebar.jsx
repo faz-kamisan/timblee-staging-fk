@@ -64,7 +64,7 @@ class RightSidebar extends React.Component {
     })
 
     var renderedCommentTabs = CommentTabs.map(function(commentTab, index) {
-      return (<li key={index} className={ 'comment-tab' + (_this.state.currentTab == commentTab ? ' active' : '') } onClick={function(e) { _this.handleTabClick(e, commentTab) } }>{commentTab}</li>)
+      return (<li key={index} className={ 'comment-tab animated-tab' + (_this.state.currentTab == commentTab ? ' active' : '') } onClick={function(e) { _this.handleTabClick(e, commentTab) } }>{commentTab}</li>)
     })
 
     return (
