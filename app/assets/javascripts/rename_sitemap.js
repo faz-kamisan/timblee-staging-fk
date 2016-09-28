@@ -12,10 +12,15 @@ RenameSitemap.prototype.bindEvents = function() {
     $(this).closest('.site-card').find(_this.sitemapNameInputField).focus();
   });
 
-  _this.sitemapNameInputField.focusout(function () {
+  _this.sitemapNameInputField.focusout(function (e) {
     $(this).closest('form').submit();
   });
 
+  _this.sitemapNameInputField.keypress(function (e) {
+    if(e.which == 13) {
+      e.preventDefault();
+    }
+  });
 };
 
 $(function() {
