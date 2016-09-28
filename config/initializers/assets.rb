@@ -32,6 +32,7 @@ Rails.application.config.assets.precompile += %w(
   jump_to.js
   rename_sitemap.js
   duplicate.js
+  hotjar.js
 )
 # Add client/assets/ folders to asset pipeline's search path.
 # If you do not want to move existing images and fonts from your Rails app
