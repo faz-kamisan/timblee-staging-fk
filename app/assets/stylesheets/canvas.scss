@@ -595,9 +595,9 @@
   position: fixed;
   width: 200px;
   height: 87px;
+  @include border-radius(5px);
   background: transparent;
   border: 1px dashed $primaryGrey;
-  left: 825px;
   text-align: center;
   transition: .35s;
   &.drag-over {
@@ -2407,4 +2407,168 @@
   .btn-grey {
     text-transform: capitalize;
   }
+}
+
+#sitemap-share-modal {
+  .m-b-20 {
+    margin-bottom: 20px;
+  }
+  .modal-header {
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      cursor: pointer;
+      font-size: 12px;
+      color: #a3acb5;
+      font-weight: 700;
+      display: inline-block;
+      text-align: center;
+      width: 90px;
+      &:hover {
+        color: $primaryPink;
+      }
+      &.active {
+        color: $primaryPink; 
+      }
+    }
+  }
+  .modal-body {
+    padding: 35px 159px;
+    background: #f9fafc;
+    p {
+      color: #62717f;
+      @extend .font-14;
+      &.m-b-2 {
+        margin-bottom: 2px;
+      }
+    }
+  }
+  #sitemap-public-share-url {
+    height: 33px;
+    width: 212px;
+    background: $transparent;
+    color: $primaryPink;
+    font-size: 10px;
+    line-height: 31px;
+    padding: 0 12px;
+    float: left;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    border: 1px solid $primaryPink;
+    border-right: 0;
+    white-space: pre;
+    span {
+      max-width: 200px;
+      white-space: pre;
+      display: block;
+    }
+  }
+  .copy-link-button {
+    width: 88px;
+    float: left;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+    font-size: 10px;
+    color: $primaryWhite;
+    background: $primaryPink;
+    min-width: 1px;
+    height: 33px;
+    line-height: 31px;
+    padding-top: 0;
+    padding-bottom: 0;
+    &:hover {
+      color: $primaryPink;
+      background: $primaryWhite;
+      border-color: $primaryPink;
+    }
+  }
+  .demo-share {
+    display: inline-block;
+    color: #62717f;
+    @extend .font-12;
+    margin-top: 10px;
+    text-decoration: underline;
+    &:hover {
+      color: $primaryPink;
+    }
+  }
+  .for-email {
+    padding: 30px 78px 40px 78px;
+    background: #f9fafc;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    p {
+      color: #62717f;
+      @extend .font-14;
+    }
+    .comment-input {
+      position: relative;
+      textarea {
+        border-color: #d9d9d9!important;
+        padding-bottom: 35px;
+      }
+    }
+    .add,
+    .cancel {
+      color: #262b30;
+      font-weight: 600;
+      &:hover {
+        color: $primaryPink;
+      }
+    }
+    .or {
+      color: #62717f;
+    }
+    .add-remove-comment {
+      bottom: 35px;
+    }
+  }
+  .btn-pink-hover {
+    height: 33px;
+    line-height: 31px;
+    padding-top: 0;
+    padding-bottom: 0;
+    min-width: 150px;
+    margin-left: 20px;
+  }
+  .bottom-btns {
+    .btn {
+      text-transform: none;
+      font-size: 12px;
+    }
+  }
+}
+
+.toggle-comments {
+  position: absolute;
+  right: 103px;
+  span:not(.icon-comment) {
+    display: block;
+    text-transform: uppercase;
+    text-align: right;
+    font-size: 8px;
+  }
+  .icon-comment {
+    font-size: 18px;
+    position: relative;
+    top: 6px;
+    left: -5px;
+  }
+}
+
+.btn-toggle-comments {
+  color: #56626f;
+  font-size: 12px;
+  &:hover,
+  &:focus {
+    color: $primaryPink;
+  }
+  &.active {
+    color: $primaryWhite;
+  }
+  width: 75px;
 }

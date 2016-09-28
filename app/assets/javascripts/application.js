@@ -32,3 +32,7 @@
 //= require toggle_class
 //= require jquery.flexslider-min
 //= require script
+
+$(window).on('load resize', function() {
+  $('.first-page-droppable').css('left', $('.page-container.level-0 > .page-tile').offset().left);
+});

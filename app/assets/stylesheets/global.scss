@@ -215,7 +215,7 @@ input:-webkit-autofill {
 .modal-content {
   @include box-shadow(0, 0, 0, $transparent);
   border: 1px solid $primaryLabel;
-  @include border-radius(10px);
+  @include border-radius(12px);
 }
 
 .modal-header {
@@ -505,4 +505,20 @@ input#toggle:checked + label:after {
 
 .pink-text {
   color: $primaryPink!important;
+}
+
+.go-back {
+  &:hover {
+    color: $primaryPink;
+  }
+}
+
+.btn-pink-hover {
+  color: $primaryWhite;
+  background: $primaryPink;
+  border-color: $primaryPink;
+  &:hover {
+    color: $primaryPink;
+    background: $transparent;
+  }
 }

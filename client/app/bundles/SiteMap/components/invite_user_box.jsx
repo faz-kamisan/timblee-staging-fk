@@ -73,7 +73,6 @@ class InviteUserBox extends React.Component {
     return (
       <div>
         <div key='upper'>
-          <label>Emails</label>
           <input type='text' name='emails' id='emails' ref='emails'></input>
         </div>
         { !this.state.messageEditorActivated &&
@@ -83,14 +82,19 @@ class InviteUserBox extends React.Component {
           </div>
         }
         { this.state.messageEditorActivated &&
-          <div key='lower'>
+          <div key='lower' className="comment-input">
             <textarea value={this.state.customMessage} placeholder='Include an optional personal message.' onChange={this.handleOnCustomMessageChange}></textarea>
-            <a onClick={this.deactivateMessageEditor}>Add message</a>
-            <span> or</span>
-            <a onClick={this.cancelMessageEditing}> cancel</a>
+            <div className="add-remove-comment">
+              <a className="cursor add" onClick={this.deactivateMessageEditor}>Add message</a>
+              <span className="or"> or</span>
+              <a className="cursor cancel" onClick={this.cancelMessageEditing}> cancel</a>
+            </div>
           </div>
         }
-        <button className='btn' onClick={this.handleEmailShare}>Send Email</button>
+        <div className="bottom-btns text-center">
+          <a href="javascript:void(0);" className="btn btn-grey">Here's what they'll see</a>
+          <button className='btn btn-pink-hover' onClick={this.handleEmailShare}>Send the email</button>
+        </div>
       </div>
     );
   }

@@ -51796,11 +51796,17 @@
 	            ),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'pull-left' },
+	              { className: 'toggle-comments' },
 	              _react2.default.createElement(
 	                'a',
-	                { href: 'javascript:void(0)', className: 'btn btn-toggle-comments', onClick: this.toggleCommentState },
-	                'Comments'
+	                { href: 'javascript:void(0)', className: 'btn-toggle-comments', onClick: this.toggleCommentState },
+	                _react2.default.createElement('span', { className: 'icon-comment' }),
+	                'Comments',
+	                _react2.default.createElement(
+	                  'span',
+	                  null,
+	                  'click to toggle'
+	                )
 	              )
 	            )
 	          )
@@ -52218,14 +52224,14 @@
 	                null,
 	                _react2.default.createElement(
 	                  'li',
-	                  { onClick: function onClick(e) {
+	                  { className: _this.state.urlView ? ' active' : '', onClick: function onClick(e) {
 	                      _this.setState({ urlView: true });
 	                    } },
 	                  'URL'
 	                ),
 	                _react2.default.createElement(
 	                  'li',
-	                  { onClick: function onClick(e) {
+	                  { className: _this.state.urlView == false ? ' active' : '', onClick: function onClick(e) {
 	                      _this.setState({ urlView: false });
 	                    } },
 	                  'Email'
@@ -52234,13 +52240,13 @@
 	            ),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'modal-body' },
+	              { className: 'modal-body' + (!_this.state.urlView ? 'hide' : '') },
 	              this.state.urlView && _react2.default.createElement(
 	                'div',
 	                null,
 	                _react2.default.createElement(
 	                  'p',
-	                  null,
+	                  { className: 'm-b-2' },
 	                  'Here\'s your sharing link.'
 	                ),
 	                '  ',
@@ -52251,26 +52257,47 @@
 	                ),
 	                _react2.default.createElement(
 	                  'p',
-	                  null,
+	                  { className: 'm-b-20' },
 	                  'Anyone with the link can view the sitemap.'
 	                ),
 	                _react2.default.createElement(
-	                  'span',
-	                  { id: 'sitemap-public-share-url' },
-	                  this.props.publicShareUrl
-	                ),
-	                _react2.default.createElement(
-	                  'button',
-	                  { className: 'btn copy-link-button', onClick: this.copyUrl },
-	                  this.state.copied ? 'Copied' : 'Copy'
+	                  'div',
+	                  { className: 'public-url clearfix' },
+	                  _react2.default.createElement(
+	                    'span',
+	                    { id: 'sitemap-public-share-url' },
+	                    _react2.default.createElement(
+	                      'span',
+	                      { className: 'truncate' },
+	                      this.props.publicShareUrl
+	                    )
+	                  ),
+	                  _react2.default.createElement(
+	                    'button',
+	                    { className: 'btn copy-link-button', onClick: this.copyUrl },
+	                    this.state.copied ? 'Copied' : 'Copy'
+	                  )
 	                ),
 	                _react2.default.createElement(
 	                  'a',
-	                  { href: this.props.publicShareUrl, target: '_blank' },
+	                  { className: 'demo-share', href: this.props.publicShareUrl, target: '_blank' },
 	                  'Here\'s what they\'ll see.'
 	                )
-	              ),
-	              !this.state.urlView && _react2.default.createElement(_invite_user_box2.default, { sitemapId: this.props.sitemapId })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'for-email' + (_this.state.urlView ? ' hide' : '') },
+	              !this.state.urlView && _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                  'p',
+	                  null,
+	                  'Enter the emails of the people you want to invite to view the sitemap. We\'ll send them a beautiful email with the link. They\'ll also be able to add comments. To invite co-workers who can edit things, go to the sitemap editor.'
+	                ),
+	                _react2.default.createElement(_invite_user_box2.default, { sitemapId: this.props.sitemapId })
+	              )
 	            )
 	          )
 	        )
@@ -52404,11 +52431,6 @@
 	        _react2.default.createElement(
 	          'div',
 	          { key: 'upper' },
-	          _react2.default.createElement(
-	            'label',
-	            null,
-	            'Emails'
-	          ),
 	          _react2.default.createElement('input', { type: 'text', name: 'emails', id: 'emails', ref: 'emails' })
 	        ),
 	        !this.state.messageEditorActivated && _react2.default.createElement(
@@ -52427,28 +52449,41 @@
 	        ),
 	        this.state.messageEditorActivated && _react2.default.createElement(
 	          'div',
-	          { key: 'lower' },
+	          { key: 'lower', className: 'comment-input' },
 	          _react2.default.createElement('textarea', { value: this.state.customMessage, placeholder: 'Include an optional personal message.', onChange: this.handleOnCustomMessageChange }),
 	          _react2.default.createElement(
-	            'a',
-	            { onClick: this.deactivateMessageEditor },
-	            'Add message'
-	          ),
-	          _react2.default.createElement(
-	            'span',
-	            null,
-	            ' or'
-	          ),
-	          _react2.default.createElement(
-	            'a',
-	            { onClick: this.cancelMessageEditing },
-	            ' cancel'
+	            'div',
+	            { className: 'add-remove-comment' },
+	            _react2.default.createElement(
+	              'a',
+	              { className: 'cursor add', onClick: this.deactivateMessageEditor },
+	              'Add message'
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'or' },
+	              ' or'
+	            ),
+	            _react2.default.createElement(
+	              'a',
+	              { className: 'cursor cancel', onClick: this.cancelMessageEditing },
+	              ' cancel'
+	            )
 	          )
 	        ),
 	        _react2.default.createElement(
-	          'button',
-	          { className: 'btn', onClick: this.handleEmailShare },
-	          'Send Email'
+	          'div',
+	          { className: 'bottom-btns text-center' },
+	          _react2.default.createElement(
+	            'a',
+	            { href: 'javascript:void(0);', className: 'btn btn-grey' },
+	            'Here\'s what they\'ll see'
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'btn btn-pink-hover', onClick: this.handleEmailShare },
+	            'Send the email'
+	          )
 	        )
 	      );
 	    }

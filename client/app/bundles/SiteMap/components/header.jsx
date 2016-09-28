@@ -124,8 +124,12 @@ class Header extends React.Component {
             <div className="pull-left">
               <a href="#sitemap-share-modal" data-toggle="modal" className="btn btn-share" onClick={this.handleSitemapShareClick}>Share</a>
             </div>
-            <div className="pull-left">
-              <a href="javascript:void(0)" className="btn btn-toggle-comments" onClick={this.toggleCommentState}>Comments</a>
+            <div className="toggle-comments">
+              <a href="javascript:void(0)" className="btn-toggle-comments" onClick={this.toggleCommentState}>
+                <span className="icon-comment"></span>
+                Comments
+                <span>click to toggle</span>
+              </a>
             </div>
           </div>
         </div>

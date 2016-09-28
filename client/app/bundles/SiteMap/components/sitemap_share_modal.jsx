@@ -47,24 +47,33 @@ class SitemapShareModal extends React.Component {
               </button>
               <h4 className="modal-title">Share Your Sitemap</h4>
               <ul>
-                <li onClick={ function(e) { _this.setState({urlView: true }) } }>URL</li>
-                <li onClick={ function(e) { _this.setState({urlView: false }) } }>Email</li>
+                <li className={ _this.state.urlView ? ' active' : '' } onClick={ function(e) { _this.setState({urlView: true }) } }>URL</li>
+                <li className={ _this.state.urlView == false ? ' active' : '' } onClick={ function(e) { _this.setState({urlView: false }) } }>Email</li>
               </ul>
             </div>
-            <div className="modal-body">
+            <div className={ 'modal-body' + (!_this.state.urlView ? 'hide' : '') }>
               {
                 this.state.urlView &&
                 <div>
-                  <p>Here's your sharing link.</p>  <span className='hide'>'</span>
-                  <p>Anyone with the link can view the sitemap.</p>
-                  <span id='sitemap-public-share-url'>{ this.props.publicShareUrl }</span>
-                  <button className='btn copy-link-button' onClick={this.copyUrl}>{this.state.copied ? 'Copied' : 'Copy'}</button>
-                  <a href={this.props.publicShareUrl} target='_blank'>Here's what they'll see.</a>
+                  <p className="m-b-2">Here's your sharing link.</p>  <span className='hide'>'</span>
+                  <p className="m-b-20">Anyone with the link can view the sitemap.</p>
+                  <div className="public-url clearfix">
+                    <span id='sitemap-public-share-url'>
+                      <span className="truncate">{ this.props.publicShareUrl }</span>
+                    </span>
+                    <button className='btn copy-link-button' onClick={this.copyUrl}>{this.state.copied ? 'Copied' : 'Copy'}</button>
+                  </div> 
+                  <a className="demo-share" href={this.props.publicShareUrl} target='_blank'>Here's what they'll see.</a>
                 </div>
               }
+            </div>
+            <div className={ 'for-email' + (_this.state.urlView ? ' hide' : '') }>
               {
                 !this.state.urlView &&
-                <InviteUserBox sitemapId={this.props.sitemapId} />
+                <div>
+                  <p>Enter the emails of the people you want to invite to view the sitemap. We'll send them a beautiful email with the link. They'll also be able to add comments. To invite co-workers who can edit things, go to the sitemap editor.</p>
+                  <InviteUserBox sitemapId={this.props.sitemapId} />
+                </div>
               }
             </div>
           </div>
