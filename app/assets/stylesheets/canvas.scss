@@ -1,4 +1,4 @@
-.page-container, .page-tile-clone {
+.page-container, .page-tile-clone, .footer-page {
   .page-tile {
     width: 200px;
     height: 87px;
@@ -1315,13 +1315,28 @@
   -moz-transition: top .35s;
   -webkit-transition: top .35s;
   .users-block {
+    margin-left: 40px;
+    top: 3px;
+    position: relative;
     .users-list {
       display: inline-block;
+      vertical-align: middle;
+      margin-left: 12px;
+      margin-bottom: 18px;
+      padding: 0;
+      .user-invite {
+        position: relative;
+      }
       li {
         display: inline-block;
+        vertical-align: middle;
+        + li {
+          margin-left: 9px;
+        }
         img {
-          width: 30px;
-          height: 30px;
+          width: 24px;
+          height: 24px;
+          @include border-radius(50%);
         }
       }
     }
@@ -1329,9 +1344,10 @@
       color: #62717f;
     }
     .user-invite {
-      font-size: 32px;
+      font-size: 26px;
       display: inline-block;
       margin-top: 4px;
+      position: relative;
       .path1:before,
       .path3:before,
       .path4:before,
@@ -1343,26 +1359,40 @@
       .path2:before {
         top: 0;
         left: 16px;
+        color: #696F7D;
+      }
+      .path4:before {
+        color: $primaryWhite!important;
       }
       .path1::before,
       .path2::before,
       .path3::before,
       .path4::before,
       .path5::before, {
-        top: 4px;
-        left: 221px;
+        top: 0;
+        left: 0;
       }
       &:hover {
         .path1:before,
+        .path2:before,
         .path3:before,
         .path4:before,
         .path5:before {
           color: $primaryPink;
+          top: 0;
+          left: 0;
         }
       }
     }
   }
 
+  .other-users {
+    font-size: 10px;
+    color: #56626f;
+    position: relative;
+    top: -9px;
+    left: 5px;
+  }
 
   .btn-share {
     height: 33px;
@@ -2688,5 +2718,21 @@
     position: absolute;
     right: 25px;
     min-width: 215px;
+  }
+}
+
+.sitemap-footer {
+  display: none;
+}
+
+@media (max-width: 1300px) {
+  .toggle-comments {
+    right: 80px;
+  }
+  .react-header .users-block {
+    margin-left: 15px;
+  }
+  .saved-status + div {
+    padding-left: 0;
   }
 }

@@ -52033,7 +52033,7 @@
 	              ),
 	              otherUsersLength == 1 && _react2.default.createElement(
 	                'a',
-	                { className: 'other-users cursor' },
+	                { className: 'other-users' },
 	                '+ ',
 	                otherUsersLength,
 	                ' other'
