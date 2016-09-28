@@ -43,25 +43,30 @@
   }
 }
 
+.dropdown-helper {
+  position: absolute;
+  min-width: 295px;
+  background: $primaryWhite;
+  @include box-shadow(0, 0, 3px, rgba(0, 0, 0, 0.35));
+  top: 30px;
+  right: -12px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  z-index: 3;
+  visibility: hidden;
+  opacity: 0;
+  @include animate(.35s);
+}
+
 .user-dropdown {
   position: relative;
   font-size: 16px;
   line-height: 24px;
   color: #535353;
-  padding: 2px 0 10px 0;
+  padding: 1px 0 10px 0;
   .user-settings {
-    position: absolute;
     min-width: 295px;
-    background: $primaryWhite;
-    @include box-shadow(0, 0, 3px, rgba(0, 0, 0, 0.35));
-    top: 30px;
-    right: -12px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    z-index: 3;
-    visibility: hidden;
-    opacity: 0;
-    @include animate(.35s);
+    @extend .dropdown-helper;
     a {
       display: block;
       height: 82px;
@@ -156,13 +161,13 @@
 }
 
 #search-sitemap-form {
-  width: 135px;
+  width: 220px;
   max-height: 320px;
   overflow-y: auto;
   background: $primaryWhite;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  margin: 10px 0 0 -30px;
+  margin: 10px 0 0 -70px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.35);
   font-family: "proxima-nova",sans-serif!important;
   position: relative;
@@ -174,15 +179,15 @@
     width: 100%!important;
     padding-bottom: 20px;
     li {
-      min-height: 30px;
-      font-size: 10px;
-      padding: 5px 13px;
-      line-height: 18px;
-      color: #646464;
+      min-height: 45px;
+      font-size: 14px;
+      padding: 10px 19px;
+      line-height: 20px;
+      color: #414952;
       background: #fff;
       word-wrap: break-word;
       + li {
-        border-top: solid 1px #F9FAFC;
+        border-top: solid 1px #fafafb;
       }
       &:hover {
         color: $primaryPink;
@@ -192,7 +197,7 @@
     .ui-state-active {
       margin: 0!important;
       border: 0;
-      border-top: solid 1px #F9FAFC;
+      border-top: solid 1px #fafafb;
       background: transparent; 
       &:first-child {
         border: 0!important; 
@@ -200,25 +205,75 @@
     }
   }
   #search-sitemap {
-    height: 30px;
+    height: 45px;
     border: 0;
-    font-size: 10px;
-    color: $primaryLink;
+    font-size: 14px;
+    color: $primaryLabel;
     width: 100%;
-    padding: 0 13px 0 27px;
+    padding: 0 20px 0 44px;
     position: relative;
     font-family: "proxima-nova",sans-serif!important;
+    line-height: 45px;
   }
   .icon-search {
-    font-size: 10px;
-    left: 13px;
+    font-size: 13px;
+    left: 19px;
     position: absolute;
-    top: 9px;
+    top: 15px;
     z-index: 5;
-    color: $primaryLink;
+    color: $primaryLabel;
   }
-  ::-webkit-input-placeholder { color: $primaryLink; opacity: 1; font-size: 10px; }
-  :-moz-placeholder { color: red; color: $primaryLink; opacity: 1; font-size: 10px; }
-  ::-moz-placeholder { color: red; color: $primaryLink; opacity: 1; font-size: 10px; }
-  :-ms-input-placeholder { color: red; color: $primaryLink; opacity: 1; font-size: 10px; }
+  ::-webkit-input-placeholder { color: $primaryLabel; opacity: 1; font-size: 14px; }
+  :-moz-placeholder { color: red; color: $primaryLabel; opacity: 1; font-size: 14px; }
+  ::-moz-placeholder { color: red; color: $primaryLabel; opacity: 1; font-size: 14px; }
+  :-ms-input-placeholder { color: red; color: $primaryLabel; opacity: 1; font-size: 14px; }
+}
+
+.notifications-tab {
+  position: relative;
+  .notifications-listing {
+    @extend .dropdown-helper;
+    width: 382px;
+    max-height: 455px;
+    overflow-y: auto;
+    left: 50%;
+    margin-left: -191px;
+  }
+  &:hover {
+    .notifications-listing {
+      visibility: visible;
+      opacity: 1;
+      top: 40px;
+    }
+  }
+  .notification-item {
+    padding: 22px 34px 22px 22px;
+    min-height: 80px;
+    + .notification-item {
+      border-top: solid 1px #eeeeee 
+    }
+  }
+  .notification-image {
+    width: 32px;
+    margin-right: 18px;
+  }
+  .profile-image {
+    margin-top: 1px;
+  }
+  .notification-content {
+    width: 276px;
+  }
+  .notification-message,
+  .notification-time {
+    display: block;
+  }
+  .notification-message {
+    color: #62717f;
+    @extend .font-12;
+  }
+  .notification-time {
+    font-size: 10px;
+    color: #d6d8da;
+    line-height: 16px;
+  }
 }

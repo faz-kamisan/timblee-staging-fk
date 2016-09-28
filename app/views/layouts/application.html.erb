@@ -4,6 +4,11 @@
   <title>Timblee</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <% if Rails.env == 'staging' %>
+    <%= javascript_include_tag 'staging_hotjar', 'data-turbolinks-track' => true %>
+  <% elsif Rails.env == 'production' %>
+    <%= javascript_include_tag 'production_hotjar', 'data-turbolinks-track' => true %>
+  <% end %>
   <script src="https://use.typekit.net/rru5bof.js"></script>
   <script>try{Typekit.load({ async: true });}catch(e){}</script>
   <%= csrf_meta_tags %>
