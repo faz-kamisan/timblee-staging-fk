@@ -2697,10 +2697,13 @@
   color: #56626f;
   font-size: 12px;
   &:focus {
-    color: $primaryPink;
+    color: #56626f;
   }
   &.active {
     color: $primaryWhite;
+    &:focus {
+      color: $primaryWhite;
+    }
   }
   width: 75px;
 }
