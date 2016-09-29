@@ -53,10 +53,8 @@ class NewSectionModal extends React.Component {
               <div className="create-section-heading">
                 Give this section a name
               </div>
-              <div className="page-types">
-                <form>
-                  <input className="form-control" type="text" id="new-section-name" name="new-section-name" onChange={this.handleSectionNameChange} />
-                </form>
+              <div>
+                <input className="form-control" type="text" id="new-section-name" name="new-section-name" onChange={this.handleSectionNameChange} />
               </div>
               <div className="modal-button">
                 <a href="javascript:void(0);" data-dismiss="modal" className="btn btn-red" onClick={this.createSection}>Create section</a>

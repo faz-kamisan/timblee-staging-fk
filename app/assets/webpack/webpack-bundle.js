@@ -38569,6 +38569,7 @@
 	exports.updateFooterPageId = updateFooterPageId;
 	exports.setMaxPageUid = setMaxPageUid;
 	exports.addSharedUsers = addSharedUsers;
+	exports.removeSection = removeSection;
 	var SET_NAME = exports.SET_NAME = 'SET_NAME';
 	var ADD_NEW_PAGE = exports.ADD_NEW_PAGE = 'ADD_NEW_PAGE';
 	var REMOVE_PAGE = exports.REMOVE_PAGE = 'REMOVE_PAGE';
@@ -38610,6 +38611,7 @@
 	var UPDATE_FOOTER_PAGE_ID = exports.UPDATE_FOOTER_PAGE_ID = 'UPDATE_FOOTER_PAGE_ID';
 	var SET_MAX_PAGE_UID = exports.SET_MAX_PAGE_UID = 'SET_MAX_PAGE_UID';
 	var ADD_SHARED_USERS = exports.ADD_SHARED_USERS = 'ADD_SHARED_USERS';
+	var REMOVE_SECTION = exports.REMOVE_SECTION = 'REMOVE_SECTION';
 	
 	function setName(name) {
 	  return { type: SET_NAME, name: name };
@@ -38774,6 +38776,10 @@
 	function addSharedUsers(emails) {
 	  return { type: ADD_SHARED_USERS, emails: emails };
 	}
+	
+	function removeSection(id) {
+	  return { type: REMOVE_SECTION, id: id };
+	}
 
 /***/ },
 /* 607 */
@@ -38842,6 +38848,8 @@
 	      return (0, _tree_helper.updatePageType)(state, action.pageId, action.sectionId, action.pageType);
 	    case _index.CREATE_NEW_SECTION:
 	      return (0, _tree_helper.createNewSection)(state, action.pageId, action.sectionId, action.newSectionName, action.timeStamp);
+	    case _index.REMOVE_SECTION:
+	      return (0, _tree_helper.removeSection)(state, action.id);
 	    case _index.UPDATE_PAGE_STATE:
 	      return (0, _tree_helper.updatePageState)(state, action.pageId, action.sectionId, action.state);
 	    case _index.DELETE_PAGE_COMMENT:
@@ -39059,6 +39067,14 @@
 	  return sectionsCopy;
 	}
 	
+	function removeSection(sections, id) {
+	  var sectionsCopy = Object.assign([], sections);
+	  sectionsCopy.removeIf(function (section) {
+	    return section.id == id;
+	  });
+	  return sectionsCopy;
+	}
+	
 	function traverse(tree, callback) {
 	  var queue = new Queue();
 	  queue.enqueue(tree);
@@ -39125,6 +39141,7 @@
 	exports.deletePageComment = deletePageComment;
 	exports.updatePageComment = updatePageComment;
 	exports.updatePagePersitence = updatePagePersitence;
+	exports.removeSection = removeSection;
 
 /***/ },
 /* 610 */
@@ -47585,7 +47602,19 @@
 	  return { sections: state.sections, sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, publicShare: state.publicShare };
 	};
 	
-	var ConnectedSecionContainer = (0, _reactRedux.connect)(mapStateToProps)(_section_container2.default);
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    removeSection: function removeSection(id) {
+	      dispatch((0, _actions.removeSection)(id));
+	    },
+	    setSaving: function setSaving(saving) {
+	      dispatch((0, _actions.setSaving)(saving));
+	      dispatch((0, _actions.changeUpdatedAt)());
+	    }
+	  };
+	};
+	
+	var ConnectedSecionContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_section_container2.default);
 	
 	exports.default = ConnectedSecionContainer;
 
@@ -47652,6 +47681,22 @@
 	      this.setState({ currentSectionId: id });
 	    }
 	  }, {
+	    key: 'removeSection',
+	    value: function removeSection(id) {
+	      this.setState({ currentSectionId: this.props });
+	      var index = this.props.sections.findIndex(function (section) {
+	        return section.id == id;
+	      });
+	      this.props.removeSection(id);
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      if (this.props.sections.length != nextProps.sections.length) {
+	        this.setState({ currentSectionId: this.getDefaultSectionId(this.props.sections) });
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this = this;
@@ -47662,6 +47707,13 @@
 	          { key: section.id, className: 'sitemap-section-tab' + (_this.state.currentSectionId == section.id ? ' active' : ''), onClick: function onClick(e) {
 	              _this.changeCurrentSectionId(section.id);
 	            }, style: { width: tabWidth } },
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'pull-left', onClick: function onClick() {
+	                _this.removeSection(section.id);
+	              } },
+	            'remove'
+	          ),
 	          _react2.default.createElement(
 	            'span',
 	            { className: 'truncate' },
@@ -47680,7 +47732,11 @@
 	          ),
 	          section.pageTree.children.filter(function (page) {
 	            return page.state != 'archived';
-	          }).length == 0 && _react2.default.createElement(_connected_first_page_droppable2.default, { pageTree: section.pageTree, leftSidebarExpanded: _this.props.leftSidebarExpanded })
+	          }).length == 0 && _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(_connected_first_page_droppable2.default, { pageTree: section.pageTree, leftSidebarExpanded: _this.props.leftSidebarExpanded })
+	          )
 	        );
 	      });
 	
@@ -48511,6 +48567,7 @@
 	        if (this.props.pageTree.parentId) {
 	          var domNode = (0, _reactDom.findDOMNode)(this);
 	          $(domNode).addClass('drag-over');
+	          $('.custom-drag-layer').addClass('over-page-top');
 	          if (this.props.pageTree.level == 1) {
 	            $(domNode).parent('.page-tile').siblings('.level-support').addClass('again-drag-over');
 	          } else {
@@ -48524,6 +48581,7 @@
 	        if (this.props.pageTree.parentId) {
 	          var domNode = (0, _reactDom.findDOMNode)(this);
 	          $(domNode).removeClass('drag-over');
+	          $('.custom-drag-layer').removeClass('over-page-top');
 	          if (this.props.pageTree.level == 1) {
 	            $(domNode).parent('.page-tile').siblings('.level-support').removeClass('again-drag-over');
 	          } else {
@@ -48725,12 +48783,14 @@
 	      if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
 	        var domNode = (0, _reactDom.findDOMNode)(this);
 	        $(domNode).addClass('drag-over');
+	        $('.custom-drag-layer').addClass('over-page-bottom');
 	        $(domNode).parent('.page-tile').siblings('.gutter').addClass('again-2-drag-over');
 	      }
 	
 	      if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
 	        var domNode = (0, _reactDom.findDOMNode)(this);
 	        $(domNode).removeClass('drag-over');
+	        $('.custom-drag-layer').removeClass('over-page-bottom');
 	        $(domNode).parent('.page-tile').siblings('.gutter').removeClass('again-2-drag-over');
 	      }
 	    }
@@ -49193,6 +49253,13 @@
 	    onPageIdUpdate: function onPageIdUpdate(id, sectionId, newId) {
 	      dispatch((0, _actions.updateId)(id, sectionId, newId));
 	    },
+	    onFooterPageTypeDrop: function onFooterPageTypeDrop(pageType, timeStamp, maxPageUid) {
+	      dispatch((0, _actions.addNewFooterPage)(pageType, timeStamp, maxPageUid + 1));
+	      dispatch((0, _actions.setMaxPageUid)(maxPageUid + 1));
+	    },
+	    onFooterPageIdUpdate: function onFooterPageIdUpdate(id, newId) {
+	      dispatch((0, _actions.updateFooterPageId)(id, newId));
+	    },
 	    setSaving: function setSaving(saving) {
 	      dispatch((0, _actions.setSaving)(saving));
 	      dispatch((0, _actions.changeUpdatedAt)());
@@ -49245,16 +49312,25 @@
 	    }
 	    if (item.type == 'PageType') {
 	      var timeStamp = new Date();
+	      if (props.pageTree.footer) {
+	        var data = { page: { page_type_id: item.id, parent_id: null, sitemap_id: props.sitemapId, name: item.name, position: null, section_id: null, footer: true } };
+	      } else {
+	        var data = { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: item.name, position: 1, section_id: props.pageTree.section_id } };
+	      }
 	      $.ajax({
 	        url: '/pages/',
 	        method: 'post',
 	        dataType: 'JSON',
-	        data: { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: item.name, position: 1, section_id: props.pageTree.section_id } },
+	        data: data,
 	        error: function error(result) {
 	          document.setFlash(result.responseText);
 	        },
 	        success: function success(result) {
-	          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id);
+	          if (props.pageTree.footer) {
+	            props.onFooterPageIdUpdate(timeStamp, result.id);
+	          } else {
+	            props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id);
+	          }
 	        },
 	        complete: function complete(result) {
 	          props.setSaving(true);
@@ -49263,7 +49339,11 @@
 	          }, 2000);
 	        }
 	      });
-	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
+	      if (props.pageTree.footer) {
+	        props.onFooterPageTypeDrop(item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
+	      } else {
+	        props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
+	      }
 	    }
 	  }
 	};
@@ -49304,11 +49384,16 @@
 	      var connectDropTarget = this.props.connectDropTarget;
 	      return connectDropTarget(_react2.default.createElement(
 	        'div',
-	        { className: 'first-page-droppable' + (this.props.leftSidebarExpanded ? '' : ' left-sidebar-contracted') },
+	        { className: 'first-page' },
+	        _react2.default.createElement('div', { className: 'collapse-open collapse-close' }),
 	        _react2.default.createElement(
-	          'span',
-	          null,
-	          'Drag and drop page tiles here to start building  your sitemap'
+	          'div',
+	          { className: 'first-page-droppable' + (this.props.leftSidebarExpanded ? '' : ' left-sidebar-contracted') },
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            'Drag and drop page tiles here to start building  your sitemap'
+	          )
 	        )
 	      ));
 	    }
@@ -61377,7 +61462,7 @@
 	            ),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'modal-body' + (!_this.state.urlView ? 'hide' : '') },
+	              { className: 'modal-body' + (!_this.state.urlView ? ' hide' : '') },
 	              this.state.urlView && _react2.default.createElement(
 	                'div',
 	                null,
@@ -62397,6 +62482,10 @@
 	
 	var _connected_page_tile2 = _interopRequireDefault(_connected_page_tile);
 	
+	var _connected_first_page_droppable = __webpack_require__(/*! ../containers/connected_first_page_droppable */ 785);
+	
+	var _connected_first_page_droppable2 = _interopRequireDefault(_connected_first_page_droppable);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -62470,9 +62559,10 @@
 	    key: 'render',
 	    value: function render() {
 	      var connectDropTarget = this.props.connectDropTarget;
-	      var renderedFooterPages = this.props.footerPages.filter(function (page) {
+	      var usablePages = this.props.footerPages.filter(function (page) {
 	        return page.state != 'archived';
-	      }).map(function (footerPage, index) {
+	      });
+	      var renderedFooterPages = usablePages.map(function (footerPage, index) {
 	        return _react2.default.createElement(
 	          'li',
 	          { key: footerPage.id, className: 'footer-page' },
@@ -62481,17 +62571,18 @@
 	      });
 	      return connectDropTarget(_react2.default.createElement(
 	        'div',
-	        { className: 'sitemap-footer' + (this.props.leftSidebarExpanded ? '' : ' left-sidebar-contracted') },
+	        { className: 'sitemap-footer hide' + (this.props.leftSidebarExpanded ? '' : ' left-sidebar-contracted') },
 	        _react2.default.createElement(
 	          'span',
 	          null,
 	          'Footer'
 	        ),
-	        _react2.default.createElement(
+	        usablePages.length > 0 && _react2.default.createElement(
 	          'ul',
 	          { className: 'footer-page-list' },
 	          renderedFooterPages
-	        )
+	        ),
+	        usablePages.length == 0 && _react2.default.createElement(_connected_first_page_droppable2.default, { pageTree: { footer: true }, leftSidebarExpanded: this.props.leftSidebarExpanded })
 	      ));
 	    }
 	  }]);
@@ -63252,12 +63343,8 @@
 	              ),
 	              _react2.default.createElement(
 	                'div',
-	                { className: 'page-types' },
-	                _react2.default.createElement(
-	                  'form',
-	                  null,
-	                  _react2.default.createElement('input', { className: 'form-control', type: 'text', id: 'new-section-name', name: 'new-section-name', onChange: this.handleSectionNameChange })
-	                )
+	                null,
+	                _react2.default.createElement('input', { className: 'form-control', type: 'text', id: 'new-section-name', name: 'new-section-name', onChange: this.handleSectionNameChange })
 	              ),
 	              _react2.default.createElement(
 	                'div',
@@ -63574,7 +63661,7 @@
 	        { style: layerStyles },
 	        _react2.default.createElement(
 	          'div',
-	          { style: getItemStyles(this.props) },
+	          { style: getItemStyles(this.props), className: 'custom-drag-layer' },
 	          this.renderItem(itemType, item)
 	        )
 	      );

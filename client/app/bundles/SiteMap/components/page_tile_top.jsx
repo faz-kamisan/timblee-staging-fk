@@ -78,6 +78,7 @@ class PageTileTop extends React.Component {
       if(this.props.pageTree.parentId) {
         var domNode = findDOMNode(this);
         $(domNode).addClass('drag-over' )
+        $('.custom-drag-layer').addClass('over-page-top');
         if(this.props.pageTree.level == 1) {
           $(domNode).parent('.page-tile').siblings('.level-support').addClass('again-drag-over')
         } else {
@@ -91,6 +92,7 @@ class PageTileTop extends React.Component {
       if(this.props.pageTree.parentId) {
         var domNode = findDOMNode(this);
         $(domNode).removeClass('drag-over')
+        $('.custom-drag-layer').removeClass('over-page-top');
         if(this.props.pageTree.level == 1) {
           $(domNode).parent('.page-tile').siblings('.level-support').removeClass('again-drag-over')
         } else {
