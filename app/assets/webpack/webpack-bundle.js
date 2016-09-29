@@ -61377,7 +61377,7 @@
 	            ),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'modal-body' + (!_this.state.urlView ? 'hide' : '') },
+	              { className: 'modal-body' + (!_this.state.urlView ? ' hide' : '') },
 	              this.state.urlView && _react2.default.createElement(
 	                'div',
 	                null,
