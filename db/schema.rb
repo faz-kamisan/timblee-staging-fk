@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160927112649) do
+ActiveRecord::Schema.define(version: 20160928141153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,11 +107,11 @@ ActiveRecord::Schema.define(version: 20160927112649) do
     t.datetime "updated_at"
   end
 
-  create_table "sitemap_invites", force: :cascade do |t|
-    t.integer  "user_id"
+  create_table "sitemap_shared_users", force: :cascade do |t|
     t.integer  "sitemap_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "user_email"
   end
 
   create_table "sitemaps", force: :cascade do |t|

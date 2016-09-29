@@ -11,8 +11,7 @@ class Sitemap < ActiveRecord::Base
   has_many :pages
   has_many :sections
   has_one :default_section, ->{ where(default: true) }, class_name: :Section
-  has_many :sitemap_invites, dependent: :destroy
-  has_many :invited_users, through: :sitemap_invites, source: :user
+  has_many :sitemap_shared_users, dependent: :destroy
   has_many :comments, as: :commentable
 
   validates :public_share_token, :business, :name, presence: true
@@ -49,7 +48,7 @@ class Sitemap < ActiveRecord::Base
 
 
   def users
-    business.users + invited_users
+    business.users
   end
 
   def active_users
@@ -66,7 +65,8 @@ class Sitemap < ActiveRecord::Base
       footerPages: pages.where(footer: true).map(&:to_react_data),
       comments: self.comments.order_by_created_at.map(&:to_react_data),
       sections: sections.map(&:to_react_data),
-      business:  business.to_react_data
+      business:  business.to_react_data,
+      sharedUsers: sitemap_shared_users
     }
   end
 

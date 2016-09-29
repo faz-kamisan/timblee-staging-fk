@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
   validates :password, length: { within: password_length, message: 'Your password needs to be at least 6 characters.' }, allow_blank: true
 
   def all_sitemaps
-    Sitemap.where(id: business.sitemaps.pluck(:id) + shared_sitemaps.pluck(:id)).order_by_alphanumeric_lower_name
+    business.sitemaps.order_by_alphanumeric_lower_name
   end
 
   def invitation_not_accepted?
