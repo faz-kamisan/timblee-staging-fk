@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 20160928141153) do
 
   create_table "guests", force: :cascade do |t|
     t.string   "full_name"
-    t.string   "email"
+    t.string   "logo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

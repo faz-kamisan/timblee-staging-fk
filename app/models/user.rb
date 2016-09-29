@@ -43,6 +43,8 @@ class User < ActiveRecord::Base
   validates :password, presence: { message: 'Without a password, it\'s like leaving your door open to the whole internet.' }, if: :password_required?
   validates :password, confirmation: true, if: :password_required?
   validates :password, length: { within: password_length, message: 'Your password needs to be at least 6 characters.' }, allow_blank: true
+  validates :full_name, uniqueness: {scope: :business, message: "There's already an account with this name in your business. Please use some other name."}
+  validate :minimum_image_size, on: :update
 
   def all_sitemaps
     business.sitemaps.order_by_alphanumeric_lower_name
@@ -75,6 +77,13 @@ class User < ActiveRecord::Base
     end
 
   private
+
+    def minimum_image_size
+      image = MiniMagick::Image.open(avatar.path)
+      unless image[:width] >= 50 && image[:height] >= 50
+        errors.add :avatar, "Avatar should be 50x50px minimum!"
+      end
+    end
 
     def add_default_avatar
       avatar.store!(File.open(File.join(Rails.root, "app/assets/images/avatar_#{[*1..14].sample}.svg")))
