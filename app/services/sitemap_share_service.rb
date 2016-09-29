@@ -9,6 +9,7 @@ class SitemapShareService
 
   def share_sitemap
     @emails.each do |email|
+      @sitemap.sitemap_shared_users.create(user_email: email)
       SitemapMailer.delay.send_share_link(email, @inviter.full_name, @sitemap.id, @message)
     end
   end
