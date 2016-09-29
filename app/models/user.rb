@@ -43,6 +43,7 @@ class User < ActiveRecord::Base
   validates :password, presence: { message: 'Without a password, it\'s like leaving your door open to the whole internet.' }, if: :password_required?
   validates :password, confirmation: true, if: :password_required?
   validates :password, length: { within: password_length, message: 'Your password needs to be at least 6 characters.' }, allow_blank: true
+  validates :full_name, uniqueness: {scope: :business, message: "There's already an account with this name in your business. Please use some other name."}
 
   def all_sitemaps
     Sitemap.where(id: business.sitemaps.pluck(:id) + shared_sitemaps.pluck(:id)).order_by_alphanumeric_lower_name

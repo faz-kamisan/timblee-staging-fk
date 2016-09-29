@@ -27,9 +27,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
     else
       clean_up_passwords resource
       respond_to do |format|
-        format.html { redirect_to settings_users_path, alert: 'Could Not Update Account' }
+        format.html { redirect_to settings_users_path, alert: resource.errors.messages.values.join(',').presence || 'Could Not Update Account' }
         format.js do
-          flash.now[:alert] = 'Could Not Update Account'
+          flash.now[:alert] = resource.errors.messages.values.join(' ').presence || 'Could Not Update Account'
           render 'shared/show_flash.js'
         end
       end
