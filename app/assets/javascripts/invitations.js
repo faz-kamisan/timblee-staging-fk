@@ -35,7 +35,6 @@ Invitations.prototype.bindEvents = function() {
   })
 };
 
-
 $(function() {
   var options = {
     sendInviteButton: $('.send-invite-button'),

@@ -1,0 +1,58 @@
+<div class='modal fade sitemap-share-modal' id='sitemap-share-modal'>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">
+            <img src='/assets/close-modal.svg' class='close-modal' />
+          </span>
+        </button>
+        <h4 class="modal-title">Share Your Sitemap</h4>
+        <ul class='share-method-tabs'>
+          <li data-target='url' class='active'>URL</li>
+          <li data-target='email'>Email</li>
+        </ul>
+      </div>
+      <div class='modal-body url sitemap-share-method'>
+        <div>
+          <p class="m-b-2">Here's your sharing link.</p>  <span class='hide'>'</span>
+          <p class="m-b-20">Anyone with the link can view the sitemap.</p>
+          <div class="public-url clearfix">
+            <span id='sitemap-public-share-url' class='backend'>
+              <span class="truncate"></span>
+            </span>
+            <button class='btn copy-link-button'>Copy</button>
+          </div>
+          <a class="demo-share" href='' target='_blank'>Here's what they'll see.</a>
+        </div>
+      </div>
+      <div class='for-email email sitemap-share-method hide'>
+        <div>
+          <p>Enter the emails of the people you want to invite to view the sitemap. We'll send them a beautiful email with the link. They'll also be able to add comments. To invite co-workers who can edit things, go to the sitemap editor.</p>
+          <div>
+            <div>
+              <input type='text' class='share-emails-input' name='emails' id='emails' ref='emails'></input>
+            </div>
+            <div class='hide'>
+              <p></p>
+              <a>Edit Message</a>
+            </div>
+            <div class="comment-input">
+              <textarea placeholder='Include an optional personal message.' class='custom-message' data-send='false'></textarea>
+              <div class="add-remove-comment">
+                <a class="cursor add add-custom-message">Add message</a>
+                <a class="cursor cancel cancel-custom-message hidden"> cancel</a>
+              </div>
+            </div>
+            <ul>
+            </ul>
+            <div class="bottom-btns text-center">
+              <a href="#sitemap-share-preview-modal" data-dismiss="modal" data-toggle='modal' class="btn btn-grey btn-modal-open">Here's what they'll see</a>
+              <button class='btn btn-pink-hover share-sitemap-button'>Send the email</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
