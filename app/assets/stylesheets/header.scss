@@ -268,8 +268,11 @@
     display: block;
   }
   .notification-message {
-    color: #62717f;
+    color: #62717f!important;
     @extend .font-12;
+    &:hover {
+      color: $primaryPink!important;
+    }
   }
   .notification-time {
     font-size: 10px;
