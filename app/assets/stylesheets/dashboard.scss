@@ -177,7 +177,7 @@
       margin: -1px 6px 0 0;
     }
     li + li {
-      margin-top: 13px;
+      margin-top: 11px;
     }
   }
   .other-users {
@@ -415,4 +415,14 @@
 #sitemap_name {
   width: 100%;
   border: 0;
+}
+
+.icon.icon-duplicate {
+  font-size: 34px;
+  position: relative;
+  left: -4px;
+  + .link-text {
+    top: -11px;
+    left: 0;
+  }
 }

@@ -5,7 +5,7 @@
         <%= image_tag(notification.user.try(:avatar) || 'profile-image.png', class: 'profile-image') %>
       </div>
       <div class="pull-left notification-content">
-        <span class="notification-message"><%= notification.message %></span>
+        <a href="#" class="notification-message"><%= notification.message %></a>
         <span class="notification-time"><%= time_ago_in_words(notification.created_at) + ' ago' %></span>
       </div>
     </li>
