@@ -49,8 +49,7 @@ class Comment < ActiveRecord::Base
 
     def notify_mentioned_user
       sitemap.users.each do |user|
-        message.match("@#{user.full_name}")
-        Notification.user_mention_notification(self, user)
+        Notification.user_mention_notification(self, user) if message.match("@#{user.full_name}")
       end
     end
 end
