@@ -2591,6 +2591,14 @@
       white-space: pre;
       display: block;
     }
+    &.backend {
+      position: relative;
+      span {
+        position: absolute;
+        top: 0;
+        left: 12px;
+      }
+    }
   }
   .copy-link-button {
     width: 88px;
@@ -2688,8 +2696,8 @@
   }
   &:hover {
     .btn-toggle-comments {
-      color: $primaryPink;  
-    }    
+      color: $primaryPink;
+    }
   }
 }
 

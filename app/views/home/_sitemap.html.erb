@@ -45,7 +45,7 @@
             <li>
               <%= form_for sitemap, url: sitemap_duplicate_path(sitemap), html: { remote: true, method: :post } do |f| %>
                 <a href="javascript:void(0);" class="action duplicate-sitemap-link">
-                  <span class="icon icon-wand"></span>
+                  <span class="icon icon-duplicate"></span>
                   <span class="link-text">Duplicate</span>
                 </a>
               <% end %>
@@ -87,10 +87,10 @@
               <% end %>
             </li>
             <li>
-              <a href="javascript:void(0);" class="action">
+              <%= link_to 'javascript:void(0))', class: 'action sitemap-share-modal-link', 'data-url': sitemap_public_share_url(sitemap.public_share_token).gsub(/(?<protocol>http(s?):\/\/)/, '\k<protocol>share.'), 'data-sitemap-id': sitemap.id, 'data-name': sitemap.name do %>
                 <span class="icon icon-share-circle"></span>
                 <span class="link-text">Share</span>
-              </a>
+              <% end %>
             </li>
             <li>
               <%= link_to "javascript:void(0))", class: 'action delete-sitemap-modal-link', 'data-url': sitemap_path(sitemap), 'data-name': sitemap.name do %>

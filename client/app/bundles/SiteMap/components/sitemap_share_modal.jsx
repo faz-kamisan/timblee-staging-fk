@@ -51,7 +51,7 @@ class SitemapShareModal extends React.Component {
                 <li className={ _this.state.urlView == false ? ' active' : '' } onClick={ function(e) { _this.setState({urlView: false }) } }>Email</li>
               </ul>
             </div>
-            <div className={ 'modal-body' + (!_this.state.urlView ? 'hide' : '') }>
+            <div className={ 'modal-body' + (!_this.state.urlView ? ' hide' : '') }>
               {
                 this.state.urlView &&
                 <div>

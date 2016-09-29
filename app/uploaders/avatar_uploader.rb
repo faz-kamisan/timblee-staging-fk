@@ -1,11 +1,11 @@
-require 'carrierwave/processing/mini_magick'
-
 class AvatarUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   storage :file
 
-  process resize_to_fit: [100, 100], :if => :is_not_svg?
+  version :thumb do
+    process resize_to_fit: [100, 100], if: :is_not_svg?
+  end
 
   def is_not_svg?(picture)
     picture.content_type != "image/svg+xml"
@@ -18,4 +18,5 @@ class AvatarUploader < CarrierWave::Uploader::Base
   def extension_whitelist
     %w(jpg jpeg gif png)
   end
+
 end

@@ -88,4 +88,6 @@ Rails.application.configure do
   }
   config.action_mailer.default_url_options = { host: "http://staging.timblee.io/" }
 
+  # Path for convert utility (for mini_magick).
+  ENV['PATHEXT'] ||= '/usr/local/bin'
 end

@@ -21,6 +21,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-duplicate:before {
+  content: "\e925";
+}
+.icon-email:before {
+  content: "\e926";
+}
+.icon-url:before {
+  content: "\e927";
+}
 .icon-page-change:before {
   content: "\e900";
 }
