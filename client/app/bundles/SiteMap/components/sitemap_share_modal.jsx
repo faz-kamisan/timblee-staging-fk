@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
-import InviteUserBox from './invite_user_box'
+import ConnectedInviteUserBox from '../containers/connected_invite_user_box'
 
 class SitemapShareModal extends React.Component {
   static propTypes = {
     showModal: PropTypes.bool.isRequired,
     sitemapId: PropTypes.number.isRequired,
-    publicShareUrl: PropTypes.string.isRequired
+    publicShareUrl: PropTypes.string.isRequired,
   };
 
   constructor(props) {
@@ -62,7 +62,7 @@ class SitemapShareModal extends React.Component {
                       <span className="truncate">{ this.props.publicShareUrl }</span>
                     </span>
                     <button className='btn copy-link-button' onClick={this.copyUrl}>{this.state.copied ? 'Copied' : 'Copy'}</button>
-                  </div> 
+                  </div>
                   <a className="demo-share" href={this.props.publicShareUrl} target='_blank'>Here's what they'll see.</a>
                 </div>
               }
@@ -72,7 +72,7 @@ class SitemapShareModal extends React.Component {
                 !this.state.urlView &&
                 <div>
                   <p>Enter the emails of the people you want to invite to view the sitemap. We'll send them a beautiful email with the link. They'll also be able to add comments. To invite co-workers who can edit things, go to the sitemap editor.</p>
-                  <InviteUserBox sitemapId={this.props.sitemapId} />
+                  <ConnectedInviteUserBox />
                 </div>
               }
             </div>
