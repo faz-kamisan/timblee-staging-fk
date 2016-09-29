@@ -70,6 +70,11 @@ class User < ActiveRecord::Base
       email: email
     }
   end
+
+  def active_for_authentication?
+    admin_access || super
+  end
+
   protected
     def confirmation_period_valid?
       self.class.allow_unconfirmed_access_for.nil? || (created_at && created_at.utc >= self.class.allow_unconfirmed_access_for.ago)
@@ -119,10 +124,6 @@ class User < ActiveRecord::Base
         errors.add(:base, I18n.t('errors.users.owner_role_update'))
         false
       end
-    end
-
-    def active_for_authentication?
-      admin_access || super
     end
 
     def email_required?
