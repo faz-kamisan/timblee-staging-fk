@@ -6,7 +6,6 @@ class User < ActiveRecord::Base
   attr_accessor :admin_access
 
   belongs_to :business, autosave: true
-  has_many :sitemap_invites, dependent: :destroy
   has_many :notifications, foreign_key: :recipient_id, dependent: :destroy
   has_many :shared_sitemaps, through: :sitemap_invites, source: :sitemap
   has_many :comments, as: :commenter
