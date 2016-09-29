@@ -30,13 +30,13 @@ class UsersController < ApplicationController
         redirect_to settings_users_path, notice: t('.success', scope: :flash)
       else
         Rails.logger.info "#{current_user.errors.full_messages}"
-        redirect_to settings_users_path, alert: t('.failure', scope: :flash)
+        redirect_to settings_users_path, alert: current_user.errors.messages.values.join(',').presence || t('.failure', scope: :flash)
       end
     else
       if params[:default_avatar] && current_user.avatar.store!(File.open(File.join(Rails.root, "app/assets/images/#{params[:default_avatar]}"))) && current_user.save!
         redirect_to settings_users_path, notice: t('.success', scope: :flash)
       else
-        redirect_to settings_users_path, alert: t('.failure', scope: :flash)
+        redirect_to settings_users_path, alert: current_user.errors.messages.values.join(',').presence || t('.failure', scope: :flash)
       end
     end
   end
