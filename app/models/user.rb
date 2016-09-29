@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
   validate :minimum_image_size, on: :update
 
   def all_sitemaps
-    Sitemap.where(id: business.sitemaps.pluck(:id) + shared_sitemaps.pluck(:id)).order_by_alphanumeric_lower_name
+    business.sitemaps.order_by_alphanumeric_lower_name
   end
 
   def invitation_not_accepted?

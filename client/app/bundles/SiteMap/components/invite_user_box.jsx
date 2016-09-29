@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react';
 
 class InviteUserBox extends React.Component {
   static propTypes = {
-    sitemapId: PropTypes.number.isRequired
+    sitemapId: PropTypes.number.isRequired,
+    sharedUsers: PropTypes.array.isRequired
   };
 
   constructor(props) {
@@ -55,7 +56,7 @@ class InviteUserBox extends React.Component {
   }
 
   handleEmailShare(e) {
-    console.log(this.refs.emails.value)
+    this.props.onShare(this.refs.emails.value.split(' '));
     $.ajax({
       url: '/sitemaps/' + this.props.sitemapId + '/share_via_email',
       method: 'post',
@@ -70,6 +71,13 @@ class InviteUserBox extends React.Component {
   }
 
   render() {
+    var renderdsharedUsers = this.props.sharedUsers.map(function(user,index) {
+      return(
+        <li key={user.id}>
+          {user.user_email}
+        </li>
+      )
+    })
     return (
       <div>
         <div key='upper'>
@@ -91,6 +99,9 @@ class InviteUserBox extends React.Component {
             </div>
           </div>
         }
+        <ul>
+          {renderdsharedUsers}
+        </ul>
         <div className="bottom-btns text-center">
           <a href="#sitemap-share-preview-modal" data-dismiss="modal" data-toggle='modal' className="btn btn-grey btn-modal-open">Here's what they'll see</a>
           <button className='btn btn-pink-hover' onClick={this.handleEmailShare}>Send the email</button>

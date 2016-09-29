@@ -38,6 +38,7 @@ export const UPDATE_FOOTER_PAGE_STATE = 'UPDATE_FOOTER_PAGE_STATE'
 export const ADD_NEW_FOOTER_PAGE = 'ADD_NEW_FOOTER_PAGE'
 export const UPDATE_FOOTER_PAGE_ID = 'UPDATE_FOOTER_PAGE_ID'
 export const SET_MAX_PAGE_UID = 'SET_MAX_PAGE_UID'
+export const ADD_SHARED_USERS = 'ADD_SHARED_USERS'
 
 export function setName(name) {
   return { type: SET_NAME, name }
@@ -197,4 +198,8 @@ export function updateFooterPageId(oldId, newId) {
 
 export function setMaxPageUid(uid) {
   return {type: SET_MAX_PAGE_UID, uid}
+}
+
+export function addSharedUsers(emails) {
+  return {type: ADD_SHARED_USERS, emails}
 }
