@@ -6,7 +6,7 @@ import { findDOMNode } from 'react-dom';
 const sitemapTarget = {
   drop: function(props, monitor, component) {
     const item = monitor.getItem();
-    if (monitor.didDrop() || !(props.pageTree.id)) {
+    if (monitor.didDrop() || !(props.pageTree.id)  || props.pageTree.footer) {
       return;
     }
     if(item.type == 'page') {
@@ -73,18 +73,18 @@ class LevelSupport extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
+    if (!this.props.isOverCurrent && nextProps.isOverCurrent && !this.props.pageTree.footer) {
       var domNode = findDOMNode(this);
       $(domNode).addClass('drag-over' )
     }
 
-    if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
+    if (this.props.isOverCurrent && !nextProps.isOverCurrent && !this.props.pageTree.footer) {
       // You can use this as leave handler
       var domNode = findDOMNode(this);
       $(domNode).removeClass('drag-over')
     }
 
-    if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
+    if (this.props.isOverCurrent && !nextProps.isOverCurrent && !this.props.pageTree.footer) {
       // You can be more specific and track enter/leave
       // shallowly, not including nested targets
     }

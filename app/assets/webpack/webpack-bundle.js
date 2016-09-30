@@ -51134,7 +51134,7 @@
 	var sitemapTarget = {
 	  drop: function drop(props, monitor, component) {
 	    var item = monitor.getItem();
-	    if (monitor.didDrop() || !props.pageTree.id) {
+	    if (monitor.didDrop() || !props.pageTree.id || props.pageTree.footer) {
 	      return;
 	    }
 	    if (item.type == 'page') {
@@ -51200,7 +51200,7 @@
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
 	      if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
-	        if (this.props.pageTree.parentId) {
+	        if (this.props.pageTree.parentId && !props.pageTree.footer) {
 	          var domNode = (0, _reactDom.findDOMNode)(this);
 	          $(domNode).addClass('drag-over');
 	          $('.custom-drag-layer').addClass('over-page-top');
@@ -51214,7 +51214,7 @@
 	
 	      if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
 	        // You can use this as leave handler
-	        if (this.props.pageTree.parentId) {
+	        if (this.props.pageTree.parentId && !props.pageTree.footer) {
 	          var domNode = (0, _reactDom.findDOMNode)(this);
 	          $(domNode).removeClass('drag-over');
 	          $('.custom-drag-layer').removeClass('over-page-top');
@@ -51351,7 +51351,7 @@
 	var sitemapTarget = {
 	  drop: function drop(props, monitor, component) {
 	    var item = monitor.getItem();
-	    if (monitor.didDrop() || item.type == 'Page' && item.parentId == props.pageTree.id) {
+	    if (monitor.didDrop() || item.type == 'Page' && item.parentId == props.pageTree.id || props.pageTree.footer) {
 	      return;
 	    }
 	    if (item.type == 'page') {
@@ -51416,14 +51416,14 @@
 	  _createClass(PageTileBottom, [{
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
-	      if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
+	      if (!this.props.isOverCurrent && nextProps.isOverCurrent && !this.props.pageTree.footer) {
 	        var domNode = (0, _reactDom.findDOMNode)(this);
 	        $(domNode).addClass('drag-over');
 	        $('.custom-drag-layer').addClass('over-page-bottom');
 	        $(domNode).parent('.page-tile').siblings('.gutter').addClass('again-2-drag-over');
 	      }
 	
-	      if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
+	      if (this.props.isOverCurrent && !nextProps.isOverCurrent && !this.props.pageTree.footer) {
 	        var domNode = (0, _reactDom.findDOMNode)(this);
 	        $(domNode).removeClass('drag-over');
 	        $('.custom-drag-layer').removeClass('over-page-bottom');
@@ -51552,7 +51552,7 @@
 	var sitemapTarget = {
 	  drop: function drop(props, monitor, component) {
 	    var item = monitor.getItem();
-	    if (monitor.didDrop() || !props.pageTree.id) {
+	    if (monitor.didDrop() || !props.pageTree.id || props.pageTree.footer) {
 	      return;
 	    }
 	    if (item.type == 'page') {
@@ -51617,18 +51617,18 @@
 	  _createClass(LevelSupport, [{
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
-	      if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
+	      if (!this.props.isOverCurrent && nextProps.isOverCurrent && !this.props.pageTree.footer) {
 	        var domNode = (0, _reactDom.findDOMNode)(this);
 	        $(domNode).addClass('drag-over');
 	      }
 	
-	      if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
+	      if (this.props.isOverCurrent && !nextProps.isOverCurrent && !this.props.pageTree.footer) {
 	        // You can use this as leave handler
 	        var domNode = (0, _reactDom.findDOMNode)(this);
 	        $(domNode).removeClass('drag-over');
 	      }
 	
-	      if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
+	      if (this.props.isOverCurrent && !nextProps.isOverCurrent && !this.props.pageTree.footer) {
 	        // You can be more specific and track enter/leave
 	        // shallowly, not including nested targets
 	      }
@@ -51744,7 +51744,7 @@
 	var sitemapTarget = {
 	  drop: function drop(props, monitor, component) {
 	    var item = monitor.getItem();
-	    if (monitor.didDrop() || !props.pageTree.id || props.pageTree.level == 1) {
+	    if (monitor.didDrop() || !props.pageTree.id || props.pageTree.level == 1 || props.pageTree.footer) {
 	      return;
 	    }
 	    if (item.type == 'page') {
@@ -51809,18 +51809,18 @@
 	  _createClass(Gutter, [{
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
-	      if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
+	      if (!this.props.isOverCurrent && nextProps.isOverCurrent && !this.props.pageTree.footer) {
 	        var domNode = (0, _reactDom.findDOMNode)(this);
 	        $(domNode).addClass('drag-over');
 	      }
 	
-	      if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
+	      if (this.props.isOverCurrent && !nextProps.isOverCurrent && !this.props.pageTree.footer) {
 	        // You can use this as leave handler
 	        var domNode = (0, _reactDom.findDOMNode)(this);
 	        $(domNode).removeClass('drag-over');
 	      }
 	
-	      if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
+	      if (this.props.isOverCurrent && !nextProps.isOverCurrent && !this.props.pageTree.footer) {
 	        // You can be more specific and track enter/leave
 	        // shallowly, not including nested targets
 	      }

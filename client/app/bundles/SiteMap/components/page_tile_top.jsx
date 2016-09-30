@@ -6,7 +6,7 @@ import { findDOMNode } from 'react-dom';
 const sitemapTarget = {
   drop: function(props, monitor, component) {
     const item = monitor.getItem();
-    if (monitor.didDrop() || !(props.pageTree.id)) {
+    if (monitor.didDrop() || !(props.pageTree.id) || props.pageTree.footer) {
       return;
     }
     if(item.type == 'page') {
@@ -75,7 +75,7 @@ class PageTileTop extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
-      if(this.props.pageTree.parentId) {
+      if(this.props.pageTree.parentId && !props.pageTree.footer) {
         var domNode = findDOMNode(this);
         $(domNode).addClass('drag-over' )
         $('.custom-drag-layer').addClass('over-page-top');
@@ -89,7 +89,7 @@ class PageTileTop extends React.Component {
 
     if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
       // You can use this as leave handler
-      if(this.props.pageTree.parentId) {
+      if(this.props.pageTree.parentId && !props.pageTree.footer) {
         var domNode = findDOMNode(this);
         $(domNode).removeClass('drag-over')
         $('.custom-drag-layer').removeClass('over-page-top');
