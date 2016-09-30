@@ -56,18 +56,21 @@ class InviteUserBox extends React.Component {
   }
 
   handleEmailShare(e) {
-    this.props.onShare(this.refs.emails.value.split(' '));
-    $.ajax({
-      url: '/sitemaps/' + this.props.sitemapId + '/share_via_email',
-      method: 'post',
-      dataType: 'JSON',
-      data: { emails: this.refs.emails.value, custom_message: this.state.lastFinalisedMessage },
-      error: (result) => {
-        document.setFlash(result.responseText)
-      },
-      complete: (result) => {
-      }
-    });
+    var emailsValue = this.refs.emails.value.trim()
+    if(value.length > 0) {
+      this.props.onShare(emailsValue.split(' '));
+      $.ajax({
+        url: '/sitemaps/' + this.props.sitemapId + '/share_via_email',
+        method: 'post',
+        dataType: 'JSON',
+        data: { emails: emailsValue, custom_message: this.state.lastFinalisedMessage },
+        error: (result) => {
+          document.setFlash(result.responseText)
+        },
+        complete: (result) => {
+        }
+      });
+    }
   }
 
   render() {
@@ -109,7 +112,7 @@ class InviteUserBox extends React.Component {
         }
         <div className="bottom-btns text-center">
           <a href="#sitemap-share-preview-modal" data-dismiss="modal" data-toggle='modal' className="btn btn-grey btn-modal-open">Here's what they'll see</a>
-          <button className='btn btn-pink-hover' onClick={this.handleEmailShare}>Send the email</button>
+          <button className='btn btn-pink-hover' data-dismiss="modal" onClick={this.handleEmailShare}>Send the email</button>
         </div>
       </div>
     );
