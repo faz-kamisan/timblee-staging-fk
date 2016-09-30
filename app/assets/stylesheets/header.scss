@@ -129,7 +129,7 @@
     margin-right: 42px;
   }
   .icon-add {
-    color: $primaryPink;  
+    color: $primaryPink;
   }
 }
 
@@ -139,6 +139,12 @@
     a {
       color: $primaryPink;
     }
+  }
+  .loading-image {
+    z-index: 999;
+    position: absolute;
+    display: none;
+    left: 100px;
   }
 }
 
@@ -198,9 +204,9 @@
       margin: 0!important;
       border: 0;
       border-top: solid 1px #fafafb;
-      background: transparent; 
+      background: transparent;
       &:first-child {
-        border: 0!important; 
+        border: 0!important;
       }
     }
   }
@@ -250,7 +256,7 @@
     padding: 22px 34px 22px 22px;
     min-height: 80px;
     + .notification-item {
-      border-top: solid 1px #eeeeee 
+      border-top: solid 1px #eeeeee
     }
   }
   .notification-image {

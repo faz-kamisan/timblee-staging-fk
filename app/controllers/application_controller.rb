@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
   before_filter :authenticate_user!
+  before_filter :load_notifications, if: :current_user
 
   def current_user_with_proxy_login
     current_proxy_user || current_user_without_proxy_login
@@ -38,5 +39,10 @@ class ApplicationController < ActionController::Base
     !!current_proxy_user
   end
   helper_method :proxy_login?
+
+  def load_notifications
+    @notifications = current_user.notifications.limit(15).order(created_at: :desc)
+    @has_more = current_user.notifications.count > 15
+  end
 
 end

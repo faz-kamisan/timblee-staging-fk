@@ -1,5 +1,5 @@
 $("div.flash-message").html("<%==j render partial: 'shared/flash_message' %>");
-$("ul.notifications-listing").replaceWith("<%==j render 'shared/notifications' %>");
+$("ul.notifications-listing").html("<%==j render @notifications %>");
 
 $("form#user_<%= @user.id %>").remove();
 $('div.modal-backdrop').remove();

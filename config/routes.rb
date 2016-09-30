@@ -78,6 +78,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :notifications, only: [] do
+    collection do
+      get 'load_more'
+    end
+  end
+
   namespace :businesses do
     resource :card, only: [:create]
     resource :subscription, only: [:create] do
