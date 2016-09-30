@@ -16,7 +16,7 @@ class PublicHeader extends React.Component {
     this.handleSitemapShareClick = this.handleSitemapShareClick.bind(this);
     this.toggleCommentState = this.toggleCommentState.bind(this);
     this.toggleInductionState = this.toggleInductionState.bind(this);
-    this.state = { name: props.name, showMainHeader: true, commentSidebarOpen: false }
+    this.state = { name: props.name, showMainHeader: true, commentSidebarOpen: false, inductionSidebarOpen: false }
   }
 
   handleMainHeaderToggle(e) {
@@ -33,13 +33,14 @@ class PublicHeader extends React.Component {
   }
 
   toggleCommentState(e) {
-    this.setState({commentSidebarOpen: !this.state.commentSidebarOpen})
+    this.setState({commentSidebarOpen: !this.state.commentSidebarOpen, inductionSidebarOpen: false})
     $('.sitemap-right-sidebar').toggleClass('open')
     $('.comment-list').toggleClass('open')
     $('.sitemap-induction-sidebar').removeClass('open')
   }
 
   toggleInductionState(e) {
+    this.setState({inductionSidebarOpen: !this.state.inductionSidebarOpen, commentSidebarOpen: false})
     $('.sitemap-induction-sidebar').toggleClass('open')
     $('.sitemap-right-sidebar').removeClass('open')
     $('.comment-list').removeClass('open')
@@ -67,27 +68,23 @@ class PublicHeader extends React.Component {
     var _this = this;
     return (
       <div className="react-public-header">
+        <div className="business-name">
+          <h3 className="site-map-name">{this.props.business.name}</h3>
+        </div>
         <div className="row">
-          <div className="col-xs-4">
-            <div className="row">
-              <div className="col-xs-9">
-                <h3 className="site-map-name">{this.props.business.name}</h3>
-              </div>
-            </div>
+          <div className="col-xs-8 col-xs-offset-2 text-center shared-details">
+            <h1 className="truncate">{this.props.name}</h1>
+            <span className='last-updated'>Last updated {this.props.updatedAt}</span>
+            <span className='page-count'>{this.getPageCount()} {(this.getPageCount() == 1) ? 'Page' : 'Pages'}</span>
           </div>
-          <div className="col-xs-4">
-              <ul>
-                <li>{this.props.name}</li>
-                <li><span className='last-updated'>Last updated {this.props.updatedAt}</span></li>
-                <li>{this.getPageCount()} {(this.getPageCount() == 1) ? 'Page' : 'Pages'}</li>
-              </ul>
-          </div>
-          <div className="col-xs-4">
-            <div className="pull-right">
-              <a href="javascript:void(0)" className="btn btn-toggle-comments" onClick={this.toggleCommentState}>Comments</a>
-              <a href="javascript:void(0)" className="btn btn-help" onClick={this.toggleInductionState}>Help</a>
-            </div>
-          </div>
+        </div>
+        <div className="header-options">
+          <a href="javascript:void(0)" className={this.state.commentSidebarOpen ? 'active' : ''} onClick={this.toggleCommentState}>
+            <span className="icon-comment-circle"></span>
+          </a>
+          <a href="javascript:void(0)" className={this.state.inductionSidebarOpen ? 'active' : ''} onClick={this.toggleInductionState}>
+            <span className="icon-question-circle"></span>
+          </a>
         </div>
       </div>
     );
