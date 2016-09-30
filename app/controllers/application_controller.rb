@@ -41,8 +41,8 @@ class ApplicationController < ActionController::Base
   helper_method :proxy_login?
 
   def load_notifications
-    @notifications = current_user.notifications.limit(5).order(created_at: :desc)
-    @has_more = current_user.notifications.count > 5
+    @notifications = current_user.notifications.limit(15).order(created_at: :desc)
+    @has_more = current_user.notifications.count > 15
   end
 
 end
