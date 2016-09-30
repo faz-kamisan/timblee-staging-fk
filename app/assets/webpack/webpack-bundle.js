@@ -50343,7 +50343,7 @@
 	          { key: section.id, className: 'sitemap-section-tab' + (_this.state.currentSectionId == section.id ? ' active' : ''), onClick: function onClick(e) {
 	              _this.changeCurrentSectionId(section.id);
 	            }, style: { width: tabWidth } },
-	          _react2.default.createElement(
+	          !section.default && _react2.default.createElement(
 	            'span',
 	            { className: 'remove-section', onClick: function onClick() {
 	                _this.removeSection(section.id);
@@ -66945,17 +66945,20 @@
 	  }, {
 	    key: 'handleEmailShare',
 	    value: function handleEmailShare(e) {
-	      this.props.onShare(this.refs.emails.value.split(' '));
-	      $.ajax({
-	        url: '/sitemaps/' + this.props.sitemapId + '/share_via_email',
-	        method: 'post',
-	        dataType: 'JSON',
-	        data: { emails: this.refs.emails.value, custom_message: this.state.lastFinalisedMessage },
-	        error: function error(result) {
-	          document.setFlash(result.responseText);
-	        },
-	        complete: function complete(result) {}
-	      });
+	      var emailsValue = this.refs.emails.value.trim();
+	      if (value.length > 0) {
+	        this.props.onShare(emailsValue.split(' '));
+	        $.ajax({
+	          url: '/sitemaps/' + this.props.sitemapId + '/share_via_email',
+	          method: 'post',
+	          dataType: 'JSON',
+	          data: { emails: emailsValue, custom_message: this.state.lastFinalisedMessage },
+	          error: function error(result) {
+	            document.setFlash(result.responseText);
+	          },
+	          complete: function complete(result) {}
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -67043,7 +67046,7 @@
 	          ),
 	          _react2.default.createElement(
 	            'button',
-	            { className: 'btn btn-pink-hover', onClick: this.handleEmailShare },
+	            { className: 'btn btn-pink-hover', 'data-dismiss': 'modal', onClick: this.handleEmailShare },
 	            'Send the email'
 	          )
 	        )

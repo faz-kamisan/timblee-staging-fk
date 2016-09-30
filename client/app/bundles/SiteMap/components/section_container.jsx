@@ -40,7 +40,9 @@ class SectionContainer extends React.Component {
     var renderedSectionTabs = this.props.sections.map(function(section, index) {
       return (
         <li key={section.id} className={'sitemap-section-tab' + (_this.state.currentSectionId == section.id ? ' active' : '')} onClick={function(e) { _this.changeCurrentSectionId(section.id) } } style={ {width: tabWidth} }>
-          <span className='remove-section' onClick={function() {_this.removeSection(section.id)} }>&times;</span>
+          { !section.default &&
+            <span className='remove-section' onClick={function() {_this.removeSection(section.id)} }>&times;</span>
+          }
           <span className="truncate">{section.name}</span>
         </li>
       )
