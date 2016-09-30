@@ -1,5 +1,5 @@
 $("div.flash-message").html("<%==j render partial: 'shared/flash_message' %>");
-$("ul.notifications-listing").replaceWith("<%==j render @notifications %>");
+$("ul.notifications-listing").html("<%==j render @notifications %>");
 
 $('div.sitemap-container[data-id=<%= @sitemap.id %>]').find('.saved-sitemap-name').removeClass('hide');
 $('div.sitemap-container[data-id=<%= @sitemap.id %>]').find('.edit-sitemap-name').addClass('hide');

@@ -1,5 +1,5 @@
 $("div.flash-message").html("<%==j render partial: 'shared/flash_message' %>");
-$("ul.notifications-listing").replaceWith("<%==j render @notifications %>");
+$("ul.notifications-listing").html("<%==j render @notifications %>");
 
 
 <% if @destroyed %>
