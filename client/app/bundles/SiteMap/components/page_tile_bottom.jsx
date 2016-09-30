@@ -6,7 +6,7 @@ import { findDOMNode } from 'react-dom';
 const sitemapTarget = {
   drop: function(props, monitor, component) {
     const item = monitor.getItem();
-    if (monitor.didDrop() || ((item.type == 'Page') && item.parentId == props.pageTree.id)) {
+    if (monitor.didDrop() || ((item.type == 'Page') && item.parentId == props.pageTree.id) || props.pageTree.footer) {
       return;
     }
     if(item.type == 'page') {
@@ -72,14 +72,14 @@ class PageTileBottom extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
+    if (!this.props.isOverCurrent && nextProps.isOverCurrent && !this.props.pageTree.footer) {
       var domNode = findDOMNode(this);
       $(domNode).addClass('drag-over' );
       $('.custom-drag-layer').addClass('over-page-bottom');
       $(domNode).parent('.page-tile').siblings('.gutter').addClass('again-2-drag-over');
     }
 
-    if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
+    if (this.props.isOverCurrent && !nextProps.isOverCurrent && !this.props.pageTree.footer) {
       var domNode = findDOMNode(this);
       $(domNode).removeClass('drag-over');
       $('.custom-drag-layer').removeClass('over-page-bottom');
