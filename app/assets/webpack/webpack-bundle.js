@@ -52554,7 +52554,7 @@
 	    _this2.handleSitemapShareClick = _this2.handleSitemapShareClick.bind(_this2);
 	    _this2.toggleCommentState = _this2.toggleCommentState.bind(_this2);
 	    _this2.toggleInductionState = _this2.toggleInductionState.bind(_this2);
-	    _this2.state = { name: props.name, showMainHeader: true, commentSidebarOpen: false };
+	    _this2.state = { name: props.name, showMainHeader: true, commentSidebarOpen: false, inductionSidebarOpen: false };
 	    return _this2;
 	  }
 	
@@ -52577,7 +52577,7 @@
 	  }, {
 	    key: 'toggleCommentState',
 	    value: function toggleCommentState(e) {
-	      this.setState({ commentSidebarOpen: !this.state.commentSidebarOpen });
+	      this.setState({ commentSidebarOpen: !this.state.commentSidebarOpen, inductionSidebarOpen: false });
 	      $('.sitemap-right-sidebar').toggleClass('open');
 	      $('.comment-list').toggleClass('open');
 	      $('.sitemap-induction-sidebar').removeClass('open');
@@ -52585,6 +52585,7 @@
 	  }, {
 	    key: 'toggleInductionState',
 	    value: function toggleInductionState(e) {
+	      this.setState({ inductionSidebarOpen: !this.state.inductionSidebarOpen, commentSidebarOpen: false });
 	      $('.sitemap-induction-sidebar').toggleClass('open');
 	      $('.sitemap-right-sidebar').removeClass('open');
 	      $('.comment-list').removeClass('open');
@@ -52617,71 +52618,51 @@
 	        { className: 'react-public-header' },
 	        _react2.default.createElement(
 	          'div',
+	          { className: 'business-name' },
+	          _react2.default.createElement(
+	            'h3',
+	            { className: 'site-map-name' },
+	            this.props.business.name
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
 	          { className: 'row' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'col-xs-4' },
+	            { className: 'col-xs-8 col-xs-offset-2 text-center shared-details' },
 	            _react2.default.createElement(
-	              'div',
-	              { className: 'row' },
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'col-xs-9' },
-	                _react2.default.createElement(
-	                  'h3',
-	                  { className: 'site-map-name' },
-	                  this.props.business.name
-	                )
-	              )
+	              'h1',
+	              { className: 'truncate' },
+	              this.props.name
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'last-updated' },
+	              'Last updated ',
+	              this.props.updatedAt
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'page-count' },
+	              this.getPageCount(),
+	              ' ',
+	              this.getPageCount() == 1 ? 'Page' : 'Pages'
 	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'header-options' },
+	          _react2.default.createElement(
+	            'a',
+	            { href: 'javascript:void(0)', className: this.state.commentSidebarOpen ? 'active' : '', onClick: this.toggleCommentState },
+	            _react2.default.createElement('span', { className: 'icon-comment-circle' })
 	          ),
 	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-xs-4' },
-	            _react2.default.createElement(
-	              'ul',
-	              null,
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                this.props.name
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  'span',
-	                  { className: 'last-updated' },
-	                  'Last updated ',
-	                  this.props.updatedAt
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                this.getPageCount(),
-	                ' ',
-	                this.getPageCount() == 1 ? 'Page' : 'Pages'
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-xs-4' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'pull-right' },
-	              _react2.default.createElement(
-	                'a',
-	                { href: 'javascript:void(0)', className: 'btn btn-toggle-comments', onClick: this.toggleCommentState },
-	                'Comments'
-	              ),
-	              _react2.default.createElement(
-	                'a',
-	                { href: 'javascript:void(0)', className: 'btn btn-help', onClick: this.toggleInductionState },
-	                'Help'
-	              )
-	            )
+	            'a',
+	            { href: 'javascript:void(0)', className: this.state.inductionSidebarOpen ? 'active' : '', onClick: this.toggleInductionState },
+	            _react2.default.createElement('span', { className: 'icon-question-circle' })
 	          )
 	        )
 	      );

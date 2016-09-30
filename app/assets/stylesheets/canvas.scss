@@ -668,7 +668,7 @@
 }
 
 .sitemap-sections {
-  padding-bottom: 130px;
+  padding-bottom: 70px;
 }
 
 .sitemap-left-sidebar {
@@ -2567,7 +2567,9 @@
   padding: 22px 0 0 0;
   .footer-page {
     display: inline-block;
-    padding-left: 20px;
+    + .footer-page {
+      padding-left: 22px;
+    }
   }
   > span {
     position: absolute;
@@ -2933,6 +2935,11 @@
   }
 }
 
+.footer-page-list {
+  padding: 0;
+  margin: 0;
+}
+
 .animated-bar-share {
   position: absolute;
   left: 0;
@@ -2966,5 +2973,117 @@
   }
   + .sitemap-section-tab {
     border-left: solid 1px #f9fafc;
+  }
+}
+
+.shared-view {
+
+  .page-container .tile-more li.second-item,
+  .page-tile-clone .tile-more li.second-item,
+  .footer-page .tile-more li.second-item {
+    top: 6px;
+  }
+
+  .page-container .tile-more li,
+  .page-tile-clone .tile-more li,
+  .footer-page .tile-more li {
+    height: calc(100% - 6px);
+  }
+
+  .react-public-header {
+    min-height: 137px;
+    position: relative;
+    background: $primaryWhite;
+    border: solid 3px #f9fafc;
+    border-bottom: 0;
+    padding: 0 50px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    h1 {
+      color: #262b30;
+      font-size: 36px;
+      margin: 0;
+      line-height: 42px;
+      font-weight: 400;
+      margin-top: 20px;
+      &.truncate {
+        max-width: 95%;
+      }
+    }
+
+    .business-name {
+      position: absolute;
+      color: $primaryBlack;
+      left: 50px;
+      top: 50%;
+      margin-top: -7px;
+      max-width: 250px;
+      h3 {
+        font-size: 14px;
+        font-weight: 400;
+        margin: 0;
+      }
+    }
+
+    .last-updated {
+      color: #a3acb5;
+      @extend .font-14;
+      margin-bottom: 4px;
+    }
+
+    .page-count {
+      color: #d6d8da;
+      @extend .font-12; 
+    }
+  }
+
+  .first-page {
+    display: none;
+  }
+
+  .page-container.level-0 {
+    padding-top: 250px!important;
+  }
+
+  .section-list {
+    top: 137px;
+  }
+
+  .shared-details {
+    span {
+      display: block;
+      position: relative;
+      right: auto;
+    }
+  }
+
+  .sitemap-footer {
+    left: 0;
+    width: 100%;
+  }
+
+  .sitemap-right-sidebar {
+    top: 138px!important;
+    padding-top: 25px;
+  }
+
+  .header-options {
+    position: absolute;
+    right: 50px;
+    top: 50%;
+    margin-top: -18px;
+    a {
+      font-size: 26px;
+      color: #d7d9db;
+      display: inline-block;
+      &:hover, &.active {
+        color: $primaryPink;
+      }
+      + a {
+        margin-left: 30px;
+      }
+    }
   }
 }
