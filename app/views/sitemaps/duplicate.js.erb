@@ -1,5 +1,5 @@
 $("div.flash-message").html("<%==j render partial: 'shared/flash_message' %>");
-$("ul.notifications-listing").replaceWith("<%==j render 'shared/notifications' %>");
+$("ul.notifications-listing").replaceWith("<%==j render @notifications %>");
 
 $("<%==j render partial: 'home/sitemap', locals: {sitemap: @duplicate} %>").insertAfter($('div.sitemap-container[data-id=<%= @sitemap.id %>]').closest('div.sitemap-outer-wrapper'))
 $("body").append("<%==j javascript_include_tag('moreOptions', 'rename_sitemap', 'delete_sitemap') %>");
