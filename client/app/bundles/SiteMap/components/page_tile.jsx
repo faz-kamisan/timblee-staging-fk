@@ -124,7 +124,9 @@ class PageTile extends React.Component {
                 </li>
               }
               <li className="second-item">
-                <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'></span>
+                <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'>
+                  <span className="card-tooltip">View Comments</span>
+                </span>
               </li>
             </ul>
           </div>
@@ -177,7 +179,9 @@ class PageTile extends React.Component {
                 </li>
               }
               <li className="second-item">
-                <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'></span>
+                <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'>
+                  <span className="card-tooltip">View Comments</span>
+                </span>
               </li>
             </ul>
           </div>
