@@ -16,12 +16,14 @@ SettingsTabs.prototype.bindEvents = function() {
     });
   };
 
+  $('.animated-tab.active').click();
+
 };
 
-$(function() {
+$($(window).on('load', function() {
   var options = {
     navTabUl : 'ul.nav-tabs',
     tabs : [ '#team', '#my-info', '#personalization', '#billing' ]
   }
   new SettingsTabs(options).bindEvents();
-});
+}));
