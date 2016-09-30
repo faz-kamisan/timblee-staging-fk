@@ -56,18 +56,21 @@ class InviteUserBox extends React.Component {
   }
 
   handleEmailShare(e) {
-    this.props.onShare(this.refs.emails.value.split(' '));
-    $.ajax({
-      url: '/sitemaps/' + this.props.sitemapId + '/share_via_email',
-      method: 'post',
-      dataType: 'JSON',
-      data: { emails: this.refs.emails.value, custom_message: this.state.lastFinalisedMessage },
-      error: (result) => {
-        document.setFlash(result.responseText)
-      },
-      complete: (result) => {
-      }
-    });
+    var emailsValue = this.refs.emails.value.trim()
+    if(value.length > 0) {
+      this.props.onShare(emailsValue.split(' '));
+      $.ajax({
+        url: '/sitemaps/' + this.props.sitemapId + '/share_via_email',
+        method: 'post',
+        dataType: 'JSON',
+        data: { emails: emailsValue, custom_message: this.state.lastFinalisedMessage },
+        error: (result) => {
+          document.setFlash(result.responseText)
+        },
+        complete: (result) => {
+        }
+      });
+    }
   }
 
   render() {
@@ -84,18 +87,19 @@ class InviteUserBox extends React.Component {
         <div key='upper'>
           <input type='text' name='emails' id='emails' ref='emails'></input>
         </div>
-        { !this.state.messageEditorActivated &&
-          <div key='lower'>
-            <p>{this.state.customMessage}</p>
-            <a onClick={this.activateMessageEditor}>Edit Message</a>
-          </div>
-        }
         <div className="already-emailed">
           <p>These people have already been emailed</p>
           <ul>
             {renderdsharedUsers}
           </ul>
+          <a href="#" id="show-others">+ 2 others</a>
         </div>
+        { !this.state.messageEditorActivated &&
+          <div key='lower' className="message-preview">
+            <p>{this.state.customMessage}</p>
+            <a onClick={this.activateMessageEditor}>Edit Message</a>
+          </div>
+        }
         { this.state.messageEditorActivated &&
           <div key='lower' className="comment-input">
             <textarea value={this.state.customMessage} placeholder='Include an optional personal message.' onChange={this.handleOnCustomMessageChange}></textarea>
@@ -108,7 +112,7 @@ class InviteUserBox extends React.Component {
         }
         <div className="bottom-btns text-center">
           <a href="#sitemap-share-preview-modal" data-dismiss="modal" data-toggle='modal' className="btn btn-grey btn-modal-open">Here's what they'll see</a>
-          <button className='btn btn-pink-hover' onClick={this.handleEmailShare}>Send the email</button>
+          <button className='btn btn-pink-hover' data-dismiss="modal" onClick={this.handleEmailShare}>Send the email</button>
         </div>
       </div>
     );

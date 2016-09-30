@@ -47707,12 +47707,12 @@
 	          { key: section.id, className: 'sitemap-section-tab' + (_this.state.currentSectionId == section.id ? ' active' : ''), onClick: function onClick(e) {
 	              _this.changeCurrentSectionId(section.id);
 	            }, style: { width: tabWidth } },
-	          _react2.default.createElement(
+	          !section.default && _react2.default.createElement(
 	            'span',
-	            { className: 'pull-left', onClick: function onClick() {
+	            { className: 'remove-section', onClick: function onClick() {
 	                _this.removeSection(section.id);
 	              } },
-	            'remove'
+	            '×'
 	          ),
 	          _react2.default.createElement(
 	            'span',
@@ -61469,7 +61469,7 @@
 	                null,
 	                _react2.default.createElement(
 	                  'li',
-	                  { className: _this.state.urlView ? ' active' : '', onClick: function onClick(e) {
+	                  { className: 'animated-tab' + (_this.state.urlView ? ' active' : ''), onClick: function onClick(e) {
 	                      _this.setState({ urlView: true });
 	                    } },
 	                  _react2.default.createElement('span', { className: 'icon-url' }),
@@ -61477,12 +61477,13 @@
 	                ),
 	                _react2.default.createElement(
 	                  'li',
-	                  { className: _this.state.urlView == false ? ' active' : '', onClick: function onClick(e) {
+	                  { className: 'animated-tab' + (_this.state.urlView == false ? ' active' : ''), onClick: function onClick(e) {
 	                      _this.setState({ urlView: false });
 	                    } },
 	                  _react2.default.createElement('span', { className: 'icon-email' }),
 	                  ' Email'
-	                )
+	                ),
+	                _react2.default.createElement('li', { className: 'animated-bar-share' })
 	              )
 	            ),
 	            _react2.default.createElement(
@@ -61696,17 +61697,20 @@
 	  }, {
 	    key: 'handleEmailShare',
 	    value: function handleEmailShare(e) {
-	      this.props.onShare(this.refs.emails.value.split(' '));
-	      $.ajax({
-	        url: '/sitemaps/' + this.props.sitemapId + '/share_via_email',
-	        method: 'post',
-	        dataType: 'JSON',
-	        data: { emails: this.refs.emails.value, custom_message: this.state.lastFinalisedMessage },
-	        error: function error(result) {
-	          document.setFlash(result.responseText);
-	        },
-	        complete: function complete(result) {}
-	      });
+	      var emailsValue = this.refs.emails.value.trim();
+	      if (value.length > 0) {
+	        this.props.onShare(emailsValue.split(' '));
+	        $.ajax({
+	          url: '/sitemaps/' + this.props.sitemapId + '/share_via_email',
+	          method: 'post',
+	          dataType: 'JSON',
+	          data: { emails: emailsValue, custom_message: this.state.lastFinalisedMessage },
+	          error: function error(result) {
+	            document.setFlash(result.responseText);
+	          },
+	          complete: function complete(result) {}
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -61727,20 +61731,6 @@
 	          { key: 'upper' },
 	          _react2.default.createElement('input', { type: 'text', name: 'emails', id: 'emails', ref: 'emails' })
 	        ),
-	        !this.state.messageEditorActivated && _react2.default.createElement(
-	          'div',
-	          { key: 'lower' },
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            this.state.customMessage
-	          ),
-	          _react2.default.createElement(
-	            'a',
-	            { onClick: this.activateMessageEditor },
-	            'Edit Message'
-	          )
-	        ),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'already-emailed' },
@@ -61753,6 +61743,25 @@
 	            'ul',
 	            null,
 	            renderdsharedUsers
+	          ),
+	          _react2.default.createElement(
+	            'a',
+	            { href: '#', id: 'show-others' },
+	            '+ 2 others'
+	          )
+	        ),
+	        !this.state.messageEditorActivated && _react2.default.createElement(
+	          'div',
+	          { key: 'lower', className: 'message-preview' },
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            this.state.customMessage
+	          ),
+	          _react2.default.createElement(
+	            'a',
+	            { onClick: this.activateMessageEditor },
+	            'Edit Message'
 	          )
 	        ),
 	        this.state.messageEditorActivated && _react2.default.createElement(
@@ -61789,7 +61798,7 @@
 	          ),
 	          _react2.default.createElement(
 	            'button',
-	            { className: 'btn btn-pink-hover', onClick: this.handleEmailShare },
+	            { className: 'btn btn-pink-hover', 'data-dismiss': 'modal', onClick: this.handleEmailShare },
 	            'Send the email'
 	          )
 	        )

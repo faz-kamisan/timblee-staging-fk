@@ -39,6 +39,11 @@ AnimateTab.prototype.bindEvents = function() {
 };
 
 $(window).on('load', function() {
+  
+  $('.btn-share').on('click', function() {
+    $('.animated-bar-share').css('left', 0);
+  });
+
   var tab = $('.animated-tab'),
       options = {
         animatedTab: tab,
@@ -50,9 +55,16 @@ $(window).on('load', function() {
         animatedBar: tab.siblings('.animated-bar-rails'),
         listItemMargin: 27
       },
+      optionsShare = {
+        animatedTab: tab,
+        animatedBar: tab.siblings('.animated-bar-share'),
+        listItemMargin: 0
+      },
       animateTab = new AnimateTab(options);
       animateTabSettings = new AnimateTab(optionsSettings);
+      animateTabShare = new AnimateTab(optionsShare);
 
   animateTab.move();
   animateTabSettings.bindEvents();
+  animateTabShare.move();
 });
