@@ -183,7 +183,7 @@
         <h4>Thanks <%= current_user.full_name %></h4>
         <p>We're so excited to have you on board! If you ever have a question or <br> need a hand with anything, we're just a click away via the settings menu <br> and would love to help!</p>
         <p>Lots of Love,</p>
-        <%= image_tag('team.svg', class: 'team-logo') %>
+        <%= image_tag('team_text.svg', class: 'team-logo') %>
         <div class="modal-button text-center">
           <%= form_for Sitemap.new do |f| %>
             <%= f.hidden_field :folder_id %>
