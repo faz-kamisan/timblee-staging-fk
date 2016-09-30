@@ -52251,7 +52251,15 @@
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'col-xs-9' },
-	                _react2.default.createElement('span', { className: 'logo-dark relative' }),
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'logo-dark relative' },
+	                  _react2.default.createElement(
+	                    'a',
+	                    { href: '/home/dashboard' },
+	                    _react2.default.createElement('img', { src: '/assets/go-back.svg', className: 'go-back-link' })
+	                  )
+	                ),
 	                _react2.default.createElement('input', { value: this.state.name, onChange: this.handleNameChange, onBlur: this.handleNameInputBlur, className: "site-map-name" + (this.state.nameFocused ? '' : ' hide'), ref: 'sitemapNameInput' }),
 	                _react2.default.createElement(
 	                  'h3',
