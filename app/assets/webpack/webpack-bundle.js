@@ -48178,6 +48178,13 @@
 	      this.props.setSelectedPage(this.props.pageTree);
 	    }
 	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate(prevProps, prevState) {
+	      if (prevState.nameChangeDisabled && !this.state.nameChangeDisabled) {
+	        this.refs.nameInput.focus();
+	      }
+	    }
+	  }, {
 	    key: 'handleNameChange',
 	    value: function handleNameChange(event) {
 	      var name = event.target.value;
@@ -48212,7 +48219,7 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      if (this.props.pageTree.newRecord) {
-	        $(this.refs.nameInput).focus();
+	        this.refs.nameInput.focus();
 	      }
 	    }
 	  }, {
@@ -48256,7 +48263,15 @@
 	              _react2.default.createElement(
 	                'li',
 	                { className: 'second-item' },
-	                _react2.default.createElement('span', { className: 'icon-page-comments tile-icons', onClick: this.setSelectedPage, 'data-toggle': 'modal', 'data-target': '#page-comments-modal' })
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'icon-page-comments tile-icons', onClick: this.setSelectedPage, 'data-toggle': 'modal', 'data-target': '#page-comments-modal' },
+	                  _react2.default.createElement(
+	                    'span',
+	                    { className: 'card-tooltip' },
+	                    'View Comments'
+	                  )
+	                )
 	              )
 	            )
 	          ),
@@ -48345,7 +48360,15 @@
 	              _react2.default.createElement(
 	                'li',
 	                { className: 'second-item' },
-	                _react2.default.createElement('span', { className: 'icon-page-comments tile-icons', onClick: this.setSelectedPage, 'data-toggle': 'modal', 'data-target': '#page-comments-modal' })
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'icon-page-comments tile-icons', onClick: this.setSelectedPage, 'data-toggle': 'modal', 'data-target': '#page-comments-modal' },
+	                  _react2.default.createElement(
+	                    'span',
+	                    { className: 'card-tooltip' },
+	                    'View Comments'
+	                  )
+	                )
 	              )
 	            )
 	          ),
@@ -48564,7 +48587,7 @@
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
 	      if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
-	        if (this.props.pageTree.parentId && !props.pageTree.footer) {
+	        if (this.props.pageTree.parentId && !this.props.pageTree.footer) {
 	          var domNode = (0, _reactDom.findDOMNode)(this);
 	          $(domNode).addClass('drag-over');
 	          $('.custom-drag-layer').addClass('over-page-top');
@@ -48578,7 +48601,7 @@
 	
 	      if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
 	        // You can use this as leave handler
-	        if (this.props.pageTree.parentId && !props.pageTree.footer) {
+	        if (this.props.pageTree.parentId && !this.props.pageTree.footer) {
 	          var domNode = (0, _reactDom.findDOMNode)(this);
 	          $(domNode).removeClass('drag-over');
 	          $('.custom-drag-layer').removeClass('over-page-top');

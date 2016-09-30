@@ -2158,6 +2158,13 @@
     margin-left: -55px;
     background: $primaryPink;
   }
+  &:hover {
+    .card-tooltip {
+      top: 41px;
+      visibility: visible;
+      opacity: 1;
+    }
+  }
 }
 
 .icon-page-change {
@@ -2384,12 +2391,36 @@
     line-height: 45px;
     background: #EEEEEE;
     cursor: pointer;
+    position: relative;
     .truncate {
       max-width: calc(100% - 10px);
+    }
+    &:before {
+      border: 1px solid #d6d8da;
+      content: "";
+      height: 45px;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 1px;
+      z-index: 5;
     }
     &.active {
       background: #F9FAFC;
       border-bottom: solid 1px #EEEEEE;
+      &:before {
+        display: none;
+      }
+      + li {
+        &:before {
+          display: none;
+        }
+      }
+    }
+    &:first-child {
+      &:before {
+        display: none;
+      }
     }
   }
 }

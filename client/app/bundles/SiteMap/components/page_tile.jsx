@@ -69,6 +69,12 @@ class PageTile extends React.Component {
     this.props.setSelectedPage(this.props.pageTree)
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if(prevState.nameChangeDisabled && !this.state.nameChangeDisabled) {
+      this.refs.nameInput.focus();
+    }
+  }
+
   handleNameChange(event) {
     var name = event.target.value
     this.setState({name: name})
@@ -96,7 +102,7 @@ class PageTile extends React.Component {
 
   componentDidMount() {
     if(this.props.pageTree.newRecord) {
-      $(this.refs.nameInput).focus();
+      this.refs.nameInput.focus();
     }
   }
 
@@ -124,7 +130,9 @@ class PageTile extends React.Component {
                 </li>
               }
               <li className="second-item">
-                <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'></span>
+                <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'>
+                  <span className="card-tooltip">View Comments</span>
+                </span>
               </li>
             </ul>
           </div>
@@ -177,7 +185,9 @@ class PageTile extends React.Component {
                 </li>
               }
               <li className="second-item">
-                <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'></span>
+                <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'>
+                  <span className="card-tooltip">View Comments</span>
+                </span>
               </li>
             </ul>
           </div>
