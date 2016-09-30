@@ -87,9 +87,12 @@ class LeftSidebar extends React.Component {
                 <i className="icon-search"></i>
               </label>
             </form>
-            <ul className="page-type-list clearfix">
+            <ul className={"page-type-list clearfix" + ((filteredPageTypes.length == 0) ? ' hide' : '')}>
               {pageTypeComponents}
             </ul>
+            <div className={'text-center no-match-text' + ((filteredPageTypes.length == 0) ? '' : ' hide')}>
+              There are no page types that match '{this.state.searchQuery}'
+            </div>
           </div>
           :
           <div className="expand-btn" onClick={this.toogleExpand}>

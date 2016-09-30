@@ -61970,8 +61970,15 @@
 	          ),
 	          _react2.default.createElement(
 	            'ul',
-	            { className: 'page-type-list clearfix' },
+	            { className: "page-type-list clearfix" + (filteredPageTypes.length == 0 ? ' hide' : '') },
 	            pageTypeComponents
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'text-center no-match-text' + (filteredPageTypes.length == 0 ? '' : ' hide') },
+	            'There are no page types that match \'',
+	            this.state.searchQuery,
+	            '\''
 	          )
 	        ) : _react2.default.createElement(
 	          'div',
