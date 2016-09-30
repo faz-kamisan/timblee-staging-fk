@@ -597,8 +597,12 @@
     width: 200px;
     height: 87px;
     @include border-radius(5px);
-    background: transparent;
-    border: 1px dashed $primaryGrey;
+    background: #F9FAFC;
+    border: 1px dashed #E3E5E7;
+    color: #E3E5E7;
+    padding-top: 24px;
+    font-size: 12px;
+    z-index: 10;
     text-align: center;
     transition: .35s;
     &.drag-over {
@@ -1370,6 +1374,7 @@
       vertical-align: middle;
       margin-left: 12px;
       margin-bottom: 18px;
+      margin-top: 1px;
       padding: 0;
       .user-invite {
         position: relative;
@@ -2545,18 +2550,31 @@
 }
 
 .sitemap-footer {
-  border-top: 1px solid black;
-  height: 100px;
+  border-top: 1px dashed #d6d8da;
+  height: 130px;
   position: fixed;
   left: 0px;
   bottom: 0px;
-  width: 100%;
+  width: calc(100% - 372px);
   background: #f9fafc;
-  z-index: 7;
+  z-index: 11;
   text-align: center;
+  left: 372px;
+  padding: 22px 0 0 0;
   .footer-page {
     display: inline-block;
     padding-left: 20px;
+  }
+  > span {
+    position: absolute;
+    left: 50%;
+    top: -10px;
+    margin-left: -35px;
+    background: #f9fafc;
+    color: #d6d8da;
+    z-index: 10;
+    font-size: 12px;
+    padding: 0 18px;
   }
 }
 
@@ -2819,5 +2837,29 @@
       content: 'add sub level page';
       display: block;
     }
+  }
+}
+
+.already-emailed {
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    padding-right: 50px;
+    color: #62717f;
+    font-size: 14px;
+    position: relative;
+    span {
+      position: absolute;
+      right: 0;
+      top: 0;
+      font-size: 17px;
+      color: $primaryPink;
+    }
+  }
+  p {
+    color: #d6d8da;
+    font-size: 14px;
   }
 }

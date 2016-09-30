@@ -47,8 +47,12 @@ class SitemapShareModal extends React.Component {
               </button>
               <h4 className="modal-title">Share Your Sitemap</h4>
               <ul>
-                <li className={ _this.state.urlView ? ' active' : '' } onClick={ function(e) { _this.setState({urlView: true }) } }>URL</li>
-                <li className={ _this.state.urlView == false ? ' active' : '' } onClick={ function(e) { _this.setState({urlView: false }) } }>Email</li>
+                <li className={ _this.state.urlView ? ' active' : '' } onClick={ function(e) { _this.setState({urlView: true }) } }>
+                  <span className="icon-url"></span> URL
+                </li>
+                <li className={ _this.state.urlView == false ? ' active' : '' } onClick={ function(e) { _this.setState({urlView: false }) } }>
+                  <span className="icon-email"></span> Email
+                </li>
               </ul>
             </div>
             <div className={ 'modal-body' + (!_this.state.urlView ? ' hide' : '') }>

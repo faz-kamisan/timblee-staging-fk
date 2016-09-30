@@ -78,7 +78,7 @@ class Footer extends React.Component {
       )
     })
     return connectDropTarget(
-      <div className={'sitemap-footer hide' + (this.props.leftSidebarExpanded ? '' : ' left-sidebar-contracted')}>
+      <div className={'sitemap-footer' + (this.props.leftSidebarExpanded ? '' : ' left-sidebar-contracted')}>
         <span>Footer</span>
         { (usablePages.length > 0) &&
           <ul className='footer-page-list'>

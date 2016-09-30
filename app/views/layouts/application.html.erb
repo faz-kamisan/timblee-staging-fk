@@ -9,8 +9,35 @@
   <% elsif Rails.env == 'production' %>
     <%= javascript_include_tag 'production_hotjar', 'data-turbolinks-track' => true %>
   <% end %>
-  <script async src="//use.typekit.net/rru5bof.js"></script>
-  <script>try{Typekit.load({ async: true });}catch(e){}</script>
+  <script type="text/javascript">
+    (function() {
+    var config = {
+      kitId: 'rru5bof',
+      scriptTimeout: 3000
+    };
+    var h = document.getElementsByTagName('html')[0];
+    h.className += ' wf-loading';
+    var t = setTimeout(function() {
+      h.className = h.className.replace(/(\s|^)wf-loading(\s|$)/g, ' ');
+      h.className += ' wf-inactive';
+    }, config.scriptTimeout);
+    var d = false;
+    var tk = document.createElement('script');
+    tk.src = '//use.typekit.net/' + config.kitId + '.js';
+    tk.type = 'text/javascript';
+    tk.async = 'true';
+    tk.onload = tk.onreadystatechange = function() {
+      var rs = this.readyState;
+      if (d || rs && rs != 'complete' && rs != 'loaded') return;
+      d = true;
+      clearTimeout(t);
+      try { Typekit.load(config); } catch (e) {}
+    };
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(tk, s);
+  })();
+
+  </script>
   <%= csrf_meta_tags %>
 </head>
 
