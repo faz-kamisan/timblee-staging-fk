@@ -103,7 +103,11 @@ class Header extends React.Component {
           <div className="col-xs-5">
             <div className="row">
               <div className="col-xs-9">
-                <span className="logo-dark relative"></span>
+                <span className="logo-dark relative">
+                  <a href="/home/dashboard">
+                    <img src="/assets/go-back.svg" className="go-back-link"></img>
+                  </a>
+                </span>
                 <input value = {this.state.name} onChange={this.handleNameChange} onBlur={this.handleNameInputBlur} className={"site-map-name" + (this.state.nameFocused ? '' : ' hide')} ref='sitemapNameInput' />
                 <h3 className={"site-map-name truncate " + (this.state.nameFocused ? ' hide' : '')} onClick={this.handleNameInputFocus}>{this.state.name}</h3>
               </div>

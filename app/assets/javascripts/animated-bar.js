@@ -10,7 +10,7 @@ AnimateTab.prototype.calcuate = function($this) {
     _this.animatedBar.animate({left: $this.position().left, width: $this.outerWidth() }, 200);
   }
   else {
-    _this.animatedBar.animate({left: $this.position().left + _this.listItemMargin, width: $this.outerWidth() }, 200); 
+    _this.animatedBar.animate({left: $this.position().left + _this.listItemMargin, width: $this.outerWidth() }, 200);
   }
 };
 
@@ -20,7 +20,7 @@ AnimateTab.prototype.checkOnLoad = function($this) {
     _this.animatedBar.animate({left: $this.position().left, width: $this.outerWidth() }, 200);
   }
   else if($this.hasClass('active')) {
-    _this.animatedBar.animate({left: $this.position().left + _this.listItemMargin, width: $this.outerWidth() }, 200); 
+    _this.animatedBar.animate({left: $this.position().left + _this.listItemMargin, width: $this.outerWidth() }, 200);
   }
 };
 
@@ -28,7 +28,7 @@ AnimateTab.prototype.move = function() {
   var _this = this;
   if(this.animatedTab.length) {
     _this.animatedTab.on('click', function() {
-      _this.calcuate($(this));  
+      _this.calcuate($(this));
     });
   }
 };
@@ -50,9 +50,16 @@ $(window).on('load', function() {
         animatedBar: tab.siblings('.animated-bar-rails'),
         listItemMargin: 27
       },
+      optionsShare = {
+        animatedTab: tab,
+        animatedBar: tab.siblings('.animated-bar-share'),
+        listItemMargin: 0
+      },
       animateTab = new AnimateTab(options);
       animateTabSettings = new AnimateTab(optionsSettings);
+      animateTabShare = new AnimateTab(optionsShare);
 
   animateTab.move();
   animateTabSettings.bindEvents();
+  animateTabShare.move();
 });

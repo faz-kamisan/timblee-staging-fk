@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setSaving, changeUpdatedAt, removeSection } from '../actions'
+import { setSaving, setSelectedSection, changeUpdatedAt } from '../actions'
 import SectionContainer from '../components/section_container'
 
 const mapStateToProps = (state) => {
@@ -8,8 +8,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    removeSection: (id) => {
-      dispatch(removeSection(id));
+    setSelectedSection: (section) => {
+      dispatch(setSelectedSection(section));
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));

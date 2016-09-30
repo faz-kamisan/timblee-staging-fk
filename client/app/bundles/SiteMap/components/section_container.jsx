@@ -22,10 +22,8 @@ class SectionContainer extends React.Component {
     this.setState({currentSectionId: id})
   }
 
-  removeSection(id) {
-    this.setState({currentSectionId: this.props})
-    var index = this.props.sections.findIndex(function(section) {return(section.id == id)})
-    this.props.removeSection(id);
+  setSelectedSection(section) {
+    this.props.setSelectedSection(section);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -40,7 +38,9 @@ class SectionContainer extends React.Component {
     var renderedSectionTabs = this.props.sections.map(function(section, index) {
       return (
         <li key={section.id} className={'sitemap-section-tab' + (_this.state.currentSectionId == section.id ? ' active' : '')} onClick={function(e) { _this.changeCurrentSectionId(section.id) } } style={ {width: tabWidth} }>
-          <span className='pull-left' onClick={function() {_this.removeSection(section.id)} }>remove</span>
+          { !section.default &&
+            <span className='remove-section' onClick={function() {_this.setSelectedSection(section)} } data-target='#delete-section-modal' data-toggle='modal'>&times;</span>
+          }
           <span className="truncate">{section.name}</span>
         </li>
       )

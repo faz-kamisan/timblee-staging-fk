@@ -12,13 +12,14 @@ class SuperAdmin::MainController < ApplicationController
     user = @business.owner
     user.admin_access = true
     sign_in(user, bypass: true)
+    session[:proxy_user_id] = user.id
     redirect_to root_path
   end
 
   private
 
     def check_user_is_super_admin
-      unless current_user.is_super_admin
+      unless current_user.is_super_admin || proxy_login?
         redirect_to home_dashboard_path, alert: 'You have to be a super admin for this.'
       end
     end
