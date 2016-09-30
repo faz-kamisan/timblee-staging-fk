@@ -66736,7 +66736,7 @@
 	                null,
 	                _react2.default.createElement(
 	                  'li',
-	                  { className: _this.state.urlView ? ' active' : '', onClick: function onClick(e) {
+	                  { className: 'animated-tab' + (_this.state.urlView ? ' active' : ''), onClick: function onClick(e) {
 	                      _this.setState({ urlView: true });
 	                    } },
 	                  _react2.default.createElement('span', { className: 'icon-url' }),
@@ -66744,12 +66744,13 @@
 	                ),
 	                _react2.default.createElement(
 	                  'li',
-	                  { className: _this.state.urlView == false ? ' active' : '', onClick: function onClick(e) {
+	                  { className: 'animated-tab' + (_this.state.urlView == false ? ' active' : ''), onClick: function onClick(e) {
 	                      _this.setState({ urlView: false });
 	                    } },
 	                  _react2.default.createElement('span', { className: 'icon-email' }),
 	                  ' Email'
-	                )
+	                ),
+	                _react2.default.createElement('li', { className: 'animated-bar-share' })
 	              )
 	            ),
 	            _react2.default.createElement(
@@ -66994,20 +66995,6 @@
 	          { key: 'upper' },
 	          _react2.default.createElement('input', { type: 'text', name: 'emails', id: 'emails', ref: 'emails' })
 	        ),
-	        !this.state.messageEditorActivated && _react2.default.createElement(
-	          'div',
-	          { key: 'lower' },
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            this.state.customMessage
-	          ),
-	          _react2.default.createElement(
-	            'a',
-	            { onClick: this.activateMessageEditor },
-	            'Edit Message'
-	          )
-	        ),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'already-emailed' },
@@ -67020,6 +67007,25 @@
 	            'ul',
 	            null,
 	            renderdsharedUsers
+	          ),
+	          _react2.default.createElement(
+	            'a',
+	            { href: '#', id: 'show-others' },
+	            '+ 2 others'
+	          )
+	        ),
+	        !this.state.messageEditorActivated && _react2.default.createElement(
+	          'div',
+	          { key: 'lower', className: 'message-preview' },
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            this.state.customMessage
+	          ),
+	          _react2.default.createElement(
+	            'a',
+	            { onClick: this.activateMessageEditor },
+	            'Edit Message'
 	          )
 	        ),
 	        this.state.messageEditorActivated && _react2.default.createElement(

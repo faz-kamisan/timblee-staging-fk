@@ -47,12 +47,13 @@ class SitemapShareModal extends React.Component {
               </button>
               <h4 className="modal-title">Share Your Sitemap</h4>
               <ul>
-                <li className={ _this.state.urlView ? ' active' : '' } onClick={ function(e) { _this.setState({urlView: true }) } }>
+                <li className={ 'animated-tab' + (_this.state.urlView ? ' active' : '') } onClick={ function(e) { _this.setState({urlView: true }) } }>
                   <span className="icon-url"></span> URL
                 </li>
-                <li className={ _this.state.urlView == false ? ' active' : '' } onClick={ function(e) { _this.setState({urlView: false }) } }>
+                <li className={ 'animated-tab' +  (_this.state.urlView == false ? ' active' : '') } onClick={ function(e) { _this.setState({urlView: false }) } }>
                   <span className="icon-email"></span> Email
                 </li>
+                <li className="animated-bar-share"></li>
               </ul>
             </div>
             <div className={ 'modal-body' + (!_this.state.urlView ? ' hide' : '') }>

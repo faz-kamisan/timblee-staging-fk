@@ -84,18 +84,19 @@ class InviteUserBox extends React.Component {
         <div key='upper'>
           <input type='text' name='emails' id='emails' ref='emails'></input>
         </div>
-        { !this.state.messageEditorActivated &&
-          <div key='lower'>
-            <p>{this.state.customMessage}</p>
-            <a onClick={this.activateMessageEditor}>Edit Message</a>
-          </div>
-        }
         <div className="already-emailed">
           <p>These people have already been emailed</p>
           <ul>
             {renderdsharedUsers}
           </ul>
+          <a href="#" id="show-others">+ 2 others</a>
         </div>
+        { !this.state.messageEditorActivated &&
+          <div key='lower' className="message-preview">
+            <p>{this.state.customMessage}</p>
+            <a onClick={this.activateMessageEditor}>Edit Message</a>
+          </div>
+        }
         { this.state.messageEditorActivated &&
           <div key='lower' className="comment-input">
             <textarea value={this.state.customMessage} placeholder='Include an optional personal message.' onChange={this.handleOnCustomMessageChange}></textarea>
