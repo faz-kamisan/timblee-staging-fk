@@ -61785,6 +61785,16 @@
 	      this.setState({ searchQuery: e.target.value });
 	    }
 	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      $('#page-type').on('focus', function () {
+	        $(this).prop('placeholder', 'Search page types');
+	      });
+	      $('#page-type').on('blur', function () {
+	        $(this).prop('placeholder', 'Page type');
+	      });
+	    }
+	  }, {
 	    key: 'getPageCount',
 	    value: function getPageCount() {
 	      var pageCount = 0;
@@ -61807,8 +61817,9 @@
 	    key: 'render',
 	    value: function render() {
 	      var _this = this;
+	      var searchQueryRegExp = new RegExp('^' + this.state.searchQuery, 'i');
 	      var filteredPageTypes = this.props.pageTypes.filter(function (pageType) {
-	        return pageType.name.toLowerCase().indexOf(_this.state.searchQuery.toLowerCase()) !== -1;
+	        return pageType.name.match(searchQueryRegExp);
 	      });
 	      var pageTypeComponents = filteredPageTypes.map(function (pageType, index) {
 	        return _react2.default.createElement(
@@ -61853,12 +61864,12 @@
 	          _react2.default.createElement(
 	            'form',
 	            { className: 'search-page-type' },
+	            _react2.default.createElement('input', { type: 'search', id: 'page-type', name: 'page-type', placeholder: 'Page type', onChange: this.handleSearch }),
 	            _react2.default.createElement(
 	              'label',
 	              { htmlFor: 'page-type' },
 	              _react2.default.createElement('i', { className: 'icon-search' })
-	            ),
-	            _react2.default.createElement('input', { type: 'search', id: 'page-type', name: 'page-type', placeholder: 'Page Type', onChange: this.handleSearch })
+	            )
 	          ),
 	          _react2.default.createElement(
 	            'ul',

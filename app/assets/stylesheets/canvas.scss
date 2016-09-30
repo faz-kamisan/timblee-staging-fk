@@ -821,6 +821,13 @@
     border: 0;
     margin: 13px 0;
     background: #262B30;
+    @include animate(.35s);
+    &:focus {
+      padding-left: 50px;
+      + label {
+        right: 330px;
+      }
+    }
   }
 
   label {
@@ -830,6 +837,7 @@
     z-index: 2;
     color: #c9cbcc;
     font-size: 16px;
+    @include animate(.35s);
   }
 
   input::-webkit-input-placeholder {

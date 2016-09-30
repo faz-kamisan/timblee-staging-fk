@@ -29,6 +29,15 @@ class LeftSidebar extends React.Component {
     this.setState({searchQuery: e.target.value})
   }
 
+  componentDidMount() {
+    $('#page-type').on('focus', function() {
+      $(this).prop('placeholder', 'Search page types')
+    })
+    $('#page-type').on('blur', function() {
+      $(this).prop('placeholder', 'Page type')
+    })
+  }
+
   getPageCount() {
     var pageCount = 0
     this.props.sections.forEach(function(section, index) {
@@ -49,7 +58,8 @@ class LeftSidebar extends React.Component {
 
   render() {
     var _this = this;
-    var filteredPageTypes = this.props.pageTypes.filter(function(pageType) { return(pageType.name.toLowerCase().indexOf(_this.state.searchQuery.toLowerCase()) !== -1) })
+    var searchQueryRegExp = new RegExp(('^' + this.state.searchQuery), 'i')
+    var filteredPageTypes = this.props.pageTypes.filter(function(pageType) { return(pageType.name.match(searchQueryRegExp)) })
     var pageTypeComponents = filteredPageTypes.map(function(pageType, index) {
       return <li key={pageType.id}><DraggablePageType name={pageType.name} iconName={pageType.icon_name} id={pageType.id} /></li>
     })
@@ -72,10 +82,10 @@ class LeftSidebar extends React.Component {
               </div>
             </div>
             <form className="search-page-type">
+              <input type="search" id="page-type" name="page-type" placeholder="Page type" onChange={this.handleSearch} />
               <label htmlFor="page-type">
                 <i className="icon-search"></i>
               </label>
-              <input type="search" id="page-type" name="page-type" placeholder="Page Type" onChange={this.handleSearch} />
             </form>
             <ul className="page-type-list clearfix">
               {pageTypeComponents}
