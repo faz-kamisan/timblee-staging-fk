@@ -50345,10 +50345,10 @@
 	            }, style: { width: tabWidth } },
 	          _react2.default.createElement(
 	            'span',
-	            { className: 'pull-left', onClick: function onClick() {
+	            { className: 'remove-section', onClick: function onClick() {
 	                _this.removeSection(section.id);
 	              } },
-	            'remove'
+	            '×'
 	          ),
 	          _react2.default.createElement(
 	            'span',

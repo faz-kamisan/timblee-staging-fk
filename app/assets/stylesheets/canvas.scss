@@ -667,6 +667,10 @@
   /*transition: .35s;*/
 }
 
+.sitemap-sections {
+  padding-bottom: 130px;
+}
+
 .sitemap-left-sidebar {
   position: fixed;
   width: 372px;
@@ -2923,6 +2927,9 @@
     text-decoration: underline;
     display: inline-block;
     margin-top: 10px;
+    &:hover {
+      color: $primaryPink;
+    }
   }
 }
 
@@ -2934,4 +2941,30 @@
   width: 91px;
   background: $primaryPink;
   z-index: 3;
+}
+
+.sitemap-section-tab {
+  position: relative;
+  color: #d6d8da;
+  &.active {
+    color: #414952;
+    .remove-section {
+      color: #414952;
+    }
+  }
+  .truncate {
+    padding-left: 15px;
+  }
+  .remove-section {
+    position: absolute;
+    left: 12px;
+    color: #d6d8da;
+    font-size: 20px;
+    &:hover {
+      color: $primaryPink;
+    }
+  }
+  + .sitemap-section-tab {
+    border-left: solid 1px #f9fafc;
+  }
 }
