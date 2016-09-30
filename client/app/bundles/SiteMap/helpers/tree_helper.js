@@ -154,6 +154,11 @@ function deletePageComment(sections, commentId, pageId, sectionId) {
 
 function removeSection(sections, id) {
   var sectionsCopy = Object.assign([], sections);
+  var section = sectionsCopy.filter(function(section) { return(section.id == id) })[0]
+  section.pageTree.state = 'archived'
+  traverse(section.pageTree, function(node) {
+    node.state = 'archived'
+  })
   sectionsCopy.removeIf(function(section) { return(section.id == id) })
   return sectionsCopy
 }

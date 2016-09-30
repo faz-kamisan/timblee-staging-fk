@@ -29,6 +29,7 @@ export const DELETE_GENERAL_COMMENT = 'DELETE_GENERAL_COMMENT'
 export const DELETE_PAGE_COMMENT = 'DELETE_PAGE_COMMENT'
 export const DELETE_FOOTER_PAGE_COMMENT = 'DELETE_FOOTER_PAGE_COMMENT'
 export const SET_SELECTED_PAGE = 'SET_SELECTED_PAGE'
+export const SET_SELECTED_SECTION = 'SET_SELECTED_SECTION'
 export const SET_SELECTED_COMMENT = 'SET_SELECTED_COMMENT'
 export const CHANGE_PAGE_TYPE = 'CHANGE_PAGE_TYPE'
 export const CHANGE_FOOTER_PAGE_TYPE = 'CHANGE_FOOTER_PAGE_TYPE'
@@ -163,6 +164,10 @@ export function deleteFooterPageComment(commentId, pageId) {
 
 export function setSelectedPage(page) {
   return { type: SET_SELECTED_PAGE, page }
+}
+
+export function setSelectedSection(section) {
+  return { type: SET_SELECTED_SECTION, section }
 }
 
 export function setSelectedComment(comment) {

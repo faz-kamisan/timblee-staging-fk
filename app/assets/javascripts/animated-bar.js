@@ -10,7 +10,7 @@ AnimateTab.prototype.calcuate = function($this) {
     _this.animatedBar.animate({left: $this.position().left, width: $this.outerWidth() }, 200);
   }
   else {
-    _this.animatedBar.animate({left: $this.position().left + _this.listItemMargin, width: $this.outerWidth() }, 200); 
+    _this.animatedBar.animate({left: $this.position().left + _this.listItemMargin, width: $this.outerWidth() }, 200);
   }
 };
 
@@ -20,7 +20,7 @@ AnimateTab.prototype.checkOnLoad = function($this) {
     _this.animatedBar.animate({left: $this.position().left, width: $this.outerWidth() }, 200);
   }
   else if($this.hasClass('active')) {
-    _this.animatedBar.animate({left: $this.position().left + _this.listItemMargin, width: $this.outerWidth() }, 200); 
+    _this.animatedBar.animate({left: $this.position().left + _this.listItemMargin, width: $this.outerWidth() }, 200);
   }
 };
 
@@ -28,7 +28,7 @@ AnimateTab.prototype.move = function() {
   var _this = this;
   if(this.animatedTab.length) {
     _this.animatedTab.on('click', function() {
-      _this.calcuate($(this));  
+      _this.calcuate($(this));
     });
   }
 };
@@ -39,11 +39,6 @@ AnimateTab.prototype.bindEvents = function() {
 };
 
 $(window).on('load', function() {
-  
-  $('.btn-share').on('click', function() {
-    $('.animated-bar-share').css('left', 0);
-  });
-
   var tab = $('.animated-tab'),
       options = {
         animatedTab: tab,

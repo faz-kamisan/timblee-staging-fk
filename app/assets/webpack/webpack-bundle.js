@@ -38443,6 +38443,10 @@
 	
 	var _selected_comment2 = _interopRequireDefault(_selected_comment);
 	
+	var _selected_section = __webpack_require__(/*! ./selected_section */ 1030);
+	
+	var _selected_section2 = _interopRequireDefault(_selected_section);
+	
 	var _public_share = __webpack_require__(/*! ./public_share */ 624);
 	
 	var _public_share2 = _interopRequireDefault(_public_share);
@@ -38479,6 +38483,7 @@
 	  business: _business2.default,
 	  selectedPage: _selected_page2.default,
 	  selectedComment: _selected_comment2.default,
+	  selectedSection: _selected_section2.default,
 	  publicShare: _public_share2.default,
 	  footerPages: _footer_pages2.default,
 	  maxPageUid: _max_page_uid2.default,
@@ -38559,6 +38564,7 @@
 	exports.deletePageComment = deletePageComment;
 	exports.deleteFooterPageComment = deleteFooterPageComment;
 	exports.setSelectedPage = setSelectedPage;
+	exports.setSelectedSection = setSelectedSection;
 	exports.setSelectedComment = setSelectedComment;
 	exports.changePageType = changePageType;
 	exports.changeFooterPageType = changeFooterPageType;
@@ -38601,6 +38607,7 @@
 	var DELETE_PAGE_COMMENT = exports.DELETE_PAGE_COMMENT = 'DELETE_PAGE_COMMENT';
 	var DELETE_FOOTER_PAGE_COMMENT = exports.DELETE_FOOTER_PAGE_COMMENT = 'DELETE_FOOTER_PAGE_COMMENT';
 	var SET_SELECTED_PAGE = exports.SET_SELECTED_PAGE = 'SET_SELECTED_PAGE';
+	var SET_SELECTED_SECTION = exports.SET_SELECTED_SECTION = 'SET_SELECTED_SECTION';
 	var SET_SELECTED_COMMENT = exports.SET_SELECTED_COMMENT = 'SET_SELECTED_COMMENT';
 	var CHANGE_PAGE_TYPE = exports.CHANGE_PAGE_TYPE = 'CHANGE_PAGE_TYPE';
 	var CHANGE_FOOTER_PAGE_TYPE = exports.CHANGE_FOOTER_PAGE_TYPE = 'CHANGE_FOOTER_PAGE_TYPE';
@@ -38735,6 +38742,10 @@
 	
 	function setSelectedPage(page) {
 	  return { type: SET_SELECTED_PAGE, page: page };
+	}
+	
+	function setSelectedSection(section) {
+	  return { type: SET_SELECTED_SECTION, section: section };
 	}
 	
 	function setSelectedComment(comment) {
@@ -39069,6 +39080,13 @@
 	
 	function removeSection(sections, id) {
 	  var sectionsCopy = Object.assign([], sections);
+	  var section = sectionsCopy.filter(function (section) {
+	    return section.id == id;
+	  })[0];
+	  section.pageTree.state = 'archived';
+	  traverse(section.pageTree, function (node) {
+	    node.state = 'archived';
+	  });
 	  sectionsCopy.removeIf(function (section) {
 	    return section.id == id;
 	  });
@@ -39923,6 +39941,10 @@
 	
 	var _connected_page_comments_modal2 = _interopRequireDefault(_connected_page_comments_modal);
 	
+	var _connected_delete_section_modal = __webpack_require__(/*! ../containers/connected_delete_section_modal */ 1031);
+	
+	var _connected_delete_section_modal2 = _interopRequireDefault(_connected_delete_section_modal);
+	
 	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 1027);
 	
 	var _custom_drag_layer2 = _interopRequireDefault(_custom_drag_layer);
@@ -39965,7 +39987,8 @@
 	          _react2.default.createElement(_connected_sitemap_share_modal2.default, null),
 	          _react2.default.createElement(_connected_delete_page_modal2.default, null),
 	          _react2.default.createElement(_connected_page_change_modal2.default, null),
-	          _react2.default.createElement(_connected_new_section_modal2.default, null)
+	          _react2.default.createElement(_connected_new_section_modal2.default, null),
+	          _react2.default.createElement(_connected_delete_section_modal2.default, null)
 	        ),
 	        _react2.default.createElement(_connected_page_comments_modal2.default, null),
 	        _react2.default.createElement(_connected_comment_delete_modal2.default, null)
@@ -47604,8 +47627,8 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    removeSection: function removeSection(id) {
-	      dispatch((0, _actions.removeSection)(id));
+	    setSelectedSection: function setSelectedSection(section) {
+	      dispatch((0, _actions.setSelectedSection)(section));
 	    },
 	    setSaving: function setSaving(saving) {
 	      dispatch((0, _actions.setSaving)(saving));
@@ -47681,13 +47704,9 @@
 	      this.setState({ currentSectionId: id });
 	    }
 	  }, {
-	    key: 'removeSection',
-	    value: function removeSection(id) {
-	      this.setState({ currentSectionId: this.props });
-	      var index = this.props.sections.findIndex(function (section) {
-	        return section.id == id;
-	      });
-	      this.props.removeSection(id);
+	    key: 'setSelectedSection',
+	    value: function setSelectedSection(section) {
+	      this.props.setSelectedSection(section);
 	    }
 	  }, {
 	    key: 'componentWillReceiveProps',
@@ -47710,8 +47729,8 @@
 	          !section.default && _react2.default.createElement(
 	            'span',
 	            { className: 'remove-section', onClick: function onClick() {
-	                _this.removeSection(section.id);
-	              } },
+	                _this.setSelectedSection(section);
+	              }, 'data-target': '#delete-section-modal', 'data-toggle': 'modal' },
 	            '×'
 	          ),
 	          _react2.default.createElement(
@@ -61427,10 +61446,19 @@
 	      window.getSelection().removeAllRanges();
 	    }
 	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this = this;
+	      $('.sitemap-share-modal').on('hidden.bs.modal', function () {
+	        _this.restoreModal();
+	      });
+	    }
+	  }, {
 	    key: 'restoreModal',
 	    value: function restoreModal(e) {
 	      var _this = this;
 	      setTimeout(function () {
+	        $('.animated-bar-share').css('left', 0);
 	        _this.setState({ copied: false, urlView: true });
 	      }, 1000);
 	    }
@@ -61452,7 +61480,7 @@
 	              { className: 'modal-header text-center' },
 	              _react2.default.createElement(
 	                'button',
-	                { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close', onClick: this.restoreModal },
+	                { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
 	                _react2.default.createElement(
 	                  'span',
 	                  { 'aria-hidden': 'true' },
@@ -61698,7 +61726,7 @@
 	    key: 'handleEmailShare',
 	    value: function handleEmailShare(e) {
 	      var emailsValue = this.refs.emails.value.trim();
-	      if (value.length > 0) {
+	      if (emailsValue.length > 0) {
 	        this.props.onShare(emailsValue.split(' '));
 	        $.ajax({
 	          url: '/sitemaps/' + this.props.sitemapId + '/share_via_email',
@@ -61713,12 +61741,18 @@
 	      }
 	    }
 	  }, {
+	    key: 'showAllUsers',
+	    value: function showAllUsers(e) {
+	      $('.extra-shared-users').removeClass('hide');
+	      $(e.target).addClass('hide');
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var renderdsharedUsers = this.props.sharedUsers.map(function (user, index) {
 	        return _react2.default.createElement(
 	          'li',
-	          { key: user.id },
+	          { key: user.id, className: index > 1 ? 'extra-shared-users hide' : '' },
 	          user.user_email,
 	          _react2.default.createElement('span', { className: 'icon-save-circle' })
 	        );
@@ -61744,10 +61778,17 @@
 	            null,
 	            renderdsharedUsers
 	          ),
-	          _react2.default.createElement(
+	          this.props.sharedUsers.length == 3 && _react2.default.createElement(
 	            'a',
-	            { href: '#', id: 'show-others' },
-	            '+ 2 others'
+	            { href: 'javascript:void(0)', id: 'show-others', onClick: this.showAllUsers },
+	            '+ 1 other'
+	          ),
+	          this.props.sharedUsers.length > 3 && _react2.default.createElement(
+	            'a',
+	            { href: 'javascript:void(0)', id: 'show-others', onClick: this.showAllUsers },
+	            '+ ',
+	            this.props.sharedUsers.length - 2,
+	            ' others'
 	          )
 	        ),
 	        !this.state.messageEditorActivated && _react2.default.createElement(
@@ -63898,6 +63939,211 @@
 	  iconName: _react.PropTypes.string.isRequired
 	};
 	exports.default = PageTypePreview;
+
+/***/ },
+/* 1030 */
+/*!***********************************************************!*\
+  !*** ./app/bundles/SiteMap/reducers/selected_section.jsx ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _index = __webpack_require__(/*! ../actions/index */ 606);
+	
+	var selectedSection = function selectedSection() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case _index.SET_SELECTED_SECTION:
+	      return action.section;
+	    default:
+	      return state;
+	  }
+	};
+	
+	exports.default = selectedSection;
+
+/***/ },
+/* 1031 */
+/*!***************************************************************************!*\
+  !*** ./app/bundles/SiteMap/containers/connected_delete_section_modal.jsx ***!
+  \***************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
+	
+	var _actions = __webpack_require__(/*! ../actions */ 606);
+	
+	var _delete_section_modal = __webpack_require__(/*! ../components/delete_section_modal */ 1032);
+	
+	var _delete_section_modal2 = _interopRequireDefault(_delete_section_modal);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return { section: state.selectedSection };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    removeSection: function removeSection(id) {
+	      dispatch((0, _actions.removeSection)(id));
+	    },
+	    setSaving: function setSaving(saving) {
+	      dispatch((0, _actions.setSaving)(saving));
+	      dispatch(changeUpdatedAt());
+	    }
+	  };
+	};
+	
+	var ConnectedDeleteSectionModal = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_delete_section_modal2.default);
+	
+	exports.default = ConnectedDeleteSectionModal;
+
+/***/ },
+/* 1032 */
+/*!*****************************************************************!*\
+  !*** ./app/bundles/SiteMap/components/delete_section_modal.jsx ***!
+  \*****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 301);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var DeleteSectionModal = function (_React$Component) {
+	  _inherits(DeleteSectionModal, _React$Component);
+	
+	  function DeleteSectionModal(props) {
+	    _classCallCheck(this, DeleteSectionModal);
+	
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(DeleteSectionModal).call(this, props));
+	
+	    _this2.deleteSection = _this2.deleteSection.bind(_this2);
+	    return _this2;
+	  }
+	
+	  _createClass(DeleteSectionModal, [{
+	    key: "deleteSection",
+	    value: function deleteSection(e) {
+	      var _this = this;
+	      this.props.removeSection(this.props.section.id);
+	      // this.props.deleteSection(this.props.comment.id, this.props.comment.commentableId, this.props.comment.commentableType, this.props.comment.footer, this.props.comment.sectionId)
+	      // $.ajax({
+	      //   url: '/comments/' + this.props.comment.id,
+	      //   method: 'delete',
+	      //   dataType: 'JSON',
+	      //   error: (result) => {
+	      //     document.setFlash(result.responseText)
+	      //   },
+	      //   complete: (result) => {
+	      //     this.props.setSaving(true)
+	      //     setTimeout(function() {
+	      //       _this.props.setSaving(false)
+	      //     }, 2000)
+	      //   }
+	      // });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this = this;
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "modal fade", id: "delete-section-modal", tabIndex: "-1", role: "dialog", "aria-labelledby": "delete-section-modalLabel" },
+	        _react2.default.createElement(
+	          "div",
+	          { className: "modal-dialog", role: "document" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "modal-content" },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "modal-header text-center" },
+	              _react2.default.createElement(
+	                "button",
+	                { type: "button", className: "close btn-modal-open", "data-dismiss": "modal", "aria-label": "Close" },
+	                _react2.default.createElement(
+	                  "span",
+	                  { "aria-hidden": "true" },
+	                  _react2.default.createElement("img", { src: "/assets/close-modal.svg", className: "close-modal hide-delete-modal" })
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "h4",
+	                { className: "modal-title" },
+	                "Delete comment"
+	              ),
+	              _react2.default.createElement(
+	                "p",
+	                { className: "modal-message" },
+	                'Are you sure you want to delete this section: ' + this.props.section.name
+	              ),
+	              _react2.default.createElement(
+	                "p",
+	                { className: "modal-message" },
+	                "All pages in this section will be deleted and their comments will be archived."
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "modal-body" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "modal-button text-center" },
+	                _react2.default.createElement(
+	                  "a",
+	                  { href: "#", "data-dismiss": "modal", className: "btn btn-red btn-modal-open", onClick: this.deleteSection },
+	                  "Delete Section"
+	                ),
+	                _react2.default.createElement(
+	                  "a",
+	                  { href: "#", "data-dismiss": "modal", className: "btn btn-transparent btn-last btn-modal-open" },
+	                  "Cancel"
+	                )
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return DeleteSectionModal;
+	}(_react2.default.Component);
+	
+	DeleteSectionModal.propTypes = {
+	  section: _react.PropTypes.object.isRequired
+	};
+	exports.default = DeleteSectionModal;
 
 /***/ }
 /******/ ]);
