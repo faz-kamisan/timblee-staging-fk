@@ -1,0 +1,11 @@
+#!/bin/env ruby
+# encoding: utf-8
+
+- stripe_plan_id: starter1
+  name: Timblee-Starter
+  cost_in_cents: 0
+
+
+- stripe_plan_id: pro1
+  name: Timblee-Pro
+  cost_in_cents: 100
