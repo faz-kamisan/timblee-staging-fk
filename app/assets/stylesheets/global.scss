@@ -522,3 +522,11 @@ input#toggle:checked + label:after {
     background: $transparent;
   }
 }
+
+.wf-loading {
+  opacity: 0;
+}
+
+.wf-inactive {
+  opacity: 1;
+}

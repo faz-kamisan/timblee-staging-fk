@@ -22,12 +22,25 @@ class SectionContainer extends React.Component {
     this.setState({currentSectionId: id})
   }
 
+  removeSection(id) {
+    this.setState({currentSectionId: this.props})
+    var index = this.props.sections.findIndex(function(section) {return(section.id == id)})
+    this.props.removeSection(id);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(this.props.sections.length != nextProps.sections.length) {
+      this.setState({currentSectionId: this.getDefaultSectionId(this.props.sections)})
+    }
+  }
+
   render() {
     var _this = this;
     var tabWidth = (100 / this.props.sections.length).toString() + '%'
     var renderedSectionTabs = this.props.sections.map(function(section, index) {
       return (
         <li key={section.id} className={'sitemap-section-tab' + (_this.state.currentSectionId == section.id ? ' active' : '')} onClick={function(e) { _this.changeCurrentSectionId(section.id) } } style={ {width: tabWidth} }>
+          <span className='pull-left' onClick={function() {_this.removeSection(section.id)} }>remove</span>
           <span className="truncate">{section.name}</span>
         </li>
       )
@@ -39,7 +52,9 @@ class SectionContainer extends React.Component {
             <DraggablePageContainer pageTree={section.pageTree} sitemapNumber='' sitemapId={_this.props.sitemapId} leftSidebarExpanded={_this.props.leftSidebarExpanded} publicShare={_this.props.publicShare} />
           </div>
           { (section.pageTree.children.filter(function(page) { return(page.state != 'archived') }).length == 0) &&
-            <ConnectedFirstPageDroppable pageTree={section.pageTree} leftSidebarExpanded={_this.props.leftSidebarExpanded} />
+            <div>
+              <ConnectedFirstPageDroppable pageTree={section.pageTree} leftSidebarExpanded={_this.props.leftSidebarExpanded} />
+            </div>
           }
         </div>
       )

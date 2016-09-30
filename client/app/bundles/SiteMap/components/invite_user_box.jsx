@@ -75,6 +75,7 @@ class InviteUserBox extends React.Component {
       return(
         <li key={user.id}>
           {user.user_email}
+          <span className="icon-save-circle"></span>
         </li>
       )
     })
@@ -89,6 +90,12 @@ class InviteUserBox extends React.Component {
             <a onClick={this.activateMessageEditor}>Edit Message</a>
           </div>
         }
+        <div className="already-emailed">
+          <p>These people have already been emailed</p>
+          <ul>
+            {renderdsharedUsers}
+          </ul>
+        </div>
         { this.state.messageEditorActivated &&
           <div key='lower' className="comment-input">
             <textarea value={this.state.customMessage} placeholder='Include an optional personal message.' onChange={this.handleOnCustomMessageChange}></textarea>
@@ -99,9 +106,6 @@ class InviteUserBox extends React.Component {
             </div>
           </div>
         }
-        <ul>
-          {renderdsharedUsers}
-        </ul>
         <div className="bottom-btns text-center">
           <a href="#sitemap-share-preview-modal" data-dismiss="modal" data-toggle='modal' className="btn btn-grey btn-modal-open">Here's what they'll see</a>
           <button className='btn btn-pink-hover' onClick={this.handleEmailShare}>Send the email</button>

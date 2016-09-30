@@ -11,16 +11,25 @@ const sitemapTarget = {
     }
     if(item.type == 'PageType') {
       var timeStamp = new Date();
+      if(props.pageTree.footer) {
+        var data = { page: { page_type_id: item.id, parent_id: null, sitemap_id: props.sitemapId, name: item.name, position: null, section_id: null, footer: true } }
+      } else {
+        var data = { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: item.name, position: 1, section_id: props.pageTree.section_id } }
+      }
       $.ajax({
         url: '/pages/',
         method: 'post',
         dataType: 'JSON',
-        data: { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: item.name, position: 1, section_id: props.pageTree.section_id } },
+        data: data,
         error: (result) => {
           document.setFlash(result.responseText)
         },
         success: (result) => {
-          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id)
+          if(props.pageTree.footer) {
+            props.onFooterPageIdUpdate(timeStamp, result.id)
+          } else {
+            props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id)
+          }
         },
         complete: (result) => {
           props.setSaving(true)
@@ -29,7 +38,11 @@ const sitemapTarget = {
           }, 2000)
         }
       });
-      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
+      if(props.pageTree.footer) {
+        props.onFooterPageTypeDrop(item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
+      } else {
+        props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
+      }
     }
   }
 };
@@ -70,8 +83,11 @@ class FirstPageDroppable extends React.Component {
   render() {
     const connectDropTarget = this.props.connectDropTarget
     return connectDropTarget(
+      <div className='first-page'>
+        <div className="collapse-open collapse-close"></div>
       <div className={'first-page-droppable' + (this.props.leftSidebarExpanded ? '' : ' left-sidebar-contracted')}>
-        <span>Drag and drop page tiles here to start building  your sitemap</span>
+          <span>Drag and drop page tiles here to start building  your sitemap</span>
+        </div>
       </div>
     );
   }

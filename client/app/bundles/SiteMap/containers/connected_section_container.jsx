@@ -1,13 +1,26 @@
 import { connect } from 'react-redux'
-import { updatePagePosition, addNewPage } from '../actions'
+import { setSaving, changeUpdatedAt, removeSection } from '../actions'
 import SectionContainer from '../components/section_container'
 
 const mapStateToProps = (state) => {
   return { sections: state.sections, sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, publicShare: state.publicShare }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeSection: (id) => {
+      dispatch(removeSection(id));
+    },
+    setSaving: (saving) => {
+      dispatch(setSaving(saving));
+      dispatch(changeUpdatedAt());
+    }
+  }
+}
+
 const ConnectedSecionContainer = connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(SectionContainer)
 
 export default ConnectedSecionContainer

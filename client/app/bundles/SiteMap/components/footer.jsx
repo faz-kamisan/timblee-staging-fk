@@ -3,6 +3,7 @@ import { ItemTypes } from '../dnd/constants';
 import { DropTarget } from 'react-dnd';
 import { findDOMNode } from 'react-dom';
 import ConnectedPageTile from '../containers/connected_page_tile'
+import ConnectedFirstPageDroppable from '../containers/connected_first_page_droppable'
 
 const sitemapTarget = {
   drop: function(props, monitor, component) {
@@ -68,7 +69,8 @@ class Footer extends React.Component {
 
   render() {
     const connectDropTarget = this.props.connectDropTarget
-    var renderedFooterPages = this.props.footerPages.filter(function(page) { return(page.state != 'archived') }).map(function(footerPage, index) {
+    var usablePages = this.props.footerPages.filter(function(page) { return(page.state != 'archived') })
+    var renderedFooterPages = usablePages.map(function(footerPage, index) {
       return(
         <li key={footerPage.id} className='footer-page'>
           <ConnectedPageTile pageTree={footerPage} collapsed={true} childrenLength={0} name={footerPage.name} />
@@ -78,9 +80,14 @@ class Footer extends React.Component {
     return connectDropTarget(
       <div className={'sitemap-footer' + (this.props.leftSidebarExpanded ? '' : ' left-sidebar-contracted')}>
         <span>Footer</span>
-        <ul className='footer-page-list'>
-          {renderedFooterPages}
-        </ul>
+        { (usablePages.length > 0) &&
+          <ul className='footer-page-list'>
+            {renderedFooterPages}
+          </ul>
+        }
+        { (usablePages.length == 0) &&
+          <ConnectedFirstPageDroppable pageTree={{footer: true}} leftSidebarExpanded={this.props.leftSidebarExpanded} />
+        }
       </div>
     );
   }

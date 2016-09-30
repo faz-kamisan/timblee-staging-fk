@@ -1,5 +1,5 @@
-import { ADD_NEW_PAGE, REMOVE_PAGE, UPDATE_PAGE_NAME, UPDATE_PAGE_PERSISTENCE, UPDATE_PAGE_POSITION, CHANGE_COLLAPSE, UPDATE_ID, ADD_PAGE_COMMENT, UPDATE_PAGE_COMMENT_ID, UPDATE_PAGE_COMMENT, DELETE_PAGE_COMMENT, DELETE_PAGE, CHANGE_PAGE_TYPE, CREATE_NEW_SECTION, UPDATE_PAGE_STATE } from '../actions/index'
-import { addPage, removePage, updatePagePosition, updatePageName, updateCollapse, updatePageId, addPageComment, updateCommentId, deletePage, updatePageType, createNewSection, updatePageState, deletePageComment, updatePageComment, updatePagePersitence } from '../helpers/tree_helper'
+import { ADD_NEW_PAGE, REMOVE_PAGE, UPDATE_PAGE_NAME, UPDATE_PAGE_PERSISTENCE, UPDATE_PAGE_POSITION, CHANGE_COLLAPSE, UPDATE_ID, ADD_PAGE_COMMENT, UPDATE_PAGE_COMMENT_ID, UPDATE_PAGE_COMMENT, DELETE_PAGE_COMMENT, DELETE_PAGE, CHANGE_PAGE_TYPE, CREATE_NEW_SECTION, UPDATE_PAGE_STATE, REMOVE_SECTION } from '../actions/index'
+import { addPage, removePage, updatePagePosition, updatePageName, updateCollapse, updatePageId, addPageComment, updateCommentId, deletePage, updatePageType, createNewSection, updatePageState, deletePageComment, updatePageComment, updatePagePersitence, removeSection } from '../helpers/tree_helper'
 
 const sections = (state = [], action) => {
   switch (action.type) {
@@ -27,6 +27,8 @@ const sections = (state = [], action) => {
       return updatePageType(state, action.pageId, action.sectionId, action.pageType)
     case CREATE_NEW_SECTION:
       return createNewSection(state, action.pageId, action.sectionId, action.newSectionName, action.timeStamp)
+    case REMOVE_SECTION:
+      return removeSection(state, action.id)
     case UPDATE_PAGE_STATE:
       return updatePageState(state, action.pageId, action.sectionId, action.state)
     case DELETE_PAGE_COMMENT:

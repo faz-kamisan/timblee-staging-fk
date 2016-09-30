@@ -84,7 +84,7 @@ class CustomDragLayer extends Component {
     }
     return (
       <div style={layerStyles}>
-        <div style={getItemStyles(this.props)}>
+        <div style={getItemStyles(this.props)} className='custom-drag-layer'>
           {this.renderItem(itemType, item)}
         </div>
       </div>

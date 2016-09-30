@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { updatePagePosition, changeUpdatedAt, addNewPage, setMaxPageUid, updateId, setSaving } from '../actions'
+import { updatePagePosition, changeUpdatedAt, addNewPage, addNewFooterPage, setMaxPageUid, updateId, updateFooterPageId, setSaving } from '../actions'
 import DroppableFirstPageDroppable from '../components/first_page_droppable'
 
 const mapStateToProps = (state) => {
@@ -17,6 +17,13 @@ const mapDispatchToProps = (dispatch) => {
     },
     onPageIdUpdate: (id, sectionId, newId) => {
       dispatch(updateId(id, sectionId, newId));
+    },
+    onFooterPageTypeDrop: (pageType, timeStamp, maxPageUid) => {
+      dispatch(addNewFooterPage(pageType, timeStamp, maxPageUid + 1));
+      dispatch(setMaxPageUid(maxPageUid + 1))
+    },
+    onFooterPageIdUpdate: (id, newId) => {
+      dispatch(updateFooterPageId(id, newId));
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));
