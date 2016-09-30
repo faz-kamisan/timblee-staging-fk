@@ -20,12 +20,13 @@ class NewSectionModal extends React.Component {
   createSection(e) {
     var _this = this
     var timeStamp = new Date();
-    this.props.onCreateSection(this.props.pageTree, this.state.sectionName, timeStamp)
+    var name = this.state.sectionName
+    this.props.onCreateSection(this.props.pageTree, name, timeStamp)
     $.ajax({
       url: '/sections',
       method: 'post',
       dataType: 'JSON',
-      data: { page_id: this.props.pageTree.id, section: { name: this.state.sectionName } },
+      data: { page_id: this.props.pageTree.id, section: { name: name } },
       error: (result) => {
         document.setFlash(result.responseText)
       },
@@ -37,6 +38,17 @@ class NewSectionModal extends React.Component {
       }
     });
   }
+
+  componentDidMount() {
+    var _this = this;
+    $('.new-section-modal').on('hidden.bs.modal', function () {
+      setTimeout(function() {
+        _this.setState({sectionName: ''})
+      }, 500)
+    });
+  }
+
+
 
   render() {
     var _this = this;
@@ -54,7 +66,7 @@ class NewSectionModal extends React.Component {
                 Give this section a name
               </div>
               <div>
-                <input className="form-control" type="text" id="new-section-name" name="new-section-name" onChange={this.handleSectionNameChange} />
+                <input className="form-control" type="text" value={this.state.sectionName} id="new-section-name" name="new-section-name" onChange={this.handleSectionNameChange} />
               </div>
               <div className="modal-button">
                 <a href="javascript:void(0);" data-dismiss="modal" className="btn btn-red" onClick={this.createSection}>Create section</a>

@@ -63415,12 +63415,13 @@
 	    value: function createSection(e) {
 	      var _this = this;
 	      var timeStamp = new Date();
-	      this.props.onCreateSection(this.props.pageTree, this.state.sectionName, timeStamp);
+	      var name = this.state.sectionName;
+	      this.props.onCreateSection(this.props.pageTree, name, timeStamp);
 	      $.ajax({
 	        url: '/sections',
 	        method: 'post',
 	        dataType: 'JSON',
-	        data: { page_id: this.props.pageTree.id, section: { name: this.state.sectionName } },
+	        data: { page_id: this.props.pageTree.id, section: { name: name } },
 	        error: function error(result) {
 	          document.setFlash(result.responseText);
 	        },
@@ -63430,6 +63431,16 @@
 	            _this.props.setSaving(false);
 	          }, 2000);
 	        }
+	      });
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this = this;
+	      $('.new-section-modal').on('hidden.bs.modal', function () {
+	        setTimeout(function () {
+	          _this.setState({ sectionName: '' });
+	        }, 500);
 	      });
 	    }
 	  }, {
@@ -63465,7 +63476,7 @@
 	              _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement('input', { className: 'form-control', type: 'text', id: 'new-section-name', name: 'new-section-name', onChange: this.handleSectionNameChange })
+	                _react2.default.createElement('input', { className: 'form-control', type: 'text', value: this.state.sectionName, id: 'new-section-name', name: 'new-section-name', onChange: this.handleSectionNameChange })
 	              ),
 	              _react2.default.createElement(
 	                'div',
@@ -63794,7 +63805,7 @@
 	              _react2.default.createElement(
 	                "h4",
 	                { className: "modal-title" },
-	                "Delete comment"
+	                "Delete section"
 	              ),
 	              _react2.default.createElement(
 	                "p",
