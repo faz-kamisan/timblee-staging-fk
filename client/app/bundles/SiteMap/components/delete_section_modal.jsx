@@ -42,7 +42,7 @@ class DeleteSectionModal extends React.Component {
                   <img src='/assets/close-modal.svg' className='close-modal hide-delete-modal'></img>
                 </span>
               </button>
-              <h4 className="modal-title">Delete comment</h4>
+              <h4 className="modal-title">Delete section</h4>
               <p className="modal-message">{'Are you sure you want to delete this section: ' + this.props.section.name}</p>
               <p className="modal-message">All pages in this section will be deleted and their comments will be archived.</p>
             </div>
