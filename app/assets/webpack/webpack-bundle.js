@@ -48256,7 +48256,15 @@
 	              _react2.default.createElement(
 	                'li',
 	                { className: 'second-item' },
-	                _react2.default.createElement('span', { className: 'icon-page-comments tile-icons', onClick: this.setSelectedPage, 'data-toggle': 'modal', 'data-target': '#page-comments-modal' })
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'icon-page-comments tile-icons', onClick: this.setSelectedPage, 'data-toggle': 'modal', 'data-target': '#page-comments-modal' },
+	                  _react2.default.createElement(
+	                    'span',
+	                    { className: 'card-tooltip' },
+	                    'View Comments'
+	                  )
+	                )
 	              )
 	            )
 	          ),
@@ -48345,7 +48353,15 @@
 	              _react2.default.createElement(
 	                'li',
 	                { className: 'second-item' },
-	                _react2.default.createElement('span', { className: 'icon-page-comments tile-icons', onClick: this.setSelectedPage, 'data-toggle': 'modal', 'data-target': '#page-comments-modal' })
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'icon-page-comments tile-icons', onClick: this.setSelectedPage, 'data-toggle': 'modal', 'data-target': '#page-comments-modal' },
+	                  _react2.default.createElement(
+	                    'span',
+	                    { className: 'card-tooltip' },
+	                    'View Comments'
+	                  )
+	                )
 	              )
 	            )
 	          ),

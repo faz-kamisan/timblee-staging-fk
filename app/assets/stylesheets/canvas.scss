@@ -2991,6 +2991,18 @@
   }
 }
 
+.second-item {
+  .tile-icons {
+    &:hover {
+      .card-tooltip {
+        visibility: visible;
+        top: 38px;
+        opacity: 1;
+      }
+    }
+  }
+}
+
 .shared-view {
 
   .page-container .tile-more li.second-item,
