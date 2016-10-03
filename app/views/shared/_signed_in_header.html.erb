@@ -89,7 +89,7 @@
         <% url = load_more_notifications_path %>
         <ul class="p-0 m-0 notifications-listing", data-offset = '0', data-url= <%= url %> data-has-more= <%= @has_more %>>
 
-          <%= render @notifications %>
+          <%= render partial: 'notifications/notification', collection: @notifications %>
 
           <div class='loading-image'>
             <%= image_tag('loader1.gif', class: 'load') %>
