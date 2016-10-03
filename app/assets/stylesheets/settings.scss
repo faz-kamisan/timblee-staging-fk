@@ -754,15 +754,52 @@ label.avatar-label > input[type=radio]:checked + img{
   color: $primaryGreyLight;
 }
 
+.avatar-group {
+  position: relative;
+}
+
+.show-avatars {
+  position: absolute;
+  width: 55px!important;
+  z-index: 1;
+  height: 16px;
+  opacity: 0;
+  cursor: pointer;
+  left: 0;
+  top: 58px;
+  &:checked {
+    ~ .avatars-list {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  &:hover {
+    + .avatar-text {
+      color: $primaryPink;
+    }
+  }
+}
+
+.surprise-image img {
+  width: 18px;
+  height: 18px;
+}
+
 .avatar-text {
   color: $primaryLink;
   font-size: 10px;
   margin-top: 3px;
   padding-left: 8px;
+  cursor: pointer;
+  position: relative;
+  top: 2px;
   .icon-caret {
     font-size: 8px;
     position: relative;
     top: 1px;
+  }
+  &:hover {
+    color: $primaryPink;
   }
 }
 
@@ -773,7 +810,7 @@ label.avatar-label > input[type=radio]:checked + img{
 
 .avatars-list {
   height: 230px;
-  overflow-y: auto;
+  overflow-y: scroll;
   width: 210px;
   padding-left: 0;
   border: 1px solid #eee;
@@ -781,8 +818,11 @@ label.avatar-label > input[type=radio]:checked + img{
   border-bottom-right-radius: 10px;
   position: absolute;
   left: -58px;
-  top: 125px;
+  top: 100px;
   z-index: 5;
+  opacity: 0;
+  visibility: hidden;
+  @include animate(.35s);
   background: $primaryWhite;
   li {
     width: 100%;
@@ -826,7 +866,7 @@ label.avatar-label > input[type=radio]:checked + img{
 .display-image {
   position: relative;
   .pink-image-overlay {
-    opacity: 0;
+    opacity: 1;
     width: 55px;
     height: 55px;
     position: absolute;

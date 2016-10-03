@@ -53,12 +53,12 @@
               <% if current_business.logo.present? %>
                 <%= image_tag(current_business.logo, class: 'choose-logo profile-image pull-left profile-image-lg', 'data-original-value': current_business.logo) %>
               <% else %>
-                <%= image_tag('business-logo.png', class: 'choose-logo profile-image pull-left profile-image-lg', 'data-original-value': 'business-logo.png') %>
+                <%= image_tag('business-logo.png', class: 'choose-logo profile-image pull-left profile-image-lg', 'data-original-value': asset_path('business-logo.png')) %>
               <% end %>
               <span class="pink-image-overlay"></span>
             </figure>
             <div class="right-text pull-right">
-              <p class="pull-right">
+              <p class="pull-right surprise-image">
                 Upload a square PNG or JPEG image at least 100 x 100px in size. We’ll resize it automatically  and it’ll appear sharp everywhere. If you upload a non-square image, It’ll come out squished! &nbsp; <%= image_tag('surprise.png') %>
               </p>
             </div>

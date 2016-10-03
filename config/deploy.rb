@@ -1,6 +1,7 @@
 # config valid only for current version of Capistrano
 lock '3.4.1'
 
+
 set :application, 'timblee'
 set :repo_url, 'git@github.com:TimbleeApp/web-app.git'
 # Default branch is :master

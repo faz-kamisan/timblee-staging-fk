@@ -70,7 +70,7 @@ en:
         failure: Couldn't delete section
     users:
       update_avatar:
-        success:
+        success: ''
         failure: Avatar couldn't be updated
       update_password:
         success: Password Updated successfully
