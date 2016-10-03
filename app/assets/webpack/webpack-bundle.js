@@ -39076,7 +39076,7 @@
 	  parentPage.children.removeIf(function (elem, idx) {
 	    return elem.id == id;
 	  });
-	  var newSection = { default: false, name: newSectionName, pageTree: page, id: timeStamp };
+	  var newSection = { default: false, name: newSectionName, pageTree: page, id: timeStamp, state: 'active' };
 	  sectionsCopy.push(newSection);
 	  return sectionsCopy;
 	}
@@ -39098,12 +39098,10 @@
 	  var section = sectionsCopy.filter(function (section) {
 	    return section.id == id;
 	  })[0];
+	  section.state = 'archived';
 	  section.pageTree.state = 'archived';
 	  traverse(section.pageTree, function (node) {
 	    node.state = 'archived';
-	  });
-	  sectionsCopy.removeIf(function (section) {
-	    return section.id == id;
 	  });
 	  return sectionsCopy;
 	}
@@ -47856,16 +47854,25 @@
 	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
-	      if (this.props.sections.length != nextProps.sections.length) {
-	        this.setState({ currentSectionId: this.getDefaultSectionId(this.props.sections) });
+	      if (this.props.sections.filter(function (section) {
+	        return section.state == 'active';
+	      }).length != nextProps.sections.filter(function (section) {
+	        return section.state == 'active';
+	      }).length) {
+	        this.setState({ currentSectionId: this.getDefaultSectionId(this.props.sections.filter(function (section) {
+	            return section.state == 'active';
+	          })) });
 	      }
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this = this;
-	      var tabWidth = (100 / this.props.sections.length).toString() + '%';
-	      var renderedSectionTabs = this.props.sections.map(function (section, index) {
+	      var activeSections = this.props.sections.filter(function (section) {
+	        return section.state == 'active';
+	      });
+	      var tabWidth = (100 / activeSections.length).toString() + '%';
+	      var renderedSectionTabs = activeSections.map(function (section, index) {
 	        return _react2.default.createElement(
 	          'li',
 	          { key: section.id, className: 'sitemap-section-tab' + (_this.state.currentSectionId == section.id ? ' active' : ''), onClick: function onClick(e) {
@@ -47885,7 +47892,7 @@
 	          )
 	        );
 	      });
-	      var renderedSections = this.props.sections.map(function (section, index) {
+	      var renderedSections = activeSections.map(function (section, index) {
 	        return _react2.default.createElement(
 	          'div',
 	          { key: section.id, className: 'sitemap-section' + (_this.state.currentSectionId == section.id ? ' active' : ' hide') },
@@ -64210,7 +64217,7 @@
   \*****************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -64243,82 +64250,83 @@
 	  }
 	
 	  _createClass(DeleteSectionModal, [{
-	    key: "deleteSection",
+	    key: 'deleteSection',
 	    value: function deleteSection(e) {
+	      var _this3 = this;
+	
 	      var _this = this;
 	      this.props.removeSection(this.props.section.id);
-	      // this.props.deleteSection(this.props.comment.id, this.props.comment.commentableId, this.props.comment.commentableType, this.props.comment.footer, this.props.comment.sectionId)
-	      // $.ajax({
-	      //   url: '/comments/' + this.props.comment.id,
-	      //   method: 'delete',
-	      //   dataType: 'JSON',
-	      //   error: (result) => {
-	      //     document.setFlash(result.responseText)
-	      //   },
-	      //   complete: (result) => {
-	      //     this.props.setSaving(true)
-	      //     setTimeout(function() {
-	      //       _this.props.setSaving(false)
-	      //     }, 2000)
-	      //   }
-	      // });
+	      $.ajax({
+	        url: '/sections/' + this.props.section.id,
+	        method: 'delete',
+	        dataType: 'JSON',
+	        error: function error(result) {
+	          document.setFlash(result.responseText);
+	        },
+	        complete: function complete(result) {
+	          _this3.props.setSaving(true);
+	          setTimeout(function () {
+	            _this.props.setSaving(false);
+	          }, 2000);
+	        }
+	      });
 	    }
 	  }, {
-	    key: "render",
+	    key: 'render',
 	    value: function render() {
 	      var _this = this;
 	      return _react2.default.createElement(
-	        "div",
-	        { className: "modal fade", id: "delete-section-modal", tabIndex: "-1", role: "dialog", "aria-labelledby": "delete-section-modalLabel" },
+	        'div',
+	        { className: 'modal fade', id: 'delete-section-modal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'delete-section-modalLabel' },
 	        _react2.default.createElement(
-	          "div",
-	          { className: "modal-dialog", role: "document" },
+	          'div',
+	          { className: 'modal-dialog', role: 'document' },
 	          _react2.default.createElement(
-	            "div",
-	            { className: "modal-content" },
+	            'div',
+	            { className: 'modal-content' },
 	            _react2.default.createElement(
-	              "div",
-	              { className: "modal-header text-center" },
+	              'div',
+	              { className: 'modal-header text-center' },
 	              _react2.default.createElement(
-	                "button",
-	                { type: "button", className: "close btn-modal-open", "data-dismiss": "modal", "aria-label": "Close" },
+	                'button',
+	                { type: 'button', className: 'close btn-modal-open', 'data-dismiss': 'modal', 'aria-label': 'Close' },
 	                _react2.default.createElement(
-	                  "span",
-	                  { "aria-hidden": "true" },
-	                  _react2.default.createElement("img", { src: "/assets/close-modal.svg", className: "close-modal hide-delete-modal" })
+	                  'span',
+	                  { 'aria-hidden': 'true' },
+	                  _react2.default.createElement('img', { src: '/assets/close-modal.svg', className: 'close-modal hide-delete-modal' })
 	                )
 	              ),
 	              _react2.default.createElement(
-	                "h4",
-	                { className: "modal-title" },
-	                "Delete section"
+	                'h4',
+	                { className: 'modal-title' },
+	                'Delete section'
 	              ),
 	              _react2.default.createElement(
-	                "p",
-	                { className: "modal-message" },
+	                'p',
+	                { className: 'modal-message' },
 	                'Are you sure you want to delete this section: ' + this.props.section.name
 	              ),
 	              _react2.default.createElement(
-	                "p",
-	                { className: "modal-message" },
-	                "All pages in this section will be deleted and their comments will be archived."
+	                'p',
+	                { className: 'modal-message' },
+	                'All pages in this section will be deleted and their comments will be archived.'
 	              )
 	            ),
 	            _react2.default.createElement(
-	              "div",
-	              { className: "modal-body" },
+	              'div',
+	              { className: 'modal-body' },
 	              _react2.default.createElement(
-	                "div",
-	                { className: "modal-button text-center" },
+	                'div',
+	                { className: 'modal-button text-center' },
 	                _react2.default.createElement(
-	                  "a",
-	                  { href: "#", "data-dismiss": "modal", className: "btn btn-red btn-modal-open", onClick: this.deleteSection },
-	                  "Delete Section"
+	                  'a',
+	                  { href: '#', 'data-dismiss': 'modal', className: 'btn btn-red btn-modal-open', onClick: this.deleteSection },
+	                  'Delete Section'
 	                ),
 	                _react2.default.createElement(
-	                  "a",
-	                  { href: "#", "data-dismiss": "modal", className: "btn btn-transparent btn-last btn-modal-open" },
-	                  "Cancel"
+	                  'a',
+	                  { href: '#', 'data-dismiss': 'modal', className: 'btn btn-transparent btn-last btn-modal-open' },
+	                  'Cancel'
 	                )
 	              )
 	            )
