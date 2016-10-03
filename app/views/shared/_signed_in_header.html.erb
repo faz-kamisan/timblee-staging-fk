@@ -1,6 +1,6 @@
 <header class="main-header">
   <div class="row">
-    <div class="col-xs-6">
+    <div class="col-xs-7">
       <div class="row">
         <div class="col-xs-12">
           <ul id="navigation" class="clearfix p-0 m-0">
@@ -23,11 +23,16 @@
                 <%= text_field_tag "sitemap_params", nil, id: 'search-sitemap', data: { source: current_user.all_sitemaps.map {|s| {label: s.name, value: s.id}} }, placeholder: 'Search for sitemaps', autocomplete: 'on' %>
               <% end %>
             </li>
+            <%- if current_user_without_proxy_login.try(:is_super_admin) || proxy_login? %>
+              <li class="nav-item">
+                <%= link_to 'Switch Account', admin_dashboard_path %>
+              </li>
+            <% end %>
           </ul>
         </div>
       </div>
     </div>
-    <div class="col-xs-6 p-r-5">
+    <div class="col-xs-5 p-r-5">
       <div class="user-dropdown pull-right text-right">
         <span class="truncate">
           <%= image_tag(current_user.avatar, class: 'profile-image') %>
@@ -81,7 +86,15 @@
         <a href="javascript:void(0);">
           <span class="icon-bell"></span>
         </a>
-        <%= render 'shared/notifications'%>
+        <% url = load_more_notifications_path %>
+        <ul class="p-0 m-0 notifications-listing", data-offset = '0', data-url= <%= url %> data-has-more= <%= @has_more %>>
+
+          <%= render partial: 'notifications/notification', collection: @notifications %>
+
+          <div class='loading-image'>
+            <%= image_tag('loader1.gif', class: 'load') %>
+          </div>
+        </ul>
       </div>
       <div class="add-sitemap-tab pull-right header-links new-sitemap">
         <%= form_for Sitemap.new do |f| %>
@@ -95,6 +108,6 @@
   </div>
 
 </header>
-<%= javascript_include_tag('sitemaps', 'jump_to') %>
+<%= javascript_include_tag('sitemaps', 'jump_to', 'notification') %>
 
 <%= render 'sitemaps/sitemap_error_modal'%>

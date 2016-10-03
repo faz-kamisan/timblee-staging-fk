@@ -3,10 +3,9 @@ class User < ActiveRecord::Base
 
   acts_as_paranoid
 
+  attr_accessor :admin_access
+
   belongs_to :business, autosave: true
-
-
-  has_many :sitemap_invites, dependent: :destroy
   has_many :notifications, foreign_key: :recipient_id, dependent: :destroy
   has_many :shared_sitemaps, through: :sitemap_invites, source: :sitemap
   has_many :comments, as: :commenter
@@ -14,13 +13,12 @@ class User < ActiveRecord::Base
 
   before_create :set_is_admin, unless: :business_id
   before_create :add_business, unless: :business_id
-  after_create :set_confirmation_instructions_to_be_sent, unless: :confirmed?
+  after_create :set_confirmation_instructions_to_be_sent, unless: [:confirmed?, :invitation_not_accepted?]
   before_destroy :restrict_owner_destroy
   after_destroy :update_business_subscription
   before_update :restrict_owner_role_update, if: :is_admin_changed?
   after_update :mail_user_about_role_update, if: :is_admin_changed?
   after_create :add_default_avatar
-  after_invitation_created :add_default_avatar
 
   strip_fields :full_name
 
@@ -71,6 +69,11 @@ class User < ActiveRecord::Base
       email: email
     }
   end
+
+  def active_for_authentication?
+    admin_access || super
+  end
+
   protected
     def confirmation_period_valid?
       self.class.allow_unconfirmed_access_for.nil? || (created_at && created_at.utc >= self.class.allow_unconfirmed_access_for.ago)
@@ -80,8 +83,8 @@ class User < ActiveRecord::Base
 
     def minimum_image_size
       image = MiniMagick::Image.open(avatar.path)
-      unless image[:width] >= 50 && image[:height] >= 50
-        errors.add :avatar, "Avatar should be 50x50px minimum!"
+      unless image[:width] >= 100 && image[:height] >= 100
+        errors.add :avatar, "Avatar should be 100x100px minimum!"
       end
     end
 

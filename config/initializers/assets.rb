@@ -35,6 +35,7 @@ Rails.application.config.assets.precompile += %w(
   duplicate.js
   production_hotjar.js
   staging_hotjar.js
+  notification.js
 )
 # Add client/assets/ folders to asset pipeline's search path.
 # If you do not want to move existing images and fonts from your Rails app

@@ -50,6 +50,11 @@ Rails.application.routes.draw do
   get  'home/intro'
   get  'home/settings'
 
+  scope module: :super_admin do
+    get '/admin', to: 'main#dashboard', as: 'admin_dashboard'
+    post '/impersonate', to: 'main#impersonate', as: 'admin_impersonate'
+  end
+
   get '/:token' => 'sitemaps#public_share', :constraints => { :subdomain => /share/ }, as: :sitemap_public_share
 
   devise_scope :user do
@@ -70,6 +75,12 @@ Rails.application.routes.draw do
   resources :businesses, only: [:update] do
     member do
       get 'delete_account'
+    end
+  end
+
+  resources :notifications, only: [] do
+    collection do
+      get 'load_more'
     end
   end
 

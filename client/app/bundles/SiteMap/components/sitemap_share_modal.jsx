@@ -26,9 +26,17 @@ class SitemapShareModal extends React.Component {
     window.getSelection().removeAllRanges();
   }
 
+  componentDidMount() {
+    var _this = this;
+    $('.sitemap-share-modal').on('hidden.bs.modal', function () {
+      _this.restoreModal();
+    });
+  }
+
   restoreModal(e) {
     var _this = this;
     setTimeout(function() {
+      $('.animated-bar-share').css('left', 0);
       _this.setState({copied: false, urlView: true})
     }, 1000)
   }
@@ -40,7 +48,7 @@ class SitemapShareModal extends React.Component {
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header text-center">
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.restoreModal}>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">
                   <img src='/assets/close-modal.svg' className='close-modal' />
                 </span>

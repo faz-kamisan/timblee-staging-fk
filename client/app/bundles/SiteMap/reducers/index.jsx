@@ -16,10 +16,12 @@ import publicShareUrl from './public_share_url'
 import business from './business'
 import selectedPage from './selected_page'
 import selectedComment from './selected_comment'
+import selectedSection from './selected_section'
 import publicShare from './public_share'
 import footerPages from './footer_pages'
 import maxPageUid from './max_page_uid'
 import sharedUsers from './shared_users'
+import newSitemap from './new_sitemap'
 
 const sitemapAppReducer = combineReducers({
   name,
@@ -39,10 +41,12 @@ const sitemapAppReducer = combineReducers({
   business,
   selectedPage,
   selectedComment,
+  selectedSection,
   publicShare,
   footerPages,
   maxPageUid,
-  sharedUsers
+  sharedUsers,
+  newSitemap
 })
 
 export default sitemapAppReducer

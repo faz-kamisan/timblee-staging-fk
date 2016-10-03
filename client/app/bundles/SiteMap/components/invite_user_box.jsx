@@ -57,7 +57,7 @@ class InviteUserBox extends React.Component {
 
   handleEmailShare(e) {
     var emailsValue = this.refs.emails.value.trim()
-    if(value.length > 0) {
+    if(emailsValue.length > 0) {
       this.props.onShare(emailsValue.split(' '));
       $.ajax({
         url: '/sitemaps/' + this.props.sitemapId + '/share_via_email',
@@ -73,10 +73,15 @@ class InviteUserBox extends React.Component {
     }
   }
 
+  showAllUsers(e) {
+    $('.extra-shared-users').removeClass('hide');
+    $(e.target).addClass('hide');
+  }
+
   render() {
     var renderdsharedUsers = this.props.sharedUsers.map(function(user,index) {
       return(
-        <li key={user.id}>
+        <li key={user.id} className={(index > 1 ? 'extra-shared-users hide' : '')}>
           {user.user_email}
           <span className="icon-save-circle"></span>
         </li>
@@ -92,7 +97,12 @@ class InviteUserBox extends React.Component {
           <ul>
             {renderdsharedUsers}
           </ul>
-          <a href="#" id="show-others">+ 2 others</a>
+          { (this.props.sharedUsers.length == 3) &&
+            <a href="javascript:void(0)" id="show-others" onClick={this.showAllUsers}>+ 1 other</a>
+          }
+          { (this.props.sharedUsers.length > 3) &&
+            <a href="javascript:void(0)" id="show-others" onClick={this.showAllUsers}>+ {this.props.sharedUsers.length - 2} others</a>
+          }
         </div>
         { !this.state.messageEditorActivated &&
           <div key='lower' className="message-preview">

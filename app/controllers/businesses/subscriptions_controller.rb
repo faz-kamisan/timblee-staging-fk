@@ -101,6 +101,7 @@ class Businesses::SubscriptionsController < ApplicationController
     def load_plan
       @plan = Plan.find_by(stripe_plan_id: params[:stripe_plan_id])
       unless @plan
+        LoggerExtension.stripe_log "Exception Plan not found"
         redirect_to billing_settings_users_path, alert: t('.plan_not_found', scope: :flash)
       end
     end
@@ -108,12 +109,14 @@ class Businesses::SubscriptionsController < ApplicationController
     def deactivate_old_subscription
       @current_subscription = current_business.current_subscription
       if @current_subscription && !@current_subscription.update(end_at: Time.current)
+        LoggerExtension.stripe_log "Exception: #{@current_subscription.errors.full_messages}"
         redirect_to billing_settings_users_path, alert: t('.failure', scope: :flash)
       end
     end
 
     def check_validity
       if @plan.stripe_plan_id == STARTER_STRIPE_ID && !current_business.allow_downgrade_to_starter?
+        LoggerExtension.stripe_log "Cannot downgrade business plan due to more no of users or sitemaps"
         redirect_to billing_settings_users_path, alert: t('.failure', scope: :flash)
       end
     end
@@ -123,7 +126,8 @@ class Businesses::SubscriptionsController < ApplicationController
         ActiveRecord::Base.transaction do
           yield
         end
-      rescue
+      rescue => e
+        LoggerExtension.stripe_log "Exception Transaction Rollback : #{e.inspect}"
         redirect_to billing_settings_users_path, alert: t('.failure', scope: :flash)
       end
     end

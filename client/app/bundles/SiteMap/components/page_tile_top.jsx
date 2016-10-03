@@ -75,7 +75,7 @@ class PageTileTop extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
-      if(this.props.pageTree.parentId && !props.pageTree.footer) {
+      if(this.props.pageTree.parentId && !this.props.pageTree.footer) {
         var domNode = findDOMNode(this);
         $(domNode).addClass('drag-over' )
         $('.custom-drag-layer').addClass('over-page-top');
@@ -89,7 +89,7 @@ class PageTileTop extends React.Component {
 
     if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
       // You can use this as leave handler
-      if(this.props.pageTree.parentId && !props.pageTree.footer) {
+      if(this.props.pageTree.parentId && !this.props.pageTree.footer) {
         var domNode = findDOMNode(this);
         $(domNode).removeClass('drag-over')
         $('.custom-drag-layer').removeClass('over-page-top');

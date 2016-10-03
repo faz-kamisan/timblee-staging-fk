@@ -80,11 +80,11 @@ Sitemaps.prototype.bindEvents = function() {
       method: 'post',
       dataType: 'JSON',
       data: { emails: tags, custom_message: (customMessage || '') },
-      error: (result) => {
-        document.setFlash(result.responseText)
-      },
-      success: (result) => {
+      success: function() {
         document.location.href = '/home/dashboard';
+      },
+      error: function() {
+        document.setFlash(result.responseText)
       }
     });
   })

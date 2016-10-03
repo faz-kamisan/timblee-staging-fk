@@ -69,6 +69,12 @@ class PageTile extends React.Component {
     this.props.setSelectedPage(this.props.pageTree)
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if(prevState.nameChangeDisabled && !this.state.nameChangeDisabled) {
+      this.refs.nameInput.focus();
+    }
+  }
+
   handleNameChange(event) {
     var name = event.target.value
     this.setState({name: name})
@@ -96,7 +102,7 @@ class PageTile extends React.Component {
 
   componentDidMount() {
     if(this.props.pageTree.newRecord) {
-      $(this.refs.nameInput).focus();
+      this.refs.nameInput.focus();
     }
   }
 

@@ -5,6 +5,7 @@ class Header extends React.Component {
     name: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
     state: PropTypes.string.isRequired,
+    newSitemap: PropTypes.bool.isRequired,
     saving: PropTypes.bool.isRequired,
     setSaving: PropTypes.func.isRequired,
     onNameChange: PropTypes.func.isRequired,
@@ -32,6 +33,14 @@ class Header extends React.Component {
     this.setState({name: name})
   }
 
+  componentDidMount() {
+    var _this = this;
+    if(this.props.newSitemap) {
+      setTimeout(function() {
+        _this.refs.nameEditor.click()
+      }, 3000)
+    }
+  }
 
   handleNameInputBlur(e) {
     var _this = this
@@ -108,8 +117,8 @@ class Header extends React.Component {
                     <img src="/assets/go-back.svg" className="go-back-link"></img>
                   </a>
                 </span>
-                <input value = {this.state.name} onChange={this.handleNameChange} onBlur={this.handleNameInputBlur} className={"site-map-name" + (this.state.nameFocused ? '' : ' hide')} ref='sitemapNameInput' />
-                <h3 className={"site-map-name truncate " + (this.state.nameFocused ? ' hide' : '')} onClick={this.handleNameInputFocus}>{this.state.name}</h3>
+                <input value = {this.state.name} onChange={this.handleNameChange} onBlur={this.handleNameInputBlur} className={"site-map-name site-map-name-input" + (this.state.nameFocused ? '' : ' hide')} ref='sitemapNameInput' />
+                <h3 className={"site-map-name truncate " + (this.state.nameFocused ? ' hide' : '')} onClick={this.handleNameInputFocus} ref='nameEditor'>{this.state.name}</h3>
               </div>
               <div className="col-xs-3 state-status text-center">
                 <h5>
