@@ -57,7 +57,7 @@ class SitemapsController < ApplicationController
   def update
     if @sitemap.update(sitemap_params)
       Notification.delay.sitemap_status_update_notification(@sitemap, current_user) if sitemap_params.has_key?('state')
-      flash_message = sitemap_params.include?(:folder_id) ? t('.folder', scope: :flash, sitemap_name: @sitemap.name, folder_name: @sitemap.folder.name) : t('.success', scope: :flash)
+      flash_message = sitemap_params.include?(:folder_id) ? t('.folder', scope: :flash, sitemap_name: @sitemap.name, folder_name: @sitemap.folder.try(:name) || 'All Sitemaps') : t('.success', scope: :flash)
       respond_to do |format|
         format.js do
           flash.now[:success] = flash_message

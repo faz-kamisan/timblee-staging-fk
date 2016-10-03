@@ -27,7 +27,6 @@
 //= require twemoji-picker
 //= require select2.min
 //= require apply_twemoji
-//= require settings_tabs
 //= require settings
 //= require constants
 //= require modal_fix
@@ -35,6 +34,7 @@
 //= require jquery.flexslider-min
 //= require script
 //= require animated-bar
+//= require settings_tabs
 
 $(window).on('load resize', function() {
   if($('.first-page-droppable').length) {
