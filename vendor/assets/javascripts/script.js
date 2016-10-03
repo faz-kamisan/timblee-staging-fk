@@ -8,7 +8,7 @@ $(window).on('load', function() {
     animation: "fade",
     directionNav: false,
     animationLoop: false,
-    slideshow: false,
+    slideshowSpeed: 5000,
     after: function() {
       if($lastSlide.last().hasClass('flex-active-slide')) {
         $skipSection.fadeOut(200);
@@ -23,6 +23,7 @@ $(window).on('load', function() {
 
   $('#replay_intro').on('click', function() {
     $('.flex-control-nav li').first().find('a').click();
+    $('.flexslider').flexslider('play')
   });
 
 });
