@@ -1,5 +1,6 @@
 set :rails_env, 'staging'
 set :branch, 'staging'
+set :whenever_command, "cd /var/www/timblee/current && RAILS_ENV=staging bundle exec whenever"
 
 # role-based syntax
 # ==================
