@@ -48,15 +48,11 @@ class UserSignupModal extends React.Component {
               </p>
               <div className='signup-fields'>
                 <input type='text' placeholder='Your name' ref='nameInput' className='form-control'></input>
-                <div className='error-div name-error'>
-                  { this.state.nameError }
-                </div>
+                 <div className='error-div name-error' dangerouslySetInnerHTML={this.createMarkup(this.state.nameError)} />
                 <input type='email' placeholder='Your work email' ref='emailInput' className='form-control'></input>
                 <div className='error-div email-error' dangerouslySetInnerHTML={this.createMarkup(this.state.emailError)} />
                 <input type='password' placeholder='Choose a password' ref='passwordInput' className='form-control'></input>
-                <div className='error-div password-error'>
-                  { this.state.passwordError }
-                </div>
+                 <div className='error-div password-error' dangerouslySetInnerHTML={this.createMarkup(this.state.passwordError)} />
               </div>
               <div className="modal-button text-center">
                 <a href="#" className="btn btn-red btn-modal-open" onClick={this.signup}>SIGN UP FOR FREE</a>

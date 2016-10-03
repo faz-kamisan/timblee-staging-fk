@@ -63318,19 +63318,11 @@
 	                'div',
 	                { className: 'signup-fields' },
 	                _react2.default.createElement('input', { type: 'text', placeholder: 'Your name', ref: 'nameInput', className: 'form-control' }),
-	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'error-div name-error' },
-	                  this.state.nameError
-	                ),
+	                _react2.default.createElement('div', { className: 'error-div name-error', dangerouslySetInnerHTML: this.createMarkup(this.state.nameError) }),
 	                _react2.default.createElement('input', { type: 'email', placeholder: 'Your work email', ref: 'emailInput', className: 'form-control' }),
 	                _react2.default.createElement('div', { className: 'error-div email-error', dangerouslySetInnerHTML: this.createMarkup(this.state.emailError) }),
 	                _react2.default.createElement('input', { type: 'password', placeholder: 'Choose a password', ref: 'passwordInput', className: 'form-control' }),
-	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'error-div password-error' },
-	                  this.state.passwordError
-	                )
+	                _react2.default.createElement('div', { className: 'error-div password-error', dangerouslySetInnerHTML: this.createMarkup(this.state.passwordError) })
 	              ),
 	              _react2.default.createElement(
 	                'div',
