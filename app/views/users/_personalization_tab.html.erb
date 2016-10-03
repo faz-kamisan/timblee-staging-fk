@@ -53,7 +53,7 @@
               <% if current_business.logo.present? %>
                 <%= image_tag(current_business.logo, class: 'choose-logo profile-image pull-left profile-image-lg', 'data-original-value': current_business.logo) %>
               <% else %>
-                <%= image_tag('business-logo.png', class: 'choose-logo profile-image pull-left profile-image-lg', 'data-original-value': 'business-logo.png') %>
+                <%= image_tag('business-logo.png', class: 'choose-logo profile-image pull-left profile-image-lg', 'data-original-value': asset_path('business-logo.png')) %>
               <% end %>
               <span class="pink-image-overlay"></span>
             </figure>
