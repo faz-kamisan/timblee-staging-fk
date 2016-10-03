@@ -5,7 +5,10 @@ import ConnectedSecionContainer from '../containers/connected_section_container'
 import ConnectedHeader from '../containers/connected_header';
 import ConnectedPublicHeader from '../containers/connected_public_header';
 import ConnectedTrialHeader from '../containers/connected_trial_header'
-import InductionSidebar from '../components/induction_sidebar';
+import InductionSidebar from './induction_sidebar';
+import IntroductionScreenOne from './introduction_screen_one';
+import IntroductionScreenTwo from './introduction_screen_two';
+import IntroductionScreenThree from './introduction_screen_three';
 import ConnectedGuestInfoFormModal from '../containers/connected_guest_info_form_modal';
 import ConnectedSitemapShareModal from '../containers/connected_sitemap_share_modal';
 import ConnectedLeftSidebar from '../containers/connected_left_sidebar';
@@ -45,6 +48,15 @@ class SiteMap extends React.Component {
         { !this.props.trial &&
           <ConnectedRightSidebar />
         }
+        {
+          this.props.publicShare &&
+          <div className="public-intro">
+            <IntroductionScreenOne />
+            <IntroductionScreenTwo />
+            <IntroductionScreenThree />
+          </div>
+        }
+        <ConnectedRightSidebar />
         <ConnectedSecionContainer sitemapNumber='' />
         <ConnectedFooter />
         <CustomDragLayer />

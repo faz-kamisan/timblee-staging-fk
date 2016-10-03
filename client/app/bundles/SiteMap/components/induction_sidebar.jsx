@@ -1,10 +1,6 @@
 import React, { PropTypes } from 'react';
-import { traverse } from '../helpers/tree_helper'
-import ConnectedComment from '../containers/connected_comment'
-import ConnectedMarkAsResolvedCheck from '../containers/connected_mark_as_resolved_check'
-import ConnectedNewComment from '../containers/connected_new_comment'
 
-class RightSidebar extends React.Component {
+class InductionSidebar extends React.Component {
   static propTypes = {
   };
 
@@ -15,10 +11,30 @@ class RightSidebar extends React.Component {
           <h2 className="comment-type-heading">
             Induction
           </h2>
+          <ul>
+            <li>
+              <p>Click on an individual page to add comments to that <br /> page</p>
+              <figure>
+                <img alt=" " src="/assets/share-intro-1.png"></img>
+              </figure>
+            </li>
+            <li>
+              <p>Click on the comments icon above to view grouped comments and to add general comments</p>
+              <figure>
+                <img alt=" " src="/assets/share-intro-2.png"></img>
+              </figure>
+            </li>
+            <li>
+              <p>To share this sitemap with others, copy and paste the URL from the browser bar and share it with them</p>
+              <figure>
+                <img alt=" " src="/assets/share-intro-3.png"></img>
+              </figure>
+            </li>
+          </ul>
         </div>
       </div>
     );
   }
 }
 
-export default RightSidebar;
+export default InductionSidebar;
