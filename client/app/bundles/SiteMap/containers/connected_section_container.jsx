@@ -3,7 +3,7 @@ import { setSaving, changeUpdatedAt, removeSection } from '../actions'
 import SectionContainer from '../components/section_container'
 
 const mapStateToProps = (state) => {
-  return { sections: state.sections, sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, publicShare: state.publicShare }
+  return { sections: state.sections, sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, publicShare: state.publicShare, trial: state.trial }
 }
 
 const mapDispatchToProps = (dispatch) => {

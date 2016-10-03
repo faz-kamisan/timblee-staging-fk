@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160928141153) do
+ActiveRecord::Schema.define(version: 20161003063213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 20160928141153) do
 
   create_table "guests", force: :cascade do |t|
     t.string   "full_name"
-    t.string   "logo"
+    t.string   "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -118,10 +118,11 @@ ActiveRecord::Schema.define(version: 20160928141153) do
     t.string   "name"
     t.integer  "folder_id"
     t.integer  "business_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.string   "state"
     t.string   "public_share_token"
+    t.boolean  "trial",              default: false
   end
 
   create_table "subscriptions", force: :cascade do |t|

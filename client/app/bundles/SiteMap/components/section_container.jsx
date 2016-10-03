@@ -63,7 +63,7 @@ class SectionContainer extends React.Component {
     })
 
     return (
-      <div className='sitemap-sections'>
+      <div className={'sitemap-sections' + (this.props.trial ? ' trial' : '')}>
         <ul className={"section-list clearfix" + ((!this.props.publicShare && this.props.leftSidebarExpanded) ? ' left-bar-expanded' : ' left-bar-contracted') + (this.props.publicShare ? ' public-share' : '')}>
           {renderedSectionTabs}
         </ul>
