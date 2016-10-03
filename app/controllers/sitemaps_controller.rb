@@ -10,7 +10,7 @@ class SitemapsController < ApplicationController
     @sitemap.business = current_business
     if @sitemap.save
       flash[:notice] = t('.success', scope: :flash)
-      redirect_to sitemap_path(@sitemap)
+      redirect_to sitemap_path(@sitemap, new_sitemap: true)
     else
       flash[:error] = t('.failure', scope: :flash)
       redirect_to home_dashboard_path
@@ -21,7 +21,9 @@ class SitemapsController < ApplicationController
     @sitemap_props = @sitemap.to_react_data.merge!(currentUser: { fullName: current_user.full_name,
                                                    email: current_user.email },
                                                    publicShareUrl: (sitemap_public_share_url(@sitemap.public_share_token).gsub(/(?<protocol>http(s?):\/\/)/, '\k<protocol>share.')),
-                                                   publicShare: false)
+                                                   publicShare: false,
+                                                   newSitemap: !!params[:new_sitemap]
+                                                   )
     if(current_business.stripe_customer_id)
       @card = current_business.active_card
     end

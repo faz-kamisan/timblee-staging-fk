@@ -38463,6 +38463,10 @@
 	
 	var _shared_users2 = _interopRequireDefault(_shared_users);
 	
+	var _new_sitemap = __webpack_require__(/*! ./new_sitemap */ 1033);
+	
+	var _new_sitemap2 = _interopRequireDefault(_new_sitemap);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var sitemapAppReducer = (0, _redux.combineReducers)({
@@ -38487,7 +38491,8 @@
 	  publicShare: _public_share2.default,
 	  footerPages: _footer_pages2.default,
 	  maxPageUid: _max_page_uid2.default,
-	  sharedUsers: _shared_users2.default
+	  sharedUsers: _shared_users2.default,
+	  newSitemap: _new_sitemap2.default
 	});
 	
 	exports.default = sitemapAppReducer;
@@ -49512,7 +49517,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving };
+	  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving, newSitemap: state.newSitemap };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -49597,6 +49602,16 @@
 	    value: function handleNameChange(event) {
 	      var name = event.target.value;
 	      this.setState({ name: name });
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this = this;
+	      if (this.props.newSitemap) {
+	        setTimeout(function () {
+	          _this.refs.nameEditor.click();
+	        }, 3000);
+	      }
 	    }
 	  }, {
 	    key: 'handleNameInputBlur',
@@ -49695,10 +49710,10 @@
 	                    _react2.default.createElement('img', { src: '/assets/go-back.svg', className: 'go-back-link' })
 	                  )
 	                ),
-	                _react2.default.createElement('input', { value: this.state.name, onChange: this.handleNameChange, onBlur: this.handleNameInputBlur, className: "site-map-name" + (this.state.nameFocused ? '' : ' hide'), ref: 'sitemapNameInput' }),
+	                _react2.default.createElement('input', { value: this.state.name, onChange: this.handleNameChange, onBlur: this.handleNameInputBlur, className: "site-map-name site-map-name-input" + (this.state.nameFocused ? '' : ' hide'), ref: 'sitemapNameInput' }),
 	                _react2.default.createElement(
 	                  'h3',
-	                  { className: "site-map-name truncate " + (this.state.nameFocused ? ' hide' : ''), onClick: this.handleNameInputFocus },
+	                  { className: "site-map-name truncate " + (this.state.nameFocused ? ' hide' : ''), onClick: this.handleNameInputFocus, ref: 'nameEditor' },
 	                  this.state.name
 	                )
 	              ),
@@ -49828,6 +49843,7 @@
 	  name: _react.PropTypes.string.isRequired,
 	  id: _react.PropTypes.number.isRequired,
 	  state: _react.PropTypes.string.isRequired,
+	  newSitemap: _react.PropTypes.bool.isRequired,
 	  saving: _react.PropTypes.bool.isRequired,
 	  setSaving: _react.PropTypes.func.isRequired,
 	  onNameChange: _react.PropTypes.func.isRequired,
@@ -64144,6 +64160,27 @@
 	  iconName: _react.PropTypes.string.isRequired
 	};
 	exports.default = PageTypePreview;
+
+/***/ },
+/* 1033 */
+/*!******************************************************!*\
+  !*** ./app/bundles/SiteMap/reducers/new_sitemap.jsx ***!
+  \******************************************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var newSitemap = function newSitemap() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+	  var action = arguments[1];
+	
+	  return state;
+	};
+	
+	exports.default = newSitemap;
 
 /***/ }
 /******/ ]);
