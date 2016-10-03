@@ -11,7 +11,7 @@ class SectionsController < ApplicationController
   end
 
   def destroy
-    send_conditional_json_response(@section.destroy)
+    send_conditional_json_response(@section.update(state: 'archived'))
   end
 
   private

@@ -9,7 +9,7 @@ class Sitemap < ActiveRecord::Base
   belongs_to :folder
   belongs_to :business
   has_many :pages
-  has_many :sections
+  has_many :sections, dependent: :destroy
   has_one :default_section, ->{ where(default: true) }, class_name: :Section
   has_many :sitemap_shared_users, dependent: :destroy
   has_many :comments, as: :commentable
@@ -22,7 +22,7 @@ class Sitemap < ActiveRecord::Base
 
   before_validation :set_default_name, on: :create, unless: :name
   before_validation :set_unique_public_share_token, on: :create
-  before_destroy :hard_delete_sections_and_pages
+  # before_destroy :hard_delete_sections_and_pages
   before_validation :set_default_state, on: :create, unless: :state
   after_create :create_default_section_and_page
   strip_fields :name
@@ -98,10 +98,10 @@ class Sitemap < ActiveRecord::Base
       self.public_share_token = Digest::SHA1.hexdigest([Time.now, rand].join)[0,10]
     end
 
-    def hard_delete_sections_and_pages
-      sections.each do |section|
-        section.really_destroy_root_page = true
-        section.destroy!
-      end
-    end
+    # def hard_delete_sections_and_pages
+    #   sections.each do |section|
+    #     section.really_destroy_root_page = true
+    #     section.destroy!
+    #   end
+    # end
 end

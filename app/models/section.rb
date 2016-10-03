@@ -1,14 +1,19 @@
 class Section < ActiveRecord::Base
+  STATES = ['active', 'archived', 'resolved']
+
   belongs_to :sitemap, touch: true
   has_many :pages
-  has_one :root_page, ->{ where(parent_id: nil) }, class_name: :Page
+  has_one :root_page, ->{ where(parent_id: nil) }, class_name: :Page, dependent: :destroy
 
   validates :name, :sitemap, presence: true
   validates :name, uniqueness: { scope: :sitemap_id }
+  validates :state, inclusion: { in: STATES }
 
-  before_destroy :destroy_root_page
+  before_update :archive_pages, if: :state_changed?
 
-  attr_accessor :really_destroy_root_page
+  # before_destroy :destroy_root_page
+
+  # attr_accessor :really_destroy_root_page
 
   def duplicate(duplicate_sitemap)
     duplicate = dup
@@ -22,14 +27,22 @@ class Section < ActiveRecord::Base
   end
 
   def to_react_data
-    { id: id, name: name, default: default, pageTree: get_page_tree }
+    { id: id, name: name, default: default, state: state, pageTree: get_page_tree }
   end
 
-  def destroy_root_page
-    if really_destroy_root_page
-      root_page.destroy
-    else
-      pages.update_all(state: 'archived')
+  private
+
+    def archive_pages
+      if(state == 'archived')
+        pages.update_all(state: 'archived')
+      end
     end
-  end
+
+  # def destroy_root_page
+  #   if really_destroy_root_page
+  #     root_page.destroy
+  #   else
+  #     pages.update_all(state: 'archived')
+  #   end
+  # end
 end
