@@ -3,7 +3,7 @@ import { updatePagePosition, addNewPage, setMaxPageUid, changeUpdatedAt, updateI
 import DroppablePageTileBottom from '../components/page_tile_Bottom'
 
 const mapStateToProps = (state) => {
-  return { sitemapId: state.id, maxPageUid: state.maxPageUid }
+  return { sitemapId: state.id, maxPageUid: state.maxPageUid, trial: state.trial }
 }
 
 const mapDispatchToProps = (dispatch) => {

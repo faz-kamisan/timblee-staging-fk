@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  skip_before_filter :authenticate_user!
+  before_filter :conditional_authenticate_user!
   before_filter :fetch_page, only: [:destroy, :update]
 
   def create
@@ -37,5 +39,9 @@ class PagesController < ApplicationController
 
     def page_resolved?
       params[:action] == 'update' && page_params.include?(:state) && @page.state == 'resolved' && @page.comments.present?
+    end
+
+    def conditional_authenticate_user!
+      (request.subdomains[0] == 'app') || authenticate_user!
     end
 end

@@ -5,6 +5,7 @@ class Sitemap < ActiveRecord::Base
   DEFAULT_NAME_PREFIX = 'New Sitemap '
   DEFAULT_SECTION_NAME = 'Default'
   GENERAL_PAGE_TYPE_NAME = 'General 1'
+  TRIAL_SITEMAP_TTL = 24.hours
 
   belongs_to :folder
   belongs_to :business
@@ -14,11 +15,11 @@ class Sitemap < ActiveRecord::Base
   has_many :sitemap_shared_users, dependent: :destroy
   has_many :comments, as: :commentable
 
-  validates :public_share_token, :business, :name, presence: true
-  validates :business, :name, presence: true
-  validates :name, uniqueness: { scope: :business_id, case_sensitive: false }
+  validates :public_share_token, :name, presence: true
+  validates :business, presence: true, unless: :trial?
+  validates :name, uniqueness: { scope: :business_id, case_sensitive: false }, unless: :trial?
   validates :public_share_token, uniqueness: true
-  validate :business_can_have_more_sitemaps, on: :create
+  validate :business_can_have_more_sitemaps, on: :create, unless: :trial?
 
   before_validation :set_default_name, on: :create, unless: :name
   before_validation :set_unique_public_share_token, on: :create
@@ -52,7 +53,9 @@ class Sitemap < ActiveRecord::Base
   end
 
   def active_users
-    users - User.where(id: users.map(&:id)).invitation_not_accepted
+    unless trial?
+      users - User.where(id: users.map(&:id)).invitation_not_accepted
+    end
   end
 
   def to_react_data
@@ -61,22 +64,28 @@ class Sitemap < ActiveRecord::Base
       id: self.id,
       maxPageUid: pages.maximum(:uid),
       updated_at: self.updated_at.strftime('%d %b %Y'),
+      createdAt: self.created_at.to_f * 1000,
       pageTypes: PageType.order_by_name,
       footerPages: pages.where(footer: true).map(&:to_react_data),
       comments: self.comments.order_by_created_at.map(&:to_react_data),
       sections: sections.map(&:to_react_data),
-      business:  business.to_react_data,
-      sharedUsers: sitemap_shared_users
+      business:  business && business.to_react_data,
+      sharedUsers: sitemap_shared_users,
+      trial: trial
     }
   end
 
   def set_default_name(default_name = DEFAULT_NAME_PREFIX)
-    new_site_map_numbers = self.business.sitemaps.where("name ~* '^"+ default_name +"\\d+$'").pluck(:name).map {|name| name.match(/\d*$/)[0].to_i}.sort
-    if(new_site_map_numbers[0] == 1)
-      first_unoccupied_number = (new_site_map_numbers.select.with_index { |number, index| number == index + 1 }[-1]) + 1
-      self.name = "#{default_name}" + first_unoccupied_number.to_s
-    else
+    if trial?
       self.name = "#{default_name}1"
+    else
+      new_site_map_numbers = self.business.sitemaps.where("name ~* '^"+ default_name +"\\d+$'").pluck(:name).map {|name| name.match(/\d*$/)[0].to_i}.sort
+      if(new_site_map_numbers[0] == 1)
+        first_unoccupied_number = (new_site_map_numbers.select.with_index { |number, index| number == index + 1 }[-1]) + 1
+        self.name = "#{default_name}" + first_unoccupied_number.to_s
+      else
+        self.name = "#{default_name}1"
+      end
     end
   end
 

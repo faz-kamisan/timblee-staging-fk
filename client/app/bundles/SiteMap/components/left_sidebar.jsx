@@ -9,6 +9,7 @@ class LeftSidebar extends React.Component {
     footerPages: PropTypes.array.isRequired,
     updatedAt: PropTypes.string.isRequired,
     leftSidebarExpanded: PropTypes.bool.isRequired,
+    trial: PropTypes.bool.isRequired,
     toggleLeftSideBarExpanded: PropTypes.func.isRequired
   };
 
@@ -36,6 +37,9 @@ class LeftSidebar extends React.Component {
     $('#page-type').on('blur', function() {
       $(this).prop('placeholder', 'Page type')
     })
+    if(this.props.trial) {
+      $('body').addClass('trial');
+    }
   }
 
   getPageCount() {
@@ -64,11 +68,11 @@ class LeftSidebar extends React.Component {
       return <li key={pageType.id}><DraggablePageType name={pageType.name} iconName={pageType.icon_name} id={pageType.id} /></li>
     })
     return (
-      <div className={'sitemap-left-sidebar' + (this.props.leftSidebarExpanded ? '' : ' expand-false')}>
+      <div className={'sitemap-left-sidebar' + (this.props.leftSidebarExpanded ? '' : ' expand-false') + (this.props.trial ? ' trial' : '')}>
         {
           this.props.leftSidebarExpanded ?
           <div>
-            <div className="close-left-bar">
+            <div className={"close-left-bar" + (this.props.trial ? ' hide' : '')}>
               <div className="row">
                 <span className="cursor col-xs-4 p-r-0" onClick={this.toogleExpand}>
                   <span className="caret-left">

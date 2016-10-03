@@ -2,6 +2,55 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_filter :configure_sign_up_params, only: [:create]
   before_filter :check_user_is_confirmed, only: [:update]
   before_filter :configure_account_update_params, only: [:update]
+
+  # POST /
+  def create
+    build_resource(sign_up_params)
+
+    resource.save
+    yield resource if block_given?
+    if resource.persisted?
+      if(session[:sitemap_id] && sitemap = Sitemap.find_by(id: session[:sitemap_id]))
+        sitemap.update(business_id: resource.business_id, trial: false)
+        session[:sitemap_id] = nil
+      end
+      if resource.active_for_authentication?
+        set_flash_message :notice, :signed_up if is_flashing_format?
+        sign_up(resource_name, resource)
+        respond_to do |format|
+          format.html do
+            respond_with resource, location: after_sign_up_path_for(resource)
+          end
+          format.json do
+            render json: resource.as_json, status: 200
+          end
+        end
+      else
+        set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_flashing_format?
+        expire_data_after_sign_in!
+        respond_to do |format|
+          format.html do
+            respond_with resource, location: after_inactive_sign_up_path_for(resource)
+          end
+          format.json do
+            render json: resource.as_json, status: 200
+          end
+        end
+      end
+    else
+      clean_up_passwords resource
+      set_minimum_password_length
+      respond_to do |format|
+        format.html do
+          respond_with resource
+        end
+        format.json do
+          render json: resource.errors, status: 422
+        end
+      end
+    end
+  end
+
   # PUT /resource
   def update
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)

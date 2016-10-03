@@ -4,6 +4,7 @@ import { DragDropContext } from 'react-dnd';
 import ConnectedSecionContainer from '../containers/connected_section_container';
 import ConnectedHeader from '../containers/connected_header';
 import ConnectedPublicHeader from '../containers/connected_public_header';
+import ConnectedTrialHeader from '../containers/connected_trial_header'
 import InductionSidebar from '../components/induction_sidebar';
 import ConnectedGuestInfoFormModal from '../containers/connected_guest_info_form_modal';
 import ConnectedSitemapShareModal from '../containers/connected_sitemap_share_modal';
@@ -16,18 +17,24 @@ import ConnectedPageChangeModal from '../containers/connected_page_change_modal'
 import ConnectedNewSectionModal from '../containers/connected_new_section_modal';
 import ConnectedPageCommentsModal from '../containers/connected_page_comments_modal';
 import ConnectedDeleteSectionModal from '../containers/connected_delete_section_modal'
-
+import UserSignupModal from './user_signup_modal'
 import CustomDragLayer from '../components/custom_drag_layer';
 
 class SiteMap extends React.Component {
   render() {
     return (
       <div className={this.props.publicShare ? 'shared-view' : ''}>
+        { !this.props.publicShare && !this.props.trial &&
+          <ConnectedHeader />
+        }
         { this.props.publicShare &&
           <ConnectedPublicHeader />
         }
-        { !this.props.publicShare &&
-          <ConnectedHeader />
+        { this.props.trial &&
+          <div>
+            <ConnectedTrialHeader />
+            <UserSignupModal sitemapId={this.props.sitemapId} />
+          </div>
         }
         { !this.props.publicShare &&
           <ConnectedLeftSidebar />
@@ -35,22 +42,30 @@ class SiteMap extends React.Component {
         { this.props.publicShare &&
           <InductionSidebar />
         }
-        <ConnectedRightSidebar />
+        { !this.props.trial &&
+          <ConnectedRightSidebar />
+        }
         <ConnectedSecionContainer sitemapNumber='' />
         <ConnectedFooter />
         <CustomDragLayer />
         <ConnectedGuestInfoFormModal />
+        { !this.props.publicShare && !this.props.trial &&
+          <ConnectedSitemapShareModal />
+        }
         { !this.props.publicShare &&
           <div>
-            <ConnectedSitemapShareModal />
             <ConnectedDeletePageModal />
             <ConnectedPageChangeModal />
             <ConnectedNewSectionModal />
             <ConnectedDeleteSectionModal />
           </div>
         }
-        <ConnectedPageCommentsModal />
-        <ConnectedCommentDeleteModal />
+        { !this.props.trial &&
+          <div>
+            <ConnectedPageCommentsModal />
+            <ConnectedCommentDeleteModal />
+          </div>
+        }
       </div>
     );
   }

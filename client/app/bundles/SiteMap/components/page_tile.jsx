@@ -129,20 +129,24 @@ class PageTile extends React.Component {
                   </span>
                 </li>
               }
-              <li className="second-item">
-                <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'>
-                  <span className="card-tooltip">View Comments</span>
-                </span>
-              </li>
+              { this.props.trial &&
+                <li className="second-item">
+                  <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'>
+                    <span className="card-tooltip">View Comments</span>
+                  </span>
+                </li>
+              }
             </ul>
           </div>
           <div className={"card-overlay" + (this.state.showOverLay ? ' overlay-in' : '')}>
             <div className="close-card-overlay">
               <a href="javascript:void(0)" className="icon-close" onClick={this.closeOverLay}></a>
             </div>
-            <a href="#page-comments-modal" className="icon-page-comments" onClick={this.setSelectedPage} data-toggle='modal'>
-              <span className="card-tooltip">View Comments</span>
-            </a>
+            { this.props.trial &&
+              <a href="#page-comments-modal" className="icon-page-comments" onClick={this.setSelectedPage} data-toggle='modal'>
+                <span className="card-tooltip">View Comments</span>
+              </a>
+            }
             <a href="#page-change-modal" className="icon-page-change" onClick={this.setSelectedPage} data-toggle='modal'>
               <span className="card-tooltip">Change Page</span>
             </a>
@@ -184,20 +188,24 @@ class PageTile extends React.Component {
                   </span>
                 </li>
               }
-              <li className="second-item">
-                <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'>
-                  <span className="card-tooltip">View Comments</span>
-                </span>
-              </li>
+              { this.props.trial &&
+                <li className="second-item">
+                  <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'>
+                    <span className="card-tooltip">View Comments</span>
+                  </span>
+                </li>
+              }
             </ul>
           </div>
           <div className={"card-overlay" + (this.state.showOverLay ? ' overlay-in' : '')}>
             <div className="close-card-overlay">
               <a href="javascript:void(0)" className="icon-close" onClick={this.closeOverLay}></a>
             </div>
-            <a href="#page-comments-modal" className="icon-page-comments" onClick={this.setSelectedPage} data-toggle='modal'>
-              <span className="card-tooltip">View Comments</span>
-            </a>
+            { this.props.trial &&
+              <a href="#page-comments-modal" className="icon-page-comments" onClick={this.setSelectedPage} data-toggle='modal'>
+                <span className="card-tooltip">View Comments</span>
+              </a>
+            }
             <a href="#page-change-modal" className="icon-page-change" onClick={this.setSelectedPage} data-toggle='modal'>
               <span className="card-tooltip">Change Page</span>
             </a>
