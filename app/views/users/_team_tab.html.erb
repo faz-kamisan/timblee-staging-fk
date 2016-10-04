@@ -28,6 +28,8 @@
           <div class="edit">
             <% if current_business.is_starter_plan? && !current_business.in_trial_period? %>
                 <a href="#invite-error-modal" data-toggle="modal" class="btn btn-pink invite-user-modal-link">Invite</a>
+            <% elsif current_business.is_starter_plan? && current_business.in_trial_period? %>
+                <a href="#invite-warning-modal" data-toggle="modal" class="btn btn-pink invite-user-modal-link">Invite</a>
             <% else %>
               <a data-toggle="modal" class="btn btn-pink invite-user-modal-link invite-link">Invite</a>
             <% end %>
@@ -109,4 +111,5 @@
 
 </div>
 <%= render 'users/invite_error_modal'%>
+<%= render 'users/invite_warning_modal'%>
 <%= javascript_include_tag('invitations', 'delete_user', 'team') %>

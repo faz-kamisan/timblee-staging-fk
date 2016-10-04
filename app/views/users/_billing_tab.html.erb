@@ -187,7 +187,7 @@
         <div class="modal-button text-center">
           <%= form_for Sitemap.new do |f| %>
             <%= f.hidden_field :folder_id %>
-            <a href="javascript:void(0);" class="btn btn-pink new-sitemap-link" data-allow-more-sitemaps= "<%= current_business.allow_more_sitemaps? ? 'true' : 'false' %>">Create a sitemap</a>
+            <a href="javascript:void(0);" class="btn btn-pink new-sitemap-link" data-allow-more-sitemaps= "<%= current_business.allow_more_sitemaps %>">Create a sitemap</a>
           <% end %>
         </div>
       </div>

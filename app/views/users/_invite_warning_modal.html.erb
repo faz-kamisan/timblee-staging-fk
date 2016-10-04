@@ -1,0 +1,20 @@
+<div class="modal fade" id="invite-warning-modal" tabindex="-1" role="dialog" aria-labelledby="invite-warning-modalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">
+            <%= image_tag('close-modal.svg', class: 'close-modal') %>
+          </span>
+        </button>
+        <h4>A warning about the starter plan</h4>
+        <% if request.original_fullpath == settings_users_path %>
+          <%= link_to 'Switch to Pro instead', "#choose-plan-modal", 'data-toggle': "modal", 'data-dismiss': 'modal' %>
+        <% else %>
+          <%= link_to 'Switch to Pro instead', billing_settings_users_path %>
+        <% end %>
+        <%= link_to 'Choose Starter Plan', "", 'data-toggle': "modal", 'data-dismiss': 'modal', class: 'invite-link' %>
+      </div>
+    </div>
+  </div>
+</div>

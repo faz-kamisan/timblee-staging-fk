@@ -3,8 +3,11 @@ var Sitemaps = function(options) {
   this.newSitemapLink = options.newSitemapLink;
   this.newSitemap = options.newSitemap;
   this.sitemapErrorModal = options.sitemapErrorModal;
+  this.sitemapWarningModal = options.sitemapWarningModal;
   this.inviteErrorModal = options.inviteErrorModal;
+  this.inviteWarningModal = options.inviteWarningModal;
   this.inviteErrorLink = options.inviteErrorLink;
+  this.inviteWarningLink = options.inviteWarningLink;
   this.deleteSitemapModal = options.deleteSitemapModal;
   this.sitemapShareModal = options.sitemapShareModal;
   this.shareMethodTabs = options.shareMethodTabs;
@@ -22,8 +25,10 @@ Sitemaps.prototype.bindEvents = function() {
   var _this = this;
 
   this.newSitemap.on('click', _this.newSitemapLink, function() {
-    if(_this.newSitemapLink.data('allow-more-sitemaps')) {
+    if($(this).find(_this.newSitemapLink).data('allow-more-sitemaps') == 'yes') {
       $(this).submit();
+    } else if($(this).find(_this.newSitemapLink).data('allow-more-sitemaps') == 'warn') {
+      _this.sitemapWarningModal.modal('show');
     } else {
       _this.sitemapErrorModal.modal('show');
     }
@@ -53,6 +58,10 @@ Sitemaps.prototype.bindEvents = function() {
 
   $('body').on('click', '.invite-error-link', function(e) {
     _this.inviteErrorModal.modal('show')
+  })
+
+  $('body').on('click', '.invite-warning-link', function(e) {
+    _this.inviteWarningModal.modal('show')
   })
 
   this.addMessageLink.on('click', function() {
@@ -171,8 +180,11 @@ $(function() {
     newSitemap : $('.new_sitemap'),
     newSitemapLink : $('.new-sitemap-link'),
     sitemapErrorModal: $('#sitemap-error-modal'),
+    sitemapWarningModal: $('#sitemap-warning-modal'),
     inviteErrorModal: $('#invite-error-modal'),
+    inviteWarningModal: $('#invite-warning-modal'),
     inviteErrorLink: $('.invite-error-link'),
+    inviteWarningLink: $('.invite-warning-link'),
     deleteSitemapModal: $('#delete-sitemap-modal'),
     deleteSitemapLink: $('.delete-sitemap-modal-link'),
     sitemapShareModal: $('#sitemap-share-modal'),
