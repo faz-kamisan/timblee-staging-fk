@@ -27,15 +27,16 @@ class SectionContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(this.props.sections.length != nextProps.sections.length) {
-      this.setState({currentSectionId: this.getDefaultSectionId(this.props.sections)})
+    if(this.props.sections.filter(function(section) {return(section.state == 'active')}).length != nextProps.sections.filter(function(section) {return(section.state == 'active')}).length) {
+      this.setState({currentSectionId: this.getDefaultSectionId(this.props.sections.filter(function(section) {return(section.state == 'active')}))})
     }
   }
 
   render() {
     var _this = this;
-    var tabWidth = (100 / this.props.sections.length).toString() + '%'
-    var renderedSectionTabs = this.props.sections.map(function(section, index) {
+    var activeSections = this.props.sections.filter(function(section) {return(section.state == 'active')})
+    var tabWidth = (100 / activeSections.length).toString() + '%'
+    var renderedSectionTabs = activeSections.map(function(section, index) {
       return (
         <li key={section.id} className={'sitemap-section-tab' + (_this.state.currentSectionId == section.id ? ' active' : '')} onClick={function(e) { _this.changeCurrentSectionId(section.id) } } style={ {width: tabWidth} }>
           { !section.default &&
@@ -45,7 +46,7 @@ class SectionContainer extends React.Component {
         </li>
       )
     })
-    var renderedSections = this.props.sections.map(function(section, index) {
+    var renderedSections = activeSections.map(function(section, index) {
       return (
         <div key={section.id} className={'sitemap-section' + (_this.state.currentSectionId == section.id ? ' active' : ' hide')}>
           <div>
@@ -61,7 +62,7 @@ class SectionContainer extends React.Component {
     })
 
     return (
-      <div className='sitemap-sections'>
+      <div className={'sitemap-sections' + (this.props.trial ? ' trial' : '')}>
         <ul className={"section-list clearfix" + ((!this.props.publicShare && this.props.leftSidebarExpanded) ? ' left-bar-expanded' : ' left-bar-contracted') + (this.props.publicShare ? ' public-share' : '')}>
           {renderedSectionTabs}
         </ul>

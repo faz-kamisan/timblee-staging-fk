@@ -1,7 +1,7 @@
 class SitemapsController < ApplicationController
   before_filter :fetch_sitemap, only: [:destroy, :show, :update, :share_via_email]
   before_filter :fetch_sitemap_from_token, only: [:public_share]
-  skip_before_filter :authenticate_user!, only: [:public_share]
+  skip_before_filter :authenticate_user!, only: [:public_share, :trial]
   before_filter :fetch_sitemap_from_sitemap_id, only: [:rename, :duplicate]
   around_action :wrap_in_transaction, only: :duplicate
 
@@ -14,6 +14,23 @@ class SitemapsController < ApplicationController
     else
       flash[:error] = t('.failure', scope: :flash)
       redirect_to home_dashboard_path
+    end
+  end
+
+  def trial
+    if(current_user)
+      redirect_to home_dashboard_path, notice: 'You are already signed in.'
+    else
+      unless(session[:sitemap_id] && (@sitemap = Sitemap.find_by(id: session[:sitemap_id])))
+        @sitemap = Sitemap.create(trial: true)
+        session[:sitemap_id] = @sitemap.id
+        TrialSitemapDestroyer.perform_in(Sitemap::TRIAL_SITEMAP_TTL, @sitemap.id)
+      end
+      @sitemap_props = @sitemap.to_react_data.merge!(publicShare: false)
+      if current_user
+        @sitemap_props.merge!(currentUser: { fullName: current_user.full_name, email: current_user.email })
+      end
+      render :show
     end
   end
 

@@ -700,6 +700,14 @@
     height: calc(100% - 127px);
   }
 
+  &.trial {
+    .page-type-list {
+      height: calc(100vh - 148px);
+    }
+    top: 50px;
+    height: calc(100% - 50px);
+  }
+
   .expand-btn {
     position: absolute;
     height: 100%;
@@ -1718,6 +1726,10 @@
   }
 }
 
+body.trial {
+  padding-top: 50px;
+}
+
 /* Comments */
 .sitemap-right-sidebar {
   position: fixed;
@@ -1756,8 +1768,8 @@
   position: fixed;
   right: -435px;
   width: 420px;
-  top: 80px;
-  height: 100%;
+  top: 138px;
+  height: calc(100% - 138px);
   background: #262b30;
   z-index: 14;
   transition: .35s;
@@ -1766,6 +1778,27 @@
   padding-top: 20px;
   &.open {
     right: 0;
+  }
+  .general-comments {
+    padding: 0 20px;
+  }
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+  p {
+    color: #c2c3c3;
+    @extend .font-14;
+    margin: 16px 0 22px 0;
+  }
+  li {
+    padding: 0 16px 30px 16px;
+    img {
+      width: 100%;
+    }
+    + li {
+      border-top: solid 2px #1b1e22;
+    }
   }
 }
 
@@ -2387,6 +2420,12 @@
   }
 }
 
+.sitemap-sections.trial {
+  .section-list {
+    top: 50px;
+  }
+}
+
 .section-list {
   padding-left: 372px;
   position: fixed;
@@ -2414,16 +2453,6 @@
     position: relative;
     .truncate {
       max-width: calc(100% - 10px);
-    }
-    &:before {
-      border: 1px solid #d6d8da;
-      content: "";
-      height: 45px;
-      left: 0;
-      position: absolute;
-      top: 0;
-      width: 1px;
-      z-index: 5;
     }
     &.active {
       background: #F9FAFC;
@@ -3160,5 +3189,62 @@
         margin-left: 30px;
       }
     }
+  }
+}
+
+.react-trial-header {
+  background: $primaryBlack;
+  position: fixed;
+  top: 0px;
+  z-index: 15;
+  height: 50px;
+  left: 0;
+  width: 100%;
+  padding: 0;
+  h6 {
+    color: $primaryWhite;
+    vertical-align: middle;
+  }
+  a {
+    background: $primaryPink;
+    color: $primaryWhite;
+    widht: 100px;
+  }
+}
+
+.intro-box {
+  padding: 34px 40px 18px 40px;
+  background: #262b30;
+  position: fixed;
+  z-index: 15;
+  width: 580px;
+  @include border-radius(10px);
+  figure img {
+    width: 498px;
+    border: 1px solid #7f7f7f;
+  }
+  p {
+    font-size: 18px;
+    color: $primaryWhite;
+    line-height: 24px;
+    margin-top: 25px;
+  }
+  a {
+    color: $primaryWhite;
+    display: inline-block;
+    @extend .font-14;
+    border-bottom: solid 1px #747678;
+    &:hover {
+      color: $primaryPink;
+      border-bottom-color: $primaryPink;
+    }
+  }
+  &.share-3 {
+    top: 83px;
+    left: 69px;
+  }
+  &.share-2 {
+    top: 112px;
+    right: 50px;
   }
 }

@@ -139,7 +139,7 @@ function createNewSection(sections, id, sectionId, newSectionName, timeStamp) {
     node.section_id = timeStamp
   })
   parentPage.children.removeIf(function(elem, idx) { return elem.id == id });
-  var newSection = { default: false, name: newSectionName, pageTree: page, id: timeStamp }
+  var newSection = { default: false, name: newSectionName, pageTree: page, id: timeStamp, state: 'active' }
   sectionsCopy.push(newSection);
   return sectionsCopy
 }
@@ -155,11 +155,11 @@ function deletePageComment(sections, commentId, pageId, sectionId) {
 function removeSection(sections, id) {
   var sectionsCopy = Object.assign([], sections);
   var section = sectionsCopy.filter(function(section) { return(section.id == id) })[0]
+  section.state = 'archived'
   section.pageTree.state = 'archived'
   traverse(section.pageTree, function(node) {
     node.state = 'archived'
   })
-  sectionsCopy.removeIf(function(section) { return(section.id == id) })
   return sectionsCopy
 }
 

@@ -23,7 +23,7 @@ $(window).on('load', function() {
 
   $('#replay_intro').on('click', function() {
     $('.flex-control-nav li').first().find('a').click();
-    $('.flexslider').flexslider('play')
+    $('.flexslider').flexslider('play');
   });
 
 });

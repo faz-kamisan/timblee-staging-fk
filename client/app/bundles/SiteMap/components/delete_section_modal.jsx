@@ -13,21 +13,20 @@ class DeleteSectionModal extends React.Component {
   deleteSection(e) {
     var _this = this
     this.props.removeSection(this.props.section.id)
-    // this.props.deleteSection(this.props.comment.id, this.props.comment.commentableId, this.props.comment.commentableType, this.props.comment.footer, this.props.comment.sectionId)
-    // $.ajax({
-    //   url: '/comments/' + this.props.comment.id,
-    //   method: 'delete',
-    //   dataType: 'JSON',
-    //   error: (result) => {
-    //     document.setFlash(result.responseText)
-    //   },
-    //   complete: (result) => {
-    //     this.props.setSaving(true)
-    //     setTimeout(function() {
-    //       _this.props.setSaving(false)
-    //     }, 2000)
-    //   }
-    // });
+    $.ajax({
+      url: '/sections/' + this.props.section.id,
+      method: 'delete',
+      dataType: 'JSON',
+      error: (result) => {
+        document.setFlash(result.responseText)
+      },
+      complete: (result) => {
+        this.props.setSaving(true)
+        setTimeout(function() {
+          _this.props.setSaving(false)
+        }, 2000)
+      }
+    });
   }
 
   render() {
