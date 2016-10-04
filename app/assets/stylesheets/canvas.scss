@@ -2433,7 +2433,7 @@ body.trial {
   left: 0;
   width: 100%;
   margin: 0;
-  z-index: 12;
+  z-index: 13;
   &.left-bar-contracted {
     padding-left: 30px;
     &.public-share {
@@ -3149,6 +3149,7 @@ body.trial {
 
   .page-container.level-0 {
     padding-top: 250px!important;
+    position: relative;
   }
 
   .section-list {
@@ -3246,6 +3247,7 @@ body.trial {
   padding: 34px 40px 18px 40px;
   background: #262b30;
   width: 580px;
+  text-align: left;
   @include border-radius(10px);
   figure img {
     width: 498px;
@@ -3277,7 +3279,7 @@ body.trial {
 }
 
 .intro-box-1 {
-  right: 20px;
+  right: auto;
   top: 182px;
   .hotspot {
     top: 100px;

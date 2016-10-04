@@ -32,6 +32,7 @@ class PageContainer extends React.Component {
       return (
         <div data-level={this.props.pageTree.level} className={ 'page-container level-' + this.props.pageTree.level.toString() } style={ { width: width } }>
           <ConnectedPageTile pageTree={this.props.pageTree} collapsed={this.props.pageTree.collapsed} childrenLength={children.length} sitemapNumber={this.props.sitemapNumber} name={this.props.pageTree.name} />
+          <ConnectedGutter pageTree={this.props.pageTree} />
           { this.props.publicShare &&
             <div className="intro-box-1">
               <div className={"intro-box share-1" + (this.props.introSlideNumber == 1 ? '' : ' hide')}>
@@ -44,7 +45,6 @@ class PageContainer extends React.Component {
               </div>
             </div>
           }
-          <ConnectedGutter pageTree={this.props.pageTree} />
           <ConnectedLevelSupport pageTree={this.props.pageTree} />
           <div className={ 'parent parent-' + this.props.pageTree.level.toString() + (this.props.pageTree.collapsed ? ' hide' : '')}>
             {this.props.children}
