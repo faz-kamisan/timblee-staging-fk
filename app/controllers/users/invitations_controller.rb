@@ -22,7 +22,7 @@ class Users::InvitationsController < Devise::InvitationsController
 
   def revoke
     if (@user.really_destroy! unless @user.active?)
-      analytics.track_pro_plan('Pro') if current_business.is_pro_plan?
+      analytics.track_pro_plan(Plan::PRO) if current_business.is_pro_plan?
       flash.now[:notice] = t('.success', scope: :flash)
     else
       flash.now[:error] = t('.failure', scope: :flash)

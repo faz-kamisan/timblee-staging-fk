@@ -53,7 +53,7 @@ class Analytics
   private
 
   def get_plan(subscription)
-    subscription.present? ? 'Pro' : 'Starter'
+    subscription.present? ? Plan::PRO : Plan::STARTER
   end
 
   def identify

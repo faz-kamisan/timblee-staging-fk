@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
   helper_method :proxy_login?
 
   def analytics
-    @analytics ||= Analytics.new(current_user)
+    @analytics ||= Analytics.new(current_user) if current_user
   end
 
   def load_notifications

@@ -48,8 +48,12 @@ class Sitemap < ActiveRecord::Base
     duplicate
   end
 
-  def all_comments
-    ::Comment.where(id: page_comment_ids + comment_ids)
+  def all_comment_ids
+    page_comment_ids + comment_ids
+  end
+
+  def all_comments_count
+    all_comment_ids.size
   end
 
   def users

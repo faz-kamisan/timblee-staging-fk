@@ -17,7 +17,7 @@ class Business < ActiveRecord::Base
   end
 
   def comments_count
-    sitemaps.inject(0){|sum, s| sum + s.all_comments.count }
+    sitemaps.includes(:comments, :page_comments).inject(0){|sum, s| sum + s.all_comments_count }
   end
 
   def future_subscription
@@ -41,7 +41,7 @@ class Business < ActiveRecord::Base
   end
 
   def plan_name
-    is_pro ? 'Pro' : 'Starter'
+    is_pro ? Plan::PRO : Plan::STARTER
   end
 
   def is_pro_plan?

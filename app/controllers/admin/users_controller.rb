@@ -23,7 +23,7 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     if @user.destroy
-      analytics.track_pro_plan('Pro') if current_business.is_pro_plan?
+      analytics.track_pro_plan(Plan::PRO) if current_business.is_pro_plan?
       flash[:notice] = t('.success', scope: :flash)
     else
       flash[:error] = @user.errors[:base].join(',')
