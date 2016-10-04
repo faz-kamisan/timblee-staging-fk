@@ -702,10 +702,10 @@
 
   &.trial {
     .page-type-list {
-      height: calc(100vh - 148px);
+      height: calc(100vh - 112px);
     }
-    top: 50px;
-    height: calc(100% - 50px);
+    top: 60px;
+    height: calc(100% - 60px);
   }
 
   .expand-btn {
@@ -2422,7 +2422,7 @@ body.trial {
 
 .sitemap-sections.trial {
   .section-list {
-    top: 50px;
+    top: 60px;
   }
 }
 
@@ -3197,18 +3197,48 @@ body.trial {
   position: fixed;
   top: 0px;
   z-index: 15;
-  height: 50px;
+  height: 60px;
   left: 0;
   width: 100%;
   padding: 0;
-  h6 {
+  text-align: center;
+  .logo-dark-trial {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    margin-top: -11px;
+    img {
+      width: 110px;
+      height: 23px;
+    }
+  }
+  p {
     color: $primaryWhite;
     vertical-align: middle;
+    height: 60px;
+    margin: 0;
+    padding: 0;
+    line-height: 60px;
+    font-size: 14px;
   }
-  a {
+  .btn {
     background: $primaryPink;
     color: $primaryWhite;
-    widht: 100px;
+    height: 26px;
+    padding: 0;
+    line-height: 23px;
+    font-size: 10px;
+    width: 170px;
+    margin: 2px 0 0 25px;
+    text-transform: uppercase;
+    &:hover {
+      color: $primaryPink;
+      border-color: $primaryPink;
+      background-color: transparent;
+    }
+  }
+  p,.btn {
+    display: inline-block;
   }
 }
 
@@ -3320,4 +3350,16 @@ body.trial {
   background: $primaryPink;
   border: 4px solid #f466ba;
   @include border-radius(50%);
+}
+
+.sitemap-sections.trial {
+  .page-container.level-0 {
+    padding-top: 105px;
+  }
+}
+
+.trial {
+  .search-page-type {
+    border-top: 0;
+  }
 }
