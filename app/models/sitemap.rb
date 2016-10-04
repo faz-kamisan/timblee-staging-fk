@@ -13,7 +13,8 @@ class Sitemap < ActiveRecord::Base
   has_many :sections, dependent: :destroy
   has_one :default_section, ->{ where(default: true) }, class_name: :Section
   has_many :sitemap_shared_users, dependent: :destroy
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable, dependent: :destroy
+  has_many :page_comments, source: :comments, through: :pages
 
   validates :public_share_token, :name, presence: true
   validates :business, presence: true, unless: :trial?
@@ -47,6 +48,9 @@ class Sitemap < ActiveRecord::Base
     duplicate
   end
 
+  def all_comments
+    ::Comment.where(id: page_comment_ids + comment_ids)
+  end
 
   def users
     business.users

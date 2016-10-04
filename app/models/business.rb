@@ -16,6 +16,10 @@ class Business < ActiveRecord::Base
     current_subscription if current_subscription.active?
   end
 
+  def comments_count
+    sitemaps.inject(0){|sum, s| sum + s.all_comments.count }
+  end
+
   def future_subscription
     current_subscription if current_subscription.in_future?
   end
@@ -34,6 +38,10 @@ class Business < ActiveRecord::Base
 
   def in_trial_period_without_any_plan?
     in_trial_period? && !has_plan
+  end
+
+  def plan_name
+    is_pro ? 'Pro' : 'Starter'
   end
 
   def is_pro_plan?
@@ -78,4 +86,5 @@ class Business < ActiveRecord::Base
     subscriptions.build(no_of_users: new_users_count, quantity: Business.monthly_charge(new_users_count))
     assign_attributes(is_pro: true, has_plan: true)
   end
+
 end

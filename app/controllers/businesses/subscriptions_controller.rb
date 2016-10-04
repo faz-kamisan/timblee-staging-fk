@@ -57,6 +57,8 @@ class Businesses::SubscriptionsController < ApplicationController
 
       InvitationService.invite_users(emails, current_user, params[:custom_message])
       LoggerExtension.stripe_log "Invitation sent to users with emails: #{emails}"
+      analytics.track_pro_plan(@current_subscription)
+
       LoggerExtension.highlight
       respond_to do |format|
         format.html do
@@ -88,6 +90,7 @@ class Businesses::SubscriptionsController < ApplicationController
         LoggerExtension.highlight
       end
 
+      analytics.track_starter_plan(@current_subscription)
       current_business.update(is_pro: false, has_plan: true)
       respond_to do |format|
         format.html do

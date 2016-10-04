@@ -52,7 +52,6 @@ protected
   private
 
     def after_accept_path_for(resource)
-      resource.confirm!
       home_intro_path
     end
 end
