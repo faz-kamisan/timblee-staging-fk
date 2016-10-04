@@ -50365,25 +50365,22 @@
 	        'div',
 	        { className: 'react-trial-header' },
 	        _react2.default.createElement(
+	          'a',
+	          { href: '#', className: 'logo-dark-trial' },
+	          _react2.default.createElement('img', { src: '/assets/logo-dark.svg', alt: ' ' })
+	        ),
+	        _react2.default.createElement(
 	          'div',
-	          { className: 'row' },
+	          { className: 'shared-details' },
 	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-xs-4 col-xs-offset-2 text-center shared-details' },
-	            _react2.default.createElement(
-	              'h6',
-	              null,
-	              'Create a free account to save, share, comment, an to create more sitemaps.'
-	            )
+	            'p',
+	            null,
+	            'Create a free account to save, share, comment, an to create more sitemaps.'
 	          ),
 	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-xs-4 col-xs-offset-1 text-center' },
-	            _react2.default.createElement(
-	              'a',
-	              { className: 'btn', 'data-toggle': 'modal', href: '#user-signup-modal' },
-	              'Create my free account'
-	            )
+	            'a',
+	            { className: 'btn', 'data-toggle': 'modal', href: '#user-signup-modal' },
+	            'Create my free account'
 	          )
 	        )
 	      );
@@ -50558,59 +50555,74 @@
 	        { className: "public-intro" },
 	        _react2.default.createElement(
 	          "div",
-	          { className: "intro-box share-1" + (this.state.introSlideNumber == 1 ? '' : ' hide') },
+	          { className: "intro-box-1" },
 	          _react2.default.createElement(
-	            "figure",
-	            null,
-	            _react2.default.createElement("img", { alt: " ", src: "/assets/share-intro-1.png" })
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            null,
-	            "Click on an individual page to add comments to that page"
-	          ),
-	          _react2.default.createElement(
-	            "a",
-	            { href: "javascript:void(0);", onClick: this.showNextSlide },
-	            "Got it"
+	            "div",
+	            { className: "intro-box share-1" + (this.state.introSlideNumber == 1 ? '' : ' hide') },
+	            _react2.default.createElement("span", { className: "hotspot" }),
+	            _react2.default.createElement(
+	              "figure",
+	              null,
+	              _react2.default.createElement("img", { alt: " ", src: "/assets/share-intro-1.png" })
+	            ),
+	            _react2.default.createElement(
+	              "p",
+	              null,
+	              "Click on an individual page to add comments to that page"
+	            ),
+	            _react2.default.createElement(
+	              "a",
+	              { href: "javascript:void(0);", onClick: this.showNextSlide },
+	              "Got it"
+	            )
 	          )
 	        ),
 	        _react2.default.createElement(
 	          "div",
-	          { className: "intro-box share-2" + (this.state.introSlideNumber == 2 ? '' : ' hide') },
+	          { className: "intro-box-2" },
 	          _react2.default.createElement(
-	            "figure",
-	            null,
-	            _react2.default.createElement("img", { alt: " ", src: "/assets/share-intro-2.png" })
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            null,
-	            "Click on the comments icon above to view grouped comments and to add general comments"
-	          ),
-	          _react2.default.createElement(
-	            "a",
-	            { href: "javascript:void(0);", onClick: this.showNextSlide },
-	            "Got it"
+	            "div",
+	            { className: "intro-box share-2" + (this.state.introSlideNumber == 2 ? '' : ' hide') },
+	            _react2.default.createElement("span", { className: "hotspot" }),
+	            _react2.default.createElement(
+	              "figure",
+	              null,
+	              _react2.default.createElement("img", { alt: " ", src: "/assets/share-intro-2.png" })
+	            ),
+	            _react2.default.createElement(
+	              "p",
+	              null,
+	              "Click on the comments icon above to view grouped comments and to add general comments"
+	            ),
+	            _react2.default.createElement(
+	              "a",
+	              { href: "javascript:void(0);", onClick: this.showNextSlide },
+	              "Got it"
+	            )
 	          )
 	        ),
 	        _react2.default.createElement(
 	          "div",
-	          { className: "intro-box share-3" + (this.state.introSlideNumber == 3 ? '' : ' hide') },
+	          { className: "intro-box-3" },
 	          _react2.default.createElement(
-	            "figure",
-	            null,
-	            _react2.default.createElement("img", { alt: " ", src: "/assets/share-intro-3.png" })
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            null,
-	            "To share this sitemap with others, copy and paste the URL from the browser bar and share it with them"
-	          ),
-	          _react2.default.createElement(
-	            "a",
-	            { href: "javascript:void(0);", onClick: this.showNextSlide },
-	            "Got it"
+	            "div",
+	            { className: "intro-box share-3" + (this.state.introSlideNumber == 3 ? '' : ' hide') },
+	            _react2.default.createElement("span", { className: "hotspot" }),
+	            _react2.default.createElement(
+	              "figure",
+	              null,
+	              _react2.default.createElement("img", { alt: " ", src: "/assets/share-intro-3.png" })
+	            ),
+	            _react2.default.createElement(
+	              "p",
+	              null,
+	              "To share this sitemap with others, copy and paste the URL from the browser bar and share it with them"
+	            ),
+	            _react2.default.createElement(
+	              "a",
+	              { href: "javascript:void(0);", onClick: this.showNextSlide },
+	              "Got it"
+	            )
 	          )
 	        )
 	      );
@@ -64360,68 +64372,77 @@
 	      var _this = this;
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'modal fade', id: 'user-signup-modal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'user-signup-modalLabel' },
+	        { className: 'modal fade react-sign-up', id: 'user-signup-modal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'user-signup-modalLabel' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'modal-dialog', role: 'document' },
+	          { className: 'modal-body user-entry registration-page text-center' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'modal-content' },
+	            { className: 'logo' },
+	            _react2.default.createElement('img', { className: 'logo-inner', src: '/assets/Timblee-icon.svg' })
+	          ),
+	          _react2.default.createElement(
+	            'h1',
+	            { className: 'modal-heading' },
+	            'Save and share your sitemap, and try timblee free for ',
+	            _react2.default.createElement('br', null),
+	            ' 30 days with no restrictions.'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            { className: 'small' },
+	            'No credit card required. Invite unlimited team ',
+	            _react2.default.createElement('br', null),
+	            ' members to try it out with you.'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'user-form' },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'modal-header text-center' },
-	              _react2.default.createElement(
-	                'p',
-	                { className: 'modal-message' },
-	                'Save and share your sitemap, and try timblee free for 30 days with no restrictions.'
-	              )
+	              { className: 'form-group' },
+	              _react2.default.createElement('input', { type: 'text', placeholder: 'Your name', ref: 'nameInput', className: 'form-control' }),
+	              _react2.default.createElement('div', { className: 'error-div name-error', dangerouslySetInnerHTML: this.createMarkup(this.state.nameError) })
 	            ),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'modal-body' },
+	              { className: 'form-group' },
+	              _react2.default.createElement('input', { type: 'email', placeholder: 'Your work email', ref: 'emailInput', className: 'form-control' }),
+	              _react2.default.createElement('div', { className: 'error-div email-error', dangerouslySetInnerHTML: this.createMarkup(this.state.emailError) })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'form-group' },
+	              _react2.default.createElement('input', { type: 'password', placeholder: 'Choose a password', ref: 'passwordInput', className: 'form-control' }),
+	              _react2.default.createElement('div', { className: 'error-div password-error', dangerouslySetInnerHTML: this.createMarkup(this.state.passwordError) })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'form-group' },
 	              _react2.default.createElement(
-	                'p',
-	                null,
-	                'No credit card required. Invite unlimited team members to try it out with  you.'
-	              ),
+	                'a',
+	                { href: 'javascript:void(0);', className: 'btn btn-pink btn-block', onClick: this.signup },
+	                'SIGN UP FOR FREE '
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'go-to-login' },
+	              'Already signed up? ',
 	              _react2.default.createElement(
-	                'div',
-	                { className: 'signup-fields' },
-	                _react2.default.createElement('input', { type: 'text', placeholder: 'Your name', ref: 'nameInput', className: 'form-control' }),
-	                _react2.default.createElement('div', { className: 'error-div name-error', dangerouslySetInnerHTML: this.createMarkup(this.state.nameError) }),
-	                _react2.default.createElement('input', { type: 'email', placeholder: 'Your work email', ref: 'emailInput', className: 'form-control' }),
-	                _react2.default.createElement('div', { className: 'error-div email-error', dangerouslySetInnerHTML: this.createMarkup(this.state.emailError) }),
-	                _react2.default.createElement('input', { type: 'password', placeholder: 'Choose a password', ref: 'passwordInput', className: 'form-control' }),
-	                _react2.default.createElement('div', { className: 'error-div password-error', dangerouslySetInnerHTML: this.createMarkup(this.state.passwordError) })
-	              ),
+	                'a',
+	                { href: '/log-in', className: 'link' },
+	                ' Log in here.'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'go-to-terms' },
+	              'By signing up, you agree to our plain English ',
 	              _react2.default.createElement(
-	                'div',
-	                { className: 'modal-button text-center' },
-	                _react2.default.createElement(
-	                  'a',
-	                  { href: '#', className: 'btn btn-red btn-modal-open', onClick: this.signup },
-	                  'SIGN UP FOR FREE'
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'p',
-	                null,
-	                'Already signed up? ',
-	                _react2.default.createElement(
-	                  'a',
-	                  { href: '/log-in' },
-	                  'Log in here.'
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'p',
-	                null,
-	                'By signing up, you agree to our plain English ',
-	                _react2.default.createElement(
-	                  'a',
-	                  { href: 'javascript:void(0)' },
-	                  'terms.'
-	                )
+	                'a',
+	                { href: 'http://timblee.io/terms', className: 'link' },
+	                'terms.'
 	              )
 	            )
 	          )
