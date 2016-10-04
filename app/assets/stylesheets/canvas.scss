@@ -3215,8 +3215,6 @@ body.trial {
 .intro-box {
   padding: 34px 40px 18px 40px;
   background: #262b30;
-  position: fixed;
-  z-index: 15;
   width: 580px;
   @include border-radius(10px);
   figure img {
@@ -3239,12 +3237,87 @@ body.trial {
       border-bottom-color: $primaryPink;
     }
   }
-  &.share-3 {
-    top: 83px;
-    left: 69px;
+}
+
+.intro-box-1,
+.intro-box-2,
+.intro-box-3 {
+  position: absolute;
+  z-index: 12;
+}
+
+.intro-box-1 {
+  right: 20px;
+  top: 182px;
+  .hotspot {
+    top: 100px;
+    left: -69px;
+  }
+}
+
+.intro-box {
+  &.share-1 {
+    &:before {
+      content: ' ';
+      position: absolute;
+      border-style: solid;
+      border-width: 21px 41px 20px 0;
+      border-color: transparent #262b30 transparent;
+      left: -21px;
+      top: 90px;
+    }
   }
   &.share-2 {
-    top: 112px;
-    right: 50px;
+    &:before {
+      content: ' ';
+      position: absolute;
+      border-style: solid;
+      border-width: 0 19px 30px 19px;
+      border-color: transparent transparent #262b30 transparent;
+      right: 73px;
+      top: -23px;
+    }
   }
+  &.share-3 {
+    &:before {
+      content: ' ';
+      position: absolute;
+      border-style: solid;
+      border-width: 0 19px 30px 19px;
+      border-color: transparent transparent #262b30 transparent;
+      right: 69px;
+      top: -23px;
+    }
+  }
+}
+
+.intro-box-2 {
+  right: 50px;
+  top: 112px;
+  z-index: 15;
+  position: fixed;
+  .hotspot {
+    top: -55px;
+    right: 81px;
+  }
+}
+
+.intro-box-3 {
+  left: 69px;
+  top: 83px;
+  z-index: 15;
+  position: fixed;
+  .hotspot {
+    top: -52px;
+    right: 76px;
+  }
+}
+
+.hotspot {
+  position: absolute;
+  width: 23px;
+  height: 23px;
+  background: $primaryPink;
+  border: 4px solid #f466ba;
+  @include border-radius(50%);
 }
