@@ -1,5 +1,6 @@
 class BusinessesController < ApplicationController
 
+  skip_before_action :lock_business_after_trial_end, only: [:delete_account]
   before_filter :fetch_business, only: [:update]
 
   def delete_account

@@ -1,6 +1,7 @@
 class Users::InvitationsController < Devise::InvitationsController
-before_filter :configure_permitted_parameters, if: :devise_controller?
-before_filter :load_user, only: [:re_invite, :revoke]
+  skip_before_action :lock_business_after_trial_end, only: [:revoke]
+  before_filter :configure_permitted_parameters, if: :devise_controller?
+  before_filter :load_user, only: [:re_invite, :revoke]
 
   def bulk_invitation
     emails = params[:email].split(/\s* \s*/)

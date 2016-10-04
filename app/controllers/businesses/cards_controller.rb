@@ -1,4 +1,5 @@
 class Businesses::CardsController < ApplicationController
+  skip_before_action :lock_business_after_trial_end, only: [:create]
   around_action :wrap_in_transaction, only: :create
 
   def create

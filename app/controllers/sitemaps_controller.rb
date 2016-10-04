@@ -1,4 +1,5 @@
 class SitemapsController < ApplicationController
+  skip_before_action :lock_business_after_trial_end, only: [:destroy]
   before_filter :fetch_sitemap, only: [:destroy, :show, :update, :share_via_email]
   before_filter :fetch_sitemap_from_token, only: [:public_share]
   skip_before_filter :authenticate_user!, only: [:public_share, :trial]
