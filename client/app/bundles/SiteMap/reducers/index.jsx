@@ -24,6 +24,7 @@ import sharedUsers from './shared_users'
 import newSitemap from './new_sitemap'
 import trial from './trial'
 import createdAt from './created_at'
+import introSlideNumber from './intro_slide_number'
 
 const sitemapAppReducer = combineReducers({
   name,
@@ -50,7 +51,8 @@ const sitemapAppReducer = combineReducers({
   sharedUsers,
   newSitemap,
   trial,
-  createdAt
+  createdAt,
+  introSlideNumber
 })
 
 export default sitemapAppReducer
