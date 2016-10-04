@@ -49417,7 +49417,9 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { sitemapId: state.id, maxPageUid: state.maxPageUid };
+	  return { sitemapId: state.id, maxPageUid: state.maxPageUid, pageType: state.pageTypes.filter(function (pageType) {
+	      return pageType.name == 'General 1';
+	    })[0] };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -49538,10 +49540,13 @@
 	var FirstPageDroppable = function (_React$Component) {
 	  _inherits(FirstPageDroppable, _React$Component);
 	
-	  function FirstPageDroppable() {
+	  function FirstPageDroppable(props) {
 	    _classCallCheck(this, FirstPageDroppable);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(FirstPageDroppable).apply(this, arguments));
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(FirstPageDroppable).call(this, props));
+	
+	    _this2.addFirstSubPage = _this2.addFirstSubPage.bind(_this2);
+	    return _this2;
 	  }
 	
 	  _createClass(FirstPageDroppable, [{
@@ -49558,13 +49563,40 @@
 	      }
 	    }
 	  }, {
+	    key: 'addFirstSubPage',
+	    value: function addFirstSubPage(e) {
+	      var timeStamp = new Date();
+	      var _this = this;
+	      $.ajax({
+	        url: '/pages/',
+	        method: 'post',
+	        dataType: 'JSON',
+	        data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.id, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: 1, section_id: this.props.pageTree.section_id } },
+	        error: function error(result) {
+	          document.setFlash(result.responseText);
+	        },
+	        success: function success(result) {
+	          var onPageIdUpdate = _this.props.onPageIdUpdate;
+	          var pageTree = _this.props.pageTree;
+	          onPageIdUpdate(timeStamp, pageTree.section_id, result.id);
+	        },
+	        complete: function complete(result) {
+	          _this.props.setSaving(true);
+	          setTimeout(function () {
+	            _this.props.setSaving(false);
+	          }, 2000);
+	        }
+	      });
+	      this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.id, 'begining', timeStamp, this.props.maxPageUid);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var connectDropTarget = this.props.connectDropTarget;
 	      return connectDropTarget(_react2.default.createElement(
 	        'div',
 	        { className: 'first-page' },
-	        _react2.default.createElement('div', { className: 'collapse-open collapse-close' }),
+	        _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addFirstSubPage }),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'first-page-droppable' + (this.props.leftSidebarExpanded ? '' : ' left-sidebar-contracted') },
@@ -51136,6 +51168,7 @@
 	          _this.afterTagAdded(event, ui);
 	        }
 	      });
+	      $(this.refs.customMessage).emojiPicker();
 	    }
 	  }, {
 	    key: 'deactivateMessageEditor',
@@ -51257,7 +51290,7 @@
 	        this.state.messageEditorActivated && _react2.default.createElement(
 	          'div',
 	          { key: 'lower', className: 'comment-input' },
-	          _react2.default.createElement('textarea', { value: this.state.customMessage, placeholder: 'Include an optional personal message.', onChange: this.handleOnCustomMessageChange }),
+	          _react2.default.createElement('textarea', { value: this.state.customMessage, placeholder: 'Include an optional personal message.', ref: 'customMessage', onChange: this.handleOnCustomMessageChange }),
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'add-remove-comment' },
@@ -62824,7 +62857,12 @@
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var _this = this;
 	      $(this.refs.newComment.refs.container).find('textarea').watermark('Add a comment...<br/>You can mention people by typing @.', { fallback: false });
+	      // $(function(){
+	      //   $(_this.refs.newComment.refs.container).find('textarea').emojiPicker();
+	      //   // $(_this.refs.newComments).emojiPicker();
+	      // });
 	    }
 	  }, {
 	    key: 'handleAddComment',

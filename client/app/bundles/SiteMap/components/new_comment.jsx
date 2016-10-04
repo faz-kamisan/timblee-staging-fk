@@ -28,7 +28,12 @@ class NewComment extends React.Component {
   }
 
   componentDidMount() {
+    var _this = this
     $(this.refs.newComment.refs.container).find('textarea').watermark('Add a comment...<br/>You can mention people by typing @.', {fallback: false});
+    // $(function(){
+    //   $(_this.refs.newComment.refs.container).find('textarea').emojiPicker();
+    //   // $(_this.refs.newComments).emojiPicker();
+    // });
   }
 
   handleAddComment(e) {

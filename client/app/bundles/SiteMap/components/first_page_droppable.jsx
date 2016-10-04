@@ -68,6 +68,11 @@ class FirstPageDroppable extends React.Component {
     maxPageUid: PropTypes.number.isRequired
   };
 
+  constructor(props) {
+    super(props);
+    this.addFirstSubPage = this.addFirstSubPage.bind(this)
+  }
+
   componentWillReceiveProps(nextProps) {
     if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
       var domNode = findDOMNode(this);
@@ -80,12 +85,38 @@ class FirstPageDroppable extends React.Component {
     }
   }
 
+  addFirstSubPage(e) {
+    var timeStamp = new Date();
+    var _this = this;
+    $.ajax({
+      url: '/pages/',
+      method: 'post',
+      dataType: 'JSON',
+      data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.id, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: 1, section_id: this.props.pageTree.section_id } },
+      error: (result) => {
+        document.setFlash(result.responseText)
+      },
+      success: (result) => {
+        var onPageIdUpdate = _this.props.onPageIdUpdate
+        var pageTree = _this.props.pageTree
+        onPageIdUpdate(timeStamp, pageTree.section_id, result.id)
+      },
+      complete: (result) => {
+        _this.props.setSaving(true)
+        setTimeout(function() {
+          _this.props.setSaving(false)
+        }, 2000)
+      }
+    });
+    this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.id, 'begining', timeStamp, this.props.maxPageUid);
+  }
+
   render() {
     const connectDropTarget = this.props.connectDropTarget
     return connectDropTarget(
       <div className='first-page'>
-        <div className="collapse-open collapse-close"></div>
-      <div className={'first-page-droppable' + (this.props.leftSidebarExpanded ? '' : ' left-sidebar-contracted')}>
+        <div className="collapse-open collapse-close" onClick={this.addFirstSubPage}></div>
+        <div className={'first-page-droppable' + (this.props.leftSidebarExpanded ? '' : ' left-sidebar-contracted')}>
           <span>Drag and drop page tiles here to start building  your sitemap</span>
         </div>
       </div>

@@ -1,3 +1,4 @@
-// $(function(){
-//   $('.clear-field').twemojiPicker();
-// });
+$(function(){
+  $('.emoji-decorated').emojiPicker();
+  // $('.share-personal-message').twemojiPicker();
+});

@@ -24,9 +24,10 @@
 //= require document_decorator
 //= require date_decorator
 //= require editFields
-//= require twemoji-picker
-//= require select2.min
+//= require jquery.emojis
+//= require jquery.emojipicker
 //= require apply_twemoji
+//= require select2.min
 //= require settings
 //= require constants
 //= require modal_fix

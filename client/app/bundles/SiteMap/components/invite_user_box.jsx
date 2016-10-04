@@ -25,6 +25,7 @@ class InviteUserBox extends React.Component {
       _this.afterTagAdded(event, ui);
     }
     })
+    $(this.refs.customMessage).emojiPicker();
   }
 
   deactivateMessageEditor(e) {
@@ -112,7 +113,7 @@ class InviteUserBox extends React.Component {
         }
         { this.state.messageEditorActivated &&
           <div key='lower' className="comment-input">
-            <textarea value={this.state.customMessage} placeholder='Include an optional personal message.' onChange={this.handleOnCustomMessageChange}></textarea>
+            <textarea value={this.state.customMessage} placeholder='Include an optional personal message.' ref='customMessage' onChange={this.handleOnCustomMessageChange}></textarea>
             <div className="add-remove-comment">
               <a className="cursor add" onClick={this.deactivateMessageEditor}>Add message</a>
               <span className="or"> or</span>
