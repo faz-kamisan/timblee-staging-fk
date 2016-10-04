@@ -43,7 +43,7 @@ class StripePaymentService
       create_subscription
     end
     @current_business.save!
-    LoggerExtension.stripe_log "NEW SUBSCRIPTION: #{@current_business.current_subscription.inspect}"
+    LoggerExtension.stripe_log "NEW SUBSCRIPTION: #{@current_business.reload.current_subscription.inspect}"
   end
 
   private

@@ -1,5 +1,6 @@
 class Admin::UsersController < ApplicationController
 
+  skip_before_action :lock_business_after_trial_end, only: [:destroy]
   before_filter :load_user, only: [:destroy, :edit, :update]
   before_filter :restrict_current_user, only: [:destroy]
   def edit

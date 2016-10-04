@@ -1,5 +1,5 @@
 $("div.flash-message").html("<%==j render partial: 'shared/flash_message' %>");
-$("ul.notifications-listing").html("<%==j render @notifications %>");
+$("ul.notifications-listing").html("<%==j render partial: 'notifications/notification', collection: @notifications %>");
 
 $('#pro-plan-modal').modal('hide');
 <% if flash[:notice].present? %>

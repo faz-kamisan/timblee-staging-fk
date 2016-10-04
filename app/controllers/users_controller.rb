@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_action :lock_business_after_trial_end, only: [:settings]
 
   def settings
     if(current_business.stripe_customer_id)

@@ -2,6 +2,7 @@ class Businesses::SubscriptionsController < ApplicationController
 
   protect_from_forgery except: :webhook
   skip_before_action :authenticate_user!, only: :webhook
+  skip_before_action :lock_business_after_trial_end, only: [:create, :webhook]
   before_action :load_plan, :check_validity, only: :create
   around_action :wrap_in_transaction, only: :create
   before_action :deactivate_old_subscription , only: :create

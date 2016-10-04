@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_filter :authenticate_user!
   before_filter :load_notifications, if: :current_user
+  before_filter :lock_business_after_trial_end, if: :current_user
 
   def current_user_with_proxy_login
     current_proxy_user || current_user_without_proxy_login
@@ -43,6 +44,17 @@ class ApplicationController < ActionController::Base
   def load_notifications
     @notifications = current_user.notifications.limit(15).order(created_at: :desc)
     @has_more = current_user.notifications.count > 15
+  end
+
+  def lock_business_after_trial_end
+    if !current_business.in_trial_period? && current_business.is_starter_plan? && !current_business.allow_downgrade_to_starter?
+      if request.xhr?.nil?
+        redirect_to billing_settings_users_path, alert: t('account_locked', scope: :flash)
+      else
+        flash.now[:alert] = t('account_locked', scope: :flash)
+        render 'shared/show_flash'
+      end
+    end
   end
 
 end

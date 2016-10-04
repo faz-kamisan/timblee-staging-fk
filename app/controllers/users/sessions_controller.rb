@@ -1,4 +1,5 @@
 class Users::SessionsController < Devise::SessionsController
+  skip_before_action :lock_business_after_trial_end, only: [:create, :destroy]
 # before_filter :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in

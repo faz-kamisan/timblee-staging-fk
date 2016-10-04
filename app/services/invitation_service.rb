@@ -10,7 +10,10 @@ class InvitationService
   def invite_users
     set_email_categories
     @email_categories[:invitable_emails].each do |email|
-      invited_user = User.invite!({email: email, business: @inviter.business, skip_invitation: true}, @inviter)
+      invited_user = User.invite!({email: email, business: @inviter.business}, @inviter) do |user|
+        user.skip_confirmation_notification!
+        user.skip_invitation = true
+      end
       InviteMailer.delay.send_invite(invited_user.id, invited_user.raw_invitation_token, @message)
     end
     @email_categories
