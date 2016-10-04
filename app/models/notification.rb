@@ -51,7 +51,7 @@ class Notification < ActiveRecord::Base
     def self.add_notifications(user, sitemap, path, partial_message)
       sitemap.users.each do |sitemap_user|
         message = (sitemap_user == user ? 'You have ' : "#{user.full_name} has ") + partial_message
-        Notification.create(message: message, link_to: path, user: user, recipient: sitemap_user)
+        Notification.create(message: message, link_to: path, user: (user.class == User ? user : nil), recipient: sitemap_user)
       end
     end
 end
