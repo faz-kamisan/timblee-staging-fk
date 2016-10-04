@@ -50,12 +50,12 @@ class GuestInfoFormModal extends React.Component {
     this.setState({email: e.target.value})
   }
 
-  componentDidUpdate(e) {
-    if(this.props.showForm) {
-      $('.modal').modal('hide');
-      $('#guest-info-modal').modal('show');
-    }
-  }
+  // componentDidUpdate(e) {
+  //   if(this.props.showForm) {
+  //     $('.modal').modal('hide');
+  //     $('#guest-info-modal').modal('show');
+  //   }
+  // }
 
   render() {
     return (

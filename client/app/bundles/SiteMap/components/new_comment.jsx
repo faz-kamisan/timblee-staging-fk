@@ -62,6 +62,8 @@ class NewComment extends React.Component {
       }
     } else {
       this.props.setShowGuestInfoForm(true)
+        $('.modal').modal('hide');
+        $('#guest-info-modal').modal('show');
     }
   }
 
