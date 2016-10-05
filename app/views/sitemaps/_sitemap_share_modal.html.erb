@@ -1,4 +1,4 @@
-<div class='modal fade sitemap-share-modal' id='sitemap-share-modal'>
+<div class='modal fade sitemap-share-modal' id='sitemap-share-modal' data-sitemap-id='<%= @sitemap ? @sitemap.id : nil %>'>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
@@ -9,8 +9,13 @@
         </button>
         <h4 class="modal-title">Share Your Sitemap</h4>
         <ul class='share-method-tabs'>
-          <li data-target='url' class='active'>URL</li>
-          <li data-target='email'>Email</li>
+          <li class='animated-tab active' data-target='url'>
+            <span class="icon-url"></span> URL
+          </li>
+          <li class='animated-tab' data-target='email'>
+            <span class="icon-email"></span> Email
+          </li>
+          <li class="animated-bar-share"></li>
         </ul>
       </div>
       <div class='modal-body url sitemap-share-method'>
@@ -19,7 +24,11 @@
           <p class="m-b-20">Anyone with the link can view the sitemap.</p>
           <div class="public-url clearfix">
             <span id='sitemap-public-share-url' class='backend'>
-              <span class="truncate"></span>
+              <span class="truncate">
+                <% if @sitemap %>
+                  <%= sitemap_public_share_url(@sitemap.public_share_token).gsub(/(?<protocol>http(s?):\/\/)/, '\k<protocol>share.') %>
+                <% end %>
+              </span>
             </span>
             <button class='btn copy-link-button'>Copy</button>
           </div>
@@ -33,15 +42,34 @@
             <div>
               <input type='text' class='share-emails-input' name='emails' id='emails' ref='emails'></input>
             </div>
-            <div class='hide'>
-              <p></p>
-              <a>Edit Message</a>
+            <div class="already-emailed">
+              <% if @sitemap %>
+                <% if @sitemap.sitemap_shared_users.length > 0 %>
+                  <p>These people have already been emailed</p>
+                <% end %>
+                <ul>
+                  <% @sitemap.sitemap_shared_users.each_with_index do |user, index| %>
+                    <li class='<%= index > 1 ? 'extra-shared-users hide' : '' %>'>
+                      <%= user.user_email %>
+                      <span class="icon-save-circle"></span>
+                    </li>
+                  <% end %>
+                </ul>
+                <% extra_user_count = @sitemap.sitemap_shared_users.length - 2 %>
+                <% if extra_user_count > 0 %>
+                  <a href="javascript:void(0)" id="show-others">+ <%= (extra_user_count).to_s + 'other'.pluralize(extra_user_count) %></a>
+                <% end %>
+              <% end %>
             </div>
-            <div class="comment-input">
+            <div class="message-preview hidden">
+              <p></p>
+              <a class='edit-message-link'>Edit Message</a>
+            </div>
+            <div class="share-comment-input comment-input">
               <textarea placeholder='Include an optional personal message.' class='custom-message share-personal-message emoji-decorated' data-send='false'></textarea>
               <div class="emoji-section add-remove-comment">
-                <a href="#" class="cursor add add-message">Add my message</a>
-                <a href="javascript:void(0);" class="clear-text cursor cancel hidden clear-custom-message">Cancel</a>
+                <a href="#" class="cursor add add-message add-share-message">Add my message</a> or
+                <a href="javascript:void(0);" class="clear-text cursor cancel cancel-message"> Cancel</a>
               </div>
             </div>
             <ul>

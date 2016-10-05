@@ -41,7 +41,7 @@ $(function() {
     inviteForm: $('.bulk-invitation-form'),
     inviteEmailsInput: $('.bulk-invite-emails-input'),
     inviteCustomMessage: $('.invite-custom-message'),
-    addMessageLink: $('.add-message'),
+    addMessageLink: $('.add-invite-message'),
     clearMessageLink: $('.clear-custom-message')
   }
   var invitations = new Invitations(options);
