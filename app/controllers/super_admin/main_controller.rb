@@ -13,7 +13,7 @@ class SuperAdmin::MainController < ApplicationController
     user.admin_access = true
     sign_in(user, bypass: true)
     session[:proxy_user_id] = user.id
-    redirect_to root_path
+    redirect_to home_dashboard_path
   end
 
   private

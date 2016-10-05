@@ -76,7 +76,7 @@ class Sitemap < ActiveRecord::Base
       pageTypes: PageType.order_by_name,
       footerPages: pages.where(footer: true).map(&:to_react_data),
       comments: self.comments.order_by_created_at.map(&:to_react_data),
-      sections: sections.map(&:to_react_data),
+      sections: sections.order(:created_at).map(&:to_react_data),
       business:  business && business.to_react_data,
       sharedUsers: sitemap_shared_users,
       trial: trial
