@@ -246,7 +246,7 @@
 
   &.level-0 {
     text-align: center;
-    padding: 175px 0 0 30px;
+    padding: 155px 0 0 30px;
     transition: padding-left .35s;
     -moz-transition: padding-left .35s;
     -webkit-transition: padding-left .35s;
@@ -260,8 +260,6 @@
       position: relative;
     }
     .first-page-droppable {
-      position: relative;
-      display: inline-block;
       margin-top: 28px;
     }
     &.no-children {
@@ -616,13 +614,13 @@
 
 .first-page {
   .first-page-droppable {
-    position: fixed;
     width: 200px;
     height: 87px;
     @include border-radius(5px);
     background: #F9FAFC;
     border: 1px dashed #E3E5E7;
     color: #E3E5E7;
+    display: inline-block;
     padding-top: 27px;
     font-size: 10px;
     z-index: 10;
@@ -2679,11 +2677,21 @@ body.trial {
   text-align: center;
   left: 372px;
   padding: 22px 0 0 0;
+  .scrollable-footer {
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
   .footer-page {
     display: inline-block;
     + .footer-page {
       padding-left: 22px;
     }
+  }
+  &.left-sidebar-contracted {
+    left: 30px;
+    width: calc(100% - 30px);
   }
   > span {
     position: absolute;
@@ -3049,8 +3057,10 @@ body.trial {
 }
 
 .footer-page-list {
-  padding: 0;
+  padding: 0 20px;
   margin: 0;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .animated-bar-share {
@@ -3109,6 +3119,11 @@ body.trial {
   .page-tile-clone .tile-more li.second-item,
   .footer-page .tile-more li.second-item {
     top: 6px;
+  }
+
+  .level-0 {
+    padding-left: 15px!important;
+    padding-right: 15px!important;
   }
 
   .page-container .tile-more li,
@@ -3175,7 +3190,7 @@ body.trial {
   }
 
   .page-container.level-0 {
-    padding-top: 250px!important;
+    padding-top: 215px!important;
   }
 
   .section-list {
@@ -3306,7 +3321,8 @@ body.trial {
 
 .intro-box-1 {
   right: auto;
-  top: 182px;
+  top: 147px;
+  z-index: 15;
   .hotspot {
     top: 100px;
     left: -69px;
@@ -3389,5 +3405,27 @@ body.trial {
 .trial {
   .search-page-type {
     border-top: 0;
+  }
+}
+
+.guest-modal {
+  .modal-body {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 35px;
+    background: $primaryWhite;
+    @include border-radius(12px);
+  }
+  .user-form {
+    padding-left: 135px;
+    padding-right: 135px;
+  }
+  .small {
+    margin-top: 15px;
+  }
+  .btn {
+    height: 48px;
+    line-height: 36px;
+    text-transform: none;
   }
 }

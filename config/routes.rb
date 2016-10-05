@@ -46,7 +46,7 @@ Rails.application.routes.draw do
   resources :sections, only: [:create, :destroy]
   resources :guests, only: [:create]
 
-  get  'home/dashboard'
+  get  'home', to: 'home#dashboard', as: 'home_dashboard'
   get  'home/intro'
   get  'home/settings'
 
