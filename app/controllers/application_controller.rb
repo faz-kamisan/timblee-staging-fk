@@ -41,6 +41,10 @@ class ApplicationController < ActionController::Base
   end
   helper_method :proxy_login?
 
+  def analytics
+    @analytics ||= Analytics.new(current_user) if current_user
+  end
+
   def load_notifications
     @notifications = current_user.notifications.limit(15).order(created_at: :desc)
     @has_more = current_user.notifications.count > 15
