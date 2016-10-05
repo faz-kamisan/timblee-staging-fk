@@ -36,11 +36,9 @@
 //= require script
 //= require animated-bar
 //= require settings_tabs
+//= require share_modal
 
 $(window).on('load resize', function() {
-  if($('.first-page-droppable').length) {
-    $('.first-page-droppable').css('left', $('.page-container.level-0 > .page-tile').offset().left);
-  }
   if($('.level-0').length) {
     $('.intro-box-1').css('left', $('.level-0 > .page-tile').offset().left + 224);
   }

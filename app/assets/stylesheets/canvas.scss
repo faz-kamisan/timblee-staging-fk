@@ -251,10 +251,33 @@
     -moz-transition: padding-left .35s;
     -webkit-transition: padding-left .35s;
     margin: 0 auto;
-    min-width: 275px;
+    min-width: 100%;
+    &.left-bar-contracted {
+      padding-right: 30px;
+    }
+    .first-page {
+      text-align: center;
+      position: relative;
+    }
+    .first-page-droppable {
+      position: relative;
+      display: inline-block;
+      margin-top: 28px;
+    }
+    &.no-children {
+      > .page-tile {
+        margin-bottom: 20px;
+        &:before {
+          bottom: -20px;
+          width: 1px;
+          height: 20px;
+          border-left: 1px dashed #e3e5e7;
+          background: $transparent;
+        }
+      }
+    }
     > .page-tile {
       margin-bottom: 75px;
-      margin-left: -40px;
       &.odd-tree {
         margin-bottom: 70px;
       }
@@ -600,8 +623,8 @@
     background: #F9FAFC;
     border: 1px dashed #E3E5E7;
     color: #E3E5E7;
-    padding-top: 24px;
-    font-size: 12px;
+    padding-top: 27px;
+    font-size: 10px;
     z-index: 10;
     text-align: center;
     transition: .35s;
@@ -618,8 +641,9 @@
   }
   .collapse-open {
     position: absolute;
-    left: 910px;
-    top: 418px;
+    top: -7px;
+    left: 50%;
+    margin-left: -9px;
     width: 20px;
     height: 20px;
     @include border-radius(4px);
@@ -680,7 +704,7 @@
   left: 0;
   overflow: hidden;
   top: 175px;
-  z-index: 13;
+  z-index: 15;
   transition: .35s;
   border-top: solid 1px #171a1d;
   ~ .sitemap-sections .page-container-wrapper .page-container.level-0 {
@@ -691,7 +715,7 @@
     cursor: pointer;
     width: 30px;
     ~ .sitemap-sections .page-container-wrapper .page-container.level-0 {
-      padding-left: 40px;
+      padding-left: 30px;
     }
   }
 
@@ -1279,6 +1303,7 @@
     width: 1px;
   }
   &.parent-0 {
+    padding-left: 40px;
     &:before {
       display: none;
     }
@@ -1870,7 +1895,7 @@ body.trial {
 }
 
 .watermark_container,
-.comment-input {
+.comment-input.comment-input--multiLine {
   display: block!important;
   color: #262b30!important;
 }
@@ -2435,7 +2460,8 @@ body.trial {
   margin: 0;
   z-index: 13;
   &.left-bar-contracted {
-    padding-left: 30px;
+    padding-left: 0;
+    padding-right: 0;
     &.public-share {
       padding-left: 0;
     }
@@ -2704,7 +2730,7 @@ body.trial {
     ul {
       padding: 0;
       position: relative;
-      margin: 0 203px 5px 203px;
+      margin: 0 199px 5px 203px;
     }
     li {
       cursor: pointer;
@@ -2755,7 +2781,6 @@ body.trial {
     white-space: pre;
     span {
       max-width: 200px;
-      white-space: pre;
       display: block;
     }
     &.backend {
@@ -3047,8 +3072,10 @@ body.trial {
       color: #414952;
     }
   }
-  .truncate {
-    padding-left: 15px;
+  + .sitemap-section-tab {
+    .truncate {
+      padding-left: 15px;
+    }
   }
   .remove-section {
     position: absolute;
