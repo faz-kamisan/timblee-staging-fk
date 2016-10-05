@@ -50169,7 +50169,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving, updatedAt: state.updated_at, sections: state.sections, footerPages: state.footerPages };
+	  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving, updatedAt: state.updated_at, sections: state.sections, footerPages: state.footerPages, introSlideNumber: state.introSlideNumber };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -50323,7 +50323,7 @@
 	          { className: 'header-options' },
 	          _react2.default.createElement(
 	            'a',
-	            { href: 'javascript:void(0)', className: this.state.commentSidebarOpen ? 'active' : '', onClick: this.toggleCommentState },
+	            { href: 'javascript:void(0)', className: this.state.commentSidebarOpen || this.props.introSlideNumber == 2 ? 'active' : '', onClick: this.toggleCommentState },
 	            _react2.default.createElement('span', { className: 'icon-comment-circle' })
 	          ),
 	          _react2.default.createElement(
