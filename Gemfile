@@ -24,7 +24,8 @@ gem 'pdfkit', '~> 0.8.2'
 gem 'wkhtmltopdf-binary', '~> 0.12.3'
 gem 'acts_as_list', '~> 0.7.4'
 gem 'mini_magick', '~> 4.5.1'
-gem 'whenever', :require => false
+gem 'whenever', require: false
+gem 'analytics-ruby', require: "segment"
 
 
 group :development, :test do
