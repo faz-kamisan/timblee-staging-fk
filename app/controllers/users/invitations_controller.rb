@@ -2,6 +2,7 @@ class Users::InvitationsController < Devise::InvitationsController
   skip_before_action :lock_business_after_trial_end, only: [:revoke]
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_filter :load_user, only: [:re_invite, :revoke]
+  after_filter :track_revoke, only: [:revoke]
 
   def bulk_invitation
     emails = params[:email].split(/\s* \s*/)
@@ -22,7 +23,6 @@ class Users::InvitationsController < Devise::InvitationsController
 
   def revoke
     if (@user.really_destroy! unless @user.active?)
-      analytics.track_pro_plan(Plan::PRO) if current_business.is_pro_plan?
       flash.now[:notice] = t('.success', scope: :flash)
     else
       flash.now[:error] = t('.failure', scope: :flash)
@@ -50,6 +50,10 @@ protected
   end
 
   private
+
+    def track_revoke
+      analytics.track_pro_plan(Plan::PRO) if current_business.is_pro_plan? && @user.destroyed?
+    end
 
     def after_accept_path_for(resource)
       home_intro_path

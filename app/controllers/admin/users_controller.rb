@@ -3,6 +3,7 @@ class Admin::UsersController < ApplicationController
   skip_before_action :lock_business_after_trial_end, only: [:destroy]
   before_filter :load_user, only: [:destroy, :edit, :update]
   before_filter :restrict_current_user, only: [:destroy]
+  after_filter :track, only: [:destroy]
   def edit
   end
 
@@ -23,7 +24,6 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     if @user.destroy
-      analytics.track_pro_plan(Plan::PRO) if current_business.is_pro_plan?
       flash[:notice] = t('.success', scope: :flash)
     else
       flash[:error] = @user.errors[:base].join(',')
@@ -41,6 +41,10 @@ class Admin::UsersController < ApplicationController
   end
 
   private
+
+    def track
+      analytics.track_pro_plan(Plan::PRO) if current_business.is_pro_plan? && @user.destroyed?
+    end
 
     def restrict_current_user
       if current_user == @user

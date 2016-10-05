@@ -13,7 +13,9 @@ class Analytics
       {
         user_id: user.id,
         event: 'Signed Up',
-        'signed Up': user.created_at.strftime('%d %b %Y')
+        properties: {
+          signed_up: user.created_at.strftime('%d %b %Y')
+        }
       }
     )
   end
