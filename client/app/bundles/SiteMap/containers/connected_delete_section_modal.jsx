@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { removeSection, setSaving } from '../actions'
+import { removeSection, changeUpdatedAt, setSaving } from '../actions'
 import DeleteSectionModal from '../components/delete_section_modal'
 
 const mapStateToProps = (state) => {

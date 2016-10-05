@@ -38597,6 +38597,7 @@
 	exports.addSharedUsers = addSharedUsers;
 	exports.removeSection = removeSection;
 	exports.incrementIntroSlideNumber = incrementIntroSlideNumber;
+	exports.updateSectionId = updateSectionId;
 	var SET_NAME = exports.SET_NAME = 'SET_NAME';
 	var ADD_NEW_PAGE = exports.ADD_NEW_PAGE = 'ADD_NEW_PAGE';
 	var REMOVE_PAGE = exports.REMOVE_PAGE = 'REMOVE_PAGE';
@@ -38641,6 +38642,7 @@
 	var ADD_SHARED_USERS = exports.ADD_SHARED_USERS = 'ADD_SHARED_USERS';
 	var REMOVE_SECTION = exports.REMOVE_SECTION = 'REMOVE_SECTION';
 	var INCREMENT_INTRO_SLIDE_NUMBER = exports.INCREMENT_INTRO_SLIDE_NUMBER = 'INCREMENT_INTRO_SLIDE_NUMBER';
+	var UPDATE_SECTION_ID = exports.UPDATE_SECTION_ID = 'UPDATE_SECTION_ID';
 	
 	function setName(name) {
 	  return { type: SET_NAME, name: name };
@@ -38817,6 +38819,10 @@
 	function incrementIntroSlideNumber() {
 	  return { type: INCREMENT_INTRO_SLIDE_NUMBER };
 	}
+	
+	function updateSectionId(oldId, newId) {
+	  return { type: UPDATE_SECTION_ID, oldId: oldId, newId: newId };
+	}
 
 /***/ },
 /* 607 */
@@ -38885,6 +38891,8 @@
 	      return (0, _tree_helper.updatePageType)(state, action.pageId, action.sectionId, action.pageType);
 	    case _index.CREATE_NEW_SECTION:
 	      return (0, _tree_helper.createNewSection)(state, action.pageId, action.sectionId, action.newSectionName, action.timeStamp);
+	    case _index.UPDATE_SECTION_ID:
+	      return (0, _tree_helper.updateSectionId)(state, action.oldId, action.newId);
 	    case _index.REMOVE_SECTION:
 	      return (0, _tree_helper.removeSection)(state, action.id);
 	    case _index.UPDATE_PAGE_STATE:
@@ -39092,6 +39100,15 @@
 	  return sectionsCopy;
 	}
 	
+	function updateSectionId(sections, oldId, newId) {
+	  var sectionsCopy = Object.assign([], sections);
+	  var section = sectionsCopy.filter(function (section) {
+	    return section.id == oldId;
+	  })[0];
+	  section.id = newId;
+	  return sectionsCopy;
+	}
+	
 	function deletePageComment(sections, commentId, pageId, sectionId) {
 	  var sectionsCopy = Object.assign([], sections);
 	  var treeCopy = sectionsCopy.filter(function (section) {
@@ -39184,6 +39201,7 @@
 	exports.updatePageComment = updatePageComment;
 	exports.updatePagePersitence = updatePagePersitence;
 	exports.removeSection = removeSection;
+	exports.updateSectionId = updateSectionId;
 
 /***/ },
 /* 610 */
@@ -47785,7 +47803,9 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { sections: state.sections, sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, publicShare: state.publicShare, trial: state.trial, introSlideNumber: state.introSlideNumber };
+	  return { sections: state.sections, sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, publicShare: state.publicShare, trial: state.trial, introSlideNumber: state.introSlideNumber, activeSectionLength: state.sections.filter(function (section) {
+	      return section.state == 'active';
+	    }).length };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -47873,11 +47893,7 @@
 	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
-	      if (this.props.sections.filter(function (section) {
-	        return section.state == 'active';
-	      }).length != nextProps.sections.filter(function (section) {
-	        return section.state == 'active';
-	      }).length) {
+	      if (this.props.activeSectionLength != nextProps.activeSectionLength) {
 	        this.setState({ currentSectionId: this.getDefaultSectionId(this.props.sections.filter(function (section) {
 	            return section.state == 'active';
 	          })) });
@@ -48468,7 +48484,7 @@
 	              ' ',
 	              this.props.name
 	            ),
-	            _react2.default.createElement('textarea', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', value: this.state.name, onChange: this.handleNameChange, onBlur: this.disableNameChangeInput, tabindex: '0' })
+	            _react2.default.createElement('textarea', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', value: this.state.name, onChange: this.handleNameChange, onBlur: this.disableNameChangeInput })
 	          ),
 	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement('div', { className: "tile-right " + this.props.pageTree.pageType.icon_name }),
@@ -63400,6 +63416,9 @@
 	    onCreateSection: function onCreateSection(pageTree, sectionName, timeStamp) {
 	      dispatch((0, _actions.createNewSection)(pageTree.id, pageTree.section_id, sectionName, timeStamp));
 	    },
+	    onSectionIdUpdate: function onSectionIdUpdate(oldId, newId) {
+	      dispatch((0, _actions.updateSectionId)(oldId, newId));
+	    },
 	    setSaving: function setSaving(saving) {
 	      dispatch((0, _actions.setSaving)(saving));
 	      dispatch((0, _actions.changeUpdatedAt)());
@@ -63475,6 +63494,9 @@
 	        data: { page_id: this.props.pageTree.id, section: { name: name } },
 	        error: function error(result) {
 	          document.setFlash(result.responseText);
+	        },
+	        success: function success(result) {
+	          _this.props.onSectionIdUpdate(timeStamp, result.id);
 	        },
 	        complete: function complete(result) {
 	          _this.props.setSaving(true);
@@ -63759,7 +63781,7 @@
 	    },
 	    setSaving: function setSaving(saving) {
 	      dispatch((0, _actions.setSaving)(saving));
-	      dispatch(changeUpdatedAt());
+	      dispatch((0, _actions.changeUpdatedAt)());
 	    }
 	  };
 	};
