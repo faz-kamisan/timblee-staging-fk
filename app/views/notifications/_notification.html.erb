@@ -1,6 +1,6 @@
 <li class="clearfix notification-item">
   <div class="pull-left notification-image">
-    <%= image_tag(notification.user.try(:avatar) || 'profile-image.png', class: 'profile-image') %>
+    <%= image_tag(notification.user.try(:avatar) || 'guest-icon.png', class: 'profile-image') %>
   </div>
   <div class="pull-left notification-content">
     <%= link_to notification.message, notification.link_to, class: "notification-message" %>
