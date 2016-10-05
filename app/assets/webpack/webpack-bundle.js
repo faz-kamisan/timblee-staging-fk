@@ -53049,16 +53049,25 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var PublicHeader = function (_React$Component) {
-	  _inherits(PublicHeader, _React$Component);
+	var TrialHeader = function (_React$Component) {
+	  _inherits(TrialHeader, _React$Component);
 	
-	  function PublicHeader(props) {
-	    _classCallCheck(this, PublicHeader);
+	  function TrialHeader(props) {
+	    _classCallCheck(this, TrialHeader);
 	
-	    return _possibleConstructorReturn(this, (PublicHeader.__proto__ || Object.getPrototypeOf(PublicHeader)).call(this, props));
+	    var _this2 = _possibleConstructorReturn(this, (TrialHeader.__proto__ || Object.getPrototypeOf(TrialHeader)).call(this, props));
+	
+	    _this2.state = { showDemo: true };
+	    _this2.showDemo = _this2.showDemo.bind(_this2);
+	    return _this2;
 	  }
 	
-	  _createClass(PublicHeader, [{
+	  _createClass(TrialHeader, [{
+	    key: 'showDemo',
+	    value: function showDemo() {
+	      this.setState({ showDemo: false });
+	    }
+	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var remainingTime = 15 * 60 * 1000 - (new Date() - new Date(this.props.createdAt));
@@ -53091,16 +53100,40 @@
 	            { className: 'btn', 'data-toggle': 'modal', href: '#user-signup-modal' },
 	            'Create my free account'
 	          )
+	        ),
+	        this.state.showDemo && _react2.default.createElement(
+	          'div',
+	          { className: 'intro-box-trial' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'intro-box' },
+	            _react2.default.createElement('span', { className: 'hotspot' }),
+	            _react2.default.createElement(
+	              'figure',
+	              null,
+	              _react2.default.createElement('img', { alt: ' ', src: '/assets/Intro1.png' })
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              'Drag and drop page tiles to build your sitemap fast.'
+	            ),
+	            _react2.default.createElement(
+	              'a',
+	              { href: 'javascript:void(0);', onClick: this.showDemo },
+	              'Got it'
+	            )
+	          )
 	        )
 	      );
 	    }
 	  }]);
 	
-	  return PublicHeader;
+	  return TrialHeader;
 	}(_react2.default.Component);
 	
-	PublicHeader.propTypes = {};
-	exports.default = PublicHeader;
+	TrialHeader.propTypes = {};
+	exports.default = TrialHeader;
 
 /***/ },
 /* 871 */
