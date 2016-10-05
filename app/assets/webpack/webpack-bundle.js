@@ -53495,7 +53495,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'modal fade', id: 'guest-info-modal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'comment-delete-modalLabel' },
+	        { className: 'modal fade guest-modal', id: 'guest-info-modal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'comment-delete-modalLabel' },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'modal-dialog', role: 'document' },
@@ -53504,48 +53504,67 @@
 	            { className: 'modal-content' },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'modal-body' },
+	              { className: 'modal-body user-entry text-center' },
 	              _react2.default.createElement(
 	                'div',
-	                { className: 'message' },
-	                _react2.default.createElement(
-	                  'span',
-	                  null,
-	                  'To view or add sitemap comments, you need to add your name and email. This will let us notify you when someone responds to your comments.'
-	                ),
-	                _react2.default.createElement(
-	                  'span',
-	                  null,
-	                  'You will be able to add and view comments instantly.'
-	                )
+	                { className: 'logo' },
+	                _react2.default.createElement('img', { className: 'logo-inner', src: '/assets/Timblee-icon.svg' })
+	              ),
+	              _react2.default.createElement(
+	                'h1',
+	                { className: 'modal-heading' },
+	                'To view or add sitemap comments, you need to ',
+	                _react2.default.createElement('br', null),
+	                ' add your name and email. This will let us notify ',
+	                _react2.default.createElement('br', null),
+	                ' you when someone responds to your ',
+	                _react2.default.createElement('br', null),
+	                ' comments.'
+	              ),
+	              _react2.default.createElement(
+	                'p',
+	                { className: 'small' },
+	                'You will be able to add and view comments instantly.'
 	              ),
 	              _react2.default.createElement(
 	                'div',
-	                { className: 'gurst-info-form' },
+	                { className: 'gurst-info-form user-form' },
 	                this.state.errors && _react2.default.createElement(
 	                  'div',
-	                  { 'class': 'form-error' },
+	                  { className: 'form-error' },
 	                  'Please enter a valid name and email.'
 	                ),
 	                this.props.showForm && _react2.default.createElement(
 	                  'form',
 	                  { onSubmit: this.handleFormSubmit },
-	                  _react2.default.createElement('input', { type: 'text', placeholder: 'name', value: this.state.name, onChange: this.handleNameChange }),
-	                  _react2.default.createElement('input', { type: 'email', placeholder: 'email', value: this.state.email, onChange: this.handleEmailChange }),
 	                  _react2.default.createElement(
-	                    'button',
-	                    { type: 'submit', className: 'btn btn-red btn-modal-open' },
-	                    'Start adding and viewing comments'
+	                    'div',
+	                    { className: 'form-group' },
+	                    _react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'name', value: this.state.name, onChange: this.handleNameChange })
+	                  ),
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'form-group' },
+	                    _react2.default.createElement('input', { className: 'form-control', type: 'email', placeholder: 'email', value: this.state.email, onChange: this.handleEmailChange })
+	                  ),
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'form-group' },
+	                    _react2.default.createElement(
+	                      'button',
+	                      { type: 'submit', className: 'btn btn-pink btn-block' },
+	                      'Start adding and viewing comments'
+	                    )
 	                  )
 	                )
 	              ),
 	              _react2.default.createElement(
 	                'div',
-	                null,
+	                { className: 'go-to-login text-center' },
 	                'Already signed up? ',
 	                _react2.default.createElement(
 	                  'a',
-	                  { href: '/log-in' },
+	                  { href: '/log-in', className: 'link' },
 	                  'Log in here'
 	                ),
 	                '.'

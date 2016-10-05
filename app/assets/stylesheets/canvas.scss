@@ -3321,7 +3321,8 @@ body.trial {
 
 .intro-box-1 {
   right: auto;
-  top: 182px;
+  top: 147px;
+  z-index: 15;
   .hotspot {
     top: 100px;
     left: -69px;
@@ -3404,5 +3405,27 @@ body.trial {
 .trial {
   .search-page-type {
     border-top: 0;
+  }
+}
+
+.guest-modal {
+  .modal-body {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 35px;
+    background: $primaryWhite;
+    @include border-radius(12px);
+  }
+  .user-form {
+    padding-left: 135px;
+    padding-right: 135px;
+  }
+  .small {
+    margin-top: 15px;
+  }
+  .btn {
+    height: 48px;
+    line-height: 36px;
+    text-transform: none;
   }
 }

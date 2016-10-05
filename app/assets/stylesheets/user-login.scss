@@ -302,3 +302,9 @@
     z-index: 99999;
   }
 }
+
+.guest-modal {
+  .modal-dialog {
+    @include alignCenter(-310px, -259px);
+  } 
+}
