@@ -1,10 +1,10 @@
 <div role="tabpanel" class="tab-pane" id="personalization">
-  <%= form_for current_business, html: { class: 'settings-form' } do |f| %>
+  <%= form_for current_business, html: { class: 'settings-form team-name-edit-form', remote: true } do |f| %>
     <div class="form-group">
       <div class="row">
         <div class="col-xs-6">
           <label>BUSINESS NAME</label>
-          <%= f.text_field :name, disabled: true, class: 'editable-input', 'data-original-value' => f.object.name, placeholder: 'Untitled' %>
+          <%= f.text_field :name, disabled: true, class: 'editable-input name-field', 'data-original-value' => f.object.name, placeholder: 'Untitled' %>
         </div>
         <div class="col-xs-6 text-right edit-info">
           <div class="edit">
