@@ -3238,7 +3238,7 @@ body.trial {
   background: $primaryBlack;
   position: fixed;
   top: 0px;
-  z-index: 15;
+  z-index: 16;
   height: 60px;
   left: 0;
   width: 100%;
@@ -3319,7 +3319,8 @@ body.trial {
   z-index: 12;
 }
 
-.intro-box-1 {
+.intro-box-1, 
+.intro-box-trial {
   right: auto;
   top: 147px;
   z-index: 15;
@@ -3427,5 +3428,42 @@ body.trial {
     height: 48px;
     line-height: 36px;
     text-transform: none;
+  }
+}
+
+.intro-box-trial {
+  position: absolute;
+  left: 380px;
+  top: 115px;
+  p {
+    display: block;
+    height: auto;
+  }
+  a {
+    margin-top: 10px;
+  }
+  .hotspot {
+    left: -67px;
+    top: 143px;
+  }
+  &:before {
+    content: ' ';
+    position: absolute;
+    border-style: solid;
+    border-width: 13px 24px 13px 0;
+    border-color: transparent #262b30 transparent;
+    left: -24px;
+    top: 141px;
+    z-index: 2;
+  }
+  &:after {
+    content: ' ';
+    position: absolute;
+    border-style: solid;
+    border-width: 14px 26px 14px 0;
+    border-color: transparent #000 transparent;
+    left: -26px;
+    top: 140px;
+    z-index: 1;
   }
 }
