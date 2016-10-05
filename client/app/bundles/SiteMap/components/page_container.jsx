@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import ConnectedPageTile from '../containers/connected_page_tile'
 import ConnectedLevelSupport from '../containers/connected_level_support'
 import ConnectedGutter from '../containers/connected_gutter'
+import ConnectedFirstPageDroppable from '../containers/connected_first_page_droppable'
 
 class PageContainer extends React.Component {
   static propTypes = {
@@ -30,9 +31,12 @@ class PageContainer extends React.Component {
       }
 
       return (
-        <div data-level={this.props.pageTree.level} className={ 'page-container level-' + this.props.pageTree.level.toString() + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') } style={ { width: width } }>
+        <div data-level={this.props.pageTree.level} className={ 'page-container level-' + this.props.pageTree.level.toString() + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + ((children.length == 0) ? ' no-children' : '') } style={ { width: width } }>
           <ConnectedPageTile pageTree={this.props.pageTree} collapsed={this.props.pageTree.collapsed} childrenLength={children.length} sitemapNumber={this.props.sitemapNumber} name={this.props.pageTree.name} />
           <ConnectedGutter pageTree={this.props.pageTree} />
+          { (children.length == 0) &&
+            <ConnectedFirstPageDroppable pageTree={this.props.pageTree} leftSidebarExpanded={this.props.leftSidebarExpanded} />
+          }
           { this.props.publicShare &&
             <div className="intro-box-1">
               <div className={"intro-box share-1" + (this.props.introSlideNumber == 1 ? '' : ' hide')}>

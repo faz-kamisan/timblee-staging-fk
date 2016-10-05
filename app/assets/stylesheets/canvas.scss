@@ -255,6 +255,27 @@
     &.left-bar-contracted {
       padding-right: 30px;
     }
+    .first-page {
+      text-align: center;
+      position: relative;
+    }
+    .first-page-droppable {
+      position: relative;
+      display: inline-block;
+      margin-top: 28px;
+    }
+    &.no-children {
+      > .page-tile {
+        margin-bottom: 20px;
+        &:before {
+          bottom: -20px;
+          width: 1px;
+          height: 20px;
+          border-left: 1px dashed #e3e5e7;
+          background: $transparent;
+        }
+      }
+    }
     > .page-tile {
       margin-bottom: 75px;
       &.odd-tree {
@@ -602,8 +623,8 @@
     background: #F9FAFC;
     border: 1px dashed #E3E5E7;
     color: #E3E5E7;
-    padding-top: 24px;
-    font-size: 12px;
+    padding-top: 27px;
+    font-size: 10px;
     z-index: 10;
     text-align: center;
     transition: .35s;
@@ -620,8 +641,9 @@
   }
   .collapse-open {
     position: absolute;
-    left: 910px;
-    top: 418px;
+    top: -7px;
+    left: 50%;
+    margin-left: -9px;
     width: 20px;
     height: 20px;
     @include border-radius(4px);
@@ -2646,6 +2668,7 @@ body.trial {
 }
 
 .sitemap-footer {
+  display: none;
   border-top: 1px dashed #d6d8da;
   height: 130px;
   position: fixed;
@@ -3371,11 +3394,3 @@ body.trial {
   }
 }
 
-
-
-
-
-
-.sitemap-footer {
-  display: none;
-}

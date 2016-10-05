@@ -50473,10 +50473,6 @@
 	
 	var _draggable_page_container2 = _interopRequireDefault(_draggable_page_container);
 	
-	var _connected_first_page_droppable = __webpack_require__(/*! ../containers/connected_first_page_droppable */ 862);
-	
-	var _connected_first_page_droppable2 = _interopRequireDefault(_connected_first_page_droppable);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -50564,13 +50560,6 @@
 	            'div',
 	            null,
 	            _react2.default.createElement(_draggable_page_container2.default, { pageTree: section.pageTree, sitemapNumber: '', sitemapId: _this.props.sitemapId, leftSidebarExpanded: _this.props.leftSidebarExpanded, publicShare: _this.props.publicShare, introSlideNumber: _this.props.introSlideNumber, showNextSlide: _this.props.showNextSlide })
-	          ),
-	          section.pageTree.children.filter(function (page) {
-	            return page.state != 'archived';
-	          }).length == 0 && _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement(_connected_first_page_droppable2.default, { pageTree: section.pageTree, leftSidebarExpanded: _this.props.leftSidebarExpanded })
 	          )
 	        );
 	      });
@@ -50783,6 +50772,10 @@
 	
 	var _connected_gutter2 = _interopRequireDefault(_connected_gutter);
 	
+	var _connected_first_page_droppable = __webpack_require__(/*! ../containers/connected_first_page_droppable */ 862);
+	
+	var _connected_first_page_droppable2 = _interopRequireDefault(_connected_first_page_droppable);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -50823,9 +50816,10 @@
 	
 	        return _react2.default.createElement(
 	          'div',
-	          { 'data-level': this.props.pageTree.level, className: 'page-container level-' + this.props.pageTree.level.toString() + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted'), style: { width: width } },
+	          { 'data-level': this.props.pageTree.level, className: 'page-container level-' + this.props.pageTree.level.toString() + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + (children.length == 0 ? ' no-children' : ''), style: { width: width } },
 	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name }),
 	          _react2.default.createElement(_connected_gutter2.default, { pageTree: this.props.pageTree }),
+	          children.length == 0 && _react2.default.createElement(_connected_first_page_droppable2.default, { pageTree: this.props.pageTree, leftSidebarExpanded: this.props.leftSidebarExpanded }),
 	          this.props.publicShare && _react2.default.createElement(
 	            'div',
 	            { className: 'intro-box-1' },
