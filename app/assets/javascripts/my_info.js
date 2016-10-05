@@ -45,12 +45,14 @@ MyInfo.prototype.bindEvents = function() {
     _this.passwordField.attr('type', 'text');
     $(this).addClass('hide');
     _this.eyeClose.removeClass('hide');
+    _this.passwordField.focus();
   });
 
   this.eyeClose.on('click', function() {
     _this.passwordField.attr('type', 'password');
     $(this).addClass('hide');
     _this.eyeOpen.removeClass('hide');
+    _this.passwordField.focus();
   });
 };
 
