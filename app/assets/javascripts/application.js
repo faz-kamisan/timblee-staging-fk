@@ -36,6 +36,7 @@
 //= require script
 //= require animated-bar
 //= require settings_tabs
+//= require share_modal
 
 $(window).on('load resize', function() {
   if($('.level-0').length) {

@@ -87,7 +87,7 @@
               <% end %>
             </li>
             <li>
-              <%= link_to 'javascript:void(0)', class: 'action sitemap-share-modal-link', 'data-url': sitemap_public_share_url(sitemap.public_share_token).gsub(/(?<protocol>http(s?):\/\/)/, '\k<protocol>share.'), 'data-sitemap-id': sitemap.id, 'data-name': sitemap.name do %>
+              <%= link_to 'javascript:void(0)', class: 'action sitemap-share-modal-link', 'data-url': sitemap_public_share_url(sitemap.public_share_token).gsub(/(?<protocol>http(s?):\/\/)/, '\k<protocol>share.'), 'data-sitemap-id': sitemap.id, 'data-name': sitemap.name, 'data-shared-users': sitemap.sitemap_shared_users.pluck(:user_email).join(',') do %>
                 <span class="icon icon-share-circle"></span>
                 <span class="link-text">Share</span>
               <% end %>

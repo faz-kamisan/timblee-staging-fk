@@ -1895,7 +1895,7 @@ body.trial {
 }
 
 .watermark_container,
-.comment-input {
+.comment-input.comment-input--multiLine {
   display: block!important;
   color: #262b30!important;
 }
@@ -2730,7 +2730,7 @@ body.trial {
     ul {
       padding: 0;
       position: relative;
-      margin: 0 203px 5px 203px;
+      margin: 0 199px 5px 203px;
     }
     li {
       cursor: pointer;
@@ -2781,7 +2781,6 @@ body.trial {
     white-space: pre;
     span {
       max-width: 200px;
-      white-space: pre;
       display: block;
     }
     &.backend {
@@ -3392,4 +3391,3 @@ body.trial {
     border-top: 0;
   }
 }
-

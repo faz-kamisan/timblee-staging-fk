@@ -11,10 +11,6 @@ var Sitemaps = function(options) {
   this.deleteSitemapLink = options.deleteSitemapLink;
   this.copyButtonLink = options.copyButtonLink;
   this.dropContainers = options.dropContainers;
-  this.customMessage = options.customMessage;
-  this.addMessageLink = options.addMessageLink;
-  this.clearMessageLink = options.clearMessageLink
-  this.shareSitemapButton = options.shareSitemapButton
   this.draggableSitemaps = options.draggableSitemaps;
 };
 
@@ -53,40 +49,6 @@ Sitemaps.prototype.bindEvents = function() {
 
   $('body').on('click', '.invite-error-link', function(e) {
     _this.inviteErrorModal.modal('show')
-  })
-
-  this.addMessageLink.on('click', function() {
-    if(_this.customMessage.val().trim().length > 0) {
-      _this.customMessage.data('send', true);
-      $(this).addClass('hidden');
-      _this.clearMessageLink.removeClass('hidden');
-    }
-  })
-
-  this.clearMessageLink.on('click', function() {
-    _this.customMessage.data('send', false);
-    _this.customMessage.val('');
-    $(this).addClass('hidden');
-    _this.addMessageLink.removeClass('hidden');
-  })
-
-  this.shareSitemapButton.on('click', function() {
-    var tags = $('.share-emails-input').val().split(',').join(' ')
-    if(_this.customMessage.data('send')) {
-      var customMessage = _this.customMessage.val();
-    }
-    $.ajax({
-      url: '/sitemaps/' + _this.sitemapShareModal.data('sitemap-id') + '/share_via_email',
-      method: 'post',
-      dataType: 'JSON',
-      data: { emails: tags, custom_message: (customMessage || '') },
-      success: function() {
-        document.location.href = '/home/dashboard';
-      },
-      error: function() {
-        document.setFlash(result.responseText)
-      }
-    });
   })
 
   $('.modal').on('hidden.bs.modal', function () {
@@ -135,14 +97,45 @@ Sitemaps.prototype.copyUrl = function() {
 };
 
 Sitemaps.prototype.configureSitemapShareModal = function(obj) {
-  this.sitemapShareModal.find('#sitemap-public-share-url span').html(obj.data('url'))
-  this.sitemapShareModal.data('sitemap-id', obj.data('sitemap-id'));
+  if(obj.data('url')) {
+    this.sitemapShareModal.find('#sitemap-public-share-url span').html(obj.data('url'))
+    this.sitemapShareModal.data('sitemap-id', obj.data('sitemap-id'));
+    if(obj.data('shared-users').length > 0) {
+      var sharedUserEmails = obj.data('shared-users').split(',');
+      this.addSharedUsersToModal(sharedUserEmails)
+    }
+  }
   $('.share-emails-input').tagit('removeAll');
   this.sitemapShareModal.find('.share-method-tabs li:first').click()
   this.sitemapShareModal.find('.share-method-tabs .url').click()
   this.sitemapShareModal.find('.copy-link-button').html('Copy');
   this.sitemapShareModal.find('a.demo-share').attr('href', obj.data('url'))
 };
+
+Sitemaps.prototype.addSharedUsersToModal = function(sharedUserEmails) {
+  var sharedUsersDiv = this.sitemapShareModal.find('.already-emailed')
+  sharedUsersDiv.html('');
+  sharedUsersDiv.append('<p>These people have already been emailed</p>');
+  var userList = $('<ul>')
+  sharedUserEmails.forEach(function(user_email, index) {
+    var classForListItem = (index > 1 ? 'extra-shared-users hide' : '')
+    var userListItem = $('<li>', { class: classForListItem })
+    userListItem.append(user_email)
+    userListItem.append($('<span>', { class: 'icon-save-circle' }))
+    userList.append(userListItem)
+  })
+  sharedUsersDiv.append(userList)
+
+  var extraUserCount = sharedUserEmails.length - 2
+  if(extraUserCount == 1) {
+    var showOthersLink = $('<a>', { id:'show-others', href: 'javascript:void(0)', html: '1 other' })
+    sharedUsersDiv.append(showOthersLink)
+  }
+  if(extraUserCount > 1) {
+    var showOthersLink = $('<a>', { id:'show-others', href: 'javascript:void(0)', html: (extraUserCount.toString() + ' others') })
+    sharedUsersDiv.append(showOthersLink)
+  }
+}
 
 Sitemaps.prototype.bindDraggers = function() {
   var _this = this;
@@ -179,10 +172,6 @@ $(function() {
     dropContainers : $('.folder-info'),
     copyButtonLink: $('.copy-link-button'),
     shareMethodTabs: $('.share-method-tabs'),
-    customMessage: $('.custom-message'),
-    addMessageLink: $('.add-custom-message'),
-    clearMessageLink: $('.cancel-custom-message'),
-    shareSitemapButton: $('.share-sitemap-button'),
     draggableSitemaps : $('.sitemap-container').not('.new-sitemap')
   }
   var sitemaps = new Sitemaps(options);

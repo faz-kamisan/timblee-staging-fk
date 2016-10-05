@@ -11,7 +11,6 @@ class SitemapShareModal extends React.Component {
   constructor(props) {
     super(props)
     this.copyUrl = this.copyUrl.bind(this);
-    this.restoreModal = this.restoreModal.bind(this);
     this.state = {copied: false, urlView: true}
   }
 
@@ -24,21 +23,6 @@ class SitemapShareModal extends React.Component {
     window.getSelection().addRange(range);
     document.execCommand('copy');
     window.getSelection().removeAllRanges();
-  }
-
-  componentDidMount() {
-    var _this = this;
-    $('.sitemap-share-modal').on('hidden.bs.modal', function () {
-      _this.restoreModal();
-    });
-  }
-
-  restoreModal(e) {
-    var _this = this;
-    setTimeout(function() {
-      $('.animated-bar-share').css('left', 0);
-      _this.setState({copied: false, urlView: true})
-    }, 1000)
   }
 
   render() {
