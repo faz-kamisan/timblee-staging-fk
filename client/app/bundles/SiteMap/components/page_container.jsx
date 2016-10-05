@@ -30,7 +30,7 @@ class PageContainer extends React.Component {
       }
 
       return (
-        <div data-level={this.props.pageTree.level} className={ 'page-container level-' + this.props.pageTree.level.toString() } style={ { width: width } }>
+        <div data-level={this.props.pageTree.level} className={ 'page-container level-' + this.props.pageTree.level.toString() + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') } style={ { width: width } }>
           <ConnectedPageTile pageTree={this.props.pageTree} collapsed={this.props.pageTree.collapsed} childrenLength={children.length} sitemapNumber={this.props.sitemapNumber} name={this.props.pageTree.name} />
           <ConnectedGutter pageTree={this.props.pageTree} />
           { this.props.publicShare &&
