@@ -3,7 +3,7 @@ import { setName, changeUpdatedAt, updateState, setSaving, showSitemapShareModal
 import PublicHeader from '../components/public_header'
 
 const mapStateToProps = (state) => {
-  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving, updatedAt: state.updated_at, sections: state.sections, footerPages: state.footerPages }
+  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving, updatedAt: state.updated_at, sections: state.sections, footerPages: state.footerPages, introSlideNumber: state.introSlideNumber }
 }
 
 const mapDispatchToProps = (dispatch) => {

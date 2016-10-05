@@ -79,7 +79,7 @@ class PublicHeader extends React.Component {
           </div>
         </div>
         <div className="header-options">
-          <a href="javascript:void(0)" className={this.state.commentSidebarOpen ? 'active' : ''} onClick={this.toggleCommentState}>
+          <a href="javascript:void(0)" className={(this.state.commentSidebarOpen || (this.props.introSlideNumber == 2)) ? 'active' : ''} onClick={this.toggleCommentState}>
             <span className="icon-comment-circle"></span>
           </a>
           <a href="javascript:void(0)" className={this.state.inductionSidebarOpen ? 'active' : ''} onClick={this.toggleInductionState}>
