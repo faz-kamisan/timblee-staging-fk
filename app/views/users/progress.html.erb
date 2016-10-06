@@ -18,15 +18,17 @@
           <%= image_tag('empty-state-container.svg', class: 'empty-state') %>
         </div>
         <% @sitemaps_by_state[:on_hold].each do |sitemap| %>
-          <div class='drag-wrapper'>
-            <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
-              <% if sitemap.comments.exists? %>
-                <span class="state"></span>
-              <% end %>
-              <span class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></span>
-              <span class="last-updated">Last updated <%= pretty_time(sitemap.updated_at) %></span>
+          <%= link_to sitemap_path(sitemap.id), class: 'sitemap-tile' do %>
+            <div class='drag-wrapper'>
+              <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
+                <% if sitemap.comments.exists? %>
+                  <span class="state"></span>
+                <% end %>
+                <span class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></span>
+                <span class="last-updated">Last updated <%= pretty_time(sitemap.updated_at) %></span>
+              </div>
             </div>
-          </div>
+          <% end %>
         <% end %>
       </div>
     </div>
@@ -43,15 +45,17 @@
           <%= image_tag('empty-state-container.svg', class: 'empty-state') %>
         </div>
         <% @sitemaps_by_state[:in_progress].each do |sitemap| %>
-          <div class='drag-wrapper'>
-            <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
-              <% if sitemap.comments.exists? %>
-                <span class="state"></span>
-              <% end %>
-              <span class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></span>
-              <span class="last-updated">Last updated <%= pretty_time(sitemap.updated_at) %></span>
+          <%= link_to sitemap_path(sitemap.id), class: 'sitemap-tile' do %>
+            <div class='drag-wrapper'>
+              <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
+                <% if sitemap.comments.exists? %>
+                  <span class="state"></span>
+                <% end %>
+                <span class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></span>
+                <span class="last-updated">Last updated <%= pretty_time(sitemap.updated_at) %></span>
+              </div>
             </div>
-          </div>
+          <% end %>
         <% end %>
       </div>
     </div>
@@ -68,15 +72,17 @@
           <%= image_tag('empty-state-container.svg', class: 'empty-state') %>
         </div>
         <% @sitemaps_by_state[:review].each do |sitemap| %>
-          <div class='drag-wrapper'>
-            <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
-              <% if sitemap.comments.exists? %>
-                <span class="state"></span>
-              <% end %>
-              <span class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></span>
-              <span class="last-updated">Last updated <%= pretty_time(sitemap.updated_at) %></span>
+          <%= link_to sitemap_path(sitemap.id), class: 'sitemap-tile' do %>
+            <div class='drag-wrapper'>
+              <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
+                <% if sitemap.comments.exists? %>
+                  <span class="state"></span>
+                <% end %>
+                <span class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></span>
+                <span class="last-updated">Last updated <%= pretty_time(sitemap.updated_at) %></span>
+              </div>
             </div>
-          </div>
+          <% end %>
         <% end %>
       </div>
     </div>
@@ -93,15 +99,17 @@
           <%= image_tag('empty-state-container.svg', class: 'empty-state') %>
         </div>
         <% @sitemaps_by_state[:approved].each do |sitemap| %>
-          <div class='drag-wrapper'>
-            <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
-              <% if sitemap.comments.exists? %>
-                <span class="state"></span>
-              <% end %>
-              <span class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></span>
-              <span class="last-updated">Last updated <%= pretty_time(sitemap.updated_at) %></span>
+          <%= link_to sitemap_path(sitemap.id), class: 'sitemap-tile' do %>
+            <div class='drag-wrapper'>
+              <div class="sitemap-card-small draggable_sitemap" data-id='<%= sitemap.id %>'>
+                <% if sitemap.comments.exists? %>
+                  <span class="state"></span>
+                <% end %>
+                <span class="card-name"><%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %></span>
+                <span class="last-updated">Last updated <%= pretty_time(sitemap.updated_at) %></span>
+              </div>
             </div>
-          </div>
+          <% end %>
         <% end %>
       </div>
     </div>
@@ -111,3 +119,5 @@
 </div>
 
 <%= javascript_include_tag('progress') %>
+<%= javascript_include_tag('dragula.min') %>
+<%= stylesheet_link_tag('dragula.min') %>
