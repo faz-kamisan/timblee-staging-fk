@@ -371,6 +371,25 @@ ul.tagit li.tagit-choice-editable {
   }
 }
 
+.invite-message-preview {
+  position: relative;
+  padding-top: 55px;
+  margin-bottom: 85px;
+  p {
+    color: #a3acb5;
+    @extend .font-14;
+    padding-bottom: 15px;
+  }
+  a {
+    color: $primaryBlack;
+    font-size: 12px;
+    cursor: pointer;
+    &:hover {
+      color: $primaryPink;
+    }
+  }
+}
+
 .twemoji-textarea {
   height: 120px;
   padding: 15px;
