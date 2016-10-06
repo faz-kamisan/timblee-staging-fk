@@ -10,6 +10,7 @@ var MyInfo = function(options) {
   this.eyeClose = options.eyeClose;
   this.eyeOpen = options.eyeOpen;
   this.passwordField = options.passwordField;
+  this.removeImage = options.removeImage;
 };
 
 MyInfo.prototype.bindEvents = function() {
@@ -27,14 +28,23 @@ MyInfo.prototype.bindEvents = function() {
     _this.previewProfileImage.attr('src', _this.previewProfileImage.data('original-value'))
   });
 
+  this.removeImage.on('click', function() {
+    _this.removeImage.addClass('hide');
+    _this.avatarField.val('');
+    _this.defaultAvatars.attr('checked', false);
+    _this.previewProfileImage.attr('src', _this.previewProfileImage.data('original-value'))
+  });
+
   this.avatarField.change(function(){
       _this.readURL(this);
       _this.defaultAvatars.attr('checked', false);
+      _this.removeImage.removeClass('hide');
   });
 
   this.avatarLink.on('click', function() {
     _this.previewProfileImage.attr('src', this.src);
     _this.avatarField.val('');
+    _this.removeImage.removeClass('hide');
   });
 
   this.previewProfileImage.on('click', function() {
@@ -80,7 +90,8 @@ $(function() {
     previewProfileImage : $('.preview-profile-image'),
     passwordField : $('input.hidden-password'),
     eyeOpen : $('.icon-eye-open'),
-    eyeClose : $('.icon-eye-close')
+    eyeClose : $('.icon-eye-close'),
+    removeImage : $('.remove-image')
   }
   new MyInfo(options).bindEvents();
 });
