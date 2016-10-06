@@ -1,4 +1,4 @@
-<div class="modal fade" id="sitemap-warning-modal" tabindex="-1" role="dialog" aria-labelledby="sitemap-warning-modalLabel">
+<div class="modal fade warnings-modals" id="sitemap-warning-modal" tabindex="-1" role="dialog" aria-labelledby="sitemap-warning-modalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
@@ -7,17 +7,22 @@
             <%= image_tag('close-modal.svg', class: 'close-modal') %>
           </span>
         </button>
-        <h4>A warning about the starter plan</h4>
-        <% if request.original_fullpath == settings_users_path %>
-          <%= link_to 'Switch to Pro instead', "#choose-plan-modal", 'data-toggle': "modal", 'data-dismiss': 'modal' %>
-        <% else %>
-          <%= link_to 'Switch to Pro instead', billing_settings_users_path %>
-        <% end %>
-        <span>
-        <%= form_for Sitemap.new do |f| %>
-          <%= f.hidden_field :folder_id %>
-          <a href="javascript:void(0);" class="new-sitemap-link" data-allow-more-sitemaps= "<%= current_business.allow_more_sitemaps? ? 'yes' : 'no' %>">Choose Starter Plan</a>
-        <% end %>
+        <h4 class="warning">A warning about the starter plan</h4>
+        <p>You currently have more sitemaps or users(or both) than the Starter plan allows.</p>
+        <p>Since you're on your free, unlimited trial till [date], you will be able to choose the free Starter plan for now. However after your trial finishes, you'll either need to upgrade to the <a href="#">Pro plan</a> or delete any sitemaps and user over the Starter plan limits.</p>
+        <div class="warning-footer">
+          <div class="warning-left">
+            <% if request.original_fullpath == settings_users_path %>
+              <%= link_to 'Choose Pro instead', "#choose-plan-modal", class: 'btn btn-left', 'data-toggle': "modal", 'data-dismiss': 'modal' %>
+            <% else %>
+              <%= link_to 'Choose Pro instead', billing_settings_users_path, class: 'btn btn-left' %>
+            <% end %>
+          </div>
+          <%= form_for Sitemap.new , html: { class: 'warning-right' } do |f| %>
+            <%= f.hidden_field :folder_id %>
+            <a href="javascript:void(0);" class="new-sitemap-link btn btn-right" data-allow-more-sitemaps= "<%= current_business.allow_more_sitemaps? ? 'yes' : 'no' %>">Choose Starter Plan</a>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

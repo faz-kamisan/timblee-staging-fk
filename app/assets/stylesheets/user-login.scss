@@ -259,3 +259,17 @@
     @include alignCenter(-310px, -146px);
   } 
 }
+
+#sitemap-warning-modal,
+#invite-warning-modal {
+  .modal-dialog {
+    @include alignCenter(-375px, -170px);
+  } 
+}
+
+#sitemap-error-modal,
+#invite-error-modal {
+  .modal-dialog {
+    @include alignCenter(-375px, -144px);
+  } 
+}
