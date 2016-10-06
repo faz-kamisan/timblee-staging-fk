@@ -969,30 +969,6 @@ label.avatar-label > input[type=radio]:checked + img{
   height: 10px;
 }
 
-.hidden-password {
-  letter-spacing: 2.5px;
-}
-
-.hidden-password::-webkit-input-placeholder {
-  font-size: x-large;
-  opacity: 0.9;
-}
-
-.hidden-password::-moz-placeholder {
-  font-size: x-large;
-  opacity: 0.9;
-}
-
-.hidden-password:-ms-input-placeholder {
-  font-size: x-large;
-  opacity: 0.9;
-}
-
-.hidden-password:-moz-placeholder {
-  font-size: x-large;
-  opacity: 0.9;
-}
-
 .role-image {
   width: 70px;
   height: 70px;
