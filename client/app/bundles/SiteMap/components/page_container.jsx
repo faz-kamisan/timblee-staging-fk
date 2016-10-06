@@ -25,9 +25,9 @@ class PageContainer extends React.Component {
     var children = this.props.pageTree.children.filter(function(page) { return(page.state != 'archived') })
     if(this.props.pageTree.level == 0) {
       if(this.props.leftSidebarExpanded) {
-        var width = ((children.length * 240) + 432).toString() + 'px'
+        var width = ((children.length * 240) + 412 + 240).toString() + 'px'
       } else {
-        var width = ((children.length * 240) + 60).toString() + 'px'
+        var width = ((children.length * 240) + 100 + 240).toString() + 'px'
       }
 
       return (
