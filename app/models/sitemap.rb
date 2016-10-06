@@ -16,7 +16,7 @@ class Sitemap < ActiveRecord::Base
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :page_comments, source: :comments, through: :pages
 
-  acts_as_list scope: [:state]
+  acts_as_list scope: [:state, :business_id]
 
   validates :public_share_token, :name, presence: true
   validates :business, presence: true, unless: :trial?
