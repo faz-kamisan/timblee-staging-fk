@@ -5,6 +5,7 @@ var Personalization = function(options) {
   this.rowEdit = options.rowEdit;
   this.logoField = options.logoField;
   this.chooseLogo = options.chooseLogo;
+  this.removeImage = options.removeImage;
 };
 
 Personalization.prototype.bindEvents = function() {
@@ -21,12 +22,19 @@ Personalization.prototype.bindEvents = function() {
     _this.chooseLogo.attr('src', _this.chooseLogo.data('original-value'))
   });
 
+  this.removeImage.on('click', function() {
+    _this.removeImage.addClass('hide');
+    _this.logoField.val('');
+    _this.chooseLogo.attr('src', _this.chooseLogo.data('original-value'))
+  });
+
   this.chooseLogo.on('click', function() {
     _this.logoField.click();
   });
 
   this.logoField.change(function(){
-      _this.readURL(this);
+    _this.readURL(this);
+    _this.removeImage.removeClass('hide');
   });
 };
 
@@ -50,7 +58,8 @@ $(function() {
     rowSave : $('.row-logo-save'),
     rowEdit : $('.row-logo-edit'),
     logoField : $('.logo-field'),
-    chooseLogo : $('.choose-logo')
+    chooseLogo : $('.choose-logo'),
+    removeImage : $('.remove-image')
   }
   new Personalization(options).bindEvents();
 });
