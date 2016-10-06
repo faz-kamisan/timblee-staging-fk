@@ -12,6 +12,7 @@ var MyInfo = function(options) {
   this.eyeOpen = options.eyeOpen;
   this.passwordField = options.passwordField;
   this.eyesIcons = options.eyesIcons;
+  this.removeImage = options.removeImage;
 };
 
 MyInfo.prototype.bindEvents = function() {
@@ -38,9 +39,23 @@ MyInfo.prototype.bindEvents = function() {
     _this.defaultAvatars.attr('checked', false);
   });
 
+  this.removeImage.on('click', function() {
+    _this.removeImage.addClass('hide');
+    _this.avatarField.val('');
+    _this.defaultAvatars.attr('checked', false);
+    _this.previewProfileImage.attr('src', _this.previewProfileImage.data('original-value'))
+  });
+
+  this.avatarField.change(function(){
+      _this.readURL(this);
+      _this.defaultAvatars.attr('checked', false);
+      _this.removeImage.removeClass('hide');
+  });
+
   this.avatarLink.on('click', function() {
     _this.previewProfileImage.attr('src', this.src);
     _this.avatarField.val('');
+    _this.removeImage.removeClass('hide');
   });
 
   this.previewProfileImage.on('click', function() {
@@ -98,7 +113,8 @@ $(function() {
     passwordField : $('input.hidden-password'),
     eyeOpen : $('.icon-eye-open'),
     eyeClose : $('.icon-eye-close'),
-    eyesIcons : $('.eyes-icons')
+    eyesIcons : $('.eyes-icons'),
+    removeImage : $('.remove-image')
   }
   new MyInfo(options).bindEvents();
 });

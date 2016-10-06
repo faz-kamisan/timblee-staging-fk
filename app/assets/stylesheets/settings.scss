@@ -114,7 +114,7 @@
   }
 }
 
-.resend {
+.resend, .delete-image {
   position: absolute;
   right: 15px;
   width: 110px;
@@ -1006,5 +1006,15 @@ label.avatar-label > input[type=radio]:checked + img{
   .role-image {
     background: url('/assets/admin-role.png');
     background-size: 70px;
+  }
+}
+
+.remove-image {
+  font-size: 10px;
+  color: #a3acb5;
+  display: inline-block;
+  margin-left: -5px;
+  &:hover {
+    color: $primaryPink;
   }
 }
