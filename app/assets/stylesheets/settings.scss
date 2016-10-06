@@ -122,6 +122,9 @@
   color: $primaryLink;
   top: 43px;
   @extend .font-10;
+  &:hover {
+    color: $primaryPink;
+  }
 }
 
 .settings-form {
@@ -965,7 +968,6 @@ label.avatar-label > input[type=radio]:checked + img{
   width: 14px;
   height: 10px;
 }
-
 
 .role-image {
   width: 70px;

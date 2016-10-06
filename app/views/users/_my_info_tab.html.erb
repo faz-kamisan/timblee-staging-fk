@@ -56,14 +56,14 @@
       <div class="row">
         <div class="col-xs-6">
           <label>Your password</label>
-          <%= f.password_field :password, disabled: true, class: 'editable-input hidden-password', placeholder: '********', 'data-original-value' => '' %>
+          <%= f.password_field :password, disabled: true, class: 'editable-input hidden-password', placeholder: '........', 'data-original-value' => '' %>
         </div>
         <div class="col-xs-6 text-right edit-info">
           <div class="edit">
             <a href="javascript:void(0);" class="btn btn-grey btn-edit">Edit</a>
           </div>
           <div class="save">
-            <a href="javascript:void(0);" class="">
+            <a href="javascript:void(0);" class="eyes-icons hide">
               <span class="icon-eye-open">
                 <%= image_tag('eye.svg', class: 'eye') %>
               </span>
@@ -72,7 +72,7 @@
               </span>
             </a>
             <button type="submit" class="btn btn-pink btn-border">Save</button>
-            <a href="javascript:void(0);" class="btn btn-grey btn-cancel">Cancel</a>
+            <a href="javascript:void(0);" class="btn btn-grey btn-cancel btn-cancel-edit-password">Cancel</a>
           </div>
         </div>
       </div>
