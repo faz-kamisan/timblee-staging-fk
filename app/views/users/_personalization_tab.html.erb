@@ -22,16 +22,16 @@
     </div>
   <% end %>
 
-  <%= form_for current_business, html: { class: 'settings-form', method: :patch, multipart: true } do |f| %>
+  <%= form_for current_business, html: { class: 'logo-edit-form settings-form', method: :patch, multipart: true } do |f| %>
     <div class="form-group">
       <div class="row row-logo-save">
         <div class="col-xs-9">
           <label>Your logo</label>
           <div class="clearfix m-t-5">
             <% if current_business.logo.present? %>
-              <%= image_tag(current_business.logo, class: 'profile-image pull-left profile-image-lg') %>
+              <%= image_tag(current_business.logo, class: 'edit-logo profile-image pull-left profile-image-lg') %>
             <% else %>
-              <%= image_tag('business-logo.png', class: 'profile-image pull-left profile-image-lg') %>
+              <%= image_tag('business-logo.png', class: 'edit-logo profile-image pull-left profile-image-lg') %>
             <% end %>
             <div class="right-text pull-right">
               <p class="pull-right">Displayed on sitemaps you or your team share with others. Upload a square PNG or JPEG image at least 100 x 100px in size.</p>
@@ -41,6 +41,7 @@
         <div class="col-xs-3 text-right edit-info">
           <div class>
             <a href="javascript:void(0);" class="btn btn-grey btn-edit-logo">Edit</a>
+            <%= link_to business_path(id: current_business.id, business: { logo: nil }), method: :patch, remote: true, class: 'delete-image' do %> Remove Image <% end %>
           </div>
         </div>
       </div>
@@ -51,9 +52,9 @@
             <figure class="display-image">
               <%= f.file_field :logo , class: 'logo-field', required: true %>
               <% if current_business.logo.present? %>
-                <%= image_tag(current_business.logo, class: 'choose-logo profile-image pull-left profile-image-lg', 'data-original-value': current_business.logo) %>
+                <%= image_tag(current_business.logo, class: 'edit-logo choose-logo profile-image pull-left profile-image-lg', 'data-original-value': current_business.logo) %>
               <% else %>
-                <%= image_tag('business-logo.png', class: 'choose-logo profile-image pull-left profile-image-lg', 'data-original-value': asset_path('business-logo.png')) %>
+                <%= image_tag('business-logo.png', class: 'edit-logo choose-logo profile-image pull-left profile-image-lg', 'data-original-value': asset_path('business-logo.png')) %>
               <% end %>
               <span class="pink-image-overlay"></span>
             </figure>
@@ -62,8 +63,8 @@
                 Upload a square PNG or JPEG image at least 100 x 100px in size. We’ll resize it automatically  and it’ll appear sharp everywhere. If you upload a non-square image, It’ll come out squished! &nbsp; <%= image_tag('surprise.png') %>
               </p>
             </div>
+            <a href="javascript:void(0);" class="remove-image hide">Remove Image</a>
           </div>
-          <a href="javascript:void(0);" class="remove-image hide">Remove<br>Image</a>
         </div>
         <div class="col-xs-6 text-right edit-info">
           <div>
