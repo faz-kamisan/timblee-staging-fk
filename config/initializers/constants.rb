@@ -8,3 +8,4 @@ CHARGE_FOR_OTHER_USERS = 12
 STRIPE_CURRENCY = 'usd'
 STRIPE_INTERVAL = 'month'
 STRIPE_SETTLEMENT_DESCRIPTION = 'Charge for final settlement'
+INTERCOM_APP_ID = Rails.application.secrets.intercom['app_id']

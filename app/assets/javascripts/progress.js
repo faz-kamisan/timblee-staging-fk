@@ -1,73 +1,55 @@
-var Progress = function(options) {
-  this.dropContainer = options.dropContainer;
-  this.draggableSitemaps = options.draggableSitemaps;
+var Progress = function() {
 };
 
 Progress.prototype.init = function() {
   var _this = this;
-  this.draggableSitemaps.draggable({
-    containment: "html",
-    revert: function(droppedContainer) {
-      return(!(droppedContainer && (droppedContainer[0] != $(this).closest('.drop_container')[0])))
-    },
-    revertDuration: 200,
-    start: function(event, ui) {
-      ui.helper.parent('.drag-wrapper').addClass('dragging');
-    },
-    stop: function(event, ui) {
-      ui.helper.parent('.drag-wrapper').removeClass('dragging');
-    }
-  });
-  this.dropContainer.droppable({
-    accept: ".draggable_sitemap",
-    drop: function(event, ui) {
-      var $dropped = $(ui.draggable);
-      var $droppedOn = $(this);
-      var originalState = $dropped.closest('.drop_container').data('state')
-      var targetState = $droppedOn.data('state')
-      if($dropped.closest('.drop_container')[0] == $droppedOn[0]) {
-        // Take Sitemap back to original container
+  this.setDropContainerHeight();
+  var drake = dragula([document.getElementById('on-hold-holder'), document.getElementById('in-progress-holder'), document.getElementById('review-holder'), document.getElementById('approved-holder')]);
+  drake.on('drop', function(dropped, droppedOn, droppedFrom, nextSibling) {
+    var $dropped = $(dropped);
+    var $droppedOn = $(droppedOn);
+    var $droppedFrom = $(droppedFrom);
+    // Update Sitemap State
+
+    var sourceContainer = $droppedFrom.closest('.drop_container')
+    var destinationContainer = $droppedOn.closest('.drop_container')
+    if(destinationContainer.find('.sitemap-tile').length == 1) {
+      var position = 1
+    } else {
+      var $nextSibling = $(nextSibling);
+      if(!nextSibling || $nextSibling.hasClass('empty-sitemap-holder')) {
+        var $destinationContainerSitemaps = $droppedOn.find('.sitemap-tile')
+        var position = $($destinationContainerSitemaps[$destinationContainerSitemaps.length - 2]).data('position') + 1
       } else {
-        // Update Sitemap State
-
-
-        var sourceContainer = $dropped.closest('.drop_container')
-        var updatedAt = new Date,
-            day = ("0" + updatedAt.getDate()).slice(-2),
-            month = updatedAt.toLocaleString('en-us', { month: "short" }),
-            year = updatedAt.getFullYear(),
-            updatedAtFormatted = month + ' ' + day + ', ' + year;
-        $dropped.css({top: 0, left: 0, transform: 'rotate(0deg)'}).parent('.drag-wrapper').removeClass('dragging').detach().prependTo($droppedOn.find('.sitemap_container'));
-        $dropped.find('.last-updated').data('original-last-updated', $dropped.find('.last-updated').html());
-        $dropped.find('.last-updated').html('Last updated ' + updatedAtFormatted);
-        _this.setSitemapCount($droppedOn, sourceContainer);
+        var position = $nextSibling.data('position')
+      }
+    }
+    var updatedAt = new Date,
+        day = ("0" + updatedAt.getDate()).slice(-2),
+        month = updatedAt.toLocaleString('en-us', { month: "short" }),
+        year = updatedAt.getFullYear(),
+        updatedAtFormatted = month + ' ' + day + ', ' + year;
+    $dropped.find('.last-updated').data('original-last-updated', $dropped.find('.last-updated').html());
+    $dropped.find('.last-updated').html('Last updated ' + updatedAtFormatted);
+    _this.setSitemapCount(destinationContainer, sourceContainer);
+    _this.setPositionForSitemapTiles(destinationContainer, sourceContainer);
+    _this.checkContainerIsEmpty(destinationContainer);
+    _this.checkContainerIsEmpty(sourceContainer);
+    _this.setDropContainerHeight();
+    $.ajax({
+      method: 'put',
+      url: '/sitemaps/' + $dropped.data('id'),
+      data: { sitemap: { state: destinationContainer.data('state'), position: position } },
+      dataType: 'script',
+      error: function() {
+        $dropped.parent('.drag-wrapper').detach().prependTo(sourceContainer.find('.sitemap_container'));
+        $dropped.find('.last-updated').html($dropped.find('.last-updated').data('original-last-updated'));
+        _this.setSitemapCount(sourceContainer, $droppedOn);
         _this.checkContainerIsEmpty($droppedOn);
         _this.checkContainerIsEmpty(sourceContainer);
-
-
-
-        $.ajax({
-          method: 'put',
-          url: '/sitemaps/' + $dropped.data('id'),
-          data: { sitemap: { state: $droppedOn.data('state') } },
-          dataType: 'script',
-          error: function() {
-            $dropped.parent('.drag-wrapper').detach().prependTo(sourceContainer.find('.sitemap_container'));
-            $dropped.find('.last-updated').html($dropped.find('.last-updated').data('original-last-updated'));
-            _this.setSitemapCount(sourceContainer, $droppedOn);
-            _this.checkContainerIsEmpty($droppedOn);
-            _this.checkContainerIsEmpty(sourceContainer);
-          }
-        });
       }
-    },
-    over: function(event, elem) {
-      $(this).addClass("dragging-over");
-    },
-    out: function(event, elem) {
-      $(this).removeClass("dragging-over");
-    }
-  });
+    });
+  })
 };
 
 Progress.prototype.checkContainerIsEmpty = function(container) {
@@ -78,9 +60,25 @@ Progress.prototype.checkContainerIsEmpty = function(container) {
   }
 }
 
+Progress.prototype.setPositionForSitemapTiles = function(targetContainer, sourceContainer) {
+  this.setPositionForSitemapTile(targetContainer);
+  this.setPositionForSitemapTile(sourceContainer);
+}
+
+Progress.prototype.setPositionForSitemapTile = function(container) {
+  container.find('.sitemap-tile').each(function(index, sitemapTile) {
+    $(sitemapTile).data('position', index + 1)
+    $(sitemapTile).attr('data-position', index + 1)
+  })
+}
+
 Progress.prototype.setSitemapCount = function(targetContainer, sourceContainer) {
   this.calculateAndSetSitemapCount(targetContainer, 'add');
   this.calculateAndSetSitemapCount(sourceContainer, 'subtract');
+}
+
+Progress.prototype.setDropContainerHeight = function() {
+  $('.sitemap_container').height($('.drop_container').height() - 125)
 }
 
 Progress.prototype.calculateAndSetSitemapCount = function(container, method) {
@@ -103,10 +101,6 @@ Progress.prototype.calculateAndSetSitemapCount = function(container, method) {
 }
 
 $(function() {
-  var options = {
-    dropContainer : $('.drop_container'),
-    draggableSitemaps : $('.draggable_sitemap')
-  }
-  var progress = new Progress(options);
+  var progress = new Progress();
   progress.init();
 });
