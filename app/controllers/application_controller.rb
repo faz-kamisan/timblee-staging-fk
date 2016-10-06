@@ -4,7 +4,8 @@ class ApplicationController < ActionController::Base
   include SettingsRoutesHelper
 
   protect_from_forgery with: :exception
-  before_filter :authenticate_user!
+
+  before_filter :authenticate_user!, unless: :proxy_login?
   before_filter :load_notifications, if: :current_user
   before_filter :lock_business_after_trial_end, if: :current_user
 
