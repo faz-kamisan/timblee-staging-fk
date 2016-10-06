@@ -136,6 +136,14 @@
       background: $primaryPink;
       z-index: 10;
     }
+    .tile-id {
+      left: 23px!important;
+      .dummy-state {
+        top: -1px;
+        margin-right: 4px;
+        position: relative;
+      }
+    }
     &.drag-over {
       &:after {
         opacity: .9;
