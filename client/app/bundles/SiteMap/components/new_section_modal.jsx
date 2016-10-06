@@ -30,6 +30,9 @@ class NewSectionModal extends React.Component {
       error: (result) => {
         document.setFlash(result.responseText)
       },
+      success: (result) => {
+        _this.props.onSectionIdUpdate(timeStamp, result.id)
+      },
       complete: (result) => {
         _this.props.setSaving(true)
         setTimeout(function() {

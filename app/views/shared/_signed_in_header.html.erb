@@ -46,25 +46,25 @@
             <% end %>
           </li>
           <li>
-            <a href="javascript:void(0)">
+            <a class='get-in-touch' href="javascript:void(0)" data-user-email="<%= current_user.email %>">
               <span class="icon-conversation"></span>
               Ask us anything
             </a>
           </li>
-          <li>
+          <li class="hide">
             <a href="javascript:void(0)">
               <span class="icon-heart"></span>
               Gift someone a 60 day trial
             </a>
           </li>
           <li>
-            <a href="javascript:void(0)">
+            <a href="https://timblee.io/feature-request" target='blank'>
               <span class="icon-wand"></span>
               Request a feature
             </a>
           </li>
           <li>
-            <a href="javascript:void(0)">
+            <a href="https://timblee.io/early-adopters" target='blank'>
               <span class="icon-binoculars"></span>
               Join our early adopters program
             </a>
@@ -77,7 +77,7 @@
           </li>
         </ul>
       </div>
-      <div class="gift pull-right header-links last">
+      <div class="gift pull-right header-links hide last">
         <a href="#">
           <span class="icon-heart"></span>
         </a>
@@ -108,6 +108,6 @@
   </div>
 
 </header>
-<%= javascript_include_tag('sitemaps', 'jump_to', 'notification') %>
+<%= javascript_include_tag('sitemaps', 'jump_to', 'notification', 'intercom') %>
 
 <%= render 'sitemaps/sitemap_error_modal'%>

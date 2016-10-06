@@ -42,6 +42,7 @@ export const SET_MAX_PAGE_UID = 'SET_MAX_PAGE_UID'
 export const ADD_SHARED_USERS = 'ADD_SHARED_USERS'
 export const REMOVE_SECTION = 'REMOVE_SECTION'
 export const INCREMENT_INTRO_SLIDE_NUMBER = 'INCREMENT_INTRO_SLIDE_NUMBER'
+export const UPDATE_SECTION_ID = 'UPDATE_SECTION_ID'
 
 export function setName(name) {
   return { type: SET_NAME, name }
@@ -217,4 +218,8 @@ export function removeSection(id) {
 
 export function incrementIntroSlideNumber() {
   return {type: INCREMENT_INTRO_SLIDE_NUMBER}
+}
+
+export function updateSectionId(oldId, newId) {
+  return {type: UPDATE_SECTION_ID, oldId, newId}
 }

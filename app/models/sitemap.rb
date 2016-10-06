@@ -16,6 +16,8 @@ class Sitemap < ActiveRecord::Base
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :page_comments, source: :comments, through: :pages
 
+  acts_as_list scope: [:state, :business_id]
+
   validates :public_share_token, :name, presence: true
   validates :business, presence: true, unless: :trial?
   validates :name, uniqueness: { scope: :business_id, case_sensitive: false }, unless: :trial?
@@ -29,7 +31,7 @@ class Sitemap < ActiveRecord::Base
   after_create :create_default_section_and_page
   strip_fields :name
 
-  scope :order_by_alphanumeric_lower_name, -> { order("SUBSTRING(name FROM '(^[0-9]+)')::BIGINT ASC, lower(name)") }
+  scope :order_by_alphanumeric_lower_name, -> { order("SUBSTRING(name FROM '[0-9]+$')::BIGINT ASC, lower(name)") }
 
   def duplicate
     duplicate = dup
@@ -76,7 +78,7 @@ class Sitemap < ActiveRecord::Base
       pageTypes: PageType.order_by_name,
       footerPages: pages.where(footer: true).map(&:to_react_data),
       comments: self.comments.order_by_created_at.map(&:to_react_data),
-      sections: sections.map(&:to_react_data),
+      sections: sections.order(:created_at).map(&:to_react_data),
       business:  business && business.to_react_data,
       sharedUsers: sitemap_shared_users,
       trial: trial

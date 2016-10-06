@@ -3,7 +3,7 @@ import { setSaving, setSelectedSection, incrementIntroSlideNumber, changeUpdated
 import SectionContainer from '../components/section_container'
 
 const mapStateToProps = (state) => {
-  return { sections: state.sections, sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, publicShare: state.publicShare, trial: state.trial, introSlideNumber: state.introSlideNumber }
+  return { sections: state.sections, sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, publicShare: state.publicShare, trial: state.trial, introSlideNumber: state.introSlideNumber, activeSectionLength: state.sections.filter(function(section) {return(section.state == 'active')}).length }
 }
 
 const mapDispatchToProps = (dispatch) => {
