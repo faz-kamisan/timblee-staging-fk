@@ -1,6 +1,6 @@
 <div class='col-xs-4 sitemap-outer-wrapper'>
   <div class='sitemap_wrapper'>
-    <div class="sitemap-container" data-id=<%= sitemap.id %> data-folder-id=<%= sitemap.folder_id %>>
+    <div class="sitemap-container" data-id=<%= sitemap.id %> data-folder-id='<%= sitemap.folder_id %>' data-name='<%= sitemap.name.downcase %>'>
       <div class="site-card">
         <% if sitemap.comments.exists? || Comment.where(commentable_type: 'Page', commentable_id: sitemap.pages.pluck(:id)).exists? %>
           <span class='state'></span>
