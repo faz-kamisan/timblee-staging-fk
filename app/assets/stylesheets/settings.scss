@@ -122,6 +122,9 @@
   color: $primaryLink;
   top: 43px;
   @extend .font-10;
+  &:hover {
+    color: $primaryPink;
+  }
 }
 
 .settings-form {
