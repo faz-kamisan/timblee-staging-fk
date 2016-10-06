@@ -63933,12 +63933,12 @@
 	                { className: 'modal-button text-center' },
 	                _react2.default.createElement(
 	                  'a',
-	                  { href: '#', 'data-dismiss': 'modal', className: 'btn btn-red btn-modal-open', onClick: this.deleteSection },
+	                  { href: 'javascript:void(0);', 'data-dismiss': 'modal', className: 'btn btn-red', onClick: this.deleteSection },
 	                  'Delete Section'
 	                ),
 	                _react2.default.createElement(
 	                  'a',
-	                  { href: '#', 'data-dismiss': 'modal', className: 'btn btn-transparent btn-last btn-modal-open' },
+	                  { href: 'javascript:void(0);', 'data-dismiss': 'modal', className: 'btn btn-grey btn-last' },
 	                  'Cancel'
 	                )
 	              )
