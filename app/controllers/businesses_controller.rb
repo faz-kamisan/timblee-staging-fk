@@ -9,6 +9,8 @@ class BusinessesController < ApplicationController
   end
 
   def update
+    @field = business_params.has_key?(:logo) ? 'logo' : 'name'
+    @business.remove_logo! if business_params.has_key?(:logo) && !business_params[:logo].present?
     if @business.update(business_params)
 
       respond_to do |format|
