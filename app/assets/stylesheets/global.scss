@@ -6,6 +6,10 @@
   text-decoration: none!important;
 }
 
+* {
+  -webkit-text-size-adjust: none;
+}
+
 body {
   background: $pageBackground;
   font-family: "proxima-nova",sans-serif;

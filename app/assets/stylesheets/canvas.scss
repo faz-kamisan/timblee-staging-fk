@@ -688,10 +688,6 @@
   transition: .35s;
 }
 
-.sitemap-sections {
-  padding-bottom: 70px;
-}
-
 .sitemap-left-sidebar {
   position: fixed;
   width: 372px;
@@ -2676,6 +2672,7 @@ body.trial {
   text-align: center;
   left: 372px;
   padding: 22px 0 0 0;
+  @include animate(.35s);
   .scrollable-footer {
     width: 100%;
     height: 100%;
@@ -3005,14 +3002,56 @@ body.trial {
   }
   &.over-page-top {
     &:before {
-      content: 'add same level page';
       display: block;
+      background: $primaryPink;
+      @include border-radius(4px);
+      color: #fff;
+      content: "Add same level page";
+      display: block;
+      font-size: 12px;
+      height: auto;
+      left: 0;
+      padding: 10px;
+      top: -35px;
+      width: 140px;
+      text-align: center;
+      @include rotate(2deg);
+    }
+    &:after {
+      content: ' ';
+      position: absolute;
+      left: 31%;
+      top: -5px;
+      border-style: solid;
+      border-width: 11px 6px 0;
+      border-color: $primaryPink transparent transparent transparent;
     }
   }
   &.over-page-bottom {
     &:before {
-      content: 'add sub level page';
       display: block;
+      background: $primaryPink;
+      @include border-radius(4px);
+      color: #fff;
+      content: "Add sub page";
+      display: block;
+      font-size: 12px;
+      height: auto;
+      padding: 10px;
+      top: -35px;
+      width: 140px;
+      text-align: center;
+      @include rotate(2deg);
+      left: 0;
+    }
+    &:after {
+      content: ' ';
+      position: absolute;
+      left: 31%;
+      top: -5px;
+      border-style: solid;
+      border-width: 11px 6px 0;
+      border-color: $primaryPink transparent transparent transparent;
     }
   }
 }
@@ -3112,6 +3151,10 @@ body.trial {
   }
 }
 
+.sitemap-sections {
+  padding-bottom: 145px;
+}
+
 .shared-view {
 
   .page-container .tile-more li.second-item,
@@ -3129,10 +3172,6 @@ body.trial {
   .page-tile-clone .tile-more li,
   .footer-page .tile-more li {
     height: calc(100% - 6px);
-  }
-
-  .sitemap-sections {
-    padding-bottom: 140px;
   }
 
   .react-public-header {
