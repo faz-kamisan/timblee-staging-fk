@@ -11,7 +11,8 @@ class SitemapsController < ApplicationController
     @sitemap.business = current_business
     if @sitemap.save
       flash[:notice] = t('.success', scope: :flash)
-      redirect_to sitemap_path(@sitemap, new_sitemap: true)
+      flash[:new_sitemap] = true
+      redirect_to sitemap_path(@sitemap)
     else
       flash[:error] = t('.failure', scope: :flash)
       redirect_to home_dashboard_path
@@ -40,7 +41,7 @@ class SitemapsController < ApplicationController
                                                    email: current_user.email },
                                                    publicShareUrl: (sitemap_public_share_url(@sitemap.public_share_token).gsub(/(?<protocol>http(s?):\/\/)/, '\k<protocol>share.')),
                                                    publicShare: false,
-                                                   newSitemap: !!params[:new_sitemap]
+                                                   newSitemap: !!flash[:new_sitemap]
                                                    )
     if(current_business.stripe_customer_id)
       @card = current_business.active_card
