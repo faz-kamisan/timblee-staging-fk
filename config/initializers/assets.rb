@@ -36,6 +36,8 @@ Rails.application.config.assets.precompile += %w(
   production_hotjar.js
   staging_hotjar.js
   notification.js
+  dragula.min.js
+  dragula.min.css
 )
 # Add client/assets/ folders to asset pipeline's search path.
 # If you do not want to move existing images and fonts from your Rails app

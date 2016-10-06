@@ -156,7 +156,7 @@ class SitemapsController < ApplicationController
     end
 
     def sitemap_params
-      params.require(:sitemap).permit(:name, :folder_id, :state)
+      params.require(:sitemap).permit(:name, :folder_id, :state, :position)
     end
 
     def rename_params
