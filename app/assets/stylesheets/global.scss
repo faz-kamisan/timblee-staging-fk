@@ -408,7 +408,6 @@ input#toggle:checked + label:after {
 .hidden-password::-webkit-input-placeholder {
    color: $primaryFormColor;
    opacity: 1;
-   line-height: 5px;
    font-size: 40px;
    letter-spacing: 1px;
 }
@@ -416,7 +415,6 @@ input#toggle:checked + label:after {
 .hidden-password:-moz-placeholder {
    color: $primaryFormColor;
    opacity: 1;
-   line-height: 5px;
    font-size: 40px;
    letter-spacing: 1px;
 }
@@ -424,7 +422,6 @@ input#toggle:checked + label:after {
 .hidden-password::-moz-placeholder {
    color: $primaryFormColor;
    opacity: 1;
-   line-height: 5px;
    font-size: 40px;
    letter-spacing: 1px;
 }
@@ -432,7 +429,6 @@ input#toggle:checked + label:after {
 .hidden-password:-ms-input-placeholder {
    color: $primaryFormColor;
    opacity: 1;
-   line-height: 5px;
    font-size: 40px;
    letter-spacing: 1px;
 }
