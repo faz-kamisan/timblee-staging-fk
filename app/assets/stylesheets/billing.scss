@@ -166,6 +166,22 @@
   }
 }
 
+#pro-plan-modal {
+  .modal-header {
+    padding-bottom: 30px;
+  }
+  input, button, #confirm-saved-card {
+    @include border-radius(4px!important);
+  }
+  button:not(.close), #confirm-saved-card {
+    background: $transparent;
+    &:hover {
+      color: $primaryWhite;
+      background: $primaryPink!important;
+    }
+  }
+}
+
 #starter-plan-modal {
   .modal-body,
   .modal-header {
