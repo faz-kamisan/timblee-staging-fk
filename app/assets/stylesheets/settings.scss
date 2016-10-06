@@ -926,3 +926,13 @@ label.avatar-label > input[type=radio]:checked + img{
   width: 14px;
   height: 10px;
 }
+
+.remove-image {
+  font-size: 10px;
+  color: #a3acb5;
+  display: inline-block;
+  margin-left: -5px;
+  &:hover {
+    color: $primaryPink;
+  }
+}
