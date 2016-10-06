@@ -122,6 +122,9 @@
   color: $primaryLink;
   top: 43px;
   @extend .font-10;
+  &:hover {
+    color: $primaryPink;
+  }
 }
 
 .settings-form {
@@ -925,28 +928,4 @@ label.avatar-label > input[type=radio]:checked + img{
 .eye {
   width: 14px;
   height: 10px;
-}
-
-.hidden-password {
-  letter-spacing: 2.5px;
-}
-
-.hidden-password::-webkit-input-placeholder {
-  font-size: x-large;
-  opacity: 0.9;
-}
-
-.hidden-password::-moz-placeholder {
-  font-size: x-large;
-  opacity: 0.9;
-}
-
-.hidden-password:-ms-input-placeholder {
-  font-size: x-large;
-  opacity: 0.9;
-}
-
-.hidden-password:-moz-placeholder {
-  font-size: x-large;
-  opacity: 0.9;
 }
