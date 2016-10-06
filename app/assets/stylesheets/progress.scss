@@ -73,17 +73,20 @@
   }
 }
 
-.drag-wrapper {
-  ~ .drag-wrapper {
-    margin-top: 16px;
-  }
-  &.dragging {
-    @include border-radius(6px);
-    background: #f9fafc;
-    border: 1px dashed #aeb6be;
-    .sitemap-card-small {
-      z-index: 2;
+.sitemap-tile {
+  display: block;
+  .drag-wrapper {
+    &.dragging {
+      @include border-radius(6px);
+      background: #f9fafc;
+      border: 1px dashed #aeb6be;
+      .sitemap-card-small {
+        z-index: 2;
+      }
     }
+  }
+  ~ .sitemap-tile {
+    margin-top: 16px;
   }
 }
 

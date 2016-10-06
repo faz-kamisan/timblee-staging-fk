@@ -47,8 +47,8 @@ class DeleteSectionModal extends React.Component {
             </div>
             <div className="modal-body">
               <div className="modal-button text-center">
-                <a href="#" data-dismiss="modal" className="btn btn-red btn-modal-open" onClick={this.deleteSection}>Delete Section</a>
-                <a href="#" data-dismiss="modal" className="btn btn-transparent btn-last btn-modal-open">Cancel</a>
+                <a href="javascript:void(0);" data-dismiss="modal" className="btn btn-red" onClick={this.deleteSection}>Delete Section</a>
+                <a href="javascript:void(0);" data-dismiss="modal" className="btn btn-grey btn-last">Cancel</a>
               </div>
             </div>
           </div>

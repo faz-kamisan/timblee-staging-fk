@@ -26,7 +26,7 @@ class SectionContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(this.props.sections.filter(function(section) {return(section.state == 'active')}).length != nextProps.sections.filter(function(section) {return(section.state == 'active')}).length) {
+    if(this.props.activeSectionLength != nextProps.activeSectionLength) {
       this.setState({currentSectionId: this.getDefaultSectionId(this.props.sections.filter(function(section) {return(section.state == 'active')}))})
     }
   }

@@ -117,7 +117,7 @@ class PageTile extends React.Component {
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber} name={this.props.name} />
           <h1 className="tile-name-edit">
             <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
-            <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' value = {this.state.name} onChange={this.handleNameChange} onBlur={this.disableNameChangeInput} tabindex="0"></textarea>
+            <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' value = {this.state.name} onChange={this.handleNameChange} onBlur={this.disableNameChangeInput}></textarea>
           </h1>
           <ConnectedPageTileBottom pageTree={this.props.pageTree} />
           <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }>
