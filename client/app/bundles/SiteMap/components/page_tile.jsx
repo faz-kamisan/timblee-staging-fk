@@ -118,7 +118,7 @@ class PageTile extends React.Component {
         <div className={"page-tile " + (((this.props.pageTree.level == 0) && (this.props.childrenLength % 2 == 0)) ? 'even-tree' : 'odd-tree') } onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile'>
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber} name={this.props.name} />
           { this.props.pageTree.alt_section_id && !(this.props.level == 0) &&
-            <span onClick={this.showLinkedSection}>section</span>
+            <span className="section-tag" onClick={this.showLinkedSection}>section</span>
           }
           <h1 className="tile-name-edit">
             <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
@@ -183,8 +183,8 @@ class PageTile extends React.Component {
       return (
         <div className="page-tile" onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber}  name={this.props.name} />
-          { this.props.pageTree.alt_section_id &&
-            <span onClick={this.showLinkedSection}>section</span>
+          { this.props.pageTree.alt_section_id && !(this.props.level == 0) &&
+            <span className="section-tag" onClick={this.showLinkedSection}>section</span>
           }
           <h1 className="tile-name-edit">
             <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>

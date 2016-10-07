@@ -48544,7 +48544,7 @@
 	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name }),
 	          this.props.pageTree.alt_section_id && !(this.props.level == 0) && _react2.default.createElement(
 	            'span',
-	            { onClick: this.showLinkedSection },
+	            { className: 'section-tag', onClick: this.showLinkedSection },
 	            'section'
 	          ),
 	          _react2.default.createElement(
@@ -48644,9 +48644,9 @@
 	          'div',
 	          { className: 'page-tile', onMouseOver: this.mouseOver, onMouseOut: this.mouseOut },
 	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name }),
-	          this.props.pageTree.alt_section_id && _react2.default.createElement(
+	          this.props.pageTree.alt_section_id && !(this.props.level == 0) && _react2.default.createElement(
 	            'span',
-	            { onClick: this.showLinkedSection },
+	            { className: 'section-tag', onClick: this.showLinkedSection },
 	            'section'
 	          ),
 	          _react2.default.createElement(
