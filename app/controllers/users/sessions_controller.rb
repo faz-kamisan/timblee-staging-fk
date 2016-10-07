@@ -1,6 +1,6 @@
 class Users::SessionsController < Devise::SessionsController
 
-  before_action :redirect_to_dashboard_if_login
+  before_action :redirect_to_dashboard_if_login, only: [:create]
   skip_before_action :lock_business_after_trial_end, only: [:create, :destroy]
 # before_filter :configure_sign_in_params, only: [:create]
 

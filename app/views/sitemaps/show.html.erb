@@ -1,4 +1,5 @@
 <%= react_component("SitemapApp", props: @sitemap_props, prerender: false) %>
+<% flash.delete(:new_sitemap) %>
 <% unless @sitemap.trial? %>
   <%= render 'users/invite_user_modal' %>
   <%= render 'users/sitemap_share_preview_modal' %>
