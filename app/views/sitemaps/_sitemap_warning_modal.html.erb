@@ -24,7 +24,7 @@
               <%= link_to 'Choose Pro instead', billing_settings_users_path, class: 'btn btn-left' %>
             <% end %>
           </div>
-          <%= form_for Sitemap.new , html: { class: 'warning-right' } do |f| %>
+          <%= form_for Sitemap.new , html: { class: 'warning-right new_sitemap' } do |f| %>
             <%= f.hidden_field :folder_id %>
             <a href="javascript:void(0);" class="new-sitemap-link btn btn-right" data-allow-more-sitemaps= "<%= current_business.allow_more_sitemaps? ? 'yes' : 'no' %>">Choose Starter Plan</a>
           <% end %>
