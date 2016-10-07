@@ -1049,6 +1049,7 @@ label.avatar-label > input[type=radio]:checked + img{
     }
   }
 }
+
 .role-image {
   width: 70px;
   height: 70px;
@@ -1073,4 +1074,32 @@ label.avatar-label > input[type=radio]:checked + img{
   &:hover {
     color: $primaryPink;
   }
+}
+
+.select2-container--default .select2-selection--single {
+  border-color: #ccc;
+}
+
+.business-selector::-webkit-input-placeholder {
+   color: #ececec!important;
+   opacity: 1;
+   font-family: "proxima-nova",sans-serif;
+}
+
+.business-selector:-moz-placeholder {
+   color: #ececec!important;
+   opacity: 1;
+   font-family: "proxima-nova",sans-serif;
+}
+
+.business-selector::-moz-placeholder {
+   color: #ececec!important;
+   opacity: 1;
+   font-family: "proxima-nova",sans-serif;
+}
+
+.business-selector:-ms-input-placeholder {  
+   color: #ececec!important;
+   opacity: 1;
+   font-family: "proxima-nova",sans-serif;
 }

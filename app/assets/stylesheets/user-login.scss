@@ -192,7 +192,7 @@
               font-weight: 400;
               top: -7px;
               left: -7px;
-              color: $primaryBlack;
+              color: $primaryLink;
             }
           }
         }
@@ -205,11 +205,36 @@
 }
 
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
-  background: $primaryPink!important;
+  background: $transparent!important;
+  color: $primaryBlack;
+}
+
+.select2-dropdown {
+  border-color: #d4d4d4;
+  max-height: 230px;
+  overflow-y: auto;
+  @include border-radius(10px);
+  top: -48px;
+  border-top: solid 1px #d4d4d4!important;
+}
+
+#select2-business_id-results li {
+  padding: 10px 12px;
+  + li {
+    border-top: solid 1px #d4d4d4;
+  }
 }
 
 .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
   border: 0!important;
+}
+
+.select2-search.select2-search--dropdown {
+  padding: 0;
+}
+
+.select2-search__field {
+  padding: 10px 12px!important;
 }
 
 .react-sign-up {
@@ -246,6 +271,14 @@
   .modal-heading {
     margin-bottom: 10px;
   }
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field {
+  border-color: #d4d4d4;
+  border-width: 0;
+  border-bottom-width: 1px;
+  height: 45px;
+  color: #ccc!important;
 }
 
 #delete-folder-modal {

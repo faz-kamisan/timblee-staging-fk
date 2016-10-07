@@ -25,5 +25,11 @@
     $(".business-selector").select2({
       placeholder: "Search or select account"
     });
+    $(".business-selector").on("select2:open", function() {
+      $(".select2-search__field").attr("placeholder", "Search for accounts");
+    });
+    $(".business-selector").on("select2:close", function() {
+      $(".select2-search__field").attr("placeholder", null);
+    });
   });
 </script>
