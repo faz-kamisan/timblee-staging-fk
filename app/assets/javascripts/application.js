@@ -37,6 +37,7 @@
 //= require animated-bar
 //= require settings_tabs
 //= require share_modal
+//= require twemoji-picker
 
 $(window).on('load resize', function() {
   if($('.level-0').length) {

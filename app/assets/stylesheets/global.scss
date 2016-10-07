@@ -8,7 +8,6 @@
 
 * {
   -webkit-text-size-adjust: none;
-  -webkit-font-smoothing: antialiased;
 }
 
 body {
@@ -566,4 +565,68 @@ ul.tagit input[type="text"] {
   color: #414952;
   font-size: 14px;
   font-family: "proxima-nova",sans-serif;
+}
+
+.twemoji-textarea {
+  padding: 0!important;
+  border: 0!important;
+  height: 128px!important;
+}
+
+.twemoji-icon-picker img {
+  bottom: -48px!important;
+  top: auto!important;
+  right: 0!important;
+}
+
+#invite-user-modal {
+  .twemoji-picker {
+    width: 160px!important;
+    height: 140px;
+    right: 0;
+    top: -33px;
+    overflow: auto;
+    overflow-x: hidden;
+    .close {
+      display: none;
+    }
+  }
+  .twemoji-picker-category {
+    border-top: solid 1px #ececec!important;
+    span {
+      display: inline-block!important;
+      width: 20%!important;
+      text-align: center;
+    }
+    img {
+      height: 15px!important;
+      padding: 0!important;
+      width: 15px!important;
+      margin-top: 4px!important;
+    }
+  }
+  .twemoji-picker-category {
+    background: $primaryWhite;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
+  .twemoji-list {
+    height: 114px!important;
+  }
+  .twemoji-picker-category .active, .twemoji-picker-category span:hover {
+    border: 0!important;
+  }
+  .twemoji-list img {
+    width: 17px!important;
+    height: 17px!important;
+    padding: 1px!important;
+  }
+}
+
+#invite-user-modal {
+  .emoji-section {
+    margin-top: 28px;
+  }
 }
