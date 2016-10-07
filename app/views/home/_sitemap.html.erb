@@ -59,32 +59,23 @@
             <li>
               <% if current_business.is_starter_plan? && !current_business.in_trial_period? %>
                 <a class="action invite-user-modal-link invite-error-link">
-                  <span class="icon icon-invite-female">
-                    <span class="path1"></span>
-                    <span class="path2"></span>
-                    <span class="path3"></span>
-                    <span class="path4"></span>
-                    <span class="path5"></span>
-                  </span>
-                  <span class="link-text">
-                    Invite a team member
-                  </span>
-                </a>
+              <% elsif !current_business.is_pro_plan? && current_business.in_trial_period? %>
+                <a class="action invite-user-modal-link invite-warning-link">
               <% else %>
                 <% url = current_business.is_pro_plan? ? businesses_subscription_path : users_bulk_invitation_path %>
                 <a data-toggle="modal" class="action invite-user-modal-link invite-link" data-url='<%= url %>'>
-                  <span class="icon icon-invite-female">
-                    <span class="path1"></span>
-                    <span class="path2"></span>
-                    <span class="path3"></span>
-                    <span class="path4"></span>
-                    <span class="path5"></span>
-                  </span>
-                  <span class="link-text">
-                    Invite a team member
-                  </span>
-                </a>
               <% end %>
+                <span class="icon icon-invite-female">
+                  <span class="path1"></span>
+                  <span class="path2"></span>
+                  <span class="path3"></span>
+                  <span class="path4"></span>
+                  <span class="path5"></span>
+                </span>
+                <span class="link-text">
+                  Invite a team member
+                </span>
+              </a>
             </li>
             <li>
               <%= link_to 'javascript:void(0)', class: 'action sitemap-share-modal-link', 'data-url': sitemap_public_share_url(sitemap.public_share_token).gsub(/(?<protocol>http(s?):\/\/)/, '\k<protocol>share.'), 'data-sitemap-id': sitemap.id, 'data-name': sitemap.name, 'data-shared-users': sitemap.sitemap_shared_users.pluck(:user_email).join(',') do %>

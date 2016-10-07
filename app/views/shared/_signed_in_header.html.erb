@@ -99,7 +99,7 @@
       <div class="add-sitemap-tab pull-right header-links new-sitemap">
         <%= form_for Sitemap.new do |f| %>
           <%= f.hidden_field :folder_id %>
-          <a href="javascript:void(0);" class="new-sitemap-link" data-allow-more-sitemaps= "<%= current_business.allow_more_sitemaps? ? 'true' : 'false' %>">
+          <a href="javascript:void(0);" class="new-sitemap-link" data-allow-more-sitemaps= "<%= current_business.allow_more_sitemaps %>">
           <span class="cus-icon-add"></span> <br>
           </a>
         <% end %>
@@ -111,3 +111,4 @@
 <%= javascript_include_tag('sitemaps', 'jump_to', 'notification', 'intercom') %>
 
 <%= render 'sitemaps/sitemap_error_modal'%>
+<%= render 'sitemaps/sitemap_warning_modal'%>
