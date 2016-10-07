@@ -38924,7 +38924,7 @@
 	    return section.id == sectionId;
 	  })[0].pageTree;
 	  var pageTypeCopy = Object.assign({}, pageType);
-	  pageTypeCopy.icon_name = pageTypeCopy.iconName;
+	  pageTypeCopy.icon_name = pageTypeCopy.iconName || pageTypeCopy.icon_name;
 	  delete pageTypeCopy.iconName;
 	  var parentPage = getNodeById(treeCopy, parentId),
 	      parentLevel = parentPage.level;
