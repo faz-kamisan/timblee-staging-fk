@@ -10,7 +10,7 @@ const sitemapSource = {
     return {id: props.pageTree.id, parentId: props.pageTree.parentId, type: 'page', pageTree: props.pageTree, sitemapNumber: props.sitemapNumber};
   },
   canDrag(props, monitor) {
-    return((!props.publicShare) && (props.pageTree.level != 0))
+    return((!props.publicShare) && (props.level != 0))
   }
 };
 
@@ -28,7 +28,6 @@ class DraggedPageContainer extends React.Component {
     connectDragSource: PropTypes.func.isRequired,
     connectDragPreview: PropTypes.func.isRequired,
     isDragging: PropTypes.bool.isRequired,
-    isDefaultSection: PropTypes.bool.isRequired,
     pageTree: PropTypes.object.isRequired,
     sitemapNumber: PropTypes.string.isRequired,
     sitemapId: PropTypes.number.isRequired
@@ -58,24 +57,23 @@ class DraggedPageContainer extends React.Component {
     var children;
     if (this.props.pageTree.children.filter(function(page) { return(page.state != 'archived') }) != null) {
       children = this.props.pageTree.children.filter(function(page) { return(page.state != 'archived') }).map(function(pageTree, index) {
-        if(pageTree.level == 1) {
+        if(_this.props.level == 0) {
           var sitemapNumber = (index + 1).toString() + '.0';
-        } else if(pageTree.level == 2) {
+        } else if(_this.props.level == 1) {
           var sitemapNumber = parseInt(_this.props.sitemapNumber).toString() + '.' + (index + 1);
         } else {
           var sitemapNumber = _this.props.sitemapNumber + '.' + (index + 1)
         }
         return (
           <div className='child-page' key={pageTree.id}>
-            <DraggablePageContainer pageTree={pageTree} onPageDrop={_this.props.onPageDrop} leftSidebarExpanded={_this.props.leftSidebarExpanded} onPageTypeDrop={_this.props.onPageTypeDrop} sitemapId={_this.props.sitemapId} sitemapNumber={sitemapNumber} publicShare={_this.props.publicShare} introSlideNumber={_this.props.introSlideNumber} showNextSlide={_this.props.showNextSlide} isDefaultSection={_this.props.isDefaultSection} />
+            <DraggablePageContainer pageTree={pageTree} onPageDrop={_this.props.onPageDrop} leftSidebarExpanded={_this.props.leftSidebarExpanded} onPageTypeDrop={_this.props.onPageTypeDrop} sitemapId={_this.props.sitemapId} sitemapNumber={sitemapNumber} publicShare={_this.props.publicShare} introSlideNumber={_this.props.introSlideNumber} showNextSlide={_this.props.showNextSlide} level={_this.props.level + 1} />
           </div>
         )
       });
     }
-    // TODO: Have to fix passing of collapse separately.
     return connectDragSource(
       <div className={'page-container-wrapper' + (isDragging ? ' dragging' : '')} >
-        <PageContainer pageTree={this.props.pageTree} children={children} sitemapNumber={this.props.sitemapNumber}  leftSidebarExpanded={this.props.leftSidebarExpanded} introSlideNumber={_this.props.introSlideNumber} showNextSlide={_this.props.showNextSlide} leftSidebarExpanded={_this.props.leftSidebarExpanded} publicShare={_this.props.publicShare} isDefaultSection={_this.props.isDefaultSection} />
+        <PageContainer pageTree={this.props.pageTree} children={children} sitemapNumber={this.props.sitemapNumber}  leftSidebarExpanded={this.props.leftSidebarExpanded} introSlideNumber={_this.props.introSlideNumber} showNextSlide={_this.props.showNextSlide} leftSidebarExpanded={_this.props.leftSidebarExpanded} publicShare={_this.props.publicShare} level={this.props.level} />
       </div>
     );
   }

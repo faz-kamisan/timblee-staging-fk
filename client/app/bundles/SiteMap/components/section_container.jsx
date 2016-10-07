@@ -11,6 +11,7 @@ class SectionContainer extends React.Component {
   constructor(props) {
     super(props);
     this.changeActiveSectionId = this.changeActiveSectionId.bind(this);
+    this.activeSection = this.activeSection.bind(this)
   }
 
   getDefaultSection(sections) {
@@ -25,9 +26,14 @@ class SectionContainer extends React.Component {
     this.props.setSelectedSection(section);
   }
 
+  activeSection() {
+    var _this = this
+    return(this.props.sections.filter(function(section) { return(section.id == _this.props.activeSectionId) })[0])
+  }
+
   componentWillReceiveProps(nextProps) {
     if(this.props.activeSectionLength > nextProps.activeSectionLength) {
-      this.props.changeActiveSectionId(this.getDefaultSection(this.props.sections.filter(function(section) {return(section.state == 'active')})).id)
+      this.props.changeActiveSectionId(this.getDefaultSection(this.props.sections).id)
       // this.setState({activeSectionId: this.getDefaultSection(this.props.sections.filter(function(section) {return(section.state == 'active')})).id})
     }
   }
@@ -37,6 +43,7 @@ class SectionContainer extends React.Component {
     var activeSections = this.props.sections.filter(function(section) {return(section.state == 'active')})
     var tabWidth = (100 / activeSections.length).toString() + '%'
     var defaultSection = this.getDefaultSection(this.props.sections)
+    // var level = (!this.props.isDefaultSection) ? this.props.pageTree.level : this.props.pageTree.level
     var renderedSectionTabs = activeSections.map(function(section, index) {
       return (
         <li key={section.id} className={'sitemap-section-tab' + (_this.props.activeSectionId == section.id ? ' active' : '')} onClick={function(e) { _this.changeActiveSectionId(section.id) } } style={ {width: tabWidth} }>
@@ -47,34 +54,17 @@ class SectionContainer extends React.Component {
         </li>
       )
     })
-    var renderedSections = activeSections.map(function(section, index) {
-      var pageTree = section.default ? section.pageTree : getNodeByAltSectionId(defaultSection.pageTree, section.id)
-      if(!section.default) {
-        pageTree.alt_level = 0
-        traverse(pageTree, function(page) {
-          var parentPage = getNodeById(defaultSection.pageTree, page.parentId)
-          if(parentPage.alt_section_id) {
-            page.level = parentPage.alt_level + 1
-          } else {
-            page.level = parentPage.level + 1
-          }
-        })
-      }
-      return (
-        <div key={section.id} className={'sitemap-section' + (_this.props.activeSectionId == section.id ? ' active' : ' hide')}>
-          <div>
-            <DraggablePageContainer pageTree={pageTree} sitemapNumber='' sitemapId={_this.props.sitemapId} leftSidebarExpanded={_this.props.leftSidebarExpanded} publicShare={_this.props.publicShare} introSlideNumber={_this.props.introSlideNumber} showNextSlide={_this.props.showNextSlide} isDefaultSection={_this.props.activeSectionId == defaultSection.id} />
-          </div>
-        </div>
-      )
-    })
-
+    var pageTree = this.activeSection().default ? this.activeSection().pageTree : getNodeByAltSectionId(defaultSection.pageTree, this.activeSection().id)
     return (
       <div className={'sitemap-sections' + (this.props.trial ? ' trial' : '')}>
         <ul className={"section-list clearfix" + ((!this.props.publicShare && this.props.leftSidebarExpanded) ? ' left-bar-expanded' : ' left-bar-contracted') + (this.props.publicShare ? ' public-share' : '')}>
           {renderedSectionTabs}
         </ul>
-        {renderedSections}
+        <div className='sitemap-section'>
+          <div>
+            <DraggablePageContainer pageTree={pageTree} sitemapNumber='' sitemapId={_this.props.sitemapId} leftSidebarExpanded={_this.props.leftSidebarExpanded} publicShare={_this.props.publicShare} introSlideNumber={_this.props.introSlideNumber} showNextSlide={_this.props.showNextSlide} level={0} />
+          </div>
+        </div>
       </div>
     );
   }

@@ -10,8 +10,13 @@ class DeleteSectionModal extends React.Component {
     this.deleteSection = this.deleteSection.bind(this);
   }
 
+  getDefaultSection(sections) {
+    return(sections.filter(function(section) { return section.default })[0])
+  }
+
   deleteSection(e) {
     var _this = this
+    this.props.changeActiveSectionId(this.getDefaultSection(this.props.sections).id)
     this.props.removeSection(this.props.section.id)
     $.ajax({
       url: '/sections/' + this.props.section.id,
@@ -43,7 +48,7 @@ class DeleteSectionModal extends React.Component {
               </button>
               <h4 className="modal-title">Delete section</h4>
               <p className="modal-message">{'Are you sure you want to delete this section: ' + this.props.section.name}</p>
-              <p className="modal-message">All pages in this section will be deleted and their comments will be archived.</p>
+              <p className="modal-message">The page linked to section will still be present in the Default section.</p>
             </div>
             <div className="modal-body">
               <div className="modal-button text-center">

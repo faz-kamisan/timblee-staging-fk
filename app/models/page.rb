@@ -11,7 +11,7 @@ class Page < ActiveRecord::Base
 
   before_validation :set_uid, on: :create, unless: :uid
   before_update :update_children_section_id, if: :alt_section_id_changed?
-  before_update :archive_children_pages, if: :state_changed?
+  before_update :archive_children_pages_and_delete_section, if: :state_changed?
 
   validates :name, :page_type, :sitemap, :uid, presence: true
   validates :section, presence: true, unless: :footer?
@@ -61,10 +61,14 @@ class Page < ActiveRecord::Base
       end
     end
 
-    def archive_children_pages
+    def archive_children_pages_and_delete_section
       if(state == 'archived')
         children.each do |child|
           child.update(state: 'archived')
+        end
+        if(alt_section_id.present?)
+          sitemap.sections.find_by(id: alt_section_id).delete
+          self.alt_section_id = nil
         end
       end
     end

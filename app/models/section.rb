@@ -12,7 +12,7 @@ class Section < ActiveRecord::Base
 
   before_update :archive_pages, if: :state_changed?
 
-  before_destroy :destroy_root_page
+  before_destroy :unlink_root_page
 
   def duplicate(duplicate_sitemap)
     duplicate = dup
@@ -50,7 +50,7 @@ class Section < ActiveRecord::Base
       end
     end
 
-  def destroy_root_page
-    root_page.destroy
+  def unlink_root_page
+    root_page.update(alt_section_id: nil)
   end
 end
