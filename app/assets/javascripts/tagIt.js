@@ -34,20 +34,21 @@ TagIt.prototype.successCallbackForTagAdd = function(data, ui) {
   var _this = this;
   if(data.existing_email){
     ui.tag.addClass("invalid-tag");
-    if (_this.myTags.find('.valid-tag').length == 0){
-      _this.errorsDiv.show();
-      _this.errorsDiv.html('All email(s) you entered here are already present in our database.')
-    }
   } else {
     ui.tag.addClass("valid-tag");
     var numberOfUsers = parseInt(_this.addedProUsersCount.data('total-users-count')) + 1,
       numberOfAddedUsers = parseInt(_this.addedProUsersCount.html()) + 1,
       monthlyCharge = (CHARGE_FOR_OWNER + (CHARGE_FOR_OTHER_USERS * (numberOfUsers - 1)));
+      if(numberOfAddedUsers == 1){
+        numberOfAddedUsers += ' user'
+      }else {
+        numberOfAddedUsers += ' users'
+      }
     _this.addedProUsersCount.data('total-users-count', numberOfUsers);
     _this.addedProUsersCount.html(numberOfAddedUsers);
     _this.newProCharges.html(monthlyCharge);
-    _this.errorsDiv.hide();
   }
+  _this.add_errors();
 };
 
 TagIt.prototype.afterTagRemoved = function(event, ui) {
@@ -56,20 +57,35 @@ TagIt.prototype.afterTagRemoved = function(event, ui) {
     var numberOfUsers = parseInt(_this.addedProUsersCount.data('total-users-count')) - 1,
       numberOfAddedUsers = parseInt(_this.addedProUsersCount.html()) - 1,
       monthlyCharge = (CHARGE_FOR_OWNER + (CHARGE_FOR_OTHER_USERS * (numberOfUsers - 1)));
+      if(numberOfAddedUsers == 1){
+        numberOfAddedUsers += ' user'
+      }else {
+        numberOfAddedUsers += ' users'
+      }
     _this.addedProUsersCount.html(numberOfAddedUsers);
     _this.addedProUsersCount.data('total-users-count', numberOfUsers);
     _this.newProCharges.html(monthlyCharge);
   }
-  if (_this.myTags.find('.valid-tag').length == 0){
-    _this.errorsDiv.show();
-    _this.errorsDiv.html('All email(s) you entered here are already present in our database.')
-  }
+  _this.add_errors();
 
   if(_this.myTags.tagit('assignedTags').length == 0) {
     _this.myTags.data("ui-tagit").tagInput.attr('placeholder', 'Enter their emails seperated by commas.')
     _this.errorsDiv.hide();
   }
 
+};
+
+TagIt.prototype.add_errors = function() {
+  var _this = this;
+  if (_this.myTags.find('.valid-tag').length == 0 && _this.myTags.find('.invalid-tag').length != 0){
+    _this.errorsDiv.show();
+    _this.errorsDiv.html('All email(s) you entered here are already present in our database.')
+  } else if(_this.myTags.find('.invalid-tag').length != 0) {
+    _this.errorsDiv.show();
+    _this.errorsDiv.html('Some email(s) you entered here are already present in our database.')
+  } else {
+    _this.errorsDiv.hide();
+  }
 };
 
 TagIt.prototype.bindEvents = function() {

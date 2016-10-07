@@ -1,5 +1,6 @@
 class SuperAdmin::MainController < ApplicationController
 
+  skip_before_action :lock_business_after_trial_end
   before_action :check_user_is_super_admin
   before_action :fetch_business, only: [:impersonate]
 

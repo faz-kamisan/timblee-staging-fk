@@ -14,16 +14,6 @@ AnimateTab.prototype.calcuate = function($this) {
   }
 };
 
-AnimateTab.prototype.checkOnLoad = function($this) {
-  var _this = this;
-  if(($this.is(':first-child')) && ($this.hasClass('active'))) {
-    _this.animatedBar.animate({left: $this.position().left, width: $this.outerWidth() }, 200);
-  }
-  else if($this.hasClass('active')) {
-    _this.animatedBar.animate({left: $this.position().left + _this.listItemMargin, width: $this.outerWidth() }, 200);
-  }
-};
-
 AnimateTab.prototype.move = function() {
   var _this = this;
   if(this.animatedTab.length) {
@@ -33,26 +23,23 @@ AnimateTab.prototype.move = function() {
   }
 };
 
-AnimateTab.prototype.bindEvents = function() {
-  this.checkOnLoad(this.animatedTab);
-  this.move();
-};
-
 $(window).on('load', function() {
-  var tab = $('.animated-tab'),
+  var shareTab = $('.share-method-tabs .animated-tab'),
+      commentTab = $('.comment-list .animated-tab'),
+      settingsTab = $('.nav-tabs .animated-tab'),
       options = {
-        animatedTab: tab,
-        animatedBar: tab.siblings('.animated-bar-react'),
+        animatedTab: commentTab,
+        animatedBar: commentTab.siblings('.animated-bar-react'),
         listItemMargin: 33
       },
       optionsSettings = {
-        animatedTab: tab,
-        animatedBar: tab.siblings('.animated-bar-rails'),
+        animatedTab: settingsTab,
+        animatedBar: settingsTab.siblings('.animated-bar-rails'),
         listItemMargin: 27
       },
       optionsShare = {
-        animatedTab: tab,
-        animatedBar: tab.siblings('.animated-bar-share'),
+        animatedTab: shareTab,
+        animatedBar: shareTab.siblings('.animated-bar-share'),
         listItemMargin: 0
       },
       animateTab = new AnimateTab(options);
@@ -60,6 +47,6 @@ $(window).on('load', function() {
       animateTabShare = new AnimateTab(optionsShare);
 
   animateTab.move();
-  animateTabSettings.bindEvents();
+  animateTabSettings.move();
   animateTabShare.move();
 });

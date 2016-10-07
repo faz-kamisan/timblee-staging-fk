@@ -36,6 +36,7 @@ Rails.application.config.assets.precompile += %w(
   production_hotjar.js
   staging_hotjar.js
   notification.js
+  intercom.js
   dragula.min.js
   dragula.min.css
 )

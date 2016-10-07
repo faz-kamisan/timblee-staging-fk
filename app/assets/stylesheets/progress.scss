@@ -15,6 +15,13 @@
     padding: 43px 0 60px 0;
     display: table;
     width: 100%;
+    .sitemap-tile.gu-transit {
+      opacity: 1;
+      .sitemap-card-small.draggable_sitemap {
+        background: #f9fafc;
+        border: 1px dashed #aeb6be;
+      }
+    }
   }
 
   .drag-me {
@@ -154,3 +161,5 @@
     height: 105px;
   }
 }
+
+

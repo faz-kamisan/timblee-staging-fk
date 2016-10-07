@@ -47,11 +47,11 @@
       <%= render 'shared/signed_in_header' %>
   <% end %>
 
+  <%= yield %>
+
   <div class= 'flash-message'>
     <%= render 'shared/flash_message.html.erb' %>
   </div>
-
-  <%= yield %>
 
 </body>
 </html>

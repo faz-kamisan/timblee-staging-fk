@@ -408,21 +408,29 @@ input#toggle:checked + label:after {
 .hidden-password::-webkit-input-placeholder {
    color: $primaryFormColor;
    opacity: 1;
+   font-size: 40px;
+   letter-spacing: 1px;
 }
 
 .hidden-password:-moz-placeholder {
    color: $primaryFormColor;
    opacity: 1;
+   font-size: 40px;
+   letter-spacing: 1px;
 }
 
 .hidden-password::-moz-placeholder {
    color: $primaryFormColor;
    opacity: 1;
+   font-size: 40px;
+   letter-spacing: 1px;
 }
 
 .hidden-password:-ms-input-placeholder {
    color: $primaryFormColor;
    opacity: 1;
+   font-size: 40px;
+   letter-spacing: 1px;
 }
 
 .modal.in .modal-dialog,
@@ -543,4 +551,19 @@ input#toggle:checked + label:after {
 
 .wf-inactive {
   visibility: visible;
+}
+
+.trial-starter-user-on-switch-plan {
+  padding: 0 35px;
+}
+
+ul.tagit {
+  max-height: 100px;
+  overflow: auto;
+}
+
+ul.tagit input[type="text"] {
+  color: #414952;
+  font-size: 14px;
+  font-family: "proxima-nova",sans-serif;
 }
