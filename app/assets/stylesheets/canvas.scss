@@ -294,16 +294,16 @@
         background: #d5d7da;
         content: ' ';
         position: absolute;
-        bottom: -75px;
+        bottom: -70px;
         left: 50%;
         width: 1px;
-        height: 75px;
+        height: 70px;
         z-index: 2;
       }
       &.even-tree {
         &:after {
           background: #d5d7da;
-          bottom: -124px;
+          bottom: -118px;
           content: " ";
           height: 49px;
           left: 50%;
@@ -3512,4 +3512,18 @@ body.trial {
     top: 140px;
     z-index: 1;
   }
+}
+
+.section-tag {
+  background: #E8E8E8;
+  font-size: 8px;
+  text-transform: uppercase;
+  color: $primaryBlack;
+  top: 10px;
+  @include border-radius(4px);
+  padding: 2px 5px;
+  cursor: pointer;
+  position: absolute;
+  font-weight: 600;
+  left: 40px;
 }
