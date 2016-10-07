@@ -40,7 +40,7 @@
             </div>
           </div>
           <div class="col-xs-6 text-center">
-            <h3>You're adding <span class='added-pro-users-count' data-total-users-count=<%= current_business.users.count %>>0</span> user</h3>
+            <h3>You're adding <span class='added-pro-users-count' data-total-users-count=<%= current_business.users.count %>>0 <%='user'.pluralize(current_business.users.count)%></span></h3>
             <% if current_business.is_pro_plan? %>
               <% if current_business.in_trial_period? %>
                 <p>On <%= current_business.trial_end_at.strftime('%d %b %Y') %>, once your <br> trial finishes, your card ending in <span class='card-last4'><%= @card.last4 %></span> will be charged:</p>
