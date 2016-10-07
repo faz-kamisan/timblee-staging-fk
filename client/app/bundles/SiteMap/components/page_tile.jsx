@@ -23,7 +23,7 @@ class PageTile extends React.Component {
     this.closeOverLay = this.closeOverLay.bind(this);
     this.openOverLay = this.openOverLay.bind(this);
     this.setSelectedPage = this.setSelectedPage.bind(this);
-    this.state = { nameChangeDisabled: !props.pageTree.newRecord, hover: false, showOverLay: false, name: this.props.name, originalName: this.props.name }
+    this.state = { nameChangeDisabled: !props.pageTree.newRecord, hover: false, showOverLay: false, name: this.props.name, originalName: this.props.name, counter: 0 }
   }
 
   enableNameChangeInput(e) {
@@ -85,7 +85,7 @@ class PageTile extends React.Component {
   }
 
   openOverLay(e) {
-    this.setState({showOverLay: true})
+    this.setState({showOverLay: true, counter: (this.state.counter + 1)})
   }
 
   mouseOver(e) {
@@ -101,6 +101,10 @@ class PageTile extends React.Component {
   }
 
   componentDidMount() {
+    var _this = this;
+    $('.page-change-modal').on('hidden.bs.modal', function () {
+      _this.setState({showOverLay: false})
+    });
     if(this.props.pageTree.newRecord) {
       this.refs.nameInput.focus();
     }
@@ -109,7 +113,7 @@ class PageTile extends React.Component {
   render() {
     if(this.props.childrenLength > 0) {
       return (
-        <div className={"page-tile " + (((this.props.pageTree.level == 0) && (this.props.childrenLength % 2 == 0)) ? 'even-tree' : 'odd-tree') } onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
+        <div className={"page-tile " + (((this.props.pageTree.level == 0) && (this.props.childrenLength % 2 == 0)) ? 'even-tree' : 'odd-tree') } onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile'>
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber} name={this.props.name} />
           <h1 className="tile-name-edit">
             <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
@@ -129,7 +133,7 @@ class PageTile extends React.Component {
                   </span>
                 </li>
               }
-              { this.props.trial &&
+              { !this.props.trial &&
                 <li className="second-item">
                   <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'>
                     <span className="card-tooltip">View Comments</span>
@@ -142,7 +146,7 @@ class PageTile extends React.Component {
             <div className="close-card-overlay">
               <a href="javascript:void(0)" className="icon-close" onClick={this.closeOverLay}></a>
             </div>
-            { this.props.trial &&
+            { !this.props.trial &&
               <a href="#page-comments-modal" className="icon-page-comments" onClick={this.setSelectedPage} data-toggle='modal'>
                 <span className="card-tooltip">View Comments</span>
               </a>
@@ -188,7 +192,7 @@ class PageTile extends React.Component {
                   </span>
                 </li>
               }
-              { this.props.trial &&
+              { !this.props.trial &&
                 <li className="second-item">
                   <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'>
                     <span className="card-tooltip">View Comments</span>
@@ -201,7 +205,7 @@ class PageTile extends React.Component {
             <div className="close-card-overlay">
               <a href="javascript:void(0)" className="icon-close" onClick={this.closeOverLay}></a>
             </div>
-            { this.props.trial &&
+            { !this.props.trial &&
               <a href="#page-comments-modal" className="icon-page-comments" onClick={this.setSelectedPage} data-toggle='modal'>
                 <span className="card-tooltip">View Comments</span>
               </a>

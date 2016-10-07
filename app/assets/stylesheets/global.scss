@@ -6,6 +6,11 @@
   text-decoration: none!important;
 }
 
+* {
+  -webkit-text-size-adjust: none;
+  -webkit-font-smoothing: antialiased;
+}
+
 body {
   background: $pageBackground;
   font-family: "proxima-nova",sans-serif;
@@ -403,21 +408,29 @@ input#toggle:checked + label:after {
 .hidden-password::-webkit-input-placeholder {
    color: $primaryFormColor;
    opacity: 1;
+   font-size: 40px;
+   letter-spacing: 1px;
 }
 
 .hidden-password:-moz-placeholder {
    color: $primaryFormColor;
    opacity: 1;
+   font-size: 40px;
+   letter-spacing: 1px;
 }
 
 .hidden-password::-moz-placeholder {
    color: $primaryFormColor;
    opacity: 1;
+   font-size: 40px;
+   letter-spacing: 1px;
 }
 
 .hidden-password:-ms-input-placeholder {
    color: $primaryFormColor;
    opacity: 1;
+   font-size: 40px;
+   letter-spacing: 1px;
 }
 
 .modal.in .modal-dialog,

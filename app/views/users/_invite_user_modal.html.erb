@@ -21,15 +21,19 @@
             <ul id="myTags" data-url='<%= validate_unique_email_users_path %>'>
             </ul>
             <div class='tags-error error-message'></div>
+            <div class="invite-message-preview hidden">
+              <p></p>
+              <a class='edit-message-link'>Edit Message</a>
+            </div>
             <div class="optional-message-container">
               <div class="optional-message">
                 <%= form_tag (current_business.is_pro_plan? ? businesses_subscription_path : users_bulk_invitation_path), { method: :post, class: 'bulk-invitation-form'} do %>
                   <%= hidden_field_tag :stripe_plan_id %>
                   <%= text_field_tag :email, nil, { autofocus: true, class: 'bulk-invite-emails-input hidden' } %>
-                  <%= text_area_tag :custom_message, nil, { class: 'form-control clear-field invite-custom-message', placeholder: 'Include an optional personal message.', 'data-send' => false } %>
+                  <%= text_area_tag :custom_message, nil, { class: 'form-control clear-field invite-custom-message invite-personal-message emoji-decorated', placeholder: 'Include an optional personal message.', 'data-send' => false } %>
                   <div class="emoji-section">
-                    <a href="#" class="add-message">Add my message</a>
-                    <a href="javascript:void(0);" class="clear-text hidden clear-custom-message">Cancel</a>
+                    <a href="#" class="add-message add-invite-message">Add my message</a> or
+                    <a href="javascript:void(0);" class="clear-text clear-custom-message"> Cancel</a>
                   </div>
                 <% end %>
               </div>

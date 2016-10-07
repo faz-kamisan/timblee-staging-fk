@@ -2,7 +2,7 @@
   <div class='sitemap_wrapper'>
     <div class="sitemap-container" data-id=<%= sitemap.id %> data-folder-id=<%= sitemap.folder_id %>>
       <div class="site-card">
-        <% if sitemap.comments.exists? %>
+        <% if sitemap.comments.exists? || Comment.where(commentable_type: 'Page', commentable_id: sitemap.pages.pluck(:id)).exists? %>
           <span class='state'></span>
         <% end %>
         <div class="saved-sitemap-name">
@@ -78,7 +78,7 @@
               </a>
             </li>
             <li>
-              <%= link_to 'javascript:void(0)', class: 'action sitemap-share-modal-link', 'data-url': sitemap_public_share_url(sitemap.public_share_token).gsub(/(?<protocol>http(s?):\/\/)/, '\k<protocol>share.'), 'data-sitemap-id': sitemap.id, 'data-name': sitemap.name do %>
+              <%= link_to 'javascript:void(0)', class: 'action sitemap-share-modal-link', 'data-url': sitemap_public_share_url(sitemap.public_share_token).gsub(/(?<protocol>http(s?):\/\/)/, '\k<protocol>share.'), 'data-sitemap-id': sitemap.id, 'data-name': sitemap.name, 'data-shared-users': sitemap.sitemap_shared_users.pluck(:user_email).join(',') do %>
                 <span class="icon icon-share-circle"></span>
                 <span class="link-text">Share</span>
               <% end %>

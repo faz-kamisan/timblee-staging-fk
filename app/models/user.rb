@@ -19,6 +19,8 @@ class User < ActiveRecord::Base
   before_update :restrict_owner_role_update, if: :is_admin_changed?
   after_update :mail_user_about_role_update, if: :is_admin_changed?
   after_create :add_default_avatar
+  after_create :track_user, unless: :created_by_invite?
+  after_invitation_accepted :confirm_user, :track_user
 
   strip_fields :full_name
 
@@ -70,16 +72,20 @@ class User < ActiveRecord::Base
     }
   end
 
-  def active_for_authentication?
-    admin_access || super
-  end
-
   protected
     def confirmation_period_valid?
       self.class.allow_unconfirmed_access_for.nil? || (created_at && created_at.utc >= self.class.allow_unconfirmed_access_for.ago)
     end
 
   private
+
+    def confirm_user
+      self.confirm!
+    end
+
+    def track_user
+      Analytics.new(self).track_user_sign_up
+    end
 
     def minimum_image_size
       image = MiniMagick::Image.open(avatar.path)

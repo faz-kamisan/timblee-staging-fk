@@ -5,6 +5,9 @@ var Invitations = function(options) {
   this.inviteCustomMessage = options.inviteCustomMessage;
   this.addMessageLink = options.addMessageLink;
   this.clearMessageLink = options.clearMessageLink;
+  this.messagePreview = options.messagePreview;
+  this.editMessageLink = options.editMessageLink;
+  this.commentInputDiv = options.commentInputDiv;
 };
 
 Invitations.prototype.bindEvents = function() {
@@ -23,15 +26,21 @@ Invitations.prototype.bindEvents = function() {
   this.addMessageLink.on('click', function() {
     if(_this.inviteCustomMessage.val().trim().length > 0) {
       _this.inviteCustomMessage.data('send', true);
-      $(this).addClass('hidden');
-      _this.clearMessageLink.removeClass('hidden');
+      _this.messagePreview.find('p:first').html(_this.inviteCustomMessage.val().trim())
+      _this.messagePreview.removeClass('hidden')
+      _this.commentInputDiv.addClass('hidden')
     }
   })
   this.clearMessageLink.on('click', function() {
     _this.inviteCustomMessage.data('send', false);
     _this.inviteCustomMessage.val('');
-    $(this).addClass('hidden');
-    _this.addMessageLink.removeClass('hidden');
+    _this.messagePreview.find('p:first').html('')
+  })
+  this.editMessageLink.on('click', function() {
+    _this.inviteCustomMessage.data('send', false);
+    _this.messagePreview.find('p:first').html('')
+    _this.messagePreview.addClass('hidden')
+    _this.commentInputDiv.removeClass('hidden')
   })
 };
 
@@ -41,8 +50,11 @@ $(function() {
     inviteForm: $('.bulk-invitation-form'),
     inviteEmailsInput: $('.bulk-invite-emails-input'),
     inviteCustomMessage: $('.invite-custom-message'),
-    addMessageLink: $('.add-message'),
-    clearMessageLink: $('.clear-custom-message')
+    addMessageLink: $('.add-invite-message'),
+    clearMessageLink: $('.clear-custom-message'),
+    messagePreview: $('.invite-message-preview'),
+    editMessageLink: $('.edit-message-link'),
+    commentInputDiv: $('.optional-message-container')
   }
   var invitations = new Invitations(options);
   invitations.bindEvents();

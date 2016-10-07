@@ -36,7 +36,7 @@ class InviteUserBox extends React.Component {
   }
 
   cancelMessageEditing(e) {
-    this.setState({ customMessage: '', customMessage: this.state.lastFinalisedMessage });
+    this.setState({ customMessage: '', lastFinalisedMessage: '' });
   }
 
   afterTagAdded(event, ui) {
@@ -93,7 +93,9 @@ class InviteUserBox extends React.Component {
           <input type='text' name='emails' id='emails' ref='emails'></input>
         </div>
         <div className="already-emailed">
-          <p>These people have already been emailed</p>
+          { (this.props.sharedUsers.length > 0) &&
+            <p>These people have already been emailed</p>
+          }
           <ul>
             {renderdsharedUsers}
           </ul>
@@ -112,7 +114,7 @@ class InviteUserBox extends React.Component {
         }
         { this.state.messageEditorActivated &&
           <div key='lower' className="comment-input">
-            <textarea value={this.state.customMessage} placeholder='Include an optional personal message.' onChange={this.handleOnCustomMessageChange}></textarea>
+            <textarea value={this.state.customMessage} placeholder='Include an optional personal message.' ref='customMessage' onChange={this.handleOnCustomMessageChange}></textarea>
             <div className="add-remove-comment">
               <a className="cursor add" onClick={this.deactivateMessageEditor}>Add message</a>
               <span className="or"> or</span>

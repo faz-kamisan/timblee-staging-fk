@@ -36,34 +36,37 @@ class UserSignupModal extends React.Component {
   render() {
     var _this = this;
     return (
-      <div className="modal fade" id="user-signup-modal" tabIndex="-1" role="dialog" aria-labelledby="user-signup-modalLabel">
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header text-center">
-              <p className="modal-message">Save and share your sitemap, and try timblee free for 30 days with no restrictions.</p>
+      <div className="modal fade react-sign-up" id="user-signup-modal" tabIndex="-1" role="dialog" aria-labelledby="user-signup-modalLabel">
+        <div className="modal-body user-entry registration-page text-center">
+          <div className="logo">
+            <img className="logo-inner" src="/assets/Timblee-icon.svg"></img>
+          </div>
+          <h1 className="modal-heading">
+            Save and share your sitemap, and try timblee free for <br/> 30 days with no restrictions.
+          </h1>
+          <p className="small">
+            No credit card required. Invite unlimited team <br/> members to try it out with you.
+          </p>
+          <div className="user-form">
+            <div className="form-group">
+              <input type='text' placeholder='Your name' ref='nameInput' className='form-control'></input>
+              <div className='error-div name-error' dangerouslySetInnerHTML={this.createMarkup(this.state.nameError)} />
+            </div> 
+            <div className="form-group">
+              <input type='email' placeholder='Your work email' ref='emailInput' className='form-control'></input>
+              <div className='error-div email-error' dangerouslySetInnerHTML={this.createMarkup(this.state.emailError)} />
+            </div> 
+            <div className="form-group">
+              <input type='password' placeholder='Choose a password' ref='passwordInput' className='form-control'></input>
+              <div className='error-div password-error' dangerouslySetInnerHTML={this.createMarkup(this.state.passwordError)} />
+            </div>  
+            <div className="form-group">
+              <a href="javascript:void(0);" className="btn btn-pink btn-block" onClick={this.signup}>SIGN UP FOR FREE </a>
             </div>
-            <div className="modal-body">
-              <p>
-                No credit card required. Invite unlimited team members to try it out with  you.
-              </p>
-              <div className='signup-fields'>
-                <input type='text' placeholder='Your name' ref='nameInput' className='form-control'></input>
-                 <div className='error-div name-error' dangerouslySetInnerHTML={this.createMarkup(this.state.nameError)} />
-                <input type='email' placeholder='Your work email' ref='emailInput' className='form-control'></input>
-                <div className='error-div email-error' dangerouslySetInnerHTML={this.createMarkup(this.state.emailError)} />
-                <input type='password' placeholder='Choose a password' ref='passwordInput' className='form-control'></input>
-                 <div className='error-div password-error' dangerouslySetInnerHTML={this.createMarkup(this.state.passwordError)} />
-              </div>
-              <div className="modal-button text-center">
-                <a href="#" className="btn btn-red btn-modal-open" onClick={this.signup}>SIGN UP FOR FREE</a>
-              </div>
-              <p>
-                Already signed up? <a href='/log-in'>Log in here.</a>
-              </p>
-              <p>
-                By signing up, you agree to our plain English <a href='javascript:void(0)'>terms.</a>
-              </p>
-            </div>
+            <p className="go-to-login">
+              Already signed up? <a href='/log-in' className="link"> Log in here.</a>
+            </p>
+            <p className="go-to-terms">By signing up, you agree to our plain English <a href='http://timblee.io/terms' className="link">terms.</a></p>
           </div>
         </div>
       </div>

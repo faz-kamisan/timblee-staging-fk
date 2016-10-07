@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { createNewSection, changeUpdatedAt, setSaving } from '../actions'
+import { createNewSection, updateSectionId, changeUpdatedAt, setSaving } from '../actions'
 import NewSectionModal from '../components/new_section_modal'
 
 const mapStateToProps = (state) => {
@@ -10,6 +10,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onCreateSection: (pageTree, sectionName, timeStamp) => {
       dispatch(createNewSection(pageTree.id, pageTree.section_id, sectionName, timeStamp))
+    },
+    onSectionIdUpdate: (oldId, newId) => {
+      dispatch(updateSectionId(oldId, newId));
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));

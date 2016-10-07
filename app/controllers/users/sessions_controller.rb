@@ -1,4 +1,6 @@
 class Users::SessionsController < Devise::SessionsController
+
+  before_action :redirect_to_dashboard_if_login
   skip_before_action :lock_business_after_trial_end, only: [:create, :destroy]
 # before_filter :configure_sign_in_params, only: [:create]
 
@@ -23,6 +25,11 @@ class Users::SessionsController < Devise::SessionsController
     respond_with resource, location: after_sign_in_path_for(resource)
   end
 
+  private
+
+  def redirect_to_dashboard_if_login
+    redirect_to after_sign_in_path_for(resource) if user_signed_in?
+  end
 
   # DELETE /resource/sign_out
   # def destroy

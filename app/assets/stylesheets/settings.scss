@@ -37,7 +37,7 @@
 .settings {
   width: 620px;
   margin: 0 auto;
-  padding: 100px 0;
+  padding: 50px 0;
 
   .form-group {
     margin-bottom: 0;
@@ -114,7 +114,7 @@
   }
 }
 
-.resend {
+.resend, .delete-image {
   position: absolute;
   right: 15px;
   width: 110px;
@@ -122,6 +122,9 @@
   color: $primaryLink;
   top: 43px;
   @extend .font-10;
+  &:hover {
+    color: $primaryPink;
+  }
 }
 
 .settings-form {
@@ -371,6 +374,33 @@ ul.tagit li.tagit-choice-editable {
   }
 }
 
+.invite-message-preview {
+  position: relative;
+  padding-top: 55px;
+  margin-bottom: 85px;
+  p {
+    color: #a3acb5;
+    @extend .font-14;
+    padding-bottom: 15px;
+  }
+  a {
+    color: $primaryBlack;
+    font-size: 12px;
+    cursor: pointer;
+    &:hover {
+      color: $primaryPink;
+    }
+  }
+}
+
+.twemoji-textarea {
+  height: 120px;
+  padding: 15px;
+  border: 1px solid #d4d4d4;
+  @include border-radius(6px);
+  background: $primaryWhite;
+}
+
 #invite-user-modal {
   .modal-button {
     padding-top: 30px;
@@ -519,7 +549,7 @@ ul.tagit li.tagit-choice-editable {
   height: 175px;
   padding: 10px;
   width: 160px;
-  background: #fff;
+  background: #f9fafc;
   color: #a3acb5;
   text-align: center;
   text-transform: uppercase;
@@ -530,11 +560,25 @@ ul.tagit li.tagit-choice-editable {
   z-index: 1;
 }
 
-.role-standard {
-  margin-right: 17px;
-}
-
 .role {
+  position: relative;
+  .role-check {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    z-index: 1;
+    width: 14px;
+    height: auto;
+    @include animate(.25s);
+    @include scale(0);
+  }
+  h4 {
+    font-size: 12px;
+    color: #a3acb5;
+    font-weight: 400;
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
   width: 160px;
   display: inline-block;
   position: relative;
@@ -550,10 +594,35 @@ ul.tagit li.tagit-choice-editable {
     top: 0;
     cursor: pointer;
     &:checked {
-      + .cus-radio {
+      + .role-check {
+        @include scale(1);
+      }
+      ~ .cus-radio {
         background: transparent;
         border: 1px solid #d6d8da;
         color: #25a45f;
+        h4 {
+          color: #25a45f;
+        }
+      }
+    }
+  }
+}
+
+.role-select-cancel {
+  margin-top: 5px!important;
+}
+
+.role-standard {
+  margin-right: 17px;
+}
+
+.role-standard,
+.role-admin {
+  input {
+    &:checked {
+      ~ .cus-radio .role-image {
+        background-position: 0 -72px;
       }
     }
   }
@@ -978,5 +1047,30 @@ label.avatar-label > input[type=radio]:checked + img{
     .warning-right {
       margin-left: 10px;
     }
+  }
+}
+.role-image {
+  width: 70px;
+  height: 70px;
+  background: url('/assets/standard-role.png');
+  background-size: 70px;
+  display: inline-block;
+  @include animate(.25s);
+}
+
+.role-admin {
+  .role-image {
+    background: url('/assets/admin-role.png');
+    background-size: 70px;
+  }
+}
+
+.remove-image {
+  font-size: 10px;
+  color: #a3acb5;
+  display: inline-block;
+  margin-left: -5px;
+  &:hover {
+    color: $primaryPink;
   }
 }

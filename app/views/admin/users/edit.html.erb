@@ -22,7 +22,7 @@
                     <h3 class="team-member-name">
                       <%= f.text_field :full_name, disabled: true, class: 'editable-input', 'data-original-value' => f.object.full_name %>
                     </h3>
-                    <span class="active-since">Active user since <%= pretty_time(@user.invitation_accepted_at || @user.created_at) %></span>
+                    <span class="active-since">Active user since <%= pretty_time(@user.invitation_accepted_at || @user.created_at)%>.</span>
                   </div>
                 </div>
               </div>
@@ -107,14 +107,22 @@
               <div class="col-xs-12 text-center user-roles-input" data-original-role=<%= f.object.is_admin? %>>
                 <div class="role role-standard">
                   <%= f.radio_button :is_admin, false, checked: !f.object.is_admin, class: 'editable-input', disabled: true %>
+                  <%= image_tag('grren-check.png', class: 'role-check') %>
                   <div class="cus-radio">
-                    Standard
+                    <div class="role-image">
+                        
+                    </div>
+                    <h4>Standard</h4>
                   </div>
                 </div>
                 <div class="role role-admin">
                   <%= f.radio_button :is_admin, true, checked: f.object.is_admin, class: 'editable-input', disabled: true %>
+                  <%= image_tag('grren-check.png', class: 'role-check') %>
                   <div class="cus-radio">
-                    Admin
+                    <div class="role-image">
+                        
+                    </div>
+                    <h4>Admin</h4>
                   </div>
                 </div>
               </div>

@@ -27,3 +27,14 @@ From web-app Root
 * Start redis-server.
 
 * Start sidekiq server.
+
+
+TIMBLEE CLIENT SIDE REACT README
+
+To start the project:
+* Clone the project.
+$ cd client/
+$ npm i
+$ node_modules/.bin/webpack -d
+
+# This will compile a webpack-bundle.js file which will be used on the client side.

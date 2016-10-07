@@ -1,0 +1,15 @@
+$("div.flash-message").html("<%==j render partial: 'shared/flash_message' %>");
+$("ul.notifications-listing").html("<%==j render partial: 'notifications/notification', collection: @notifications %>");
+<% if @field == 'name' %>
+  $('.team-name-edit-form .btn-cancel').click();
+  $('.editable-input.name-field').val("<%= @business.reload.name %>")
+<% elsif @field == 'logo' %>
+  $('.logo-edit-form .btn-cancel').click();
+  <% if @business.logo.present?%>
+    $('img.edit-logo').attr('src', '<%= asset_path(@business.logo) %>')
+    $('img.edit-logo').data('original-value', '<%= asset_path(@business.logo) %>')
+    <% else %>
+    $('img.edit-logo').attr('src', '<%= asset_path("business-logo.png") %>')
+    $('img.edit-logo').data('original-value', '<%= asset_path("business-logo.png") %>')
+  <% end %>
+<% end %>

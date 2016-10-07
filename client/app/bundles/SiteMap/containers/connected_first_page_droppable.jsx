@@ -3,7 +3,7 @@ import { updatePagePosition, changeUpdatedAt, addNewPage, addNewFooterPage, setM
 import DroppableFirstPageDroppable from '../components/first_page_droppable'
 
 const mapStateToProps = (state) => {
-  return { sitemapId: state.id, maxPageUid: state.maxPageUid }
+  return { sitemapId: state.id, maxPageUid: state.maxPageUid, pageType: (state.pageTypes.filter(function(pageType) { return(pageType.name == 'General 1') })[0]) }
 }
 
 const mapDispatchToProps = (dispatch) => {

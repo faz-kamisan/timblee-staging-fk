@@ -1,15 +1,18 @@
 import { connect } from 'react-redux'
-import { setSaving, setSelectedSection, changeUpdatedAt } from '../actions'
+import { setSaving, setSelectedSection, incrementIntroSlideNumber, changeUpdatedAt } from '../actions'
 import SectionContainer from '../components/section_container'
 
 const mapStateToProps = (state) => {
-  return { sections: state.sections, sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, publicShare: state.publicShare, trial: state.trial }
+  return { sections: state.sections, sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, publicShare: state.publicShare, trial: state.trial, introSlideNumber: state.introSlideNumber, activeSectionLength: state.sections.filter(function(section) {return(section.state == 'active')}).length }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setSelectedSection: (section) => {
       dispatch(setSelectedSection(section));
+    },
+    showNextSlide: () => {
+      dispatch(incrementIntroSlideNumber())
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));

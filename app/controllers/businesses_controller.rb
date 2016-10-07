@@ -9,12 +9,32 @@ class BusinessesController < ApplicationController
   end
 
   def update
+    @field = business_params.has_key?(:logo) ? 'logo' : 'name'
+    @business.remove_logo! if business_params.has_key?(:logo) && !business_params[:logo].present?
     if @business.update(business_params)
-      flash[:notice] = t('.success', scope: :flash)
+
+      respond_to do |format|
+        format.js do
+          flash.now[:notice] = t('.success', scope: :flash)
+        end
+        format.html do
+          flash[:notice] = t('.success', scope: :flash)
+          redirect_to personalization_settings_users_path
+        end
+      end
     else
-      flash[:alert] = t('.failure', scope: :flash)
+
+      respond_to do |format|
+        format.js do
+          flash[:alert] = t('.failure', scope: :flash)
+        end
+        format.html do
+          flash[:alert] = t('.failure', scope: :flash)
+          redirect_to personalization_settings_users_path
+        end
+      end
+
     end
-    redirect_to personalization_settings_users_path
   end
 
   private
@@ -31,3 +51,4 @@ class BusinessesController < ApplicationController
     end
 
 end
+
