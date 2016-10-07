@@ -67,7 +67,7 @@
   .tile-number {
     color: $primaryGrey;
     font-size: 9px;
-    display: block;
+    display: inline-block;
     margin: 0 0 2px 0;
   }
 
@@ -3365,7 +3365,7 @@ body.trial {
   z-index: 12;
 }
 
-.intro-box-1, 
+.intro-box-1,
 .intro-box-trial {
   right: auto;
   top: 147px;

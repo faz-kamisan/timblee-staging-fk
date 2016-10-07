@@ -10,7 +10,7 @@ class Page < ActiveRecord::Base
   acts_as_list scope: :parent
 
   before_validation :set_uid, on: :create, unless: :uid
-  before_update :update_children_section_id, if: :section_id_changed?
+  before_update :update_children_section_id, if: :alt_section_id_changed?
   before_update :archive_children_pages, if: :state_changed?
 
   validates :name, :page_type, :sitemap, :uid, presence: true
@@ -25,7 +25,6 @@ class Page < ActiveRecord::Base
     duplicate.sitemap = duplicate_section.sitemap
     duplicate.save
     child_pages.order(:position).each { |page| page.duplicate(duplicate_section, duplicate.id)}
-
   end
 
   def get_tree(collection, level = 0)
@@ -41,6 +40,7 @@ class Page < ActiveRecord::Base
       id: id,
       uid: uid,
       section_id: section_id,
+      alt_section_id: alt_section_id,
       parentId: parent_id,
       position: position,
       comments: comments.sort_by(&:created_at).map(&:to_react_data),
@@ -57,7 +57,7 @@ class Page < ActiveRecord::Base
 
     def update_children_section_id
       children.each do |child|
-        child.update(section_id: self.section_id)
+        child.update(section_id: self.alt_section_id)
       end
     end
 

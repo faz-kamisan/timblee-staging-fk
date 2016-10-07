@@ -128,17 +128,18 @@ function createNewSection(sections, id, sectionId, newSectionName, timeStamp) {
   var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
   var page = getNodeById(treeCopy, id)
   var parentPage = getNodeById(treeCopy, page.parentId)
-  page.parentId = null
-  page.position = 1
-  page.level = 0
+  page.alt_section_id = timeStamp
+  // page.parentId = null
+  // page.position = 1
+  // page.level = 0
   traverse(page, function(node) {
-    if(node.parentId) {
-      var parentNode = getNodeById(treeCopy, node.parentId);
-      node.level = parentNode.level + 1
-    }
+    // if(node.parentId) {
+      // var parentNode = getNodeById(treeCopy, node.parentId);
+      // node.level = parentNode.level + 1
+    // }
     node.section_id = timeStamp
   })
-  parentPage.children.removeIf(function(elem, idx) { return elem.id == id });
+  // parentPage.children.removeIf(function(elem, idx) { return elem.id == id });
   var newSection = { default: false, name: newSectionName, pageTree: page, id: timeStamp, state: 'active' }
   sectionsCopy.push(newSection);
   return sectionsCopy
@@ -148,6 +149,7 @@ function updateSectionId(sections, oldId, newId) {
   var sectionsCopy = Object.assign([], sections);
   var section = sectionsCopy.filter(function(section) { return(section.id == oldId) })[0];
   section.id = newId;
+  section.pageTree.alt_section_id = newId;
   return sectionsCopy;
 }
 
@@ -170,6 +172,14 @@ function removeSection(sections, id) {
   return sectionsCopy
 }
 
+function updatePageState(sections, pageId, sectionId, state) {
+  var sectionsCopy = Object.assign([], sections);
+  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
+  var page = getNodeById(treeCopy, pageId)
+  page.state = state
+  return sectionsCopy
+}
+
 function traverse(tree, callback) {
   var queue = new Queue();
   queue.enqueue(tree);
@@ -181,14 +191,6 @@ function traverse(tree, callback) {
     callback(currentTree);
     currentTree = queue.dequeue();
   }
-}
-
-function updatePageState(sections, pageId, sectionId, state) {
-  var sectionsCopy = Object.assign([], sections);
-  var treeCopy = sectionsCopy.filter(function(section) { return(section.id == sectionId) })[0].pageTree
-  var page = getNodeById(treeCopy, pageId)
-  page.state = state
-  return sectionsCopy
 }
 
 function getNodeById(tree, id){
@@ -205,6 +207,21 @@ function getNodeById(tree, id){
   return null;
 }
 
+function getNodeByAltSectionId(tree, alt_section_id){
+  if(tree.alt_section_id == alt_section_id){
+    return tree;
+  }else if (tree.children != null){
+    var i;
+    var result = null;
+    for(i=0; result == null && i < tree.children.length; i++){
+      result = getNodeByAltSectionId(tree.children[i], alt_section_id);
+    }
+    return result;
+  }
+  return null;
+}
+
+
 function getNodeByPosition(tree, position){
   if(tree.position == position){
     return tree;
@@ -220,4 +237,4 @@ function getNodeByPosition(tree, position){
 }
 
 
-export { addPage, removePage, updatePagePosition, updatePageName, traverse, updateCollapse, updatePageId, addPageComment, updateCommentId, updatePageType, createNewSection, updatePageState, deletePageComment, updatePageComment, updatePagePersitence, removeSection, updateSectionId }
+export { addPage, removePage, updatePagePosition, updatePageName, traverse, updateCollapse, updatePageId, addPageComment, updateCommentId, updatePageType, createNewSection, updatePageState, deletePageComment, updatePageComment, updatePagePersitence, removeSection, updateSectionId, getNodeByAltSectionId, getNodeById }

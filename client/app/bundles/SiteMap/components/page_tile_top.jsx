@@ -73,6 +73,10 @@ class PageTileTop extends React.Component {
     maxPageUid: PropTypes.number.isRequired
   };
 
+  constructor(props) {
+    super(props);
+  }
+
   componentWillReceiveProps(nextProps) {
     if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
       if(this.props.pageTree.parentId && !this.props.pageTree.footer) {

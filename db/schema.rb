@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161006074109) do
+ActiveRecord::Schema.define(version: 20161007063346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,13 +82,14 @@ ActiveRecord::Schema.define(version: 20161006074109) do
     t.integer  "sitemap_id"
     t.integer  "page_type_id"
     t.integer  "parent_id"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.integer  "position"
     t.integer  "uid"
     t.integer  "section_id"
-    t.string   "state",        default: "active"
-    t.boolean  "footer",       default: false
+    t.string   "state",          default: "active"
+    t.boolean  "footer",         default: false
+    t.integer  "alt_section_id"
   end
 
   create_table "plans", force: :cascade do |t|

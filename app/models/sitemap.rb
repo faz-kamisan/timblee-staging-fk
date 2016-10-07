@@ -81,6 +81,7 @@ class Sitemap < ActiveRecord::Base
       sections: sections.order(:created_at).map(&:to_react_data),
       business:  business && business.to_react_data,
       sharedUsers: sitemap_shared_users,
+      activeSectionId: default_section.id,
       trial: trial
     }
   end

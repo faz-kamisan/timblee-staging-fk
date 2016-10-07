@@ -9,6 +9,7 @@ class PageContainer extends React.Component {
     pageTree: PropTypes.object.isRequired,
     sitemapNumber: PropTypes.string.isRequired,
     children: PropTypes.array.isRequired,
+    isDefaultSection: PropTypes.bool.isRequired,
     introSlideNumber: PropTypes.number.isRequired
   };
 
@@ -23,7 +24,8 @@ class PageContainer extends React.Component {
 
   render() {
     var children = this.props.pageTree.children.filter(function(page) { return(page.state != 'archived') })
-    if(this.props.pageTree.level == 0) {
+    var level = (!this.props.isDefaultSection && this.props.pageTree.alt_section_id) ? this.props.pageTree.alt_level : this.props.pageTree.level
+    if(level == 0) {
       if(this.props.leftSidebarExpanded) {
         var width = ((children.length * 240) + 412 + 240).toString() + 'px'
       } else {
@@ -31,7 +33,7 @@ class PageContainer extends React.Component {
       }
 
       return (
-        <div data-level={this.props.pageTree.level} className={ 'page-container level-' + this.props.pageTree.level.toString() + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + ((children.length == 0) ? ' no-children' : '') } style={ { width: width } }>
+        <div data-level={level} className={ 'page-container level-' + level.toString() + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + ((children.length == 0) ? ' no-children' : '') } style={ { width: width } }>
           <ConnectedPageTile pageTree={this.props.pageTree} collapsed={this.props.pageTree.collapsed} childrenLength={children.length} sitemapNumber={this.props.sitemapNumber} name={this.props.pageTree.name} />
           <ConnectedGutter pageTree={this.props.pageTree} />
           { (children.length == 0) &&
@@ -50,18 +52,18 @@ class PageContainer extends React.Component {
             </div>
           }
           <ConnectedLevelSupport pageTree={this.props.pageTree} />
-          <div className={ 'parent parent-' + this.props.pageTree.level.toString() + (this.props.pageTree.collapsed ? ' hide' : '')}>
+          <div className={ 'parent parent-' + level.toString() + (this.props.pageTree.collapsed ? ' hide' : '')}>
             {this.props.children}
           </div>
         </div>
       );
     } else {
       return (
-        <div data-level={this.props.pageTree.level} className={ 'page-container level-' + this.props.pageTree.level.toString() }>
+        <div data-level={level} className={ 'page-container level-' + level.toString() }>
           <ConnectedPageTile pageTree={this.props.pageTree} collapsed={this.props.pageTree.collapsed} childrenLength={children.length} sitemapNumber={this.props.sitemapNumber} name={this.props.pageTree.name} />
           <ConnectedGutter pageTree={this.props.pageTree} />
           <ConnectedLevelSupport pageTree={this.props.pageTree} />
-          <div className={ 'parent parent-' + this.props.pageTree.level.toString() + (this.props.pageTree.collapsed ? ' hide' : '')}>
+          <div className={ 'parent parent-' + level.toString() + (this.props.pageTree.collapsed ? ' hide' : '')}>
             {this.props.children}
           </div>
         </div>

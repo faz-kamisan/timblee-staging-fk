@@ -28,6 +28,7 @@ class DraggedPageContainer extends React.Component {
     connectDragSource: PropTypes.func.isRequired,
     connectDragPreview: PropTypes.func.isRequired,
     isDragging: PropTypes.bool.isRequired,
+    isDefaultSection: PropTypes.bool.isRequired,
     pageTree: PropTypes.object.isRequired,
     sitemapNumber: PropTypes.string.isRequired,
     sitemapId: PropTypes.number.isRequired
@@ -66,7 +67,7 @@ class DraggedPageContainer extends React.Component {
         }
         return (
           <div className='child-page' key={pageTree.id}>
-            <DraggablePageContainer pageTree={pageTree} onPageDrop={_this.props.onPageDrop} leftSidebarExpanded={_this.props.leftSidebarExpanded} onPageTypeDrop={_this.props.onPageTypeDrop} sitemapId={_this.props.sitemapId} sitemapNumber={sitemapNumber} publicShare={_this.props.publicShare} introSlideNumber={_this.props.introSlideNumber} showNextSlide={_this.props.showNextSlide} />
+            <DraggablePageContainer pageTree={pageTree} onPageDrop={_this.props.onPageDrop} leftSidebarExpanded={_this.props.leftSidebarExpanded} onPageTypeDrop={_this.props.onPageTypeDrop} sitemapId={_this.props.sitemapId} sitemapNumber={sitemapNumber} publicShare={_this.props.publicShare} introSlideNumber={_this.props.introSlideNumber} showNextSlide={_this.props.showNextSlide} isDefaultSection={_this.props.isDefaultSection} />
           </div>
         )
       });
@@ -74,7 +75,7 @@ class DraggedPageContainer extends React.Component {
     // TODO: Have to fix passing of collapse separately.
     return connectDragSource(
       <div className={'page-container-wrapper' + (isDragging ? ' dragging' : '')} >
-        <PageContainer pageTree={this.props.pageTree} children={children} sitemapNumber={this.props.sitemapNumber}  leftSidebarExpanded={this.props.leftSidebarExpanded} introSlideNumber={_this.props.introSlideNumber} showNextSlide={_this.props.showNextSlide} leftSidebarExpanded={_this.props.leftSidebarExpanded} publicShare={_this.props.publicShare} />
+        <PageContainer pageTree={this.props.pageTree} children={children} sitemapNumber={this.props.sitemapNumber}  leftSidebarExpanded={this.props.leftSidebarExpanded} introSlideNumber={_this.props.introSlideNumber} showNextSlide={_this.props.showNextSlide} leftSidebarExpanded={_this.props.leftSidebarExpanded} publicShare={_this.props.publicShare} isDefaultSection={_this.props.isDefaultSection} />
       </div>
     );
   }

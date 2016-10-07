@@ -1,24 +1,24 @@
 import React, { PropTypes } from 'react';
-import { traverse } from '../helpers/tree_helper'
+import { traverse, getNodeById, getNodeByAltSectionId } from '../helpers/tree_helper'
 import DraggablePageContainer from './draggable_page_container'
 
 class SectionContainer extends React.Component {
   static propTypes = {
-    sections: PropTypes.array.isRequired
+    sections: PropTypes.array.isRequired,
+    activeSectionId: PropTypes.number.isRequired
   };
 
   constructor(props) {
     super(props);
-    this.changeCurrentSectionId = this.changeCurrentSectionId.bind(this);
-    this.state = { currentSectionId: this.getDefaultSectionId(props.sections) }
+    this.changeActiveSectionId = this.changeActiveSectionId.bind(this);
   }
 
-  getDefaultSectionId(sections) {
-    return(sections.filter(function(section) { return section.default })[0].id)
+  getDefaultSection(sections) {
+    return(sections.filter(function(section) { return section.default })[0])
   }
 
-  changeCurrentSectionId(id) {
-    this.setState({currentSectionId: id})
+  changeActiveSectionId(id) {
+    this.props.changeActiveSectionId(id)
   }
 
   setSelectedSection(section) {
@@ -26,8 +26,9 @@ class SectionContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(this.props.activeSectionLength != nextProps.activeSectionLength) {
-      this.setState({currentSectionId: this.getDefaultSectionId(this.props.sections.filter(function(section) {return(section.state == 'active')}))})
+    if(this.props.activeSectionLength > nextProps.activeSectionLength) {
+      this.props.changeActiveSectionId(this.getDefaultSection(this.props.sections.filter(function(section) {return(section.state == 'active')})).id)
+      // this.setState({activeSectionId: this.getDefaultSection(this.props.sections.filter(function(section) {return(section.state == 'active')})).id})
     }
   }
 
@@ -35,9 +36,10 @@ class SectionContainer extends React.Component {
     var _this = this;
     var activeSections = this.props.sections.filter(function(section) {return(section.state == 'active')})
     var tabWidth = (100 / activeSections.length).toString() + '%'
+    var defaultSection = this.getDefaultSection(this.props.sections)
     var renderedSectionTabs = activeSections.map(function(section, index) {
       return (
-        <li key={section.id} className={'sitemap-section-tab' + (_this.state.currentSectionId == section.id ? ' active' : '')} onClick={function(e) { _this.changeCurrentSectionId(section.id) } } style={ {width: tabWidth} }>
+        <li key={section.id} className={'sitemap-section-tab' + (_this.props.activeSectionId == section.id ? ' active' : '')} onClick={function(e) { _this.changeActiveSectionId(section.id) } } style={ {width: tabWidth} }>
           { !section.default &&
             <span className='remove-section' onClick={function() {_this.setSelectedSection(section)} } data-target='#delete-section-modal' data-toggle='modal'>&times;</span>
           }
@@ -46,10 +48,22 @@ class SectionContainer extends React.Component {
       )
     })
     var renderedSections = activeSections.map(function(section, index) {
+      var pageTree = section.default ? section.pageTree : getNodeByAltSectionId(defaultSection.pageTree, section.id)
+      if(!section.default) {
+        pageTree.alt_level = 0
+        traverse(pageTree, function(page) {
+          var parentPage = getNodeById(defaultSection.pageTree, page.parentId)
+          if(parentPage.alt_section_id) {
+            page.level = parentPage.alt_level + 1
+          } else {
+            page.level = parentPage.level + 1
+          }
+        })
+      }
       return (
-        <div key={section.id} className={'sitemap-section' + (_this.state.currentSectionId == section.id ? ' active' : ' hide')}>
+        <div key={section.id} className={'sitemap-section' + (_this.props.activeSectionId == section.id ? ' active' : ' hide')}>
           <div>
-            <DraggablePageContainer pageTree={section.pageTree} sitemapNumber='' sitemapId={_this.props.sitemapId} leftSidebarExpanded={_this.props.leftSidebarExpanded} publicShare={_this.props.publicShare} introSlideNumber={_this.props.introSlideNumber} showNextSlide={_this.props.showNextSlide} />
+            <DraggablePageContainer pageTree={pageTree} sitemapNumber='' sitemapId={_this.props.sitemapId} leftSidebarExpanded={_this.props.leftSidebarExpanded} publicShare={_this.props.publicShare} introSlideNumber={_this.props.introSlideNumber} showNextSlide={_this.props.showNextSlide} isDefaultSection={_this.props.activeSectionId == defaultSection.id} />
           </div>
         </div>
       )

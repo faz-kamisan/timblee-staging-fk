@@ -25,6 +25,7 @@ import newSitemap from './new_sitemap'
 import trial from './trial'
 import createdAt from './created_at'
 import introSlideNumber from './intro_slide_number'
+import activeSectionId from './active_section_id'
 
 const sitemapAppReducer = combineReducers({
   name,
@@ -52,7 +53,8 @@ const sitemapAppReducer = combineReducers({
   newSitemap,
   trial,
   createdAt,
-  introSlideNumber
+  introSlideNumber,
+  activeSectionId
 })
 
 export default sitemapAppReducer

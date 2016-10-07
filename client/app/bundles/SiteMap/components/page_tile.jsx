@@ -23,6 +23,7 @@ class PageTile extends React.Component {
     this.closeOverLay = this.closeOverLay.bind(this);
     this.openOverLay = this.openOverLay.bind(this);
     this.setSelectedPage = this.setSelectedPage.bind(this);
+    this.showLinkedSection = this.showLinkedSection.bind(this);
     this.state = { nameChangeDisabled: !props.pageTree.newRecord, hover: false, showOverLay: false, name: this.props.name, originalName: this.props.name, counter: 0 }
   }
 
@@ -100,6 +101,10 @@ class PageTile extends React.Component {
     this.props.onCollapsedChanged(this.props.pageTree.id, this.props.pageTree.section_id)
   }
 
+  showLinkedSection(e) {
+    this.props.changeActiveSectionId(this.props.pageTree.alt_section_id)
+  }
+
   componentDidMount() {
     var _this = this;
     $('.page-change-modal').on('hidden.bs.modal', function () {
@@ -115,6 +120,9 @@ class PageTile extends React.Component {
       return (
         <div className={"page-tile " + (((this.props.pageTree.level == 0) && (this.props.childrenLength % 2 == 0)) ? 'even-tree' : 'odd-tree') } onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile'>
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber} name={this.props.name} />
+          { this.props.pageTree.alt_section_id &&
+            <span onClick={this.showLinkedSection}>section</span>
+          }
           <h1 className="tile-name-edit">
             <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
             <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' value = {this.state.name} onChange={this.handleNameChange} onBlur={this.disableNameChangeInput}></textarea>
@@ -174,6 +182,9 @@ class PageTile extends React.Component {
       return (
         <div className="page-tile" onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber}  name={this.props.name} />
+          { this.props.pageTree.alt_section_id &&
+            <span onClick={this.showLinkedSection}>section</span>
+          }
           <h1 className="tile-name-edit">
             <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
             <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' value = {this.state.name} onChange={this.handleNameChange} onBlur={this.disableNameChangeInput}></textarea>
