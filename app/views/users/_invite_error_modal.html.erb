@@ -1,4 +1,4 @@
-<div class="modal fade" id="invite-error-modal" tabindex="-1" role="dialog" aria-labelledby="invite-error-modalLabel">
+<div class="modal fade warnings-modals" id="invite-error-modal" tabindex="-1" role="dialog" aria-labelledby="invite-error-modalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
@@ -7,14 +7,18 @@
             <%= image_tag('close-modal.svg', class: 'close-modal') %>
           </span>
         </button>
-        <h4>You can't proceed <%= image_tag('sad.png', class: 'sad') %> </h4>
+        <h4 class="warning">You can't proceed <%= image_tag('sad.png', class: 'sad') %> </h4>
         <p>You are currently on Starter plan which allows only 1 user.</p>
-        <p>Want to add more users? <br>
-        <% if request.original_fullpath == settings_users_path %>
-          <%= link_to 'Switch to Pro plan', "#choose-plan-modal", 'data-toggle': "modal", 'data-dismiss': 'modal' %>
-        <% else %>
-          <%= link_to 'Switch to Pro plan', billing_settings_users_path %>
-        <% end %>
+        <p>Want to add more users?</p>
+        <div class="warning-footer">
+          <div class="warning-left">
+            <% if request.original_fullpath == settings_users_path %>
+              <%= link_to 'Switch to Pro plan', "#choose-plan-modal", class: 'btn btn-right', 'data-toggle': "modal", 'data-dismiss': 'modal' %>
+              <% else %>
+              <%= link_to 'Switch to Pro plan', billing_settings_users_path, class: 'btn btn-right' %>
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
   </div>

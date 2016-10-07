@@ -176,7 +176,7 @@
           padding-right: 15px;
           font-size: 14px;
           .select2-selection__placeholder {
-            color: $primaryBlack!important;  
+            color: $primaryBlack!important;
           }
         }
         .select2-selection__arrow {
@@ -281,21 +281,34 @@
 #new-section-modal {
   .modal-dialog {
     @include alignCenter(-310px, -118px);
-  } 
+  }
 }
 
 #delete-page-modal {
   .modal-dialog {
     @include alignCenter(-310px, -183px);
-  } 
+  }
 }
 
 #sucessful_reset_password_sent_modal {
   .modal-dialog {
     @include alignCenter(-310px, -146px);
-  } 
+  }
 }
 
+#sitemap-warning-modal,
+#invite-warning-modal {
+  .modal-dialog {
+    @include alignCenter(-375px, -170px);
+  }
+}
+
+#sitemap-error-modal,
+#invite-error-modal {
+  .modal-dialog {
+    @include alignCenter(-375px, -144px);
+  }
+}
 .react-sign-up {
   .modal-body {
     @include alignCenter(-310px, -274px);
@@ -306,5 +319,5 @@
 .guest-modal {
   .modal-dialog {
     @include alignCenter(-310px, -259px);
-  } 
+  }
 }

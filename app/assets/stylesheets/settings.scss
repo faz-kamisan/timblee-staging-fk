@@ -988,6 +988,67 @@ label.avatar-label > input[type=radio]:checked + img{
   height: 10px;
 }
 
+.warnings-modals {
+  .warning {
+    color: $primaryError;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+    padding-top: 63px;
+    padding-bottom: 23px;
+  }
+  .modal-dialog {
+    width: 750px;
+  }
+  .modal-content {
+    padding-left: 150px;
+    padding-right: 150px;
+  }
+  p {
+    @extend .font-12;
+    color: #62717f;
+    a {
+      text-decoration: underline;
+      color: #62717f;
+      &:hover {
+        color: $primaryPink;
+      }
+    }
+  }
+  .btn {
+    min-width: 135px;
+    height: 40px;
+    font-size: 10px;
+    line-height: 28px;
+    text-transform: uppercase;
+    &.btn-left {
+      border-color: #B4BCC3;
+      color: #B4BCC3;
+      &:hover {
+        background: #B4BCC3;
+        color: $primaryWhite;
+      }
+    }
+    &.btn-right {
+      border-color: $primaryPink;
+      color: $primaryPink;
+      &:hover {
+        background: $primaryPink;
+        color: $primaryWhite;
+      }
+    }
+  }
+  .warning-footer {
+    padding: 18px 0 32px 0;
+    .warning-left,
+    .warning-right {
+      display: inline-block;
+    }
+    .warning-right {
+      margin-left: 10px;
+    }
+  }
+}
 .role-image {
   width: 70px;
   height: 70px;
