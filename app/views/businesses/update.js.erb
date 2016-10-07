@@ -11,5 +11,6 @@ $("ul.notifications-listing").html("<%==j render partial: 'notifications/notific
     <% else %>
     $('img.edit-logo').attr('src', '<%= asset_path("business-logo.png") %>')
     $('img.edit-logo').data('original-value', '<%= asset_path("business-logo.png") %>')
+    $('.delete-image').addClass('hide')
   <% end %>
 <% end %>

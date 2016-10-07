@@ -41,7 +41,7 @@
         <div class="col-xs-3 text-right edit-info">
           <div class>
             <a href="javascript:void(0);" class="btn btn-grey btn-edit-logo">Edit</a>
-            <%= link_to business_path(id: current_business.id, business: { logo: nil }), method: :patch, remote: true, class: 'delete-image' do %> Remove Image <% end %>
+            <%= link_to business_path(id: current_business.id, business: { logo: nil }), method: :patch, remote: true, class: "delete-image #{'hide' unless current_business.logo.present? }" do %> Remove Image <% end %>
           </div>
         </div>
       </div>

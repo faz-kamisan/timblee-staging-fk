@@ -20,6 +20,7 @@ Personalization.prototype.bindEvents = function() {
     _this.rowEdit.addClass('hide');
     _this.logoField.val('');
     _this.chooseLogo.attr('src', _this.chooseLogo.data('original-value'))
+    _this.removeImage.addClass('hide');
   });
 
   this.removeImage.on('click', function() {
