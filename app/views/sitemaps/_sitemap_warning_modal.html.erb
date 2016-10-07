@@ -9,7 +9,13 @@
         </button>
         <h4 class="warning">A warning about the starter plan</h4>
         <p>You currently have more sitemaps or users(or both) than the Starter plan allows.</p>
-        <p>Since you're on your free, unlimited trial till [date], you will be able to choose the free Starter plan for now. However after your trial finishes, you'll either need to upgrade to the <a href="#">Pro plan</a> or delete any sitemaps and user over the Starter plan limits.</p>
+        <p>Since you're on your free, unlimited trial till <%= current_business.trial_end_at.strftime('%d %b %Y') %>, you will be able to choose the free Starter plan for now. However after your trial finishes, you'll either need to upgrade to the
+        <% if request.original_fullpath == settings_users_path %>
+          <%= link_to 'Pro plan', "#choose-plan-modal", 'data-toggle': "modal", 'data-dismiss': 'modal' %>
+        <% else %>
+          <%= link_to 'Pro plan', billing_settings_users_path %>
+        <% end %>
+        or delete any sitemaps and user over the Starter plan limits.</p>
         <div class="warning-footer">
           <div class="warning-left">
             <% if request.original_fullpath == settings_users_path %>
