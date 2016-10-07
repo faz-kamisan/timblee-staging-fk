@@ -210,18 +210,18 @@
 }
 
 .select2-dropdown {
-  border-color: #d4d4d4;
+  border-color: #ececec;
   max-height: 230px;
   overflow-y: auto;
   @include border-radius(10px);
   top: -48px;
-  border-top: solid 1px #d4d4d4!important;
+  border-top: solid 1px #ececec!important;
 }
 
 #select2-business_id-results li {
   padding: 10px 12px;
   + li {
-    border-top: solid 1px #d4d4d4;
+    border-top: solid 1px #ececec;
   }
 }
 
@@ -274,7 +274,7 @@
 }
 
 .select2-container--default .select2-search--dropdown .select2-search__field {
-  border-color: #d4d4d4;
+  border-color: #ececec;
   border-width: 0;
   border-bottom-width: 1px;
   height: 45px;
