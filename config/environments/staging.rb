@@ -89,8 +89,7 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     user_name: 'f5087f2a-a035-4166-b7e0-7b40c350193a',
     password: 'f5087f2a-a035-4166-b7e0-7b40c350193a',
-    server: 'smtp.api.createsend.com',
-    domain: 'timblee.com',
+    address: 'smtp.api.createsend.com',
     port: '587'
   }
   config.action_mailer.default_url_options = { host: "http://staging.timblee.io/" }
