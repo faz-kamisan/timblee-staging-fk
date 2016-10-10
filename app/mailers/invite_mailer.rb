@@ -1,5 +1,5 @@
 class InviteMailer < ActionMailer::Base
-  default from: 'admin@timblee.com'
+  default from: 'pratibha@vinsol.com'
 
   def send_invite(user_id, token, custom_message = '')
     @user = User.find_by_id(user_id)
