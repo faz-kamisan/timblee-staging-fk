@@ -87,11 +87,11 @@ Rails.application.configure do
   #   :authentication => :cram_md5
   # }
   config.action_mailer.smtp_settings = {
-    server: 'smtp.api.createsend.com',
-    port: '587',
-    domain: 'gmail.com',
     user_name: 'f5087f2a-a035-4166-b7e0-7b40c350193a',
-    password: 'f5087f2a-a035-4166-b7e0-7b40c350193a'
+    password: 'f5087f2a-a035-4166-b7e0-7b40c350193a',
+    address: 'smtp.api.createsend.com',
+    port: '587',
+    authentication: :plain
   }
   config.action_mailer.default_url_options = { host: "http://staging.timblee.io/" }
 
