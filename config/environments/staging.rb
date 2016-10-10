@@ -78,13 +78,19 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   :user_name => '693ce70b565399',
+  #   :password => '9c0e85713c7a5f',
+  #   :address => 'mailtrap.io',
+  #   :domain => 'mailtrap.io',
+  #   :port => '2525',
+  #   :authentication => :cram_md5
+  # }
   config.action_mailer.smtp_settings = {
-    :user_name => '693ce70b565399',
-    :password => '9c0e85713c7a5f',
-    :address => 'mailtrap.io',
-    :domain => 'mailtrap.io',
-    :port => '2525',
-    :authentication => :cram_md5
+    server: 'smtp.api.createsend.com',
+    port: '587',
+    username: 'f5087f2a-a035-4166-b7e0-7b40c350193a',
+    password: 'f5087f2a-a035-4166-b7e0-7b40c350193a'
   }
   config.action_mailer.default_url_options = { host: "http://staging.timblee.io/" }
 
