@@ -1,6 +1,6 @@
 $(function(){
-  $('.invite-personal-message').twemojiPicker({
+  $('#invite-personal-message').twemojiPicker({
   });
-  $('.share-personal-message').twemojiPicker({
+  $('#share-personal-message').twemojiPicker({
   });
 });

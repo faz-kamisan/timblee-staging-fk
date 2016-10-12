@@ -24,8 +24,6 @@
 //= require document_decorator
 //= require date_decorator
 //= require editFields
-//= require jquery.emojis
-//= require jquery.emojipicker
 //= require apply_twemoji
 //= require select2.min
 //= require settings
