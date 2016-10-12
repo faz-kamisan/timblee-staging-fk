@@ -23,7 +23,7 @@ export default class PageContainerPreview extends Component {
         }
         return (
           <div className='test' key={pageTree.id}>
-            <PageContainerPreview pageTree={pageTree} sitemapNumber={sitemapNumber} />
+            <PageContainerPreview pageTree={pageTree} sitemapNumber={sitemapNumber} level={_this.props.level + 1} />
           </div>
         )
       });
@@ -31,7 +31,7 @@ export default class PageContainerPreview extends Component {
 
     return (
       <div style={styles} className='custom-drag-preview'>
-        <PageContainer pageTree={pageTree} children={children} sitemapNumber={this.props.sitemapNumber} />
+        <PageContainer pageTree={pageTree} children={children} level={this.props.level} sitemapNumber={this.props.sitemapNumber} isDragging={true} />
       </div>
     );
   }

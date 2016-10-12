@@ -7,7 +7,7 @@ import PageContainer from './page_container'
 
 const sitemapSource = {
   beginDrag(props, monitor, component) {
-    return {id: props.pageTree.id, parentId: props.pageTree.parentId, type: 'page', pageTree: props.pageTree, sitemapNumber: props.sitemapNumber};
+    return {id: props.pageTree.id, parentId: props.pageTree.parentId, type: 'page', pageTree: props.pageTree, sitemapNumber: props.sitemapNumber, level: props.level };
   },
   canDrag(props, monitor) {
     return((!props.publicShare) && (props.level != 0))
@@ -66,14 +66,14 @@ class DraggedPageContainer extends React.Component {
         }
         return (
           <div className='child-page' key={pageTree.id}>
-            <DraggablePageContainer pageTree={pageTree} onPageDrop={_this.props.onPageDrop} leftSidebarExpanded={_this.props.leftSidebarExpanded} onPageTypeDrop={_this.props.onPageTypeDrop} sitemapId={_this.props.sitemapId} sitemapNumber={sitemapNumber} publicShare={_this.props.publicShare} introSlideNumber={_this.props.introSlideNumber} showNextSlide={_this.props.showNextSlide} level={_this.props.level + 1} />
+            <DraggablePageContainer pageTree={pageTree} onPageDrop={_this.props.onPageDrop} leftSidebarExpanded={_this.props.leftSidebarExpanded} onPageTypeDrop={_this.props.onPageTypeDrop} sitemapId={_this.props.sitemapId} sitemapNumber={sitemapNumber} publicShare={_this.props.publicShare} introSlideNumber={_this.props.introSlideNumber} showNextSlide={_this.props.showNextSlide} level={_this.props.level + 1}  isDragging={_this.props.isDragging} />
           </div>
         )
       });
     }
     return connectDragSource(
       <div className={'page-container-wrapper' + (isDragging ? ' dragging' : '')} >
-        <PageContainer pageTree={this.props.pageTree} children={children} sitemapNumber={this.props.sitemapNumber}  leftSidebarExpanded={this.props.leftSidebarExpanded} introSlideNumber={_this.props.introSlideNumber} showNextSlide={_this.props.showNextSlide} leftSidebarExpanded={_this.props.leftSidebarExpanded} publicShare={_this.props.publicShare} level={this.props.level} />
+        <PageContainer pageTree={this.props.pageTree} children={children} sitemapNumber={this.props.sitemapNumber}  leftSidebarExpanded={this.props.leftSidebarExpanded} introSlideNumber={_this.props.introSlideNumber} showNextSlide={_this.props.showNextSlide} leftSidebarExpanded={_this.props.leftSidebarExpanded} publicShare={_this.props.publicShare} level={_this.props.level} isDragging={_this.props.isDragging} />
       </div>
     );
   }
