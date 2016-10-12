@@ -175,12 +175,16 @@ class PageTile extends React.Component {
 
   mouseOver(e) {
     this.setState({hover: true});
-    this.addFaded()
+    if(!this.props.pageTree.footer) {
+      this.addFaded()
+    }
   }
 
   mouseOut(e) {
     this.setState({hover: false});
-    this.removeFaded()
+    if(!this.props.pageTree.footer) {
+      this.removeFaded()
+    }
   }
 
   addFaded() {
@@ -193,7 +197,7 @@ class PageTile extends React.Component {
 
   handleMouseDown(e) {
     var target = $(e.target)
-    if(target.closest('.collapse-open').length == 0) {
+    if((target.closest('.collapse-open').length == 0) && (target.closest('.first-item').length == 0) && (target.closest('.close-card-overlay').length == 0)) {
       this.removeFaded()
     }
   }
