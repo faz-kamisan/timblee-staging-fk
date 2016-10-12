@@ -915,6 +915,12 @@
     margin: 13px 0;
     background: #262B30;
     @include animate(.35s);
+    &.search-active {
+      padding-left: 50px;
+      + label {
+        right: 330px;
+      }
+    }
     &:focus {
       padding-left: 50px;
       + label {

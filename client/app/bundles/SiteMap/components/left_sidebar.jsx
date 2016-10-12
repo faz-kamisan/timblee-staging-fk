@@ -62,8 +62,12 @@ class LeftSidebar extends React.Component {
 
   render() {
     var _this = this;
-    var searchQueryRegExp = new RegExp(('^' + this.state.searchQuery), 'i')
-    var filteredPageTypes = this.props.pageTypes.filter(function(pageType) { return(pageType.name.match(searchQueryRegExp)) })
+    if(this.state.searchQuery.length > 0) {
+      var searchQueryRegExp = new RegExp(('\\b' + this.state.searchQuery), 'gi')
+      var filteredPageTypes = this.props.pageTypes.filter(function(pageType) { return(pageType.name.match(searchQueryRegExp)) })
+    } else {
+      var filteredPageTypes = this.props.pageTypes
+    }
     var pageTypeComponents = filteredPageTypes.map(function(pageType, index) {
       return <li key={pageType.id}><DraggablePageType name={pageType.name} iconName={pageType.icon_name} id={pageType.id} /></li>
     })
@@ -86,7 +90,7 @@ class LeftSidebar extends React.Component {
               </div>
             </div>
             <form className="search-page-type">
-              <input type="search" id="page-type" name="page-type" placeholder="Page type" onChange={this.handleSearch} />
+              <input type="search" id="page-type" name="page-type" placeholder="Page type" className={(this.state.searchQuery.length > 0) ? ' search-active' : ''} onChange={this.handleSearch} />
               <label htmlFor="page-type">
                 <i className="icon-search"></i>
               </label>

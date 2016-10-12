@@ -48527,7 +48527,7 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var _this = this;
-	      $('.page-change-modal').on('hidden.bs.modal', function () {
+	      $('.modal').on('hidden.bs.modal', function () {
 	        _this.setState({ showOverLay: false });
 	      });
 	      if (this.props.pageTree.newRecord) {
@@ -48540,8 +48540,8 @@
 	      if (this.props.childrenLength > 0) {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: "page-tile " + (this.props.pageTree.level == 0 && this.props.childrenLength % 2 == 0 ? 'even-tree' : 'odd-tree'), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile' },
-	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name }),
+	          { className: "page-tile " + (this.props.level == 0 && this.props.childrenLength % 2 == 0 ? 'even-tree' : 'odd-tree'), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile' },
+	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name, level: this.props.level }),
 	          this.props.pageTree.alt_section_id && !(this.props.level == 0) && _react2.default.createElement(
 	            'span',
 	            { className: 'section-tag', onClick: this.showLinkedSection },
@@ -48643,7 +48643,7 @@
 	        return _react2.default.createElement(
 	          'div',
 	          { className: 'page-tile', onMouseOver: this.mouseOver, onMouseOut: this.mouseOut },
-	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name }),
+	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name, level: this.props.level }),
 	          this.props.pageTree.alt_section_id && !(this.props.level == 0) && _react2.default.createElement(
 	            'span',
 	            { className: 'section-tag', onClick: this.showLinkedSection },
@@ -48662,7 +48662,7 @@
 	          ),
 	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement('div', { className: "tile-right " + this.props.pageTree.pageType.icon_name }),
-	          _react2.default.createElement(
+	          !(this.props.level == 0 && this.props.pageTree.alt_section_id) && _react2.default.createElement(
 	            'div',
 	            { className: "tile-right-hover " + (this.state.hover ? 'hovered' : '') },
 	            _react2.default.createElement(
@@ -48694,7 +48694,7 @@
 	              )
 	            )
 	          ),
-	          _react2.default.createElement(
+	          !(this.props.level == 0 && this.props.pageTree.alt_section_id) && _react2.default.createElement(
 	            'div',
 	            { className: "card-overlay" + (this.state.showOverLay ? ' overlay-in' : '') },
 	            _react2.default.createElement(
@@ -48847,7 +48847,7 @@
 	var sitemapTarget = {
 	  drop: function drop(props, monitor, component) {
 	    var item = monitor.getItem();
-	    if (monitor.didDrop() || !props.pageTree.id || props.pageTree.footer) {
+	    if (monitor.didDrop() || !props.pageTree.id || props.pageTree.footer || props.level == 0) {
 	      return;
 	    }
 	    if (item.type == 'page') {
@@ -48913,11 +48913,11 @@
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
 	      if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
-	        if (this.props.pageTree.parentId && !this.props.pageTree.footer) {
+	        if (this.props.level > 0 && !this.props.pageTree.footer) {
 	          var domNode = (0, _reactDom.findDOMNode)(this);
 	          $(domNode).addClass('drag-over');
 	          $('.custom-drag-layer').addClass('over-page-top');
-	          if (this.props.pageTree.level == 1) {
+	          if (this.props.level == 1) {
 	            $(domNode).parent('.page-tile').siblings('.level-support').addClass('again-drag-over');
 	          } else {
 	            $(domNode).parent('.page-tile').siblings('.gutter').addClass('again-drag-over');
@@ -48927,11 +48927,11 @@
 	
 	      if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
 	        // You can use this as leave handler
-	        if (this.props.pageTree.parentId && !this.props.pageTree.footer) {
+	        if (this.props.level > 0 && !this.props.pageTree.footer) {
 	          var domNode = (0, _reactDom.findDOMNode)(this);
 	          $(domNode).removeClass('drag-over');
 	          $('.custom-drag-layer').removeClass('over-page-top');
-	          if (this.props.pageTree.level == 1) {
+	          if (this.props.level == 1) {
 	            $(domNode).parent('.page-tile').siblings('.level-support').removeClass('again-drag-over');
 	          } else {
 	            $(domNode).parent('.page-tile').siblings('.gutter').removeClass('again-drag-over');
@@ -51213,10 +51213,14 @@
 	    key: 'render',
 	    value: function render() {
 	      var _this = this;
-	      var searchQueryRegExp = new RegExp('^' + this.state.searchQuery, 'i');
-	      var filteredPageTypes = this.props.pageTypes.filter(function (pageType) {
-	        return pageType.name.match(searchQueryRegExp);
-	      });
+	      if (this.state.searchQuery.length > 0) {
+	        var searchQueryRegExp = new RegExp('\\b' + this.state.searchQuery, 'gi');
+	        var filteredPageTypes = this.props.pageTypes.filter(function (pageType) {
+	          return pageType.name.match(searchQueryRegExp);
+	        });
+	      } else {
+	        var filteredPageTypes = this.props.pageTypes;
+	      }
 	      var pageTypeComponents = filteredPageTypes.map(function (pageType, index) {
 	        return _react2.default.createElement(
 	          'li',
@@ -51260,7 +51264,7 @@
 	          _react2.default.createElement(
 	            'form',
 	            { className: 'search-page-type' },
-	            _react2.default.createElement('input', { type: 'search', id: 'page-type', name: 'page-type', placeholder: 'Page type', onChange: this.handleSearch }),
+	            _react2.default.createElement('input', { type: 'search', id: 'page-type', name: 'page-type', placeholder: 'Page type', className: this.state.searchQuery.length > 0 ? ' search-active' : '', onChange: this.handleSearch }),
 	            _react2.default.createElement(
 	              'label',
 	              { htmlFor: 'page-type' },
@@ -63408,9 +63412,14 @@
 	    key: 'render',
 	    value: function render() {
 	      var _this = this;
-	      var filteredPageTypes = this.props.pageTypes.filter(function (pageType) {
-	        return pageType.name.toLowerCase().indexOf(_this.state.searchQuery.toLowerCase()) !== -1;
-	      });
+	      if (this.state.searchQuery.length > 0) {
+	        var searchQueryRegExp = new RegExp('\\b' + this.state.searchQuery, 'gi');
+	        var filteredPageTypes = this.props.pageTypes.filter(function (pageType) {
+	          return pageType.name.match(searchQueryRegExp);
+	        });
+	      } else {
+	        var filteredPageTypes = this.props.pageTypes;
+	      }
 	      var pageTypeComponents = filteredPageTypes.map(function (pageType, index) {
 	        return _react2.default.createElement(
 	          'li',

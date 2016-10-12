@@ -104,7 +104,7 @@ class PageTile extends React.Component {
 
   componentDidMount() {
     var _this = this;
-    $('.page-change-modal').on('hidden.bs.modal', function () {
+    $('.modal').on('hidden.bs.modal', function () {
       _this.setState({showOverLay: false})
     });
     if(this.props.pageTree.newRecord) {
@@ -115,8 +115,8 @@ class PageTile extends React.Component {
   render() {
     if(this.props.childrenLength > 0) {
       return (
-        <div className={"page-tile " + (((this.props.pageTree.level == 0) && (this.props.childrenLength % 2 == 0)) ? 'even-tree' : 'odd-tree') } onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile'>
-          <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber} name={this.props.name} />
+        <div className={"page-tile " + (((this.props.level == 0) && (this.props.childrenLength % 2 == 0)) ? 'even-tree' : 'odd-tree') } onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile'>
+          <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber} name={this.props.name} level={this.props.level} />
           { this.props.pageTree.alt_section_id && !(this.props.level == 0) &&
             <span className="section-tag" onClick={this.showLinkedSection}>section</span>
           }
@@ -182,7 +182,7 @@ class PageTile extends React.Component {
     } else {
       return (
         <div className="page-tile" onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
-          <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber}  name={this.props.name} />
+          <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber}  name={this.props.name} level={this.props.level} />
           { this.props.pageTree.alt_section_id && !(this.props.level == 0) &&
             <span className="section-tag" onClick={this.showLinkedSection}>section</span>
           }
@@ -193,51 +193,55 @@ class PageTile extends React.Component {
           <ConnectedPageTileBottom pageTree={this.props.pageTree} />
           <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }>
           </div>
-          <div className={ "tile-right-hover " + (this.state.hover ? 'hovered' : '') }>
-            <ul className="tile-more">
-              { !this.props.publicShare &&
-                <li className="first-item">
-                  <span className="more-option tile-icons" onClick={this.openOverLay}>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </span>
-                </li>
-              }
-              { !this.props.trial &&
-                <li className="second-item">
-                  <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'>
-                    <span className="card-tooltip">View Comments</span>
-                  </span>
-                </li>
-              }
-            </ul>
-          </div>
-          <div className={"card-overlay" + (this.state.showOverLay ? ' overlay-in' : '')}>
-            <div className="close-card-overlay">
-              <a href="javascript:void(0)" className="icon-close" onClick={this.closeOverLay}></a>
+          { !((this.props.level == 0) && this.props.pageTree.alt_section_id) &&
+            <div className={ "tile-right-hover " + (this.state.hover ? 'hovered' : '') }>
+              <ul className="tile-more">
+                { !this.props.publicShare &&
+                  <li className="first-item">
+                    <span className="more-option tile-icons" onClick={this.openOverLay}>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </span>
+                  </li>
+                }
+                { !this.props.trial &&
+                  <li className="second-item">
+                    <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'>
+                      <span className="card-tooltip">View Comments</span>
+                    </span>
+                  </li>
+                }
+              </ul>
             </div>
-            { !this.props.trial &&
-              <a href="#page-comments-modal" className="icon-page-comments" onClick={this.setSelectedPage} data-toggle='modal'>
-                <span className="card-tooltip">View Comments</span>
+          }
+          { !((this.props.level == 0) && this.props.pageTree.alt_section_id) &&
+            <div className={"card-overlay" + (this.state.showOverLay ? ' overlay-in' : '')}>
+              <div className="close-card-overlay">
+                <a href="javascript:void(0)" className="icon-close" onClick={this.closeOverLay}></a>
+              </div>
+              { !this.props.trial &&
+                <a href="#page-comments-modal" className="icon-page-comments" onClick={this.setSelectedPage} data-toggle='modal'>
+                  <span className="card-tooltip">View Comments</span>
+                </a>
+              }
+              <a href="#page-change-modal" className="icon-page-change" onClick={this.setSelectedPage} data-toggle='modal'>
+                <span className="card-tooltip">Change Page</span>
               </a>
-            }
-            <a href="#page-change-modal" className="icon-page-change" onClick={this.setSelectedPage} data-toggle='modal'>
-              <span className="card-tooltip">Change Page</span>
-            </a>
-            {
-              !(this.props.level == 0) &&
-              <a href="#new-section-modal" className="icon-page-new" onClick={this.setSelectedPage} data-toggle='modal'>
-                <span className="card-tooltip">New Section</span>
-              </a>
-            }
-            {
-              (!(this.props.level == 0) || (this.props.pageTree.footer)) &&
-              <a href="#delete-page-modal" className="icon-page-delete" onClick={this.setSelectedPage} data-toggle='modal'>
-                <span className="card-tooltip">Delete Page</span>
-              </a>
-            }
-          </div>
+              {
+                !(this.props.level == 0) &&
+                <a href="#new-section-modal" className="icon-page-new" onClick={this.setSelectedPage} data-toggle='modal'>
+                  <span className="card-tooltip">New Section</span>
+                </a>
+              }
+              {
+                (!(this.props.level == 0) || (this.props.pageTree.footer)) &&
+                <a href="#delete-page-modal" className="icon-page-delete" onClick={this.setSelectedPage} data-toggle='modal'>
+                  <span className="card-tooltip">Delete Page</span>
+                </a>
+              }
+            </div>
+          }
         </div>
       );
     }
