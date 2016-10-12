@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { changeCollapse, updatePageName, updateFooterPageName, updatePagePersitence, changeActiveSectionId, updateFooterPagePersitence, changeUpdatedAt, setSaving, setSelectedPage, addNewPage, setMaxPageUid } from '../actions'
+import { changeCollapse, updatePageName, updateFooterPageName, updatePagePersitence, changeActiveSectionId, updateFooterPagePersitence, changeUpdatedAt, setSaving, setSelectedPage, addNewPage, setMaxPageUid, updateId } from '../actions'
 import PageTile from '../components/page_tile'
 
 const mapStateToProps = (state) => {

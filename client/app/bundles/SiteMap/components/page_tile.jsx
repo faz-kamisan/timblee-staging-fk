@@ -27,6 +27,9 @@ class PageTile extends React.Component {
     this.addSameLevelNextPage = this.addSameLevelNextPage.bind(this);
     this.addSameLevelPrevPage = this.addSameLevelPrevPage.bind(this);
     this.addSubPage = this.addSubPage.bind(this);
+    this.addFaded = this.addFaded.bind(this);
+    this.removeFaded = this.removeFaded.bind(this);
+    this.handleMouseDown = this.handleMouseDown.bind(this);
     this.state = { nameChangeDisabled: !props.pageTree.newRecord, hover: false, showOverLay: false, name: this.props.name, originalName: this.props.name, counter: 0 }
   }
 
@@ -95,6 +98,7 @@ class PageTile extends React.Component {
       }
     });
     this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.parentId, (this.props.pageTree.position), timeStamp, this.props.maxPageUid);
+    this.removeFaded();
   }
 
   addSameLevelPrevPage(e) {
@@ -121,6 +125,7 @@ class PageTile extends React.Component {
       }
     });
     this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.parentId, (this.props.pageTree.position - 1), timeStamp, this.props.maxPageUid);
+    this.removeFaded();
   }
 
   addSubPage(e) {
@@ -147,6 +152,7 @@ class PageTile extends React.Component {
       }
     });
     this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.id, 'begining', timeStamp, this.props.maxPageUid);
+    this.removeFaded();
   }
 
   setSelectedPage(e) {
@@ -169,6 +175,15 @@ class PageTile extends React.Component {
 
   mouseOver(e) {
     this.setState({hover: true});
+    this.addFaded()
+  }
+
+  mouseOut(e) {
+    this.setState({hover: false});
+    this.removeFaded()
+  }
+
+  addFaded() {
     var otherPageTiles = $('.page-tile').not($(this.refs.pageTile))
     $(this.refs.pageTile).addClass('not-faded');
     otherPageTiles.addClass('faded')
@@ -176,8 +191,14 @@ class PageTile extends React.Component {
     $('.parent').addClass('faded-parent')
   }
 
-  mouseOut(e) {
-    this.setState({hover: false});
+  handleMouseDown(e) {
+    var target = $(e.target)
+    if(target.closest('.collapse-open').length == 0) {
+      this.removeFaded()
+    }
+  }
+
+  removeFaded() {
     $('.page-tile').removeClass('faded')
     $(this.refs.pageTile).removeClass('not-faded');
     $('.gutter, .level-support').removeClass('faded')
@@ -205,19 +226,23 @@ class PageTile extends React.Component {
   render() {
     if(this.props.childrenLength > 0) {
       return (
-        <div className={"page-tile " + (((this.props.pageTree.level == 0) && (this.props.childrenLength % 2 == 0)) ? 'even-tree' : 'odd-tree') } onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile' ref='pageTile'>
-          <div className='left-button'>
-            <div className="collapse-open collapse-close" onClick={this.addSameLevelPrevPage}></div>
-          Add same level page
-          </div>
-          <div className='right-button'>
-            <div className="collapse-open collapse-close" onClick={this.addSameLevelNextPage}></div>
-          Add same level page
-          </div>
-          <div className='bottom-button'>
-            <div className="collapse-open collapse-close" onClick={this.addSubPage}></div>
-          Add sub page
-          </div>
+        <div className={"page-tile " + (((this.props.pageTree.level == 0) && (this.props.childrenLength % 2 == 0)) ? 'even-tree' : 'odd-tree') } onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile' onMouseDown={this.handleMouseDown}>
+          { !this.props.isDragging &&
+            <div>
+              <div className='left-button'>
+                <div className="collapse-open collapse-close" onClick={this.addSameLevelPrevPage}></div>
+              Add same level page
+              </div>
+              <div className='right-button'>
+                <div className="collapse-open collapse-close" onClick={this.addSameLevelNextPage}></div>
+              Add same level page
+              </div>
+              <div className='bottom-button'>
+                <div className="collapse-open collapse-close" onClick={this.addSubPage}></div>
+              Add sub page
+              </div>
+            </div>
+          }
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber} name={this.props.name} />
           { this.props.pageTree.alt_section_id && !(this.props.level == 0) &&
             <span className="section-tag" onClick={this.showLinkedSection}>section</span>
@@ -283,19 +308,23 @@ class PageTile extends React.Component {
       );
     } else {
       return (
-        <div className="page-tile" onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile'>
-          <div className='left-button'>
-            <div className="collapse-open collapse-close" onClick={this.addSameLevelPrevPage}></div>
-          Add same level page
-          </div>
-          <div className='right-button'>
-            <div className="collapse-open collapse-close" onClick={this.addSameLevelNextPage}></div>
-          Add same level page
-          </div>
-          <div className='bottom-button'>
-            <div className="collapse-open collapse-close" onClick={this.addSubPage}></div>
-          Add sub page
-          </div>
+        <div className="page-tile" onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile' onMouseDown={this.handleMouseDown}>
+          { !this.props.isDragging &&
+            <div>
+              <div className='left-button'>
+                <div className="collapse-open collapse-close" onClick={this.addSameLevelPrevPage}></div>
+              Add same level page
+              </div>
+              <div className='right-button'>
+                <div className="collapse-open collapse-close" onClick={this.addSameLevelNextPage}></div>
+              Add same level page
+              </div>
+              <div className='bottom-button'>
+                <div className="collapse-open collapse-close" onClick={this.addSubPage}></div>
+              Add sub page
+              </div>
+            </div>
+          }
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber}  name={this.props.name} />
           { this.props.pageTree.alt_section_id && !(this.props.level == 0) &&
             <span className="section-tag" onClick={this.showLinkedSection}>section</span>

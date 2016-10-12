@@ -48067,7 +48067,7 @@
 	
 	var sitemapSource = {
 	  beginDrag: function beginDrag(props, monitor, component) {
-	    return { id: props.pageTree.id, parentId: props.pageTree.parentId, type: 'page', pageTree: props.pageTree, sitemapNumber: props.sitemapNumber };
+	    return { id: props.pageTree.id, parentId: props.pageTree.parentId, type: 'page', pageTree: props.pageTree, sitemapNumber: props.sitemapNumber, level: props.level };
 	  },
 	  canDrag: function canDrag(props, monitor) {
 	    return !props.publicShare && props.level != 0;
@@ -48134,14 +48134,14 @@
 	          return _react2.default.createElement(
 	            'div',
 	            { className: 'child-page', key: pageTree.id },
-	            _react2.default.createElement(DraggablePageContainer, { pageTree: pageTree, onPageDrop: _this.props.onPageDrop, leftSidebarExpanded: _this.props.leftSidebarExpanded, onPageTypeDrop: _this.props.onPageTypeDrop, sitemapId: _this.props.sitemapId, sitemapNumber: sitemapNumber, publicShare: _this.props.publicShare, introSlideNumber: _this.props.introSlideNumber, showNextSlide: _this.props.showNextSlide, level: _this.props.level + 1 })
+	            _react2.default.createElement(DraggablePageContainer, { pageTree: pageTree, onPageDrop: _this.props.onPageDrop, leftSidebarExpanded: _this.props.leftSidebarExpanded, onPageTypeDrop: _this.props.onPageTypeDrop, sitemapId: _this.props.sitemapId, sitemapNumber: sitemapNumber, publicShare: _this.props.publicShare, introSlideNumber: _this.props.introSlideNumber, showNextSlide: _this.props.showNextSlide, level: _this.props.level + 1, isDragging: _this.props.isDragging })
 	          );
 	        });
 	      }
 	      return connectDragSource(_react2.default.createElement(
 	        'div',
 	        { className: 'page-container-wrapper' + (isDragging ? ' dragging' : '') },
-	        _react2.default.createElement(_page_container2.default, (_React$createElement = { pageTree: this.props.pageTree, children: children, sitemapNumber: this.props.sitemapNumber, leftSidebarExpanded: this.props.leftSidebarExpanded, introSlideNumber: _this.props.introSlideNumber, showNextSlide: _this.props.showNextSlide }, _defineProperty(_React$createElement, 'leftSidebarExpanded', _this.props.leftSidebarExpanded), _defineProperty(_React$createElement, 'publicShare', _this.props.publicShare), _defineProperty(_React$createElement, 'level', this.props.level), _React$createElement))
+	        _react2.default.createElement(_page_container2.default, (_React$createElement = { pageTree: this.props.pageTree, children: children, sitemapNumber: this.props.sitemapNumber, leftSidebarExpanded: this.props.leftSidebarExpanded, introSlideNumber: _this.props.introSlideNumber, showNextSlide: _this.props.showNextSlide }, _defineProperty(_React$createElement, 'leftSidebarExpanded', _this.props.leftSidebarExpanded), _defineProperty(_React$createElement, 'publicShare', _this.props.publicShare), _defineProperty(_React$createElement, 'level', _this.props.level), _defineProperty(_React$createElement, 'isDragging', _this.props.isDragging), _React$createElement))
 	      ));
 	    }
 	  }]);
@@ -48255,7 +48255,7 @@
 	        return _react2.default.createElement(
 	          'div',
 	          { 'data-level': this.props.level, className: 'page-container level-' + this.props.level.toString() + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + (children.length == 0 ? ' no-children' : ''), style: { width: width } },
-	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name, level: this.props.level }),
+	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name, level: this.props.level, isDragging: this.props.isDragging }),
 	          _react2.default.createElement(_connected_gutter2.default, { pageTree: this.props.pageTree }),
 	          children.length == 0 && _react2.default.createElement(_connected_first_page_droppable2.default, { pageTree: this.props.pageTree, leftSidebarExpanded: this.props.leftSidebarExpanded }),
 	          this.props.publicShare && _react2.default.createElement(
@@ -48373,7 +48373,7 @@
 	      dispatch((0, _actions.setMaxPageUid)(maxPageUid + 1));
 	    },
 	    onPageIdUpdate: function onPageIdUpdate(id, sectionId, newId) {
-	      dispatch(updateId(id, sectionId, newId));
+	      dispatch((0, _actions.updateId)(id, sectionId, newId));
 	    },
 	    setSelectedPage: function setSelectedPage(page) {
 	      dispatch((0, _actions.setSelectedPage)(page));
@@ -48418,8 +48418,6 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -48446,6 +48444,9 @@
 	    _this2.addSameLevelNextPage = _this2.addSameLevelNextPage.bind(_this2);
 	    _this2.addSameLevelPrevPage = _this2.addSameLevelPrevPage.bind(_this2);
 	    _this2.addSubPage = _this2.addSubPage.bind(_this2);
+	    _this2.addFaded = _this2.addFaded.bind(_this2);
+	    _this2.removeFaded = _this2.removeFaded.bind(_this2);
+	    _this2.handleMouseDown = _this2.handleMouseDown.bind(_this2);
 	    _this2.state = { nameChangeDisabled: !props.pageTree.newRecord, hover: false, showOverLay: false, name: _this2.props.name, originalName: _this2.props.name, counter: 0 };
 	    return _this2;
 	  }
@@ -48521,6 +48522,7 @@
 	        }
 	      });
 	      this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.parentId, this.props.pageTree.position, timeStamp, this.props.maxPageUid);
+	      this.removeFaded();
 	    }
 	  }, {
 	    key: 'addSameLevelPrevPage',
@@ -48548,6 +48550,7 @@
 	        }
 	      });
 	      this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.parentId, this.props.pageTree.position - 1, timeStamp, this.props.maxPageUid);
+	      this.removeFaded();
 	    }
 	  }, {
 	    key: 'addSubPage',
@@ -48575,6 +48578,7 @@
 	        }
 	      });
 	      this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.id, 'begining', timeStamp, this.props.maxPageUid);
+	      this.removeFaded();
 	    }
 	  }, {
 	    key: 'setSelectedPage',
@@ -48602,6 +48606,17 @@
 	    key: 'mouseOver',
 	    value: function mouseOver(e) {
 	      this.setState({ hover: true });
+	      this.addFaded();
+	    }
+	  }, {
+	    key: 'mouseOut',
+	    value: function mouseOut(e) {
+	      this.setState({ hover: false });
+	      this.removeFaded();
+	    }
+	  }, {
+	    key: 'addFaded',
+	    value: function addFaded() {
 	      var otherPageTiles = $('.page-tile').not($(this.refs.pageTile));
 	      $(this.refs.pageTile).addClass('not-faded');
 	      otherPageTiles.addClass('faded');
@@ -48609,9 +48624,16 @@
 	      $('.parent').addClass('faded-parent');
 	    }
 	  }, {
-	    key: 'mouseOut',
-	    value: function mouseOut(e) {
-	      this.setState({ hover: false });
+	    key: 'handleMouseDown',
+	    value: function handleMouseDown(e) {
+	      var target = $(e.target);
+	      if (target.closest('.collapse-open').length == 0) {
+	        this.removeFaded();
+	      }
+	    }
+	  }, {
+	    key: 'removeFaded',
+	    value: function removeFaded() {
 	      $('.page-tile').removeClass('faded');
 	      $(this.refs.pageTile).removeClass('not-faded');
 	      $('.gutter, .level-support').removeClass('faded');
@@ -48644,24 +48666,28 @@
 	      if (this.props.childrenLength > 0) {
 	        return _react2.default.createElement(
 	          'div',
-	          _defineProperty({ className: "page-tile " + (this.props.pageTree.level == 0 && this.props.childrenLength % 2 == 0 ? 'even-tree' : 'odd-tree'), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile' }, 'ref', 'pageTile'),
-	          _react2.default.createElement(
+	          { className: "page-tile " + (this.props.pageTree.level == 0 && this.props.childrenLength % 2 == 0 ? 'even-tree' : 'odd-tree'), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile', onMouseDown: this.handleMouseDown },
+	          !this.props.isDragging && _react2.default.createElement(
 	            'div',
-	            { className: 'left-button' },
-	            _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelPrevPage }),
-	            'Add same level page'
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'right-button' },
-	            _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelNextPage }),
-	            'Add same level page'
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'bottom-button' },
-	            _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSubPage }),
-	            'Add sub page'
+	            null,
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'left-button' },
+	              _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelPrevPage }),
+	              'Add same level page'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'right-button' },
+	              _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelNextPage }),
+	              'Add same level page'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'bottom-button' },
+	              _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSubPage }),
+	              'Add sub page'
+	            )
 	          ),
 	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name }),
 	          this.props.pageTree.alt_section_id && !(this.props.level == 0) && _react2.default.createElement(
@@ -48764,24 +48790,28 @@
 	      } else {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: 'page-tile', onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile' },
-	          _react2.default.createElement(
+	          { className: 'page-tile', onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile', onMouseDown: this.handleMouseDown },
+	          !this.props.isDragging && _react2.default.createElement(
 	            'div',
-	            { className: 'left-button' },
-	            _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelPrevPage }),
-	            'Add same level page'
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'right-button' },
-	            _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelNextPage }),
-	            'Add same level page'
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'bottom-button' },
-	            _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSubPage }),
-	            'Add sub page'
+	            null,
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'left-button' },
+	              _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelPrevPage }),
+	              'Add same level page'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'right-button' },
+	              _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelNextPage }),
+	              'Add same level page'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'bottom-button' },
+	              _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSubPage }),
+	              'Add sub page'
+	            )
 	          ),
 	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name }),
 	          this.props.pageTree.alt_section_id && !(this.props.level == 0) && _react2.default.createElement(
@@ -64446,7 +64476,7 @@
 	      var itemtypes = _constants.ItemTypes;
 	      switch (type) {
 	        case _constants.ItemTypes.PAGE_CONTAINER:
-	          return _react2.default.createElement(_page_container_preview2.default, { pageTree: item.pageTree, sitemapNumber: item.sitemapNumber });
+	          return _react2.default.createElement(_page_container_preview2.default, { pageTree: item.pageTree, sitemapNumber: item.sitemapNumber, level: item.level });
 	        case _constants.ItemTypes.PAGE_TYPE:
 	          return _react2.default.createElement(_page_type_preview2.default, { name: item.name, iconName: item.iconName });
 	        default:
@@ -64560,7 +64590,7 @@
 	          return _react2.default.createElement(
 	            'div',
 	            { className: 'test', key: pageTree.id },
-	            _react2.default.createElement(PageContainerPreview, { pageTree: pageTree, sitemapNumber: sitemapNumber })
+	            _react2.default.createElement(PageContainerPreview, { pageTree: pageTree, sitemapNumber: sitemapNumber, level: _this.props.level + 1 })
 	          );
 	        });
 	      }
@@ -64568,7 +64598,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { style: styles, className: 'custom-drag-preview' },
-	        _react2.default.createElement(_page_container2.default, { pageTree: pageTree, children: children, sitemapNumber: this.props.sitemapNumber })
+	        _react2.default.createElement(_page_container2.default, { pageTree: pageTree, children: children, level: this.props.level, sitemapNumber: this.props.sitemapNumber, isDragging: true })
 	      );
 	    }
 	  }]);
