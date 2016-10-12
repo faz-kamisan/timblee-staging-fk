@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setSaving, setSelectedSection, incrementIntroSlideNumber, changeUpdatedAt } from '../actions'
+import { setSaving, setSelectedSection, setIntroSlideNumber, changeUpdatedAt } from '../actions'
 import IntroductionScreens from '../components/introduction_screens'
 
 const mapStateToProps = (state) => {
@@ -8,8 +8,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    showNextSlide: () => {
-      dispatch(incrementIntroSlideNumber())
+    setIntroSlideNumber: (introSlideNumber) => {
+      dispatch(setIntroSlideNumber(introSlideNumber))
     }
   }
 }

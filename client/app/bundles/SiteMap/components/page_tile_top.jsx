@@ -6,7 +6,7 @@ import { findDOMNode } from 'react-dom';
 const sitemapTarget = {
   drop: function(props, monitor, component) {
     const item = monitor.getItem();
-    if (monitor.didDrop() || !(props.pageTree.id) || props.pageTree.footer) {
+    if (monitor.didDrop() || !(props.pageTree.id) || props.pageTree.footer || props.level == 0) {
       return;
     }
     if(item.type == 'page') {
@@ -79,11 +79,11 @@ class PageTileTop extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
-      if(this.props.pageTree.parentId && !this.props.pageTree.footer) {
+      if((this.props.level > 0) && !this.props.pageTree.footer) {
         var domNode = findDOMNode(this);
         $(domNode).addClass('drag-over' )
         $('.custom-drag-layer').addClass('over-page-top');
-        if(this.props.pageTree.level == 1) {
+        if(this.props.level == 1) {
           $(domNode).parent('.page-tile').siblings('.level-support').addClass('again-drag-over')
         } else {
           $(domNode).parent('.page-tile').siblings('.gutter').addClass('again-drag-over')
@@ -93,11 +93,11 @@ class PageTileTop extends React.Component {
 
     if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
       // You can use this as leave handler
-      if(this.props.pageTree.parentId && !this.props.pageTree.footer) {
+      if((this.props.level > 0) && !this.props.pageTree.footer) {
         var domNode = findDOMNode(this);
         $(domNode).removeClass('drag-over')
         $('.custom-drag-layer').removeClass('over-page-top');
-        if(this.props.pageTree.level == 1) {
+        if(this.props.level == 1) {
           $(domNode).parent('.page-tile').siblings('.level-support').removeClass('again-drag-over')
         } else {
           $(domNode).parent('.page-tile').siblings('.gutter').removeClass('again-drag-over')

@@ -8,7 +8,6 @@
 
 * {
   -webkit-text-size-adjust: none;
-  -webkit-font-smoothing: antialiased;
 }
 
 body {
@@ -566,4 +565,133 @@ ul.tagit input[type="text"] {
   color: #414952;
   font-size: 14px;
   font-family: "proxima-nova",sans-serif;
+}
+
+.twemoji-textarea img {
+  width: 15px!important;
+  height: 15px!important;
+}
+
+.twemoji-textarea {
+  padding: 0!important;
+  border: 0!important;
+  height: 128px!important;
+}
+
+.twemoji-icon-picker img {
+  bottom: -48px!important;
+  top: auto!important;
+  right: 0!important;
+  width: 22px!important;
+  height: 22px!important;
+  right: -4px;
+  opacity: 0;
+}
+
+.twemoji-icon-picker {
+  &:hover {
+    &:before {
+      color: $primaryPink;
+    }
+  }
+  &:before {
+    content: "\e91d";
+    font-family: 'icomoon' !important;
+    font-size: 20px;
+    color: #62717f;
+    bottom: -52px;
+    position: absolute;
+    right: -2px;
+  }
+}
+
+#invite-user-modal, #sitemap-share-modal {
+  .twemoji-picker {
+    width: 160px!important;
+    height: 140px;
+    right: 0;
+    top: -33px;
+    overflow: auto;
+    overflow-x: hidden;
+    .close {
+      display: none;
+    }
+  }
+  .twemoji-picker-category {
+    border-top: solid 1px #ececec!important;
+    span {
+      display: inline-block!important;
+      width: 20%!important;
+      text-align: center;
+    }
+    img {
+      height: 15px!important;
+      padding: 0!important;
+      width: 15px!important;
+      margin-top: 4px!important;
+    }
+  }
+  .twemoji-picker-category {
+    background: $primaryWhite;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
+  .twemoji-list {
+    height: 114px!important;
+  }
+  .twemoji-picker-category .active, .twemoji-picker-category span:hover {
+    border: 0!important;
+  }
+  .twemoji-list img {
+    width: 17px!important;
+    height: 17px!important;
+    padding: 1px!important;
+  }
+}
+
+#invite-user-modal, #sitemap-share-modal {
+  .emoji-section {
+    margin-top: 28px;
+  }
+}
+
+#sitemap-share-modal {
+  .twemoji-wrap {
+    height: 150px!important;
+    @include border-radius(6px);
+    border: 1px solid #d4d4d4!important;
+    background: $primaryWhite;
+  }
+  .twemoji-textarea {
+    padding: 10px 13px 0 13px!important;
+    height: 115px!important;
+  }
+  .twemoji-icon-picker {
+    bottom: 57px;
+    position: absolute;
+    right: 15px;
+  }
+  .twemoji-picker {
+    right: 5px;
+    top: -34px;
+  }
+  .bottom-btns {
+    margin-top: 35px;
+  }
+  .for-email .add-remove-comment {
+    bottom: 10px!important;
+  }
+}
+
+.message-preview p {
+  word-wrap: break-word;
+  img {
+    width: 16px!important;
+    height: 16px!important;
+    position: relative;
+    bottom: 1px;
+    margin-right: 1px;
+  }
 }

@@ -40,7 +40,12 @@ class PageChangeModal extends React.Component {
 
   render() {
     var _this = this;
-    var filteredPageTypes = this.props.pageTypes.filter(function(pageType) { return(pageType.name.toLowerCase().indexOf(_this.state.searchQuery.toLowerCase()) !== -1) })
+    if(this.state.searchQuery.length > 0) {
+      var searchQueryRegExp = new RegExp(('\\b' + this.state.searchQuery), 'gi')
+      var filteredPageTypes = this.props.pageTypes.filter(function(pageType) { return(pageType.name.match(searchQueryRegExp)) })
+    } else {
+      var filteredPageTypes = this.props.pageTypes
+    }
     var pageTypeComponents = filteredPageTypes.map(function(pageType, index) {
       return(
         <li key={pageType.id} onClick={ function(e) { _this.setPageType(pageType) } }>

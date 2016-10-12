@@ -38601,7 +38601,7 @@
 	exports.setMaxPageUid = setMaxPageUid;
 	exports.addSharedUsers = addSharedUsers;
 	exports.removeSection = removeSection;
-	exports.incrementIntroSlideNumber = incrementIntroSlideNumber;
+	exports.setIntroSlideNumber = setIntroSlideNumber;
 	exports.updateSectionId = updateSectionId;
 	exports.changeActiveSectionId = changeActiveSectionId;
 	var SET_NAME = exports.SET_NAME = 'SET_NAME';
@@ -38647,7 +38647,7 @@
 	var SET_MAX_PAGE_UID = exports.SET_MAX_PAGE_UID = 'SET_MAX_PAGE_UID';
 	var ADD_SHARED_USERS = exports.ADD_SHARED_USERS = 'ADD_SHARED_USERS';
 	var REMOVE_SECTION = exports.REMOVE_SECTION = 'REMOVE_SECTION';
-	var INCREMENT_INTRO_SLIDE_NUMBER = exports.INCREMENT_INTRO_SLIDE_NUMBER = 'INCREMENT_INTRO_SLIDE_NUMBER';
+	var SET_INTRO_SLIDE_NUMBER = exports.SET_INTRO_SLIDE_NUMBER = 'SET_INTRO_SLIDE_NUMBER';
 	var UPDATE_SECTION_ID = exports.UPDATE_SECTION_ID = 'UPDATE_SECTION_ID';
 	var CHANGE_ACTIVE_SECTION_ID = exports.CHANGE_ACTIVE_SECTION_ID = 'CHANGE_ACTIVE_SECTION_ID';
 	
@@ -38823,8 +38823,8 @@
 	  return { type: REMOVE_SECTION, id: id };
 	}
 	
-	function incrementIntroSlideNumber() {
-	  return { type: INCREMENT_INTRO_SLIDE_NUMBER };
+	function setIntroSlideNumber(introSlideNumber) {
+	  return { type: SET_INTRO_SLIDE_NUMBER, introSlideNumber: introSlideNumber };
 	}
 	
 	function updateSectionId(oldId, newId) {
@@ -40002,12 +40002,12 @@
 	var _index = __webpack_require__(/*! ../actions/index */ 606);
 	
 	var introSlideNumber = function introSlideNumber() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
 	  var action = arguments[1];
 	
 	  switch (action.type) {
-	    case _index.INCREMENT_INTRO_SLIDE_NUMBER:
-	      return state + 1;
+	    case _index.SET_INTRO_SLIDE_NUMBER:
+	      return action.introSlideNumber;
 	    default:
 	      return state;
 	  }
@@ -47867,8 +47867,8 @@
 	    setSelectedSection: function setSelectedSection(section) {
 	      dispatch((0, _actions.setSelectedSection)(section));
 	    },
-	    showNextSlide: function showNextSlide() {
-	      dispatch((0, _actions.incrementIntroSlideNumber)());
+	    setIntroSlideNumber: function setIntroSlideNumber(introSlideNumber) {
+	      dispatch((0, _actions.setIntroSlideNumber)(introSlideNumber));
 	    },
 	    changeActiveSectionId: function changeActiveSectionId(sectionId) {
 	      dispatch((0, _actions.changeActiveSectionId)(sectionId));
@@ -48008,7 +48008,7 @@
 	          _react2.default.createElement(
 	            'div',
 	            null,
-	            _react2.default.createElement(_draggable_page_container2.default, { pageTree: pageTree, sitemapNumber: '', sitemapId: _this.props.sitemapId, leftSidebarExpanded: _this.props.leftSidebarExpanded, publicShare: _this.props.publicShare, introSlideNumber: _this.props.introSlideNumber, showNextSlide: _this.props.showNextSlide, level: 0 })
+	            _react2.default.createElement(_draggable_page_container2.default, { pageTree: pageTree, sitemapNumber: '', sitemapId: _this.props.sitemapId, leftSidebarExpanded: _this.props.leftSidebarExpanded, publicShare: _this.props.publicShare, introSlideNumber: _this.props.introSlideNumber, setIntroSlideNumber: _this.props.setIntroSlideNumber, level: 0 })
 	          )
 	        )
 	      );
@@ -48067,7 +48067,7 @@
 	
 	var sitemapSource = {
 	  beginDrag: function beginDrag(props, monitor, component) {
-	    return { id: props.pageTree.id, parentId: props.pageTree.parentId, type: 'page', pageTree: props.pageTree, sitemapNumber: props.sitemapNumber };
+	    return { id: props.pageTree.id, parentId: props.pageTree.parentId, type: 'page', pageTree: props.pageTree, sitemapNumber: props.sitemapNumber, level: props.level };
 	  },
 	  canDrag: function canDrag(props, monitor) {
 	    return !props.publicShare && props.level != 0;
@@ -48134,14 +48134,14 @@
 	          return _react2.default.createElement(
 	            'div',
 	            { className: 'child-page', key: pageTree.id },
-	            _react2.default.createElement(DraggablePageContainer, { pageTree: pageTree, onPageDrop: _this.props.onPageDrop, leftSidebarExpanded: _this.props.leftSidebarExpanded, onPageTypeDrop: _this.props.onPageTypeDrop, sitemapId: _this.props.sitemapId, sitemapNumber: sitemapNumber, publicShare: _this.props.publicShare, introSlideNumber: _this.props.introSlideNumber, showNextSlide: _this.props.showNextSlide, level: _this.props.level + 1 })
+	            _react2.default.createElement(DraggablePageContainer, { pageTree: pageTree, onPageDrop: _this.props.onPageDrop, leftSidebarExpanded: _this.props.leftSidebarExpanded, onPageTypeDrop: _this.props.onPageTypeDrop, sitemapId: _this.props.sitemapId, sitemapNumber: sitemapNumber, publicShare: _this.props.publicShare, introSlideNumber: _this.props.introSlideNumber, setIntroSlideNumber: _this.props.setIntroSlideNumber, level: _this.props.level + 1, isDragging: _this.props.isDragging })
 	          );
 	        });
 	      }
 	      return connectDragSource(_react2.default.createElement(
 	        'div',
 	        { className: 'page-container-wrapper' + (isDragging ? ' dragging' : '') },
-	        _react2.default.createElement(_page_container2.default, (_React$createElement = { pageTree: this.props.pageTree, children: children, sitemapNumber: this.props.sitemapNumber, leftSidebarExpanded: this.props.leftSidebarExpanded, introSlideNumber: _this.props.introSlideNumber, showNextSlide: _this.props.showNextSlide }, _defineProperty(_React$createElement, 'leftSidebarExpanded', _this.props.leftSidebarExpanded), _defineProperty(_React$createElement, 'publicShare', _this.props.publicShare), _defineProperty(_React$createElement, 'level', this.props.level), _React$createElement))
+	        _react2.default.createElement(_page_container2.default, (_React$createElement = { pageTree: this.props.pageTree, children: children, sitemapNumber: this.props.sitemapNumber, leftSidebarExpanded: this.props.leftSidebarExpanded, introSlideNumber: _this.props.introSlideNumber, setIntroSlideNumber: _this.props.setIntroSlideNumber }, _defineProperty(_React$createElement, 'leftSidebarExpanded', _this.props.leftSidebarExpanded), _defineProperty(_React$createElement, 'publicShare', _this.props.publicShare), _defineProperty(_React$createElement, 'level', _this.props.level), _defineProperty(_React$createElement, 'isDragging', _this.props.isDragging), _React$createElement))
 	      ));
 	    }
 	  }]);
@@ -48228,16 +48228,24 @@
 	  function PageContainer(props) {
 	    _classCallCheck(this, PageContainer);
 	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PageContainer).call(this, props));
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(PageContainer).call(this, props));
 	
-	    _this.showNextSlide = _this.showNextSlide.bind(_this);
-	    return _this;
+	    _this2.setIntroSlideNumber = _this2.setIntroSlideNumber.bind(_this2);
+	    _this2.hideFirstScreenHandle = _this2.hideFirstScreenHandle.bind(_this2);
+	    _this2.state = { showFirstScreenHandle: true };
+	    return _this2;
 	  }
 	
 	  _createClass(PageContainer, [{
-	    key: 'showNextSlide',
-	    value: function showNextSlide(e) {
-	      this.props.showNextSlide();
+	    key: 'hideFirstScreenHandle',
+	    value: function hideFirstScreenHandle(e) {
+	      this.setState({ showFirstScreenHandle: false });
+	      this.props.setIntroSlideNumber(0);
+	    }
+	  }, {
+	    key: 'setIntroSlideNumber',
+	    value: function setIntroSlideNumber(number) {
+	      this.props.setIntroSlideNumber(number);
 	    }
 	  }, {
 	    key: 'render',
@@ -48245,6 +48253,7 @@
 	      var children = this.props.pageTree.children.filter(function (page) {
 	        return page.state != 'archived';
 	      });
+	      var _this = this;
 	      if (this.props.level == 0) {
 	        if (this.props.leftSidebarExpanded) {
 	          var width = (children.length * 240 + 412 + 240).toString() + 'px';
@@ -48255,16 +48264,18 @@
 	        return _react2.default.createElement(
 	          'div',
 	          { 'data-level': this.props.level, className: 'page-container level-' + this.props.level.toString() + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + (children.length == 0 ? ' no-children' : ''), style: { width: width } },
-	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name, level: this.props.level }),
+	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name, level: this.props.level, isDragging: this.props.isDragging }),
 	          _react2.default.createElement(_connected_gutter2.default, { pageTree: this.props.pageTree }),
 	          children.length == 0 && _react2.default.createElement(_connected_first_page_droppable2.default, { pageTree: this.props.pageTree, leftSidebarExpanded: this.props.leftSidebarExpanded }),
 	          this.props.publicShare && _react2.default.createElement(
 	            'div',
 	            { className: 'intro-box-1' },
+	            _react2.default.createElement('span', { className: "hotspot " + (this.state.showFirstScreenHandle ? '' : 'hide'), onClick: function onClick(e) {
+	                _this.setIntroSlideNumber(1);
+	              } }),
 	            _react2.default.createElement(
 	              'div',
 	              { className: "intro-box share-1" + (this.props.introSlideNumber == 1 ? '' : ' hide') },
-	              _react2.default.createElement('span', { className: 'hotspot' }),
 	              _react2.default.createElement(
 	                'figure',
 	                null,
@@ -48277,7 +48288,7 @@
 	              ),
 	              _react2.default.createElement(
 	                'a',
-	                { href: 'javascript:void(0);', onClick: this.showNextSlide },
+	                { href: 'javascript:void(0);', onClick: this.hideFirstScreenHandle },
 	                'Got it'
 	              )
 	            )
@@ -48341,7 +48352,9 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { publicShare: state.publicShare };
+	  return { publicShare: state.publicShare, pageType: state.pageTypes.filter(function (pageType) {
+	      return pageType.name == 'General 1';
+	    })[0], maxPageUid: state.maxPageUid, sitemapId: state.id };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -48365,6 +48378,13 @@
 	    },
 	    changeActiveSectionId: function changeActiveSectionId(sectionId) {
 	      dispatch((0, _actions.changeActiveSectionId)(sectionId));
+	    },
+	    onPageTypeDrop: function onPageTypeDrop(sectionId, pageType, parentId, position, timeStamp, maxPageUid) {
+	      dispatch((0, _actions.addNewPage)(sectionId, pageType, parentId, position, timeStamp, maxPageUid + 1));
+	      dispatch((0, _actions.setMaxPageUid)(maxPageUid + 1));
+	    },
+	    onPageIdUpdate: function onPageIdUpdate(id, sectionId, newId) {
+	      dispatch((0, _actions.updateId)(id, sectionId, newId));
 	    },
 	    setSelectedPage: function setSelectedPage(page) {
 	      dispatch((0, _actions.setSelectedPage)(page));
@@ -48432,6 +48452,12 @@
 	    _this2.openOverLay = _this2.openOverLay.bind(_this2);
 	    _this2.setSelectedPage = _this2.setSelectedPage.bind(_this2);
 	    _this2.showLinkedSection = _this2.showLinkedSection.bind(_this2);
+	    _this2.addSameLevelNextPage = _this2.addSameLevelNextPage.bind(_this2);
+	    _this2.addSameLevelPrevPage = _this2.addSameLevelPrevPage.bind(_this2);
+	    _this2.addSubPage = _this2.addSubPage.bind(_this2);
+	    _this2.addFaded = _this2.addFaded.bind(_this2);
+	    _this2.removeFaded = _this2.removeFaded.bind(_this2);
+	    _this2.handleMouseDown = _this2.handleMouseDown.bind(_this2);
 	    _this2.state = { nameChangeDisabled: !props.pageTree.newRecord, hover: false, showOverLay: false, name: _this2.props.name, originalName: _this2.props.name, counter: 0 };
 	    return _this2;
 	  }
@@ -48482,6 +48508,90 @@
 	      }
 	    }
 	  }, {
+	    key: 'addSameLevelNextPage',
+	    value: function addSameLevelNextPage(e) {
+	      var timeStamp = new Date();
+	      var _this = this;
+	      $.ajax({
+	        url: '/pages/',
+	        method: 'post',
+	        dataType: 'JSON',
+	        data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.parentId, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: this.props.pageTree.position + 1, section_id: this.props.pageTree.section_id } },
+	        error: function error(result) {
+	          document.setFlash(result.responseText);
+	        },
+	        success: function success(result) {
+	          var onPageIdUpdate = _this.props.onPageIdUpdate;
+	          var pageTree = _this.props.pageTree;
+	          onPageIdUpdate(timeStamp, pageTree.section_id, result.id);
+	        },
+	        complete: function complete(result) {
+	          _this.props.setSaving(true);
+	          setTimeout(function () {
+	            _this.props.setSaving(false);
+	          }, 2000);
+	        }
+	      });
+	      this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.parentId, this.props.pageTree.position, timeStamp, this.props.maxPageUid);
+	      this.removeFaded();
+	    }
+	  }, {
+	    key: 'addSameLevelPrevPage',
+	    value: function addSameLevelPrevPage(e) {
+	      var timeStamp = new Date();
+	      var _this = this;
+	      $.ajax({
+	        url: '/pages/',
+	        method: 'post',
+	        dataType: 'JSON',
+	        data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.parentId, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: this.props.pageTree.position, section_id: this.props.pageTree.section_id } },
+	        error: function error(result) {
+	          document.setFlash(result.responseText);
+	        },
+	        success: function success(result) {
+	          var onPageIdUpdate = _this.props.onPageIdUpdate;
+	          var pageTree = _this.props.pageTree;
+	          onPageIdUpdate(timeStamp, pageTree.section_id, result.id);
+	        },
+	        complete: function complete(result) {
+	          _this.props.setSaving(true);
+	          setTimeout(function () {
+	            _this.props.setSaving(false);
+	          }, 2000);
+	        }
+	      });
+	      this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.parentId, this.props.pageTree.position - 1, timeStamp, this.props.maxPageUid);
+	      this.removeFaded();
+	    }
+	  }, {
+	    key: 'addSubPage',
+	    value: function addSubPage(e) {
+	      var timeStamp = new Date();
+	      var _this = this;
+	      $.ajax({
+	        url: '/pages/',
+	        method: 'post',
+	        dataType: 'JSON',
+	        data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.id, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: 1, section_id: this.props.pageTree.section_id } },
+	        error: function error(result) {
+	          document.setFlash(result.responseText);
+	        },
+	        success: function success(result) {
+	          var onPageIdUpdate = _this.props.onPageIdUpdate;
+	          var pageTree = _this.props.pageTree;
+	          onPageIdUpdate(timeStamp, pageTree.section_id, result.id);
+	        },
+	        complete: function complete(result) {
+	          _this.props.setSaving(true);
+	          setTimeout(function () {
+	            _this.props.setSaving(false);
+	          }, 2000);
+	        }
+	      });
+	      this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.id, 'begining', timeStamp, this.props.maxPageUid);
+	      this.removeFaded();
+	    }
+	  }, {
 	    key: 'setSelectedPage',
 	    value: function setSelectedPage(e) {
 	      this.props.setSelectedPage(this.props.pageTree);
@@ -48507,11 +48617,42 @@
 	    key: 'mouseOver',
 	    value: function mouseOver(e) {
 	      this.setState({ hover: true });
+	      if (!this.props.pageTree.footer) {
+	        this.addFaded();
+	      }
 	    }
 	  }, {
 	    key: 'mouseOut',
 	    value: function mouseOut(e) {
 	      this.setState({ hover: false });
+	      if (!this.props.pageTree.footer) {
+	        this.removeFaded();
+	      }
+	    }
+	  }, {
+	    key: 'addFaded',
+	    value: function addFaded() {
+	      var otherPageTiles = $('.page-tile').not($(this.refs.pageTile));
+	      $(this.refs.pageTile).addClass('not-faded');
+	      otherPageTiles.addClass('faded');
+	      $('.gutter, .level-support').addClass('faded');
+	      $('.parent').addClass('faded-parent');
+	    }
+	  }, {
+	    key: 'handleMouseDown',
+	    value: function handleMouseDown(e) {
+	      var target = $(e.target);
+	      if (target.closest('.collapse-open').length == 0 && target.closest('.first-item').length == 0 && target.closest('.close-card-overlay').length == 0) {
+	        this.removeFaded();
+	      }
+	    }
+	  }, {
+	    key: 'removeFaded',
+	    value: function removeFaded() {
+	      $('.page-tile').removeClass('faded');
+	      $(this.refs.pageTile).removeClass('not-faded');
+	      $('.gutter, .level-support').removeClass('faded');
+	      $('.parent').removeClass('faded-parent');
 	    }
 	  }, {
 	    key: 'handleOnCollapsedChanged',
@@ -48527,7 +48668,7 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var _this = this;
-	      $('.page-change-modal').on('hidden.bs.modal', function () {
+	      $('.modal').on('hidden.bs.modal', function () {
 	        _this.setState({ showOverLay: false });
 	      });
 	      if (this.props.pageTree.newRecord) {
@@ -48540,8 +48681,30 @@
 	      if (this.props.childrenLength > 0) {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: "page-tile " + (this.props.pageTree.level == 0 && this.props.childrenLength % 2 == 0 ? 'even-tree' : 'odd-tree'), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile' },
-	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name }),
+	          { className: "page-tile " + (this.props.level == 0 && this.props.childrenLength % 2 == 0 ? 'even-tree' : 'odd-tree'), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile', onMouseDown: this.handleMouseDown },
+	          !this.props.isDragging && _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'left-button' },
+	              _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelPrevPage }),
+	              'Add same level page'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'right-button' },
+	              _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelNextPage }),
+	              'Add same level page'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'bottom-button' },
+	              _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSubPage }),
+	              'Add sub page'
+	            )
+	          ),
+	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name, level: this.props.level }),
 	          this.props.pageTree.alt_section_id && !(this.props.level == 0) && _react2.default.createElement(
 	            'span',
 	            { className: 'section-tag', onClick: this.showLinkedSection },
@@ -48642,8 +48805,30 @@
 	      } else {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: 'page-tile', onMouseOver: this.mouseOver, onMouseOut: this.mouseOut },
-	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name }),
+	          { className: 'page-tile', onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile', onMouseDown: this.handleMouseDown },
+	          !this.props.isDragging && _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'left-button' },
+	              _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelPrevPage }),
+	              'Add same level page'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'right-button' },
+	              _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelNextPage }),
+	              'Add same level page'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'bottom-button' },
+	              _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSubPage }),
+	              'Add sub page'
+	            )
+	          ),
+	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name, level: this.props.level }),
 	          this.props.pageTree.alt_section_id && !(this.props.level == 0) && _react2.default.createElement(
 	            'span',
 	            { className: 'section-tag', onClick: this.showLinkedSection },
@@ -48662,7 +48847,7 @@
 	          ),
 	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement('div', { className: "tile-right " + this.props.pageTree.pageType.icon_name }),
-	          _react2.default.createElement(
+	          !(this.props.level == 0 && this.props.pageTree.alt_section_id) && _react2.default.createElement(
 	            'div',
 	            { className: "tile-right-hover " + (this.state.hover ? 'hovered' : '') },
 	            _react2.default.createElement(
@@ -48694,7 +48879,7 @@
 	              )
 	            )
 	          ),
-	          _react2.default.createElement(
+	          !(this.props.level == 0 && this.props.pageTree.alt_section_id) && _react2.default.createElement(
 	            'div',
 	            { className: "card-overlay" + (this.state.showOverLay ? ' overlay-in' : '') },
 	            _react2.default.createElement(
@@ -48847,7 +49032,7 @@
 	var sitemapTarget = {
 	  drop: function drop(props, monitor, component) {
 	    var item = monitor.getItem();
-	    if (monitor.didDrop() || !props.pageTree.id || props.pageTree.footer) {
+	    if (monitor.didDrop() || !props.pageTree.id || props.pageTree.footer || props.level == 0) {
 	      return;
 	    }
 	    if (item.type == 'page') {
@@ -48913,11 +49098,11 @@
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
 	      if (!this.props.isOverCurrent && nextProps.isOverCurrent) {
-	        if (this.props.pageTree.parentId && !this.props.pageTree.footer) {
+	        if (this.props.level > 0 && !this.props.pageTree.footer) {
 	          var domNode = (0, _reactDom.findDOMNode)(this);
 	          $(domNode).addClass('drag-over');
 	          $('.custom-drag-layer').addClass('over-page-top');
-	          if (this.props.pageTree.level == 1) {
+	          if (this.props.level == 1) {
 	            $(domNode).parent('.page-tile').siblings('.level-support').addClass('again-drag-over');
 	          } else {
 	            $(domNode).parent('.page-tile').siblings('.gutter').addClass('again-drag-over');
@@ -48927,11 +49112,11 @@
 	
 	      if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
 	        // You can use this as leave handler
-	        if (this.props.pageTree.parentId && !this.props.pageTree.footer) {
+	        if (this.props.level > 0 && !this.props.pageTree.footer) {
 	          var domNode = (0, _reactDom.findDOMNode)(this);
 	          $(domNode).removeClass('drag-over');
 	          $('.custom-drag-layer').removeClass('over-page-top');
-	          if (this.props.pageTree.level == 1) {
+	          if (this.props.level == 1) {
 	            $(domNode).parent('.page-tile').siblings('.level-support').removeClass('again-drag-over');
 	          } else {
 	            $(domNode).parent('.page-tile').siblings('.gutter').removeClass('again-drag-over');
@@ -50336,7 +50521,16 @@
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var _this = this;
 	      $('body').addClass('hide-header');
+	      $('body').on('click', function (e) {
+	        if (!(e.target.closest('.sitemap-induction-sidebar') || e.target.closest('.sitemap-right-sidebar') || e.target.closest('.show-comments-sidebar-link') || e.target.closest('.show-induction-sidebar-link'))) {
+	          _this.setState({ commentSidebarOpen: false, inductionSidebarOpen: false });
+	          $('.sitemap-induction-sidebar').removeClass('open');
+	          $('.sitemap-right-sidebar').removeClass('open');
+	          $('.comment-list').removeClass('open');
+	        }
+	      });
 	    }
 	  }, {
 	    key: 'toggleCommentState',
@@ -50420,12 +50614,12 @@
 	          { className: 'header-options' },
 	          _react2.default.createElement(
 	            'a',
-	            { href: 'javascript:void(0)', className: this.state.commentSidebarOpen || this.props.introSlideNumber == 2 ? 'active' : '', onClick: this.toggleCommentState },
+	            { href: 'javascript:void(0)', className: 'show-comments-sidebar-link ' + (this.state.commentSidebarOpen || this.props.introSlideNumber == 2 ? ' active' : ''), onClick: this.toggleCommentState },
 	            _react2.default.createElement('span', { className: 'icon-comment-circle' })
 	          ),
 	          _react2.default.createElement(
 	            'a',
-	            { href: 'javascript:void(0)', className: this.state.inductionSidebarOpen ? 'active' : '', onClick: this.toggleInductionState },
+	            { href: 'javascript:void(0)', className: 'show-induction-sidebar-link ' + (this.state.inductionSidebarOpen ? 'active' : ''), onClick: this.toggleInductionState },
 	            _react2.default.createElement('span', { className: 'icon-question-circle' })
 	          )
 	        )
@@ -50518,15 +50712,21 @@
 	
 	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(TrialHeader).call(this, props));
 	
-	    _this2.state = { showDemo: true };
+	    _this2.state = { showDemo: false, showDemoHandle: true };
+	    _this2.hideDemo = _this2.hideDemo.bind(_this2);
 	    _this2.showDemo = _this2.showDemo.bind(_this2);
 	    return _this2;
 	  }
 	
 	  _createClass(TrialHeader, [{
+	    key: 'hideDemo',
+	    value: function hideDemo() {
+	      this.setState({ showDemo: false, showDemoHandle: false });
+	    }
+	  }, {
 	    key: 'showDemo',
 	    value: function showDemo() {
-	      this.setState({ showDemo: false });
+	      this.setState({ showDemo: true });
 	    }
 	  }, {
 	    key: 'componentDidMount',
@@ -50562,13 +50762,13 @@
 	            'Create my free account'
 	          )
 	        ),
-	        this.state.showDemo && _react2.default.createElement(
+	        _react2.default.createElement(
 	          'div',
-	          { className: 'intro-box-trial' },
-	          _react2.default.createElement(
+	          { className: "intro-box-trial " + (this.state.showDemo ? '' : 'hide-demo') },
+	          this.state.showDemoHandle && _react2.default.createElement('span', { className: 'hotspot', onClick: this.showDemo }),
+	          this.state.showDemo && _react2.default.createElement(
 	            'div',
 	            { className: 'intro-box' },
-	            _react2.default.createElement('span', { className: 'hotspot' }),
 	            _react2.default.createElement(
 	              'figure',
 	              null,
@@ -50581,7 +50781,7 @@
 	            ),
 	            _react2.default.createElement(
 	              'a',
-	              { href: 'javascript:void(0);', onClick: this.showDemo },
+	              { href: 'javascript:void(0);', onClick: this.hideDemo },
 	              'Got it'
 	            )
 	          )
@@ -50734,8 +50934,8 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    showNextSlide: function showNextSlide() {
-	      dispatch((0, _actions.incrementIntroSlideNumber)());
+	    setIntroSlideNumber: function setIntroSlideNumber(introSlideNumber) {
+	      dispatch((0, _actions.setIntroSlideNumber)(introSlideNumber));
 	    }
 	  };
 	};
@@ -50777,30 +50977,48 @@
 	  function IntroductionScreens(props) {
 	    _classCallCheck(this, IntroductionScreens);
 	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(IntroductionScreens).call(this, props));
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(IntroductionScreens).call(this, props));
 	
-	    _this.showNextSlide = _this.showNextSlide.bind(_this);
-	    return _this;
+	    _this2.setIntroSlideNumber = _this2.setIntroSlideNumber.bind(_this2);
+	    _this2.hideSecondScreenHandle = _this2.hideSecondScreenHandle.bind(_this2);
+	    _this2.hideThirdScreenHandle = _this2.hideThirdScreenHandle.bind(_this2);
+	    _this2.state = { showSecondScreenHandle: true, showThirdScreenHandle: true };
+	    return _this2;
 	  }
 	
 	  _createClass(IntroductionScreens, [{
-	    key: "showNextSlide",
-	    value: function showNextSlide(e) {
-	      this.props.showNextSlide();
+	    key: "hideSecondScreenHandle",
+	    value: function hideSecondScreenHandle(e) {
+	      this.setState({ showSecondScreenHandle: false });
+	      this.props.setIntroSlideNumber(0);
+	    }
+	  }, {
+	    key: "hideThirdScreenHandle",
+	    value: function hideThirdScreenHandle(e) {
+	      this.setState({ showThirdScreenHandle: false });
+	      this.props.setIntroSlideNumber(0);
+	    }
+	  }, {
+	    key: "setIntroSlideNumber",
+	    value: function setIntroSlideNumber(number) {
+	      this.props.setIntroSlideNumber(number);
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
+	      var _this = this;
 	      return _react2.default.createElement(
 	        "div",
 	        { className: "public-intro" },
 	        _react2.default.createElement(
 	          "div",
 	          { className: "intro-box-2" },
+	          _react2.default.createElement("span", { className: "hotspot " + (this.state.showSecondScreenHandle ? '' : 'hide'), onClick: function onClick(e) {
+	              _this.setIntroSlideNumber(2);
+	            } }),
 	          _react2.default.createElement(
 	            "div",
 	            { className: "intro-box share-2" + (this.props.introSlideNumber == 2 ? '' : ' hide') },
-	            _react2.default.createElement("span", { className: "hotspot" }),
 	            _react2.default.createElement(
 	              "figure",
 	              null,
@@ -50813,7 +51031,7 @@
 	            ),
 	            _react2.default.createElement(
 	              "a",
-	              { href: "javascript:void(0);", onClick: this.showNextSlide },
+	              { href: "javascript:void(0);", onClick: this.hideSecondScreenHandle },
 	              "Got it"
 	            )
 	          )
@@ -50821,10 +51039,12 @@
 	        _react2.default.createElement(
 	          "div",
 	          { className: "intro-box-3" },
+	          _react2.default.createElement("span", { className: "hotspot " + (this.state.showThirdScreenHandle ? '' : 'hide'), onClick: function onClick(e) {
+	              _this.setIntroSlideNumber(3);
+	            } }),
 	          _react2.default.createElement(
 	            "div",
 	            { className: "intro-box share-3" + (this.props.introSlideNumber == 3 ? '' : ' hide') },
-	            _react2.default.createElement("span", { className: "hotspot" }),
 	            _react2.default.createElement(
 	              "figure",
 	              null,
@@ -50837,7 +51057,7 @@
 	            ),
 	            _react2.default.createElement(
 	              "a",
-	              { href: "javascript:void(0);", onClick: this.showNextSlide },
+	              { href: "javascript:void(0);", onClick: this.hideThirdScreenHandle },
 	              "Got it"
 	            )
 	          )
@@ -51213,10 +51433,14 @@
 	    key: 'render',
 	    value: function render() {
 	      var _this = this;
-	      var searchQueryRegExp = new RegExp('^' + this.state.searchQuery, 'i');
-	      var filteredPageTypes = this.props.pageTypes.filter(function (pageType) {
-	        return pageType.name.match(searchQueryRegExp);
-	      });
+	      if (this.state.searchQuery.length > 0) {
+	        var searchQueryRegExp = new RegExp('\\b' + this.state.searchQuery, 'gi');
+	        var filteredPageTypes = this.props.pageTypes.filter(function (pageType) {
+	          return pageType.name.match(searchQueryRegExp);
+	        });
+	      } else {
+	        var filteredPageTypes = this.props.pageTypes;
+	      }
 	      var pageTypeComponents = filteredPageTypes.map(function (pageType, index) {
 	        return _react2.default.createElement(
 	          'li',
@@ -51260,7 +51484,7 @@
 	          _react2.default.createElement(
 	            'form',
 	            { className: 'search-page-type' },
-	            _react2.default.createElement('input', { type: 'search', id: 'page-type', name: 'page-type', placeholder: 'Page type', onChange: this.handleSearch }),
+	            _react2.default.createElement('input', { type: 'search', id: 'page-type', name: 'page-type', placeholder: 'Page type', className: this.state.searchQuery.length > 0 ? ' search-active' : '', onChange: this.handleSearch }),
 	            _react2.default.createElement(
 	              'label',
 	              { htmlFor: 'page-type' },
@@ -63408,9 +63632,14 @@
 	    key: 'render',
 	    value: function render() {
 	      var _this = this;
-	      var filteredPageTypes = this.props.pageTypes.filter(function (pageType) {
-	        return pageType.name.toLowerCase().indexOf(_this.state.searchQuery.toLowerCase()) !== -1;
-	      });
+	      if (this.state.searchQuery.length > 0) {
+	        var searchQueryRegExp = new RegExp('\\b' + this.state.searchQuery, 'gi');
+	        var filteredPageTypes = this.props.pageTypes.filter(function (pageType) {
+	          return pageType.name.match(searchQueryRegExp);
+	        });
+	      } else {
+	        var filteredPageTypes = this.props.pageTypes;
+	      }
 	      var pageTypeComponents = filteredPageTypes.map(function (pageType, index) {
 	        return _react2.default.createElement(
 	          'li',
@@ -64306,7 +64535,7 @@
 	      var itemtypes = _constants.ItemTypes;
 	      switch (type) {
 	        case _constants.ItemTypes.PAGE_CONTAINER:
-	          return _react2.default.createElement(_page_container_preview2.default, { pageTree: item.pageTree, sitemapNumber: item.sitemapNumber });
+	          return _react2.default.createElement(_page_container_preview2.default, { pageTree: item.pageTree, sitemapNumber: item.sitemapNumber, level: item.level });
 	        case _constants.ItemTypes.PAGE_TYPE:
 	          return _react2.default.createElement(_page_type_preview2.default, { name: item.name, iconName: item.iconName });
 	        default:
@@ -64420,7 +64649,7 @@
 	          return _react2.default.createElement(
 	            'div',
 	            { className: 'test', key: pageTree.id },
-	            _react2.default.createElement(PageContainerPreview, { pageTree: pageTree, sitemapNumber: sitemapNumber })
+	            _react2.default.createElement(PageContainerPreview, { pageTree: pageTree, sitemapNumber: sitemapNumber, level: _this.props.level + 1 })
 	          );
 	        });
 	      }
@@ -64428,7 +64657,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { style: styles, className: 'custom-drag-preview' },
-	        _react2.default.createElement(_page_container2.default, { pageTree: pageTree, children: children, sitemapNumber: this.props.sitemapNumber })
+	        _react2.default.createElement(_page_container2.default, { pageTree: pageTree, children: children, level: this.props.level, sitemapNumber: this.props.sitemapNumber, isDragging: true })
 	      );
 	    }
 	  }]);

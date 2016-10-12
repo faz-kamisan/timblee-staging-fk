@@ -66,7 +66,7 @@ class CustomDragLayer extends Component {
     switch (type) {
     case ItemTypes.PAGE_CONTAINER:
       return (
-        <PageContainerPreview pageTree={item.pageTree} sitemapNumber={item.sitemapNumber} />
+        <PageContainerPreview pageTree={item.pageTree} sitemapNumber={item.sitemapNumber} level={item.level} />
       );
     case ItemTypes.PAGE_TYPE:
       return (

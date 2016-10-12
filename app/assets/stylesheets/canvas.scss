@@ -1,3 +1,88 @@
+.faded {
+  opacity: 0.05;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.not-faded {
+  z-index: 2;
+  &:before, &:after {
+    opacity: 0.05;
+  }
+  &:hover {
+    .left-button, .right-button, .bottom-button {
+      opacity: 1;
+      visibility: visible;
+    }
+    .left-button {
+      left: -150px;
+    }
+    .right-button {
+      right: -150px;
+    }
+    .bottom-button {
+      top: 84px;
+    }
+  }
+}
+
+.faded-parent {
+  &:before {
+    opacity: 0.05;
+  }
+}
+
+.left-button,
+.right-button,
+.bottom-button {
+  width: 150px;
+  background: $transparent;
+  font-size: 11px;
+  position: absolute;
+  opacity: 0;
+  height: 84px;
+  visibility: hidden;
+  text-align: center;
+  padding-top: 30px;
+  @include animate(.5s);
+}
+
+.left-button {
+  left: -140px;
+  padding-right: 20px;
+  .collapse-open {
+    bottom: auto!important;
+    left: auto!important;
+    right: 8px!important;
+    top: 50%;
+    margin-top: -13px;
+  }
+}
+
+.right-button {
+  right: -140px;
+  padding-left: 20px;
+  .collapse-open {
+    bottom: 35px!important;
+    left: 8px!important;
+    right: auto!important;
+  }
+}
+
+.bottom-button {
+  top: 74px;
+  width: 100%;
+  padding-top: 35px;
+  height: 54px;
+  .collapse-open {
+    bottom: auto!important;
+    top: 10px!important;
+    left: 50%!important;
+    right: auto!important;
+    margin-left: -9px!important;
+  }
+}
+
 .page-container, .page-tile-clone, .footer-page {
   .page-tile {
     width: 200px;
@@ -9,6 +94,7 @@
     position: relative;
     display: inline-block;
     cursor: pointer;
+    @include animate(.5s);
     .collapse-open {
       position: absolute;
       left: 0;
@@ -93,7 +179,7 @@
   .tile-name-edit {
     padding-right: 70px;
     padding-left: 22px;
-    font-size: 12px;
+    font-size: 10px;
     margin: 0;
     text-align: left;
     line-height: 14px;
@@ -284,6 +370,10 @@
     }
     > .page-tile {
       margin-bottom: 75px;
+      .left-button,
+      .right-button {
+        display: none;
+      }
       &.odd-tree {
         margin-bottom: 70px;
       }
@@ -532,6 +622,7 @@
     width: 100%;
     height: 26px;
     background: $transparent;
+    @include animate(0.5s);
     &.drag-over, &.again-drag-over, &.again-2-drag-over {
       background: url('/assets/gutter.png');
       background-repeat: no-repeat;
@@ -557,6 +648,7 @@
         position: absolute;
         right: -40px;
         top: 0;
+        @include animate(0.5s);
         z-index: 2;
         &:before {
           content: ' ';
@@ -915,6 +1007,12 @@
     margin: 13px 0;
     background: #262B30;
     @include animate(.35s);
+    &.search-active {
+      padding-left: 50px;
+      + label {
+        right: 330px;
+      }
+    }
     &:focus {
       padding-left: 50px;
       + label {
@@ -1794,10 +1892,10 @@ body.trial {
   position: fixed;
   right: -435px;
   width: 420px;
-  top: 138px;
-  height: calc(100% - 138px);
+  top: 0px;
+  height: 100%;
   background: #262b30;
-  z-index: 14;
+  z-index: 16;
   transition: .35s;
   box-shadow: 0px 0px 20px 7px rgba(147, 147, 147, 1);
   overflow-y: auto;
@@ -3257,7 +3355,9 @@ body.trial {
   }
 
   .sitemap-right-sidebar {
-    top: 138px!important;
+    top: 0px!important;
+    z-index: 16;
+    height: 100%;
     padding-top: 25px;
   }
 
@@ -3430,7 +3530,7 @@ body.trial {
   position: fixed;
   .hotspot {
     top: -52px;
-    right: 76px;
+    left: 481px;
   }
 }
 
@@ -3481,6 +3581,11 @@ body.trial {
   position: absolute;
   left: 380px;
   top: 115px;
+  &.hide-demo {
+    &:before, &:after {
+      display: none;
+    }
+  }
   p {
     display: block;
     height: auto;

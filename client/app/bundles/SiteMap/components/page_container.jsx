@@ -14,15 +14,23 @@ class PageContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.showNextSlide = this.showNextSlide.bind(this)
+    this.setIntroSlideNumber = this.setIntroSlideNumber.bind(this)
+    this.hideFirstScreenHandle = this.hideFirstScreenHandle.bind(this);
+    this.state = { showFirstScreenHandle: true }
   }
 
-  showNextSlide(e) {
-    this.props.showNextSlide()
+  hideFirstScreenHandle(e) {
+    this.setState({ showFirstScreenHandle: false })
+    this.props.setIntroSlideNumber(0)
+  }
+
+  setIntroSlideNumber(number) {
+    this.props.setIntroSlideNumber(number)
   }
 
   render() {
     var children = this.props.pageTree.children.filter(function(page) { return(page.state != 'archived') })
+    var _this = this
     if(this.props.level == 0) {
       if(this.props.leftSidebarExpanded) {
         var width = ((children.length * 240) + 412 + 240).toString() + 'px'
@@ -32,20 +40,20 @@ class PageContainer extends React.Component {
 
       return (
         <div data-level={this.props.level} className={ 'page-container level-' + this.props.level.toString() + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + ((children.length == 0) ? ' no-children' : '') } style={ { width: width } }>
-          <ConnectedPageTile pageTree={this.props.pageTree} collapsed={this.props.pageTree.collapsed} childrenLength={children.length} sitemapNumber={this.props.sitemapNumber} name={this.props.pageTree.name} level={this.props.level} />
+          <ConnectedPageTile pageTree={this.props.pageTree} collapsed={this.props.pageTree.collapsed} childrenLength={children.length} sitemapNumber={this.props.sitemapNumber} name={this.props.pageTree.name} level={this.props.level}  isDragging={this.props.isDragging} />
           <ConnectedGutter pageTree={this.props.pageTree} />
           { (children.length == 0) &&
             <ConnectedFirstPageDroppable pageTree={this.props.pageTree} leftSidebarExpanded={this.props.leftSidebarExpanded} />
           }
           { this.props.publicShare &&
             <div className="intro-box-1">
+              <span className={ "hotspot " + (this.state.showFirstScreenHandle ? '' : 'hide')} onClick={function(e) { _this.setIntroSlideNumber(1) } }></span>
               <div className={"intro-box share-1" + (this.props.introSlideNumber == 1 ? '' : ' hide')}>
-                <span className="hotspot"></span>
                 <figure>
                   <img alt=" " src="/assets/share-intro-1.png"></img>
                 </figure>
                 <p>Click on an individual page to add comments to that page</p>
-                <a href="javascript:void(0);" onClick={this.showNextSlide}>Got it</a>
+                <a href="javascript:void(0);" onClick={this.hideFirstScreenHandle}>Got it</a>
               </div>
             </div>
           }
