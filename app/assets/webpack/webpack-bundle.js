@@ -50708,15 +50708,21 @@
 	
 	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(TrialHeader).call(this, props));
 	
-	    _this2.state = { showDemo: true };
+	    _this2.state = { showDemo: false, showDemoHandle: true };
+	    _this2.hideDemo = _this2.hideDemo.bind(_this2);
 	    _this2.showDemo = _this2.showDemo.bind(_this2);
 	    return _this2;
 	  }
 	
 	  _createClass(TrialHeader, [{
+	    key: 'hideDemo',
+	    value: function hideDemo() {
+	      this.setState({ showDemo: false, showDemoHandle: false });
+	    }
+	  }, {
 	    key: 'showDemo',
 	    value: function showDemo() {
-	      this.setState({ showDemo: false });
+	      this.setState({ showDemo: true });
 	    }
 	  }, {
 	    key: 'componentDidMount',
@@ -50752,13 +50758,13 @@
 	            'Create my free account'
 	          )
 	        ),
-	        this.state.showDemo && _react2.default.createElement(
+	        _react2.default.createElement(
 	          'div',
-	          { className: 'intro-box-trial' },
-	          _react2.default.createElement(
+	          { className: "intro-box-trial " + (this.state.showDemo ? '' : 'hide-demo') },
+	          this.state.showDemoHandle && _react2.default.createElement('span', { className: 'hotspot', onClick: this.showDemo }),
+	          this.state.showDemo && _react2.default.createElement(
 	            'div',
 	            { className: 'intro-box' },
-	            _react2.default.createElement('span', { className: 'hotspot' }),
 	            _react2.default.createElement(
 	              'figure',
 	              null,
@@ -50771,7 +50777,7 @@
 	            ),
 	            _react2.default.createElement(
 	              'a',
-	              { href: 'javascript:void(0);', onClick: this.showDemo },
+	              { href: 'javascript:void(0);', onClick: this.hideDemo },
 	              'Got it'
 	            )
 	          )

@@ -3581,6 +3581,11 @@ body.trial {
   position: absolute;
   left: 380px;
   top: 115px;
+  &.hide-demo {
+    &:before, &:after {
+      display: none;
+    }
+  }
   p {
     display: block;
     height: auto;
