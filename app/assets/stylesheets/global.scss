@@ -605,7 +605,7 @@ ul.tagit input[type="text"] {
   }
 }
 
-#invite-user-modal {
+#invite-user-modal, #sitemap-share-modal {
   .twemoji-picker {
     width: 160px!important;
     height: 140px;
@@ -651,8 +651,47 @@ ul.tagit input[type="text"] {
   }
 }
 
-#invite-user-modal {
+#invite-user-modal, #sitemap-share-modal {
   .emoji-section {
     margin-top: 28px;
+  }
+}
+
+#sitemap-share-modal {
+  .twemoji-wrap {
+    height: 150px!important;
+    @include border-radius(6px);
+    border: 1px solid #d4d4d4!important;
+    background: $primaryWhite;
+  }
+  .twemoji-textarea {
+    padding: 10px 13px 0 13px!important;
+    height: 115px!important;
+  }
+  .twemoji-icon-picker {
+    bottom: 57px;
+    position: absolute;
+    right: 15px;
+  }
+  .twemoji-picker {
+    right: 5px;
+    top: -34px;
+  }
+  .bottom-btns {
+    margin-top: 35px;
+  }
+  .for-email .add-remove-comment {
+    bottom: 10px!important;
+  }
+}
+
+.message-preview p {
+  word-wrap: break-word;
+  img {
+    width: 16px!important;
+    height: 16px!important;
+    position: relative;
+    bottom: 1px;
+    margin-right: 1px;
   }
 }
