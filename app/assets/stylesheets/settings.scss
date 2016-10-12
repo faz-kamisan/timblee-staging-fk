@@ -1104,11 +1104,6 @@ label.avatar-label > input[type=radio]:checked + img{
    font-family: "proxima-nova",sans-serif;
 }
 
-.emojiPickerIcon {
-  bottom: -30px;
-  top: auto!important;
-  width: 20px!important;
-  height: 20px!important;
-  background-size: 20px!important;
-  background-color: $transparent!important;
+.invite-message-preview > p {
+  word-wrap: break-word;
 }
