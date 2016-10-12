@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   acts_as_paranoid
 
-  attr_accessor :admin_access
+  attr_accessor :admin_access, :trial_days
 
   belongs_to :business, autosave: true
   has_many :notifications, foreign_key: :recipient_id, dependent: :destroy
@@ -108,7 +108,7 @@ class User < ActiveRecord::Base
     end
 
     def add_business
-      build_business(owner: self, trial_days: DEFAULT_TRIAL_DAYS)
+      build_business(owner: self, trial_days: trial_days.presence || DEFAULT_TRIAL_DAYS)
     end
 
     def set_confirmation_instructions_to_be_sent

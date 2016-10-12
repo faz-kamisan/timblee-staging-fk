@@ -7,7 +7,7 @@
           <%= image_tag('Timblee-icon.svg', class: 'logo-inner') %>
         </div>
         <h1 class="modal-heading">
-          Try Timblee free for 30 days and create beautiful <br> visual sitemaps for your web projects.
+          Try Timblee free for <%= request.path == new_user_registration_60_day_trial_path ? 60 : params[:trial_days] || 30 %> days and create beautiful <br> visual sitemaps for your web projects.
         </h1>
         <p class="small">
           No credit card required. Invite unlimited team <br> members to try it out with you.
@@ -25,6 +25,9 @@
             <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Choose a password' %>
            <span class='error-message'><%= f.object.errors[:password].join(',') %></span>
           </div>
+
+          <%= hidden_field_tag :trial_days, request.path == new_user_registration_60_day_trial_path ? 60 : params[:trial_days] || 30 %>
+
           <div class="form-group">
             <%= f.submit "Sign up for free", class: 'btn btn-pink btn-block' %>
           </div>

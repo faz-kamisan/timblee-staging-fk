@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     get "users/sign-up" => "devise/registrations#new", as: "new_user_registration"
+    get "users/sign-up-60" => "devise/registrations#new", as: "new_user_registration_60_day_trial"
   end
 
   devise_for :users, controllers: {
