@@ -48341,7 +48341,9 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { publicShare: state.publicShare };
+	  return { publicShare: state.publicShare, pageType: state.pageTypes.filter(function (pageType) {
+	      return pageType.name == 'General 1';
+	    })[0], maxPageUid: state.maxPageUid, sitemapId: state.id };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -48365,6 +48367,13 @@
 	    },
 	    changeActiveSectionId: function changeActiveSectionId(sectionId) {
 	      dispatch((0, _actions.changeActiveSectionId)(sectionId));
+	    },
+	    onPageTypeDrop: function onPageTypeDrop(sectionId, pageType, parentId, position, timeStamp, maxPageUid) {
+	      dispatch((0, _actions.addNewPage)(sectionId, pageType, parentId, position, timeStamp, maxPageUid + 1));
+	      dispatch((0, _actions.setMaxPageUid)(maxPageUid + 1));
+	    },
+	    onPageIdUpdate: function onPageIdUpdate(id, sectionId, newId) {
+	      dispatch(updateId(id, sectionId, newId));
 	    },
 	    setSelectedPage: function setSelectedPage(page) {
 	      dispatch((0, _actions.setSelectedPage)(page));
@@ -48409,6 +48418,8 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -48432,6 +48443,9 @@
 	    _this2.openOverLay = _this2.openOverLay.bind(_this2);
 	    _this2.setSelectedPage = _this2.setSelectedPage.bind(_this2);
 	    _this2.showLinkedSection = _this2.showLinkedSection.bind(_this2);
+	    _this2.addSameLevelNextPage = _this2.addSameLevelNextPage.bind(_this2);
+	    _this2.addSameLevelPrevPage = _this2.addSameLevelPrevPage.bind(_this2);
+	    _this2.addSubPage = _this2.addSubPage.bind(_this2);
 	    _this2.state = { nameChangeDisabled: !props.pageTree.newRecord, hover: false, showOverLay: false, name: _this2.props.name, originalName: _this2.props.name, counter: 0 };
 	    return _this2;
 	  }
@@ -48482,6 +48496,87 @@
 	      }
 	    }
 	  }, {
+	    key: 'addSameLevelNextPage',
+	    value: function addSameLevelNextPage(e) {
+	      var timeStamp = new Date();
+	      var _this = this;
+	      $.ajax({
+	        url: '/pages/',
+	        method: 'post',
+	        dataType: 'JSON',
+	        data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.parentId, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: this.props.pageTree.position + 1, section_id: this.props.pageTree.section_id } },
+	        error: function error(result) {
+	          document.setFlash(result.responseText);
+	        },
+	        success: function success(result) {
+	          var onPageIdUpdate = _this.props.onPageIdUpdate;
+	          var pageTree = _this.props.pageTree;
+	          onPageIdUpdate(timeStamp, pageTree.section_id, result.id);
+	        },
+	        complete: function complete(result) {
+	          _this.props.setSaving(true);
+	          setTimeout(function () {
+	            _this.props.setSaving(false);
+	          }, 2000);
+	        }
+	      });
+	      this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.parentId, this.props.pageTree.position, timeStamp, this.props.maxPageUid);
+	    }
+	  }, {
+	    key: 'addSameLevelPrevPage',
+	    value: function addSameLevelPrevPage(e) {
+	      var timeStamp = new Date();
+	      var _this = this;
+	      $.ajax({
+	        url: '/pages/',
+	        method: 'post',
+	        dataType: 'JSON',
+	        data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.parentId, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: this.props.pageTree.position, section_id: this.props.pageTree.section_id } },
+	        error: function error(result) {
+	          document.setFlash(result.responseText);
+	        },
+	        success: function success(result) {
+	          var onPageIdUpdate = _this.props.onPageIdUpdate;
+	          var pageTree = _this.props.pageTree;
+	          onPageIdUpdate(timeStamp, pageTree.section_id, result.id);
+	        },
+	        complete: function complete(result) {
+	          _this.props.setSaving(true);
+	          setTimeout(function () {
+	            _this.props.setSaving(false);
+	          }, 2000);
+	        }
+	      });
+	      this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.parentId, this.props.pageTree.position - 1, timeStamp, this.props.maxPageUid);
+	    }
+	  }, {
+	    key: 'addSubPage',
+	    value: function addSubPage(e) {
+	      var timeStamp = new Date();
+	      var _this = this;
+	      $.ajax({
+	        url: '/pages/',
+	        method: 'post',
+	        dataType: 'JSON',
+	        data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.id, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: 1, section_id: this.props.pageTree.section_id } },
+	        error: function error(result) {
+	          document.setFlash(result.responseText);
+	        },
+	        success: function success(result) {
+	          var onPageIdUpdate = _this.props.onPageIdUpdate;
+	          var pageTree = _this.props.pageTree;
+	          onPageIdUpdate(timeStamp, pageTree.section_id, result.id);
+	        },
+	        complete: function complete(result) {
+	          _this.props.setSaving(true);
+	          setTimeout(function () {
+	            _this.props.setSaving(false);
+	          }, 2000);
+	        }
+	      });
+	      this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.id, 'begining', timeStamp, this.props.maxPageUid);
+	    }
+	  }, {
 	    key: 'setSelectedPage',
 	    value: function setSelectedPage(e) {
 	      this.props.setSelectedPage(this.props.pageTree);
@@ -48507,11 +48602,20 @@
 	    key: 'mouseOver',
 	    value: function mouseOver(e) {
 	      this.setState({ hover: true });
+	      var otherPageTiles = $('.page-tile').not($(this.refs.pageTile));
+	      $(this.refs.pageTile).addClass('not-faded');
+	      otherPageTiles.addClass('faded');
+	      $('.gutter, .level-support').addClass('faded');
+	      $('.parent').addClass('faded-parent');
 	    }
 	  }, {
 	    key: 'mouseOut',
 	    value: function mouseOut(e) {
 	      this.setState({ hover: false });
+	      $('.page-tile').removeClass('faded');
+	      $(this.refs.pageTile).removeClass('not-faded');
+	      $('.gutter, .level-support').removeClass('faded');
+	      $('.parent').removeClass('faded-parent');
 	    }
 	  }, {
 	    key: 'handleOnCollapsedChanged',
@@ -48540,7 +48644,25 @@
 	      if (this.props.childrenLength > 0) {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: "page-tile " + (this.props.pageTree.level == 0 && this.props.childrenLength % 2 == 0 ? 'even-tree' : 'odd-tree'), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile' },
+	          _defineProperty({ className: "page-tile " + (this.props.pageTree.level == 0 && this.props.childrenLength % 2 == 0 ? 'even-tree' : 'odd-tree'), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile' }, 'ref', 'pageTile'),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'left-button' },
+	            _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelPrevPage }),
+	            'Add same level page'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'right-button' },
+	            _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelNextPage }),
+	            'Add same level page'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'bottom-button' },
+	            _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSubPage }),
+	            'Add sub page'
+	          ),
 	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name }),
 	          this.props.pageTree.alt_section_id && !(this.props.level == 0) && _react2.default.createElement(
 	            'span',
@@ -48642,7 +48764,25 @@
 	      } else {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: 'page-tile', onMouseOver: this.mouseOver, onMouseOut: this.mouseOut },
+	          { className: 'page-tile', onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'left-button' },
+	            _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelPrevPage }),
+	            'Add same level page'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'right-button' },
+	            _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelNextPage }),
+	            'Add same level page'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'bottom-button' },
+	            _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSubPage }),
+	            'Add sub page'
+	          ),
 	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name }),
 	          this.props.pageTree.alt_section_id && !(this.props.level == 0) && _react2.default.createElement(
 	            'span',

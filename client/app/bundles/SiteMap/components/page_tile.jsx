@@ -24,6 +24,9 @@ class PageTile extends React.Component {
     this.openOverLay = this.openOverLay.bind(this);
     this.setSelectedPage = this.setSelectedPage.bind(this);
     this.showLinkedSection = this.showLinkedSection.bind(this);
+    this.addSameLevelNextPage = this.addSameLevelNextPage.bind(this);
+    this.addSameLevelPrevPage = this.addSameLevelPrevPage.bind(this);
+    this.addSubPage = this.addSubPage.bind(this);
     this.state = { nameChangeDisabled: !props.pageTree.newRecord, hover: false, showOverLay: false, name: this.props.name, originalName: this.props.name, counter: 0 }
   }
 
@@ -68,6 +71,84 @@ class PageTile extends React.Component {
     }
   }
 
+  addSameLevelNextPage(e) {
+    var timeStamp = new Date();
+    var _this = this;
+    $.ajax({
+      url: '/pages/',
+      method: 'post',
+      dataType: 'JSON',
+      data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.parentId, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: (this.props.pageTree.position + 1), section_id: this.props.pageTree.section_id } },
+      error: (result) => {
+        document.setFlash(result.responseText)
+      },
+      success: (result) => {
+        var onPageIdUpdate = _this.props.onPageIdUpdate
+        var pageTree = _this.props.pageTree
+        onPageIdUpdate(timeStamp, pageTree.section_id, result.id)
+      },
+      complete: (result) => {
+        _this.props.setSaving(true)
+        setTimeout(function() {
+          _this.props.setSaving(false)
+        }, 2000)
+      }
+    });
+    this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.parentId, (this.props.pageTree.position), timeStamp, this.props.maxPageUid);
+  }
+
+  addSameLevelPrevPage(e) {
+    var timeStamp = new Date();
+    var _this = this;
+    $.ajax({
+      url: '/pages/',
+      method: 'post',
+      dataType: 'JSON',
+      data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.parentId, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: this.props.pageTree.position, section_id: this.props.pageTree.section_id } },
+      error: (result) => {
+        document.setFlash(result.responseText)
+      },
+      success: (result) => {
+        var onPageIdUpdate = _this.props.onPageIdUpdate
+        var pageTree = _this.props.pageTree
+        onPageIdUpdate(timeStamp, pageTree.section_id, result.id)
+      },
+      complete: (result) => {
+        _this.props.setSaving(true)
+        setTimeout(function() {
+          _this.props.setSaving(false)
+        }, 2000)
+      }
+    });
+    this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.parentId, (this.props.pageTree.position - 1), timeStamp, this.props.maxPageUid);
+  }
+
+  addSubPage(e) {
+    var timeStamp = new Date();
+    var _this = this;
+    $.ajax({
+      url: '/pages/',
+      method: 'post',
+      dataType: 'JSON',
+      data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.id, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: 1, section_id: this.props.pageTree.section_id } },
+      error: (result) => {
+        document.setFlash(result.responseText)
+      },
+      success: (result) => {
+        var onPageIdUpdate = _this.props.onPageIdUpdate
+        var pageTree = _this.props.pageTree
+        onPageIdUpdate(timeStamp, pageTree.section_id, result.id)
+      },
+      complete: (result) => {
+        _this.props.setSaving(true)
+        setTimeout(function() {
+          _this.props.setSaving(false)
+        }, 2000)
+      }
+    });
+    this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.id, 'begining', timeStamp, this.props.maxPageUid);
+  }
+
   setSelectedPage(e) {
     this.props.setSelectedPage(this.props.pageTree)
   }
@@ -88,10 +169,19 @@ class PageTile extends React.Component {
 
   mouseOver(e) {
     this.setState({hover: true});
+    var otherPageTiles = $('.page-tile').not($(this.refs.pageTile))
+    $(this.refs.pageTile).addClass('not-faded');
+    otherPageTiles.addClass('faded')
+    $('.gutter, .level-support').addClass('faded')
+    $('.parent').addClass('faded-parent')
   }
 
   mouseOut(e) {
     this.setState({hover: false});
+    $('.page-tile').removeClass('faded')
+    $(this.refs.pageTile).removeClass('not-faded');
+    $('.gutter, .level-support').removeClass('faded')
+    $('.parent').removeClass('faded-parent')
   }
 
   handleOnCollapsedChanged(e) {
@@ -115,7 +205,19 @@ class PageTile extends React.Component {
   render() {
     if(this.props.childrenLength > 0) {
       return (
-        <div className={"page-tile " + (((this.props.pageTree.level == 0) && (this.props.childrenLength % 2 == 0)) ? 'even-tree' : 'odd-tree') } onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile'>
+        <div className={"page-tile " + (((this.props.pageTree.level == 0) && (this.props.childrenLength % 2 == 0)) ? 'even-tree' : 'odd-tree') } onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile' ref='pageTile'>
+          <div className='left-button'>
+            <div className="collapse-open collapse-close" onClick={this.addSameLevelPrevPage}></div>
+          Add same level page
+          </div>
+          <div className='right-button'>
+            <div className="collapse-open collapse-close" onClick={this.addSameLevelNextPage}></div>
+          Add same level page
+          </div>
+          <div className='bottom-button'>
+            <div className="collapse-open collapse-close" onClick={this.addSubPage}></div>
+          Add sub page
+          </div>
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber} name={this.props.name} />
           { this.props.pageTree.alt_section_id && !(this.props.level == 0) &&
             <span className="section-tag" onClick={this.showLinkedSection}>section</span>
@@ -181,7 +283,19 @@ class PageTile extends React.Component {
       );
     } else {
       return (
-        <div className="page-tile" onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
+        <div className="page-tile" onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile'>
+          <div className='left-button'>
+            <div className="collapse-open collapse-close" onClick={this.addSameLevelPrevPage}></div>
+          Add same level page
+          </div>
+          <div className='right-button'>
+            <div className="collapse-open collapse-close" onClick={this.addSameLevelNextPage}></div>
+          Add same level page
+          </div>
+          <div className='bottom-button'>
+            <div className="collapse-open collapse-close" onClick={this.addSubPage}></div>
+          Add sub page
+          </div>
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber}  name={this.props.name} />
           { this.props.pageTree.alt_section_id && !(this.props.level == 0) &&
             <span className="section-tag" onClick={this.showLinkedSection}>section</span>
