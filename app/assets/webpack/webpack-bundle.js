@@ -50506,7 +50506,16 @@
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var _this = this;
 	      $('body').addClass('hide-header');
+	      $('body').on('click', function (e) {
+	        if (!(e.target.closest('.sitemap-induction-sidebar') || e.target.closest('.sitemap-right-sidebar') || e.target.closest('.show-comments-sidebar-link') || e.target.closest('.show-induction-sidebar-link'))) {
+	          _this.setState({ commentSidebarOpen: false, inductionSidebarOpen: false });
+	          $('.sitemap-induction-sidebar').removeClass('open');
+	          $('.sitemap-right-sidebar').removeClass('open');
+	          $('.comment-list').removeClass('open');
+	        }
+	      });
 	    }
 	  }, {
 	    key: 'toggleCommentState',
@@ -50590,12 +50599,12 @@
 	          { className: 'header-options' },
 	          _react2.default.createElement(
 	            'a',
-	            { href: 'javascript:void(0)', className: this.state.commentSidebarOpen || this.props.introSlideNumber == 2 ? 'active' : '', onClick: this.toggleCommentState },
+	            { href: 'javascript:void(0)', className: 'show-comments-sidebar-link ' + (this.state.commentSidebarOpen || this.props.introSlideNumber == 2 ? ' active' : ''), onClick: this.toggleCommentState },
 	            _react2.default.createElement('span', { className: 'icon-comment-circle' })
 	          ),
 	          _react2.default.createElement(
 	            'a',
-	            { href: 'javascript:void(0)', className: this.state.inductionSidebarOpen ? 'active' : '', onClick: this.toggleInductionState },
+	            { href: 'javascript:void(0)', className: 'show-induction-sidebar-link ' + (this.state.inductionSidebarOpen ? 'active' : ''), onClick: this.toggleInductionState },
 	            _react2.default.createElement('span', { className: 'icon-question-circle' })
 	          )
 	        )

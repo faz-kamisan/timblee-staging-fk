@@ -622,6 +622,7 @@
     width: 100%;
     height: 26px;
     background: $transparent;
+    @include animate(0.5s);
     &.drag-over, &.again-drag-over, &.again-2-drag-over {
       background: url('/assets/gutter.png');
       background-repeat: no-repeat;
@@ -647,6 +648,7 @@
         position: absolute;
         right: -40px;
         top: 0;
+        @include animate(0.5s);
         z-index: 2;
         &:before {
           content: ' ';
@@ -1890,10 +1892,10 @@ body.trial {
   position: fixed;
   right: -435px;
   width: 420px;
-  top: 138px;
-  height: calc(100% - 138px);
+  top: 0px;
+  height: 100%;
   background: #262b30;
-  z-index: 14;
+  z-index: 15;
   transition: .35s;
   box-shadow: 0px 0px 20px 7px rgba(147, 147, 147, 1);
   overflow-y: auto;
@@ -3353,7 +3355,9 @@ body.trial {
   }
 
   .sitemap-right-sidebar {
-    top: 138px!important;
+    top: 0px!important;
+    z-index: 15;
+    height: 100%;
     padding-top: 25px;
   }
 
