@@ -382,6 +382,13 @@ ul.tagit li.tagit-choice-editable {
     color: #a3acb5;
     @extend .font-14;
     padding-bottom: 15px;
+    img {
+      width: 16px!important;
+      height: 16px!important;
+      margin-right: 2px;
+      position: relative;
+      bottom: 1px;
+    }
   }
   a {
     color: $primaryBlack;
