@@ -10,6 +10,8 @@
   <% elsif Rails.env == 'production' %>
     <%= javascript_include_tag 'production_hotjar', 'data-turbolinks-track' => true %>
   <% end %>
+
+
   <script type="text/javascript">
     (function() {
       var config = {
@@ -52,6 +54,6 @@
   <div class= 'flash-message'>
     <%= render 'shared/flash_message.html.erb' %>
   </div>
-
+  <%= javascript_include_tag('intercom') %>
 </body>
 </html>
