@@ -1,6 +1,7 @@
 class Users::SessionsController < Devise::SessionsController
 
-  before_action :redirect_to_dashboard_if_login, only: [:create]
+  before_action :redirect_to_dashboard_if_login, except: [:destroy]
+  prepend_before_action :destroy_proxy_user_id_in_session, only: [:destroy]
   skip_before_action :lock_business_after_trial_end, only: [:create, :destroy]
 # before_filter :configure_sign_in_params, only: [:create]
 
@@ -29,6 +30,10 @@ class Users::SessionsController < Devise::SessionsController
 
   def redirect_to_dashboard_if_login
     redirect_to after_sign_in_path_for(resource) if user_signed_in?
+  end
+
+  def destroy_proxy_user_id_in_session
+    session[:proxy_user_id] = nil
   end
 
   # DELETE /resource/sign_out
