@@ -1,5 +1,5 @@
 $(function(){
-  $('.emoji-decorated').twemojiPicker({
+  $('.invite-personal-message').twemojiPicker({
   });
   $('.share-personal-message').twemojiPicker({
   });
