@@ -38601,7 +38601,7 @@
 	exports.setMaxPageUid = setMaxPageUid;
 	exports.addSharedUsers = addSharedUsers;
 	exports.removeSection = removeSection;
-	exports.incrementIntroSlideNumber = incrementIntroSlideNumber;
+	exports.setIntroSlideNumber = setIntroSlideNumber;
 	exports.updateSectionId = updateSectionId;
 	exports.changeActiveSectionId = changeActiveSectionId;
 	var SET_NAME = exports.SET_NAME = 'SET_NAME';
@@ -38647,7 +38647,7 @@
 	var SET_MAX_PAGE_UID = exports.SET_MAX_PAGE_UID = 'SET_MAX_PAGE_UID';
 	var ADD_SHARED_USERS = exports.ADD_SHARED_USERS = 'ADD_SHARED_USERS';
 	var REMOVE_SECTION = exports.REMOVE_SECTION = 'REMOVE_SECTION';
-	var INCREMENT_INTRO_SLIDE_NUMBER = exports.INCREMENT_INTRO_SLIDE_NUMBER = 'INCREMENT_INTRO_SLIDE_NUMBER';
+	var SET_INTRO_SLIDE_NUMBER = exports.SET_INTRO_SLIDE_NUMBER = 'SET_INTRO_SLIDE_NUMBER';
 	var UPDATE_SECTION_ID = exports.UPDATE_SECTION_ID = 'UPDATE_SECTION_ID';
 	var CHANGE_ACTIVE_SECTION_ID = exports.CHANGE_ACTIVE_SECTION_ID = 'CHANGE_ACTIVE_SECTION_ID';
 	
@@ -38823,8 +38823,8 @@
 	  return { type: REMOVE_SECTION, id: id };
 	}
 	
-	function incrementIntroSlideNumber() {
-	  return { type: INCREMENT_INTRO_SLIDE_NUMBER };
+	function setIntroSlideNumber(introSlideNumber) {
+	  return { type: SET_INTRO_SLIDE_NUMBER, introSlideNumber: introSlideNumber };
 	}
 	
 	function updateSectionId(oldId, newId) {
@@ -40002,12 +40002,12 @@
 	var _index = __webpack_require__(/*! ../actions/index */ 606);
 	
 	var introSlideNumber = function introSlideNumber() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
 	  var action = arguments[1];
 	
 	  switch (action.type) {
-	    case _index.INCREMENT_INTRO_SLIDE_NUMBER:
-	      return state + 1;
+	    case _index.SET_INTRO_SLIDE_NUMBER:
+	      return action.introSlideNumber;
 	    default:
 	      return state;
 	  }
@@ -47867,8 +47867,8 @@
 	    setSelectedSection: function setSelectedSection(section) {
 	      dispatch((0, _actions.setSelectedSection)(section));
 	    },
-	    showNextSlide: function showNextSlide() {
-	      dispatch((0, _actions.incrementIntroSlideNumber)());
+	    setIntroSlideNumber: function setIntroSlideNumber(introSlideNumber) {
+	      dispatch((0, _actions.setIntroSlideNumber)(introSlideNumber));
 	    },
 	    changeActiveSectionId: function changeActiveSectionId(sectionId) {
 	      dispatch((0, _actions.changeActiveSectionId)(sectionId));
@@ -48008,7 +48008,7 @@
 	          _react2.default.createElement(
 	            'div',
 	            null,
-	            _react2.default.createElement(_draggable_page_container2.default, { pageTree: pageTree, sitemapNumber: '', sitemapId: _this.props.sitemapId, leftSidebarExpanded: _this.props.leftSidebarExpanded, publicShare: _this.props.publicShare, introSlideNumber: _this.props.introSlideNumber, showNextSlide: _this.props.showNextSlide, level: 0 })
+	            _react2.default.createElement(_draggable_page_container2.default, { pageTree: pageTree, sitemapNumber: '', sitemapId: _this.props.sitemapId, leftSidebarExpanded: _this.props.leftSidebarExpanded, publicShare: _this.props.publicShare, introSlideNumber: _this.props.introSlideNumber, setIntroSlideNumber: _this.props.setIntroSlideNumber, level: 0 })
 	          )
 	        )
 	      );
@@ -48134,14 +48134,14 @@
 	          return _react2.default.createElement(
 	            'div',
 	            { className: 'child-page', key: pageTree.id },
-	            _react2.default.createElement(DraggablePageContainer, { pageTree: pageTree, onPageDrop: _this.props.onPageDrop, leftSidebarExpanded: _this.props.leftSidebarExpanded, onPageTypeDrop: _this.props.onPageTypeDrop, sitemapId: _this.props.sitemapId, sitemapNumber: sitemapNumber, publicShare: _this.props.publicShare, introSlideNumber: _this.props.introSlideNumber, showNextSlide: _this.props.showNextSlide, level: _this.props.level + 1, isDragging: _this.props.isDragging })
+	            _react2.default.createElement(DraggablePageContainer, { pageTree: pageTree, onPageDrop: _this.props.onPageDrop, leftSidebarExpanded: _this.props.leftSidebarExpanded, onPageTypeDrop: _this.props.onPageTypeDrop, sitemapId: _this.props.sitemapId, sitemapNumber: sitemapNumber, publicShare: _this.props.publicShare, introSlideNumber: _this.props.introSlideNumber, setIntroSlideNumber: _this.props.setIntroSlideNumber, level: _this.props.level + 1, isDragging: _this.props.isDragging })
 	          );
 	        });
 	      }
 	      return connectDragSource(_react2.default.createElement(
 	        'div',
 	        { className: 'page-container-wrapper' + (isDragging ? ' dragging' : '') },
-	        _react2.default.createElement(_page_container2.default, (_React$createElement = { pageTree: this.props.pageTree, children: children, sitemapNumber: this.props.sitemapNumber, leftSidebarExpanded: this.props.leftSidebarExpanded, introSlideNumber: _this.props.introSlideNumber, showNextSlide: _this.props.showNextSlide }, _defineProperty(_React$createElement, 'leftSidebarExpanded', _this.props.leftSidebarExpanded), _defineProperty(_React$createElement, 'publicShare', _this.props.publicShare), _defineProperty(_React$createElement, 'level', _this.props.level), _defineProperty(_React$createElement, 'isDragging', _this.props.isDragging), _React$createElement))
+	        _react2.default.createElement(_page_container2.default, (_React$createElement = { pageTree: this.props.pageTree, children: children, sitemapNumber: this.props.sitemapNumber, leftSidebarExpanded: this.props.leftSidebarExpanded, introSlideNumber: _this.props.introSlideNumber, setIntroSlideNumber: _this.props.setIntroSlideNumber }, _defineProperty(_React$createElement, 'leftSidebarExpanded', _this.props.leftSidebarExpanded), _defineProperty(_React$createElement, 'publicShare', _this.props.publicShare), _defineProperty(_React$createElement, 'level', _this.props.level), _defineProperty(_React$createElement, 'isDragging', _this.props.isDragging), _React$createElement))
 	      ));
 	    }
 	  }]);
@@ -48228,16 +48228,24 @@
 	  function PageContainer(props) {
 	    _classCallCheck(this, PageContainer);
 	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PageContainer).call(this, props));
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(PageContainer).call(this, props));
 	
-	    _this.showNextSlide = _this.showNextSlide.bind(_this);
-	    return _this;
+	    _this2.setIntroSlideNumber = _this2.setIntroSlideNumber.bind(_this2);
+	    _this2.hideFirstScreenHandle = _this2.hideFirstScreenHandle.bind(_this2);
+	    _this2.state = { showFirstScreenHandle: true };
+	    return _this2;
 	  }
 	
 	  _createClass(PageContainer, [{
-	    key: 'showNextSlide',
-	    value: function showNextSlide(e) {
-	      this.props.showNextSlide();
+	    key: 'hideFirstScreenHandle',
+	    value: function hideFirstScreenHandle(e) {
+	      this.setState({ showFirstScreenHandle: false });
+	      this.props.setIntroSlideNumber(0);
+	    }
+	  }, {
+	    key: 'setIntroSlideNumber',
+	    value: function setIntroSlideNumber(number) {
+	      this.props.setIntroSlideNumber(number);
 	    }
 	  }, {
 	    key: 'render',
@@ -48245,6 +48253,7 @@
 	      var children = this.props.pageTree.children.filter(function (page) {
 	        return page.state != 'archived';
 	      });
+	      var _this = this;
 	      if (this.props.level == 0) {
 	        if (this.props.leftSidebarExpanded) {
 	          var width = (children.length * 240 + 412 + 240).toString() + 'px';
@@ -48261,10 +48270,12 @@
 	          this.props.publicShare && _react2.default.createElement(
 	            'div',
 	            { className: 'intro-box-1' },
+	            _react2.default.createElement('span', { className: "hotspot " + (this.state.showFirstScreenHandle ? '' : 'hide'), onClick: function onClick(e) {
+	                _this.setIntroSlideNumber(1);
+	              } }),
 	            _react2.default.createElement(
 	              'div',
 	              { className: "intro-box share-1" + (this.props.introSlideNumber == 1 ? '' : ' hide') },
-	              _react2.default.createElement('span', { className: 'hotspot' }),
 	              _react2.default.createElement(
 	                'figure',
 	                null,
@@ -48277,7 +48288,7 @@
 	              ),
 	              _react2.default.createElement(
 	                'a',
-	                { href: 'javascript:void(0);', onClick: this.showNextSlide },
+	                { href: 'javascript:void(0);', onClick: this.hideFirstScreenHandle },
 	                'Got it'
 	              )
 	            )
@@ -50913,8 +50924,8 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    showNextSlide: function showNextSlide() {
-	      dispatch((0, _actions.incrementIntroSlideNumber)());
+	    setIntroSlideNumber: function setIntroSlideNumber(introSlideNumber) {
+	      dispatch((0, _actions.setIntroSlideNumber)(introSlideNumber));
 	    }
 	  };
 	};
@@ -50956,30 +50967,48 @@
 	  function IntroductionScreens(props) {
 	    _classCallCheck(this, IntroductionScreens);
 	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(IntroductionScreens).call(this, props));
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(IntroductionScreens).call(this, props));
 	
-	    _this.showNextSlide = _this.showNextSlide.bind(_this);
-	    return _this;
+	    _this2.setIntroSlideNumber = _this2.setIntroSlideNumber.bind(_this2);
+	    _this2.hideSecondScreenHandle = _this2.hideSecondScreenHandle.bind(_this2);
+	    _this2.hideThirdScreenHandle = _this2.hideThirdScreenHandle.bind(_this2);
+	    _this2.state = { showSecondScreenHandle: true, showThirdScreenHandle: true };
+	    return _this2;
 	  }
 	
 	  _createClass(IntroductionScreens, [{
-	    key: "showNextSlide",
-	    value: function showNextSlide(e) {
-	      this.props.showNextSlide();
+	    key: "hideSecondScreenHandle",
+	    value: function hideSecondScreenHandle(e) {
+	      this.setState({ showSecondScreenHandle: false });
+	      this.props.setIntroSlideNumber(0);
+	    }
+	  }, {
+	    key: "hideThirdScreenHandle",
+	    value: function hideThirdScreenHandle(e) {
+	      this.setState({ showThirdScreenHandle: false });
+	      this.props.setIntroSlideNumber(0);
+	    }
+	  }, {
+	    key: "setIntroSlideNumber",
+	    value: function setIntroSlideNumber(number) {
+	      this.props.setIntroSlideNumber(number);
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
+	      var _this = this;
 	      return _react2.default.createElement(
 	        "div",
 	        { className: "public-intro" },
 	        _react2.default.createElement(
 	          "div",
 	          { className: "intro-box-2" },
+	          _react2.default.createElement("span", { className: "hotspot " + (this.state.showSecondScreenHandle ? '' : 'hide'), onClick: function onClick(e) {
+	              _this.setIntroSlideNumber(2);
+	            } }),
 	          _react2.default.createElement(
 	            "div",
 	            { className: "intro-box share-2" + (this.props.introSlideNumber == 2 ? '' : ' hide') },
-	            _react2.default.createElement("span", { className: "hotspot" }),
 	            _react2.default.createElement(
 	              "figure",
 	              null,
@@ -50992,7 +51021,7 @@
 	            ),
 	            _react2.default.createElement(
 	              "a",
-	              { href: "javascript:void(0);", onClick: this.showNextSlide },
+	              { href: "javascript:void(0);", onClick: this.hideSecondScreenHandle },
 	              "Got it"
 	            )
 	          )
@@ -51000,10 +51029,12 @@
 	        _react2.default.createElement(
 	          "div",
 	          { className: "intro-box-3" },
+	          _react2.default.createElement("span", { className: "hotspot " + (this.state.showThirdScreenHandle ? '' : 'hide'), onClick: function onClick(e) {
+	              _this.setIntroSlideNumber(3);
+	            } }),
 	          _react2.default.createElement(
 	            "div",
 	            { className: "intro-box share-3" + (this.props.introSlideNumber == 3 ? '' : ' hide') },
-	            _react2.default.createElement("span", { className: "hotspot" }),
 	            _react2.default.createElement(
 	              "figure",
 	              null,
@@ -51016,7 +51047,7 @@
 	            ),
 	            _react2.default.createElement(
 	              "a",
-	              { href: "javascript:void(0);", onClick: this.showNextSlide },
+	              { href: "javascript:void(0);", onClick: this.hideThirdScreenHandle },
 	              "Got it"
 	            )
 	          )

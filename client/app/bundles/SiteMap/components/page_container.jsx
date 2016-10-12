@@ -14,15 +14,23 @@ class PageContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.showNextSlide = this.showNextSlide.bind(this)
+    this.setIntroSlideNumber = this.setIntroSlideNumber.bind(this)
+    this.hideFirstScreenHandle = this.hideFirstScreenHandle.bind(this);
+    this.state = { showFirstScreenHandle: true }
   }
 
-  showNextSlide(e) {
-    this.props.showNextSlide()
+  hideFirstScreenHandle(e) {
+    this.setState({ showFirstScreenHandle: false })
+    this.props.setIntroSlideNumber(0)
+  }
+
+  setIntroSlideNumber(number) {
+    this.props.setIntroSlideNumber(number)
   }
 
   render() {
     var children = this.props.pageTree.children.filter(function(page) { return(page.state != 'archived') })
+    var _this = this
     if(this.props.level == 0) {
       if(this.props.leftSidebarExpanded) {
         var width = ((children.length * 240) + 412 + 240).toString() + 'px'
@@ -39,13 +47,13 @@ class PageContainer extends React.Component {
           }
           { this.props.publicShare &&
             <div className="intro-box-1">
+              <span className={ "hotspot " + (this.state.showFirstScreenHandle ? '' : 'hide')} onClick={function(e) { _this.setIntroSlideNumber(1) } }></span>
               <div className={"intro-box share-1" + (this.props.introSlideNumber == 1 ? '' : ' hide')}>
-                <span className="hotspot"></span>
                 <figure>
                   <img alt=" " src="/assets/share-intro-1.png"></img>
                 </figure>
                 <p>Click on an individual page to add comments to that page</p>
-                <a href="javascript:void(0);" onClick={this.showNextSlide}>Got it</a>
+                <a href="javascript:void(0);" onClick={this.hideFirstScreenHandle}>Got it</a>
               </div>
             </div>
           }

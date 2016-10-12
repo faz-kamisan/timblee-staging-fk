@@ -1,9 +1,9 @@
-import { INCREMENT_INTRO_SLIDE_NUMBER } from '../actions/index'
+import { SET_INTRO_SLIDE_NUMBER } from '../actions/index'
 
-const introSlideNumber = (state = 1, action) => {
+const introSlideNumber = (state = 0, action) => {
   switch (action.type) {
-    case INCREMENT_INTRO_SLIDE_NUMBER:
-      return (state + 1)
+    case SET_INTRO_SLIDE_NUMBER:
+      return (action.introSlideNumber)
     default:
       return state
   }
