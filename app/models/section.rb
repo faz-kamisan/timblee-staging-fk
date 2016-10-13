@@ -7,7 +7,6 @@ class Section < ActiveRecord::Base
   # has_one :root_page, ->{ where(alt_section_id: id) }, class_name: :Page, forign_key: :alt_section_id, dependent: :destroy
 
   validates :name, :sitemap, presence: true
-  validates :name, uniqueness: { scope: :sitemap_id }
   validates :state, inclusion: { in: STATES }
 
   before_update :archive_pages, if: :state_changed?
