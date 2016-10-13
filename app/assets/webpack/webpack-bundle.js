@@ -48591,7 +48591,7 @@
 	                'Change Page'
 	              )
 	            ),
-	            !(this.props.level == 0) && this.props.alt_section_id && _react2.default.createElement(
+	            !(this.props.level == 0) && !this.props.pageTree.alt_section_id && _react2.default.createElement(
 	              'a',
 	              { href: '#new-section-modal', className: 'icon-page-new', onClick: this.setSelectedPage, 'data-toggle': 'modal' },
 	              _react2.default.createElement(
@@ -48715,7 +48715,7 @@
 	                'Change Page'
 	              )
 	            ),
-	            !(this.props.level == 0) && this.props.alt_section_id && _react2.default.createElement(
+	            !(this.props.level == 0) && !this.props.pageTree.alt_section_id && _react2.default.createElement(
 	              'a',
 	              { href: '#new-section-modal', className: 'icon-page-new', onClick: this.setSelectedPage, 'data-toggle': 'modal' },
 	              _react2.default.createElement(
@@ -63682,6 +63682,10 @@
 	        setTimeout(function () {
 	          _this.setState({ sectionName: '' });
 	        }, 500);
+	      });
+	
+	      $('.new-section-modal').on('shown.bs.modal', function () {
+	        $('#new-section-name').focus();
 	      });
 	    }
 	  }, {

@@ -6,18 +6,18 @@ module SettingsRoutesHelper
   end
 
   def team_settings_users_path
-    settings_users_path + '#team'
+    settings_tab_users_path(tab: 'team')
   end
 
   def personalization_settings_users_path
-    settings_users_path + '#personalization'
+    settings_tab_users_path(tab: 'personalization')
   end
 
   def my_info_settings_users_path
-    settings_users_path + '#my-info'
+    settings_tab_users_path(tab: 'my-info')
   end
 
   def billing_settings_users_path
-    settings_users_path + '#billing'
+    settings_tab_users_path(tab: 'billing')
   end
 end

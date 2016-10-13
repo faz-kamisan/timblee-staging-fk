@@ -5,19 +5,12 @@ var SettingsTabs = function(options) {
 };
 
 SettingsTabs.prototype.bindEvents = function() {
-  if (this.url.match('#')) {
-    $(this.navTabUl + ' a[href= "#' + this.url.split('#')[1] + '"]').tab('show');
-  }
+  $(this.navTabUl + ' a').on('click', function() {
+    $('.settings > .tab-content > .tab-pane').removeClass('active')
+    $('#' + $(this).data('name')).addClass('active')
 
-  //Change hash for page-reload
-  for (var i = 0; i < this.tabs.length; i++) {
-    $(this.navTabUl + ' a[href= "' + this.tabs[i] + '"]').on('click', function (e) {
-        window.location.hash = e.target.hash;
-    });
-  };
-
-  $('.animated-tab.active').click();
-
+    window.history.pushState("", "", '/users/settings/' + $(this).data('name'));
+  })
 };
 
 $($(window).on('load', function() {
@@ -26,4 +19,6 @@ $($(window).on('load', function() {
     tabs : [ '#team', '#my-info', '#personalization', '#billing' ]
   }
   new SettingsTabs(options).bindEvents();
+
+  $('.animated-tab.active').click();
 }));
