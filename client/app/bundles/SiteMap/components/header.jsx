@@ -157,7 +157,9 @@ class Header extends React.Component {
           </div>
           <div className="col-xs-5">
             <div className="pull-left">
-              <a href="#sitemap-share-modal" data-toggle="modal" className="btn btn-share" onClick={this.handleSitemapShareClick}>Share</a>
+              <a href="#sitemap-share-modal" data-toggle="modal" className="btn btn-share" onClick={this.handleSitemapShareClick}>
+               <span className="share-icon"></span>   Share
+              </a>
             </div>
             <div className="toggle-comments">
               <a href="javascript:void(0)" className={"btn-toggle-comments" + (this.state.commentSidebarOpen ? ' active' : '')} onClick={this.toggleCommentState}>
