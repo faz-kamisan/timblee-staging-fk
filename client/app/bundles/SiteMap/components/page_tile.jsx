@@ -168,12 +168,6 @@ class PageTile extends React.Component {
     this.props.setSelectedPage(this.props.pageTree)
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if(prevState.nameChangeDisabled && !this.state.nameChangeDisabled) {
-      this.refs.nameInput.focus();
-    }
-  }
-
   closeOverLay(e) {
     this.setState({showOverLay: false})
   }
@@ -226,12 +220,18 @@ class PageTile extends React.Component {
     this.props.changeActiveSectionId(this.props.pageTree.alt_section_id)
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if(prevState.nameChangeDisabled && !this.state.nameChangeDisabled) {
+      this.refs.nameInput.focus();
+    }
+  }
+
   componentDidMount() {
     var _this = this;
     $('.modal').on('hidden.bs.modal', function () {
       _this.setState({showOverLay: false})
     });
-    if(this.props.pageTree.newRecord) {
+    if(!this.state.nameChangeDisabled) {
       this.refs.nameInput.focus();
     }
   }
