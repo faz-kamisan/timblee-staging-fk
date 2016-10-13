@@ -17,7 +17,6 @@ class User < ActiveRecord::Base
   before_destroy :restrict_owner_destroy
   after_destroy :update_business_subscription
   before_update :restrict_owner_role_update, if: :is_admin_changed?
-  after_update :mail_user_about_role_update, if: :is_admin_changed?
   after_create :add_default_avatar
   after_create :track_user, unless: :created_by_invite?
   after_invitation_accepted :confirm_user, :track_user
@@ -72,6 +71,10 @@ class User < ActiveRecord::Base
     }
   end
 
+  def mail_user_about_role_update(admin_user)
+    UserMailer.delay_for(10.seconds).send_updated_role_details(id, admin_user.id) unless avatar_changed? # in add_default_avatar calling save triggers this callback after_create but it needs to be called only after_update
+  end
+
   protected
     def confirmation_period_valid?
       self.class.allow_unconfirmed_access_for.nil? || (created_at && created_at.utc >= self.class.allow_unconfirmed_access_for.ago)
@@ -97,10 +100,6 @@ class User < ActiveRecord::Base
     def add_default_avatar
       avatar.store!(File.open(File.join(Rails.root, "app/assets/images/avatar_#{[*1..14].sample}.svg")))
       self.save(validate: false)
-    end
-
-    def mail_user_about_role_update
-      UserMailer.delay_for(10.seconds).send_updated_role_details(id) unless avatar_changed? # in add_default_avatar calling save triggers this callback after_create but it needs to be called only after_update
     end
 
     def set_is_admin
