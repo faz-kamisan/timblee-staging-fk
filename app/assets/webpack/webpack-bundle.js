@@ -63653,26 +63653,28 @@
 	    value: function createSection(e) {
 	      var _this = this;
 	      var timeStamp = new Date();
-	      var name = this.state.sectionName;
-	      this.props.onCreateSection(this.props.pageTree, name, timeStamp);
-	      $.ajax({
-	        url: '/sections',
-	        method: 'post',
-	        dataType: 'JSON',
-	        data: { page_id: this.props.pageTree.id, section: { name: name } },
-	        error: function error(result) {
-	          document.setFlash(result.responseText);
-	        },
-	        success: function success(result) {
-	          _this.props.onSectionIdUpdate(timeStamp, result.id);
-	        },
-	        complete: function complete(result) {
-	          _this.props.setSaving(true);
-	          setTimeout(function () {
-	            _this.props.setSaving(false);
-	          }, 2000);
-	        }
-	      });
+	      var name = this.state.sectionName.trim();
+	      if (name) {
+	        this.props.onCreateSection(this.props.pageTree, name, timeStamp);
+	        $.ajax({
+	          url: '/sections',
+	          method: 'post',
+	          dataType: 'JSON',
+	          data: { page_id: this.props.pageTree.id, section: { name: name } },
+	          error: function error(result) {
+	            document.setFlash(result.responseText);
+	          },
+	          success: function success(result) {
+	            _this.props.onSectionIdUpdate(timeStamp, result.id);
+	          },
+	          complete: function complete(result) {
+	            _this.props.setSaving(true);
+	            setTimeout(function () {
+	              _this.props.setSaving(false);
+	            }, 2000);
+	          }
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'componentDidMount',
