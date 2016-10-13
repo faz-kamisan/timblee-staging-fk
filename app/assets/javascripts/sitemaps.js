@@ -68,6 +68,9 @@ Sitemaps.prototype.bindEvents = function() {
     _this.inviteErrorModal.modal('show')
   })
 
+  $('body').on('click', '.invite-warning-link', function(e) {
+    _this.inviteWarningModal.modal('show')
+  })
 
   $('.modal').on('hidden.bs.modal', function () {
     setTimeout(function() {
