@@ -12,8 +12,8 @@ class SuperAdmin::MainController < ApplicationController
   def impersonate
     user = @business.owner
     user.admin_access = true
-    session[:proxy_user_id] = current_user.id
     sign_in(user, bypass: true)
+    session[:proxy_user_id] = user.id
     redirect_to home_dashboard_path
   end
 

@@ -9,6 +9,9 @@ class HomeController < ApplicationController
     @card = current_business.active_card
   end
 
+  def settings
+  end
+
   def intro
   end
 end

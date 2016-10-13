@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   skip_before_filter :authenticate_user!
-  before_filter :conditional_authenticate_user!, unless: :proxy_login?
+  before_filter :conditional_authenticate_user!
   before_filter :fetch_page, only: [:destroy, :update]
 
   def create
@@ -42,6 +42,6 @@ class PagesController < ApplicationController
     end
 
     def conditional_authenticate_user!
-      (request.subdomains[0] == 'app') || authenticate_user!
+      proxy_login? || (request.subdomains[0] == 'app') || authenticate_user!
     end
 end
