@@ -74,7 +74,7 @@ class Footer extends React.Component {
     var renderedFooterPages = usablePages.map(function(footerPage, index) {
       return(
         <li key={footerPage.id} className='footer-page'>
-          <ConnectedPageTile pageTree={footerPage} collapsed={true} childrenLength={0} name={footerPage.name} />
+          <ConnectedPageTile pageTree={footerPage} collapsed={true} childrenLength={0} name={footerPage.name} level={0} />
         </li>
       )
     })

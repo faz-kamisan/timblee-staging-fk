@@ -3,5 +3,10 @@ $("ul.notifications-listing").html("<%==j render partial: 'notifications/notific
 
 <% if(@folder.persisted?) %>
   $('.dynamic-folders-list').html("<%= escape_javascript(render partial: 'home/folder', collection: @folders) %>")
+  $('.folder-info').removeClass('active-delete');
+  $('#new_sitemap #sitemap_folder_id').val(<%= @folder.id %>);
+  $('.dynamic-folders-list .folder-info').filter('[data-id=' + '<%= @folder.id %>' + ']').addClass('active-delete');
+  $('.sitemap-container').not('.new-sitemap').closest('.sitemap-outer-wrapper').addClass('hidden');
+  $('.folder-heading').text('<%= @folder.name %>');
 <% end %>
 $('.new-folder-name-field').val('')

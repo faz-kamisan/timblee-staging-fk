@@ -40,7 +40,7 @@ class PageContainer extends React.Component {
 
       return (
         <div data-level={this.props.level} className={ 'page-container level-' + this.props.level.toString() + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + ((children.length == 0) ? ' no-children' : '') } style={ { width: width } }>
-          <ConnectedPageTile pageTree={this.props.pageTree} collapsed={this.props.pageTree.collapsed} childrenLength={children.length} sitemapNumber={this.props.sitemapNumber} name={this.props.pageTree.name} level={this.props.level}  isDragging={this.props.isDragging} />
+          <ConnectedPageTile pageTree={this.props.pageTree} collapsed={this.props.pageTree.collapsed} childrenLength={children.length} sitemapNumber={this.props.sitemapNumber} name={this.props.pageTree.name} level={this.props.level} isDragging={this.props.isDragging} />
           <ConnectedGutter pageTree={this.props.pageTree} />
           { (children.length == 0) &&
             <ConnectedFirstPageDroppable pageTree={this.props.pageTree} leftSidebarExpanded={this.props.leftSidebarExpanded} />
@@ -66,7 +66,7 @@ class PageContainer extends React.Component {
     } else {
       return (
         <div data-level={this.props.level} className={ 'page-container level-' + this.props.level.toString() }>
-          <ConnectedPageTile pageTree={this.props.pageTree} collapsed={this.props.pageTree.collapsed} childrenLength={children.length} sitemapNumber={this.props.sitemapNumber} name={this.props.pageTree.name} level={this.props.level} />
+          <ConnectedPageTile pageTree={this.props.pageTree} collapsed={this.props.pageTree.collapsed} childrenLength={children.length} sitemapNumber={this.props.sitemapNumber} name={this.props.pageTree.name} level={this.props.level} isDragging={this.props.isDragging} />
           <ConnectedGutter pageTree={this.props.pageTree} />
           <ConnectedLevelSupport pageTree={this.props.pageTree} />
           <div className={ 'parent parent-' + this.props.level.toString() + (this.props.pageTree.collapsed ? ' hide' : '')}>

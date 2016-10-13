@@ -64,6 +64,7 @@ Folders.prototype.bindEvents = function() {
     _this.resetDeletionModal();
     _this.deletionModal.modal('hide');
   });
+
   this.makeFoldersDroppable($('.folder-info'));
 };
 

@@ -20,7 +20,16 @@ class Header extends React.Component {
     this.handleMainHeaderToggle = this.handleMainHeaderToggle.bind(this);
     this.handleSitemapShareClick = this.handleSitemapShareClick.bind(this);
     this.toggleCommentState = this.toggleCommentState.bind(this);
+    this.handeNameKeyPressed = this.handeNameKeyPressed.bind(this);
     this.state = { nameFocused: false, name: props.name, showMainHeader: true, commentSidebarOpen: false }
+  }
+
+  handeNameKeyPressed(e) {
+    if(e.charCode == 13) {
+      e.preventDefault()
+      e.stopPropagation()
+      this.handleNameInputBlur();
+    }
   }
 
   handleMainHeaderToggle(e) {
@@ -40,6 +49,10 @@ class Header extends React.Component {
         _this.refs.nameEditor.click()
       }, 3000)
     }
+    var reactOuterWrapper = $('#react-app-outer-wrapper')
+    // debugger
+    $('.react-header .icon-invite-female').data('url', reactOuterWrapper.data('url'))
+    $('.react-header .icon-invite-female').addClass(reactOuterWrapper.data('invite-permission-modal'))
   }
 
   handleNameInputBlur(e) {
@@ -117,7 +130,7 @@ class Header extends React.Component {
                     <img src="/assets/go-back.svg" className="go-back-link"></img>
                   </a>
                 </span>
-                <input value = {this.state.name} onChange={this.handleNameChange} onBlur={this.handleNameInputBlur} className={"site-map-name site-map-name-input" + (this.state.nameFocused ? '' : ' hide')} ref='sitemapNameInput' />
+                <input value = {this.state.name} onChange={this.handleNameChange} onBlur={this.handleNameInputBlur} className={"site-map-name site-map-name-input" + (this.state.nameFocused ? '' : ' hide')} ref='sitemapNameInput' onKeyPress={this.handeNameKeyPressed} />
                 <h3 className={"site-map-name truncate " + (this.state.nameFocused ? ' hide' : '')} onClick={this.handleNameInputFocus} ref='nameEditor'>{this.state.name}</h3>
               </div>
               <div className="col-xs-3 state-status text-center">
@@ -144,7 +157,9 @@ class Header extends React.Component {
           </div>
           <div className="col-xs-5">
             <div className="pull-left">
-              <a href="#sitemap-share-modal" data-toggle="modal" className="btn btn-share" onClick={this.handleSitemapShareClick}>Share</a>
+              <a href="#sitemap-share-modal" data-toggle="modal" className="btn btn-share" onClick={this.handleSitemapShareClick}>
+               <span className="share-icon"></span>   Share
+              </a>
             </div>
             <div className="toggle-comments">
               <a href="javascript:void(0)" className={"btn-toggle-comments" + (this.state.commentSidebarOpen ? ' active' : '')} onClick={this.toggleCommentState}>
@@ -154,7 +169,7 @@ class Header extends React.Component {
               </a>
             </div>
             <div className="pull-left users-block">
-              <span className="icon-invite-female user-invite invite-link cursor" data-url='/users/bulk_invitation' data-remote={true}>
+              <span className="icon-invite-female user-invite cursor" data-remote={true}>
                 <span className="path1"></span>
                 <span className="path2"></span>
                 <span className="path3"></span>

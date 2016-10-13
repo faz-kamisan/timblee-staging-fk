@@ -49,7 +49,6 @@ Rails.application.routes.draw do
 
   get  'home', to: 'home#dashboard', as: 'home_dashboard'
   get  'home/intro'
-  get  'home/settings'
 
   scope module: :super_admin do
     get '/admin', to: 'main#dashboard', as: 'admin_dashboard'

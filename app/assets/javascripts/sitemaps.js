@@ -15,6 +15,7 @@ var Sitemaps = function(options) {
   this.copyButtonLink = options.copyButtonLink;
   this.dropContainers = options.dropContainers;
   this.draggableSitemaps = options.draggableSitemaps;
+  this.searchSitemapInput = options.searchSitemapInput;
 };
 
 Sitemaps.prototype.bindEvents = function() {
@@ -27,6 +28,17 @@ Sitemaps.prototype.bindEvents = function() {
       _this.sitemapWarningModal.modal('show');
     } else {
       _this.sitemapErrorModal.modal('show');
+    }
+  });
+
+  this.searchSitemapInput.on('input', function(e) {
+    $('.sitemap-container').closest('.sitemap-outer-wrapper').removeClass('hide');
+    if(e.target.value.trim().length > 0) {
+      $(e.target).closest('.dashboard-search').addClass('active');
+      var searchQueryRegExp = new RegExp(('\\b' + e.target.value.trim()), 'gi')
+      $('.sitemap-container').not('.new-sitemap').not(function(i, element) { return $(element).data('name').match(searchQueryRegExp) }).closest('.sitemap-outer-wrapper').addClass('hide');
+    } else {
+      $(e.target).closest('.dashboard-search').removeClass('active');
     }
   });
 
@@ -56,6 +68,9 @@ Sitemaps.prototype.bindEvents = function() {
     _this.inviteErrorModal.modal('show')
   })
 
+  $('body').on('click', '.invite-warning-link', function(e) {
+    _this.inviteWarningModal.modal('show')
+  })
 
   $('.modal').on('hidden.bs.modal', function () {
     setTimeout(function() {
@@ -181,7 +196,8 @@ $(function() {
     dropContainers : $('.folder-info'),
     copyButtonLink: $('.copy-link-button'),
     shareMethodTabs: $('.share-method-tabs'),
-    draggableSitemaps : $('.sitemap-container').not('.new-sitemap')
+    draggableSitemaps: $('.sitemap-container').not('.new-sitemap'),
+    searchSitemapInput: $('.search-sitemap')
   }
   var sitemaps = new Sitemaps(options);
   sitemaps.init();
