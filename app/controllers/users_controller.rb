@@ -2,6 +2,8 @@ class UsersController < ApplicationController
   skip_before_action :lock_business_after_trial_end, only: [:settings]
 
   def settings
+    @current_tab = params[:tab] || 'my-info'
+
     if(current_business.stripe_customer_id)
       @card = current_business.active_card
     end

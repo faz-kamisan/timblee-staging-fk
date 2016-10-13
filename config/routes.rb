@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   resources :users do
     collection do
       get 'settings'
+      get 'settings/:tab', as: 'settings_tab', to: 'users#settings', constraints: { tab: /my-info|team|personalization|billing/}
       get 'progress'
       patch 'update_password'
       patch 'update_avatar'

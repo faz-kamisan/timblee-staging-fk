@@ -18,10 +18,11 @@ class InviteMailer < ActionMailer::Base
         'Data' => {
           'inviting_user_first_name' => @inviter.full_name,
           'inviting_user_name' => @inviter.full_name,
+          'Here is a personal message from inviter' => @custom_message_header,
+          'Insert personal message here' => @custom_message,
           'show the whole link here' => accept_invitation_url(@user, :invitation_token => @token)
         }
       }
-      message['Data'].merge!({'Here is a personal message from&nbsp;[inviting_user_name' => @custom_message_header, 'Insert personal message here' => @custom_message}) if custom_message.present?
       response = tx_smart_mailer.send(message)
     else
       mail(
