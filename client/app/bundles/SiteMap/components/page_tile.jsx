@@ -30,6 +30,7 @@ class PageTile extends React.Component {
     this.addFaded = this.addFaded.bind(this);
     this.removeFaded = this.removeFaded.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handeNameChange = this.handeNameChange.bind(this);
     this.state = { nameChangeDisabled: !props.pageTree.newRecord, hover: false, showOverLay: false, name: this.props.name, originalName: this.props.name, counter: 0 }
   }
 
@@ -39,10 +40,18 @@ class PageTile extends React.Component {
     }
   }
 
+  handeNameChange(e) {
+    if(e.charCode == 13) {
+      e.preventDefault()
+      e.stopPropagation()
+      this.disableNameChangeInput();
+    }
+  }
+
   disableNameChangeInput(e) {
     var _this = this;
     var name = this.refs.nameInput.value
-    if(name.length > 0) {
+    if((name != this.props.name) && name.length > 0) {
       $.ajax({
         url: '/pages/' + this.props.pageTree.id,
         method: 'put',
@@ -253,7 +262,7 @@ class PageTile extends React.Component {
           }
           <h1 className="tile-name-edit">
             <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
-            <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' defaultValue={this.props.name} onBlur={this.disableNameChangeInput}></textarea>
+            <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' defaultValue={this.props.name} onBlur={this.disableNameChangeInput} onKeyPress={this.handeNameChange}></textarea>
           </h1>
           <ConnectedPageTileBottom pageTree={this.props.pageTree} />
           <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }>
@@ -335,7 +344,7 @@ class PageTile extends React.Component {
           }
           <h1 className="tile-name-edit">
             <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
-            <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' defaultValue={this.props.name} onBlur={this.disableNameChangeInput}></textarea>
+            <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' defaultValue={this.props.name} onBlur={this.disableNameChangeInput}  onKeyPress={this.handeNameChange}></textarea>
           </h1>
           <ConnectedPageTileBottom pageTree={this.props.pageTree} />
           <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }>

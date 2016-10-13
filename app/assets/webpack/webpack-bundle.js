@@ -48304,7 +48304,7 @@
 	        return _react2.default.createElement(
 	          'div',
 	          { 'data-level': this.props.level, className: 'page-container level-' + this.props.level.toString() },
-	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name, level: this.props.level }),
+	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name, level: this.props.level, isDragging: this.props.isDragging }),
 	          _react2.default.createElement(_connected_gutter2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement(_connected_level_support2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement(
@@ -48458,6 +48458,7 @@
 	    _this2.addFaded = _this2.addFaded.bind(_this2);
 	    _this2.removeFaded = _this2.removeFaded.bind(_this2);
 	    _this2.handleMouseDown = _this2.handleMouseDown.bind(_this2);
+	    _this2.handeNameChange = _this2.handeNameChange.bind(_this2);
 	    _this2.state = { nameChangeDisabled: !props.pageTree.newRecord, hover: false, showOverLay: false, name: _this2.props.name, originalName: _this2.props.name, counter: 0 };
 	    return _this2;
 	  }
@@ -48470,13 +48471,22 @@
 	      }
 	    }
 	  }, {
+	    key: 'handeNameChange',
+	    value: function handeNameChange(e) {
+	      if (e.charCode == 13) {
+	        e.preventDefault();
+	        e.stopPropagation();
+	        this.disableNameChangeInput();
+	      }
+	    }
+	  }, {
 	    key: 'disableNameChangeInput',
 	    value: function disableNameChangeInput(e) {
 	      var _this3 = this;
 	
 	      var _this = this;
 	      var name = this.refs.nameInput.value;
-	      if (name.length > 0) {
+	      if (name != this.props.name && name.length > 0) {
 	        $.ajax({
 	          url: '/pages/' + this.props.pageTree.id,
 	          method: 'put',
@@ -48719,7 +48729,7 @@
 	              ' ',
 	              this.props.name
 	            ),
-	            _react2.default.createElement('textarea', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', defaultValue: this.props.name, onBlur: this.disableNameChangeInput })
+	            _react2.default.createElement('textarea', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', defaultValue: this.props.name, onBlur: this.disableNameChangeInput, onKeyPress: this.handeNameChange })
 	          ),
 	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement('div', { className: "tile-right " + this.props.pageTree.pageType.icon_name }),
@@ -48843,7 +48853,7 @@
 	              ' ',
 	              this.props.name
 	            ),
-	            _react2.default.createElement('textarea', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', defaultValue: this.props.name, onBlur: this.disableNameChangeInput })
+	            _react2.default.createElement('textarea', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', defaultValue: this.props.name, onBlur: this.disableNameChangeInput, onKeyPress: this.handeNameChange })
 	          ),
 	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement('div', { className: "tile-right " + this.props.pageTree.pageType.icon_name }),
@@ -50077,11 +50087,21 @@
 	    _this2.handleMainHeaderToggle = _this2.handleMainHeaderToggle.bind(_this2);
 	    _this2.handleSitemapShareClick = _this2.handleSitemapShareClick.bind(_this2);
 	    _this2.toggleCommentState = _this2.toggleCommentState.bind(_this2);
+	    _this2.handeNameKeyPressed = _this2.handeNameKeyPressed.bind(_this2);
 	    _this2.state = { nameFocused: false, name: props.name, showMainHeader: true, commentSidebarOpen: false };
 	    return _this2;
 	  }
 	
 	  _createClass(Header, [{
+	    key: 'handeNameKeyPressed',
+	    value: function handeNameKeyPressed(e) {
+	      if (e.charCode == 13) {
+	        e.preventDefault();
+	        e.stopPropagation();
+	        this.handleNameInputBlur();
+	      }
+	    }
+	  }, {
 	    key: 'handleMainHeaderToggle',
 	    value: function handleMainHeaderToggle(e) {
 	      $('body').toggleClass('hide-header');
@@ -50200,7 +50220,7 @@
 	                    _react2.default.createElement('img', { src: '/assets/go-back.svg', className: 'go-back-link' })
 	                  )
 	                ),
-	                _react2.default.createElement('input', { value: this.state.name, onChange: this.handleNameChange, onBlur: this.handleNameInputBlur, className: "site-map-name site-map-name-input" + (this.state.nameFocused ? '' : ' hide'), ref: 'sitemapNameInput' }),
+	                _react2.default.createElement('input', { value: this.state.name, onChange: this.handleNameChange, onBlur: this.handleNameInputBlur, className: "site-map-name site-map-name-input" + (this.state.nameFocused ? '' : ' hide'), ref: 'sitemapNameInput', onKeyPress: this.handeNameKeyPressed }),
 	                _react2.default.createElement(
 	                  'h3',
 	                  { className: "site-map-name truncate " + (this.state.nameFocused ? ' hide' : ''), onClick: this.handleNameInputFocus, ref: 'nameEditor' },
@@ -63088,7 +63108,7 @@
 	        return _react2.default.createElement(
 	          'li',
 	          { key: footerPage.id, className: 'footer-page' },
-	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: footerPage, collapsed: true, childrenLength: 0, name: footerPage.name })
+	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: footerPage, collapsed: true, childrenLength: 0, name: footerPage.name, level: 0 })
 	        );
 	      });
 	      return connectDropTarget(_react2.default.createElement(

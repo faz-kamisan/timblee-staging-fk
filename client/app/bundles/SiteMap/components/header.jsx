@@ -20,7 +20,16 @@ class Header extends React.Component {
     this.handleMainHeaderToggle = this.handleMainHeaderToggle.bind(this);
     this.handleSitemapShareClick = this.handleSitemapShareClick.bind(this);
     this.toggleCommentState = this.toggleCommentState.bind(this);
+    this.handeNameKeyPressed = this.handeNameKeyPressed.bind(this);
     this.state = { nameFocused: false, name: props.name, showMainHeader: true, commentSidebarOpen: false }
+  }
+
+  handeNameKeyPressed(e) {
+    if(e.charCode == 13) {
+      e.preventDefault()
+      e.stopPropagation()
+      this.handleNameInputBlur();
+    }
   }
 
   handleMainHeaderToggle(e) {
@@ -117,7 +126,7 @@ class Header extends React.Component {
                     <img src="/assets/go-back.svg" className="go-back-link"></img>
                   </a>
                 </span>
-                <input value = {this.state.name} onChange={this.handleNameChange} onBlur={this.handleNameInputBlur} className={"site-map-name site-map-name-input" + (this.state.nameFocused ? '' : ' hide')} ref='sitemapNameInput' />
+                <input value = {this.state.name} onChange={this.handleNameChange} onBlur={this.handleNameInputBlur} className={"site-map-name site-map-name-input" + (this.state.nameFocused ? '' : ' hide')} ref='sitemapNameInput' onKeyPress={this.handeNameKeyPressed} />
                 <h3 className={"site-map-name truncate " + (this.state.nameFocused ? ' hide' : '')} onClick={this.handleNameInputFocus} ref='nameEditor'>{this.state.name}</h3>
               </div>
               <div className="col-xs-3 state-status text-center">
