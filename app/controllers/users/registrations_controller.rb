@@ -54,7 +54,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # PUT /resource
   def update
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
-    debugger
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
     resource_updated = resource.update_without_password(account_update_params)
     yield resource if block_given?
