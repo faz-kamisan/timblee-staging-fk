@@ -11,6 +11,7 @@ class Admin::UsersController < ApplicationController
     prev_unconfirmed_email = @user.unconfirmed_email if @user.respond_to?(:unconfirmed_email)
     user_updated = @user.update_without_password(user_params)
     if user_updated
+      @user.mail_user_about_role_update(current_user) if user_params.has_key?(:is_admin)
       if is_flashing_format?
         flash_key = update_needs_confirmation?(@user, prev_unconfirmed_email) ?
           :update_needs_confirmation : :updated

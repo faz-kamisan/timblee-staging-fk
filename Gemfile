@@ -26,7 +26,7 @@ gem 'acts_as_list', '~> 0.7.4'
 gem 'mini_magick', '~> 4.5.1'
 gem 'whenever', require: false
 gem 'analytics-ruby', require: "segment"
-
+gem 'createsend'
 
 group :development, :test do
   gem 'byebug', '~> 9.0.5'
