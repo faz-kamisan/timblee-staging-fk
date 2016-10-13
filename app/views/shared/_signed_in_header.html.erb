@@ -23,7 +23,7 @@
                 <%= text_field_tag "sitemap_params", nil, id: 'search-sitemap', data: { source: current_user.all_sitemaps.map {|s| {label: s.name, value: s.id}} }, placeholder: 'Search for sitemaps', autocomplete: 'on' %>
               <% end %>
             </li>
-            <%- if current_user.try(:is_super_admin) || proxy_login? %>
+            <%- if current_user_without_proxy_login.try(:is_super_admin) || proxy_login? %>
               <li class="nav-item">
                 <%= link_to 'Switch Account', admin_dashboard_path %>
               </li>

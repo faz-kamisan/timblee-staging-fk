@@ -9,6 +9,13 @@ class ApplicationController < ActionController::Base
   before_filter :load_notifications, if: :current_user
   before_filter :lock_business_after_trial_end, if: :current_user
 
+  def current_user_with_proxy_login
+    current_proxy_user || current_user_without_proxy_login
+  end
+  alias_method_chain :current_user, :proxy_login
+  helper_method :current_user_with_proxy_login,
+                :current_user_without_proxy_login
+
   def current_business
     current_user.try(:business)
   end
