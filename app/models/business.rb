@@ -10,7 +10,9 @@ class Business < ActiveRecord::Base
   has_one :active_card, -> { order(created_at: :desc) }, class_name: :Card
   mount_uploader :logo, AvatarUploader
 
-  delegate :no_of_users, to: :current_subscription
+  def no_of_users
+    users.count
+  end
 
   def active_subscription
     current_subscription if current_subscription.active?

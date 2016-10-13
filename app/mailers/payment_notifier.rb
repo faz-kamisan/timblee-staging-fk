@@ -1,5 +1,5 @@
 class PaymentNotifier < ActionMailer::Base
-  default from: 'admin@timblee.com'
+  default from: 'admin@timblee.com', to: 'pratibha@vinsol.com'
 
   def success(user, event)
     @event = event
@@ -21,5 +21,12 @@ class PaymentNotifier < ActionMailer::Base
     @event = event
     @user = user
     mail to: user.email, subject: 'Payment failure for Pro subscription!'
+  end
+
+  def exception(user, exception)
+    @exception = exception
+    @user = user
+    @business = user.business
+    mail subject: 'Exception while taking subscription!'
   end
 end

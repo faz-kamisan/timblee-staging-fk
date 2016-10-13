@@ -106,14 +106,16 @@ class Businesses::SubscriptionsController < ApplicationController
       @plan = Plan.find_by(stripe_plan_id: params[:stripe_plan_id])
       unless @plan
         LoggerExtension.stripe_log "Exception Plan not found"
+        PaymentNotifier.delay.exception(current_user,  "Exception Plan not found")
         redirect_to billing_settings_users_path, alert: t('.plan_not_found', scope: :flash)
       end
     end
 
     def deactivate_old_subscription
-      @current_subscription = current_business.current_subscription
+      @current_subscription = current_business.is_pro_plan? ? current_business.subscriptions.order(:created_at).last : nil
       if @current_subscription && !@current_subscription.update(end_at: Time.current)
         LoggerExtension.stripe_log "Exception: #{@current_subscription.errors.full_messages}"
+        PaymentNotifier.delay.exception(current_user,  "Exception: #{@current_subscription.errors.full_messages}")
         redirect_to billing_settings_users_path, alert: t('.failure', scope: :flash)
       end
     end
@@ -132,6 +134,7 @@ class Businesses::SubscriptionsController < ApplicationController
         end
       rescue => e
         LoggerExtension.stripe_log "Exception Transaction Rollback : #{e.inspect}"
+        PaymentNotifier.delay.exception(current_user,  "Exception Transaction Rollback : #{e.inspect}")
         redirect_to billing_settings_users_path, alert: t('.failure', scope: :flash)
       end
     end
