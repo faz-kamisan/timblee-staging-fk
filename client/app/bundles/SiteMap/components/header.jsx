@@ -49,6 +49,10 @@ class Header extends React.Component {
         _this.refs.nameEditor.click()
       }, 3000)
     }
+    var reactOuterWrapper = $('#react-app-outer-wrapper')
+    // debugger
+    $('.react-header .icon-invite-female').data('url', reactOuterWrapper.data('url'))
+    $('.react-header .icon-invite-female').addClass(reactOuterWrapper.data('invite-permission-modal'))
   }
 
   handleNameInputBlur(e) {
@@ -163,7 +167,7 @@ class Header extends React.Component {
               </a>
             </div>
             <div className="pull-left users-block">
-              <span className="icon-invite-female user-invite invite-link cursor" data-url='/users/bulk_invitation' data-remote={true}>
+              <span className="icon-invite-female user-invite cursor" data-remote={true}>
                 <span className="path1"></span>
                 <span className="path2"></span>
                 <span className="path3"></span>

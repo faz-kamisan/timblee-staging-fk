@@ -48607,13 +48607,6 @@
 	      this.props.setSelectedPage(this.props.pageTree);
 	    }
 	  }, {
-	    key: 'componentDidUpdate',
-	    value: function componentDidUpdate(prevProps, prevState) {
-	      if (prevState.nameChangeDisabled && !this.state.nameChangeDisabled) {
-	        this.refs.nameInput.focus();
-	      }
-	    }
-	  }, {
 	    key: 'closeOverLay',
 	    value: function closeOverLay(e) {
 	      this.setState({ showOverLay: false });
@@ -48675,13 +48668,20 @@
 	      this.props.changeActiveSectionId(this.props.pageTree.alt_section_id);
 	    }
 	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate(prevProps, prevState) {
+	      if (prevState.nameChangeDisabled && !this.state.nameChangeDisabled) {
+	        this.refs.nameInput.focus();
+	      }
+	    }
+	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var _this = this;
 	      $('.modal').on('hidden.bs.modal', function () {
 	        _this.setState({ showOverLay: false });
 	      });
-	      if (this.props.pageTree.newRecord) {
+	      if (!this.state.nameChangeDisabled) {
 	        this.refs.nameInput.focus();
 	      }
 	    }
@@ -50122,6 +50122,10 @@
 	          _this.refs.nameEditor.click();
 	        }, 3000);
 	      }
+	      var reactOuterWrapper = $('#react-app-outer-wrapper');
+	      // debugger
+	      $('.react-header .icon-invite-female').data('url', reactOuterWrapper.data('url'));
+	      $('.react-header .icon-invite-female').addClass(reactOuterWrapper.data('invite-permission-modal'));
 	    }
 	  }, {
 	    key: 'handleNameInputBlur',
@@ -50294,7 +50298,7 @@
 	              { className: 'pull-left users-block' },
 	              _react2.default.createElement(
 	                'span',
-	                { className: 'icon-invite-female user-invite invite-link cursor', 'data-url': '/users/bulk_invitation', 'data-remote': true },
+	                { className: 'icon-invite-female user-invite cursor', 'data-remote': true },
 	                _react2.default.createElement('span', { className: 'path1' }),
 	                _react2.default.createElement('span', { className: 'path2' }),
 	                _react2.default.createElement('span', { className: 'path3' }),
