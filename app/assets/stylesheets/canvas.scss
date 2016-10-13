@@ -551,90 +551,58 @@
       padding-right: 22px;
     }
 
+    .tile-top,
+    .tile-name-edit {
+      padding-left: 12px;
+    }
+
     .tile-right {
       display: none;
     }
   }
 
   &.level-6 {
-    .gutter {
-      width: 110px;
-      margin-left: 90px;
+
+    > .page-tile:after {
+      content: ' ';
+      position: absolute;
+      width: 1px;
+      height: 22px;
+      left: 9px;
+      top: -25px;
+      background: #d5d7da;
     }
 
     .page-tile {
-      width: 110px;
-      margin-left: 90px;
+      &:before {
+        display: none;
+      }
+
+      > .collapse-open {
+        display: none;
+      }
     }
 
-    .tile-top,
-    .til-bottom {
-      padding-left: 10px;
-    }
-
-    .tile-name,
-    .tile-name-edit {
-      padding-right: 10px;
-    }
-
-    .tile-name-edit {
-      padding-left: 10px;
-    }
-
-    .tile-right {
-      display: none;
+    .page-tile {
+      border-top-color: #FC5255;
     }
   }
 
   &.level-7 {
-    .gutter {
-      width: 92px;
-      margin-left: 108px;
-    }
-
     .page-tile {
-      width: 92px;
-      margin-left: 108px;
-    }
-
-    .tile-top,
-    .til-bottom {
-      padding-left: 10px;
-    }
-
-    .tile-name,
-    .tile-name-edit {
-      padding-right: 10px;
-    }
-
-    .tile-right {
-      display: none;
+      border-top-color: #BC2131;
     }
   }
 
   &.level-8 {
-    .gutter {
-      width: 74px;
-      margin-left: 126px;
-    }
-
     .page-tile {
-      width: 74px;
-      margin-left: 126px;
+      border-top-color: #000000;
     }
+  }
 
-    .tile-top,
-    .til-bottom {
-      padding-left: 10px;
-    }
-
-    .tile-name,
-    .tile-name-edit {
-      padding-right: 10px;
-    }
-
-    .tile-right {
-      display: none;
+  &.level-9 {
+    .page-tile {
+      border-top-color: #F8C031;
     }
   }
 
@@ -1450,7 +1418,7 @@
   }
   &.parent-6 {
     &:before {
-      left: 99px;
+      display: none;
     }
   }
 }
@@ -1496,26 +1464,21 @@
       }
       > .parent-6 {
         > .child-page:before {
-          @extend .hide-before;
-          left: 81px;
+          display: none;
         }
       }
       > .parent-7 {
         > .child-page:before {
-          @extend .hide-before;
-          left: 99px;
+          display: none;
         }
       }
       > .parent-8 {
         > .child-page:before {
-          @extend .hide-before;
-          left: 117px;
+          display: none;
         }
       }
       > .parent-9 {
         > .child-page:before {
-          @extend .hide-before;
-          left: 135px;
         }
       }
     }
