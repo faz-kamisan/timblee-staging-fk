@@ -31,7 +31,7 @@ export default class PageContainerPreview extends Component {
 
     return (
       <div style={styles} className='custom-drag-preview'>
-        <PageContainer pageTree={pageTree} children={children} level={this.props.level} sitemapNumber={this.props.sitemapNumber} isDragging={true} />
+        <PageContainer pageTree={pageTree} children={children} level={this.props.level} sitemapNumber={this.props.sitemapNumber} isDragging={true} introSlideNumber={0} />
       </div>
     );
   }

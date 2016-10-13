@@ -48591,7 +48591,7 @@
 	                'Change Page'
 	              )
 	            ),
-	            !(this.props.level == 0) && _react2.default.createElement(
+	            !(this.props.level == 0) && this.props.alt_section_id && _react2.default.createElement(
 	              'a',
 	              { href: '#new-section-modal', className: 'icon-page-new', onClick: this.setSelectedPage, 'data-toggle': 'modal' },
 	              _react2.default.createElement(
@@ -48715,7 +48715,7 @@
 	                'Change Page'
 	              )
 	            ),
-	            !(this.props.level == 0) && _react2.default.createElement(
+	            !(this.props.level == 0) && this.props.alt_section_id && _react2.default.createElement(
 	              'a',
 	              { href: '#new-section-modal', className: 'icon-page-new', onClick: this.setSelectedPage, 'data-toggle': 'modal' },
 	              _react2.default.createElement(
@@ -64482,7 +64482,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { style: styles, className: 'custom-drag-preview' },
-	        _react2.default.createElement(_page_container2.default, { pageTree: pageTree, children: children, level: this.props.level, sitemapNumber: this.props.sitemapNumber, isDragging: true })
+	        _react2.default.createElement(_page_container2.default, { pageTree: pageTree, children: children, level: this.props.level, sitemapNumber: this.props.sitemapNumber, isDragging: true, introSlideNumber: 0 })
 	      );
 	    }
 	  }]);
