@@ -4,10 +4,10 @@ class InviteMailer < ActionMailer::Base
   default from: 'pratibha@vinsol.com'
 
   def send_invite(user_id, token, custom_message = '')
-    @user = User.find_by_id(user_id)
+    @user = User.find(user_id)
     @token = token
     @custom_message = custom_message.gsub(/\r\n/, '<br>').html_safe
-    @inviter = User.find_by_id(@user.invited_by_id)
+    @inviter = User.find(@user.invited_by_id)
     @custom_message_header = "Here is a personal message from #{@inviter.full_name}" if @custom_message.present?
 
     if Rails.env.staging?
@@ -16,8 +16,8 @@ class InviteMailer < ActionMailer::Base
       message = {
       'To' => "#{@user.full_name} <#{@user.email}>",
         'Data' => {
-          'inviting_user_first_name' => @user.full_name,
-          'inviting_user_name' => @user.full_name,
+          'inviting_user_first_name' => @inviter.full_name,
+          'inviting_user_name' => @inviter.full_name,
           'Here is a personal message from&nbsp;[inviting_user_name' => @custom_message_header,
           'Insert personal message here' => @custom_message,
           'show the whole link here' => accept_invitation_url(@user, :invitation_token => @token)
