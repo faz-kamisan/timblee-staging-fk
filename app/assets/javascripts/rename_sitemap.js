@@ -14,8 +14,14 @@ RenameSitemap.prototype.bindEvents = function() {
   });
 
   _this.sitemapNameInputField.focusout(function (e) {
+    // debugger
     if(_this.flag) {
-      $(this).closest('form').submit();
+      if($(this).data('original-value') != $(this).val()) {
+        $(this).closest('form').submit();
+      } else {
+        $(this).closest('.site-card').find('.saved-sitemap-name').removeClass('hide');
+        $(this).closest('.site-card').find('.edit-sitemap-name').addClass('hide');
+      }
     } else {
       _this.flag = true;
     }
