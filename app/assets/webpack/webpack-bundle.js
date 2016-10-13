@@ -63683,6 +63683,10 @@
 	          _this.setState({ sectionName: '' });
 	        }, 500);
 	      });
+	
+	      $('.new-section-modal').on('shown.bs.modal', function () {
+	        $('#new-section-name').focus();
+	      });
 	    }
 	  }, {
 	    key: 'render',
