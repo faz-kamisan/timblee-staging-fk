@@ -1,13 +1,15 @@
 <section class="settings">
   <h1>Settings</h1>
 
+  <%- @current_tab = params[:tab] || 'my-info' %>
+
   <!-- Settings -->
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active animated-tab"><a href="#my-info" aria-controls="my-info" role="tab" data-toggle="tab">My info</a></li>
-    <li role="presentation" class="animated-tab"><a href="#team" aria-controls="team" role="tab" data-toggle="tab">Team</a></li>
+    <li role="presentation" class="animated-tab <%= 'active' if @current_tab == 'my-info'%>"><a aria-controls="my-info" role="tab" data-toggle="tab" data-name="my-info">My info</a></li>
+    <li role="presentation" class="animated-tab <%= 'active' if @current_tab == 'team'%>"><a aria-controls="team" role="tab" data-toggle="tab" data-name="team">Team</a></li>
     <% if current_user.is_admin? %>
-      <li role="presentation" class="animated-tab"><a href="#personalization" aria-controls="personalization" role="tab" data-toggle="tab">Personalization</a></li>
-      <li role="presentation" class="animated-tab"><a href="#billing" aria-controls="billing" role="tab" data-toggle="tab">Billing</a></li>
+      <li role="presentation" class="animated-tab <%= 'active' if @current_tab == 'personalization'%>"><a aria-controls="personalization" role="tab" data-toggle="tab" data-name="personalization">Personalization</a></li>
+      <li role="presentation" class="animated-tab <%= 'active' if @current_tab == 'billing'%>"><a aria-controls="billing" role="tab" data-toggle="tab" data-name="billing">Billing</a></li>
     <% end %>
     <li class="animated-bar-rails"></li>
   </ul>
