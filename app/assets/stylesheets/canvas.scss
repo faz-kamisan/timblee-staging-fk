@@ -44,7 +44,7 @@
   visibility: hidden;
   text-align: center;
   padding-top: 30px;
-  @include animate(.5s);
+  @include animate(.05s);
 }
 
 .left-button {
@@ -83,7 +83,11 @@
   }
 }
 
-.page-container, .page-tile-clone, .footer-page {
+.page-container,
+.page-tile-clone,
+.footer-page {
+
+   // Individual page tile
   .page-tile {
     width: 200px;
     height: 87px;
@@ -94,7 +98,9 @@
     position: relative;
     display: inline-block;
     cursor: pointer;
-    @include animate(.5s);
+    @include animate(.05s);
+
+    // The Plus button on the page tile
     .collapse-open {
       position: absolute;
       left: 0;
@@ -106,39 +112,42 @@
       z-index: 11;
       cursor: pointer;
       background: $primaryWhite;
-      &:after {
-        content: ' ';
-        position: absolute;
-        width: 8px;
-        height: 2px;
-        background: #535c63;
-        left: 50%;
-        top: 50%;
-        margin-left: -4px;
-        margin-top: -1px;
-        z-index: 2;
-      }
 
+      &:after,
       &:before {
         content: ' ';
         position: absolute;
+        background: #535c63;
+        z-index: 2;
+        left: 50%;
+        top: 50%;
+      }
+
+      &:after {
+        width: 8px;
+        height: 2px;
+        margin-left: -4px;
+        margin-top: -1px;
+      }
+
+      &:before {
         width: 2px;
         height: 8px;
         background: #535c63;
-        left: 50%;
-        top: 50%;
         margin-left: -1px;
         margin-top: -4px;
-        z-index: 2;
         display: none;
       }
 
+      // When page tile collapse button is clicked
       &.collapse-close {
         &:before {
           display: block;
         }
       }
     }
+
+    // When we hover on the page tile
     &:hover {
       .tile-right-hover {
         opacity: 1;
@@ -543,7 +552,6 @@
     .page-tile {
       width: 128px;
       margin-left: 72px;
-      border-top-color: #00cfff;
     }
 
     .tile-name,
@@ -563,13 +571,13 @@
 
   &.level-6 {
 
-    > .page-tile:after {
+    .page-tile:after {
       content: ' ';
       position: absolute;
       width: 1px;
-      height: 22px;
+      height: 26px;
       left: 9px;
-      top: -25px;
+      top: -29px;
       background: #d5d7da;
     }
 
@@ -583,26 +591,35 @@
       }
     }
 
-    .page-tile {
-      border-top-color: #FC5255;
+  }
+
+  &.border-level-5 {
+    > .page-tile {
+      border-top-color: #24D0FD!important;
     }
   }
 
-  &.level-7 {
-    .page-tile {
-      border-top-color: #BC2131;
+  &.border-level-6 {
+    > .page-tile {
+      border-top-color: #FC5255!important;
     }
   }
 
-  &.level-8 {
-    .page-tile {
-      border-top-color: #000000;
+  &.border-level-7 {
+    > .page-tile {
+      border-top-color: #BC2131!important;
     }
   }
 
-  &.level-9 {
-    .page-tile {
-      border-top-color: #F8C031;
+  &.border-level-8 {
+    > .page-tile {
+      border-top-color: #000000!important;
+    }
+  }
+
+  &.border-level-9 {
+    > .page-tile {
+      border-top-color: #F8C031!important;
     }
   }
 
@@ -610,7 +627,7 @@
     width: 100%;
     height: 26px;
     background: $transparent;
-    @include animate(0.5s);
+    @include animate(0.05s);
     &.drag-over, &.again-drag-over, &.again-2-drag-over {
       background: url('/assets/gutter.png');
       background-repeat: no-repeat;
@@ -636,7 +653,7 @@
         position: absolute;
         right: -40px;
         top: 0;
-        @include animate(0.5s);
+        @include animate(0.1s);
         z-index: 2;
         &:before {
           content: ' ';
@@ -1414,10 +1431,6 @@
   &.parent-5 {
     &:before {
       left: 81px;
-    }
-  }
-  &.parent-6 {
-    &:before {
       display: none;
     }
   }
@@ -2269,29 +2282,6 @@ body.trial {
   }
   .close-card-overlay {
     right: 7px;
-  }
-}
-
-.level-6 {
-  .card-overlay {
-    padding-top: 45px;
-    a {
-      font-size: 20px;
-    }
-  }
-  .close-card-overlay {
-    top: 17px;
-    a {
-      font-size: 17px;
-    }
-  }
-}
-
-.level-7 {
-  .card-overlay {
-    a + a {
-      margin-left: 0;
-    }
   }
 }
 
