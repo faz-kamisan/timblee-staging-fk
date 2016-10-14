@@ -39,7 +39,7 @@ const sitemapTarget = {
         }
       });
       if(props.pageTree.footer) {
-        props.onFooterPageTypeDrop(item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
+        props.onFooterPageTypeDrop(item, timeStamp, props.maxPageUid);
       } else {
         props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
       }

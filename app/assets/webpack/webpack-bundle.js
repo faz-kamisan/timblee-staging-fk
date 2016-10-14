@@ -49886,7 +49886,7 @@
 	        }
 	      });
 	      if (props.pageTree.footer) {
-	        props.onFooterPageTypeDrop(item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
+	        props.onFooterPageTypeDrop(item, timeStamp, props.maxPageUid);
 	      } else {
 	        props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
 	      }
@@ -50123,7 +50123,6 @@
 	        }, 3000);
 	      }
 	      var reactOuterWrapper = $('#react-app-outer-wrapper');
-	      // debugger
 	      $('.react-header .icon-invite-female').data('url', reactOuterWrapper.data('url'));
 	      $('.react-header .icon-invite-female').addClass(reactOuterWrapper.data('invite-permission-modal'));
 	    }

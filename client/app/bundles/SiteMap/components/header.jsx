@@ -50,7 +50,6 @@ class Header extends React.Component {
       }, 3000)
     }
     var reactOuterWrapper = $('#react-app-outer-wrapper')
-    // debugger
     $('.react-header .icon-invite-female').data('url', reactOuterWrapper.data('url'))
     $('.react-header .icon-invite-female').addClass(reactOuterWrapper.data('invite-permission-modal'))
   }
