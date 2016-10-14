@@ -39,7 +39,7 @@ class PageContainer extends React.Component {
       }
 
       return (
-        <div data-level={this.props.level} className={ 'page-container level-' + this.props.level.toString() + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + ((children.length == 0) ? ' no-children' : '') } style={ { width: width } }>
+        <div data-level={this.props.level} className={ 'page-container level-' + this.props.level.toString() + ((this.props.level > 4) ? (' border-level-' + ((this.props.level % 5) + 5).toString()) : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + ((children.length == 0) ? ' no-children' : '') } style={ { width: width } }>
           <ConnectedPageTile pageTree={this.props.pageTree} collapsed={this.props.pageTree.collapsed} childrenLength={children.length} sitemapNumber={this.props.sitemapNumber} name={this.props.pageTree.name} level={this.props.level} isDragging={this.props.isDragging} />
           <ConnectedGutter pageTree={this.props.pageTree} />
           { (children.length == 0) &&
@@ -65,7 +65,7 @@ class PageContainer extends React.Component {
       );
     } else {
       return (
-        <div data-level={this.props.level} className={ 'page-container level-' + this.props.level.toString() }>
+        <div data-level={this.props.level} className={ 'page-container level-' + this.props.level.toString() + ((this.props.level > 4) ? (' border-level-' + ((this.props.level % 5) + 5).toString()) : '') }>
           <ConnectedPageTile pageTree={this.props.pageTree} collapsed={this.props.pageTree.collapsed} childrenLength={children.length} sitemapNumber={this.props.sitemapNumber} name={this.props.pageTree.name} level={this.props.level} isDragging={this.props.isDragging} />
           <ConnectedGutter pageTree={this.props.pageTree} />
           <ConnectedLevelSupport pageTree={this.props.pageTree} />

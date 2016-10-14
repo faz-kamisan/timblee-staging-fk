@@ -362,3 +362,9 @@
     @include alignCenter(-310px, -259px);
   }
 }
+
+#delete-section-modal {
+  .modal-dialog {
+    @include alignCenter(-310px, -144px);
+  } 
+}

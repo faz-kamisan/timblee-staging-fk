@@ -44,7 +44,7 @@
   visibility: hidden;
   text-align: center;
   padding-top: 30px;
-  @include animate(.5s);
+  @include animate(.05s);
 }
 
 .left-button {
@@ -83,7 +83,11 @@
   }
 }
 
-.page-container, .page-tile-clone, .footer-page {
+.page-container,
+.page-tile-clone,
+.footer-page {
+
+   // Individual page tile
   .page-tile {
     width: 200px;
     height: 87px;
@@ -94,7 +98,9 @@
     position: relative;
     display: inline-block;
     cursor: pointer;
-    @include animate(.5s);
+    @include animate(.05s);
+
+    // The Plus button on the page tile
     .collapse-open {
       position: absolute;
       left: 0;
@@ -106,39 +112,42 @@
       z-index: 11;
       cursor: pointer;
       background: $primaryWhite;
-      &:after {
-        content: ' ';
-        position: absolute;
-        width: 8px;
-        height: 2px;
-        background: #535c63;
-        left: 50%;
-        top: 50%;
-        margin-left: -4px;
-        margin-top: -1px;
-        z-index: 2;
-      }
 
+      &:after,
       &:before {
         content: ' ';
         position: absolute;
+        background: #535c63;
+        z-index: 2;
+        left: 50%;
+        top: 50%;
+      }
+
+      &:after {
+        width: 8px;
+        height: 2px;
+        margin-left: -4px;
+        margin-top: -1px;
+      }
+
+      &:before {
         width: 2px;
         height: 8px;
         background: #535c63;
-        left: 50%;
-        top: 50%;
         margin-left: -1px;
         margin-top: -4px;
-        z-index: 2;
         display: none;
       }
 
+      // When page tile collapse button is clicked
       &.collapse-close {
         &:before {
           display: block;
         }
       }
     }
+
+    // When we hover on the page tile
     &:hover {
       .tile-right-hover {
         opacity: 1;
@@ -404,6 +413,13 @@
         }
       }
     }
+    &.no-children {
+      > .page-tile {
+        .bottom-button {
+          display: none;
+        }
+      }
+    }
   }
 
   &.level-1 {
@@ -470,6 +486,10 @@
       margin-left: 36px;
     }
 
+    .section-tag {
+      left: 48px;
+    }
+
     .page-tile {
       width: 164px;
       margin-left: 36px;
@@ -494,6 +514,10 @@
     .gutter {
       width: 146px;
       margin-left: 54px;
+    }
+
+    .section-tag {
+      left: 52px;
     }
 
     .page-tile {
@@ -521,15 +545,23 @@
       margin-left: 72px;
     }
 
+    .section-tag {
+      left: 57px;
+    }
+
     .page-tile {
       width: 128px;
       margin-left: 72px;
-      border-top-color: #00cfff;
     }
 
     .tile-name,
     .tile-name-edit {
       padding-right: 22px;
+    }
+
+    .tile-top,
+    .tile-name-edit {
+      padding-left: 12px;
     }
 
     .tile-right {
@@ -538,84 +570,56 @@
   }
 
   &.level-6 {
-    .gutter {
-      width: 110px;
-      margin-left: 90px;
+
+    .page-tile:after {
+      content: ' ';
+      position: absolute;
+      width: 1px;
+      height: 26px;
+      left: 9px;
+      top: -29px;
+      background: #d5d7da;
     }
 
     .page-tile {
-      width: 110px;
-      margin-left: 90px;
+      &:before {
+        display: none;
+      }
+
+      > .collapse-open {
+        display: none;
+      }
     }
 
-    .tile-top,
-    .til-bottom {
-      padding-left: 10px;
-    }
+  }
 
-    .tile-name,
-    .tile-name-edit {
-      padding-right: 10px;
-    }
-
-    .tile-name-edit {
-      padding-left: 10px;
-    }
-
-    .tile-right {
-      display: none;
+  &.border-level-5 {
+    > .page-tile {
+      border-top-color: #24D0FD!important;
     }
   }
 
-  &.level-7 {
-    .gutter {
-      width: 92px;
-      margin-left: 108px;
-    }
-
-    .page-tile {
-      width: 92px;
-      margin-left: 108px;
-    }
-
-    .tile-top,
-    .til-bottom {
-      padding-left: 10px;
-    }
-
-    .tile-name,
-    .tile-name-edit {
-      padding-right: 10px;
-    }
-
-    .tile-right {
-      display: none;
+  &.border-level-6 {
+    > .page-tile {
+      border-top-color: #FC5255!important;
     }
   }
 
-  &.level-8 {
-    .gutter {
-      width: 74px;
-      margin-left: 126px;
+  &.border-level-7 {
+    > .page-tile {
+      border-top-color: #BC2131!important;
     }
+  }
 
-    .page-tile {
-      width: 74px;
-      margin-left: 126px;
+  &.border-level-8 {
+    > .page-tile {
+      border-top-color: #000000!important;
     }
+  }
 
-    .tile-top,
-    .til-bottom {
-      padding-left: 10px;
-    }
-
-    .tile-name,
-    .tile-name-edit {
-      padding-right: 10px;
-    }
-
-    .tile-right {
-      display: none;
+  &.border-level-9 {
+    > .page-tile {
+      border-top-color: #F8C031!important;
     }
   }
 
@@ -623,7 +627,7 @@
     width: 100%;
     height: 26px;
     background: $transparent;
-    @include animate(0.5s);
+    @include animate(0.05s);
     &.drag-over, &.again-drag-over, &.again-2-drag-over {
       background: url('/assets/gutter.png');
       background-repeat: no-repeat;
@@ -649,7 +653,7 @@
         position: absolute;
         right: -40px;
         top: 0;
-        @include animate(0.5s);
+        @include animate(0.1s);
         z-index: 2;
         &:before {
           content: ' ';
@@ -1427,11 +1431,7 @@
   &.parent-5 {
     &:before {
       left: 81px;
-    }
-  }
-  &.parent-6 {
-    &:before {
-      left: 99px;
+      display: none;
     }
   }
 }
@@ -1477,26 +1477,21 @@
       }
       > .parent-6 {
         > .child-page:before {
-          @extend .hide-before;
-          left: 81px;
+          display: none;
         }
       }
       > .parent-7 {
         > .child-page:before {
-          @extend .hide-before;
-          left: 99px;
+          display: none;
         }
       }
       > .parent-8 {
         > .child-page:before {
-          @extend .hide-before;
-          left: 117px;
+          display: none;
         }
       }
       > .parent-9 {
         > .child-page:before {
-          @extend .hide-before;
-          left: 135px;
         }
       }
     }
@@ -1611,6 +1606,21 @@
     &:hover {
       color: $primaryPink;
       border-color: $primaryPink;
+      .share-icon {
+        background-position: 0 1px;  
+      }
+    }
+    .share-icon {
+      display: inline-block;
+      width: 12px;
+      height: 14px;
+      background: url('/assets/share.png');
+      background-repeat: no-repeat;
+      background-size: 12px;
+      background-position: 0 -13px;
+      position: relative;
+      top: 2.5px;
+      left: -3px;
     }
   }
 
@@ -2272,29 +2282,6 @@ body.trial {
   }
   .close-card-overlay {
     right: 7px;
-  }
-}
-
-.level-6 {
-  .card-overlay {
-    padding-top: 45px;
-    a {
-      font-size: 20px;
-    }
-  }
-  .close-card-overlay {
-    top: 17px;
-    a {
-      font-size: 17px;
-    }
-  }
-}
-
-.level-7 {
-  .card-overlay {
-    a + a {
-      margin-left: 0;
-    }
   }
 }
 
@@ -3236,6 +3223,8 @@ body.trial {
     position: absolute;
     left: 12px;
     color: #d6d8da;
+    line-height: 36px;
+    top: 6px;
     font-size: 20px;
     &:hover {
       color: $primaryPink;
