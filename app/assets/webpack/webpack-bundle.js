@@ -51487,7 +51487,7 @@
 	              { className: 'row' },
 	              _react2.default.createElement(
 	                'span',
-	                { className: 'cursor col-xs-4 p-r-0', onClick: this.toogleExpand },
+	                { className: 'cursor col-xs-5 p-r-0', onClick: this.toogleExpand },
 	                _react2.default.createElement(
 	                  'span',
 	                  { className: 'caret-left' },
@@ -51497,7 +51497,7 @@
 	              ),
 	              _react2.default.createElement(
 	                'span',
-	                { className: 'last-updated col-xs-8 p-r-0 text-right' },
+	                { className: 'last-updated col-xs-7 p-r-0 text-right' },
 	                this.getPageCount(),
 	                ' ',
 	                this.getPageCount() == 1 ? 'Page' : 'Pages',

@@ -78,13 +78,13 @@ class LeftSidebar extends React.Component {
           <div>
             <div className={"close-left-bar" + (this.props.trial ? ' hide' : '')}>
               <div className="row">
-                <span className="cursor col-xs-4 p-r-0" onClick={this.toogleExpand}>
+                <span className="cursor col-xs-5 p-r-0" onClick={this.toogleExpand}>
                   <span className="caret-left">
                     <i className="icon-caret"></i>
                   </span>
                   Hide Sidebar
                 </span>
-                <span className="last-updated col-xs-8 p-r-0 text-right">
+                <span className="last-updated col-xs-7 p-r-0 text-right">
                   {this.getPageCount()} {(this.getPageCount() == 1) ? 'Page' : 'Pages'} | Last updated {this.props.updatedAt}
                 </span>
               </div>
