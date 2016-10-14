@@ -12,7 +12,7 @@ class Sitemap < ActiveRecord::Base
   has_many :pages
   has_many :sections
   has_one :default_section, ->{ where(default: true) }, class_name: :Section
-  has_many :sitemap_shared_users, dependent: :destroy
+  has_many :sitemap_shared_users
   has_many :comments, as: :commentable
   has_many :page_comments, source: :comments, through: :pages
 
@@ -119,8 +119,7 @@ class Sitemap < ActiveRecord::Base
     end
 
     def delete_associations
-      Comment.where(id: pages.pluck(:id)).delete_all
-      # page_comments.delete_all
+      Comment.where(commentable_type: :Page, commentable_id: pages.pluck(:id)).delete_all
       comments.delete_all
       sitemap_shared_users.delete_all
       pages.delete_all

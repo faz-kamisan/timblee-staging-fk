@@ -51427,7 +51427,7 @@
 	                'Change Page'
 	              )
 	            ),
-	            !(this.props.level == 0) && _react2.default.createElement(
+	            !(this.props.level == 0) && !this.props.pageTree.alt_section_id && _react2.default.createElement(
 	              'a',
 	              { href: '#new-section-modal', className: 'icon-page-new', onClick: this.setSelectedPage, 'data-toggle': 'modal' },
 	              _react2.default.createElement(
@@ -51551,7 +51551,7 @@
 	                'Change Page'
 	              )
 	            ),
-	            !(this.props.level == 0) && _react2.default.createElement(
+	            !(this.props.level == 0) && !this.props.pageTree.alt_section_id && _react2.default.createElement(
 	              'a',
 	              { href: '#new-section-modal', className: 'icon-page-new', onClick: this.setSelectedPage, 'data-toggle': 'modal' },
 	              _react2.default.createElement(
@@ -52758,6 +52758,10 @@
 	          _this.refs.nameEditor.click();
 	        }, 3000);
 	      }
+	      var reactOuterWrapper = $('#react-app-outer-wrapper');
+	      // debugger
+	      $('.react-header .icon-invite-female').data('url', reactOuterWrapper.data('url'));
+	      $('.react-header .icon-invite-female').addClass(reactOuterWrapper.data('invite-permission-modal'));
 	    }
 	  }, {
 	    key: 'handleNameInputBlur',
@@ -52931,7 +52935,7 @@
 	              { className: 'pull-left users-block' },
 	              _react2.default.createElement(
 	                'span',
-	                { className: 'icon-invite-female user-invite invite-link cursor', 'data-url': '/users/bulk_invitation', 'data-remote': true },
+	                { className: 'icon-invite-female user-invite cursor', 'data-remote': true },
 	                _react2.default.createElement('span', { className: 'path1' }),
 	                _react2.default.createElement('span', { className: 'path2' }),
 	                _react2.default.createElement('span', { className: 'path3' }),
@@ -54119,7 +54123,7 @@
 	              { className: 'row' },
 	              _react2.default.createElement(
 	                'span',
-	                { className: 'cursor col-xs-4 p-r-0', onClick: this.toogleExpand },
+	                { className: 'cursor col-xs-5 p-r-0', onClick: this.toogleExpand },
 	                _react2.default.createElement(
 	                  'span',
 	                  { className: 'caret-left' },
@@ -54129,7 +54133,7 @@
 	              ),
 	              _react2.default.createElement(
 	                'span',
-	                { className: 'last-updated col-xs-8 p-r-0 text-right' },
+	                { className: 'last-updated col-xs-7 p-r-0 text-right' },
 	                this.getPageCount(),
 	                ' ',
 	                this.getPageCount() == 1 ? 'Page' : 'Pages',
@@ -69139,26 +69143,28 @@
 	    value: function createSection(e) {
 	      var _this = this;
 	      var timeStamp = new Date();
-	      var name = this.state.sectionName;
-	      this.props.onCreateSection(this.props.pageTree, name, timeStamp);
-	      $.ajax({
-	        url: '/sections',
-	        method: 'post',
-	        dataType: 'JSON',
-	        data: { page_id: this.props.pageTree.id, section: { name: name } },
-	        error: function error(result) {
-	          document.setFlash(result.responseText);
-	        },
-	        success: function success(result) {
-	          _this.props.onSectionIdUpdate(timeStamp, result.id);
-	        },
-	        complete: function complete(result) {
-	          _this.props.setSaving(true);
-	          setTimeout(function () {
-	            _this.props.setSaving(false);
-	          }, 2000);
-	        }
-	      });
+	      var name = this.state.sectionName.trim();
+	      if (name) {
+	        this.props.onCreateSection(this.props.pageTree, name, timeStamp);
+	        $.ajax({
+	          url: '/sections',
+	          method: 'post',
+	          dataType: 'JSON',
+	          data: { page_id: this.props.pageTree.id, section: { name: name } },
+	          error: function error(result) {
+	            document.setFlash(result.responseText);
+	          },
+	          success: function success(result) {
+	            _this.props.onSectionIdUpdate(timeStamp, result.id);
+	          },
+	          complete: function complete(result) {
+	            _this.props.setSaving(true);
+	            setTimeout(function () {
+	              _this.props.setSaving(false);
+	            }, 2000);
+	          }
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'componentDidMount',
@@ -69168,6 +69174,10 @@
 	        setTimeout(function () {
 	          _this.setState({ sectionName: '' });
 	        }, 500);
+	      });
+	
+	      $('.new-section-modal').on('shown.bs.modal', function () {
+	        $('#new-section-name').focus();
 	      });
 	    }
 	  }, {
@@ -69968,7 +69978,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { style: styles, className: 'custom-drag-preview' },
-	        _react2.default.createElement(_page_container2.default, { pageTree: pageTree, children: children, level: this.props.level, sitemapNumber: this.props.sitemapNumber, isDragging: true })
+	        _react2.default.createElement(_page_container2.default, { pageTree: pageTree, children: children, level: this.props.level, sitemapNumber: this.props.sitemapNumber, isDragging: true, introSlideNumber: 0 })
 	      );
 	    }
 	  }]);

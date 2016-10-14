@@ -1,5 +1,5 @@
 <!-- My Info Tab -->
-<div role="tabpanel" class="tab-pane active" id="my-info">
+<div role="tabpanel" class="tab-pane <%= 'active' if @current_tab == 'my-info'%>" id="my-info">
   <%= form_for current_user, url: registration_path(current_user), html: { class: 'settings-form' } do |f| %>
     <div class="form-group">
       <div class="row">
