@@ -213,7 +213,7 @@ class PageTile extends React.Component {
 
   handleMouseDown(e) {
     var target = $(e.target)
-    if((target.closest('.collapse-open').length == 0) && (target.closest('.first-item').length == 0) && (target.closest('.close-card-overlay').length == 0)) {
+    if((target.closest('.right-button-div').length == 0) && (target.closest('.bottom-button-div').length == 0) && (target.closest('.close-card-overlay').length == 0)) {
       this.removeFaded()
     }
   }
@@ -249,14 +249,14 @@ class PageTile extends React.Component {
           { !this.props.isDragging &&
             <div>
               <div className="right-button-div">
-                <div className='right-button'>
-                  <div className="collapse-open collapse-close" onClick={this.addSameLevelNextPage}></div>
-                  Add same level page                
+                <div className='right-button' onClick={this.addSameLevelNextPage}>
+                  <div className="collapse-open collapse-close"></div>
+                  Add same level page
                 </div>
               </div>
               <div className="bottom-button-div">
-                <div className='bottom-button'>
-                  <div className="collapse-open collapse-close" onClick={this.addSubPage}></div>
+                <div className='bottom-button' onClick={this.addSubPage}>
+                  <div className="collapse-open collapse-close"></div>
                   Add sub page
                 </div>
               </div>
@@ -339,14 +339,14 @@ class PageTile extends React.Component {
           { !this.props.isDragging &&
             <div>
               <div className="right-button-div">
-                <div className='right-button'>
-                  <div className="collapse-open collapse-close" onClick={this.addSameLevelNextPage}></div>
-                  Add same level page                
+                <div className='right-button' onClick={this.addSameLevelNextPage}>
+                  <div className="collapse-open collapse-close"></div>
+                  Add same level page
                 </div>
               </div>
               <div className="bottom-button-div">
-                <div className='bottom-button'>
-                  <div className="collapse-open collapse-close" onClick={this.addSubPage}></div>
+                <div className='bottom-button' onClick={this.addSubPage}>
+                  <div className="collapse-open collapse-close"></div>
                   Add sub page
                 </div>
               </div>

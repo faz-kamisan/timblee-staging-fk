@@ -79,16 +79,16 @@
 - name: Pricing
   icon_name: pricing-icon
 
-- name: Product-Clothing
+- name: 'Product: Clothing'
   icon_name: product-clothing-icon
 
-- name: Product-Electronics
+- name: 'Product: Electronics'
   icon_name: product-electronics-icon
 
-- name: Product-General
+- name: 'Product: General'
   icon_name: product-general-icon
 
-- name: Product-Shoes
+- name: 'Product: Shoes'
   icon_name: product-shoes-icon
 
 - name: Reviews

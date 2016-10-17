@@ -1,11 +1,15 @@
 .not-faded {
   z-index: 12;
   &:hover {
+    .right-button-div, .bottom-button-div {
+      display: block;
+    }
     .right-button,
     .bottom-button {
       opacity: 1!important;
       visibility: visible!important;
     }
+
   }
 }
 
@@ -43,6 +47,7 @@
 
 .right-button-div {
   position: absolute;
+  display: none;
   right: -155px;
   width: 155px;
   height: 100%;
@@ -51,6 +56,7 @@
 
 .bottom-button-div {
   position: absolute;
+  display: none;
   width: 116px;
   height: 55px;
   background: $transparent;
@@ -1616,7 +1622,7 @@
       color: $primaryPink;
       border-color: $primaryPink;
       .share-icon {
-        background-position: 0 1px;  
+        background-position: 0 1px;
       }
     }
     .share-icon {
@@ -3722,17 +3728,17 @@ body.trial {
   cursor: pointer;
   &.pulse-1 {
     -webkit-animation-delay: .35s;
-    animation-delay: .35s;  
+    animation-delay: .35s;
   }
 
   &.pulse-2 {
     -webkit-animation-delay: .7s;
-    animation-delay: .7s;  
+    animation-delay: .7s;
   }
 
   &.pulse-3 {
     -webkit-animation-delay: 1.05s;
-    animation-delay: 1.05s;  
+    animation-delay: 1.05s;
   }
 }
 
