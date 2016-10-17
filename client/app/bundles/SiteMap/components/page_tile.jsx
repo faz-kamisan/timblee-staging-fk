@@ -239,7 +239,7 @@ class PageTile extends React.Component {
   render() {
     if(this.props.childrenLength > 0) {
       return (
-        <div className={"page-tile " + (((this.props.level == 0) && (this.props.childrenLength % 2 == 0)) ? 'even-tree' : 'odd-tree') } onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile' onMouseDown={this.handleMouseDown}>
+        <div className={"page-tile " + (((this.props.level == 0) && (this.props.childrenLength % 2 == 0)) ? 'even-tree' : 'odd-tree') + (((this.props.level > 7) && (this.props.pageTree.alt_section_id)) ? " level-with-section" : "") } onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile' onMouseDown={this.handleMouseDown}>
           { !this.props.isDragging &&
             <div>
               <div className='left-button'>
@@ -257,9 +257,17 @@ class PageTile extends React.Component {
             </div>
           }
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber} name={this.props.name} level={this.props.level} />
-          { this.props.pageTree.alt_section_id && !(this.props.level == 0) &&
-            <span className="section-tag" onClick={this.showLinkedSection}>section</span>
-          }
+          <div className="tile-top-data">
+            <h1 className="tile-name">
+              <span className="tile-number">{this.props.sitemapNumber}</span>
+            </h1>
+            { this.props.pageTree.alt_section_id && !(this.props.level == 0) &&
+              <span className="section-tag" onClick={this.showLinkedSection}>
+                section
+                <img src="/assets/link.png" alt=" "></img>
+              </span>
+            }
+          </div>
           <h1 className="tile-name-edit">
             <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
             <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' defaultValue={this.props.name} onBlur={this.disableNameChangeInput} onKeyPress={this.handeNameChange}></textarea>
@@ -321,7 +329,7 @@ class PageTile extends React.Component {
       );
     } else {
       return (
-        <div className="page-tile" onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile' onMouseDown={this.handleMouseDown}>
+        <div className={ "page-tile " + (((this.props.level > 7) && (this.props.pageTree.alt_section_id)) ? " level-with-section" : "" )} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile' onMouseDown={this.handleMouseDown}>
           { !this.props.isDragging &&
             <div>
               <div className='left-button'>
@@ -339,9 +347,17 @@ class PageTile extends React.Component {
             </div>
           }
           <ConnectedPageTileTop pageTree={this.props.pageTree} sitemapNumber={this.props.sitemapNumber}  name={this.props.name} level={this.props.level} />
-          { this.props.pageTree.alt_section_id && !(this.props.level == 0) &&
-            <span className="section-tag" onClick={this.showLinkedSection}>section</span>
-          }
+          <div className="tile-top-data">
+            <h1 className="tile-name">
+              <span className="tile-number">{this.props.sitemapNumber}</span>
+            </h1>
+            { this.props.pageTree.alt_section_id && !(this.props.level == 0) &&
+              <span className="section-tag" onClick={this.showLinkedSection}>
+                section
+                <img src="/assets/link.png" alt=" "></img>
+              </span>
+            }
+          </div>
           <h1 className="tile-name-edit">
             <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
             <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' defaultValue={this.props.name} onBlur={this.disableNameChangeInput}  onKeyPress={this.handeNameChange}></textarea>
