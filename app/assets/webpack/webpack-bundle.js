@@ -48355,7 +48355,7 @@
 	var mapStateToProps = function mapStateToProps(state) {
 	  return { publicShare: state.publicShare, pageType: state.pageTypes.filter(function (pageType) {
 	      return pageType.name == 'General 1';
-	    })[0], maxPageUid: state.maxPageUid, sitemapId: state.id };
+	    })[0], maxPageUid: state.maxPageUid, sitemapId: state.id, currentUser: state.currentUser, currentGuest: state.currentGuest };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -48393,6 +48393,9 @@
 	    setSaving: function setSaving(saving) {
 	      dispatch((0, _actions.setSaving)(saving));
 	      dispatch((0, _actions.changeUpdatedAt)());
+	    },
+	    setShowGuestInfoForm: function setShowGuestInfoForm(showGuestInfoForm) {
+	      dispatch((0, _actions.setShowGuestInfoForm)(showGuestInfoForm));
 	    }
 	  };
 	};
@@ -48452,6 +48455,7 @@
 	    _this2.closeOverLay = _this2.closeOverLay.bind(_this2);
 	    _this2.openOverLay = _this2.openOverLay.bind(_this2);
 	    _this2.setSelectedPage = _this2.setSelectedPage.bind(_this2);
+	    _this2.checkUserOrGuest = _this2.checkUserOrGuest.bind(_this2);
 	    _this2.showLinkedSection = _this2.showLinkedSection.bind(_this2);
 	    _this2.addSameLevelNextPage = _this2.addSameLevelNextPage.bind(_this2);
 	    _this2.addSameLevelPrevPage = _this2.addSameLevelPrevPage.bind(_this2);
@@ -48602,6 +48606,18 @@
 	      });
 	      this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.id, 'begining', timeStamp, this.props.maxPageUid);
 	      this.removeFaded();
+	    }
+	  }, {
+	    key: 'checkUserOrGuest',
+	    value: function checkUserOrGuest(e) {
+	      if (this.props.currentUser || this.props.currentGuest) {
+	        this.props.setSelectedPage(this.props.pageTree);
+	        $('#page-comments-modal').modal('show');
+	      } else {
+	        this.props.setShowGuestInfoForm(true);
+	        $('.modal').modal('hide');
+	        $('#guest-info-modal').modal('show');
+	      }
 	    }
 	  }, {
 	    key: 'setSelectedPage',
@@ -48757,7 +48773,7 @@
 	                { className: 'second-item' },
 	                _react2.default.createElement(
 	                  'span',
-	                  { className: 'icon-page-comments tile-icons', onClick: this.setSelectedPage, 'data-toggle': 'modal', 'data-target': '#page-comments-modal' },
+	                  { className: 'icon-page-comments tile-icons', onClick: this.checkUserOrGuest },
 	                  _react2.default.createElement(
 	                    'span',
 	                    { className: 'card-tooltip' },
@@ -48777,7 +48793,7 @@
 	            ),
 	            !this.props.trial && _react2.default.createElement(
 	              'a',
-	              { href: '#page-comments-modal', className: 'icon-page-comments', onClick: this.setSelectedPage, 'data-toggle': 'modal' },
+	              { href: 'javascript:void(0)', className: 'icon-page-comments', onClick: this.checkUserOrGuest, 'data-toggle': 'modal' },
 	              _react2.default.createElement(
 	                'span',
 	                { className: 'card-tooltip' },
@@ -48881,7 +48897,7 @@
 	                { className: 'second-item' },
 	                _react2.default.createElement(
 	                  'span',
-	                  { className: 'icon-page-comments tile-icons', onClick: this.setSelectedPage, 'data-toggle': 'modal', 'data-target': '#page-comments-modal' },
+	                  { className: 'icon-page-comments tile-icons', onClick: this.checkUserOrGuest },
 	                  _react2.default.createElement(
 	                    'span',
 	                    { className: 'card-tooltip' },
@@ -48901,7 +48917,7 @@
 	            ),
 	            !this.props.trial && _react2.default.createElement(
 	              'a',
-	              { href: '#page-comments-modal', className: 'icon-page-comments', onClick: this.setSelectedPage, 'data-toggle': 'modal' },
+	              { href: 'javascript:void(0)', className: 'icon-page-comments', onClick: this.checkUserOrGuest, 'data-toggle': 'modal' },
 	              _react2.default.createElement(
 	                'span',
 	                { className: 'card-tooltip' },
@@ -50477,11 +50493,15 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving, updatedAt: state.updated_at, sections: state.sections, footerPages: state.footerPages, introSlideNumber: state.introSlideNumber };
+	  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving, updatedAt: state.updated_at, sections: state.sections, footerPages: state.footerPages, introSlideNumber: state.introSlideNumber, currentUser: state.currentUser, currentGuest: state.currentGuest };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {};
+	  return {
+	    setShowGuestInfoForm: function setShowGuestInfoForm(showGuestInfoForm) {
+	      dispatch((0, _actions.setShowGuestInfoForm)(showGuestInfoForm));
+	    }
+	  };
 	};
 	
 	var ConnectedPublicHeader = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_public_header2.default);
@@ -50561,10 +50581,16 @@
 	  }, {
 	    key: 'toggleCommentState',
 	    value: function toggleCommentState(e) {
-	      this.setState({ commentSidebarOpen: !this.state.commentSidebarOpen, inductionSidebarOpen: false });
-	      $('.sitemap-right-sidebar').toggleClass('open');
-	      $('.comment-list').toggleClass('open');
-	      $('.sitemap-induction-sidebar').removeClass('open');
+	      if (this.props.currentUser || this.props.currentGuest) {
+	        this.setState({ commentSidebarOpen: !this.state.commentSidebarOpen, inductionSidebarOpen: false });
+	        $('.sitemap-right-sidebar').toggleClass('open');
+	        $('.comment-list').toggleClass('open');
+	        $('.sitemap-induction-sidebar').removeClass('open');
+	      } else {
+	        this.props.setShowGuestInfoForm(true);
+	        $('.modal').modal('hide');
+	        $('#guest-info-modal').modal('show');
+	      }
 	    }
 	  }, {
 	    key: 'toggleInductionState',
@@ -62785,9 +62811,6 @@
 	    setSaving: function setSaving(saving) {
 	      dispatch((0, _actions.setSaving)(saving));
 	      dispatch((0, _actions.changeUpdatedAt)());
-	    },
-	    setShowGuestInfoForm: function setShowGuestInfoForm(showGuestInfoForm) {
-	      dispatch((0, _actions.setShowGuestInfoForm)(showGuestInfoForm));
 	    }
 	  };
 	};
@@ -62858,33 +62881,27 @@
 	  }, {
 	    key: 'handleAddComment',
 	    value: function handleAddComment(e) {
-	      if (this.props.currentUser || this.props.currentGuest) {
-	        if (this.state.newCommentMessage.trim().length > 0) {
-	          var _this = this;
-	          var timeStamp = new Date();
-	          this.props.addComment(this.props.commentableId, this.props.commentableType, _this.props.footer, this.state.newCommentMessage, this.props.currentUser || this.props.currentGuest, this.props.sectionId, timeStamp);
-	          $.ajax({
-	            url: '/comments/',
-	            method: 'post',
-	            dataType: 'JSON',
-	            data: { comment: { commentable_id: this.props.commentableId, commentable_type: this.props.commentableType, message: this.state.newCommentMessage } },
-	            error: function error(result) {
-	              document.setFlash(result.responseText);
-	            },
-	            success: function success(result) {
-	              _this.props.setSaving(true);
-	              setTimeout(function () {
-	                _this.props.setSaving(false);
-	              }, 2000);
-	              _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, _this.props.footer, timeStamp, result.id, _this.props.sectionId);
-	            }
-	          });
-	          this.setState({ newCommentMessage: '' });
-	        }
-	      } else {
-	        this.props.setShowGuestInfoForm(true);
-	        $('.modal').modal('hide');
-	        $('#guest-info-modal').modal('show');
+	      if (this.state.newCommentMessage.trim().length > 0) {
+	        var _this = this;
+	        var timeStamp = new Date();
+	        this.props.addComment(this.props.commentableId, this.props.commentableType, _this.props.footer, this.state.newCommentMessage, this.props.currentUser || this.props.currentGuest, this.props.sectionId, timeStamp);
+	        $.ajax({
+	          url: '/comments/',
+	          method: 'post',
+	          dataType: 'JSON',
+	          data: { comment: { commentable_id: this.props.commentableId, commentable_type: this.props.commentableType, message: this.state.newCommentMessage } },
+	          error: function error(result) {
+	            document.setFlash(result.responseText);
+	          },
+	          success: function success(result) {
+	            _this.props.setSaving(true);
+	            setTimeout(function () {
+	              _this.props.setSaving(false);
+	            }, 2000);
+	            _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, _this.props.footer, timeStamp, result.id, _this.props.sectionId);
+	          }
+	        });
+	        this.setState({ newCommentMessage: '' });
 	      }
 	    }
 	  }, {
