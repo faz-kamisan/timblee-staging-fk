@@ -51333,7 +51333,7 @@
 	      if (this.props.childrenLength > 0) {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: "page-tile " + (this.props.level == 0 && this.props.childrenLength % 2 == 0 ? 'even-tree' : 'odd-tree'), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile', onMouseDown: this.handleMouseDown },
+	          { className: "page-tile " + (this.props.level == 0 && this.props.childrenLength % 2 == 0 ? 'even-tree' : 'odd-tree') + (this.props.level > 7 && this.props.pageTree.alt_section_id ? " level-with-section" : ""), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile', onMouseDown: this.handleMouseDown },
 	          !this.props.isDragging && _react2.default.createElement(
 	            'div',
 	            null,
@@ -51357,10 +51357,24 @@
 	            )
 	          ),
 	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name, level: this.props.level }),
-	          this.props.pageTree.alt_section_id && !(this.props.level == 0) && _react2.default.createElement(
-	            'span',
-	            { className: 'section-tag', onClick: this.showLinkedSection },
-	            'section'
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'tile-top-data' },
+	            _react2.default.createElement(
+	              'h1',
+	              { className: 'tile-name' },
+	              _react2.default.createElement(
+	                'span',
+	                { className: 'tile-number' },
+	                this.props.sitemapNumber
+	              )
+	            ),
+	            this.props.pageTree.alt_section_id && !(this.props.level == 0) && _react2.default.createElement(
+	              'span',
+	              { className: 'section-tag', onClick: this.showLinkedSection },
+	              'section',
+	              _react2.default.createElement('img', { src: '/assets/link.png', alt: ' ' })
+	            )
 	          ),
 	          _react2.default.createElement(
 	            'h1',
@@ -51457,7 +51471,7 @@
 	      } else {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: 'page-tile', onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile', onMouseDown: this.handleMouseDown },
+	          { className: "page-tile " + (this.props.level > 7 && this.props.pageTree.alt_section_id ? " level-with-section" : ""), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile', onMouseDown: this.handleMouseDown },
 	          !this.props.isDragging && _react2.default.createElement(
 	            'div',
 	            null,
@@ -51481,10 +51495,24 @@
 	            )
 	          ),
 	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name, level: this.props.level }),
-	          this.props.pageTree.alt_section_id && !(this.props.level == 0) && _react2.default.createElement(
-	            'span',
-	            { className: 'section-tag', onClick: this.showLinkedSection },
-	            'section'
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'tile-top-data' },
+	            _react2.default.createElement(
+	              'h1',
+	              { className: 'tile-name' },
+	              _react2.default.createElement(
+	                'span',
+	                { className: 'tile-number' },
+	                this.props.sitemapNumber
+	              )
+	            ),
+	            this.props.pageTree.alt_section_id && !(this.props.level == 0) && _react2.default.createElement(
+	              'span',
+	              { className: 'section-tag', onClick: this.showLinkedSection },
+	              'section',
+	              _react2.default.createElement('img', { src: '/assets/link.png', alt: ' ' })
+	            )
 	          ),
 	          _react2.default.createElement(
 	            'h1',
@@ -51780,19 +51808,7 @@
 	    key: 'render',
 	    value: function render() {
 	      var connectDropTarget = this.props.connectDropTarget;
-	      return connectDropTarget(_react2.default.createElement(
-	        'div',
-	        { className: 'tile-top' },
-	        _react2.default.createElement(
-	          'h1',
-	          { className: 'tile-name' },
-	          _react2.default.createElement(
-	            'span',
-	            { className: 'tile-number' },
-	            this.props.sitemapNumber
-	          )
-	        )
-	      ));
+	      return connectDropTarget(_react2.default.createElement('div', { className: 'tile-top' }));
 	    }
 	  }]);
 	
