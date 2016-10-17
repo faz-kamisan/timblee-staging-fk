@@ -177,17 +177,17 @@ class PageTile extends React.Component {
   }
 
   mouseOver(e) {
-    // this.setState({hover: true});
-    // if(!this.props.pageTree.footer) {
-    //   this.addFaded()
-    // }
+    this.setState({hover: true});
+    if(!this.props.pageTree.footer) {
+      this.addFaded()
+    }
   }
 
   mouseOut(e) {
-    // this.setState({hover: false});
-    // if(!this.props.pageTree.footer) {
-    //   this.removeFaded()
-    // }
+    this.setState({hover: false});
+    if(!this.props.pageTree.footer) {
+      this.removeFaded()
+    }
   }
 
   addFaded() {
