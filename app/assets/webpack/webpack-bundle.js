@@ -48469,6 +48469,7 @@
 	    value: function enableNameChangeInput(e) {
 	      if (!(this.props.pageTree.alt_section_id && this.props.level == 0)) {
 	        this.setState({ nameChangeDisabled: false });
+	        this.refs.nameInput.focus();
 	      }
 	    }
 	  }, {
@@ -48683,7 +48684,7 @@
 	        _this.setState({ showOverLay: false });
 	      });
 	      if (!this.state.nameChangeDisabled) {
-	        this.refs.nameInput.focus();
+	        this.enableNameChangeInput();
 	      }
 	    }
 	  }, {
@@ -50120,9 +50121,8 @@
 	    value: function componentDidMount() {
 	      var _this = this;
 	      if (this.props.newSitemap) {
-	        setTimeout(function () {
-	          _this.refs.nameEditor.click();
-	        }, 3000);
+	        this.handleNameInputFocus();
+	        $(this.refs.sitemapNameInput).focus();
 	      }
 	      var reactOuterWrapper = $('#react-app-outer-wrapper');
 	      $('.react-header .icon-invite-female').data('url', reactOuterWrapper.data('url'));
@@ -51280,12 +51280,12 @@
 	                  _react2.default.createElement(
 	                    'div',
 	                    { className: 'form-group' },
-	                    _react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'name', value: this.state.name, onChange: this.handleNameChange })
+	                    _react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'Your name', value: this.state.name, onChange: this.handleNameChange })
 	                  ),
 	                  _react2.default.createElement(
 	                    'div',
 	                    { className: 'form-group' },
-	                    _react2.default.createElement('input', { className: 'form-control', type: 'email', placeholder: 'email', value: this.state.email, onChange: this.handleEmailChange })
+	                    _react2.default.createElement('input', { className: 'form-control', type: 'email', placeholder: 'Your email', value: this.state.email, onChange: this.handleEmailChange })
 	                  ),
 	                  _react2.default.createElement(
 	                    'div',
