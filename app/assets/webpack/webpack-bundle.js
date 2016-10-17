@@ -50596,7 +50596,8 @@
 	    value: function componentWillReceiveProps(nextProps) {
 	      if (this.props.activeSectionLength > nextProps.activeSectionLength) {
 	        this.props.changeActiveSectionId(this.getDefaultSection(this.props.sections).id);
-	        // this.setState({activeSectionId: this.getDefaultSection(this.props.sections.filter(function(section) {return(section.state == 'active')})).id})
+	      } else if (this.props.activeSectionLength < nextProps.activeSectionLength) {
+	        this.props.changeActiveSectionId(nextProps.sections[nextProps.sections.length - 1].id);
 	      }
 	    }
 	  }, {
@@ -50633,7 +50634,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'sitemap-sections' + (this.props.trial ? ' trial' : '') },
-	        _react2.default.createElement(
+	        renderedSectionTabs.length > 1 && _react2.default.createElement(
 	          'ul',
 	          { className: "section-list clearfix" + (!this.props.publicShare && this.props.leftSidebarExpanded ? ' left-bar-expanded' : ' left-bar-contracted') + (this.props.publicShare ? ' public-share' : '') },
 	          renderedSectionTabs
@@ -50996,7 +50997,7 @@
 	var mapStateToProps = function mapStateToProps(state) {
 	  return { publicShare: state.publicShare, pageType: state.pageTypes.filter(function (pageType) {
 	      return pageType.name == 'General 1';
-	    })[0], maxPageUid: state.maxPageUid, sitemapId: state.id };
+	    })[0], maxPageUid: state.maxPageUid, sitemapId: state.id, currentUser: state.currentUser, currentGuest: state.currentGuest };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -51034,6 +51035,9 @@
 	    setSaving: function setSaving(saving) {
 	      dispatch((0, _actions.setSaving)(saving));
 	      dispatch((0, _actions.changeUpdatedAt)());
+	    },
+	    setShowGuestInfoForm: function setShowGuestInfoForm(showGuestInfoForm) {
+	      dispatch((0, _actions.setShowGuestInfoForm)(showGuestInfoForm));
 	    }
 	  };
 	};
@@ -51093,6 +51097,7 @@
 	    _this2.closeOverLay = _this2.closeOverLay.bind(_this2);
 	    _this2.openOverLay = _this2.openOverLay.bind(_this2);
 	    _this2.setSelectedPage = _this2.setSelectedPage.bind(_this2);
+	    _this2.checkUserOrGuest = _this2.checkUserOrGuest.bind(_this2);
 	    _this2.showLinkedSection = _this2.showLinkedSection.bind(_this2);
 	    _this2.addSameLevelNextPage = _this2.addSameLevelNextPage.bind(_this2);
 	    _this2.addSameLevelPrevPage = _this2.addSameLevelPrevPage.bind(_this2);
@@ -51110,6 +51115,7 @@
 	    value: function enableNameChangeInput(e) {
 	      if (!(this.props.pageTree.alt_section_id && this.props.level == 0)) {
 	        this.setState({ nameChangeDisabled: false });
+	        this.refs.nameInput.focus();
 	      }
 	    }
 	  }, {
@@ -51244,6 +51250,18 @@
 	      this.removeFaded();
 	    }
 	  }, {
+	    key: 'checkUserOrGuest',
+	    value: function checkUserOrGuest(e) {
+	      if (this.props.currentUser || this.props.currentGuest) {
+	        this.props.setSelectedPage(this.props.pageTree);
+	        $('#page-comments-modal').modal('show');
+	      } else {
+	        this.props.setShowGuestInfoForm(true);
+	        $('.modal').modal('hide');
+	        $('#guest-info-modal').modal('show');
+	      }
+	    }
+	  }, {
 	    key: 'setSelectedPage',
 	    value: function setSelectedPage(e) {
 	      this.props.setSelectedPage(this.props.pageTree);
@@ -51324,7 +51342,7 @@
 	        _this.setState({ showOverLay: false });
 	      });
 	      if (!this.state.nameChangeDisabled) {
-	        this.refs.nameInput.focus();
+	        this.enableNameChangeInput();
 	      }
 	    }
 	  }, {
@@ -51387,7 +51405,7 @@
 	            ),
 	            _react2.default.createElement('textarea', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', defaultValue: this.props.name, onBlur: this.disableNameChangeInput, onKeyPress: this.handeNameChange })
 	          ),
-	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree }),
+	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree, commentsLength: this.props.pageTree.comments.length }),
 	          _react2.default.createElement('div', { className: "tile-right " + this.props.pageTree.pageType.icon_name }),
 	          !(this.props.level == 0 && this.props.pageTree.alt_section_id) && _react2.default.createElement(
 	            'div',
@@ -51411,7 +51429,7 @@
 	                { className: 'second-item' },
 	                _react2.default.createElement(
 	                  'span',
-	                  { className: 'icon-page-comments tile-icons', onClick: this.setSelectedPage, 'data-toggle': 'modal', 'data-target': '#page-comments-modal' },
+	                  { className: 'icon-page-comments tile-icons', onClick: this.checkUserOrGuest },
 	                  _react2.default.createElement(
 	                    'span',
 	                    { className: 'card-tooltip' },
@@ -51431,7 +51449,7 @@
 	            ),
 	            !this.props.trial && _react2.default.createElement(
 	              'a',
-	              { href: '#page-comments-modal', className: 'icon-page-comments', onClick: this.setSelectedPage, 'data-toggle': 'modal' },
+	              { href: 'javascript:void(0)', className: 'icon-page-comments', onClick: this.checkUserOrGuest, 'data-toggle': 'modal' },
 	              _react2.default.createElement(
 	                'span',
 	                { className: 'card-tooltip' },
@@ -51525,7 +51543,7 @@
 	            ),
 	            _react2.default.createElement('textarea', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', defaultValue: this.props.name, onBlur: this.disableNameChangeInput, onKeyPress: this.handeNameChange })
 	          ),
-	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree }),
+	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree, commentsLength: this.props.pageTree.comments.length }),
 	          _react2.default.createElement('div', { className: "tile-right " + this.props.pageTree.pageType.icon_name }),
 	          !(this.props.level == 0 && this.props.pageTree.alt_section_id) && _react2.default.createElement(
 	            'div',
@@ -51549,7 +51567,7 @@
 	                { className: 'second-item' },
 	                _react2.default.createElement(
 	                  'span',
-	                  { className: 'icon-page-comments tile-icons', onClick: this.setSelectedPage, 'data-toggle': 'modal', 'data-target': '#page-comments-modal' },
+	                  { className: 'icon-page-comments tile-icons', onClick: this.checkUserOrGuest },
 	                  _react2.default.createElement(
 	                    'span',
 	                    { className: 'card-tooltip' },
@@ -51569,7 +51587,7 @@
 	            ),
 	            !this.props.trial && _react2.default.createElement(
 	              'a',
-	              { href: '#page-comments-modal', className: 'icon-page-comments', onClick: this.setSelectedPage, 'data-toggle': 'modal' },
+	              { href: 'javascript:void(0)', className: 'icon-page-comments', onClick: this.checkUserOrGuest, 'data-toggle': 'modal' },
 	              _react2.default.createElement(
 	                'span',
 	                { className: 'card-tooltip' },
@@ -52007,7 +52025,7 @@
 	        _react2.default.createElement(
 	          'span',
 	          { className: 'tile-id' },
-	          this.props.pageTree.comments.length > 0 && _react2.default.createElement('span', { className: 'dummy-state' }),
+	          this.props.commentsLength > 0 && _react2.default.createElement('span', { className: 'dummy-state' }),
 	          'ID: ',
 	          formattedUid
 	        )
@@ -52024,6 +52042,7 @@
 	  onPageIdUpdate: _react.PropTypes.func.isRequired,
 	  setSaving: _react.PropTypes.func.isRequired,
 	  pageTree: _react.PropTypes.object.isRequired,
+	  commentsLength: _react.PropTypes.number.isRequired,
 	  sitemapId: _react.PropTypes.number.isRequired,
 	  maxPageUid: _react.PropTypes.number.isRequired
 	};
@@ -52758,14 +52777,14 @@
 	    _this2.handleMainHeaderToggle = _this2.handleMainHeaderToggle.bind(_this2);
 	    _this2.handleSitemapShareClick = _this2.handleSitemapShareClick.bind(_this2);
 	    _this2.toggleCommentState = _this2.toggleCommentState.bind(_this2);
-	    _this2.handeNameKeyPressed = _this2.handeNameKeyPressed.bind(_this2);
+	    _this2.handleNameKeyPressed = _this2.handleNameKeyPressed.bind(_this2);
 	    _this2.state = { nameFocused: false, name: props.name, showMainHeader: true, commentSidebarOpen: false };
 	    return _this2;
 	  }
 	
 	  _createClass(Header, [{
-	    key: 'handeNameKeyPressed',
-	    value: function handeNameKeyPressed(e) {
+	    key: 'handleNameKeyPressed',
+	    value: function handleNameKeyPressed(e) {
 	      if (e.charCode == 13) {
 	        e.preventDefault();
 	        e.stopPropagation();
@@ -52789,9 +52808,8 @@
 	    value: function componentDidMount() {
 	      var _this = this;
 	      if (this.props.newSitemap) {
-	        setTimeout(function () {
-	          _this.refs.nameEditor.click();
-	        }, 3000);
+	        this.handleNameInputFocus();
+	        $(this.refs.sitemapNameInput).focus();
 	      }
 	      var reactOuterWrapper = $('#react-app-outer-wrapper');
 	      $('.react-header .icon-invite-female').data('url', reactOuterWrapper.data('url'));
@@ -52806,10 +52824,10 @@
 	      this.setState({ nameFocused: false });
 	      if (this.state.name != this.props.name) {
 	        $.ajax({
-	          url: '/sitemaps/' + this.props.id,
-	          method: 'put',
-	          dataType: 'JSON',
-	          data: { sitemap: { name: this.state.name } },
+	          url: '/sitemaps/' + this.props.id + '/rename',
+	          method: 'patch',
+	          dataType: 'script',
+	          data: { dont_show_flash: true, sitemap: { name: this.state.name } },
 	          error: function error(result) {
 	            var name = _this.props.name;
 	            document.setFlash(result.responseText);
@@ -52894,7 +52912,7 @@
 	                    _react2.default.createElement('img', { src: '/assets/go-back.svg', className: 'go-back-link' })
 	                  )
 	                ),
-	                _react2.default.createElement('input', { value: this.state.name, onChange: this.handleNameChange, onBlur: this.handleNameInputBlur, className: "site-map-name site-map-name-input" + (this.state.nameFocused ? '' : ' hide'), ref: 'sitemapNameInput', onKeyPress: this.handeNameKeyPressed }),
+	                _react2.default.createElement('input', { value: this.state.name, onChange: this.handleNameChange, onBlur: this.handleNameInputBlur, className: "site-map-name site-map-name-input" + (this.state.nameFocused ? '' : ' hide'), ref: 'sitemapNameInput', onKeyPress: this.handleNameKeyPressed }),
 	                _react2.default.createElement(
 	                  'h3',
 	                  { className: "site-map-name truncate " + (this.state.nameFocused ? ' hide' : ''), onClick: this.handleNameInputFocus, ref: 'nameEditor' },
@@ -53146,11 +53164,15 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving, updatedAt: state.updated_at, sections: state.sections, footerPages: state.footerPages, introSlideNumber: state.introSlideNumber };
+	  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving, updatedAt: state.updated_at, sections: state.sections, footerPages: state.footerPages, introSlideNumber: state.introSlideNumber, currentUser: state.currentUser, currentGuest: state.currentGuest };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {};
+	  return {
+	    setShowGuestInfoForm: function setShowGuestInfoForm(showGuestInfoForm) {
+	      dispatch((0, _actions.setShowGuestInfoForm)(showGuestInfoForm));
+	    }
+	  };
 	};
 	
 	var ConnectedPublicHeader = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_public_header2.default);
@@ -53230,10 +53252,16 @@
 	  }, {
 	    key: 'toggleCommentState',
 	    value: function toggleCommentState(e) {
-	      this.setState({ commentSidebarOpen: !this.state.commentSidebarOpen, inductionSidebarOpen: false });
-	      $('.sitemap-right-sidebar').toggleClass('open');
-	      $('.comment-list').toggleClass('open');
-	      $('.sitemap-induction-sidebar').removeClass('open');
+	      if (this.props.currentUser || this.props.currentGuest) {
+	        this.setState({ commentSidebarOpen: !this.state.commentSidebarOpen, inductionSidebarOpen: false });
+	        $('.sitemap-right-sidebar').toggleClass('open');
+	        $('.comment-list').toggleClass('open');
+	        $('.sitemap-induction-sidebar').removeClass('open');
+	      } else {
+	        this.props.setShowGuestInfoForm(true);
+	        $('.modal').modal('hide');
+	        $('#guest-info-modal').modal('show');
+	      }
 	    }
 	  }, {
 	    key: 'toggleInductionState',
@@ -53967,12 +53995,12 @@
 	                  _react2.default.createElement(
 	                    'div',
 	                    { className: 'form-group' },
-	                    _react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'name', value: this.state.name, onChange: this.handleNameChange })
+	                    _react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'Your name', value: this.state.name, onChange: this.handleNameChange })
 	                  ),
 	                  _react2.default.createElement(
 	                    'div',
 	                    { className: 'form-group' },
-	                    _react2.default.createElement('input', { className: 'form-control', type: 'email', placeholder: 'email', value: this.state.email, onChange: this.handleEmailChange })
+	                    _react2.default.createElement('input', { className: 'form-control', type: 'email', placeholder: 'Your email', value: this.state.email, onChange: this.handleEmailChange })
 	                  ),
 	                  _react2.default.createElement(
 	                    'div',
@@ -68126,9 +68154,6 @@
 	    setSaving: function setSaving(saving) {
 	      dispatch((0, _actions.setSaving)(saving));
 	      dispatch((0, _actions.changeUpdatedAt)());
-	    },
-	    setShowGuestInfoForm: function setShowGuestInfoForm(showGuestInfoForm) {
-	      dispatch((0, _actions.setShowGuestInfoForm)(showGuestInfoForm));
 	    }
 	  };
 	};
@@ -68199,33 +68224,27 @@
 	  }, {
 	    key: 'handleAddComment',
 	    value: function handleAddComment(e) {
-	      if (this.props.currentUser || this.props.currentGuest) {
-	        if (this.state.newCommentMessage.trim().length > 0) {
-	          var _this = this;
-	          var timeStamp = new Date();
-	          this.props.addComment(this.props.commentableId, this.props.commentableType, _this.props.footer, this.state.newCommentMessage, this.props.currentUser || this.props.currentGuest, this.props.sectionId, timeStamp);
-	          $.ajax({
-	            url: '/comments/',
-	            method: 'post',
-	            dataType: 'JSON',
-	            data: { comment: { commentable_id: this.props.commentableId, commentable_type: this.props.commentableType, message: this.state.newCommentMessage } },
-	            error: function error(result) {
-	              document.setFlash(result.responseText);
-	            },
-	            success: function success(result) {
-	              _this.props.setSaving(true);
-	              setTimeout(function () {
-	                _this.props.setSaving(false);
-	              }, 2000);
-	              _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, _this.props.footer, timeStamp, result.id, _this.props.sectionId);
-	            }
-	          });
-	          this.setState({ newCommentMessage: '' });
-	        }
-	      } else {
-	        this.props.setShowGuestInfoForm(true);
-	        $('.modal').modal('hide');
-	        $('#guest-info-modal').modal('show');
+	      if (this.state.newCommentMessage.trim().length > 0) {
+	        var _this = this;
+	        var timeStamp = new Date();
+	        this.props.addComment(this.props.commentableId, this.props.commentableType, _this.props.footer, this.state.newCommentMessage, this.props.currentUser || this.props.currentGuest, this.props.sectionId, timeStamp);
+	        $.ajax({
+	          url: '/comments/',
+	          method: 'post',
+	          dataType: 'JSON',
+	          data: { comment: { commentable_id: this.props.commentableId, commentable_type: this.props.commentableType, message: this.state.newCommentMessage } },
+	          error: function error(result) {
+	            document.setFlash(result.responseText);
+	          },
+	          success: function success(result) {
+	            _this.props.setSaving(true);
+	            setTimeout(function () {
+	              _this.props.setSaving(false);
+	            }, 2000);
+	            _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, _this.props.footer, timeStamp, result.id, _this.props.sectionId);
+	          }
+	        });
+	        this.setState({ newCommentMessage: '' });
 	      }
 	    }
 	  }, {
@@ -69118,12 +69137,12 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { pageTree: state.selectedPage };
+	  return { pageTree: state.selectedPage, sections: state.sections };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    onCreateSection: function onCreateSection(pageTree, sectionName, timeStamp) {
+	    onCreateSection: function onCreateSection(pageTree, sectionName, timeStamp, sections) {
 	      dispatch((0, _actions.createNewSection)(pageTree.id, pageTree.section_id, sectionName, timeStamp));
 	    },
 	    onSectionIdUpdate: function onSectionIdUpdate(oldId, newId) {
@@ -69197,7 +69216,7 @@
 	      var timeStamp = new Date();
 	      var name = this.state.sectionName.trim();
 	      if (name) {
-	        this.props.onCreateSection(this.props.pageTree, name, timeStamp);
+	        this.props.onCreateSection(this.props.pageTree, name, timeStamp, this.props.sections);
 	        $.ajax({
 	          url: '/sections',
 	          method: 'post',
@@ -69292,7 +69311,8 @@
 	}(_react2.default.Component);
 	
 	NewSectionModal.propTypes = {
-	  pageTree: _react.PropTypes.object.isRequired
+	  pageTree: _react.PropTypes.object.isRequired,
+	  sections: _react.PropTypes.array.isRequired
 	};
 	exports.default = NewSectionModal;
 

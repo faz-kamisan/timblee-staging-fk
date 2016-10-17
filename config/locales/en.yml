@@ -14,12 +14,12 @@ en:
     guests:
       not_found: Can't find guest
       create:
-        success: Guest created successfully
+        success: ''
         failure: Couldn't create guest
     sitemaps:
       not_found: Can't find sitemap
       create:
-        success: Sitemap created successfully
+        success: ''
         failure: Couldn't create sitemap
       update:
         success: Sitemap updated successfully

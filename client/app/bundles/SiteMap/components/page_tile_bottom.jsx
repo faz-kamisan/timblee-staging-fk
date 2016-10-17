@@ -67,6 +67,7 @@ class PageTileBottom extends React.Component {
     onPageIdUpdate: PropTypes.func.isRequired,
     setSaving: PropTypes.func.isRequired,
     pageTree: PropTypes.object.isRequired,
+    commentsLength: PropTypes.number.isRequired,
     sitemapId: PropTypes.number.isRequired,
     maxPageUid: PropTypes.number.isRequired
   };
@@ -93,7 +94,7 @@ class PageTileBottom extends React.Component {
     return connectDropTarget(
       <div className="tile-bottom">
         <span className="tile-id">
-          { (this.props.pageTree.comments.length > 0) &&
+          { (this.props.commentsLength > 0) &&
             <span className="dummy-state"></span>
           }
           ID: { formattedUid }

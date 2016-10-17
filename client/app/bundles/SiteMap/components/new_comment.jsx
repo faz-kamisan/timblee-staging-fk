@@ -37,33 +37,27 @@ class NewComment extends React.Component {
   }
 
   handleAddComment(e) {
-    if(this.props.currentUser || this.props.currentGuest) {
-      if(this.state.newCommentMessage.trim().length > 0) {
-        var _this = this;
-        var timeStamp = new Date();
-        this.props.addComment(this.props.commentableId, this.props.commentableType, _this.props.footer, this.state.newCommentMessage, (this.props.currentUser || this.props.currentGuest), this.props.sectionId, timeStamp)
-        $.ajax({
-          url: '/comments/',
-          method: 'post',
-          dataType: 'JSON',
-          data: { comment: { commentable_id: this.props.commentableId, commentable_type: this.props.commentableType, message: this.state.newCommentMessage } },
-          error: (result) => {
-            document.setFlash(result.responseText)
-          },
-          success: (result) => {
-            _this.props.setSaving(true)
-            setTimeout(function() {
-              _this.props.setSaving(false)
-            }, 2000)
-            _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, _this.props.footer, timeStamp, result.id, _this.props.sectionId)
-          }
-        });
-        this.setState({ newCommentMessage: '' })
-      }
-    } else {
-      this.props.setShowGuestInfoForm(true)
-        $('.modal').modal('hide');
-        $('#guest-info-modal').modal('show');
+    if(this.state.newCommentMessage.trim().length > 0) {
+      var _this = this;
+      var timeStamp = new Date();
+      this.props.addComment(this.props.commentableId, this.props.commentableType, _this.props.footer, this.state.newCommentMessage, (this.props.currentUser || this.props.currentGuest), this.props.sectionId, timeStamp)
+      $.ajax({
+        url: '/comments/',
+        method: 'post',
+        dataType: 'JSON',
+        data: { comment: { commentable_id: this.props.commentableId, commentable_type: this.props.commentableType, message: this.state.newCommentMessage } },
+        error: (result) => {
+          document.setFlash(result.responseText)
+        },
+        success: (result) => {
+          _this.props.setSaving(true)
+          setTimeout(function() {
+            _this.props.setSaving(false)
+          }, 2000)
+          _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, _this.props.footer, timeStamp, result.id, _this.props.sectionId)
+        }
+      });
+      this.setState({ newCommentMessage: '' })
     }
   }
 

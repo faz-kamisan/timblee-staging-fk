@@ -20,11 +20,11 @@ class Header extends React.Component {
     this.handleMainHeaderToggle = this.handleMainHeaderToggle.bind(this);
     this.handleSitemapShareClick = this.handleSitemapShareClick.bind(this);
     this.toggleCommentState = this.toggleCommentState.bind(this);
-    this.handeNameKeyPressed = this.handeNameKeyPressed.bind(this);
+    this.handleNameKeyPressed = this.handleNameKeyPressed.bind(this);
     this.state = { nameFocused: false, name: props.name, showMainHeader: true, commentSidebarOpen: false }
   }
 
-  handeNameKeyPressed(e) {
+  handleNameKeyPressed(e) {
     if(e.charCode == 13) {
       e.preventDefault()
       e.stopPropagation()
@@ -45,9 +45,8 @@ class Header extends React.Component {
   componentDidMount() {
     var _this = this;
     if(this.props.newSitemap) {
-      setTimeout(function() {
-        _this.refs.nameEditor.click()
-      }, 3000)
+      this.handleNameInputFocus()
+      $(this.refs.sitemapNameInput).focus()
     }
     var reactOuterWrapper = $('#react-app-outer-wrapper')
     $('.react-header .icon-invite-female').data('url', reactOuterWrapper.data('url'))
@@ -59,10 +58,10 @@ class Header extends React.Component {
     this.setState({nameFocused: false})
     if(this.state.name != this.props.name) {
       $.ajax({
-        url: '/sitemaps/' + this.props.id,
-        method: 'put',
-        dataType: 'JSON',
-        data: { sitemap: { name: this.state.name } },
+        url: '/sitemaps/' + this.props.id + '/rename',
+        method: 'patch',
+        dataType: 'script',
+        data: { dont_show_flash: true, sitemap: { name: this.state.name } },
         error: (result) => {
           var name = _this.props.name
           document.setFlash(result.responseText)
@@ -129,7 +128,7 @@ class Header extends React.Component {
                     <img src="/assets/go-back.svg" className="go-back-link"></img>
                   </a>
                 </span>
-                <input value = {this.state.name} onChange={this.handleNameChange} onBlur={this.handleNameInputBlur} className={"site-map-name site-map-name-input" + (this.state.nameFocused ? '' : ' hide')} ref='sitemapNameInput' onKeyPress={this.handeNameKeyPressed} />
+                <input value = {this.state.name} onChange={this.handleNameChange} onBlur={this.handleNameInputBlur} className={"site-map-name site-map-name-input" + (this.state.nameFocused ? '' : ' hide')} ref='sitemapNameInput' onKeyPress={this.handleNameKeyPressed} />
                 <h3 className={"site-map-name truncate " + (this.state.nameFocused ? ' hide' : '')} onClick={this.handleNameInputFocus} ref='nameEditor'>{this.state.name}</h3>
               </div>
               <div className="col-xs-3 state-status text-center">

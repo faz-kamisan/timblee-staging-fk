@@ -10,7 +10,6 @@ class SitemapsController < ApplicationController
     @sitemap = current_business.sitemaps.build(sitemap_params)
     @sitemap.business = current_business
     if @sitemap.save
-      flash[:notice] = t('.success', scope: :flash)
       flash[:new_sitemap] = true
       redirect_to sitemap_path(@sitemap)
     else
@@ -102,7 +101,9 @@ class SitemapsController < ApplicationController
 
   def rename
     if @sitemap.update(rename_params)
-      flash.now[:success] = t('.success', scope: :flash)
+      unless(params[:dont_show_flash])
+        flash.now[:success] = t('.success', scope: :flash)
+      end
     else
       flash.now[:alert] = set_flash_message_for_rename_failure
     end
@@ -113,7 +114,7 @@ class SitemapsController < ApplicationController
     if @duplicate.persisted?
       flash.now[:success] = t('.success', scope: :flash)
     else
-      flash.now[:alert] = t('.failure', scope: :flash)
+      flash.now[:alert] = @duplicate.errors.full_messages.try(:join, ' ') || t('.failure', scope: :flash)
       render 'shared/show_flash'
     end
   end

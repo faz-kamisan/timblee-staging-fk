@@ -3,7 +3,8 @@ import PageType from './page_type'
 
 class NewSectionModal extends React.Component {
   static propTypes = {
-    pageTree: PropTypes.object.isRequired
+    pageTree: PropTypes.object.isRequired,
+    sections: PropTypes.array.isRequired
   };
 
   constructor(props) {
@@ -22,7 +23,7 @@ class NewSectionModal extends React.Component {
     var timeStamp = new Date();
     var name = this.state.sectionName.trim()
     if(name) {
-      this.props.onCreateSection(this.props.pageTree, name, timeStamp)
+      this.props.onCreateSection(this.props.pageTree, name, timeStamp, this.props.sections)
       $.ajax({
         url: '/sections',
         method: 'post',

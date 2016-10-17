@@ -3,7 +3,7 @@ class Sitemap < ActiveRecord::Base
 
   LENGTH_TO_TRUNCATE = 44
   DEFAULT_NAME_PREFIX = 'New Sitemap '
-  DEFAULT_SECTION_NAME = 'Default'
+  DEFAULT_SECTION_NAME = 'Main sitemap'
   GENERAL_PAGE_TYPE_NAME = 'General 1'
   TRIAL_SITEMAP_TTL = 24.hours
 
@@ -31,7 +31,7 @@ class Sitemap < ActiveRecord::Base
   after_create :create_default_section_and_page
   strip_fields :name
 
-  scope :order_by_alphanumeric_lower_name, -> { order("SUBSTRING(name FROM '[0-9]+$')::BIGINT ASC, lower(name)") }
+  scope :order_by_alphanumeric_lower_name, -> { order("lower(SUBSTRING(name FROM '([^0-9]+)')) ASC, SUBSTRING(name FROM '[0-9]+$')::BIGINT ASC, lower(name)") }
 
   def duplicate
     duplicate = dup
@@ -105,7 +105,7 @@ class Sitemap < ActiveRecord::Base
 
     def business_can_have_more_sitemaps
       unless business.allow_more_sitemaps?
-        errors.add(:base, 'Can\'t create more sitemaps for current business')
+        errors.add(:base, "Could not duplicate the sitemap since you've reached your plan's limit of three sitemaps.")
       end
     end
 
