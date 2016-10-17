@@ -57,7 +57,7 @@ class SitemapsController < ApplicationController
   end
 
   def share_via_email
-    emails = params[:emails].split(',')
+    emails = params[:emails].split(' ')
     SitemapShareService.share_sitemap(emails, current_user, @sitemap, params[:custom_message])
     render json: { success: 'Emails Sent Successfully' }, status: 200
   end
