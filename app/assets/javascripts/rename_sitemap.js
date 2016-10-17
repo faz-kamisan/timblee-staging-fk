@@ -14,7 +14,6 @@ RenameSitemap.prototype.bindEvents = function() {
   });
 
   _this.sitemapNameInputField.focusout(function (e) {
-    // debugger
     if(_this.flag) {
       if($(this).data('original-value') != $(this).val()) {
         $(this).closest('form').submit();

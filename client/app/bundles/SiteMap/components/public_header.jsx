@@ -42,10 +42,16 @@ class PublicHeader extends React.Component {
   }
 
   toggleCommentState(e) {
-    this.setState({commentSidebarOpen: !this.state.commentSidebarOpen, inductionSidebarOpen: false})
-    $('.sitemap-right-sidebar').toggleClass('open')
-    $('.comment-list').toggleClass('open')
-    $('.sitemap-induction-sidebar').removeClass('open')
+    if(this.props.currentUser || this.props.currentGuest) {
+      this.setState({commentSidebarOpen: !this.state.commentSidebarOpen, inductionSidebarOpen: false})
+      $('.sitemap-right-sidebar').toggleClass('open')
+      $('.comment-list').toggleClass('open')
+      $('.sitemap-induction-sidebar').removeClass('open')
+    } else {
+      this.props.setShowGuestInfoForm(true)
+      $('.modal').modal('hide');
+      $('#guest-info-modal').modal('show');
+    }
   }
 
   toggleInductionState(e) {

@@ -3,7 +3,7 @@ class Sitemap < ActiveRecord::Base
 
   LENGTH_TO_TRUNCATE = 44
   DEFAULT_NAME_PREFIX = 'New Sitemap '
-  DEFAULT_SECTION_NAME = 'Default'
+  DEFAULT_SECTION_NAME = 'Main sitemap'
   GENERAL_PAGE_TYPE_NAME = 'General 1'
   TRIAL_SITEMAP_TTL = 24.hours
 

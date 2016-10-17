@@ -10,7 +10,6 @@ class SitemapsController < ApplicationController
     @sitemap = current_business.sitemaps.build(sitemap_params)
     @sitemap.business = current_business
     if @sitemap.save
-      flash[:notice] = t('.success', scope: :flash)
       flash[:new_sitemap] = true
       redirect_to sitemap_path(@sitemap)
     else

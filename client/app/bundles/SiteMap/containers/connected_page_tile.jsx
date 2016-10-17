@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
-import { changeCollapse, updatePageName, updateFooterPageName, updatePagePersitence, changeActiveSectionId, updateFooterPagePersitence, changeUpdatedAt, setSaving, setSelectedPage, addNewPage, setMaxPageUid, updateId } from '../actions'
+import { changeCollapse, updatePageName, updateFooterPageName, updatePagePersitence, changeActiveSectionId, updateFooterPagePersitence, changeUpdatedAt, setSaving, setSelectedPage, addNewPage, setMaxPageUid, updateId, setShowGuestInfoForm } from '../actions'
 import PageTile from '../components/page_tile'
 
 const mapStateToProps = (state) => {
-  return {publicShare: state.publicShare , pageType: (state.pageTypes.filter(function(pageType) { return(pageType.name == 'General 1') })[0]), maxPageUid: state.maxPageUid, sitemapId: state.id}
+  return {publicShare: state.publicShare , pageType: (state.pageTypes.filter(function(pageType) { return(pageType.name == 'General 1') })[0]), maxPageUid: state.maxPageUid, sitemapId: state.id, currentUser: state.currentUser, currentGuest: state.currentGuest}
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -41,6 +41,9 @@ const mapDispatchToProps = (dispatch) => {
     setSaving: (saving) => {
       dispatch(setSaving(saving));
       dispatch(changeUpdatedAt());
+    },
+    setShowGuestInfoForm: (showGuestInfoForm) => {
+      dispatch(setShowGuestInfoForm(showGuestInfoForm));
     }
   }
 }

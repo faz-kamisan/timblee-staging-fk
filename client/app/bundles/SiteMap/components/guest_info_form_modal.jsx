@@ -81,10 +81,10 @@ class GuestInfoFormModal extends React.Component {
                   this.props.showForm &&
                   <form onSubmit={this.handleFormSubmit}>
                     <div className="form-group">
-                      <input className="form-control" type='text' placeholder='name' value={this.state.name} onChange={this.handleNameChange}  />
+                      <input className="form-control" type='text' placeholder='Your name' value={this.state.name} onChange={this.handleNameChange}  />
                     </div>
                     <div className="form-group">
-                      <input className="form-control" type='email' placeholder='email' value={this.state.email} onChange={this.handleEmailChange}  />
+                      <input className="form-control" type='email' placeholder='Your email' value={this.state.email} onChange={this.handleEmailChange}  />
                     </div>
                     <div className="form-group">
                       <button type='submit' className="btn btn-pink btn-block">Start adding and viewing comments</button>
