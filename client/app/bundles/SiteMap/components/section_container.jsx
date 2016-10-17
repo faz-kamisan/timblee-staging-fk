@@ -34,7 +34,8 @@ class SectionContainer extends React.Component {
   componentWillReceiveProps(nextProps) {
     if(this.props.activeSectionLength > nextProps.activeSectionLength) {
       this.props.changeActiveSectionId(this.getDefaultSection(this.props.sections).id)
-      // this.setState({activeSectionId: this.getDefaultSection(this.props.sections.filter(function(section) {return(section.state == 'active')})).id})
+    } else if(this.props.activeSectionLength < nextProps.activeSectionLength) {
+      this.props.changeActiveSectionId(nextProps.sections[nextProps.sections.length - 1].id)
     }
   }
 
@@ -57,9 +58,11 @@ class SectionContainer extends React.Component {
     var pageTree = this.activeSection().default ? this.activeSection().pageTree : getNodeByAltSectionId(defaultSection.pageTree, this.activeSection().id)
     return (
       <div className={'sitemap-sections' + (this.props.trial ? ' trial' : '')}>
-        <ul className={"section-list clearfix" + ((!this.props.publicShare && this.props.leftSidebarExpanded) ? ' left-bar-expanded' : ' left-bar-contracted') + (this.props.publicShare ? ' public-share' : '')}>
-          {renderedSectionTabs}
-        </ul>
+        { (renderedSectionTabs.length > 1) &&
+          <ul className={"section-list clearfix" + ((!this.props.publicShare && this.props.leftSidebarExpanded) ? ' left-bar-expanded' : ' left-bar-contracted') + (this.props.publicShare ? ' public-share' : '')}>
+            {renderedSectionTabs}
+          </ul>
+        }
         <div className='sitemap-section'>
           <div>
             <DraggablePageContainer pageTree={pageTree} sitemapNumber='' sitemapId={_this.props.sitemapId} leftSidebarExpanded={_this.props.leftSidebarExpanded} publicShare={_this.props.publicShare} introSlideNumber={_this.props.introSlideNumber} setIntroSlideNumber={_this.props.setIntroSlideNumber} level={0} />

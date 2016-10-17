@@ -23,6 +23,7 @@ class PageTile extends React.Component {
     this.closeOverLay = this.closeOverLay.bind(this);
     this.openOverLay = this.openOverLay.bind(this);
     this.setSelectedPage = this.setSelectedPage.bind(this);
+    this.checkUserOrGuest = this.checkUserOrGuest.bind(this);
     this.showLinkedSection = this.showLinkedSection.bind(this);
     this.addSameLevelNextPage = this.addSameLevelNextPage.bind(this);
     this.addSameLevelPrevPage = this.addSameLevelPrevPage.bind(this);
@@ -37,6 +38,7 @@ class PageTile extends React.Component {
   enableNameChangeInput(e) {
     if(!(this.props.pageTree.alt_section_id && (this.props.level == 0))) {
       this.setState({ nameChangeDisabled: false })
+      this.refs.nameInput.focus();
     }
   }
 
@@ -164,6 +166,17 @@ class PageTile extends React.Component {
     this.removeFaded();
   }
 
+  checkUserOrGuest(e) {
+    if(this.props.currentUser || this.props.currentGuest) {
+      this.props.setSelectedPage(this.props.pageTree)
+      $('#page-comments-modal').modal('show')
+    } else {
+      this.props.setShowGuestInfoForm(true)
+      $('.modal').modal('hide');
+      $('#guest-info-modal').modal('show');
+    }
+  }
+
   setSelectedPage(e) {
     this.props.setSelectedPage(this.props.pageTree)
   }
@@ -232,7 +245,7 @@ class PageTile extends React.Component {
       _this.setState({showOverLay: false})
     });
     if(!this.state.nameChangeDisabled) {
-      this.refs.nameInput.focus();
+      this.enableNameChangeInput()
     }
   }
 
@@ -264,7 +277,7 @@ class PageTile extends React.Component {
             <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
             <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' defaultValue={this.props.name} onBlur={this.disableNameChangeInput} onKeyPress={this.handeNameChange}></textarea>
           </h1>
-          <ConnectedPageTileBottom pageTree={this.props.pageTree} />
+          <ConnectedPageTileBottom pageTree={this.props.pageTree} commentsLength={this.props.pageTree.comments.length} />
           <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }>
           </div>
           { !((this.props.level == 0) && this.props.pageTree.alt_section_id) &&
@@ -281,7 +294,7 @@ class PageTile extends React.Component {
                 }
                 { !this.props.trial &&
                   <li className="second-item">
-                    <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'>
+                    <span className="icon-page-comments tile-icons" onClick={this.checkUserOrGuest}>
                       <span className="card-tooltip">View Comments</span>
                     </span>
                   </li>
@@ -295,7 +308,7 @@ class PageTile extends React.Component {
                 <a href="javascript:void(0)" className="icon-close" onClick={this.closeOverLay}></a>
               </div>
               { !this.props.trial &&
-                <a href="#page-comments-modal" className="icon-page-comments" onClick={this.setSelectedPage} data-toggle='modal'>
+                <a href="javascript:void(0)" className="icon-page-comments" onClick={this.checkUserOrGuest} data-toggle='modal'>
                   <span className="card-tooltip">View Comments</span>
                 </a>
               }
@@ -346,7 +359,7 @@ class PageTile extends React.Component {
             <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
             <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' defaultValue={this.props.name} onBlur={this.disableNameChangeInput}  onKeyPress={this.handeNameChange}></textarea>
           </h1>
-          <ConnectedPageTileBottom pageTree={this.props.pageTree} />
+          <ConnectedPageTileBottom pageTree={this.props.pageTree} commentsLength={this.props.pageTree.comments.length} />
           <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }>
           </div>
           { !((this.props.level == 0) && this.props.pageTree.alt_section_id) &&
@@ -363,7 +376,7 @@ class PageTile extends React.Component {
                 }
                 { !this.props.trial &&
                   <li className="second-item">
-                    <span className="icon-page-comments tile-icons" onClick={this.setSelectedPage} data-toggle='modal' data-target='#page-comments-modal'>
+                    <span className="icon-page-comments tile-icons" onClick={this.checkUserOrGuest}>
                       <span className="card-tooltip">View Comments</span>
                     </span>
                   </li>
@@ -377,7 +390,7 @@ class PageTile extends React.Component {
                 <a href="javascript:void(0)" className="icon-close" onClick={this.closeOverLay}></a>
               </div>
               { !this.props.trial &&
-                <a href="#page-comments-modal" className="icon-page-comments" onClick={this.setSelectedPage} data-toggle='modal'>
+                <a href="javascript:void(0)" className="icon-page-comments" onClick={this.checkUserOrGuest} data-toggle='modal'>
                   <span className="card-tooltip">View Comments</span>
                 </a>
               }
