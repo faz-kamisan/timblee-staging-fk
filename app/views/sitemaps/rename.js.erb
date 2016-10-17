@@ -5,3 +5,5 @@ $('div.sitemap-container[data-id=<%= @sitemap.id %>]').find('.saved-sitemap-name
 $('div.sitemap-container[data-id=<%= @sitemap.id %>]').find('.edit-sitemap-name').addClass('hide');
 $('div.sitemap-container[data-id=<%= @sitemap.id %>]').find('.saved-card-name').html('<%= @sitemap.reload.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %>')
 $('div.sitemap-container[data-id=<%= @sitemap.id %>]').find('.edit-card-name input').val('<%= @sitemap.reload.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %>')
+$('#search-sitemap').data('source', '<%== current_user.all_sitemaps.map {|s| {label: s.name, value: s.id}}.to_json %>')
+$("#search-sitemap").autocomplete({source: JSON.parse($('#search-sitemap').data('source'))})

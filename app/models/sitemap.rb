@@ -105,7 +105,7 @@ class Sitemap < ActiveRecord::Base
 
     def business_can_have_more_sitemaps
       unless business.allow_more_sitemaps?
-        errors.add(:base, 'Can\'t create more sitemaps for current business')
+        errors.add(:base, "Could not duplicate the sitemap since you've reached your plan's limit of three sitemaps.")
       end
     end
 
