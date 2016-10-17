@@ -177,17 +177,17 @@ class PageTile extends React.Component {
   }
 
   mouseOver(e) {
-    this.setState({hover: true});
-    if(!this.props.pageTree.footer) {
-      this.addFaded()
-    }
+    // this.setState({hover: true});
+    // if(!this.props.pageTree.footer) {
+    //   this.addFaded()
+    // }
   }
 
   mouseOut(e) {
-    this.setState({hover: false});
-    if(!this.props.pageTree.footer) {
-      this.removeFaded()
-    }
+    // this.setState({hover: false});
+    // if(!this.props.pageTree.footer) {
+    //   this.removeFaded()
+    // }
   }
 
   addFaded() {
@@ -264,7 +264,7 @@ class PageTile extends React.Component {
             <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
             <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' defaultValue={this.props.name} onBlur={this.disableNameChangeInput} onKeyPress={this.handeNameChange}></textarea>
           </h1>
-          <ConnectedPageTileBottom pageTree={this.props.pageTree} />
+          <ConnectedPageTileBottom pageTree={this.props.pageTree} commentsLength={this.props.pageTree.comments.length} />
           <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }>
           </div>
           { !((this.props.level == 0) && this.props.pageTree.alt_section_id) &&
@@ -346,7 +346,7 @@ class PageTile extends React.Component {
             <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
             <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' defaultValue={this.props.name} onBlur={this.disableNameChangeInput}  onKeyPress={this.handeNameChange}></textarea>
           </h1>
-          <ConnectedPageTileBottom pageTree={this.props.pageTree} />
+          <ConnectedPageTileBottom pageTree={this.props.pageTree} commentsLength={this.props.pageTree.comments.length} />
           <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }>
           </div>
           { !((this.props.level == 0) && this.props.pageTree.alt_section_id) &&

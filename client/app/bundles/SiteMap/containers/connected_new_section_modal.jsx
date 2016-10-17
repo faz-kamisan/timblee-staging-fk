@@ -3,12 +3,12 @@ import { createNewSection, updateSectionId, changeUpdatedAt, setSaving } from '.
 import NewSectionModal from '../components/new_section_modal'
 
 const mapStateToProps = (state) => {
-  return { pageTree: state.selectedPage }
+  return { pageTree: state.selectedPage, sections: state.sections }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onCreateSection: (pageTree, sectionName, timeStamp) => {
+    onCreateSection: (pageTree, sectionName, timeStamp, sections) => {
       dispatch(createNewSection(pageTree.id, pageTree.section_id, sectionName, timeStamp))
     },
     onSectionIdUpdate: (oldId, newId) => {

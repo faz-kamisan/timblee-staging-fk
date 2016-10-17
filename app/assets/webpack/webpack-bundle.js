@@ -47960,7 +47960,8 @@
 	    value: function componentWillReceiveProps(nextProps) {
 	      if (this.props.activeSectionLength > nextProps.activeSectionLength) {
 	        this.props.changeActiveSectionId(this.getDefaultSection(this.props.sections).id);
-	        // this.setState({activeSectionId: this.getDefaultSection(this.props.sections.filter(function(section) {return(section.state == 'active')})).id})
+	      } else if (this.props.activeSectionLength < nextProps.activeSectionLength) {
+	        this.props.changeActiveSectionId(nextProps.sections[nextProps.sections.length - 1].id);
 	      }
 	    }
 	  }, {
@@ -47997,7 +47998,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'sitemap-sections' + (this.props.trial ? ' trial' : '') },
-	        _react2.default.createElement(
+	        renderedSectionTabs.length > 1 && _react2.default.createElement(
 	          'ul',
 	          { className: "section-list clearfix" + (!this.props.publicShare && this.props.leftSidebarExpanded ? ' left-bar-expanded' : ' left-bar-contracted') + (this.props.publicShare ? ' public-share' : '') },
 	          renderedSectionTabs
@@ -48619,18 +48620,18 @@
 	  }, {
 	    key: 'mouseOver',
 	    value: function mouseOver(e) {
-	      this.setState({ hover: true });
-	      if (!this.props.pageTree.footer) {
-	        this.addFaded();
-	      }
+	      // this.setState({hover: true});
+	      // if(!this.props.pageTree.footer) {
+	      //   this.addFaded()
+	      // }
 	    }
 	  }, {
 	    key: 'mouseOut',
 	    value: function mouseOut(e) {
-	      this.setState({ hover: false });
-	      if (!this.props.pageTree.footer) {
-	        this.removeFaded();
-	      }
+	      // this.setState({hover: false});
+	      // if(!this.props.pageTree.footer) {
+	      //   this.removeFaded()
+	      // }
 	    }
 	  }, {
 	    key: 'addFaded',
@@ -48731,7 +48732,7 @@
 	            ),
 	            _react2.default.createElement('textarea', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', defaultValue: this.props.name, onBlur: this.disableNameChangeInput, onKeyPress: this.handeNameChange })
 	          ),
-	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree }),
+	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree, commentsLength: this.props.pageTree.comments.length }),
 	          _react2.default.createElement('div', { className: "tile-right " + this.props.pageTree.pageType.icon_name }),
 	          !(this.props.level == 0 && this.props.pageTree.alt_section_id) && _react2.default.createElement(
 	            'div',
@@ -48855,7 +48856,7 @@
 	            ),
 	            _react2.default.createElement('textarea', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', defaultValue: this.props.name, onBlur: this.disableNameChangeInput, onKeyPress: this.handeNameChange })
 	          ),
-	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree }),
+	          _react2.default.createElement(_connected_page_tile_bottom2.default, { pageTree: this.props.pageTree, commentsLength: this.props.pageTree.comments.length }),
 	          _react2.default.createElement('div', { className: "tile-right " + this.props.pageTree.pageType.icon_name }),
 	          !(this.props.level == 0 && this.props.pageTree.alt_section_id) && _react2.default.createElement(
 	            'div',
@@ -49349,7 +49350,7 @@
 	        _react2.default.createElement(
 	          'span',
 	          { className: 'tile-id' },
-	          this.props.pageTree.comments.length > 0 && _react2.default.createElement('span', { className: 'dummy-state' }),
+	          this.props.commentsLength > 0 && _react2.default.createElement('span', { className: 'dummy-state' }),
 	          'ID: ',
 	          formattedUid
 	        )
@@ -49366,6 +49367,7 @@
 	  onPageIdUpdate: _react.PropTypes.func.isRequired,
 	  setSaving: _react.PropTypes.func.isRequired,
 	  pageTree: _react.PropTypes.object.isRequired,
+	  commentsLength: _react.PropTypes.number.isRequired,
 	  sitemapId: _react.PropTypes.number.isRequired,
 	  maxPageUid: _react.PropTypes.number.isRequired
 	};
@@ -63775,12 +63777,12 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { pageTree: state.selectedPage };
+	  return { pageTree: state.selectedPage, sections: state.sections };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    onCreateSection: function onCreateSection(pageTree, sectionName, timeStamp) {
+	    onCreateSection: function onCreateSection(pageTree, sectionName, timeStamp, sections) {
 	      dispatch((0, _actions.createNewSection)(pageTree.id, pageTree.section_id, sectionName, timeStamp));
 	    },
 	    onSectionIdUpdate: function onSectionIdUpdate(oldId, newId) {
@@ -63854,7 +63856,7 @@
 	      var timeStamp = new Date();
 	      var name = this.state.sectionName.trim();
 	      if (name) {
-	        this.props.onCreateSection(this.props.pageTree, name, timeStamp);
+	        this.props.onCreateSection(this.props.pageTree, name, timeStamp, this.props.sections);
 	        $.ajax({
 	          url: '/sections',
 	          method: 'post',
@@ -63949,7 +63951,8 @@
 	}(_react2.default.Component);
 	
 	NewSectionModal.propTypes = {
-	  pageTree: _react.PropTypes.object.isRequired
+	  pageTree: _react.PropTypes.object.isRequired,
+	  sections: _react.PropTypes.array.isRequired
 	};
 	exports.default = NewSectionModal;
 
