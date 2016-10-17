@@ -113,7 +113,7 @@ class SitemapsController < ApplicationController
     if @duplicate.persisted?
       flash.now[:success] = t('.success', scope: :flash)
     else
-      flash.now[:alert] = t('.failure', scope: :flash)
+      flash.now[:alert] = @duplicate.errors.full_messages.try(:join, ' ') || t('.failure', scope: :flash)
       render 'shared/show_flash'
     end
   end
