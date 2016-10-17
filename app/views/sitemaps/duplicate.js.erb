@@ -4,3 +4,5 @@ $("ul.notifications-listing").html("<%==j render partial: 'notifications/notific
 $("<%==j render partial: 'home/sitemap', locals: {sitemap: @duplicate} %>").insertAfter($('div.sitemap-container[data-id=<%= @sitemap.id %>]').closest('div.sitemap-outer-wrapper'))
 $("body").append("<%==j javascript_include_tag('moreOptions', 'rename_sitemap', 'delete_sitemap') %>");
 $('div.sitemap-container[data-id=<%= @duplicate.id %>]').find('.rename-sitemap-link').click();
+$('#search-sitemap').data('source', '<%== current_user.all_sitemaps.map {|s| {label: s.name, value: s.id}}.to_json %>')
+$("#search-sitemap").autocomplete({source: JSON.parse($('#search-sitemap').data('source'))})
