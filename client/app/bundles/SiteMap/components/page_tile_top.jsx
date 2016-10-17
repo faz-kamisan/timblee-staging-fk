@@ -110,9 +110,6 @@ class PageTileTop extends React.Component {
     const connectDropTarget = this.props.connectDropTarget
     return connectDropTarget(
       <div className="tile-top">
-        <h1 className="tile-name">
-          <span className="tile-number">{this.props.sitemapNumber}</span>
-        </h1>
       </div>
     );
   }
