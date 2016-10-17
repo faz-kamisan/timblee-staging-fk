@@ -204,11 +204,11 @@ class PageTile extends React.Component {
   }
 
   addFaded() {
-    var otherPageTiles = $('.page-tile').not($(this.refs.pageTile))
     $(this.refs.pageTile).addClass('not-faded');
-    otherPageTiles.addClass('faded')
-    $('.gutter, .level-support').addClass('faded')
-    $('.parent').addClass('faded-parent')
+  }
+
+  removeFaded() {
+    $(this.refs.pageTile).removeClass('not-faded');
   }
 
   handleMouseDown(e) {
@@ -216,13 +216,6 @@ class PageTile extends React.Component {
     if((target.closest('.collapse-open').length == 0) && (target.closest('.first-item').length == 0) && (target.closest('.close-card-overlay').length == 0)) {
       this.removeFaded()
     }
-  }
-
-  removeFaded() {
-    $('.page-tile').removeClass('faded')
-    $(this.refs.pageTile).removeClass('not-faded');
-    $('.gutter, .level-support').removeClass('faded')
-    $('.parent').removeClass('faded-parent')
   }
 
   handleOnCollapsedChanged(e) {
@@ -255,17 +248,17 @@ class PageTile extends React.Component {
         <div className={"page-tile " + (((this.props.level == 0) && (this.props.childrenLength % 2 == 0)) ? 'even-tree' : 'odd-tree') + (((this.props.level > 7) && (this.props.pageTree.alt_section_id)) ? " level-with-section" : "") } onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile' onMouseDown={this.handleMouseDown}>
           { !this.props.isDragging &&
             <div>
-              <div className='left-button'>
-                <div className="collapse-open collapse-close" onClick={this.addSameLevelPrevPage}></div>
-              Add same level page
+              <div className="right-button-div">
+                <div className='right-button'>
+                  <div className="collapse-open collapse-close" onClick={this.addSameLevelNextPage}></div>
+                  Add same level page                
+                </div>
               </div>
-              <div className='right-button'>
-                <div className="collapse-open collapse-close" onClick={this.addSameLevelNextPage}></div>
-              Add same level page
-              </div>
-              <div className='bottom-button'>
-                <div className="collapse-open collapse-close" onClick={this.addSubPage}></div>
-              Add sub page
+              <div className="bottom-button-div">
+                <div className='bottom-button'>
+                  <div className="collapse-open collapse-close" onClick={this.addSubPage}></div>
+                  Add sub page
+                </div>
               </div>
             </div>
           }
@@ -345,17 +338,17 @@ class PageTile extends React.Component {
         <div className={ "page-tile " + (((this.props.level > 7) && (this.props.pageTree.alt_section_id)) ? " level-with-section" : "" )} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile' onMouseDown={this.handleMouseDown}>
           { !this.props.isDragging &&
             <div>
-              <div className='left-button'>
-                <div className="collapse-open collapse-close" onClick={this.addSameLevelPrevPage}></div>
-              Add same level page
+              <div className="right-button-div">
+                <div className='right-button'>
+                  <div className="collapse-open collapse-close" onClick={this.addSameLevelNextPage}></div>
+                  Add same level page                
+                </div>
               </div>
-              <div className='right-button'>
-                <div className="collapse-open collapse-close" onClick={this.addSameLevelNextPage}></div>
-              Add same level page
-              </div>
-              <div className='bottom-button'>
-                <div className="collapse-open collapse-close" onClick={this.addSubPage}></div>
-              Add sub page
+              <div className="bottom-button-div">
+                <div className='bottom-button'>
+                  <div className="collapse-open collapse-close" onClick={this.addSubPage}></div>
+                  Add sub page
+                </div>
               </div>
             </div>
           }

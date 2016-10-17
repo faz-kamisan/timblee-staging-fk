@@ -51295,11 +51295,12 @@
 	  }, {
 	    key: 'addFaded',
 	    value: function addFaded() {
-	      var otherPageTiles = $('.page-tile').not($(this.refs.pageTile));
 	      $(this.refs.pageTile).addClass('not-faded');
-	      otherPageTiles.addClass('faded');
-	      $('.gutter, .level-support').addClass('faded');
-	      $('.parent').addClass('faded-parent');
+	    }
+	  }, {
+	    key: 'removeFaded',
+	    value: function removeFaded() {
+	      $(this.refs.pageTile).removeClass('not-faded');
 	    }
 	  }, {
 	    key: 'handleMouseDown',
@@ -51308,14 +51309,6 @@
 	      if (target.closest('.collapse-open').length == 0 && target.closest('.first-item').length == 0 && target.closest('.close-card-overlay').length == 0) {
 	        this.removeFaded();
 	      }
-	    }
-	  }, {
-	    key: 'removeFaded',
-	    value: function removeFaded() {
-	      $('.page-tile').removeClass('faded');
-	      $(this.refs.pageTile).removeClass('not-faded');
-	      $('.gutter, .level-support').removeClass('faded');
-	      $('.parent').removeClass('faded-parent');
 	    }
 	  }, {
 	    key: 'handleOnCollapsedChanged',
@@ -51357,21 +51350,23 @@
 	            null,
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'left-button' },
-	              _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelPrevPage }),
-	              'Add same level page'
+	              { className: 'right-button-div' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'right-button' },
+	                _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelNextPage }),
+	                'Add same level page'
+	              )
 	            ),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'right-button' },
-	              _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelNextPage }),
-	              'Add same level page'
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'bottom-button' },
-	              _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSubPage }),
-	              'Add sub page'
+	              { className: 'bottom-button-div' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'bottom-button' },
+	                _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSubPage }),
+	                'Add sub page'
+	              )
 	            )
 	          ),
 	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name, level: this.props.level }),
@@ -51495,21 +51490,23 @@
 	            null,
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'left-button' },
-	              _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelPrevPage }),
-	              'Add same level page'
+	              { className: 'right-button-div' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'right-button' },
+	                _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelNextPage }),
+	                'Add same level page'
+	              )
 	            ),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'right-button' },
-	              _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSameLevelNextPage }),
-	              'Add same level page'
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'bottom-button' },
-	              _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSubPage }),
-	              'Add sub page'
+	              { className: 'bottom-button-div' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'bottom-button' },
+	                _react2.default.createElement('div', { className: 'collapse-open collapse-close', onClick: this.addSubPage }),
+	                'Add sub page'
+	              )
 	            )
 	          ),
 	          _react2.default.createElement(_connected_page_tile_top2.default, { pageTree: this.props.pageTree, sitemapNumber: this.props.sitemapNumber, name: this.props.name, level: this.props.level }),

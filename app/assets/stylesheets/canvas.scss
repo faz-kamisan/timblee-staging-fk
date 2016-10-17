@@ -1,85 +1,75 @@
-.faded {
-  opacity: 0.05;
-  z-index: 1;
-  pointer-events: none;
-}
-
 .not-faded {
-  z-index: 2;
-  &:before, &:after {
-    opacity: 0.05;
-  }
+  z-index: 12;
   &:hover {
-    .left-button, .right-button, .bottom-button {
-      opacity: 1;
-      visibility: visible;
-    }
-    .left-button {
-      left: -150px;
-    }
-    .right-button {
-      right: -150px;
-    }
+    .right-button,
     .bottom-button {
-      top: 84px;
+      opacity: 1!important;
+      visibility: visible!important;
     }
   }
 }
 
-.faded-parent {
-  &:before {
-    opacity: 0.05;
+.page-container .page-tile {
+  .right-button,
+  .bottom-button {
+    width: auto;
+    background: $primaryWhite;
+    font-size: 10px;
+    position: absolute;
+    opacity: 0;
+    height: auto;
+    visibility: hidden;
+    text-align: center;
+    padding: 10px 13px;
+    border: 2px solid #ddd;
+    font-weight: 600;
+    z-index: 10;
+    @include border-radius(2px);
+    .collapse-open {
+      background: $transparent;
+      border: 0;
+      position: relative;
+      bottom: auto;
+      left: auto;
+      width: auto;
+      height: auto;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 10px;
+      bottom: 1px;
+    }
   }
 }
 
-.left-button,
-.right-button,
-.bottom-button {
-  width: 150px;
-  background: $transparent;
-  font-size: 11px;
+.right-button-div {
   position: absolute;
-  opacity: 0;
-  height: 84px;
-  visibility: hidden;
-  text-align: center;
-  padding-top: 30px
+  right: -155px;
+  width: 155px;
+  height: 100%;
+  background: $transparent;
 }
 
-.left-button {
-  left: -140px;
-  padding-right: 20px;
-  .collapse-open {
-    bottom: auto!important;
-    left: auto!important;
-    right: 8px!important;
-    top: 50%;
-    margin-top: -13px;
-  }
+.bottom-button-div {
+  position: absolute;
+  width: 116px;
+  height: 55px;
+  background: $transparent;
+  bottom: -55px;
+  left: 50%;
+  margin-left: -58px;
 }
 
 .right-button {
-  right: -140px;
-  padding-left: 20px;
-  .collapse-open {
-    bottom: 35px!important;
-    left: 8px!important;
-    right: auto!important;
-  }
+  left: 50%;
+  top: 50%;
+  margin-top: -21px;
+  margin-left: -66px;
 }
 
 .bottom-button {
-  top: 74px;
-  width: 100%;
-  padding-top: 35px;
-  height: 54px;
-  .collapse-open {
-    bottom: auto!important;
-    top: 10px!important;
-    left: 50%!important;
-    right: auto!important;
-    margin-left: -9px!important;
-  }
+  top: 17px;
+  left: 0;
+  width: 116px!important;
 }
 
 .page-container,
