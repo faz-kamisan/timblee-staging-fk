@@ -50125,14 +50125,14 @@
 	    _this2.handleMainHeaderToggle = _this2.handleMainHeaderToggle.bind(_this2);
 	    _this2.handleSitemapShareClick = _this2.handleSitemapShareClick.bind(_this2);
 	    _this2.toggleCommentState = _this2.toggleCommentState.bind(_this2);
-	    _this2.handeNameKeyPressed = _this2.handeNameKeyPressed.bind(_this2);
+	    _this2.handleNameKeyPressed = _this2.handleNameKeyPressed.bind(_this2);
 	    _this2.state = { nameFocused: false, name: props.name, showMainHeader: true, commentSidebarOpen: false };
 	    return _this2;
 	  }
 	
 	  _createClass(Header, [{
-	    key: 'handeNameKeyPressed',
-	    value: function handeNameKeyPressed(e) {
+	    key: 'handleNameKeyPressed',
+	    value: function handleNameKeyPressed(e) {
 	      if (e.charCode == 13) {
 	        e.preventDefault();
 	        e.stopPropagation();
@@ -50172,10 +50172,10 @@
 	      this.setState({ nameFocused: false });
 	      if (this.state.name != this.props.name) {
 	        $.ajax({
-	          url: '/sitemaps/' + this.props.id,
-	          method: 'put',
-	          dataType: 'JSON',
-	          data: { sitemap: { name: this.state.name } },
+	          url: '/sitemaps/' + this.props.id + '/rename',
+	          method: 'patch',
+	          dataType: 'script',
+	          data: { dont_show_flash: true, sitemap: { name: this.state.name } },
 	          error: function error(result) {
 	            var name = _this.props.name;
 	            document.setFlash(result.responseText);
@@ -50260,7 +50260,7 @@
 	                    _react2.default.createElement('img', { src: '/assets/go-back.svg', className: 'go-back-link' })
 	                  )
 	                ),
-	                _react2.default.createElement('input', { value: this.state.name, onChange: this.handleNameChange, onBlur: this.handleNameInputBlur, className: "site-map-name site-map-name-input" + (this.state.nameFocused ? '' : ' hide'), ref: 'sitemapNameInput', onKeyPress: this.handeNameKeyPressed }),
+	                _react2.default.createElement('input', { value: this.state.name, onChange: this.handleNameChange, onBlur: this.handleNameInputBlur, className: "site-map-name site-map-name-input" + (this.state.nameFocused ? '' : ' hide'), ref: 'sitemapNameInput', onKeyPress: this.handleNameKeyPressed }),
 	                _react2.default.createElement(
 	                  'h3',
 	                  { className: "site-map-name truncate " + (this.state.nameFocused ? ' hide' : ''), onClick: this.handleNameInputFocus, ref: 'nameEditor' },

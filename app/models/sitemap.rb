@@ -31,7 +31,7 @@ class Sitemap < ActiveRecord::Base
   after_create :create_default_section_and_page
   strip_fields :name
 
-  scope :order_by_alphanumeric_lower_name, -> { order("SUBSTRING(name FROM '[0-9]+$')::BIGINT ASC, lower(name)") }
+  scope :order_by_alphanumeric_lower_name, -> { order("lower(SUBSTRING(name FROM '([^0-9]+)')) ASC, SUBSTRING(name FROM '[0-9]+$')::BIGINT ASC, lower(name)") }
 
   def duplicate
     duplicate = dup

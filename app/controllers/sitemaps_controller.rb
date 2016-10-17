@@ -101,7 +101,9 @@ class SitemapsController < ApplicationController
 
   def rename
     if @sitemap.update(rename_params)
-      flash.now[:success] = t('.success', scope: :flash)
+      unless(params[:dont_show_flash])
+        flash.now[:success] = t('.success', scope: :flash)
+      end
     else
       flash.now[:alert] = set_flash_message_for_rename_failure
     end
