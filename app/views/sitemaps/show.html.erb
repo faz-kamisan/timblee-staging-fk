@@ -1,11 +1,13 @@
-<% if current_business.is_starter_plan? && !current_business.in_trial_period? %>
-  <% invite_permission_modal = 'invite-error-link' %>
-<% elsif !current_business.is_pro_plan? && current_business.in_trial_period? %>
-  <% invite_permission_modal = 'invite-warning-link' %>
-<% else %>
-  <% invite_permission_modal = 'invite-link' %>
+<% if current_business %>
+  <% if current_business.is_starter_plan? && !current_business.in_trial_period? %>
+    <% invite_permission_modal = 'invite-error-link' %>
+  <% elsif !current_business.is_pro_plan? && current_business.in_trial_period? %>
+    <% invite_permission_modal = 'invite-warning-link' %>
+  <% else %>
+    <% invite_permission_modal = 'invite-link' %>
+  <% end %>
+  <% url = current_business.is_pro_plan? ? businesses_subscription_path : users_bulk_invitation_path %>
 <% end %>
-<% url = current_business.is_pro_plan? ? businesses_subscription_path : users_bulk_invitation_path %>
 <div id='react-app-outer-wrapper' data-invite-permission-modal='<%= invite_permission_modal %>' data-url='<%= url %>'>
   <%= react_component("SitemapApp", props: @sitemap_props, prerender: false) %>
 </div>
@@ -17,6 +19,6 @@
   <%= render 'users/invite_user_preview_modal' %>
   <%= render 'users/invite_error_modal'%>
   <%= render 'users/invite_warning_modal'%>
-  <%= javascript_include_tag('invitations', 'team', 'webpack-bundle') %>
 <% end %>
+<%= javascript_include_tag('invitations', 'team', 'webpack-bundle') %>
 <%= stylesheet_link_tag 'canvas_body' %>
