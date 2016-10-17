@@ -43,8 +43,7 @@
   height: 84px;
   visibility: hidden;
   text-align: center;
-  padding-top: 30px;
-  @include animate(.05s);
+  padding-top: 30px
 }
 
 .left-button {
@@ -98,7 +97,6 @@
     position: relative;
     display: inline-block;
     cursor: pointer;
-    @include animate(.05s);
 
     // The Plus button on the page tile
     .collapse-open {
@@ -196,6 +194,7 @@
     top: 27px;
     z-index: 4;
     width: 100%;
+    font-weight: 600;
     word-wrap: break-word;
     textarea {
       height: 15px;
@@ -238,6 +237,7 @@
         top: -1px;
         margin-right: 4px;
         position: relative;
+        background: #62717f;
       }
     }
     &.drag-over {
@@ -627,7 +627,6 @@
     width: 100%;
     height: 26px;
     background: $transparent;
-    @include animate(0.05s);
     &.drag-over, &.again-drag-over, &.again-2-drag-over {
       background: url('/assets/gutter.png');
       background-repeat: no-repeat;
@@ -726,7 +725,7 @@
     border: 1px dashed #E3E5E7;
     color: #E3E5E7;
     display: inline-block;
-    padding-top: 27px;
+    padding-top: 26px;
     font-size: 10px;
     z-index: 10;
     text-align: center;
@@ -739,7 +738,8 @@
     }
     span {
       vertical-align: middle;
-      font-weight: 500;
+      font-weight: 400;
+      font-size: 12px;
     }
   }
   .collapse-open {
@@ -1038,6 +1038,7 @@
 
   input::-webkit-input-placeholder {
     color: $primaryWhite;
+    font-weight: 300;
     opacity: 1;
     font-size: 14px;
     letter-spacing: 0;
@@ -1045,6 +1046,7 @@
 
   input::-moz-placeholder {
     color: $primaryWhite;
+    font-weight: 300;
     opacity: 1;
     font-size: 14px;
     letter-spacing: 0;
@@ -1052,6 +1054,7 @@
 
   input:-ms-input-placeholder {
     color: $primaryWhite;
+    font-weight: 300;
     opacity: 1;
     font-size: 14px;
     letter-spacing: 0;
@@ -1059,6 +1062,7 @@
 
   input:-moz-placeholder {
     color: $primaryWhite;
+    font-weight: 300;
     opacity: 1;
     font-size: 14px;
     letter-spacing: 0;
@@ -1934,6 +1938,9 @@ body.trial {
     + li {
       border-top: solid 2px #1b1e22;
     }
+  }
+  .comment-type-heading {
+    padding-left: 16px;
   }
 }
 
@@ -3527,6 +3534,7 @@ body.trial {
 .hotspot {
   position: absolute;
   width: 23px;
+  cursor: pointer;
   height: 23px;
   background: $primaryPink;
   border: 4px solid #f466ba;
@@ -3622,4 +3630,94 @@ body.trial {
   font-weight: 600;
   left: 40px;
   z-index: 6;
+}
+
+@-moz-keyframes pulse {
+ 0% {
+  -moz-transform: scale(0);
+  opacity: 0;
+  border: 0 solid $primaryPink;
+ }
+ 25% {
+  -moz-transform: scale(0);
+  opacity: 0.2;
+  border: 2px solid $primaryPink;
+ }
+ 50% {
+  -moz-transform: scale(0.1);
+  opacity: 0.4;
+  border: 3px solid $primaryPink;
+ }
+ 75% {
+  -moz-transform: scale(0.5);
+  opacity: 0.6;
+  border: 4px solid $primaryPink;
+ }
+ 100% {
+  -moz-transform: scale(1);
+  opacity: 0;
+  border: 0 solid $primaryPink;
+ }
+}
+
+@-webkit-keyframes pulse {
+ 0% {
+  -webkit-transform: scale(0);
+  opacity: 0;
+  border: 0 solid $primaryPink;
+ }
+ 25% {
+  -webkit-transform: scale(0);
+  opacity: 0.1;
+  border: 2px solid $primaryPink;
+ }
+ 50% {
+  -webkit-transform: scale(0.1);
+  opacity: 0.3;
+  border: 3px solid $primaryPink;
+ }
+ 75% {
+  -webkit-transform: scale(0.5);
+  opacity: 0.5;
+  border: 4px solid $primaryPink;
+ }
+ 100% {
+  -webkit-transform: scale(1);
+  opacity: 0;
+ }
+}
+
+.pulse {
+  border: 5px solid $primaryPink;
+  background: transparent;
+  @include border-radius(50%);
+  height: 60px;
+  width: 60px;
+  animation: pulse 3s linear;
+  -webkit-animation: pulse 3s linear;
+  -moz-animation: pulse 3s linear;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -30px 0 0 -30px;
+  z-index: 1;
+  opacity: 0;
+  cursor: pointer;
+  &.pulse-1 {
+    -webkit-animation-delay: .35s;
+    animation-delay: .35s;  
+  }
+
+  &.pulse-2 {
+    -webkit-animation-delay: .7s;
+    animation-delay: .7s;  
+  }
+
+  &.pulse-3 {
+    -webkit-animation-delay: 1.05s;
+    animation-delay: 1.05s;  
+  }
 }

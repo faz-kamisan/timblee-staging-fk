@@ -47,10 +47,14 @@ class PageContainer extends React.Component {
           }
           { this.props.publicShare &&
             <div className="intro-box-1">
-              <span className={ "hotspot " + (this.state.showFirstScreenHandle ? '' : 'hide')} onClick={function(e) { _this.setIntroSlideNumber(1) } }></span>
+              <span className={ "hotspot " + (this.state.showFirstScreenHandle ? '' : 'hide')} onClick={function(e) { _this.setIntroSlideNumber(1) } }>
+                <span className="pulse pulse-1"></span>
+                <span className="pulse pulse-2"></span>
+                <span className="pulse pulse-3"></span>
+              </span>
               <div className={"intro-box share-1" + (this.props.introSlideNumber == 1 ? '' : ' hide')}>
                 <figure>
-                  <img alt=" " src="/assets/share-intro-1.png"></img>
+                  <img alt=" " src="/assets/share-intro-1.jpg"></img>
                 </figure>
                 <p>Click on an individual page to add comments to that page</p>
                 <a href="javascript:void(0);" onClick={this.hideFirstScreenHandle}>Got it</a>

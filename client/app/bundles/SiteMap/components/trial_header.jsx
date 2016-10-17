@@ -40,7 +40,11 @@ class TrialHeader extends React.Component {
         </div>
         <div className={"intro-box-trial " + (this.state.showDemo ? '' : 'hide-demo')}>
           { this.state.showDemoHandle &&
-            <span className="hotspot" onClick={this.showDemo}></span>
+            <span className="hotspot" onClick={this.showDemo}>
+              <span className="pulse pulse-1"></span>
+              <span className="pulse pulse-2"></span>
+              <span className="pulse pulse-3"></span>
+            </span>
           }
           {this.state.showDemo &&
             <div className="intro-box">

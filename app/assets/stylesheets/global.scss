@@ -18,6 +18,10 @@ body {
   transition: padding-top .35s;
   -moz-transition: padding-top .35s;
   -webkit-transition: padding-top .35s;
+  &.full-width {
+    min-width: 1px;
+    width: 100%;
+  }
 }
 
 .btn {
