@@ -683,9 +683,26 @@
         }
       }
 
+      .level-support-before {
+        width: 40px;
+        background: $transparent;
+        height: 87px;
+        position: absolute;
+        left: -40px;
+        top: 0;
+        z-index: 2;
+        &.drag-over, &.again-drag-over {
+          background: url('/assets/level-support.png');
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+      }
+
       &:last-child {
         .level-support {
-          display: none;
+          &:before {
+            display: none;
+          }
         }
       }
     }
