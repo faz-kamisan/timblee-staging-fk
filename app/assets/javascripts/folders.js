@@ -81,6 +81,16 @@ Folders.prototype.makeFoldersDroppable = function(folders) {
         _this.revertSitemap($droppedSitemap, $droppedOnFolder);
       } else {
         // Update Sitemap Folder
+        var sourceFolderId = $droppedSitemap.data('folder-id');
+        if(sourceFolderId && sourceFolderId != '') {
+          var $sourceFolder = $('.folder-info[data-id=' + $droppedSitemap.data('folder-id') + ']');
+        } else {
+          var $sourceFolder = $('.folder-info.all-sitemap-folder');
+        }
+        _this.setSitemapCountForFolders($droppedOnFolder, $sourceFolder);
+        $droppedSitemap.attr('data-folder-id', $droppedOnFolder.data('id'));
+        $droppedSitemap.data('folder-id', $droppedOnFolder.data('id'));
+        $('.folder-info.active-delete').find('.folder-info-block').click();
         $.ajax({
           method: 'put',
           url: '/sitemaps/' + $droppedSitemap.data('id'),
@@ -90,16 +100,6 @@ Folders.prototype.makeFoldersDroppable = function(folders) {
             _this.revertSitemap($droppedSitemap, $droppedOnFolder);
           },
           success: function() {
-            var sourceFolderId = $droppedSitemap.data('folder-id');
-            if(sourceFolderId && sourceFolderId != '') {
-              var $sourceFolder = $('.folder-info[data-id=' + $droppedSitemap.data('folder-id') + ']');
-            } else {
-              var $sourceFolder = $('.folder-info.all-sitemap-folder');
-            }
-            _this.setSitemapCountForFolders($droppedOnFolder, $sourceFolder);
-            $droppedSitemap.attr('data-folder-id', $droppedOnFolder.data('id'));
-            $droppedSitemap.data('folder-id', $droppedOnFolder.data('id'));
-            $('.folder-info.active-delete').find('.folder-info-block').click();
           }
         });
       }
