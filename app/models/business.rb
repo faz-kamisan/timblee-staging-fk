@@ -67,7 +67,7 @@ class Business < ActiveRecord::Base
   end
 
   def allow_more_sitemaps
-    if is_pro_plan? || sitemaps.count < 3
+    if is_pro_plan? || sitemaps.count < 3 || (in_trial_period? && !has_plan)
       'yes'
     elsif in_trial_period?
       'warn'
