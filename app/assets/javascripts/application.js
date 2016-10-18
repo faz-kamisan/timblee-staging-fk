@@ -35,6 +35,7 @@
 //= require share_modal
 //= require twemoji-picker
 //= require full_body
+//= require header
 
 $(window).on('load resize', function() {
   if($('.level-0').length) {

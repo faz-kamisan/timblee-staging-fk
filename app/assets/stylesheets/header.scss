@@ -87,6 +87,11 @@
     > span {
       color: $primaryPink;
     }
+  }
+  &.active {
+    > span {
+      color: $primaryPink;
+    }
     .user-settings {
       visibility: visible;
       opacity: 1;
