@@ -3344,6 +3344,15 @@ body.trial {
       }
     }
 
+    .business-logo {
+      position: absolute;
+      color: $primaryBlack;
+      left: 50px;
+      top: 33%;
+      margin-top: -7px;
+      max-width: 250px;
+    }
+
     .last-updated {
       color: #a3acb5;
       @extend .font-14;

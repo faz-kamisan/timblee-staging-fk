@@ -48128,26 +48128,22 @@
 	      var isDragging = this.props.isDragging;
 	      var _this = this;
 	      var children;
-	      if (this.props.pageTree.children.filter(function (page) {
+	      children = this.props.pageTree.children.filter(function (page) {
 	        return page.state != 'archived' && (page.section_id == _this.props.activeSectionId || page.alt_section_id == _this.props.activeSectionId);
-	      }).length > 0) {
-	        children = this.props.pageTree.children.filter(function (page) {
-	          return page.state != 'archived';
-	        }).map(function (pageTree, index) {
-	          if (_this.props.level == 0) {
-	            var sitemapNumber = (index + 1).toString() + '.0';
-	          } else if (_this.props.level == 1) {
-	            var sitemapNumber = parseInt(_this.props.sitemapNumber).toString() + '.' + (index + 1);
-	          } else {
-	            var sitemapNumber = _this.props.sitemapNumber + '.' + (index + 1);
-	          }
-	          return _react2.default.createElement(
-	            'div',
-	            { className: 'child-page', key: pageTree.id },
-	            _react2.default.createElement(DraggablePageContainer, { pageTree: pageTree, onPageDrop: _this.props.onPageDrop, leftSidebarExpanded: _this.props.leftSidebarExpanded, onPageTypeDrop: _this.props.onPageTypeDrop, sitemapId: _this.props.sitemapId, sitemapNumber: sitemapNumber, publicShare: _this.props.publicShare, introSlideNumber: _this.props.introSlideNumber, setIntroSlideNumber: _this.props.setIntroSlideNumber, level: _this.props.level + 1, isDragging: _this.props.isDragging, activeSectionId: _this.props.activeSectionId })
-	          );
-	        });
-	      }
+	      }).map(function (pageTree, index) {
+	        if (_this.props.level == 0) {
+	          var sitemapNumber = (index + 1).toString() + '.0';
+	        } else if (_this.props.level == 1) {
+	          var sitemapNumber = parseInt(_this.props.sitemapNumber).toString() + '.' + (index + 1);
+	        } else {
+	          var sitemapNumber = _this.props.sitemapNumber + '.' + (index + 1);
+	        }
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'child-page', key: pageTree.id },
+	          _react2.default.createElement(DraggablePageContainer, { pageTree: pageTree, onPageDrop: _this.props.onPageDrop, leftSidebarExpanded: _this.props.leftSidebarExpanded, onPageTypeDrop: _this.props.onPageTypeDrop, sitemapId: _this.props.sitemapId, sitemapNumber: sitemapNumber, publicShare: _this.props.publicShare, introSlideNumber: _this.props.introSlideNumber, setIntroSlideNumber: _this.props.setIntroSlideNumber, level: _this.props.level + 1, isDragging: _this.props.isDragging, activeSectionId: _this.props.activeSectionId })
+	        );
+	      });
 	      return connectDragSource(_react2.default.createElement(
 	        'div',
 	        { className: 'page-container-wrapper' + (isDragging ? ' dragging' : '') },
@@ -50850,7 +50846,11 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'react-public-header' },
-	        _react2.default.createElement(
+	        this.props.business.logo.logo.url ? _react2.default.createElement(
+	          'div',
+	          { className: 'business-logo' },
+	          _react2.default.createElement('img', { className: 'profile-image profile-image-lg', src: this.props.business.logo.logo.url, alt: 'Logo' })
+	        ) : _react2.default.createElement(
 	          'div',
 	          { className: 'business-name' },
 	          _react2.default.createElement(
