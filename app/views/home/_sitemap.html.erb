@@ -2,17 +2,17 @@
   <div class='sitemap_wrapper'>
     <div class="sitemap-container" data-id=<%= sitemap.id %> data-folder-id='<%= sitemap.folder_id %>' data-name='<%= sitemap.name.downcase %>'>
       <div class="site-card">
-        <% if sitemap.comments.exists? || Comment.where(commentable_type: 'Page', commentable_id: sitemap.pages.pluck(:id)).exists? %>
-          <span class='state'></span>
-        <% end %>
-        <div class="saved-sitemap-name">
-          <a href=<%= '/sitemaps/' + sitemap.id.to_s %> class='sitemap-link'>
+        <a href=<%= '/sitemaps/' + sitemap.id.to_s %> class='sitemap-link'>
+          <% if sitemap.comments.exists? || Comment.where(commentable_type: 'Page', commentable_id: sitemap.pages.pluck(:id)).exists? %>
+            <span class='state'></span>
+          <% end %>
+          <div class="saved-sitemap-name">
             <h2 class="card-name saved-card-name">
               <%= sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %>
             </h2>
             <p class="updated">Last updated <%= pretty_time(sitemap.updated_at) %></p>
-          </a>
-        </div>
+          </div>
+        </a>
         <div class="edit-sitemap-name hide">
           <span class='sitemap-link'>
             <h2 class="card-name edit-card-name">
