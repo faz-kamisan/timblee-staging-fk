@@ -59,7 +59,7 @@
             <li>
               <% if current_business.is_starter_plan? && !current_business.in_trial_period? %>
                 <a class="action invite-user-modal-link invite-error-link">
-              <% elsif !current_business.is_pro_plan? && current_business.in_trial_period? %>
+              <% elsif current_business.is_starter_plan? && current_business.in_trial_period? %>
                 <a class="action invite-user-modal-link invite-warning-link">
               <% else %>
                 <% url = current_business.is_pro_plan? ? businesses_subscription_path : users_bulk_invitation_path %>

@@ -1,7 +1,7 @@
 <% if current_business %>
   <% if current_business.is_starter_plan? && !current_business.in_trial_period? %>
     <% invite_permission_modal = 'invite-error-link' %>
-  <% elsif !current_business.is_pro_plan? && current_business.in_trial_period? %>
+  <% elsif current_business.is_starter_plan? && current_business.in_trial_period? %>
     <% invite_permission_modal = 'invite-warning-link' %>
   <% else %>
     <% invite_permission_modal = 'invite-link' %>
