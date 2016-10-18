@@ -237,7 +237,7 @@ class PageTile extends React.Component {
     if(this.props.childrenLength > 0) {
       return (
         <div className={"page-tile " + (((this.props.level == 0) && (this.props.childrenLength % 2 == 0)) ? 'even-tree' : 'odd-tree') + (((this.props.level > 7) && (this.props.pageTree.alt_section_id)) ? " level-with-section" : "") } onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile'>
-          { !this.props.isDragging &&
+          { !this.props.isDragging && !this.props.publicShare &&
             <div>
               <div className="right-button-div">
                 <div className='right-button' onClick={this.addSameLevelNextPage}>
@@ -329,7 +329,7 @@ class PageTile extends React.Component {
     } else {
       return (
         <div className={ "page-tile " + (((this.props.level > 7) && (this.props.pageTree.alt_section_id)) ? " level-with-section" : "" )} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile'>
-          { !this.props.isDragging &&
+          { !this.props.isDragging && !this.props.publicShare &&
             <div>
               <div className="right-button-div">
                 <div className='right-button' onClick={this.addSameLevelNextPage}>
