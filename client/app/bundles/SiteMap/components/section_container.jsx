@@ -65,7 +65,7 @@ class SectionContainer extends React.Component {
         }
         <div className='sitemap-section'>
           <div>
-            <DraggablePageContainer pageTree={pageTree} sitemapNumber='' sitemapId={_this.props.sitemapId} leftSidebarExpanded={_this.props.leftSidebarExpanded} publicShare={_this.props.publicShare} introSlideNumber={_this.props.introSlideNumber} setIntroSlideNumber={_this.props.setIntroSlideNumber} level={0} />
+            <DraggablePageContainer pageTree={pageTree} sitemapNumber='' sitemapId={_this.props.sitemapId} leftSidebarExpanded={_this.props.leftSidebarExpanded} publicShare={_this.props.publicShare} introSlideNumber={_this.props.introSlideNumber} setIntroSlideNumber={_this.props.setIntroSlideNumber} level={0} activeSectionId={_this.props.activeSectionId} />
           </div>
         </div>
       </div>

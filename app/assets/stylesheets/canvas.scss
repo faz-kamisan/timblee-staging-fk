@@ -27,7 +27,7 @@
     padding: 10px 13px;
     border: 2px solid #ddd;
     font-weight: 600;
-    z-index: 10;
+    z-index: 20;
     @include border-radius(2px);
     .collapse-open {
       background: $transparent;
@@ -47,6 +47,7 @@
 
 .right-button-div {
   position: absolute;
+  z-index: 20;
   display: none;
   right: -155px;
   width: 155px;
@@ -56,6 +57,7 @@
 
 .bottom-button-div {
   position: absolute;
+  z-index: 20;
   display: none;
   width: 116px;
   height: 55px;

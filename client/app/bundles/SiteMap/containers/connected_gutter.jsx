@@ -3,7 +3,7 @@ import { updatePagePosition, addNewPage, setMaxPageUid, changeUpdatedAt, updateI
 import DroppableGutter from '../components/gutter'
 
 const mapStateToProps = (state) => {
-  return { sitemapId: state.id, maxPageUid: state.maxPageUid }
+  return { sitemapId: state.id, maxPageUid: state.maxPageUid, activeSectionId: state.activeSectionId }
 }
 
 const mapDispatchToProps = (dispatch) => {

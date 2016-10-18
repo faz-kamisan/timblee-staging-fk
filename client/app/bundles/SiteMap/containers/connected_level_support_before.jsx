@@ -3,7 +3,7 @@ import { updatePagePosition, changeUpdatedAt, addNewPage, setMaxPageUid, updateI
 import DroppableLevelSupportBefore from '../components/level_support_before'
 
 const mapStateToProps = (state) => {
-  return { sitemapId: state.id, maxPageUid: state.maxPageUid }
+  return { sitemapId: state.id, maxPageUid: state.maxPageUid, activeSectionId: state.activeSectionId }
 }
 
 const mapDispatchToProps = (dispatch) => {

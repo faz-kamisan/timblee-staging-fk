@@ -14,7 +14,7 @@ const sitemapTarget = {
       if(props.pageTree.footer) {
         var data = { page: { page_type_id: item.id, parent_id: null, sitemap_id: props.sitemapId, name: item.name, position: null, section_id: null, footer: true } }
       } else {
-        var data = { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: item.name, position: 1, section_id: props.pageTree.section_id } }
+        var data = { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: item.name, position: 1, section_id: props.activeSectionId } }
       }
       $.ajax({
         url: '/pages/',
@@ -41,7 +41,7 @@ const sitemapTarget = {
       if(props.pageTree.footer) {
         props.onFooterPageTypeDrop(item, timeStamp, props.maxPageUid);
       } else {
-        props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
+        props.onPageTypeDrop(props.activeSectionId, item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
       }
     }
   }
@@ -92,7 +92,7 @@ class FirstPageDroppable extends React.Component {
       url: '/pages/',
       method: 'post',
       dataType: 'JSON',
-      data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.id, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: 1, section_id: this.props.pageTree.section_id } },
+      data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.id, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: 1, section_id: this.props.activeSectionId } },
       error: (result) => {
         document.setFlash(result.responseText)
       },
@@ -108,7 +108,7 @@ class FirstPageDroppable extends React.Component {
         }, 2000)
       }
     });
-    this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.id, 'begining', timeStamp, this.props.maxPageUid);
+    this.props.onPageTypeDrop(this.props.activeSectionId, this.props.pageType, this.props.pageTree.id, 'begining', timeStamp, this.props.maxPageUid);
   }
 
   render() {

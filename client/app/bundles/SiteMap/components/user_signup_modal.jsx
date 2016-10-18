@@ -51,15 +51,15 @@ class UserSignupModal extends React.Component {
             <div className="form-group">
               <input type='text' placeholder='Your name' ref='nameInput' className='form-control'></input>
               <div className='error-div name-error' dangerouslySetInnerHTML={this.createMarkup(this.state.nameError)} />
-            </div> 
+            </div>
             <div className="form-group">
               <input type='email' placeholder='Your work email' ref='emailInput' className='form-control'></input>
               <div className='error-div email-error' dangerouslySetInnerHTML={this.createMarkup(this.state.emailError)} />
-            </div> 
+            </div>
             <div className="form-group">
               <input type='password' placeholder='Choose a password' ref='passwordInput' className='form-control'></input>
               <div className='error-div password-error' dangerouslySetInnerHTML={this.createMarkup(this.state.passwordError)} />
-            </div>  
+            </div>
             <div className="form-group">
               <a href="javascript:void(0);" className="btn btn-pink btn-block" onClick={this.signup}>SIGN UP FOR FREE </a>
             </div>

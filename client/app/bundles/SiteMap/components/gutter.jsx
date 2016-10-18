@@ -32,12 +32,12 @@ const sitemapTarget = {
         url: '/pages/',
         method: 'post',
         dataType: 'JSON',
-        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: (props.pageTree.position + 1), section_id: props.pageTree.section_id } },
+        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: (props.pageTree.position + 1), section_id: props.activeSectionId } },
         error: (result) => {
           document.setFlash(result.responseText)
         },
         success: (result) => {
-          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id)
+          props.onPageIdUpdate(timeStamp, props.activeSectionId, result.id)
         },
         complete: (result) => {
           props.setSaving(true)
@@ -46,7 +46,7 @@ const sitemapTarget = {
           }, 2000)
         }
       });
-      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp, props.maxPageUid);
+      props.onPageTypeDrop(props.activeSectionId, item, props.pageTree.parentId, props.pageTree.position, timeStamp, props.maxPageUid);
     }
   }
 };

@@ -5,7 +5,7 @@ class PagesController < ApplicationController
 
   def create
     @page = Page.new(page_params)
-    @page.section = @page.parent.section if @page.parent_id?
+    @page.section_id = (@page.parent.alt_section_id || @page.parent.section_id) if @page.parent_id?
     send_conditional_json_response(@page.save)
   end
 

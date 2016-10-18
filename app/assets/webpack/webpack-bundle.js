@@ -39091,16 +39091,6 @@
 	  return sectionsCopy;
 	}
 	
-	function updateSectionId(sections, oldId, newId) {
-	  var sectionsCopy = Object.assign([], sections);
-	  var section = sectionsCopy.filter(function (section) {
-	    return section.id == oldId;
-	  })[0];
-	  section.id = newId;
-	  section.pageTree.alt_section_id = newId;
-	  return sectionsCopy;
-	}
-	
 	function deletePageComment(sections, commentId, pageId, sectionId) {
 	  var sectionsCopy = Object.assign([], sections);
 	  var treeCopy = sectionsCopy.filter(function (section) {
@@ -39121,8 +39111,24 @@
 	  var page = getNodeById(treeCopy, id);
 	  var parentPage = getNodeById(treeCopy, page.parentId);
 	  page.alt_section_id = timeStamp;
+	  traverse(page, function (node) {
+	    node.section_id = timeStamp;
+	  });
 	  var newSection = { default: false, name: newSectionName, pageTree: page, id: timeStamp, state: 'active' };
 	  sectionsCopy.push(newSection);
+	  return sectionsCopy;
+	}
+	
+	function updateSectionId(sections, oldId, newId) {
+	  var sectionsCopy = Object.assign([], sections);
+	  var section = sectionsCopy.filter(function (section) {
+	    return section.id == oldId;
+	  })[0];
+	  section.id = newId;
+	  section.pageTree.alt_section_id = newId;
+	  traverse(section.pageTree, function (node) {
+	    node.section_id = newId;
+	  });
 	  return sectionsCopy;
 	}
 	
@@ -39136,6 +39142,9 @@
 	  })[0];
 	  var sectionPage = getNodeByAltSectionId(defaultSection.pageTree, id);
 	  sectionPage.alt_section_id = null;
+	  traverse(sectionPage, function (node) {
+	    node.section_id = sectionPage.section_id;
+	  });
 	  sectionsCopy.removeIf(function (section) {
 	    return section.id == id;
 	  });
@@ -48009,7 +48018,7 @@
 	          _react2.default.createElement(
 	            'div',
 	            null,
-	            _react2.default.createElement(_draggable_page_container2.default, { pageTree: pageTree, sitemapNumber: '', sitemapId: _this.props.sitemapId, leftSidebarExpanded: _this.props.leftSidebarExpanded, publicShare: _this.props.publicShare, introSlideNumber: _this.props.introSlideNumber, setIntroSlideNumber: _this.props.setIntroSlideNumber, level: 0 })
+	            _react2.default.createElement(_draggable_page_container2.default, { pageTree: pageTree, sitemapNumber: '', sitemapId: _this.props.sitemapId, leftSidebarExpanded: _this.props.leftSidebarExpanded, publicShare: _this.props.publicShare, introSlideNumber: _this.props.introSlideNumber, setIntroSlideNumber: _this.props.setIntroSlideNumber, level: 0, activeSectionId: _this.props.activeSectionId })
 	          )
 	        )
 	      );
@@ -48120,8 +48129,8 @@
 	      var _this = this;
 	      var children;
 	      if (this.props.pageTree.children.filter(function (page) {
-	        return page.state != 'archived';
-	      }) != null) {
+	        return page.state != 'archived' && (page.section_id == _this.props.activeSectionId || page.alt_section_id == _this.props.activeSectionId);
+	      }).length > 0) {
 	        children = this.props.pageTree.children.filter(function (page) {
 	          return page.state != 'archived';
 	        }).map(function (pageTree, index) {
@@ -48135,7 +48144,7 @@
 	          return _react2.default.createElement(
 	            'div',
 	            { className: 'child-page', key: pageTree.id },
-	            _react2.default.createElement(DraggablePageContainer, { pageTree: pageTree, onPageDrop: _this.props.onPageDrop, leftSidebarExpanded: _this.props.leftSidebarExpanded, onPageTypeDrop: _this.props.onPageTypeDrop, sitemapId: _this.props.sitemapId, sitemapNumber: sitemapNumber, publicShare: _this.props.publicShare, introSlideNumber: _this.props.introSlideNumber, setIntroSlideNumber: _this.props.setIntroSlideNumber, level: _this.props.level + 1, isDragging: _this.props.isDragging })
+	            _react2.default.createElement(DraggablePageContainer, { pageTree: pageTree, onPageDrop: _this.props.onPageDrop, leftSidebarExpanded: _this.props.leftSidebarExpanded, onPageTypeDrop: _this.props.onPageTypeDrop, sitemapId: _this.props.sitemapId, sitemapNumber: sitemapNumber, publicShare: _this.props.publicShare, introSlideNumber: _this.props.introSlideNumber, setIntroSlideNumber: _this.props.setIntroSlideNumber, level: _this.props.level + 1, isDragging: _this.props.isDragging, activeSectionId: _this.props.activeSectionId })
 	          );
 	        });
 	      }
@@ -48367,7 +48376,7 @@
 	var mapStateToProps = function mapStateToProps(state) {
 	  return { publicShare: state.publicShare, pageType: state.pageTypes.filter(function (pageType) {
 	      return pageType.name == 'General 1';
-	    })[0], maxPageUid: state.maxPageUid, sitemapId: state.id, currentUser: state.currentUser, currentGuest: state.currentGuest };
+	    })[0], maxPageUid: state.maxPageUid, sitemapId: state.id, currentUser: state.currentUser, currentGuest: state.currentGuest, activeSectionId: state.activeSectionId };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -48474,7 +48483,6 @@
 	    _this2.addSubPage = _this2.addSubPage.bind(_this2);
 	    _this2.addFaded = _this2.addFaded.bind(_this2);
 	    _this2.removeFaded = _this2.removeFaded.bind(_this2);
-	    _this2.handleMouseDown = _this2.handleMouseDown.bind(_this2);
 	    _this2.handeNameChange = _this2.handeNameChange.bind(_this2);
 	    _this2.state = { nameChangeDisabled: !props.pageTree.newRecord, hover: false, showOverLay: false, name: _this2.props.name, originalName: _this2.props.name, counter: 0 };
 	    return _this2;
@@ -48544,14 +48552,14 @@
 	        url: '/pages/',
 	        method: 'post',
 	        dataType: 'JSON',
-	        data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.parentId, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: this.props.pageTree.position + 1, section_id: this.props.pageTree.section_id } },
+	        data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.parentId, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: this.props.pageTree.position + 1, section_id: this.props.activeSectionId } },
 	        error: function error(result) {
 	          document.setFlash(result.responseText);
 	        },
 	        success: function success(result) {
 	          var onPageIdUpdate = _this.props.onPageIdUpdate;
 	          var pageTree = _this.props.pageTree;
-	          onPageIdUpdate(timeStamp, pageTree.section_id, result.id);
+	          onPageIdUpdate(timeStamp, _this.props.activeSectionId, result.id);
 	        },
 	        complete: function complete(result) {
 	          _this.props.setSaving(true);
@@ -48560,7 +48568,7 @@
 	          }, 2000);
 	        }
 	      });
-	      this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.parentId, this.props.pageTree.position, timeStamp, this.props.maxPageUid);
+	      this.props.onPageTypeDrop(this.props.activeSectionId, this.props.pageType, this.props.pageTree.parentId, this.props.pageTree.position, timeStamp, this.props.maxPageUid);
 	      this.removeFaded();
 	    }
 	  }, {
@@ -48572,14 +48580,14 @@
 	        url: '/pages/',
 	        method: 'post',
 	        dataType: 'JSON',
-	        data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.parentId, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: this.props.pageTree.position, section_id: this.props.pageTree.section_id } },
+	        data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.parentId, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: this.props.pageTree.position, section_id: this.props.activeSectionId } },
 	        error: function error(result) {
 	          document.setFlash(result.responseText);
 	        },
 	        success: function success(result) {
 	          var onPageIdUpdate = _this.props.onPageIdUpdate;
 	          var pageTree = _this.props.pageTree;
-	          onPageIdUpdate(timeStamp, pageTree.section_id, result.id);
+	          onPageIdUpdate(timeStamp, _this.props.activeSectionId, result.id);
 	        },
 	        complete: function complete(result) {
 	          _this.props.setSaving(true);
@@ -48588,7 +48596,7 @@
 	          }, 2000);
 	        }
 	      });
-	      this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.parentId, this.props.pageTree.position - 1, timeStamp, this.props.maxPageUid);
+	      this.props.onPageTypeDrop(this.props.activeSectionId, this.props.pageType, this.props.pageTree.parentId, this.props.pageTree.position - 1, timeStamp, this.props.maxPageUid);
 	      this.removeFaded();
 	    }
 	  }, {
@@ -48600,14 +48608,13 @@
 	        url: '/pages/',
 	        method: 'post',
 	        dataType: 'JSON',
-	        data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.id, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: 1, section_id: this.props.pageTree.section_id } },
+	        data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.id, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: 1, section_id: this.props.activeSectionId } },
 	        error: function error(result) {
 	          document.setFlash(result.responseText);
 	        },
 	        success: function success(result) {
 	          var onPageIdUpdate = _this.props.onPageIdUpdate;
-	          var pageTree = _this.props.pageTree;
-	          onPageIdUpdate(timeStamp, pageTree.section_id, result.id);
+	          onPageIdUpdate(timeStamp, _this.props.activeSectionId, result.id);
 	        },
 	        complete: function complete(result) {
 	          _this.props.setSaving(true);
@@ -48616,7 +48623,7 @@
 	          }, 2000);
 	        }
 	      });
-	      this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.id, 'begining', timeStamp, this.props.maxPageUid);
+	      this.props.onPageTypeDrop(this.props.activeSectionId, this.props.pageType, this.props.pageTree.id, 'begining', timeStamp, this.props.maxPageUid);
 	      this.removeFaded();
 	    }
 	  }, {
@@ -48673,14 +48680,6 @@
 	      $(this.refs.pageTile).removeClass('not-faded');
 	    }
 	  }, {
-	    key: 'handleMouseDown',
-	    value: function handleMouseDown(e) {
-	      var target = $(e.target);
-	      if (target.closest('.right-button-div').length == 0 && target.closest('.bottom-button-div').length == 0 && target.closest('.close-card-overlay').length == 0) {
-	        this.removeFaded();
-	      }
-	    }
-	  }, {
 	    key: 'handleOnCollapsedChanged',
 	    value: function handleOnCollapsedChanged(e) {
 	      this.props.onCollapsedChanged(this.props.pageTree.id, this.props.pageTree.section_id);
@@ -48714,7 +48713,7 @@
 	      if (this.props.childrenLength > 0) {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: "page-tile " + (this.props.level == 0 && this.props.childrenLength % 2 == 0 ? 'even-tree' : 'odd-tree') + (this.props.level > 7 && this.props.pageTree.alt_section_id ? " level-with-section" : ""), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile', onMouseDown: this.handleMouseDown },
+	          { className: "page-tile " + (this.props.level == 0 && this.props.childrenLength % 2 == 0 ? 'even-tree' : 'odd-tree') + (this.props.level > 7 && this.props.pageTree.alt_section_id ? " level-with-section" : ""), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile' },
 	          !this.props.isDragging && _react2.default.createElement(
 	            'div',
 	            null,
@@ -48728,7 +48727,7 @@
 	                'Add same level page'
 	              )
 	            ),
-	            _react2.default.createElement(
+	            !(this.props.pageTree.alt_section_id && this.props.pageTree.alt_section_id != this.props.activeSectionId) && _react2.default.createElement(
 	              'div',
 	              { className: 'bottom-button-div' },
 	              _react2.default.createElement(
@@ -48849,12 +48848,12 @@
 	              )
 	            )
 	          ),
-	          this.props.level > 0 && _react2.default.createElement('div', { className: "collapse-open" + (this.props.collapsed ? ' collapse-close' : ''), onClick: this.handleOnCollapsedChanged })
+	          this.props.level > 0 && !this.props.pageTree.alt_section_id && _react2.default.createElement('div', { className: "collapse-open" + (this.props.collapsed ? ' collapse-close' : ''), onClick: this.handleOnCollapsedChanged })
 	        );
 	      } else {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: "page-tile " + (this.props.level > 7 && this.props.pageTree.alt_section_id ? " level-with-section" : ""), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile', onMouseDown: this.handleMouseDown },
+	          { className: "page-tile " + (this.props.level > 7 && this.props.pageTree.alt_section_id ? " level-with-section" : ""), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile' },
 	          !this.props.isDragging && _react2.default.createElement(
 	            'div',
 	            null,
@@ -48868,7 +48867,7 @@
 	                'Add same level page'
 	              )
 	            ),
-	            _react2.default.createElement(
+	            !(this.props.pageTree.alt_section_id && this.props.pageTree.alt_section_id != this.props.activeSectionId) && _react2.default.createElement(
 	              'div',
 	              { className: 'bottom-button-div' },
 	              _react2.default.createElement(
@@ -49032,7 +49031,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { sitemapId: state.id, maxPageUid: state.maxPageUid };
+	  return { sitemapId: state.id, maxPageUid: state.maxPageUid, activeSectionId: state.activeSectionId };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -49123,12 +49122,12 @@
 	        url: '/pages/',
 	        method: 'post',
 	        dataType: 'JSON',
-	        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: props.pageTree.position + 1, section_id: props.pageTree.section_id } },
+	        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: props.pageTree.position + 1, section_id: props.activeSectionId } },
 	        error: function error(result) {
 	          document.setFlash(result.responseText);
 	        },
 	        success: function success(result) {
-	          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id);
+	          props.onPageIdUpdate(timeStamp, props.activeSectionId, result.id);
 	        },
 	        complete: function complete(result) {
 	          props.setSaving(true);
@@ -49137,7 +49136,7 @@
 	          }, 2000);
 	        }
 	      });
-	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp, props.maxPageUid);
+	      props.onPageTypeDrop(props.activeSectionId, item, props.pageTree.parentId, props.pageTree.position, timeStamp, props.maxPageUid);
 	    }
 	  }
 	};
@@ -49240,7 +49239,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { sitemapId: state.id, maxPageUid: state.maxPageUid, trial: state.trial };
+	  return { sitemapId: state.id, maxPageUid: state.maxPageUid, trial: state.trial, activeSectionId: state.activeSectionId };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -49302,7 +49301,7 @@
 	var sitemapTarget = {
 	  drop: function drop(props, monitor, component) {
 	    var item = monitor.getItem();
-	    if (monitor.didDrop() || item.type == 'Page' && item.parentId == props.pageTree.id || props.pageTree.footer) {
+	    if (monitor.didDrop() || item.type == 'Page' && item.parentId == props.pageTree.id || props.pageTree.footer || props.pageTree.alt_section_id && props.pageTree.alt_section_id != props.activeSectionId) {
 	      return;
 	    }
 	    if (item.type == 'page') {
@@ -49328,12 +49327,12 @@
 	        url: '/pages/',
 	        method: 'post',
 	        dataType: 'JSON',
-	        data: { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: item.name, position: 1, section_id: props.pageTree.section_id } },
+	        data: { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: item.name, position: 1, section_id: props.activeSectionId } },
 	        error: function error(result) {
 	          document.setFlash(result.responseText);
 	        },
 	        success: function success(result) {
-	          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id);
+	          props.onPageIdUpdate(timeStamp, props.activeSectionId, result.id);
 	        },
 	        complete: function complete(result) {
 	          props.setSaving(true);
@@ -49342,7 +49341,7 @@
 	          }, 2000);
 	        }
 	      });
-	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
+	      props.onPageTypeDrop(props.activeSectionId, item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
 	    }
 	  }
 	};
@@ -49367,14 +49366,14 @@
 	  _createClass(PageTileBottom, [{
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
-	      if (!this.props.isOverCurrent && nextProps.isOverCurrent && !this.props.pageTree.footer) {
+	      if (!this.props.isOverCurrent && nextProps.isOverCurrent && !this.props.pageTree.footer && !(this.props.pageTree.alt_section_id && this.props.pageTree.alt_section_id != this.props.activeSectionId)) {
 	        var domNode = (0, _reactDom.findDOMNode)(this);
 	        $(domNode).addClass('drag-over');
 	        $('.custom-drag-layer').addClass('over-page-bottom');
 	        $(domNode).parent('.page-tile').siblings('.gutter').addClass('again-2-drag-over');
 	      }
 	
-	      if (this.props.isOverCurrent && !nextProps.isOverCurrent && !this.props.pageTree.footer) {
+	      if (this.props.isOverCurrent && !nextProps.isOverCurrent && !this.props.pageTree.footer && !(this.props.pageTree.alt_section_id && this.props.pageTree.alt_section_id != this.props.activeSectionId)) {
 	        var domNode = (0, _reactDom.findDOMNode)(this);
 	        $(domNode).removeClass('drag-over');
 	        $('.custom-drag-layer').removeClass('over-page-bottom');
@@ -49442,7 +49441,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { sitemapId: state.id, maxPageUid: state.maxPageUid };
+	  return { sitemapId: state.id, maxPageUid: state.maxPageUid, activeSectionId: state.activeSectionId };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -49530,12 +49529,12 @@
 	        url: '/pages/',
 	        method: 'post',
 	        dataType: 'JSON',
-	        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: props.pageTree.position + 1, section_id: props.pageTree.section_id } },
+	        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: props.pageTree.position + 1, section_id: props.activeSectionId } },
 	        error: function error(result) {
 	          document.setFlash(result.responseText);
 	        },
 	        success: function success(result) {
-	          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id);
+	          props.onPageIdUpdate(timeStamp, props.activeSectionId, result.id);
 	        },
 	        complete: function complete(result) {
 	          props.setSaving(true);
@@ -49544,7 +49543,7 @@
 	          }, 2000);
 	        }
 	      });
-	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp, props.maxPageUid);
+	      props.onPageTypeDrop(props.activeSectionId, item, props.pageTree.parentId, props.pageTree.position, timeStamp, props.maxPageUid);
 	    }
 	  }
 	};
@@ -49634,7 +49633,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { sitemapId: state.id, maxPageUid: state.maxPageUid };
+	  return { sitemapId: state.id, maxPageUid: state.maxPageUid, activeSectionId: state.activeSectionId };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -49722,12 +49721,12 @@
 	        url: '/pages/',
 	        method: 'post',
 	        dataType: 'JSON',
-	        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: props.pageTree.position, section_id: props.pageTree.section_id } },
+	        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: props.pageTree.position, section_id: props.activeSectionId } },
 	        error: function error(result) {
 	          document.setFlash(result.responseText);
 	        },
 	        success: function success(result) {
-	          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id);
+	          props.onPageIdUpdate(timeStamp, props.activeSectionId, result.id);
 	        },
 	        complete: function complete(result) {
 	          props.setSaving(true);
@@ -49736,7 +49735,7 @@
 	          }, 2000);
 	        }
 	      });
-	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position - 1, timeStamp, props.maxPageUid);
+	      props.onPageTypeDrop(props.activeSectionId, item, props.pageTree.parentId, props.pageTree.position - 1, timeStamp, props.maxPageUid);
 	    }
 	  }
 	};
@@ -49821,7 +49820,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { sitemapId: state.id, maxPageUid: state.maxPageUid };
+	  return { sitemapId: state.id, maxPageUid: state.maxPageUid, activeSectionId: state.activeSectionId };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -49909,12 +49908,12 @@
 	        url: '/pages/',
 	        method: 'post',
 	        dataType: 'JSON',
-	        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: props.pageTree.position + 1, section_id: props.pageTree.section_id } },
+	        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: props.pageTree.position + 1, section_id: props.activeSectionId } },
 	        error: function error(result) {
 	          document.setFlash(result.responseText);
 	        },
 	        success: function success(result) {
-	          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id);
+	          props.onPageIdUpdate(timeStamp, props.activeSectionId, result.id);
 	        },
 	        complete: function complete(result) {
 	          props.setSaving(true);
@@ -49923,7 +49922,7 @@
 	          }, 2000);
 	        }
 	      });
-	      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.parentId, props.pageTree.position, timeStamp, props.maxPageUid);
+	      props.onPageTypeDrop(props.activeSectionId, item, props.pageTree.parentId, props.pageTree.position, timeStamp, props.maxPageUid);
 	    }
 	  }
 	};
@@ -50015,7 +50014,7 @@
 	var mapStateToProps = function mapStateToProps(state) {
 	  return { sitemapId: state.id, maxPageUid: state.maxPageUid, pageType: state.pageTypes.filter(function (pageType) {
 	      return pageType.name == 'General 1';
-	    })[0] };
+	    })[0], activeSectionId: state.activeSectionId };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -50092,7 +50091,7 @@
 	      if (props.pageTree.footer) {
 	        var data = { page: { page_type_id: item.id, parent_id: null, sitemap_id: props.sitemapId, name: item.name, position: null, section_id: null, footer: true } };
 	      } else {
-	        var data = { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: item.name, position: 1, section_id: props.pageTree.section_id } };
+	        var data = { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: item.name, position: 1, section_id: props.activeSectionId } };
 	      }
 	      $.ajax({
 	        url: '/pages/',
@@ -50119,7 +50118,7 @@
 	      if (props.pageTree.footer) {
 	        props.onFooterPageTypeDrop(item, timeStamp, props.maxPageUid);
 	      } else {
-	        props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
+	        props.onPageTypeDrop(props.activeSectionId, item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
 	      }
 	    }
 	  }
@@ -50167,7 +50166,7 @@
 	        url: '/pages/',
 	        method: 'post',
 	        dataType: 'JSON',
-	        data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.id, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: 1, section_id: this.props.pageTree.section_id } },
+	        data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.id, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: 1, section_id: this.props.activeSectionId } },
 	        error: function error(result) {
 	          document.setFlash(result.responseText);
 	        },
@@ -50183,7 +50182,7 @@
 	          }, 2000);
 	        }
 	      });
-	      this.props.onPageTypeDrop(this.props.pageTree.section_id, this.props.pageType, this.props.pageTree.id, 'begining', timeStamp, this.props.maxPageUid);
+	      this.props.onPageTypeDrop(this.props.activeSectionId, this.props.pageType, this.props.pageTree.id, 'begining', timeStamp, this.props.maxPageUid);
 	    }
 	  }, {
 	    key: 'render',
