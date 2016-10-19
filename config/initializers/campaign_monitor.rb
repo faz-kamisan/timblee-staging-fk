@@ -24,6 +24,10 @@ class CampaignMonitor
     invite_users_to_timble:                   'e9865900-6caf-4358-b03e-c2cb761f6d25',
     confirmation_instructions:                'd40f9026-5e45-4245-aa08-7fea4dc9d271',
     reconfirmation_instructions:              'cc76a3d4-a9cb-4c65-a428-da8616a70741',
-    reset_password_instructions:              '1ff7d0ae-5ec2-4bcb-877b-b66961a73800'
+    reset_password_instructions:              '1ff7d0ae-5ec2-4bcb-877b-b66961a73800',
+    share_sitemap:                            '3707da03-0c49-47a0-878e-c33955e64b33',
+    payment_success:                          '340f25ef-942d-435d-8b67-e1d3feb6609d',
+    payment_failure:                          '3904f499-cc31-4717-baf2-5cf16830ca23',
+    payment_refund:                           'd559e4a1-2c9c-4508-a081-08651d44456a'
   }
 end
