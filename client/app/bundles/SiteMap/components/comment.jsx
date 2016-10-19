@@ -23,6 +23,7 @@ class Comment extends React.Component {
     this.showEditor = this.showEditor.bind(this);
     this.closeEditor = this.closeEditor.bind(this);
     this.editMessage = this.editMessage.bind(this);
+    this.messageFormatter = this.messageFormatter.bind(this);
   }
 
   showEditor(e) {
@@ -31,6 +32,10 @@ class Comment extends React.Component {
 
   closeEditor(e) {
     this.setState({editMode: false, editable: this.props.editable})
+  }
+
+  messageFormatter() {
+    return { __html: this.state.message.replace(/@\[(.*)\]/g, function(match, p1) { return('<span class="comment-mention">@' + p1 + '</span>') }) }
   }
 
   editMessage(message) {
@@ -74,15 +79,13 @@ class Comment extends React.Component {
             <ConnectedCommentEditor message={ this.state.message } commentableId={this.props.commentableId} commentableType={this.props.commentableType} sectionId={this.props.sectionId} id={this.props.id} closeEditor={this.closeEditor} modalView={this.props.modalView} editMessage={this.editMessage} footer={this.props.footer} />
           }
           {!this.state.editMode &&
-            <p>
-              {this.state.message}
-            </p>
+            <p dangerouslySetInnerHTML={this.messageFormatter()} />
           }
         </div>
       );
     } else {
       return (
-        <div>
+        <div className='comment-block'>
           <img className="user-comment-image" src='/assets/avatar_10.svg' />
           <h4>
             {this.props.commenter.fullName}
@@ -90,9 +93,7 @@ class Comment extends React.Component {
           <h6>
             {this.props.createdAt}
           </h6>
-          <p>
-            {this.state.message}
-          </p>
+          <p dangerouslySetInnerHTML={this.messageFormatter()} />
         </div>
       );
     }

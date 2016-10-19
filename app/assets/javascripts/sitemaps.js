@@ -32,6 +32,7 @@ Sitemaps.prototype.bindEvents = function() {
   });
 
   this.searchSitemapInput.on('input', function(e) {
+    debugger
     $('.sitemap-container').closest('.sitemap-outer-wrapper').removeClass('hide');
     if(e.target.value.trim().length > 0) {
       $(e.target).closest('.dashboard-search').addClass('active');

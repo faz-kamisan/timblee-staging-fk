@@ -52312,6 +52312,7 @@
 	    _this.showEditor = _this.showEditor.bind(_this);
 	    _this.closeEditor = _this.closeEditor.bind(_this);
 	    _this.editMessage = _this.editMessage.bind(_this);
+	    _this.messageFormatter = _this.messageFormatter.bind(_this);
 	    return _this;
 	  }
 	
@@ -52324,6 +52325,13 @@
 	    key: 'closeEditor',
 	    value: function closeEditor(e) {
 	      this.setState({ editMode: false, editable: this.props.editable });
+	    }
+	  }, {
+	    key: 'messageFormatter',
+	    value: function messageFormatter() {
+	      return { __html: this.state.message.replace(/@\[(.*)\]/g, function (match, p1) {
+	          return '<span class="comment-mention">@' + p1 + '</span>';
+	        }) };
 	    }
 	  }, {
 	    key: 'editMessage',
@@ -52386,16 +52394,12 @@
 	            this.props.createdAt
 	          ),
 	          this.state.editMode && _react2.default.createElement(_connected_comment_editor2.default, { message: this.state.message, commentableId: this.props.commentableId, commentableType: this.props.commentableType, sectionId: this.props.sectionId, id: this.props.id, closeEditor: this.closeEditor, modalView: this.props.modalView, editMessage: this.editMessage, footer: this.props.footer }),
-	          !this.state.editMode && _react2.default.createElement(
-	            'p',
-	            null,
-	            this.state.message
-	          )
+	          !this.state.editMode && _react2.default.createElement('p', { dangerouslySetInnerHTML: this.messageFormatter() })
 	        );
 	      } else {
 	        return _react2.default.createElement(
 	          'div',
-	          null,
+	          { className: 'comment-block' },
 	          _react2.default.createElement('img', { className: 'user-comment-image', src: '/assets/avatar_10.svg' }),
 	          _react2.default.createElement(
 	            'h4',
@@ -52407,11 +52411,7 @@
 	            null,
 	            this.props.createdAt
 	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            this.state.message
-	          )
+	          _react2.default.createElement('p', { dangerouslySetInnerHTML: this.messageFormatter() })
 	        );
 	      }
 	    }
@@ -52583,8 +52583,8 @@
 	        _react2.default.createElement(
 	          _reactMentions.MentionsInput,
 	          { className: 'comment-input', value: this.state.commentMessage, onChange: this.handleCommentChange, displayTransform: function displayTransform(id, display, type) {
-	              return '@' + display;
-	            }, markup: '@__display__', ref: 'newComment' },
+	              return '@' + display + '';
+	            }, markup: '@[__display__]', ref: 'newComment' },
 	          _react2.default.createElement(_reactMentions.Mention, { trigger: '@', data: this.props.business.users, appendSpaceOnAdd: true })
 	        ),
 	        _react2.default.createElement(
@@ -63139,8 +63139,8 @@
 	        _react2.default.createElement(
 	          _reactMentions.MentionsInput,
 	          { className: 'comment-input', value: this.state.newCommentMessage, onChange: this.handleCommentChange, displayTransform: function displayTransform(id, display, type) {
-	              return '@' + display;
-	            }, markup: '@__display__', ref: 'newComment' },
+	              return '@' + display + '';
+	            }, markup: '@[__display__]', ref: 'newComment' },
 	          _react2.default.createElement(_reactMentions.Mention, { trigger: '@', data: this.props.business.users, appendSpaceOnAdd: true })
 	        ),
 	        _react2.default.createElement(
