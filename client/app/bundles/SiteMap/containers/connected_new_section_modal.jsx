@@ -13,7 +13,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     onSectionIdUpdate: (oldId, newId) => {
       dispatch(updateSectionId(oldId, newId));
-      dispatch(changeActiveSectionId(sectionId));
+      dispatch(changeActiveSectionId(newId));
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));
