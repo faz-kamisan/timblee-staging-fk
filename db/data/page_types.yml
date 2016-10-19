@@ -10,7 +10,7 @@
 - name: Calendar
   icon_name: calendar-icon
 
-- name: Checkout/Payment
+- name: Checkout & Payment
   icon_name: checkout-payment-icon
 
 - name: Confirmation
@@ -58,7 +58,7 @@
 - name: Landing Page
   icon_name: landing-page-icon
 
-- name: Legal terms
+- name: Legal / terms
   icon_name: legal-terms-icon
 
 - name: Listing
@@ -67,10 +67,10 @@
 - name: Loading
   icon_name: loading-icon
 
-- name: Log in/Sign up
+- name: Log in / sign up
   icon_name: login-icon
 
-- name: Modal/Pop-up
+- name: Modal / pop-up
   icon_name: modal-icon
 
 - name: Portfolio
