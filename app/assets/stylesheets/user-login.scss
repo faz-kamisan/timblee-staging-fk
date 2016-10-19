@@ -354,6 +354,9 @@
   .modal-body {
     @include alignCenter(-310px, -274px);
     z-index: 99999;
+    &.modal-with-error {
+      @include alignCenter(-310px, -325px);
+    }
   }
 }
 

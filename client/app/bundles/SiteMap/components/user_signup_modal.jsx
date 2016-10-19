@@ -35,9 +35,10 @@ class UserSignupModal extends React.Component {
 
   render() {
     var _this = this;
+    var error = ((this.state.nameError.length > 0) || (this.state.emailError.length > 0) || (this.state.passwordError.length > 0));
     return (
       <div className="modal fade react-sign-up" id="user-signup-modal" tabIndex="-1" role="dialog" aria-labelledby="user-signup-modalLabel">
-        <div className="modal-body user-entry registration-page text-center">
+        <div className={"modal-body user-entry registration-page text-center" +  (error ? " modal-with-error": "" )}>
           <div className="logo">
             <img className="logo-inner" src="/assets/Timblee-icon.svg"></img>
           </div>
