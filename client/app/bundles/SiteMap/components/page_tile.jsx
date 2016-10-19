@@ -323,7 +323,7 @@ class PageTile extends React.Component {
               }
             </div>
           }
-          {((this.props.level > 0) && (!this.props.pageTree.alt_section_id)) && <div className={ "collapse-open" + (this.props.collapsed ? ' collapse-close' : '') } onClick={this.handleOnCollapsedChanged}></div>}
+          {((this.props.level > 0) && (!this.props.pageTree.alt_section_id)) && <div className={ "collapse-open collapsible" + (this.props.collapsed ? ' collapse-close' : '') } onClick={this.handleOnCollapsedChanged}></div>}
         </div>
       );
     } else {
