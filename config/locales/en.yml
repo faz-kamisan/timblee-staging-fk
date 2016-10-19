@@ -9,7 +9,7 @@ en:
         success: Folder updated successfully
         failure: Couldn't update folder
       destroy:
-        success: Folder destroyed successfully
+        success: Folder deleted successfully
         failure: Couldn't delete folder
     guests:
       not_found: Can't find guest

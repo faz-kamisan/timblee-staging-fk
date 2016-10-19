@@ -2260,7 +2260,7 @@ body.trial {
   top: 0;
   @include scale(0);
   background: $primaryWhite;
-  z-index: 11;
+  z-index: 21;
   padding: 47px 23px 10px 5px;
   @include animate(.35s);
   a {
