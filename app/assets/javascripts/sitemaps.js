@@ -32,12 +32,11 @@ Sitemaps.prototype.bindEvents = function() {
   });
 
   this.searchSitemapInput.on('input', function(e) {
-    debugger
     $('.sitemap-container').closest('.sitemap-outer-wrapper').removeClass('hide');
     if(e.target.value.trim().length > 0) {
       $(e.target).closest('.dashboard-search').addClass('active');
       var searchQueryRegExp = new RegExp(('\\b' + e.target.value.trim()), 'gi')
-      $('.sitemap-container').not('.new-sitemap').not(function(i, element) { return $(element).data('name').match(searchQueryRegExp) }).closest('.sitemap-outer-wrapper').addClass('hide');
+      $('.sitemap-container').not('.new-sitemap').not(function(i, element) { console.log($(element)); console.log($(element).data('name')); return($(element).data('name').match(searchQueryRegExp)) }).closest('.sitemap-outer-wrapper').addClass('hide');
     } else {
       $(e.target).closest('.dashboard-search').removeClass('active');
     }
