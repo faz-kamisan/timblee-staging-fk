@@ -37,7 +37,8 @@ class SitemapsController < ApplicationController
 
   def show
     @sitemap_props = @sitemap.to_react_data.merge!(currentUser: { fullName: current_user.full_name,
-                                                   email: current_user.email },
+                                                   email: current_user.email,
+                                                   isAdmin: current_user.is_admin? },
                                                    publicShareUrl: (sitemap_public_share_url(@sitemap.public_share_token).gsub(/(?<protocol>http(s?):\/\/)/, '\k<protocol>share.')),
                                                    publicShare: false,
                                                    newSitemap: !!flash[:new_sitemap]

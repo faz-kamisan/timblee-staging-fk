@@ -3,7 +3,7 @@ import { setName, changeUpdatedAt, updateState, setSaving, showSitemapShareModal
 import Header from '../components/header'
 
 const mapStateToProps = (state) => {
-  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving, newSitemap: state.newSitemap }
+  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving, newSitemap: state.newSitemap, currentUser: state.currentUser }
 }
 
 const mapDispatchToProps = (dispatch) => {

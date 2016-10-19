@@ -32,9 +32,7 @@ class SectionContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(this.props.activeSectionLength > nextProps.activeSectionLength) {
-      this.props.changeActiveSectionId(this.getDefaultSection(this.props.sections).id)
-    } else if(this.props.activeSectionLength < nextProps.activeSectionLength) {
+    if(this.props.activeSectionLength < nextProps.activeSectionLength) {
       this.props.changeActiveSectionId(nextProps.sections[nextProps.sections.length - 1].id)
     }
   }
@@ -47,7 +45,7 @@ class SectionContainer extends React.Component {
     // var level = (!this.props.isDefaultSection) ? this.props.pageTree.level : this.props.pageTree.level
     var renderedSectionTabs = activeSections.map(function(section, index) {
       return (
-        <li key={section.id} className={'sitemap-section-tab' + (_this.props.activeSectionId == section.id ? ' active' : '')} onClick={function(e) { _this.changeActiveSectionId(section.id) } } style={ {width: tabWidth} }>
+        <li key={section.id} className={'sitemap-section-tab' + (_this.props.activeSectionId == section.id ? ' active' : '')} onClick={function(e) { ($(e.target).closest('.remove-section').length == 0) ? _this.changeActiveSectionId(section.id) : '' } } style={ {width: tabWidth} }>
           { !section.default &&
             <span className='remove-section' onClick={function() {_this.setSelectedSection(section)} } data-target='#delete-section-modal' data-toggle='modal'>&times;</span>
           }
