@@ -1,4 +1,6 @@
 class SectionsController < ApplicationController
+  skip_before_filter :authenticate_user!
+  before_filter :conditional_authenticate_user!
   before_filter :fetch_page, only: [:create]
   before_filter :fetch_section, only: [:destroy]
 
@@ -40,5 +42,9 @@ class SectionsController < ApplicationController
       else
         render json: t('.failure', scope: :flash) , status: 422
       end
+    end
+
+    def conditional_authenticate_user!
+      proxy_login? || (request.subdomains[0] == 'app') || authenticate_user!
     end
 end
