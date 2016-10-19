@@ -415,11 +415,16 @@ input#toggle:checked + label:after {
    letter-spacing: 1px;
 }
 
+.safari .hidden-password::-webkit-input-placeholder {
+  line-height: 5px;
+}
+
 .hidden-password:-moz-placeholder {
    color: $primaryFormColor;
    opacity: 1;
    font-size: 40px;
    letter-spacing: 1px;
+   line-height: 5px;
 }
 
 .hidden-password::-moz-placeholder {
@@ -427,6 +432,7 @@ input#toggle:checked + label:after {
    opacity: 1;
    font-size: 40px;
    letter-spacing: 1px;
+   line-height: 5px;
 }
 
 .hidden-password:-ms-input-placeholder {
@@ -434,6 +440,7 @@ input#toggle:checked + label:after {
    opacity: 1;
    font-size: 40px;
    letter-spacing: 1px;
+   line-height: 5px;
 }
 
 .modal.in .modal-dialog,
@@ -611,9 +618,9 @@ ul.tagit input[type="text"] {
 
 #invite-user-modal, #sitemap-share-modal {
   .twemoji-picker {
-    width: 160px!important;
+    width: 175px!important;
     height: 140px;
-    right: 0;
+    right: -5px;
     top: -33px;
     overflow: auto;
     overflow-x: hidden;

@@ -625,12 +625,21 @@ ul.tagit li.tagit-choice-editable {
   margin-right: 17px;
 }
 
-.role-standard,
-.role-admin {
+.role-standard {
   input {
     &:checked {
       ~ .cus-radio .role-image {
         background-position: 0 -72px;
+      }
+    }
+  }
+}
+
+.role-admin {
+  input {
+    &:checked {
+      ~ .cus-radio .role-image {
+        background-position: 0 -71px;
       }
     }
   }
