@@ -52,7 +52,7 @@ class DeleteSectionModal extends React.Component {
               </button>
               <h4 className="modal-title">Delete section</h4>
               <p className="modal-message">{'Are you sure you want to delete this section: ' + this.props.section.name}</p>
-              <p className="modal-message">The page linked to section will still be present in the Default section.</p>
+              <p className="modal-message">The page linked to section will still be present in main sitemap.</p>
             </div>
             <div className="modal-body">
               <div className="modal-button text-center">

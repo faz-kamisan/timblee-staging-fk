@@ -69791,7 +69791,7 @@
 	              _react2.default.createElement(
 	                "p",
 	                { className: "modal-message" },
-	                "The page linked to section will still be present in the Default section."
+	                "The page linked to section will still be present in main sitemap."
 	              )
 	            ),
 	            _react2.default.createElement(
