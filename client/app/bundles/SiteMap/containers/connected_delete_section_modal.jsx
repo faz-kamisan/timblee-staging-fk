@@ -3,7 +3,7 @@ import { removeSection, changeUpdatedAt, setSaving, changeActiveSectionId } from
 import DeleteSectionModal from '../components/delete_section_modal'
 
 const mapStateToProps = (state) => {
-  return { section: state.selectedSection, sections: state.sections}
+  return { section: state.selectedSection, sections: state.sections, activeSectionId: state.activeSectionId}
 }
 
 const mapDispatchToProps = (dispatch) => {

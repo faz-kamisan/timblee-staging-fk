@@ -167,13 +167,15 @@ class Header extends React.Component {
               </a>
             </div>
             <div className="pull-left users-block">
-              <span className="icon-invite-female user-invite cursor" data-remote={true}>
-                <span className="path1"></span>
-                <span className="path2"></span>
-                <span className="path3"></span>
-                <span className="path4"></span>
-                <span className="path5"></span>
-              </span>
+              { this.props.currentUser.isAdmin &&
+                <span className="icon-invite-female user-invite cursor" data-remote={true}>
+                  <span className="path1"></span>
+                  <span className="path2"></span>
+                  <span className="path3"></span>
+                  <span className="path4"></span>
+                  <span className="path5"></span>
+                </span>
+              }
               <ul className='users-list'>
                 {renderUsers}
               </ul>

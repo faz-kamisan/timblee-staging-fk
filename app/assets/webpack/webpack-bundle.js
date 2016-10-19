@@ -39112,7 +39112,9 @@
 	  var parentPage = getNodeById(treeCopy, page.parentId);
 	  page.alt_section_id = timeStamp;
 	  traverse(page, function (node) {
-	    node.section_id = timeStamp;
+	    if (page.id != node.id) {
+	      node.section_id = timeStamp;
+	    }
 	  });
 	  var newSection = { default: false, name: newSectionName, pageTree: page, id: timeStamp, state: 'active' };
 	  sectionsCopy.push(newSection);
@@ -39127,7 +39129,9 @@
 	  section.id = newId;
 	  section.pageTree.alt_section_id = newId;
 	  traverse(section.pageTree, function (node) {
-	    node.section_id = newId;
+	    if (section.pageTree.id != node.id) {
+	      node.section_id = newId;
+	    }
 	  });
 	  return sectionsCopy;
 	}
@@ -39143,7 +39147,9 @@
 	  var sectionPage = getNodeByAltSectionId(defaultSection.pageTree, id);
 	  sectionPage.alt_section_id = null;
 	  traverse(sectionPage, function (node) {
-	    node.section_id = sectionPage.section_id;
+	    if (sectionPage.id != node.id) {
+	      node.section_id = sectionPage.section_id;
+	    }
 	  });
 	  sectionsCopy.removeIf(function (section) {
 	    return section.id == id;
@@ -47967,9 +47973,7 @@
 	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
-	      if (this.props.activeSectionLength > nextProps.activeSectionLength) {
-	        this.props.changeActiveSectionId(this.getDefaultSection(this.props.sections).id);
-	      } else if (this.props.activeSectionLength < nextProps.activeSectionLength) {
+	      if (this.props.activeSectionLength < nextProps.activeSectionLength) {
 	        this.props.changeActiveSectionId(nextProps.sections[nextProps.sections.length - 1].id);
 	      }
 	    }
@@ -47987,7 +47991,7 @@
 	        return _react2.default.createElement(
 	          'li',
 	          { key: section.id, className: 'sitemap-section-tab' + (_this.props.activeSectionId == section.id ? ' active' : ''), onClick: function onClick(e) {
-	              _this.changeActiveSectionId(section.id);
+	              $(e.target).closest('.remove-section').length == 0 ? _this.changeActiveSectionId(section.id) : '';
 	            }, style: { width: tabWidth } },
 	          !section.default && _react2.default.createElement(
 	            'span',
@@ -50256,7 +50260,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving, newSitemap: state.newSitemap };
+	  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving, newSitemap: state.newSitemap, currentUser: state.currentUser };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -50534,7 +50538,7 @@
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'pull-left users-block' },
-	              _react2.default.createElement(
+	              this.props.currentUser.isAdmin && _react2.default.createElement(
 	                'span',
 	                { className: 'icon-invite-female user-invite cursor', 'data-remote': true },
 	                _react2.default.createElement('span', { className: 'path1' }),
@@ -64405,7 +64409,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { section: state.selectedSection, sections: state.sections };
+	  return { section: state.selectedSection, sections: state.sections, activeSectionId: state.activeSectionId };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -64434,7 +64438,7 @@
   \*****************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -64467,91 +64471,93 @@
 	  }
 	
 	  _createClass(DeleteSectionModal, [{
-	    key: 'getDefaultSection',
+	    key: "getDefaultSection",
 	    value: function getDefaultSection(sections) {
 	      return sections.filter(function (section) {
 	        return section.default;
 	      })[0];
 	    }
 	  }, {
-	    key: 'deleteSection',
+	    key: "deleteSection",
 	    value: function deleteSection(e) {
-	      var _this3 = this;
-	
 	      var _this = this;
-	      this.props.changeActiveSectionId(this.getDefaultSection(this.props.sections).id);
+	      e.preventDefault();
+	      e.stopPropagation();
+	      if (this.props.activeSectionId == this.props.section.id) {
+	        this.props.changeActiveSectionId(this.getDefaultSection(this.props.sections).id);
+	      }
 	      this.props.removeSection(this.props.section.id);
-	      $.ajax({
-	        url: '/sections/' + this.props.section.id,
-	        method: 'delete',
-	        dataType: 'JSON',
-	        error: function error(result) {
-	          document.setFlash(result.responseText);
-	        },
-	        complete: function complete(result) {
-	          _this3.props.setSaving(true);
-	          setTimeout(function () {
-	            _this.props.setSaving(false);
-	          }, 2000);
-	        }
-	      });
+	      // $.ajax({
+	      //   url: '/sections/' + this.props.section.id,
+	      //   method: 'delete',
+	      //   dataType: 'JSON',
+	      //   error: (result) => {
+	      //     document.setFlash(result.responseText)
+	      //   },
+	      //   complete: (result) => {
+	      //     this.props.setSaving(true)
+	      //     setTimeout(function() {
+	      //       _this.props.setSaving(false)
+	      //     }, 2000)
+	      //   }
+	      // });
 	    }
 	  }, {
-	    key: 'render',
+	    key: "render",
 	    value: function render() {
 	      var _this = this;
 	      return _react2.default.createElement(
-	        'div',
-	        { className: 'modal fade', id: 'delete-section-modal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'delete-section-modalLabel' },
+	        "div",
+	        { className: "modal fade", id: "delete-section-modal", tabIndex: "-1", role: "dialog", "aria-labelledby": "delete-section-modalLabel" },
 	        _react2.default.createElement(
-	          'div',
-	          { className: 'modal-dialog', role: 'document' },
+	          "div",
+	          { className: "modal-dialog", role: "document" },
 	          _react2.default.createElement(
-	            'div',
-	            { className: 'modal-content' },
+	            "div",
+	            { className: "modal-content" },
 	            _react2.default.createElement(
-	              'div',
-	              { className: 'modal-header text-center' },
+	              "div",
+	              { className: "modal-header text-center" },
 	              _react2.default.createElement(
-	                'button',
-	                { type: 'button', className: 'close btn-modal-open', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+	                "button",
+	                { type: "button", className: "close btn-modal-open", "data-dismiss": "modal", "aria-label": "Close" },
 	                _react2.default.createElement(
-	                  'span',
-	                  { 'aria-hidden': 'true' },
-	                  _react2.default.createElement('img', { src: '/assets/close-modal.svg', className: 'close-modal hide-delete-modal' })
+	                  "span",
+	                  { "aria-hidden": "true" },
+	                  _react2.default.createElement("img", { src: "/assets/close-modal.svg", className: "close-modal hide-delete-modal" })
 	                )
 	              ),
 	              _react2.default.createElement(
-	                'h4',
-	                { className: 'modal-title' },
-	                'Delete section'
+	                "h4",
+	                { className: "modal-title" },
+	                "Delete section"
 	              ),
 	              _react2.default.createElement(
-	                'p',
-	                { className: 'modal-message' },
+	                "p",
+	                { className: "modal-message" },
 	                'Are you sure you want to delete this section: ' + this.props.section.name
 	              ),
 	              _react2.default.createElement(
-	                'p',
-	                { className: 'modal-message' },
-	                'The page linked to section will still be present in the Default section.'
+	                "p",
+	                { className: "modal-message" },
+	                "The page linked to section will still be present in the Default section."
 	              )
 	            ),
 	            _react2.default.createElement(
-	              'div',
-	              { className: 'modal-body' },
+	              "div",
+	              { className: "modal-body" },
 	              _react2.default.createElement(
-	                'div',
-	                { className: 'modal-button text-center' },
+	                "div",
+	                { className: "modal-button text-center" },
 	                _react2.default.createElement(
-	                  'a',
-	                  { href: 'javascript:void(0);', 'data-dismiss': 'modal', className: 'btn btn-red', onClick: this.deleteSection },
-	                  'Delete Section'
+	                  "a",
+	                  { href: "javascript:void(0);", "data-dismiss": "modal", className: "btn btn-red", onClick: this.deleteSection },
+	                  "Delete Section"
 	                ),
 	                _react2.default.createElement(
-	                  'a',
-	                  { href: 'javascript:void(0);', 'data-dismiss': 'modal', className: 'btn btn-grey btn-last' },
-	                  'Cancel'
+	                  "a",
+	                  { href: "javascript:void(0);", "data-dismiss": "modal", className: "btn btn-grey btn-last" },
+	                  "Cancel"
 	                )
 	              )
 	            )

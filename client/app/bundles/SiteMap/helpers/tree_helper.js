@@ -143,7 +143,9 @@ function createNewSection(sections, id, sectionId, newSectionName, timeStamp) {
   var parentPage = getNodeById(treeCopy, page.parentId)
   page.alt_section_id = timeStamp
   traverse(page, function(node) {
-    node.section_id = timeStamp
+    if(page.id != node.id) {
+      node.section_id = timeStamp
+    }
   })
   var newSection = { default: false, name: newSectionName, pageTree: page, id: timeStamp, state: 'active' }
   sectionsCopy.push(newSection);
@@ -156,7 +158,9 @@ function updateSectionId(sections, oldId, newId) {
   section.id = newId;
   section.pageTree.alt_section_id = newId;
   traverse(section.pageTree, function(node) {
-    node.section_id = newId
+    if(section.pageTree.id != node.id) {
+      node.section_id = newId
+    }
   })
   return sectionsCopy;
 }
@@ -168,7 +172,9 @@ function removeSection(sections, id) {
   var sectionPage = getNodeByAltSectionId(defaultSection.pageTree, id)
   sectionPage.alt_section_id = null
   traverse(sectionPage, function(node) {
-    node.section_id = sectionPage.section_id
+    if(sectionPage.id != node.id) {
+      node.section_id = sectionPage.section_id
+    }
   })
   sectionsCopy.removeIf(function(section)  {
     return(section.id == id)
