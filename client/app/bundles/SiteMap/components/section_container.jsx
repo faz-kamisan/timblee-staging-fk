@@ -32,7 +32,7 @@ class SectionContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(this.props.activeSectionLength < nextProps.activeSectionLength) {
+    if((this.props.activeSectionLength < nextProps.activeSectionLength) || (nextProps.sections[nextProps.sections.length - 1].id != this.props.sections[this.props.sections.length - 1].id)) {
       this.props.changeActiveSectionId(nextProps.sections[nextProps.sections.length - 1].id)
     }
   }
@@ -42,7 +42,6 @@ class SectionContainer extends React.Component {
     var activeSections = this.props.sections.filter(function(section) {return(section.state == 'active')})
     var tabWidth = (100 / activeSections.length).toString() + '%'
     var defaultSection = this.getDefaultSection(this.props.sections)
-    // var level = (!this.props.isDefaultSection) ? this.props.pageTree.level : this.props.pageTree.level
     var renderedSectionTabs = activeSections.map(function(section, index) {
       return (
         <li key={section.id} className={'sitemap-section-tab' + (_this.props.activeSectionId == section.id ? ' active' : '')} onClick={function(e) { ($(e.target).closest('.remove-section').length == 0) ? _this.changeActiveSectionId(section.id) : '' } } style={ {width: tabWidth} }>

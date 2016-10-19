@@ -48,7 +48,7 @@
       </div>
     </div>
   </form>
-  <% current_business.users.each_with_index do |user, index|%>
+  <% current_business.users.order(:full_name, :email).each_with_index do |user, index|%>
     <form id="user_<%= user.id %>" class="settings-form <%= 'last' if (index + 1) == current_business.users.count %>" >
       <div class="form-group">
         <% if user.active? %>

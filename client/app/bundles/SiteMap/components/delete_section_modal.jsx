@@ -22,20 +22,20 @@ class DeleteSectionModal extends React.Component {
       this.props.changeActiveSectionId(this.getDefaultSection(this.props.sections).id)
     }
     this.props.removeSection(this.props.section.id)
-    // $.ajax({
-    //   url: '/sections/' + this.props.section.id,
-    //   method: 'delete',
-    //   dataType: 'JSON',
-    //   error: (result) => {
-    //     document.setFlash(result.responseText)
-    //   },
-    //   complete: (result) => {
-    //     this.props.setSaving(true)
-    //     setTimeout(function() {
-    //       _this.props.setSaving(false)
-    //     }, 2000)
-    //   }
-    // });
+    $.ajax({
+      url: '/sections/' + this.props.section.id,
+      method: 'delete',
+      dataType: 'JSON',
+      error: (result) => {
+        document.setFlash(result.responseText)
+      },
+      complete: (result) => {
+        this.props.setSaving(true)
+        setTimeout(function() {
+          _this.props.setSaving(false)
+        }, 2000)
+      }
+    });
   }
 
   render() {
