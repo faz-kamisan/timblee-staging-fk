@@ -21,7 +21,7 @@ class Notification < ActiveRecord::Base
     user = comment.commenter
     sitemap = comment.sitemap
     path = Rails.application.routes.url_helpers.sitemap_path(sitemap)
-    message = comment.commentable_type == 'Sitemap' ? '#{user.full_name} commented on #{sitemap.name}' : "#{sitemap.name} - #{user.full_name} #{state} a comment on #{comment.commentable.name}"
+    message = comment.commentable_type == 'Sitemap' ? "#{user.full_name} commented on #{sitemap.name}" : "#{sitemap.name} - #{user.full_name} #{state} a comment on #{comment.commentable.name}"
     add_notifications(user, sitemap, path, message)
   end
 
