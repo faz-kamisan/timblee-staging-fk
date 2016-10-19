@@ -6,14 +6,14 @@ class Notification < ActiveRecord::Base
   scope :not_mailed, -> { where(email_sent: false) }
 
   def self.delete_sitemap_notification(sitemap, user)
-    path = Rails.application.routes.url_helpers.home_dashboard_path
+    path = '#'
     message = "#{sitemap.name} was deleted by #{user.full_name}."
     add_notifications(user, sitemap, path, message)
   end
 
   def self.sitemap_status_update_notification(sitemap, user)
     path = Rails.application.routes.url_helpers.progress_users_path
-    message = "#{user.full_name} updated status of the #{sitemap.name} to #{sitemap.state.titleize}."
+    message = "#{user.full_name} updated the status of the #{sitemap.name} to #{sitemap.state.titleize}."
     add_notifications(user, sitemap, path, message)
   end
 
@@ -21,8 +21,7 @@ class Notification < ActiveRecord::Base
     user = comment.commenter
     sitemap = comment.sitemap
     path = Rails.application.routes.url_helpers.sitemap_path(sitemap)
-    message = "#{sitemap.name} - #{user.full_name} #{state} a comment on " +
-              (comment.commentable_type == 'Sitemap' ? 'General Comments' : "#{comment.commentable.name}")
+    message = comment.commentable_type == 'Sitemap' ? '#{user.full_name} commented on #{sitemap.name}' : "#{sitemap.name} - #{user.full_name} #{state} a comment on #{comment.commentable.name}"
     add_notifications(user, sitemap, path, message)
   end
 
