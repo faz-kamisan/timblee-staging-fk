@@ -52,7 +52,11 @@ class SectionContainer extends React.Component {
         </li>
       )
     })
-    var pageTree = this.activeSection().default ? this.activeSection().pageTree : getNodeByAltSectionId(defaultSection.pageTree, this.activeSection().id)
+    if(this.activeSection()) {
+      var pageTree = this.activeSection().default ? this.activeSection().pageTree : getNodeByAltSectionId(defaultSection.pageTree, this.activeSection().id)
+    } else {
+      var pageTree = getNodeByAltSectionId(defaultSection.pageTree, this.props.sections[this.props.sections.length - 1].id)
+    }
     return (
       <div className={'sitemap-sections' + (this.props.trial ? ' trial' : '')}>
         { (renderedSectionTabs.length > 1) &&

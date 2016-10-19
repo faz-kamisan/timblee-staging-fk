@@ -225,6 +225,7 @@ class PageTile extends React.Component {
 
   componentDidMount() {
     var _this = this;
+    document.moveCaretToEnd(this.refs.nameInput);
     $('.modal').on('hidden.bs.modal', function () {
       _this.setState({showOverLay: false})
     });

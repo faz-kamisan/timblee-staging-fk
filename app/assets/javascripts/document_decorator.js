@@ -7,3 +7,14 @@ Document.prototype.setFlash = function(message) {
   $("div.flash-message").html('');
   $("div.flash-message").append($flash);
 }
+
+Document.prototype.moveCaretToEnd = function(el) {
+  if (typeof el.selectionStart == "number") {
+    el.selectionStart = el.selectionEnd = el.value.length;
+  } else if (typeof el.createTextRange != "undefined") {
+    el.focus();
+    var range = el.createTextRange();
+    range.collapse(false);
+    range.select();
+  }
+}

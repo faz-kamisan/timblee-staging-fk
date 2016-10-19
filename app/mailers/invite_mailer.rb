@@ -1,7 +1,7 @@
 class InviteMailer < ActionMailer::Base
   include Devise::Controllers::UrlHelpers
 
-  default from: 'pratibha@vinsol.com'
+  default from: 'admin@timblee.com'
 
   def send_invite(user_id, token, custom_message = '')
     @user = User.find(user_id)

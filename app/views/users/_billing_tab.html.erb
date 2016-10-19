@@ -12,14 +12,14 @@
               You're on the free trial till  <%= current_business.trial_end_at.strftime('%d %b %Y') %> with no restrictions. To keep using Timblee after that, we'll ask you to choose a plan and add a credit card. Our pricing is simple – $19 per month for the first user and $12 for every subsequent user. If you’ll only need to plan websites ocassionally and work alone, there's also a free plan.
 
             <% elsif current_business.in_trial_period? && current_business.is_pro_plan? %>
-              You're on the Pro plan with <span class='pro-users-count'><%= current_business.no_of_users %></span> users. Your monthly charge is $<span class='pro-charges'><%= current_business.monthly_charge%></span>. To add more users, click on the 'Team' tab above.
+              You're on the Pro plan with <span class='pro-users-count'><%= current_business.no_of_users %></span> <%= 'user'.pluralize(current_business.no_of_users)%>. Your monthly charge is $<span class='pro-charges'><%= current_business.monthly_charge%></span>. To add more users, click on the 'Team' tab above.
               You're on the free trial till  <%= current_business.trial_end_at.strftime('%d %b %Y') %>.
             <% elsif current_business.in_trial_period? && current_business.is_starter_plan? %>
               You're on the Starter plan with one user and a maximum of three sitemaps. This is a free plan.
               <a href="#choose-plan-modal" data-toggle="modal" data-dismiss="modal" id="upgrade">Upgrade to the Pro plan</a> for only $19 to have unlimited sitemaps.
               You're on the free trial till  <%= current_business.trial_end_at.strftime('%d %b %Y') %> with no restrictions.
             <% elsif current_business.is_pro_plan? %>
-              You're on the Pro plan with <span class='pro-users-count'><%= current_business.no_of_users %></span> users. Your monthly charge is $<span class='pro-charges'><%= current_business.monthly_charge%></span>. To add more users, click on the 'Team' tab above.
+              You're on the Pro plan with <span class='pro-users-count'><%= current_business.no_of_users %></span> <%= 'user'.pluralize(current_business.no_of_users)%>. Your monthly charge is $<span class='pro-charges'><%= current_business.monthly_charge%></span>. To add more users, click on the 'Team' tab above.
 
             <% else %>
               You're on the Starter plan with one user and a maximum of three sitemaps. This is a free plan.
