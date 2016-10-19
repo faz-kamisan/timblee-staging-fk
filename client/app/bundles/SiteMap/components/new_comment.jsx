@@ -74,7 +74,7 @@ class NewComment extends React.Component {
   render() {
     return (
       <div className="relative">
-        <MentionsInput className='comment-input' value={this.state.newCommentMessage} onChange={this.handleCommentChange} displayTransform={function(id, display, type) { return('@' + display) }} markup={'@__display__'} ref='newComment'>
+        <MentionsInput className='comment-input' value={this.state.newCommentMessage} onChange={this.handleCommentChange} displayTransform={function(id, display, type) { return('@' + display + '') }} markup={'@[__display__]'} ref='newComment'>
           <Mention trigger="@" data={this.props.business.users} appendSpaceOnAdd={true} />
         </MentionsInput>
         <div className="add-remove-comment">

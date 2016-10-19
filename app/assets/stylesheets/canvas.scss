@@ -2121,6 +2121,9 @@ body.trial {
     &:first-child {
       margin-top: 17px;
     }
+    .comment-mention {
+      color: $primaryPink;
+    }
   }
   h6 {
     position: absolute;
@@ -2782,6 +2785,9 @@ body.trial {
       @include border-radius(4px);
       border: 1px solid #d4d4d4;
       margin-bottom: 32px;
+      .comment-mention {
+        color: $primaryPink;
+      }
     }
     &:before {
       display: none;
