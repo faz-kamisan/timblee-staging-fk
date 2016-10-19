@@ -1,11 +1,15 @@
 .not-faded {
   z-index: 12;
   &:hover {
+    .right-button-div, .bottom-button-div {
+      display: block;
+    }
     .right-button,
     .bottom-button {
       opacity: 1!important;
       visibility: visible!important;
     }
+
   }
 }
 
@@ -23,7 +27,7 @@
     padding: 10px 13px;
     border: 2px solid #ddd;
     font-weight: 600;
-    z-index: 10;
+    z-index: 20;
     @include border-radius(2px);
     .collapse-open {
       background: $transparent;
@@ -43,6 +47,8 @@
 
 .right-button-div {
   position: absolute;
+  z-index: 20;
+  display: none;
   right: -155px;
   width: 155px;
   height: 100%;
@@ -51,6 +57,8 @@
 
 .bottom-button-div {
   position: absolute;
+  z-index: 20;
+  display: none;
   width: 116px;
   height: 55px;
   background: $transparent;
@@ -187,17 +195,15 @@
     font-weight: 600;
     word-wrap: break-word;
     textarea {
-      height: 15px;
       border: 0;
       border-radius: 0;
       resize: none;
       font-size: 10px;
+      line-height: 12px;
       color: #262b30;
       padding: 0;
       margin: 0;
-      position: relative;
-      bottom: 1.5px;
-      overflow-y: hidden
+      overflow-y: visible;
     }
   }
 
@@ -677,9 +683,26 @@
         }
       }
 
+      .level-support-before {
+        width: 40px;
+        background: $transparent;
+        height: 87px;
+        position: absolute;
+        left: -40px;
+        top: 0;
+        z-index: 2;
+        &.drag-over, &.again-drag-over {
+          background: url('/assets/level-support.png');
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+      }
+
       &:last-child {
         .level-support {
-          display: none;
+          &:before {
+            display: none;
+          }
         }
       }
     }
@@ -1616,7 +1639,7 @@
       color: $primaryPink;
       border-color: $primaryPink;
       .share-icon {
-        background-position: 0 1px;  
+        background-position: 0 1px;
       }
     }
     .share-icon {
@@ -3319,6 +3342,15 @@ body.trial {
       }
     }
 
+    .business-logo {
+      position: absolute;
+      color: $primaryBlack;
+      left: 50px;
+      top: 33%;
+      margin-top: -7px;
+      max-width: 250px;
+    }
+
     .last-updated {
       color: #a3acb5;
       @extend .font-14;
@@ -3722,17 +3754,17 @@ body.trial {
   cursor: pointer;
   &.pulse-1 {
     -webkit-animation-delay: .35s;
-    animation-delay: .35s;  
+    animation-delay: .35s;
   }
 
   &.pulse-2 {
     -webkit-animation-delay: .7s;
-    animation-delay: .7s;  
+    animation-delay: .7s;
   }
 
   &.pulse-3 {
     -webkit-animation-delay: 1.05s;
-    animation-delay: 1.05s;  
+    animation-delay: 1.05s;
   }
 }
 

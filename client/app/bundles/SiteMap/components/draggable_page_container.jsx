@@ -55,22 +55,20 @@ class DraggedPageContainer extends React.Component {
     const isDragging = this.props.isDragging;
     var _this = this;
     var children;
-    if (this.props.pageTree.children.filter(function(page) { return(page.state != 'archived') }) != null) {
-      children = this.props.pageTree.children.filter(function(page) { return(page.state != 'archived') }).map(function(pageTree, index) {
-        if(_this.props.level == 0) {
-          var sitemapNumber = (index + 1).toString() + '.0';
-        } else if(_this.props.level == 1) {
-          var sitemapNumber = parseInt(_this.props.sitemapNumber).toString() + '.' + (index + 1);
-        } else {
-          var sitemapNumber = _this.props.sitemapNumber + '.' + (index + 1)
-        }
-        return (
-          <div className='child-page' key={pageTree.id}>
-            <DraggablePageContainer pageTree={pageTree} onPageDrop={_this.props.onPageDrop} leftSidebarExpanded={_this.props.leftSidebarExpanded} onPageTypeDrop={_this.props.onPageTypeDrop} sitemapId={_this.props.sitemapId} sitemapNumber={sitemapNumber} publicShare={_this.props.publicShare} introSlideNumber={_this.props.introSlideNumber} setIntroSlideNumber={_this.props.setIntroSlideNumber} level={_this.props.level + 1}  isDragging={_this.props.isDragging} />
-          </div>
-        )
-      });
-    }
+    children = this.props.pageTree.children.filter(function(page) { return((page.state != 'archived') && ((page.section_id == _this.props.activeSectionId) || (page.alt_section_id == _this.props.activeSectionId))) }).map(function(pageTree, index) {
+      if(_this.props.level == 0) {
+        var sitemapNumber = (index + 1).toString() + '.0';
+      } else if(_this.props.level == 1) {
+        var sitemapNumber = parseInt(_this.props.sitemapNumber).toString() + '.' + (index + 1);
+      } else {
+        var sitemapNumber = _this.props.sitemapNumber + '.' + (index + 1)
+      }
+      return (
+        <div className='child-page' key={pageTree.id}>
+          <DraggablePageContainer pageTree={pageTree} onPageDrop={_this.props.onPageDrop} leftSidebarExpanded={_this.props.leftSidebarExpanded} onPageTypeDrop={_this.props.onPageTypeDrop} sitemapId={_this.props.sitemapId} sitemapNumber={sitemapNumber} publicShare={_this.props.publicShare} introSlideNumber={_this.props.introSlideNumber} setIntroSlideNumber={_this.props.setIntroSlideNumber} level={_this.props.level + 1}  isDragging={_this.props.isDragging} activeSectionId={_this.props.activeSectionId} />
+        </div>
+      )
+    });
     return connectDragSource(
       <div className={'page-container-wrapper' + (isDragging ? ' dragging' : '')} >
         <PageContainer pageTree={this.props.pageTree} children={children} sitemapNumber={this.props.sitemapNumber}  leftSidebarExpanded={this.props.leftSidebarExpanded} introSlideNumber={_this.props.introSlideNumber} setIntroSlideNumber={_this.props.setIntroSlideNumber} leftSidebarExpanded={_this.props.leftSidebarExpanded} publicShare={_this.props.publicShare} level={_this.props.level} isDragging={_this.props.isDragging} />

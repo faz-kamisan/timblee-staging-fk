@@ -10,7 +10,6 @@ class NewComment extends React.Component {
     addComment: PropTypes.func.isRequired,
     setSaving: PropTypes.func.isRequired,
     onCommentIdUpdate: PropTypes.func.isRequired,
-    setShowGuestInfoForm: PropTypes.func.isRequired,
     business: PropTypes.object.isRequired,
     currentUser: PropTypes.object
   };

@@ -26,7 +26,7 @@ en:
         failure: Couldn't update sitemap
         folder : "%{sitemap_name} successfully moved under %{folder_name}"
       destroy:
-        success: Sitemap destroyed successfully
+        success: Sitemap deleted permanently :(
         failure: Couldn't delete sitemap
       rename:
         success: Sitemap renamed successfully

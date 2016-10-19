@@ -6,7 +6,7 @@ import { findDOMNode } from 'react-dom';
 const sitemapTarget = {
   drop: function(props, monitor, component) {
     const item = monitor.getItem();
-    if (monitor.didDrop() || ((item.type == 'Page') && item.parentId == props.pageTree.id) || props.pageTree.footer) {
+    if (monitor.didDrop() || ((item.type == 'Page') && item.parentId == props.pageTree.id) || props.pageTree.footer || (props.pageTree.alt_section_id && (props.pageTree.alt_section_id != props.activeSectionId))) {
       return;
     }
     if(item.type == 'page') {
@@ -32,12 +32,12 @@ const sitemapTarget = {
         url: '/pages/',
         method: 'post',
         dataType: 'JSON',
-        data: { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: item.name, position: 1, section_id: props.pageTree.section_id } },
+        data: { page: { page_type_id: item.id, parent_id: props.pageTree.id, sitemap_id: props.sitemapId, name: item.name, position: 1, section_id: props.activeSectionId } },
         error: (result) => {
           document.setFlash(result.responseText)
         },
         success: (result) => {
-          props.onPageIdUpdate(timeStamp, props.pageTree.section_id, result.id)
+          props.onPageIdUpdate(timeStamp, props.activeSectionId, result.id)
         },
         complete: (result) => {
           props.setSaving(true)
@@ -46,7 +46,7 @@ const sitemapTarget = {
           }, 2000)
         }
       });
-      props.onPageTypeDrop(props.pageTree.section_id, item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
+      props.onPageTypeDrop(props.activeSectionId, item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
     }
   }
 };
@@ -73,14 +73,14 @@ class PageTileBottom extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.isOverCurrent && nextProps.isOverCurrent && !this.props.pageTree.footer) {
+    if (!this.props.isOverCurrent && nextProps.isOverCurrent && !this.props.pageTree.footer && !(this.props.pageTree.alt_section_id && (this.props.pageTree.alt_section_id != this.props.activeSectionId))) {
       var domNode = findDOMNode(this);
       $(domNode).addClass('drag-over' );
       $('.custom-drag-layer').addClass('over-page-bottom');
       $(domNode).parent('.page-tile').siblings('.gutter').addClass('again-2-drag-over');
     }
 
-    if (this.props.isOverCurrent && !nextProps.isOverCurrent && !this.props.pageTree.footer) {
+    if (this.props.isOverCurrent && !nextProps.isOverCurrent && !this.props.pageTree.footer && !(this.props.pageTree.alt_section_id && (this.props.pageTree.alt_section_id != this.props.activeSectionId))) {
       var domNode = findDOMNode(this);
       $(domNode).removeClass('drag-over');
       $('.custom-drag-layer').removeClass('over-page-bottom');

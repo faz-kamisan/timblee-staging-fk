@@ -83,9 +83,14 @@ class PublicHeader extends React.Component {
     var _this = this;
     return (
       <div className="react-public-header">
-        <div className="business-name">
-          <h3 className="site-map-name">{this.props.business.name}</h3>
-        </div>
+        { this.props.business.logo.logo.url ?
+          <div className="business-logo">
+            <img className="profile-image profile-image-lg" src={this.props.business.logo.logo.url} alt="Logo" />
+          </div> :
+          <div className="business-name">
+            <h3 className="site-map-name">{this.props.business.name}</h3>
+          </div>
+        }
         <div className="row">
           <div className="col-xs-8 col-xs-offset-2 text-center shared-details">
             <h1 className="truncate">{this.props.name}</h1>

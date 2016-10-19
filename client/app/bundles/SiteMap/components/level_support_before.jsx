@@ -6,7 +6,7 @@ import { findDOMNode } from 'react-dom';
 const sitemapTarget = {
   drop: function(props, monitor, component) {
     const item = monitor.getItem();
-    if (monitor.didDrop() || !(props.pageTree.id) || (props.pageTree.level == 1) || props.pageTree.footer) {
+    if (monitor.didDrop() || !(props.pageTree.id)  || props.pageTree.footer) {
       return;
     }
     if(item.type == 'page') {
@@ -14,7 +14,7 @@ const sitemapTarget = {
         url: '/pages/' + item.id,
         method: 'put',
         dataType: 'JSON',
-        data: { page: { parent_id: props.pageTree.parentId, position: (props.pageTree.position + 1) } },
+        data: { page: { parent_id: props.pageTree.parentId, position: (props.pageTree.position) } },
         error: (result) => {
           document.setFlash(result.responseText)
         },
@@ -25,14 +25,14 @@ const sitemapTarget = {
           }, 2000)
         }
       });
-      props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.parentId, props.pageTree.position);
+      props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.parentId, props.pageTree.position - 1);
     } else if(item.type == 'PageType') {
       var timeStamp = new Date();
       $.ajax({
         url: '/pages/',
         method: 'post',
         dataType: 'JSON',
-        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: (props.pageTree.position + 1), section_id: props.activeSectionId } },
+        data: { page: { page_type_id: item.id, parent_id: props.pageTree.parentId, sitemap_id: props.sitemapId, name: item.name, position: (props.pageTree.position), section_id: props.activeSectionId } },
         error: (result) => {
           document.setFlash(result.responseText)
         },
@@ -46,10 +46,11 @@ const sitemapTarget = {
           }, 2000)
         }
       });
-      props.onPageTypeDrop(props.activeSectionId, item, props.pageTree.parentId, props.pageTree.position, timeStamp, props.maxPageUid);
+      props.onPageTypeDrop(props.activeSectionId, item, props.pageTree.parentId, props.pageTree.position - 1, timeStamp, props.maxPageUid);
     }
   }
 };
+
 
 var DropTargetDecorator = DropTarget([ItemTypes.PAGE_CONTAINER, ItemTypes.PAGE_TYPE], sitemapTarget,
   function(connect, monitor) {
@@ -60,7 +61,7 @@ var DropTargetDecorator = DropTarget([ItemTypes.PAGE_CONTAINER, ItemTypes.PAGE_T
     };
 });
 
-class Gutter extends React.Component {
+class LevelSupportBefore extends React.Component {
   static propTypes = {
     onPageDrop: PropTypes.func.isRequired,
     onPageTypeDrop: PropTypes.func.isRequired,
@@ -82,20 +83,15 @@ class Gutter extends React.Component {
       var domNode = findDOMNode(this);
       $(domNode).removeClass('drag-over')
     }
-
-    if (this.props.isOverCurrent && !nextProps.isOverCurrent && !this.props.pageTree.footer) {
-      // You can be more specific and track enter/leave
-      // shallowly, not including nested targets
-    }
   }
 
   render() {
     const connectDropTarget = this.props.connectDropTarget
     return connectDropTarget(
-      <div className={"gutter " + ((this.props.pageTree.children.length > 0) ? 'with-children' : '') }></div>
+      <div className="level-support-before"></div>
     );
   }
 }
 
-var DroppableGutter = DropTargetDecorator(Gutter)
-export default DroppableGutter
+var DroppableLevelSupportBefore = DropTargetDecorator(LevelSupportBefore)
+export default DroppableLevelSupportBefore

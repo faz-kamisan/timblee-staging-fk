@@ -1,15 +1,15 @@
 import { connect } from 'react-redux'
-import { updatePagePosition, addNewPage, setMaxPageUid, changeUpdatedAt, updateId, setSaving } from '../actions'
-import DroppablePageTileBottom from '../components/page_tile_Bottom'
+import { updatePagePosition, changeUpdatedAt, addNewPage, setMaxPageUid, updateId, setSaving } from '../actions'
+import DroppableLevelSupportBefore from '../components/level_support_before'
 
 const mapStateToProps = (state) => {
-  return { sitemapId: state.id, maxPageUid: state.maxPageUid, trial: state.trial, activeSectionId: state.activeSectionId }
+  return { sitemapId: state.id, maxPageUid: state.maxPageUid, activeSectionId: state.activeSectionId }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onPageDrop: (id, sectionId, newParentId, position) => {
-      dispatch(updatePagePosition(id, sectionId,  newParentId, position));
+      dispatch(updatePagePosition(id,sectionId,  newParentId, position));
     },
     onPageTypeDrop: (sectionId, pageType, parentId, position, timeStamp, maxPageUid) => {
       dispatch(addNewPage(sectionId, pageType, parentId, position, timeStamp, maxPageUid + 1));
@@ -25,9 +25,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const ConnectedPageTileBottom = connect(
+const ConnectedLevelSupportBefore = connect(
   mapStateToProps,
   mapDispatchToProps
-)(DroppablePageTileBottom)
+)(DroppableLevelSupportBefore)
 
-export default ConnectedPageTileBottom
+export default ConnectedLevelSupportBefore
