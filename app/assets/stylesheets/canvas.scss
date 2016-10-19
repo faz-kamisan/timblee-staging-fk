@@ -3194,7 +3194,13 @@ body.trial {
     }
   }
   .page-tile {
-    .collapsible {
+    .collapse-open {
+      display: none;
+    }
+  }
+
+  .parent, .page-tile {
+    &:before, &:after {
       display: none;
     }
   }

@@ -48847,7 +48847,7 @@
 	              )
 	            )
 	          ),
-	          this.props.level > 0 && !this.props.pageTree.alt_section_id && _react2.default.createElement('div', { className: "collapse-open collapsible" + (this.props.collapsed ? ' collapse-close' : ''), onClick: this.handleOnCollapsedChanged })
+	          this.props.level > 0 && !this.props.pageTree.alt_section_id && _react2.default.createElement('div', { className: "collapse-open" + (this.props.collapsed ? ' collapse-close' : ''), onClick: this.handleOnCollapsedChanged })
 	        );
 	      } else {
 	        return _react2.default.createElement(
