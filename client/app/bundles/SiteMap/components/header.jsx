@@ -46,7 +46,9 @@ class Header extends React.Component {
     var _this = this;
     if(this.props.newSitemap) {
       this.handleNameInputFocus()
-      $(this.refs.sitemapNameInput).focus()
+      setTimeout(function() {
+        $(_this.refs.sitemapNameInput).focus()
+      }, 1000)
     }
     var reactOuterWrapper = $('#react-app-outer-wrapper')
     $('.react-header .icon-invite-female').data('url', reactOuterWrapper.data('url'))
