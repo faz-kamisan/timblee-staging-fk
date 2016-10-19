@@ -166,7 +166,7 @@
     position: absolute;
     left: 27px;
     bottom: 8px;
-    font-size: 9px;
+    font-size: 8px;
     color: #b7b6bc;
     display: block;
   }
@@ -183,8 +183,8 @@
 
   .tile-name-edit {
     padding-right: 70px;
-    padding-left: 22px;
-    font-size: 10px;
+    padding-left: 20px;
+    font-size: 12px;
     margin: 0;
     text-align: left;
     line-height: 12px;
@@ -194,11 +194,16 @@
     width: 100%;
     font-weight: 600;
     word-wrap: break-word;
+    > div {
+      max-height: 37px;
+      overflow: hidden;
+      padding-right: 5px;
+    }
     textarea {
       border: 0;
       border-radius: 0;
       resize: none;
-      font-size: 10px;
+      font-size: 12px;
       line-height: 12px;
       color: #262b30;
       padding: 0;
@@ -210,7 +215,7 @@
   .tile-top,
   .tile-bottom {
     padding-right: 0;
-    padding-left: 22px;
+    padding-left: 20px;
     height: 42px;
     text-align: left;
     position: relative;
@@ -1537,7 +1542,7 @@
   height: 80px;
   left: 0;
   width: 100%;
-  min-width: 1300px;
+  min-width: 1100px;
   padding: 20px 30px;
   transition: top .35s;
   -moz-transition: top .35s;
@@ -2179,6 +2184,9 @@ body.trial {
   .add, .cancel {
     color: $primaryGrey;
     @extend .font-14;
+    &:hover {
+      color: $primaryPink;
+    }
   }
   .or {
     padding: 0 2px;
@@ -2680,6 +2688,19 @@ body.trial {
       + li {
         margin-top: 43px;
       }
+      &:last-child {
+        position: relative;
+        &:before {
+          content: ' ';
+          position: absolute;
+          left: 17px;
+          top: 36px;
+          height: calc(100% - 36px);
+          background: $primaryWhite;
+          width: 2px;
+          z-index: 5;
+        }
+      }
     }
     li > div:before {
       background: $transparent;
@@ -2743,6 +2764,9 @@ body.trial {
     color: #6a717f;
     a {
       color: #6a717f;
+      &:hover {
+        color: $primaryPink;
+      }
     }
   }
 }
@@ -3782,5 +3806,6 @@ body.trial {
     display: inline-block;
     position: relative;
     top: 6px;
+    left: -1px;
   }
 }
