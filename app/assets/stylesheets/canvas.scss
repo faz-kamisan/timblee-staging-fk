@@ -2858,6 +2858,29 @@ body.trial {
     font-size: 12px;
     padding: 0 18px;
   }
+  .card-overlay {
+    a:hover {
+      .card-tooltip {
+        top: -41px;
+      }
+    }
+  }
+  
+  .second-item {
+    .tile-icons:hover {
+      .card-tooltip {
+        top: -41px
+      }
+    }
+  }
+
+  .card-tooltip {
+    top: -36px;
+    &:before {
+      top: 25px;
+      @include rotate(180deg);
+    }
+  }
 }
 
 #delete-page-modal {
