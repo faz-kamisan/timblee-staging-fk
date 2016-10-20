@@ -79,10 +79,10 @@ TagIt.prototype.add_errors = function() {
   var _this = this;
   if (_this.myTags.find('.valid-tag').length == 0 && _this.myTags.find('.invalid-tag').length != 0){
     _this.errorsDiv.show();
-    _this.errorsDiv.html('All email(s) you entered here are already present in our database.')
+    _this.errorsDiv.html('The emails highlighted in red are already linked to this, or another Timblee account. Please use alternative emails for these users.')
   } else if(_this.myTags.find('.invalid-tag').length != 0) {
     _this.errorsDiv.show();
-    _this.errorsDiv.html('Some email(s) you entered here are already present in our database.')
+    _this.errorsDiv.html('The emails highlighted in red are already linked to this, or another Timblee account. Please use alternative emails for these users.')
   } else {
     _this.errorsDiv.hide();
   }

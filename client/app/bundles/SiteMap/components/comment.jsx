@@ -28,10 +28,16 @@ class Comment extends React.Component {
 
   showEditor(e) {
     this.setState({editMode: true, editable: false})
+    if(this.props.commentableType == 'Page' && this.props.hideNewComment) {
+      this.props.hideNewComment();
+    }
   }
 
   closeEditor(e) {
     this.setState({editMode: false, editable: this.props.editable})
+    if(this.props.commentableType == 'Page' && this.props.showNewComment) {
+      this.props.showNewComment();
+    }
   }
 
   messageFormatter() {
