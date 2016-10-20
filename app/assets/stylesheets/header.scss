@@ -182,6 +182,9 @@
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.35);
   font-family: "proxima-nova",sans-serif!important;
   position: absolute;
+  .ui-widget {
+    font-family: "proxima-nova",sans-serif!important;
+  }
   .ui-widget-content {
     position: relative;
     background: transparent!important;
