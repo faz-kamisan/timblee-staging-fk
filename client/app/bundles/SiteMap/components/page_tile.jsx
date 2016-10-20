@@ -183,10 +183,15 @@ class PageTile extends React.Component {
 
   addFaded() {
     $(this.refs.pageTile).addClass('not-faded');
+    $(this.refs.pageTile).parents('.parent').addClass('not-faded');
+    $('.page-container').not($(this.refs.pageTile).parents('.page-container')).addClass('faded')
+    // $('.page-container.level-1').not($('.page-tile.not-faded').closest('.page-container.level-1')).addClass('faded')
   }
 
   removeFaded() {
     $(this.refs.pageTile).removeClass('not-faded');
+    $(this.refs.pageTile).parents('.parent').removeClass('not-faded');
+    $('.page-container').removeClass('faded');
   }
 
   handleOnCollapsedChanged(e) {
@@ -219,7 +224,7 @@ class PageTile extends React.Component {
       return (
         <div className={"page-tile " + (((this.props.level == 0) && (this.props.childrenLength % 2 == 0)) ? 'even-tree' : 'odd-tree') + (((this.props.level > 7) && (this.props.pageTree.alt_section_id)) ? " level-with-section" : "") } onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile'>
           { !this.props.isDragging && !this.props.publicShare &&
-            <div>
+            <div style={{zIndex: 100}}>
               <div className="right-button-div">
                 <div className='right-button' onClick={this.addSameLevelNextPage}>
                   <div className="collapse-open collapse-close"></div>
