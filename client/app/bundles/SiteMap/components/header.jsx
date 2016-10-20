@@ -156,11 +156,6 @@ class Header extends React.Component {
             </span>
           </div>
           <div className="col-xs-5">
-            <div className="pull-left">
-              <a href="#sitemap-share-modal" data-toggle="modal" className="btn btn-share" onClick={this.handleSitemapShareClick}>
-               <span className="share-icon"></span>   Share
-              </a>
-            </div>
             <div className="toggle-comments">
               <a href="javascript:void(0)" className={"btn-toggle-comments" + (this.state.commentSidebarOpen ? ' active' : '')} onClick={this.toggleCommentState}>
                 <span className="icon-comment"></span>
@@ -168,7 +163,7 @@ class Header extends React.Component {
                 <span>click to toggle</span>
               </a>
             </div>
-            <div className="pull-left users-block">
+            <div className="pull-right users-block">
               { this.props.currentUser.isAdmin &&
                 <span className="icon-invite-female user-invite cursor" data-remote={true}>
                   <span className="path1"></span>
@@ -191,6 +186,11 @@ class Header extends React.Component {
                   + { otherUsersLength } other
                 </a>
               }
+            </div>
+            <div className="pull-right share-sitemap-btn-div">
+              <a href="#sitemap-share-modal" data-toggle="modal" className="btn btn-share" onClick={this.handleSitemapShareClick}>
+               <span className="share-icon"></span> Share
+              </a>
             </div>
           </div>
         </div>

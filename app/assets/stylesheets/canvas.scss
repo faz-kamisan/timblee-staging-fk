@@ -1545,6 +1545,7 @@
     margin-left: 40px;
     top: 3px;
     position: relative;
+    padding-right: 225px;
     .users-list {
       display: inline-block;
       vertical-align: middle;
@@ -3097,6 +3098,7 @@ body.trial {
   position: absolute;
   right: 103px;
   cursor: pointer;
+  z-index: 1;
   span:not(.icon-comment) {
     display: block;
     text-transform: uppercase;

@@ -50,4 +50,12 @@ $(document).ready(function() {
   rename.each(function() {
     document.moveCaretToEnd(this);
   });
+
+  $('.twemoji-list span').each(function() {
+    var $this = $(this);
+    $this.on('click', function() {
+      $this.closest('.twemoji-wrap').find('.twemoji-icon-picker img').click();
+    });
+  });
 });
+
