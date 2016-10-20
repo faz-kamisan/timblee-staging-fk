@@ -736,22 +736,8 @@
 
 .page-container-wrapper {
   &.dragging {
-    display: none !important;
-  }
-}
-
-.child-page {
-  &.dragging {
-    display: none !important;
-  }
-}
-
-.parent-0 {
-  > .child-page {
-    &.dragging {
-      display: inline-block !important;
-      vertical-align: top;
-    }
+    opacity: 0.5;
+    pointer-events: none;
   }
 }
 
@@ -3242,6 +3228,17 @@ body.trial {
       border-style: solid;
       border-width: 11px 6px 0;
       border-color: $primaryPink transparent transparent transparent;
+    }
+  }
+  .page-tile {
+    .collapse-open {
+      display: none;
+    }
+  }
+
+  .parent, .page-tile {
+    &:before, &:after {
+      display: none;
     }
   }
 }

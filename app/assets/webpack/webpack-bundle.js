@@ -64959,7 +64959,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { style: styles, className: 'custom-drag-preview' },
-	        _react2.default.createElement(_page_container2.default, { pageTree: pageTree, children: children, level: this.props.level, sitemapNumber: this.props.sitemapNumber, isDragging: true, introSlideNumber: 0 })
+	        _react2.default.createElement(_page_container2.default, { pageTree: pageTree, children: [], level: this.props.level, sitemapNumber: this.props.sitemapNumber, isDragging: true, introSlideNumber: 0 })
 	      );
 	    }
 	  }]);
