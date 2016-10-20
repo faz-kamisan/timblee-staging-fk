@@ -618,9 +618,9 @@ ul.tagit input[type="text"] {
 
 #invite-user-modal, #sitemap-share-modal {
   .twemoji-picker {
-    width: 175px!important;
-    height: 140px;
-    right: -5px;
+    width: 215px!important;
+    height: 150px;
+    right: -45px;
     top: -33px;
     overflow: auto;
     overflow-x: hidden;
@@ -630,16 +630,19 @@ ul.tagit input[type="text"] {
   }
   .twemoji-picker-category {
     border-top: solid 1px #ececec!important;
+    height: 35px;
     span {
       display: inline-block!important;
       width: 20%!important;
       text-align: center;
+      height: 35px;
     }
     img {
-      height: 15px!important;
+      height: 18px!important;
       padding: 0!important;
-      width: 15px!important;
-      margin-top: 4px!important;
+      width: 18px!important;
+      vertical-align: middle;
+      margin-top: 6px!important;
     }
   }
   .twemoji-picker-category {
@@ -650,7 +653,7 @@ ul.tagit input[type="text"] {
     width: 100%;
   }
   .twemoji-list {
-    height: 114px!important;
+    height: 115px!important;
   }
   .twemoji-picker-category .active, .twemoji-picker-category span:hover {
     border: 0!important;
