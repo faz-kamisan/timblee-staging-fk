@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import enhanceWithClickOutside from 'react-click-outside';
 import ConnectedPageTileTop from '../containers/connected_page_tile_top';
 import ConnectedPageTileBottom from '../containers/connected_page_tile_bottom';
 
@@ -15,6 +16,7 @@ class PageTile extends React.Component {
 
   constructor(props) {
     super(props);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
     this.handleOnCollapsedChanged = this.handleOnCollapsedChanged.bind(this)
     this.mouseOver = this.mouseOver.bind(this)
     this.mouseOut = this.mouseOut.bind(this)
@@ -26,12 +28,17 @@ class PageTile extends React.Component {
     this.checkUserOrGuest = this.checkUserOrGuest.bind(this);
     this.showLinkedSection = this.showLinkedSection.bind(this);
     this.addSameLevelNextPage = this.addSameLevelNextPage.bind(this);
-    this.addSameLevelPrevPage = this.addSameLevelPrevPage.bind(this);
     this.addSubPage = this.addSubPage.bind(this);
     this.addFaded = this.addFaded.bind(this);
     this.removeFaded = this.removeFaded.bind(this);
     this.handeNameChange = this.handeNameChange.bind(this);
     this.state = { nameChangeDisabled: !props.pageTree.newRecord, hover: false, showOverLay: false, name: this.props.name, originalName: this.props.name, counter: 0 }
+  }
+
+  handleClickOutside() {
+    if(this.state.showOverLay) {
+      this.setState({ showOverLay: false });
+    }
   }
 
   enableNameChangeInput(e) {
@@ -108,33 +115,6 @@ class PageTile extends React.Component {
       }
     });
     this.props.onPageTypeDrop(this.props.activeSectionId, this.props.pageType, this.props.pageTree.parentId, (this.props.pageTree.position), timeStamp, this.props.maxPageUid);
-    this.removeFaded();
-  }
-
-  addSameLevelPrevPage(e) {
-    var timeStamp = new Date();
-    var _this = this;
-    $.ajax({
-      url: '/pages/',
-      method: 'post',
-      dataType: 'JSON',
-      data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.parentId, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: this.props.pageTree.position, section_id: this.props.activeSectionId } },
-      error: (result) => {
-        document.setFlash(result.responseText)
-      },
-      success: (result) => {
-        var onPageIdUpdate = _this.props.onPageIdUpdate
-        var pageTree = _this.props.pageTree
-        onPageIdUpdate(timeStamp, _this.props.activeSectionId, result.id)
-      },
-      complete: (result) => {
-        _this.props.setSaving(true)
-        setTimeout(function() {
-          _this.props.setSaving(false)
-        }, 2000)
-      }
-    });
-    this.props.onPageTypeDrop(this.props.activeSectionId, this.props.pageType, this.props.pageTree.parentId, (this.props.pageTree.position - 1), timeStamp, this.props.maxPageUid);
     this.removeFaded();
   }
 
@@ -422,4 +402,4 @@ class PageTile extends React.Component {
   }
 }
 
-export default PageTile
+export default enhanceWithClickOutside(PageTile)

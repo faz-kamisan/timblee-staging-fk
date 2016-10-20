@@ -28,6 +28,7 @@
     "expose-loader": "^0.7.1",
     "imports-loader": "^0.6.5",
     "react": "^0.14.8 || ^15.0.0",
+    "react-click-outside": "^2.2.0",
     "react-dnd": "^2.1.4",
     "react-dnd-html5-backend": "^2.1.2",
     "react-dom": "^0.14.8 || ^15.0.0",
