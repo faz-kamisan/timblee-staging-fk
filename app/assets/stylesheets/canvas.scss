@@ -507,6 +507,10 @@
       border-top-color: #24a35f;
     }
 
+    .tile-id {
+      left: 21px!important;
+    }
+
     .tile-name,
     .tile-name-edit {
       padding-right: 50px;
@@ -566,6 +570,10 @@
     .tile-name-edit {
       padding-left: 12px;
     }
+
+    .tile-id {
+      left: 14px!important;
+    } 
 
     .tile-right {
       display: none;
