@@ -21,7 +21,7 @@ class InductionSidebar extends React.Component {
             <li>
               <p>Click on the comments icon above to view grouped comments and to add general comments</p>
               <figure>
-                <img alt=" " src="/assets/share-intro-2.jpg"></img>
+                <img alt=" " src="/assets/share-intro-2.png"></img>
               </figure>
             </li>
             <li>

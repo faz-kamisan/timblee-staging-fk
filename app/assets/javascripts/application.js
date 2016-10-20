@@ -37,6 +37,7 @@
 //= require full_body
 //= require header
 //= require browsers
+//= require animate_shared_view
 
 $(window).on('load resize', function() {
   if($('.level-0').length) {
