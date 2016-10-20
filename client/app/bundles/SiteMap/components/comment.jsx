@@ -18,7 +18,7 @@ class Comment extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {editMode: false, editable: this.props.editable, message: this.props.message }
+    this.state = {editMode: (this.props.id == this.props.commentInEditionId), editable: this.props.editable, message: this.props.message }
     this.setSelectedComment = this.setSelectedComment.bind(this);
     this.showEditor = this.showEditor.bind(this);
     this.closeEditor = this.closeEditor.bind(this);
@@ -26,17 +26,30 @@ class Comment extends React.Component {
     this.messageFormatter = this.messageFormatter.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({editMode: (nextProps.id == nextProps.commentInEditionId)})
+  }
+
+  componentDidMount() {
+    var _this = this;
+    $('#page-comments-modal').on('shown.bs.modal', function () {
+      if(_this.state.editMode) {
+        _this.setState({editMode: false})
+      }
+    });
+  }
+
   showEditor(e) {
     this.setState({editMode: true, editable: false})
-    if(this.props.commentableType == 'Page' && this.props.hideNewComment) {
-      this.props.hideNewComment();
+    if(this.props.commentableType == 'Page' && this.props.setCommentInEditionId) {
+      this.props.setCommentInEditionId(this.props.id);
     }
   }
 
   closeEditor(e) {
     this.setState({editMode: false, editable: this.props.editable})
-    if(this.props.commentableType == 'Page' && this.props.showNewComment) {
-      this.props.showNewComment();
+    if(this.props.commentableType == 'Page' && this.props.setCommentInEditionId) {
+      this.props.setCommentInEditionId(null);
     }
   }
 

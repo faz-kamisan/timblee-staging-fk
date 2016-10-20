@@ -52339,31 +52339,46 @@
 	  function Comment(props) {
 	    _classCallCheck(this, Comment);
 	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Comment).call(this, props));
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Comment).call(this, props));
 	
-	    _this.state = { editMode: false, editable: _this.props.editable, message: _this.props.message };
-	    _this.setSelectedComment = _this.setSelectedComment.bind(_this);
-	    _this.showEditor = _this.showEditor.bind(_this);
-	    _this.closeEditor = _this.closeEditor.bind(_this);
-	    _this.editMessage = _this.editMessage.bind(_this);
-	    _this.messageFormatter = _this.messageFormatter.bind(_this);
-	    return _this;
+	    _this2.state = { editMode: _this2.props.id == _this2.props.commentInEditionId, editable: _this2.props.editable, message: _this2.props.message };
+	    _this2.setSelectedComment = _this2.setSelectedComment.bind(_this2);
+	    _this2.showEditor = _this2.showEditor.bind(_this2);
+	    _this2.closeEditor = _this2.closeEditor.bind(_this2);
+	    _this2.editMessage = _this2.editMessage.bind(_this2);
+	    _this2.messageFormatter = _this2.messageFormatter.bind(_this2);
+	    return _this2;
 	  }
 	
 	  _createClass(Comment, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      this.setState({ editMode: nextProps.id == nextProps.commentInEditionId });
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this = this;
+	      $('#page-comments-modal').on('shown.bs.modal', function () {
+	        if (_this.state.editMode) {
+	          _this.setState({ editMode: false });
+	        }
+	      });
+	    }
+	  }, {
 	    key: 'showEditor',
 	    value: function showEditor(e) {
 	      this.setState({ editMode: true, editable: false });
-	      if (this.props.commentableType == 'Page' && this.props.hideNewComment) {
-	        this.props.hideNewComment();
+	      if (this.props.commentableType == 'Page' && this.props.setCommentInEditionId) {
+	        this.props.setCommentInEditionId(this.props.id);
 	      }
 	    }
 	  }, {
 	    key: 'closeEditor',
 	    value: function closeEditor(e) {
 	      this.setState({ editMode: false, editable: this.props.editable });
-	      if (this.props.commentableType == 'Page' && this.props.showNewComment) {
-	        this.props.showNewComment();
+	      if (this.props.commentableType == 'Page' && this.props.setCommentInEditionId) {
+	        this.props.setCommentInEditionId(null);
 	      }
 	    }
 	  }, {
@@ -64313,21 +64328,25 @@
 	
 	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(PageCommentsModal).call(this, props));
 	
-	    _this2.state = { showNewComment: true };
-	    _this2.showNewComment = _this2.showNewComment.bind(_this2);
-	    _this2.hideNewComment = _this2.hideNewComment.bind(_this2);
+	    _this2.state = { commentInEditionId: null };
+	    _this2.setCommentInEditionId = _this2.setCommentInEditionId.bind(_this2);
 	    return _this2;
 	  }
 	
 	  _createClass(PageCommentsModal, [{
-	    key: 'showNewComment',
-	    value: function showNewComment() {
-	      this.setState({ showNewComment: true });
+	    key: 'setCommentInEditionId',
+	    value: function setCommentInEditionId(id) {
+	      this.setState({ commentInEditionId: id });
 	    }
 	  }, {
-	    key: 'hideNewComment',
-	    value: function hideNewComment() {
-	      this.setState({ showNewComment: false });
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this = this;
+	      $('#page-comments-modal').on('shown.bs.modal', function () {
+	        if (_this.state.commentInEditionId) {
+	          _this.setState({ commentInEditionId: null });
+	        }
+	      });
 	    }
 	  }, {
 	    key: 'render',
@@ -64338,7 +64357,7 @@
 	          return _react2.default.createElement(
 	            'li',
 	            { key: comment.id },
-	            _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: _this.props.pageTree.state == 'active', commentableId: _this.props.pageTree.id, commentableType: 'Page', sectionId: _this.props.pageTree.section_id, commentableName: _this.props.pageTree.name, modalView: true, footer: _this.props.pageTree.footer, showNewComment: _this.showNewComment, hideNewComment: _this.hideNewComment })
+	            _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: _this.props.pageTree.state == 'active', commentableId: _this.props.pageTree.id, commentableType: 'Page', sectionId: _this.props.pageTree.section_id, commentableName: _this.props.pageTree.name, modalView: true, footer: _this.props.pageTree.footer, setCommentInEditionId: _this.setCommentInEditionId, commentInEditionId: _this.state.commentInEditionId })
 	          );
 	        });
 	      }
@@ -64391,7 +64410,7 @@
 	                  { className: 'comment-group' },
 	                  this.props.pageTree && renderedPageComments
 	                ),
-	                this.props.pageTree.state == 'active' && this.state.showNewComment && _react2.default.createElement(_connected_new_comment2.default, { commentableId: this.props.pageTree.id, commentableType: 'Page', footer: this.props.pageTree.footer, sectionId: this.props.pageTree.section_id })
+	                this.props.pageTree.state == 'active' && !this.state.commentInEditionId && _react2.default.createElement(_connected_new_comment2.default, { commentableId: this.props.pageTree.id, commentableType: 'Page', footer: this.props.pageTree.footer, sectionId: this.props.pageTree.section_id })
 	              )
 	            )
 	          )

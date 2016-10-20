@@ -10,24 +10,28 @@ class PageCommentsModal extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { showNewComment: true }
-    this.showNewComment = this.showNewComment.bind(this);
-    this.hideNewComment = this.hideNewComment.bind(this);
+    this.state = { commentInEditionId: null }
+    this.setCommentInEditionId = this.setCommentInEditionId.bind(this);
   }
 
-  showNewComment() {
-    this.setState({showNewComment: true})
+  setCommentInEditionId(id) {
+    this.setState({commentInEditionId: id})
   }
 
-  hideNewComment() {
-    this.setState({showNewComment: false})
+  componentDidMount() {
+    var _this = this;
+    $('#page-comments-modal').on('shown.bs.modal', function () {
+      if(_this.state.commentInEditionId) {
+        _this.setState({commentInEditionId: null})
+      }
+    });
   }
 
   render() {
     var _this = this;
     if(this.props.pageTree.comments) {
       var renderedPageComments = this.props.pageTree.comments.map(function(comment, index) {
-        return <li key={comment.id}><ConnectedComment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} editable={(_this.props.pageTree.state == 'active')} commentableId={_this.props.pageTree.id} commentableType='Page' sectionId={_this.props.pageTree.section_id} commentableName={ _this.props.pageTree.name } modalView={true} footer={_this.props.pageTree.footer} showNewComment={_this.showNewComment} hideNewComment={_this.hideNewComment} /></li>
+        return <li key={comment.id}><ConnectedComment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} editable={(_this.props.pageTree.state == 'active')} commentableId={_this.props.pageTree.id} commentableType='Page' sectionId={_this.props.pageTree.section_id} commentableName={ _this.props.pageTree.name } modalView={true} footer={_this.props.pageTree.footer} setCommentInEditionId={_this.setCommentInEditionId} commentInEditionId={_this.state.commentInEditionId} /></li>
       })
     }
     return (
@@ -51,7 +55,7 @@ class PageCommentsModal extends React.Component {
                 <ul className="comment-group">
                   {this.props.pageTree && renderedPageComments}
                 </ul>
-                { (this.props.pageTree.state == 'active') && (this.state.showNewComment) &&
+                { (this.props.pageTree.state == 'active') && (!this.state.commentInEditionId) &&
                   <ConnectedNewComment commentableId={this.props.pageTree.id} commentableType='Page' footer={this.props.pageTree.footer} sectionId={this.props.pageTree.section_id} />
                 }
               </div>
