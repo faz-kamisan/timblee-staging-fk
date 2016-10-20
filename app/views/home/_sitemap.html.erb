@@ -18,7 +18,7 @@
             <h2 class="card-name edit-card-name">
 
               <%= form_for sitemap, url: sitemap_rename_path(sitemap), html: { remote: true, method: :patch } do |f| %>
-                <%= f.text_field :name, disabled: false, class: 'editable-input sitemap-rename-input', 'data-original-value' => f.object.name %>
+                <%= f.text_area :name, disabled: false, class: 'editable-input sitemap-rename-input', 'data-original-value' => f.object.name %>
               <% end %>
             </h2>
             <p class="updated">Last updated <%= pretty_time(sitemap.updated_at) %></p>
