@@ -1,3 +1,5 @@
+import deepcopy from 'deepcopy';
+
 function addPage(sections, sectionId, pageType, parentId, position, tempId, uid) {
   var sectionsCopy = Object.assign([], sections);
   var treeCopy = sectionsCopy.filter(function(section) { return(section.default) })[0].pageTree
@@ -99,7 +101,7 @@ function addPageComment(sections, id, sectionId, commenter, message, tempId) {
   var page = getNodeById(treeCopy, id)
   var newComment = { message: message, commenter: commenter, id: tempId, created_at: 'Just now', state: 'active' }
   page.comments.push(newComment)
-  return sectionsCopy
+  return deepcopy(sectionsCopy)
 }
 
 function updateCommentId(sections, oldId, newId, sectionId, pageId) {
@@ -108,7 +110,7 @@ function updateCommentId(sections, oldId, newId, sectionId, pageId) {
   var page = getNodeById(treeCopy, pageId)
   var comment = page.comments.filter(function(comment) { return comment.id == oldId })[0]
   comment.id = newId
-  return sectionsCopy
+  return deepcopy(sectionsCopy)
 }
 
 function updatePageComment(sections, id, message, sectionId, pageId) {
