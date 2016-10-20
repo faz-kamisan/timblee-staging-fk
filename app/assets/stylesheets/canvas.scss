@@ -1,6 +1,9 @@
 .not-faded {
-  z-index: 12;
-  &:hover {
+  &.parent {
+    z-index: 12;
+  }
+  &.page-tile {
+    z-index: 12;
     .right-button-div, .bottom-button-div {
       display: block;
     }
@@ -10,6 +13,12 @@
       visibility: visible!important;
     }
   }
+  &:hover {
+  }
+}
+
+.page-container.faded {
+  z-index: 1;
 }
 
 .page-container .page-tile {
@@ -2826,7 +2835,7 @@ body.trial {
   bottom: 0px;
   width: calc(100% - 372px);
   background: #f9fafc;
-  z-index: 11;
+  z-index: 12;
   text-align: center;
   left: 372px;
   padding: 22px 0 0 0;
@@ -2865,7 +2874,7 @@ body.trial {
       }
     }
   }
-  
+
   .second-item {
     .tile-icons:hover {
       .card-tooltip {

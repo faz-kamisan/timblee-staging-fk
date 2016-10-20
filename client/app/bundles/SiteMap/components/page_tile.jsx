@@ -185,7 +185,6 @@ class PageTile extends React.Component {
     $(this.refs.pageTile).addClass('not-faded');
     $(this.refs.pageTile).parents('.parent').addClass('not-faded');
     $('.page-container').not($(this.refs.pageTile).parents('.page-container')).addClass('faded')
-    // $('.page-container.level-1').not($('.page-tile.not-faded').closest('.page-container.level-1')).addClass('faded')
   }
 
   removeFaded() {

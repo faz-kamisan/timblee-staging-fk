@@ -22,7 +22,7 @@ class SectionsController < ApplicationController
   private
     def fetch_section
       unless @section = Section.find_by(id: params[:id])
-        render json: t('.not_found', scope: :flash) , status: 404
+        render json: t('sections.not_found', scope: :flash) , status: 404
       end
     end
 
