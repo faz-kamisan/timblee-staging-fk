@@ -1,8 +1,14 @@
 .not-faded {
   &.parent {
     z-index: 12;
+    &:before {
+      z-index: 0;
+    }
   }
   &.page-tile {
+    &:after {
+      z-index: 1;
+    }
     z-index: 12;
     .right-button-div, .bottom-button-div {
       display: block;

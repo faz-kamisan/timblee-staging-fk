@@ -55049,11 +55049,17 @@
 	    key: 'showEditor',
 	    value: function showEditor(e) {
 	      this.setState({ editMode: true, editable: false });
+	      if (this.props.commentableType == 'Page' && this.props.hideNewComment) {
+	        this.props.hideNewComment();
+	      }
 	    }
 	  }, {
 	    key: 'closeEditor',
 	    value: function closeEditor(e) {
 	      this.setState({ editMode: false, editable: this.props.editable });
+	      if (this.props.commentableType == 'Page' && this.props.showNewComment) {
+	        this.props.showNewComment();
+	      }
 	    }
 	  }, {
 	    key: 'messageFormatter',
@@ -69654,10 +69660,25 @@
 	  function PageCommentsModal(props) {
 	    _classCallCheck(this, PageCommentsModal);
 	
-	    return _possibleConstructorReturn(this, (PageCommentsModal.__proto__ || Object.getPrototypeOf(PageCommentsModal)).call(this, props));
+	    var _this2 = _possibleConstructorReturn(this, (PageCommentsModal.__proto__ || Object.getPrototypeOf(PageCommentsModal)).call(this, props));
+	
+	    _this2.state = { showNewComment: true };
+	    _this2.showNewComment = _this2.showNewComment.bind(_this2);
+	    _this2.hideNewComment = _this2.hideNewComment.bind(_this2);
+	    return _this2;
 	  }
 	
 	  _createClass(PageCommentsModal, [{
+	    key: 'showNewComment',
+	    value: function showNewComment() {
+	      this.setState({ showNewComment: true });
+	    }
+	  }, {
+	    key: 'hideNewComment',
+	    value: function hideNewComment() {
+	      this.setState({ showNewComment: false });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this = this;
@@ -69666,7 +69687,7 @@
 	          return _react2.default.createElement(
 	            'li',
 	            { key: comment.id },
-	            _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: _this.props.pageTree.state == 'active', commentableId: _this.props.pageTree.id, commentableType: 'Page', sectionId: _this.props.pageTree.section_id, commentableName: _this.props.pageTree.name, modalView: true, footer: _this.props.pageTree.footer })
+	            _react2.default.createElement(_connected_comment2.default, { id: comment.id, message: comment.message, commenter: comment.commenter, createdAt: comment.created_at, editable: _this.props.pageTree.state == 'active', commentableId: _this.props.pageTree.id, commentableType: 'Page', sectionId: _this.props.pageTree.section_id, commentableName: _this.props.pageTree.name, modalView: true, footer: _this.props.pageTree.footer, showNewComment: _this.showNewComment, hideNewComment: _this.hideNewComment })
 	          );
 	        });
 	      }
@@ -69719,7 +69740,7 @@
 	                  { className: 'comment-group' },
 	                  this.props.pageTree && renderedPageComments
 	                ),
-	                this.props.pageTree.state == 'active' && _react2.default.createElement(_connected_new_comment2.default, { commentableId: this.props.pageTree.id, commentableType: 'Page', footer: this.props.pageTree.footer, sectionId: this.props.pageTree.section_id })
+	                this.props.pageTree.state == 'active' && this.state.showNewComment && _react2.default.createElement(_connected_new_comment2.default, { commentableId: this.props.pageTree.id, commentableType: 'Page', footer: this.props.pageTree.footer, sectionId: this.props.pageTree.section_id })
 	              )
 	            )
 	          )
@@ -69893,7 +69914,7 @@
 	              _react2.default.createElement(
 	                'p',
 	                { className: 'modal-message' },
-	                'The page linked to section will still be present in main sitemap.'
+	                'Pages in this section will not be deleted but added back to the main sitemap. To delete any sub-pages, delete the parent page in the main sitemap.'
 	              )
 	            ),
 	            _react2.default.createElement(

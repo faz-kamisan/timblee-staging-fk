@@ -10,13 +10,24 @@ class PageCommentsModal extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = { showNewComment: true }
+    this.showNewComment = this.showNewComment.bind(this);
+    this.hideNewComment = this.hideNewComment.bind(this);
+  }
+
+  showNewComment() {
+    this.setState({showNewComment: true})
+  }
+
+  hideNewComment() {
+    this.setState({showNewComment: false})
   }
 
   render() {
     var _this = this;
     if(this.props.pageTree.comments) {
       var renderedPageComments = this.props.pageTree.comments.map(function(comment, index) {
-        return <li key={comment.id}><ConnectedComment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} editable={(_this.props.pageTree.state == 'active')} commentableId={_this.props.pageTree.id} commentableType='Page' sectionId={_this.props.pageTree.section_id} commentableName={ _this.props.pageTree.name } modalView={true} footer={_this.props.pageTree.footer} /></li>
+        return <li key={comment.id}><ConnectedComment id={comment.id} message={comment.message} commenter={comment.commenter} createdAt={comment.created_at} editable={(_this.props.pageTree.state == 'active')} commentableId={_this.props.pageTree.id} commentableType='Page' sectionId={_this.props.pageTree.section_id} commentableName={ _this.props.pageTree.name } modalView={true} footer={_this.props.pageTree.footer} showNewComment={_this.showNewComment} hideNewComment={_this.hideNewComment} /></li>
       })
     }
     return (
@@ -40,7 +51,7 @@ class PageCommentsModal extends React.Component {
                 <ul className="comment-group">
                   {this.props.pageTree && renderedPageComments}
                 </ul>
-                { (this.props.pageTree.state == 'active') &&
+                { (this.props.pageTree.state == 'active') && (this.state.showNewComment) &&
                   <ConnectedNewComment commentableId={this.props.pageTree.id} commentableType='Page' footer={this.props.pageTree.footer} sectionId={this.props.pageTree.section_id} />
                 }
               </div>
