@@ -44,3 +44,10 @@ $(window).on('load resize', function() {
     $('.intro-box-1').css('left', $('.level-0 > .page-tile').offset().left + 224);
   }
 });
+
+$(document).ready(function() {
+  var rename = $('.sitemap-rename-input');
+  rename.each(function() {
+    document.moveCaretToEnd(this);
+  });
+});
