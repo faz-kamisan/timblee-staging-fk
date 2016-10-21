@@ -6,7 +6,7 @@ import ConnectedHeader from '../containers/connected_header';
 import ConnectedPublicHeader from '../containers/connected_public_header';
 import ConnectedTrialHeader from '../containers/connected_trial_header'
 import InductionSidebar from './induction_sidebar';
-import ConnectedIntroductionScreens from '../containers/connected_introduction_screens';
+import ConnectedIntroductionScreenTwo from '../containers/connected_introduction_screen_two';
 import ConnectedGuestInfoFormModal from '../containers/connected_guest_info_form_modal';
 import ConnectedLeftSidebar from '../containers/connected_left_sidebar';
 import ConnectedRightSidebar from '../containers/connected_right_sidebar';
@@ -47,7 +47,7 @@ class SiteMap extends React.Component {
         }
         {
           this.props.publicShare &&
-          <ConnectedIntroductionScreens />
+          <ConnectedIntroductionScreenTwo />
         }
         <ConnectedSecionContainer sitemapNumber='' />
         <ConnectedFooter />

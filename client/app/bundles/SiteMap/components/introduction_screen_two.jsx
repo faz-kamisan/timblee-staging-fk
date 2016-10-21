@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
+import enhanceWithClickOutside from 'react-click-outside';
 
-class IntroductionScreens extends React.Component {
+class IntroductionScreensTwo extends React.Component {
   static propTypes = {
     introSlideNumber: PropTypes.number.isRequired
   };
@@ -9,6 +10,7 @@ class IntroductionScreens extends React.Component {
     super(props);
     this.setIntroSlideNumber = this.setIntroSlideNumber.bind(this);
     this.hideSecondScreenHandle = this.hideSecondScreenHandle.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
     this.state = { showSecondScreenHandle: true, showThirdScreenHandle: true }
   }
 
@@ -19,6 +21,12 @@ class IntroductionScreens extends React.Component {
 
   setIntroSlideNumber(number) {
     this.props.setIntroSlideNumber(number)
+  }
+
+  handleClickOutside() {
+    if(this.state.showSecondScreenHandle && this.props.introSlideNumber == 2) {
+      this.hideSecondScreenHandle()
+    }
   }
 
   render() {
@@ -44,4 +52,4 @@ class IntroductionScreens extends React.Component {
   }
 }
 
-export default IntroductionScreens;
+export default enhanceWithClickOutside(IntroductionScreensTwo);

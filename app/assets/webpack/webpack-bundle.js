@@ -42514,9 +42514,9 @@
 	
 	var _induction_sidebar2 = _interopRequireDefault(_induction_sidebar);
 	
-	var _connected_introduction_screens = __webpack_require__(/*! ../containers/connected_introduction_screens */ 812);
+	var _connected_introduction_screen_two = __webpack_require__(/*! ../containers/connected_introduction_screen_two */ 1051);
 	
-	var _connected_introduction_screens2 = _interopRequireDefault(_connected_introduction_screens);
+	var _connected_introduction_screen_two2 = _interopRequireDefault(_connected_introduction_screen_two);
 	
 	var _connected_guest_info_form_modal = __webpack_require__(/*! ../containers/connected_guest_info_form_modal */ 814);
 	
@@ -42600,7 +42600,7 @@
 	        !this.props.publicShare && _react2.default.createElement(_connected_left_sidebar2.default, null),
 	        this.props.publicShare && _react2.default.createElement(_induction_sidebar2.default, null),
 	        !this.props.trial && _react2.default.createElement(_connected_right_sidebar2.default, null),
-	        this.props.publicShare && _react2.default.createElement(_connected_introduction_screens2.default, null),
+	        this.props.publicShare && _react2.default.createElement(_connected_introduction_screen_two2.default, null),
 	        _react2.default.createElement(_connected_section_container2.default, { sitemapNumber: '' }),
 	        _react2.default.createElement(_connected_footer2.default, null),
 	        _react2.default.createElement(_custom_drag_layer2.default, null),
@@ -50608,6 +50608,10 @@
 	
 	var _connected_first_page_droppable2 = _interopRequireDefault(_connected_first_page_droppable);
 	
+	var _connected_introduction_screen_one = __webpack_require__(/*! ../containers/connected_introduction_screen_one */ 1052);
+	
+	var _connected_introduction_screen_one2 = _interopRequireDefault(_connected_introduction_screen_one);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -50619,29 +50623,13 @@
 	var PageContainer = function (_React$Component) {
 	  _inherits(PageContainer, _React$Component);
 	
-	  function PageContainer(props) {
+	  function PageContainer() {
 	    _classCallCheck(this, PageContainer);
 	
-	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(PageContainer).call(this, props));
-	
-	    _this2.setIntroSlideNumber = _this2.setIntroSlideNumber.bind(_this2);
-	    _this2.hideFirstScreenHandle = _this2.hideFirstScreenHandle.bind(_this2);
-	    _this2.state = { showFirstScreenHandle: true };
-	    return _this2;
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(PageContainer).apply(this, arguments));
 	  }
 	
 	  _createClass(PageContainer, [{
-	    key: 'hideFirstScreenHandle',
-	    value: function hideFirstScreenHandle(e) {
-	      this.setState({ showFirstScreenHandle: false });
-	      this.props.setIntroSlideNumber(0);
-	    }
-	  }, {
-	    key: 'setIntroSlideNumber',
-	    value: function setIntroSlideNumber(number) {
-	      this.props.setIntroSlideNumber(number);
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var children = this.props.pageTree.children.filter(function (page) {
@@ -50667,38 +50655,7 @@
 	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name, level: this.props.level, isDragging: this.props.isDragging }),
 	          _react2.default.createElement(_connected_gutter2.default, { pageTree: this.props.pageTree }),
 	          children.length == 0 && _react2.default.createElement(_connected_first_page_droppable2.default, { pageTree: this.props.pageTree, leftSidebarExpanded: this.props.leftSidebarExpanded }),
-	          this.props.publicShare && _react2.default.createElement(
-	            'div',
-	            { className: 'intro-box-1' },
-	            _react2.default.createElement(
-	              'span',
-	              { className: "hotspot " + (this.state.showFirstScreenHandle ? '' : 'hide'), onClick: function onClick(e) {
-	                  _this.setIntroSlideNumber(1);
-	                } },
-	              _react2.default.createElement('span', { className: 'pulse pulse-1' }),
-	              _react2.default.createElement('span', { className: 'pulse pulse-2' }),
-	              _react2.default.createElement('span', { className: 'pulse pulse-3' })
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: "intro-box share-1" + (this.props.introSlideNumber == 1 ? '' : ' hide') },
-	              _react2.default.createElement(
-	                'figure',
-	                null,
-	                _react2.default.createElement('img', { alt: ' ', src: '/assets/share-intro-1.jpg' })
-	              ),
-	              _react2.default.createElement(
-	                'p',
-	                null,
-	                'Click on an individual page to add comments to that page'
-	              ),
-	              _react2.default.createElement(
-	                'a',
-	                { href: 'javascript:void(0);', onClick: this.hideFirstScreenHandle },
-	                'Got it'
-	              )
-	            )
-	          ),
+	          this.props.publicShare && _react2.default.createElement(_connected_introduction_screen_one2.default, null),
 	          _react2.default.createElement(_connected_level_support2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement(
 	            'div',
@@ -50730,8 +50687,7 @@
 	PageContainer.propTypes = {
 	  pageTree: _react.PropTypes.object.isRequired,
 	  sitemapNumber: _react.PropTypes.string.isRequired,
-	  children: _react.PropTypes.array.isRequired,
-	  introSlideNumber: _react.PropTypes.number.isRequired
+	  children: _react.PropTypes.array.isRequired
 	};
 	exports.default = PageContainer;
 
@@ -53393,6 +53349,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _trial_intro_screen = __webpack_require__(/*! ./trial_intro_screen */ 1054);
+	
+	var _trial_intro_screen2 = _interopRequireDefault(_trial_intro_screen);
+	
 	var _tree_helper = __webpack_require__(/*! ../helpers/tree_helper */ 609);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -53406,28 +53366,13 @@
 	var TrialHeader = function (_React$Component) {
 	  _inherits(TrialHeader, _React$Component);
 	
-	  function TrialHeader(props) {
+	  function TrialHeader() {
 	    _classCallCheck(this, TrialHeader);
 	
-	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(TrialHeader).call(this, props));
-	
-	    _this2.state = { showDemo: false, showDemoHandle: true };
-	    _this2.hideDemo = _this2.hideDemo.bind(_this2);
-	    _this2.showDemo = _this2.showDemo.bind(_this2);
-	    return _this2;
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(TrialHeader).apply(this, arguments));
 	  }
 	
 	  _createClass(TrialHeader, [{
-	    key: 'hideDemo',
-	    value: function hideDemo() {
-	      this.setState({ showDemo: false, showDemoHandle: false });
-	    }
-	  }, {
-	    key: 'showDemo',
-	    value: function showDemo() {
-	      this.setState({ showDemo: true });
-	    }
-	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var remainingTime = 15 * 60 * 1000 - (new Date() - new Date(this.props.createdAt));
@@ -53461,36 +53406,7 @@
 	            'Create my free account'
 	          )
 	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: "intro-box-trial " + (this.state.showDemo ? '' : 'hide-demo') },
-	          this.state.showDemoHandle && _react2.default.createElement(
-	            'span',
-	            { className: 'hotspot', onClick: this.showDemo },
-	            _react2.default.createElement('span', { className: 'pulse pulse-1' }),
-	            _react2.default.createElement('span', { className: 'pulse pulse-2' }),
-	            _react2.default.createElement('span', { className: 'pulse pulse-3' })
-	          ),
-	          this.state.showDemo && _react2.default.createElement(
-	            'div',
-	            { className: 'intro-box' },
-	            _react2.default.createElement(
-	              'figure',
-	              null,
-	              _react2.default.createElement('img', { alt: ' ', src: '/assets/Intro1.png' })
-	            ),
-	            _react2.default.createElement(
-	              'p',
-	              null,
-	              'Drag and drop page tiles to build your sitemap fast.'
-	            ),
-	            _react2.default.createElement(
-	              'a',
-	              { href: 'javascript:void(0);', onClick: this.hideDemo },
-	              'Got it'
-	            )
-	          )
-	        )
+	        _react2.default.createElement(_trial_intro_screen2.default, null)
 	      );
 	    }
 	  }]);
@@ -53498,7 +53414,6 @@
 	  return TrialHeader;
 	}(_react2.default.Component);
 	
-	TrialHeader.propTypes = {};
 	exports.default = TrialHeader;
 
 /***/ },
@@ -53611,148 +53526,8 @@
 	exports.default = InductionSidebar;
 
 /***/ },
-/* 812 */
-/*!***************************************************************************!*\
-  !*** ./app/bundles/SiteMap/containers/connected_introduction_screens.jsx ***!
-  \***************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
-	
-	var _actions = __webpack_require__(/*! ../actions */ 606);
-	
-	var _introduction_screens = __webpack_require__(/*! ../components/introduction_screens */ 813);
-	
-	var _introduction_screens2 = _interopRequireDefault(_introduction_screens);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var mapStateToProps = function mapStateToProps(state) {
-	  return { introSlideNumber: state.introSlideNumber };
-	};
-	
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {
-	    setIntroSlideNumber: function setIntroSlideNumber(introSlideNumber) {
-	      dispatch((0, _actions.setIntroSlideNumber)(introSlideNumber));
-	    }
-	  };
-	};
-	
-	var ConnectedIntroductionScreens = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_introduction_screens2.default);
-	
-	exports.default = ConnectedIntroductionScreens;
-
-/***/ },
-/* 813 */
-/*!*****************************************************************!*\
-  !*** ./app/bundles/SiteMap/components/introduction_screens.jsx ***!
-  \*****************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 301);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var IntroductionScreens = function (_React$Component) {
-	  _inherits(IntroductionScreens, _React$Component);
-	
-	  function IntroductionScreens(props) {
-	    _classCallCheck(this, IntroductionScreens);
-	
-	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(IntroductionScreens).call(this, props));
-	
-	    _this2.setIntroSlideNumber = _this2.setIntroSlideNumber.bind(_this2);
-	    _this2.hideSecondScreenHandle = _this2.hideSecondScreenHandle.bind(_this2);
-	    _this2.state = { showSecondScreenHandle: true, showThirdScreenHandle: true };
-	    return _this2;
-	  }
-	
-	  _createClass(IntroductionScreens, [{
-	    key: "hideSecondScreenHandle",
-	    value: function hideSecondScreenHandle(e) {
-	      this.setState({ showSecondScreenHandle: false });
-	      this.props.setIntroSlideNumber(0);
-	    }
-	  }, {
-	    key: "setIntroSlideNumber",
-	    value: function setIntroSlideNumber(number) {
-	      this.props.setIntroSlideNumber(number);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      var _this = this;
-	      return _react2.default.createElement(
-	        "div",
-	        { className: "public-intro" },
-	        _react2.default.createElement(
-	          "div",
-	          { className: "intro-box-2" },
-	          _react2.default.createElement(
-	            "span",
-	            { className: "hotspot " + (this.state.showSecondScreenHandle ? '' : 'hide'), onClick: function onClick(e) {
-	                _this.setIntroSlideNumber(2);
-	              } },
-	            _react2.default.createElement("span", { className: "pulse pulse-1" }),
-	            _react2.default.createElement("span", { className: "pulse pulse-2" }),
-	            _react2.default.createElement("span", { className: "pulse pulse-3" })
-	          ),
-	          _react2.default.createElement(
-	            "div",
-	            { className: "intro-box share-2" + (this.props.introSlideNumber == 2 ? '' : ' hide') },
-	            _react2.default.createElement(
-	              "figure",
-	              null,
-	              _react2.default.createElement("img", { alt: " ", src: "/assets/share-intro-3.jpg" })
-	            ),
-	            _react2.default.createElement(
-	              "p",
-	              null,
-	              "Click on the comments icon above to view grouped comments and to add general comments"
-	            ),
-	            _react2.default.createElement(
-	              "a",
-	              { href: "javascript:void(0);", onClick: this.hideSecondScreenHandle },
-	              "Got it"
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return IntroductionScreens;
-	}(_react2.default.Component);
-	
-	IntroductionScreens.propTypes = {
-	  introSlideNumber: _react.PropTypes.number.isRequired
-	};
-	exports.default = IntroductionScreens;
-
-/***/ },
+/* 812 */,
+/* 813 */,
 /* 814 */
 /*!****************************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_guest_info_form_modal.jsx ***!
@@ -67454,6 +67229,417 @@
 	  iconName: _react.PropTypes.string.isRequired
 	};
 	exports.default = PageTypePreview;
+
+/***/ },
+/* 1050 */
+/*!********************************************************************!*\
+  !*** ./app/bundles/SiteMap/components/introduction_screen_two.jsx ***!
+  \********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 301);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactClickOutside = __webpack_require__(/*! react-click-outside */ 791);
+	
+	var _reactClickOutside2 = _interopRequireDefault(_reactClickOutside);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var IntroductionScreensTwo = function (_React$Component) {
+	  _inherits(IntroductionScreensTwo, _React$Component);
+	
+	  function IntroductionScreensTwo(props) {
+	    _classCallCheck(this, IntroductionScreensTwo);
+	
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(IntroductionScreensTwo).call(this, props));
+	
+	    _this2.setIntroSlideNumber = _this2.setIntroSlideNumber.bind(_this2);
+	    _this2.hideSecondScreenHandle = _this2.hideSecondScreenHandle.bind(_this2);
+	    _this2.handleClickOutside = _this2.handleClickOutside.bind(_this2);
+	    _this2.state = { showSecondScreenHandle: true, showThirdScreenHandle: true };
+	    return _this2;
+	  }
+	
+	  _createClass(IntroductionScreensTwo, [{
+	    key: 'hideSecondScreenHandle',
+	    value: function hideSecondScreenHandle(e) {
+	      this.setState({ showSecondScreenHandle: false });
+	      this.props.setIntroSlideNumber(0);
+	    }
+	  }, {
+	    key: 'setIntroSlideNumber',
+	    value: function setIntroSlideNumber(number) {
+	      this.props.setIntroSlideNumber(number);
+	    }
+	  }, {
+	    key: 'handleClickOutside',
+	    value: function handleClickOutside() {
+	      if (this.state.showSecondScreenHandle && this.props.introSlideNumber == 2) {
+	        this.hideSecondScreenHandle();
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this = this;
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'public-intro' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'intro-box-2' },
+	          _react2.default.createElement(
+	            'span',
+	            { className: "hotspot " + (this.state.showSecondScreenHandle ? '' : 'hide'), onClick: function onClick(e) {
+	                _this.setIntroSlideNumber(2);
+	              } },
+	            _react2.default.createElement('span', { className: 'pulse pulse-1' }),
+	            _react2.default.createElement('span', { className: 'pulse pulse-2' }),
+	            _react2.default.createElement('span', { className: 'pulse pulse-3' })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: "intro-box share-2" + (this.props.introSlideNumber == 2 ? '' : ' hide') },
+	            _react2.default.createElement(
+	              'figure',
+	              null,
+	              _react2.default.createElement('img', { alt: ' ', src: '/assets/share-intro-3.jpg' })
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              'Click on the comments icon above to view grouped comments and to add general comments'
+	            ),
+	            _react2.default.createElement(
+	              'a',
+	              { href: 'javascript:void(0);', onClick: this.hideSecondScreenHandle },
+	              'Got it'
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return IntroductionScreensTwo;
+	}(_react2.default.Component);
+	
+	IntroductionScreensTwo.propTypes = {
+	  introSlideNumber: _react.PropTypes.number.isRequired
+	};
+	exports.default = (0, _reactClickOutside2.default)(IntroductionScreensTwo);
+
+/***/ },
+/* 1051 */
+/*!******************************************************************************!*\
+  !*** ./app/bundles/SiteMap/containers/connected_introduction_screen_two.jsx ***!
+  \******************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
+	
+	var _actions = __webpack_require__(/*! ../actions */ 606);
+	
+	var _introduction_screen_two = __webpack_require__(/*! ../components/introduction_screen_two */ 1050);
+	
+	var _introduction_screen_two2 = _interopRequireDefault(_introduction_screen_two);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return { introSlideNumber: state.introSlideNumber };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    setIntroSlideNumber: function setIntroSlideNumber(introSlideNumber) {
+	      dispatch((0, _actions.setIntroSlideNumber)(introSlideNumber));
+	    }
+	  };
+	};
+	
+	var ConnectedIntroductionScreenTwo = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_introduction_screen_two2.default);
+	
+	exports.default = ConnectedIntroductionScreenTwo;
+
+/***/ },
+/* 1052 */
+/*!******************************************************************************!*\
+  !*** ./app/bundles/SiteMap/containers/connected_introduction_screen_one.jsx ***!
+  \******************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
+	
+	var _actions = __webpack_require__(/*! ../actions */ 606);
+	
+	var _introduction_screen_one = __webpack_require__(/*! ../components/introduction_screen_one */ 1053);
+	
+	var _introduction_screen_one2 = _interopRequireDefault(_introduction_screen_one);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return { introSlideNumber: state.introSlideNumber };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    setIntroSlideNumber: function setIntroSlideNumber(introSlideNumber) {
+	      dispatch((0, _actions.setIntroSlideNumber)(introSlideNumber));
+	    }
+	  };
+	};
+	
+	var ConnectedIntroductionScreenOne = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_introduction_screen_one2.default);
+	
+	exports.default = ConnectedIntroductionScreenOne;
+
+/***/ },
+/* 1053 */
+/*!********************************************************************!*\
+  !*** ./app/bundles/SiteMap/components/introduction_screen_one.jsx ***!
+  \********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 301);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactClickOutside = __webpack_require__(/*! react-click-outside */ 791);
+	
+	var _reactClickOutside2 = _interopRequireDefault(_reactClickOutside);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var IntroductionScreensOne = function (_React$Component) {
+	  _inherits(IntroductionScreensOne, _React$Component);
+	
+	  function IntroductionScreensOne(props) {
+	    _classCallCheck(this, IntroductionScreensOne);
+	
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(IntroductionScreensOne).call(this, props));
+	
+	    _this2.setIntroSlideNumber = _this2.setIntroSlideNumber.bind(_this2);
+	    _this2.hideFirstScreenHandle = _this2.hideFirstScreenHandle.bind(_this2);
+	    _this2.handleClickOutside = _this2.handleClickOutside.bind(_this2);
+	    _this2.state = { showFirstScreenHandle: true };
+	    return _this2;
+	  }
+	
+	  _createClass(IntroductionScreensOne, [{
+	    key: 'hideFirstScreenHandle',
+	    value: function hideFirstScreenHandle(e) {
+	      this.setState({ showFirstScreenHandle: false });
+	      this.props.setIntroSlideNumber(0);
+	    }
+	  }, {
+	    key: 'setIntroSlideNumber',
+	    value: function setIntroSlideNumber(number) {
+	      this.props.setIntroSlideNumber(number);
+	    }
+	  }, {
+	    key: 'handleClickOutside',
+	    value: function handleClickOutside() {
+	      if (this.state.showFirstScreenHandle && this.props.introSlideNumber == 1) {
+	        this.hideFirstScreenHandle();
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this = this;
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'intro-box-1' },
+	        _react2.default.createElement(
+	          'span',
+	          { className: "hotspot " + (this.state.showFirstScreenHandle ? '' : 'hide'), onClick: function onClick(e) {
+	              _this.setIntroSlideNumber(1);
+	            } },
+	          _react2.default.createElement('span', { className: 'pulse pulse-1' }),
+	          _react2.default.createElement('span', { className: 'pulse pulse-2' }),
+	          _react2.default.createElement('span', { className: 'pulse pulse-3' })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: "intro-box share-1" + (this.props.introSlideNumber == 1 ? '' : ' hide') },
+	          _react2.default.createElement(
+	            'figure',
+	            null,
+	            _react2.default.createElement('img', { alt: ' ', src: '/assets/share-intro-1.jpg' })
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Click on an individual page to add comments to that page'
+	          ),
+	          _react2.default.createElement(
+	            'a',
+	            { href: 'javascript:void(0);', onClick: this.hideFirstScreenHandle },
+	            'Got it'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return IntroductionScreensOne;
+	}(_react2.default.Component);
+	
+	IntroductionScreensOne.propTypes = {
+	  introSlideNumber: _react.PropTypes.number.isRequired
+	};
+	exports.default = (0, _reactClickOutside2.default)(IntroductionScreensOne);
+
+/***/ },
+/* 1054 */
+/*!***************************************************************!*\
+  !*** ./app/bundles/SiteMap/components/trial_intro_screen.jsx ***!
+  \***************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 301);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactClickOutside = __webpack_require__(/*! react-click-outside */ 791);
+	
+	var _reactClickOutside2 = _interopRequireDefault(_reactClickOutside);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TrialIntroScreen = function (_React$Component) {
+	  _inherits(TrialIntroScreen, _React$Component);
+	
+	  function TrialIntroScreen(props) {
+	    _classCallCheck(this, TrialIntroScreen);
+	
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(TrialIntroScreen).call(this, props));
+	
+	    _this2.state = { showDemo: false, showDemoHandle: true };
+	    _this2.hideDemo = _this2.hideDemo.bind(_this2);
+	    _this2.showDemo = _this2.showDemo.bind(_this2);
+	    return _this2;
+	  }
+	
+	  _createClass(TrialIntroScreen, [{
+	    key: 'hideDemo',
+	    value: function hideDemo() {
+	      this.setState({ showDemo: false, showDemoHandle: false });
+	    }
+	  }, {
+	    key: 'showDemo',
+	    value: function showDemo() {
+	      this.setState({ showDemo: true });
+	    }
+	  }, {
+	    key: 'handleClickOutside',
+	    value: function handleClickOutside() {
+	      if (this.state.showDemo) {
+	        this.hideDemo();
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this = this;
+	      return _react2.default.createElement(
+	        'div',
+	        { className: "intro-box-trial " + (this.state.showDemo ? '' : 'hide-demo') },
+	        this.state.showDemoHandle && _react2.default.createElement(
+	          'span',
+	          { className: 'hotspot', onClick: this.showDemo },
+	          _react2.default.createElement('span', { className: 'pulse pulse-1' }),
+	          _react2.default.createElement('span', { className: 'pulse pulse-2' }),
+	          _react2.default.createElement('span', { className: 'pulse pulse-3' })
+	        ),
+	        this.state.showDemo && _react2.default.createElement(
+	          'div',
+	          { className: 'intro-box' },
+	          _react2.default.createElement(
+	            'figure',
+	            null,
+	            _react2.default.createElement('img', { alt: ' ', src: '/assets/Intro1.png' })
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Drag and drop page tiles to build your sitemap fast.'
+	          ),
+	          _react2.default.createElement(
+	            'a',
+	            { href: 'javascript:void(0);', onClick: this.hideDemo },
+	            'Got it'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return TrialIntroScreen;
+	}(_react2.default.Component);
+	
+	TrialIntroScreen.propTypes = {
+	  introSlideNumber: _react.PropTypes.number.isRequired
+	};
+	exports.default = (0, _reactClickOutside2.default)(TrialIntroScreen);
 
 /***/ }
 /******/ ]);

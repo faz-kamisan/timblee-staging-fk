@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { setSaving, setSelectedSection, setIntroSlideNumber, changeUpdatedAt } from '../actions'
-import IntroductionScreens from '../components/introduction_screens'
+import IntroductionScreenTwo from '../components/introduction_screen_two'
 
 const mapStateToProps = (state) => {
   return { introSlideNumber: state.introSlideNumber }
@@ -14,9 +14,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const ConnectedIntroductionScreens = connect(
+const ConnectedIntroductionScreenTwo = connect(
   mapStateToProps,
   mapDispatchToProps
-)(IntroductionScreens)
+)(IntroductionScreenTwo)
 
-export default ConnectedIntroductionScreens
+export default ConnectedIntroductionScreenTwo

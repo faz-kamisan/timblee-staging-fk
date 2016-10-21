@@ -4,30 +4,14 @@ import ConnectedLevelSupport from '../containers/connected_level_support'
 import ConnectedLevelSupportBefore from '../containers/connected_level_support_before'
 import ConnectedGutter from '../containers/connected_gutter'
 import ConnectedFirstPageDroppable from '../containers/connected_first_page_droppable'
+import ConnectedIntroductionScreenOne from '../containers/connected_introduction_screen_one';
 
 class PageContainer extends React.Component {
   static propTypes = {
     pageTree: PropTypes.object.isRequired,
     sitemapNumber: PropTypes.string.isRequired,
     children: PropTypes.array.isRequired,
-    introSlideNumber: PropTypes.number.isRequired
   };
-
-  constructor(props) {
-    super(props);
-    this.setIntroSlideNumber = this.setIntroSlideNumber.bind(this)
-    this.hideFirstScreenHandle = this.hideFirstScreenHandle.bind(this);
-    this.state = { showFirstScreenHandle: true }
-  }
-
-  hideFirstScreenHandle(e) {
-    this.setState({ showFirstScreenHandle: false })
-    this.props.setIntroSlideNumber(0)
-  }
-
-  setIntroSlideNumber(number) {
-    this.props.setIntroSlideNumber(number)
-  }
 
   render() {
     var children = this.props.pageTree.children.filter(function(page) { return(page.state != 'archived') })
@@ -55,20 +39,7 @@ class PageContainer extends React.Component {
             <ConnectedFirstPageDroppable pageTree={this.props.pageTree} leftSidebarExpanded={this.props.leftSidebarExpanded} />
           }
           { this.props.publicShare &&
-            <div className="intro-box-1">
-              <span className={ "hotspot " + (this.state.showFirstScreenHandle ? '' : 'hide')} onClick={function(e) { _this.setIntroSlideNumber(1) } }>
-                <span className="pulse pulse-1"></span>
-                <span className="pulse pulse-2"></span>
-                <span className="pulse pulse-3"></span>
-              </span>
-              <div className={"intro-box share-1" + (this.props.introSlideNumber == 1 ? '' : ' hide')}>
-                <figure>
-                  <img alt=" " src="/assets/share-intro-1.jpg"></img>
-                </figure>
-                <p>Click on an individual page to add comments to that page</p>
-                <a href="javascript:void(0);" onClick={this.hideFirstScreenHandle}>Got it</a>
-              </div>
-            </div>
+            <ConnectedIntroductionScreenOne />
           }
           <ConnectedLevelSupport pageTree={this.props.pageTree} />
           <div className={ 'parent parent-' + this.props.level.toString() + (this.props.pageTree.collapsed ? ' hide' : '')}>
