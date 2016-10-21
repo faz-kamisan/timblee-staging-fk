@@ -38,8 +38,8 @@ class NewComment extends React.Component {
   handleAddComment(e) {
     if(this.state.newCommentMessage.trim().length > 0) {
       var _this = this;
-      var timeStamp = new Date();
-      this.props.addComment(this.props.commentableId, this.props.commentableType, _this.props.footer, this.state.newCommentMessage, (this.props.currentUser || this.props.currentGuest), this.props.sectionId, timeStamp)
+      var timeStamp = new Date().getTime();
+      this.props.addComment(this.props.commentableId, this.props.commentableType, _this.props.footer, this.state.newCommentMessage, (this.props.currentUser || this.props.currentGuest), this.props.sectionId, timeStamp, this.props.sections, this.props.selectedPage)
       $.ajax({
         url: '/comments/',
         method: 'post',

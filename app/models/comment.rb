@@ -10,7 +10,7 @@ class Comment < ActiveRecord::Base
   after_update :update_comment_notification, if: Proc.new { |c| c.message_changed? }
 
   def to_react_data
-    { id: id, message: message, created_at: created_at_decorated, commenter: { fullName: commenter.full_name, email: commenter.email } }
+    { id: id, message: message, created_at: created_at_decorated, commenter: { fullName: commenter.full_name, email: commenter.email, avatar: (commenter_type == 'User' ? commenter.avatar : nil) } }
   end
 
   def sitemap

@@ -78,10 +78,11 @@ class Comment extends React.Component {
   }
 
   render() {
+    var commenterImageUrl = this.props.commenter.avatar ? this.props.commenter.avatar.avatar.url : '/assets/guest-icon.svg'
     if((this.props.currentUser && (this.props.commenter.email == this.props.currentUser.email)) || (this.props.currentGuest && (this.props.commenter.email == this.props.currentGuest.email))) {
       return (
         <div className='comment-block'>
-          <img className="user-comment-image" src='/assets/avatar_10.svg' />
+          <img className="user-comment-image" src={commenterImageUrl} />
           <h4>
             You
             { this.state.editable &&
@@ -105,7 +106,7 @@ class Comment extends React.Component {
     } else {
       return (
         <div className='comment-block'>
-          <img className="user-comment-image" src='/assets/avatar_10.svg' />
+          <img className="user-comment-image" src={commenterImageUrl} />
           <h4>
             {this.props.commenter.fullName}
           </h4>
