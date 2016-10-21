@@ -42458,7 +42458,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { publicShare: state.publicShare, trial: state.trial, sitemapId: state.id, currentUser: state.currentUser };
+	  return { publicShare: state.publicShare, trial: state.trial, sitemapId: state.id, currentUser: state.currentUser, leftSidebarExpanded: state.leftSidebarExpanded };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -42601,7 +42601,11 @@
 	        this.props.publicShare && _react2.default.createElement(_induction_sidebar2.default, null),
 	        !this.props.trial && _react2.default.createElement(_connected_right_sidebar2.default, null),
 	        this.props.publicShare && _react2.default.createElement(_connected_introduction_screen_two2.default, null),
-	        _react2.default.createElement(_connected_section_container2.default, { sitemapNumber: '' }),
+	        _react2.default.createElement(
+	          'div',
+	          { className: "scrollable-div-sitemaps " + (this.props.leftSidebarExpanded ? '' : 'left-bar-contracted') },
+	          _react2.default.createElement(_connected_section_container2.default, { sitemapNumber: '' })
+	        ),
 	        _react2.default.createElement(_connected_footer2.default, null),
 	        _react2.default.createElement(_custom_drag_layer2.default, null),
 	        _react2.default.createElement(_connected_guest_info_form_modal2.default, null),
@@ -50388,9 +50392,21 @@
 	      } else {
 	        var pageTree = (0, _tree_helper.getNodeByAltSectionId)(defaultSection.pageTree, this.props.sections[this.props.sections.length - 1].id);
 	      }
+	
+	      if (this.props.leftSidebarExpanded) {
+	        var width = pageTree.children.length * 240 + 240;
+	      } else {
+	        var width = pageTree.children.length * 240 + 100 + 240;
+	      }
+	      if (this.props.publicShare) {
+	        width -= 372;
+	      }
+	
+	      width = width.toString() + 'px';
+	
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'sitemap-sections' + (this.props.trial ? ' trial' : '') },
+	        { className: 'sitemap-sections' + (this.props.trial ? ' trial' : ''), style: { width: width } },
 	        renderedSectionTabs.length > 1 && _react2.default.createElement(
 	          'ul',
 	          { className: "section-list clearfix" + (!this.props.publicShare && this.props.leftSidebarExpanded ? ' left-bar-expanded' : ' left-bar-contracted') + (this.props.publicShare ? ' public-share' : '') },
@@ -50638,9 +50654,9 @@
 	      var _this = this;
 	      if (this.props.level == 0) {
 	        if (this.props.leftSidebarExpanded) {
-	          var width = children.length * 240 + 412 + 240;
+	          var width = children.length * 240 + 240;
 	        } else {
-	          var width = children.length * 240 + 100 + 240;
+	          var width = children.length * 240 + 240;
 	        }
 	        if (this.props.publicShare) {
 	          width -= 372;
@@ -50650,7 +50666,7 @@
 	
 	        return _react2.default.createElement(
 	          'div',
-	          { 'data-level': this.props.level, className: 'page-container level-' + this.props.level.toString() + (this.props.level > 4 ? ' border-level-' + (this.props.level % 5 + 5).toString() : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + (children.length == 0 ? ' no-children' : ''), style: { width: width } },
+	          { 'data-level': this.props.level, className: 'page-container level-' + this.props.level.toString() + (this.props.level > 4 ? ' border-level-' + (this.props.level % 5 + 5).toString() : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + (children.length == 0 ? ' no-children' : '') },
 	          this.props.sitemapNumber == '1.0' && _react2.default.createElement(_connected_level_support_before2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name, level: this.props.level, isDragging: this.props.isDragging }),
 	          _react2.default.createElement(_connected_gutter2.default, { pageTree: this.props.pageTree }),
@@ -65972,22 +65988,22 @@
 	      });
 	      return connectDropTarget(_react2.default.createElement(
 	        'div',
-	        { className: 'sitemap-footer' + (this.props.leftSidebarExpanded ? '' : ' left-sidebar-contracted') },
+	        { className: "scrollable-div-footer" + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') },
 	        _react2.default.createElement(
 	          'span',
-	          null,
+	          { className: 'span-indicator' },
 	          'Footer'
 	        ),
-	        usablePages.length > 0 && _react2.default.createElement(
+	        _react2.default.createElement(
 	          'div',
-	          { className: 'scrollable-footer' },
-	          _react2.default.createElement(
+	          { className: 'sitemap-footer', style: { width: width } },
+	          usablePages.length > 0 && _react2.default.createElement(
 	            'ul',
-	            { className: 'footer-page-list', style: { width: width } },
+	            { className: 'footer-page-list' },
 	            renderedFooterPages
-	          )
-	        ),
-	        usablePages.length == 0 && _react2.default.createElement(_connected_first_page_droppable2.default, { pageTree: { footer: true }, leftSidebarExpanded: this.props.leftSidebarExpanded })
+	          ),
+	          usablePages.length == 0 && _react2.default.createElement(_connected_first_page_droppable2.default, { pageTree: { footer: true }, leftSidebarExpanded: this.props.leftSidebarExpanded })
+	        )
 	      ));
 	    }
 	  }]);

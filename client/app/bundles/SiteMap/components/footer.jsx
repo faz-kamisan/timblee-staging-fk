@@ -79,18 +79,18 @@ class Footer extends React.Component {
       )
     })
     return connectDropTarget(
-      <div className={'sitemap-footer' + (this.props.leftSidebarExpanded ? '' : ' left-sidebar-contracted')}>
-        <span>Footer</span>
-        { (usablePages.length > 0) &&
-          <div className="scrollable-footer">
-            <ul className='footer-page-list' style={{ width: width }}>
+      <div className={"scrollable-div-footer" + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted')}>
+        <span className="span-indicator">Footer</span>
+        <div className='sitemap-footer' style={{ width: width }}>
+          { (usablePages.length > 0) &&
+            <ul className='footer-page-list'>
               {renderedFooterPages}
             </ul>
-          </div>
-        }
-        { (usablePages.length == 0) &&
-          <ConnectedFirstPageDroppable pageTree={{footer: true}} leftSidebarExpanded={this.props.leftSidebarExpanded} />
-        }
+          }
+          { (usablePages.length == 0) &&
+            <ConnectedFirstPageDroppable pageTree={{footer: true}} leftSidebarExpanded={this.props.leftSidebarExpanded} />
+          }
+        </div>
       </div>
     );
   }

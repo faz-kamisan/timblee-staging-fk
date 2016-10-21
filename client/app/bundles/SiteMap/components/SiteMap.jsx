@@ -49,7 +49,9 @@ class SiteMap extends React.Component {
           this.props.publicShare &&
           <ConnectedIntroductionScreenTwo />
         }
-        <ConnectedSecionContainer sitemapNumber='' />
+        <div className={"scrollable-div-sitemaps " + (this.props.leftSidebarExpanded ? '' : 'left-bar-contracted')}>
+          <ConnectedSecionContainer sitemapNumber='' />
+        </div>
         <ConnectedFooter />
         <CustomDragLayer />
         <ConnectedGuestInfoFormModal />
