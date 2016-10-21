@@ -52675,7 +52675,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving, newSitemap: state.newSitemap, currentUser: state.currentUser };
+	  return { name: state.name, id: state.id, state: state.state, business: state.business, saving: state.saving, newSitemap: state.newSitemap, currentUser: state.currentUser, publicShareUrl: state.publicShareUrl, sharedUsers: state.sharedUsers };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -52979,7 +52979,9 @@
 	              { className: 'pull-right share-sitemap-btn-div' },
 	              _react2.default.createElement(
 	                'a',
-	                { href: '#sitemap-share-modal', 'data-toggle': 'modal', className: 'btn btn-share', onClick: this.handleSitemapShareClick },
+	                { href: 'javascript:void(0)', className: 'btn btn-share action sitemap-share-modal-link', 'data-url': this.props.publicShareUrl, 'data-name': this.props.name, 'data-id': this.props.id, 'data-shared-users': this.props.sharedUsers.map(function (user) {
+	                    return user.user_email;
+	                  }).join(',') },
 	                _react2.default.createElement('span', { className: 'share-icon' }),
 	                ' Share'
 	              )

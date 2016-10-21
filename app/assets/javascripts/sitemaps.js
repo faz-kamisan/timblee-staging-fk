@@ -42,6 +42,10 @@ Sitemaps.prototype.bindEvents = function() {
     }
   });
 
+  this.sitemapShareModal.on('shown.bs.modal', function(e) {
+    $(this).find('.share-method-tabs li:first').click()
+  })
+
   $('body').on('click', '.delete-sitemap-modal-link', function(e) {
     _this.deleteSitemapModal.modal('show')
   })
