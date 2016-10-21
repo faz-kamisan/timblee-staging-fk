@@ -573,7 +573,7 @@
 
     .tile-id {
       left: 14px!important;
-    } 
+    }
 
     .tile-right {
       display: none;
@@ -2041,6 +2041,12 @@ body.trial {
 
 
 
+}
+
+.watermark_container,
+.comment-input.comment-input--multiLine {
+  display: block!important;
+  color: #262b30!important;
   label.watermark {
     z-index: 4;
     font-weight: 400;
@@ -2051,12 +2057,6 @@ body.trial {
     left: 15px!important;
     color: #dadada!important;
   }
-}
-
-.watermark_container,
-.comment-input.comment-input--multiLine {
-  display: block!important;
-  color: #262b30!important;
 }
 
 .watermark_container {
