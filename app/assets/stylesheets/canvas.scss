@@ -247,7 +247,7 @@
       z-index: 10;
     }
     .tile-id {
-      left: 23px!important;
+      left: 21px!important;
       .dummy-state {
         top: -1px;
         margin-right: 4px;
@@ -2876,6 +2876,14 @@ body.trial {
     }
   }
 
+  .tile-top-data {
+    display: none;
+  }
+
+  .tile-name-edit {
+    top: 13px;
+  }
+
   .second-item {
     .tile-icons:hover {
       .card-tooltip {
@@ -2890,6 +2898,10 @@ body.trial {
       top: 25px;
       @include rotate(180deg);
     }
+  }
+
+  .page-tile {
+    border-top-color: #e7e9ea;
   }
 }
 
@@ -3166,17 +3178,17 @@ body.trial {
   }
 }
 
-@media (max-width: 1300px) {
-  .toggle-comments {
-    right: 80px;
-  }
-  .react-header .users-block {
-    margin-left: 15px;
-  }
-  .saved-status + div {
-    padding-left: 0;
-  }
-}
+// @media (max-width: 1300px) {
+//   .toggle-comments {
+//     right: 80px;
+//   }
+//   .react-header .users-block {
+//     margin-left: 15px;
+//   }
+//   .saved-status + div {
+//     padding-left: 0;
+//   }
+// }
 
 .custom-drag-layer {
   &:before {
