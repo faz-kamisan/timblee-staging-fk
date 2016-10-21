@@ -56276,7 +56276,7 @@
 	              _react2.default.createElement(
 	                'figure',
 	                null,
-	                _react2.default.createElement('img', { alt: ' ', src: '/assets/share-intro-2.png' })
+	                _react2.default.createElement('img', { alt: ' ', src: '/assets/share-intro-3.jpg' })
 	              )
 	            ),
 	            _react2.default.createElement(
@@ -56290,7 +56290,7 @@
 	              _react2.default.createElement(
 	                'figure',
 	                null,
-	                _react2.default.createElement('img', { alt: ' ', src: '/assets/share-intro-3.jpg' })
+	                _react2.default.createElement('img', { alt: ' ', src: '/assets/share-intro-2.jpg' })
 	              )
 	            )
 	          )
