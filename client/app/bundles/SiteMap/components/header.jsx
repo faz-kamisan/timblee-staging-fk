@@ -188,7 +188,7 @@ class Header extends React.Component {
               }
             </div>
             <div className="pull-right share-sitemap-btn-div">
-              <a href="#sitemap-share-modal" data-toggle="modal" className="btn btn-share" onClick={this.handleSitemapShareClick}>
+              <a href="javascript:void(0)" className="btn btn-share action sitemap-share-modal-link" data-url={this.props.publicShareUrl} data-name={this.props.name} data-id={this.props.id} data-shared-users={this.props.sharedUsers.map(function(user) { return(user.user_email) }).join(',')}>
                <span className="share-icon"></span> Share
               </a>
             </div>
