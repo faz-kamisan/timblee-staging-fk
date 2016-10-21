@@ -146,7 +146,7 @@ class Header extends React.Component {
               </div>
             </div>
           </div>
-          <div className="col-xs-2 saved-status">
+          <div className="col-xs-1 saved-status">
             <span>
               { this.props.saving &&
                 <div>
@@ -155,7 +155,7 @@ class Header extends React.Component {
               }
             </span>
           </div>
-          <div className="col-xs-5">
+          <div className="col-xs-6">
             <div className="toggle-comments">
               <a href="javascript:void(0)" className={"btn-toggle-comments" + (this.state.commentSidebarOpen ? ' active' : '')} onClick={this.toggleCommentState}>
                 <span className="icon-comment"></span>
