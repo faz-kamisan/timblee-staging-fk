@@ -16,6 +16,7 @@ body {
   min-width: 1100px;
   padding-top: 95px;
   transition: padding-top .35s;
+  margin-bottom: 0px !important;
   -moz-transition: padding-top .35s;
   -webkit-transition: padding-top .35s;
   &.full-width {
