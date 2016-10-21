@@ -34,9 +34,9 @@ class PageContainer extends React.Component {
     var _this = this
     if(this.props.level == 0) {
       if(this.props.leftSidebarExpanded) {
-        var width = ((children.length * 240) + 412 + 240)
+        var width = ((children.length * 240) + 240)
       } else {
-        var width = ((children.length * 240) + 100 + 240)
+        var width = ((children.length * 240) + 240)
       }
       if(this.props.publicShare) {
         width -= 372
@@ -45,7 +45,7 @@ class PageContainer extends React.Component {
       width = width.toString() + 'px'
 
       return (
-        <div data-level={this.props.level} className={ 'page-container level-' + this.props.level.toString() + ((this.props.level > 4) ? (' border-level-' + ((this.props.level % 5) + 5).toString()) : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + ((children.length == 0) ? ' no-children' : '') } style={ { width: width } }>
+        <div data-level={this.props.level} className={ 'page-container level-' + this.props.level.toString() + ((this.props.level > 4) ? (' border-level-' + ((this.props.level % 5) + 5).toString()) : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + ((children.length == 0) ? ' no-children' : '') }>
           { this.props.sitemapNumber == '1.0' &&
             <ConnectedLevelSupportBefore pageTree={this.props.pageTree} />
           }
