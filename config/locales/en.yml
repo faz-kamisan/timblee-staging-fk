@@ -78,7 +78,7 @@ en:
 
       confirmations:
         show:
-          confirmation_token_invalid: 'Confirmation Token is Invalid'
+          confirmation_token_invalid: 'This confirmation link is no longer valid. Please log in and go to Settings to get this resent.'
       invitations:
         bulk_invitation:
           success: "%{emails} successfully invited."

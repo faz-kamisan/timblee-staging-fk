@@ -69,7 +69,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
           respond_with resource, location: after_update_path_for(resource)
         end
         format.js do
-          flash.now[:notice] = 'Account Updated'
+          flash.now[:notice] = ''
           render 'shared/show_flash.js'
         end
       end

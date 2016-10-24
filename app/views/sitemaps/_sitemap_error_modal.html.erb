@@ -8,16 +8,16 @@
           </span>
         </button>
         <h4 class="warning">You can't proceed <%= image_tag('sad.png', class: 'sad') %> </h4>
-        <p>You are currently on Starter plan which allows only 3 sitemaps.</p>
-        <p>Want to add more sitemaps?</p>
+        <p>You are currently on the Starter plan which only allows 3 sitemaps and 1 user.</p>
+        <p>Want unlimited sitemaps, or more users?</p>
         <div class="warning-footer">
           <div class="warning-left">
             <% if request.original_fullpath == settings_users_path %>
-              <%= link_to 'Switch to Pro plan', "#choose-plan-modal", class: 'btn btn-right', 'data-toggle': "modal", 'data-dismiss': 'modal' %>
+              <%= link_to 'SWITCH TO THE PRO PLAN', "#choose-plan-modal", class: 'btn btn-right', 'data-toggle': "modal", 'data-dismiss': 'modal' %>
             <% else %>
-              <%= link_to 'Switch to Pro plan', billing_settings_users_path, class: 'btn btn-right' %>
+              <%= link_to 'SWITCH TO THE PRO PLAN', billing_settings_users_path, class: 'btn btn-right' %>
             <% end %>
-          </div>  
+          </div>
          </div>
       </div>
     </div>
