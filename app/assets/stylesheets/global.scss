@@ -711,3 +711,7 @@ ul.tagit input[type="text"] {
     margin-right: 1px;
   }
 }
+
+.no-pointer {
+  pointer-events: none;
+}

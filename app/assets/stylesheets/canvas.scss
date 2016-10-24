@@ -624,7 +624,7 @@
 
   &.border-level-2 {
     > .page-tile {
-      border-top-color: #ff650f; 
+      border-top-color: #ff650f;
     }
   }
 
@@ -2976,6 +2976,9 @@ body.trial {
   }
   .page-tile {
     pointer-events: none;
+    &:before, &:after {
+      display: none;
+    };
   }
   .btn {
     font-size: 12px;
