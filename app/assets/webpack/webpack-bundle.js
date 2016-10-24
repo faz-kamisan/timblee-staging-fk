@@ -50675,7 +50675,7 @@
 	          _react2.default.createElement(_connected_level_support2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'parent parent-' + this.props.level.toString() + (this.props.pageTree.collapsed ? ' hide' : '') },
+	            { className: 'parent parent-' + this.props.level.toString() + (this.props.pageTree.collapsed ? ' hide' : '') + (this.props.level > 4 ? '' : ' to-be-faded'), 'data-level': this.props.level },
 	            this.props.children
 	          )
 	        );
@@ -50690,7 +50690,7 @@
 	          _react2.default.createElement(_connected_level_support2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'parent parent-' + this.props.level.toString() + (this.props.pageTree.collapsed ? ' hide' : '') },
+	            { className: 'parent parent-' + this.props.level.toString() + (this.props.pageTree.collapsed ? ' hide' : '') + (this.props.level > 4 ? '' : ' to-be-faded'), 'data-level': this.props.level },
 	            this.props.children
 	          )
 	        );
@@ -51015,14 +51015,14 @@
 	    key: 'addFaded',
 	    value: function addFaded() {
 	      $(this.refs.pageTile).addClass('not-faded');
-	      $(this.refs.pageTile).parents('.parent').addClass('not-faded');
+	      $(this.refs.pageTile).parents('.parent.to-be-faded').addClass('not-faded');
 	      $('.page-container').not($(this.refs.pageTile).parents('.page-container')).addClass('faded');
 	    }
 	  }, {
 	    key: 'removeFaded',
 	    value: function removeFaded() {
 	      $(this.refs.pageTile).removeClass('not-faded');
-	      $(this.refs.pageTile).parents('.parent').removeClass('not-faded');
+	      $(this.refs.pageTile).parents('.parent.to-be-faded').removeClass('not-faded');
 	      $('.page-container').removeClass('faded');
 	    }
 	  }, {
