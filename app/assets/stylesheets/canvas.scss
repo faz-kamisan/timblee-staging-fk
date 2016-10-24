@@ -3950,3 +3950,26 @@ body.trial {
   position: relative;
   z-index: 30;
 }
+
+.share-footer {
+  height: 46px;
+  background: $primaryWhite;
+  border: 1px solid #d6d8da;
+  padding: 0 44px;
+  line-height: 44px;
+  font-style: 12px;
+  a {
+    color: $primaryGrey;
+    vertical-align: middle;
+    &:hover {
+      color: $primaryPink;
+    }
+  }
+  img {
+    width: 23px;
+    height: 20px;
+    position: relative;
+    bottom: 1px;
+    margin-right: 10px;
+  }
+}

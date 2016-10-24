@@ -42731,6 +42731,16 @@
 	          _react2.default.createElement(_connected_section_container2.default, { sitemapNumber: '' })
 	        ),
 	        _react2.default.createElement(_connected_footer2.default, null),
+	        this.props.publicShare && _react2.default.createElement(
+	          'div',
+	          { className: 'share-footer' },
+	          _react2.default.createElement(
+	            'a',
+	            { href: 'https://timblee.io?utm_source=timblee&utm_medium=web-app&utm_campaign=general&utm_content=public-view-footer', target: '_blank' },
+	            _react2.default.createElement('img', { src: '/assets/Timblee-icon-footer.svg', alt: ' ' }),
+	            'Designed with Timblee'
+	          )
+	        ),
 	        _react2.default.createElement(_custom_drag_layer2.default, null),
 	        _react2.default.createElement(_connected_guest_info_form_modal2.default, null),
 	        !this.props.publicShare && _react2.default.createElement(
@@ -71196,7 +71206,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, footerPages: state.footerPages, maxPageUid: state.maxPageUid };
+	  return { sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, footerPages: state.footerPages, maxPageUid: state.maxPageUid, publicShare: state.publicShare };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
