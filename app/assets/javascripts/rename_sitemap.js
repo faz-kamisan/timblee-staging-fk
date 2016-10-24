@@ -17,6 +17,7 @@ RenameSitemap.prototype.bindEvents = function() {
     if(_this.flag) {
       if($(this).data('original-value') != $(this).val()) {
         $(this).closest('form').submit();
+        $(this).data('original-value', $(this).val())
       } else {
         $(this).closest('.site-card').find('.saved-sitemap-name').removeClass('hide');
         $(this).closest('.site-card').find('.edit-sitemap-name').addClass('hide');
@@ -25,6 +26,16 @@ RenameSitemap.prototype.bindEvents = function() {
       _this.flag = true;
     }
   });
+
+  _this.sitemapNameInputField.on('keypress', function(e) {
+    if(e.charCode == 13) {
+      e.preventDefault()
+      e.stopPropagation()
+      $(this).trigger('focusout')
+      // this.disableNameChangeInput();
+    }
+  })
+
 
   _this.sitemapNameInputField.keypress(function (e) {
     if(e.which == 13) {
