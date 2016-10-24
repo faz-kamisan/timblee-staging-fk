@@ -66179,7 +66179,7 @@
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'page-tile-clone text-center' },
-	                this.props.pageTree.pageType && _react2.default.createElement(_page_container2.default, { pageTree: this.props.pageTree, childrenLength: 0, level: this.props.pageTree.tempLevel, sitemapNumber: this.props.pageTree.sitemapNumber })
+	                this.props.pageTree.pageType && _react2.default.createElement(_page_container2.default, { pageTree: this.props.pageTree, childrenLength: 0, level: this.props.pageTree.tempLevel || 0, sitemapNumber: this.props.pageTree.sitemapNumber })
 	              ),
 	              _react2.default.createElement(
 	                'div',

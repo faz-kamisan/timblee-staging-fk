@@ -49,7 +49,7 @@ class DeletePageModal extends React.Component {
             <div className="modal-body">
               <div className="page-tile-clone text-center">
                 {this.props.pageTree.pageType &&
-                  <PageContainer pageTree={this.props.pageTree} childrenLength={0} level={this.props.pageTree.tempLevel} sitemapNumber={this.props.pageTree.sitemapNumber} />
+                  <PageContainer pageTree={this.props.pageTree} childrenLength={0} level={this.props.pageTree.tempLevel || 0} sitemapNumber={this.props.pageTree.sitemapNumber} />
                 }
               </div>
               <div className="modal-button text-center">
