@@ -53299,10 +53299,10 @@
 	        }
 	
 	        width = width.toString() + 'px';
-	
+	        var className = 'page-container level-' + this.props.level.toString() + (this.props.level > 0 ? ' border-level-' + (this.props.level % 10 == 0 ? 10 : this.props.level % 10).toString() : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + (children.length == 0 ? ' no-children' : '');
 	        return _react2.default.createElement(
 	          'div',
-	          { 'data-level': this.props.level, className: 'page-container level-' + this.props.level.toString() + (this.props.level > 4 ? ' border-level-' + (this.props.level % 5 + 5).toString() : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + (children.length == 0 ? ' no-children' : '') },
+	          { 'data-level': this.props.level, className: className },
 	          this.props.sitemapNumber == '1.0' && _react2.default.createElement(_connected_level_support_before2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name, level: this.props.level, isDragging: this.props.isDragging }),
 	          _react2.default.createElement(_connected_gutter2.default, { pageTree: this.props.pageTree }),
@@ -53316,9 +53316,10 @@
 	          )
 	        );
 	      } else {
+	        var className = 'page-container level-' + this.props.level.toString() + (this.props.level > 0 ? ' border-level-' + (this.props.level % 10 == 0 ? 10 : this.props.level % 10).toString() : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted');
 	        return _react2.default.createElement(
 	          'div',
-	          { 'data-level': this.props.level, className: 'page-container level-' + this.props.level.toString() + (this.props.level > 4 ? ' border-level-' + (this.props.level % 5 + 5).toString() : '') },
+	          { 'data-level': this.props.level, className: className },
 	          this.props.sitemapNumber == '1.0' && _react2.default.createElement(_connected_level_support_before2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name, level: this.props.level, isDragging: this.props.isDragging }),
 	          _react2.default.createElement(_connected_gutter2.default, { pageTree: this.props.pageTree }),

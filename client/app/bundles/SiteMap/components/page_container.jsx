@@ -27,9 +27,9 @@ class PageContainer extends React.Component {
       }
 
       width = width.toString() + 'px'
-
+      var className = 'page-container level-' + this.props.level.toString() + ((this.props.level > 0) ? (' border-level-' + ((this.props.level % 10) == 0 ? 10 : (this.props.level % 10)).toString()) : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + ((children.length == 0) ? ' no-children' : '')
       return (
-        <div data-level={this.props.level} className={ 'page-container level-' + this.props.level.toString() + ((this.props.level > 4) ? (' border-level-' + ((this.props.level % 5) + 5).toString()) : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + ((children.length == 0) ? ' no-children' : '') }>
+        <div data-level={this.props.level} className={ className }>
           { this.props.sitemapNumber == '1.0' &&
             <ConnectedLevelSupportBefore pageTree={this.props.pageTree} />
           }
@@ -48,8 +48,9 @@ class PageContainer extends React.Component {
         </div>
       );
     } else {
+      var className = 'page-container level-' + this.props.level.toString() + ((this.props.level > 0) ? (' border-level-' + ((this.props.level % 10) == 0 ? 10 : (this.props.level % 10)).toString()) : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted')
       return (
-        <div data-level={this.props.level} className={ 'page-container level-' + this.props.level.toString() + ((this.props.level > 4) ? (' border-level-' + ((this.props.level % 5) + 5).toString()) : '') }>
+        <div data-level={this.props.level} className={ className }>
           { this.props.sitemapNumber == '1.0' &&
             <ConnectedLevelSupportBefore pageTree={this.props.pageTree} />
           }
