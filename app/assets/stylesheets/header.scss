@@ -248,6 +248,14 @@
   :-ms-input-placeholder { color: red; color: $primaryLabel; opacity: 1; font-size: 14px; }
 }
 
+.safari {
+  #search-sitemap-form {
+    #search-sitemap {
+      line-height: 20px;
+    }
+  }
+}
+
 .notifications-tab {
   position: relative;
   .notifications-listing {
