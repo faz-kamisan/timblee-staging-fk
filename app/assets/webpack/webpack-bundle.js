@@ -42530,39 +42530,39 @@
 	
 	var _connected_right_sidebar2 = _interopRequireDefault(_connected_right_sidebar);
 	
-	var _connected_footer = __webpack_require__(/*! ../containers/connected_footer */ 1037);
+	var _connected_footer = __webpack_require__(/*! ../containers/connected_footer */ 1035);
 	
 	var _connected_footer2 = _interopRequireDefault(_connected_footer);
 	
-	var _connected_delete_page_modal = __webpack_require__(/*! ../containers/connected_delete_page_modal */ 1039);
+	var _connected_delete_page_modal = __webpack_require__(/*! ../containers/connected_delete_page_modal */ 1037);
 	
 	var _connected_delete_page_modal2 = _interopRequireDefault(_connected_delete_page_modal);
 	
-	var _connected_comment_delete_modal = __webpack_require__(/*! ../containers/connected_comment_delete_modal */ 1041);
+	var _connected_comment_delete_modal = __webpack_require__(/*! ../containers/connected_comment_delete_modal */ 1039);
 	
 	var _connected_comment_delete_modal2 = _interopRequireDefault(_connected_comment_delete_modal);
 	
-	var _connected_page_change_modal = __webpack_require__(/*! ../containers/connected_page_change_modal */ 1043);
+	var _connected_page_change_modal = __webpack_require__(/*! ../containers/connected_page_change_modal */ 1041);
 	
 	var _connected_page_change_modal2 = _interopRequireDefault(_connected_page_change_modal);
 	
-	var _connected_new_section_modal = __webpack_require__(/*! ../containers/connected_new_section_modal */ 1045);
+	var _connected_new_section_modal = __webpack_require__(/*! ../containers/connected_new_section_modal */ 1043);
 	
 	var _connected_new_section_modal2 = _interopRequireDefault(_connected_new_section_modal);
 	
-	var _connected_page_comments_modal = __webpack_require__(/*! ../containers/connected_page_comments_modal */ 1047);
+	var _connected_page_comments_modal = __webpack_require__(/*! ../containers/connected_page_comments_modal */ 1045);
 	
 	var _connected_page_comments_modal2 = _interopRequireDefault(_connected_page_comments_modal);
 	
-	var _connected_delete_section_modal = __webpack_require__(/*! ../containers/connected_delete_section_modal */ 1049);
+	var _connected_delete_section_modal = __webpack_require__(/*! ../containers/connected_delete_section_modal */ 1047);
 	
 	var _connected_delete_section_modal2 = _interopRequireDefault(_connected_delete_section_modal);
 	
-	var _user_signup_modal = __webpack_require__(/*! ./user_signup_modal */ 1051);
+	var _user_signup_modal = __webpack_require__(/*! ./user_signup_modal */ 1049);
 	
 	var _user_signup_modal2 = _interopRequireDefault(_user_signup_modal);
 	
-	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 1052);
+	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 1050);
 	
 	var _custom_drag_layer2 = _interopRequireDefault(_custom_drag_layer);
 	
@@ -42607,6 +42607,16 @@
 	          _react2.default.createElement(_connected_section_container2.default, { sitemapNumber: '' })
 	        ),
 	        _react2.default.createElement(_connected_footer2.default, null),
+	        this.props.publicShare && _react2.default.createElement(
+	          'div',
+	          { className: 'share-footer' },
+	          _react2.default.createElement(
+	            'a',
+	            { href: 'https://timblee.io?utm_source=timblee&utm_medium=web-app&utm_campaign=general&utm_content=public-view-footer', target: '_blank' },
+	            _react2.default.createElement('img', { src: '/assets/Timblee-icon-footer.svg', alt: ' ' }),
+	            'Designed with Timblee'
+	          )
+	        ),
 	        _react2.default.createElement(_custom_drag_layer2.default, null),
 	        _react2.default.createElement(_connected_guest_info_form_modal2.default, null),
 	        !this.props.publicShare && _react2.default.createElement(
@@ -65825,9 +65835,7 @@
 	exports.default = NewComment;
 
 /***/ },
-/* 1035 */,
-/* 1036 */,
-/* 1037 */
+/* 1035 */
 /*!*************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_footer.jsx ***!
   \*************************************************************/
@@ -65843,14 +65851,14 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _footer = __webpack_require__(/*! ../components/footer */ 1038);
+	var _footer = __webpack_require__(/*! ../components/footer */ 1036);
 	
 	var _footer2 = _interopRequireDefault(_footer);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, footerPages: state.footerPages, maxPageUid: state.maxPageUid };
+	  return { sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, footerPages: state.footerPages, maxPageUid: state.maxPageUid, publicShare: state.publicShare };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -65874,7 +65882,7 @@
 	exports.default = ConnectedFooter;
 
 /***/ },
-/* 1038 */
+/* 1036 */
 /*!***************************************************!*\
   !*** ./app/bundles/SiteMap/components/footer.jsx ***!
   \***************************************************/
@@ -66024,7 +66032,7 @@
 	exports.default = DroppableFooter;
 
 /***/ },
-/* 1039 */
+/* 1037 */
 /*!************************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_delete_page_modal.jsx ***!
   \************************************************************************/
@@ -66040,7 +66048,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _delete_page_modal = __webpack_require__(/*! ../components/delete_page_modal */ 1040);
+	var _delete_page_modal = __webpack_require__(/*! ../components/delete_page_modal */ 1038);
 	
 	var _delete_page_modal2 = _interopRequireDefault(_delete_page_modal);
 	
@@ -66071,7 +66079,7 @@
 	exports.default = ConnectedDeletePageModal;
 
 /***/ },
-/* 1040 */
+/* 1038 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/delete_page_modal.jsx ***!
   \**************************************************************/
@@ -66211,7 +66219,7 @@
 	exports.default = DeletePageModal;
 
 /***/ },
-/* 1041 */
+/* 1039 */
 /*!***************************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_comment_delete_modal.jsx ***!
   \***************************************************************************/
@@ -66227,7 +66235,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _comment_delete_modal = __webpack_require__(/*! ../components/comment_delete_modal */ 1042);
+	var _comment_delete_modal = __webpack_require__(/*! ../components/comment_delete_modal */ 1040);
 	
 	var _comment_delete_modal2 = _interopRequireDefault(_comment_delete_modal);
 	
@@ -66262,7 +66270,7 @@
 	exports.default = ConnectedCommentDeleteModal;
 
 /***/ },
-/* 1042 */
+/* 1040 */
 /*!*****************************************************************!*\
   !*** ./app/bundles/SiteMap/components/comment_delete_modal.jsx ***!
   \*****************************************************************/
@@ -66408,7 +66416,7 @@
 	exports.default = CommentDeleteModal;
 
 /***/ },
-/* 1043 */
+/* 1041 */
 /*!************************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_page_change_modal.jsx ***!
   \************************************************************************/
@@ -66424,7 +66432,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _page_change_modal = __webpack_require__(/*! ../components/page_change_modal */ 1044);
+	var _page_change_modal = __webpack_require__(/*! ../components/page_change_modal */ 1042);
 	
 	var _page_change_modal2 = _interopRequireDefault(_page_change_modal);
 	
@@ -66455,7 +66463,7 @@
 	exports.default = ConnectedPageChangeModal;
 
 /***/ },
-/* 1044 */
+/* 1042 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_change_modal.jsx ***!
   \**************************************************************/
@@ -66626,7 +66634,7 @@
 	exports.default = PageChangeModal;
 
 /***/ },
-/* 1045 */
+/* 1043 */
 /*!************************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_new_section_modal.jsx ***!
   \************************************************************************/
@@ -66642,7 +66650,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _new_section_modal = __webpack_require__(/*! ../components/new_section_modal */ 1046);
+	var _new_section_modal = __webpack_require__(/*! ../components/new_section_modal */ 1044);
 	
 	var _new_section_modal2 = _interopRequireDefault(_new_section_modal);
 	
@@ -66673,7 +66681,7 @@
 	exports.default = ConnectedNewSectionModal;
 
 /***/ },
-/* 1046 */
+/* 1044 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/new_section_modal.jsx ***!
   \**************************************************************/
@@ -66830,7 +66838,7 @@
 	exports.default = NewSectionModal;
 
 /***/ },
-/* 1047 */
+/* 1045 */
 /*!**************************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_page_comments_modal.jsx ***!
   \**************************************************************************/
@@ -66846,7 +66854,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _page_comments_modal = __webpack_require__(/*! ../components/page_comments_modal */ 1048);
+	var _page_comments_modal = __webpack_require__(/*! ../components/page_comments_modal */ 1046);
 	
 	var _page_comments_modal2 = _interopRequireDefault(_page_comments_modal);
 	
@@ -66870,7 +66878,7 @@
 	exports.default = ConnectedPageCommentsModal;
 
 /***/ },
-/* 1048 */
+/* 1046 */
 /*!****************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_comments_modal.jsx ***!
   \****************************************************************/
@@ -67016,7 +67024,7 @@
 	exports.default = PageCommentsModal;
 
 /***/ },
-/* 1049 */
+/* 1047 */
 /*!***************************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_delete_section_modal.jsx ***!
   \***************************************************************************/
@@ -67032,7 +67040,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
-	var _delete_section_modal = __webpack_require__(/*! ../components/delete_section_modal */ 1050);
+	var _delete_section_modal = __webpack_require__(/*! ../components/delete_section_modal */ 1048);
 	
 	var _delete_section_modal2 = _interopRequireDefault(_delete_section_modal);
 	
@@ -67062,7 +67070,7 @@
 	exports.default = ConnectedDeleteSectionModal;
 
 /***/ },
-/* 1050 */
+/* 1048 */
 /*!*****************************************************************!*\
   !*** ./app/bundles/SiteMap/components/delete_section_modal.jsx ***!
   \*****************************************************************/
@@ -67210,7 +67218,7 @@
 	exports.default = DeleteSectionModal;
 
 /***/ },
-/* 1051 */
+/* 1049 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/user_signup_modal.jsx ***!
   \**************************************************************/
@@ -67372,7 +67380,7 @@
 	exports.default = UserSignupModal;
 
 /***/ },
-/* 1052 */
+/* 1050 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/custom_drag_layer.jsx ***!
   \**************************************************************/
@@ -67394,11 +67402,11 @@
 	
 	var _reactDnd = __webpack_require__(/*! react-dnd */ 733);
 	
-	var _page_container_preview = __webpack_require__(/*! ./page_container_preview */ 1053);
+	var _page_container_preview = __webpack_require__(/*! ./page_container_preview */ 1051);
 	
 	var _page_container_preview2 = _interopRequireDefault(_page_container_preview);
 	
-	var _page_type_preview = __webpack_require__(/*! ./page_type_preview */ 1054);
+	var _page_type_preview = __webpack_require__(/*! ./page_type_preview */ 1052);
 	
 	var _page_type_preview2 = _interopRequireDefault(_page_type_preview);
 	
@@ -67520,7 +67528,7 @@
 	exports.default = DragLayerDecorator(CustomDragLayer);
 
 /***/ },
-/* 1053 */
+/* 1051 */
 /*!*******************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_container_preview.jsx ***!
   \*******************************************************************/
@@ -67603,7 +67611,7 @@
 	exports.default = PageContainerPreview;
 
 /***/ },
-/* 1054 */
+/* 1052 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_type_preview.jsx ***!
   \**************************************************************/
