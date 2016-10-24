@@ -12,7 +12,7 @@ class Analytics
     track(
       {
         user_id: user.id,
-        event: 'Signed Up',
+        event: 'Sign Up',
         properties: {
           signed_up: user.created_at.strftime('%d %b %Y')
         }
