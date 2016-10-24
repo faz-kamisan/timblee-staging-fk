@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import PageContainer from './page_container'
 import ConnectedPageTile from '../containers/connected_page_tile'
 
 class DeletePageModal extends React.Component {
@@ -48,7 +49,7 @@ class DeletePageModal extends React.Component {
             <div className="modal-body">
               <div className="page-tile-clone text-center">
                 {this.props.pageTree.pageType &&
-                  <ConnectedPageTile pageTree={this.props.pageTree} collapsed={true} childrenLength={0} name={this.props.pageTree.name} />
+                  <PageContainer pageTree={this.props.pageTree} childrenLength={0} level={this.props.pageTree.tempLevel} sitemapNumber={this.props.pageTree.sitemapNumber} />
                 }
               </div>
               <div className="modal-button text-center">

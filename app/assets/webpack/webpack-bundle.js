@@ -42731,6 +42731,16 @@
 	          _react2.default.createElement(_connected_section_container2.default, { sitemapNumber: '' })
 	        ),
 	        _react2.default.createElement(_connected_footer2.default, null),
+	        this.props.publicShare && _react2.default.createElement(
+	          'div',
+	          { className: 'share-footer' },
+	          _react2.default.createElement(
+	            'a',
+	            { href: 'https://timblee.io?utm_source=timblee&utm_medium=web-app&utm_campaign=general&utm_content=public-view-footer', target: '_blank' },
+	            _react2.default.createElement('img', { src: '/assets/Timblee-icon-footer.svg', alt: ' ' }),
+	            'Designed with Timblee'
+	          )
+	        ),
 	        _react2.default.createElement(_custom_drag_layer2.default, null),
 	        _react2.default.createElement(_connected_guest_info_form_modal2.default, null),
 	        !this.props.publicShare && _react2.default.createElement(
@@ -53299,10 +53309,10 @@
 	        }
 	
 	        width = width.toString() + 'px';
-	
+	        var className = 'page-container level-' + this.props.level.toString() + (this.props.level > 0 ? ' border-level-' + (this.props.level % 10 == 0 ? 10 : this.props.level % 10).toString() : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + (children.length == 0 ? ' no-children' : '');
 	        return _react2.default.createElement(
 	          'div',
-	          { 'data-level': this.props.level, className: 'page-container level-' + this.props.level.toString() + (this.props.level > 4 ? ' border-level-' + (this.props.level % 5 + 5).toString() : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + (children.length == 0 ? ' no-children' : '') },
+	          { 'data-level': this.props.level, className: className },
 	          this.props.sitemapNumber == '1.0' && _react2.default.createElement(_connected_level_support_before2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name, level: this.props.level, isDragging: this.props.isDragging }),
 	          _react2.default.createElement(_connected_gutter2.default, { pageTree: this.props.pageTree }),
@@ -53316,9 +53326,10 @@
 	          )
 	        );
 	      } else {
+	        var className = 'page-container level-' + this.props.level.toString() + (this.props.level > 0 ? ' border-level-' + (this.props.level % 10 == 0 ? 10 : this.props.level % 10).toString() : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted');
 	        return _react2.default.createElement(
 	          'div',
-	          { 'data-level': this.props.level, className: 'page-container level-' + this.props.level.toString() + (this.props.level > 4 ? ' border-level-' + (this.props.level % 5 + 5).toString() : '') },
+	          { 'data-level': this.props.level, className: className },
 	          this.props.sitemapNumber == '1.0' && _react2.default.createElement(_connected_level_support_before2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name, level: this.props.level, isDragging: this.props.isDragging }),
 	          _react2.default.createElement(_connected_gutter2.default, { pageTree: this.props.pageTree }),
@@ -53617,6 +53628,7 @@
 	  }, {
 	    key: 'setSelectedPage',
 	    value: function setSelectedPage(e) {
+	      this.props.pageTree.tempLevel = this.props.level;
 	      this.props.setSelectedPage(this.props.pageTree);
 	    }
 	  }, {
@@ -71195,7 +71207,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, footerPages: state.footerPages, maxPageUid: state.maxPageUid };
+	  return { sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, footerPages: state.footerPages, maxPageUid: state.maxPageUid, publicShare: state.publicShare };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -71434,6 +71446,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _page_container = __webpack_require__(/*! ./page_container */ 860);
+	
+	var _page_container2 = _interopRequireDefault(_page_container);
+	
 	var _connected_page_tile = __webpack_require__(/*! ../containers/connected_page_tile */ 861);
 	
 	var _connected_page_tile2 = _interopRequireDefault(_connected_page_tile);
@@ -71520,7 +71536,7 @@
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'page-tile-clone text-center' },
-	                this.props.pageTree.pageType && _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: true, childrenLength: 0, name: this.props.pageTree.name })
+	                this.props.pageTree.pageType && _react2.default.createElement(_page_container2.default, { pageTree: this.props.pageTree, childrenLength: 0, level: this.props.pageTree.tempLevel, sitemapNumber: this.props.pageTree.sitemapNumber })
 	              ),
 	              _react2.default.createElement(
 	                'div',

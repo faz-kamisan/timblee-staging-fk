@@ -3,7 +3,7 @@ import { addNewFooterPage, changeUpdatedAt, updateFooterPageId, setSaving, setMa
 import DroppableFooter from '../components/footer'
 
 const mapStateToProps = (state) => {
-  return { sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, footerPages: state.footerPages, maxPageUid: state.maxPageUid }
+  return { sitemapId: state.id, leftSidebarExpanded: state.leftSidebarExpanded, footerPages: state.footerPages, maxPageUid: state.maxPageUid, publicShare: state.publicShare }
 }
 
 const mapDispatchToProps = (dispatch) => {

@@ -264,10 +264,6 @@
 
   .tile-top {
     padding-top: 12px;
-    &:after {
-      border-top-left-radius: 4px;
-      border-top-right-radius: 4px;
-    }
   }
 
   .tile-bottom {
@@ -443,10 +439,6 @@
         opacity: 0;
       }
     }
-
-    .page-tile {
-      border-top-color: #0679b4;
-    }
   }
 
   &.level-2 {
@@ -457,7 +449,6 @@
     .page-tile {
       width: 182px;
       margin-left: 18px;
-      border-top-color: #ff650f;
       &:before {
         position: absolute;
         content: ' ';
@@ -504,7 +495,6 @@
     .page-tile {
       width: 164px;
       margin-left: 36px;
-      border-top-color: #24a35f;
     }
 
     .tile-id {
@@ -534,7 +524,6 @@
     .page-tile {
       width: 146px;
       margin-left: 54px;
-      border-top-color: #8851b4;
     }
 
     .tile-name {
@@ -627,6 +616,30 @@
     }
   }
 
+  &.border-level-1 {
+    > .page-tile {
+      border-top-color: #0679b3;
+    }
+  }
+
+  &.border-level-2 {
+    > .page-tile {
+      border-top-color: #ff650f;
+    }
+  }
+
+  &.border-level-3 {
+    > .page-tile {
+      border-top-color: #24a35f;
+    }
+  }
+
+  &.border-level-4 {
+    > .page-tile {
+      border-top-color: #8851b4;
+    }
+  }
+
   &.border-level-5 {
     > .page-tile {
       border-top-color: #24D0FD!important;
@@ -638,7 +651,7 @@
 
   &.border-level-6 {
     > .page-tile {
-      border-top-color: #FC5255!important;
+      border-top-color: #3366ff!important;
     }
   }
 
@@ -657,6 +670,12 @@
   &.border-level-9 {
     > .page-tile {
       border-top-color: #F8C031!important;
+    }
+  }
+
+  &.border-level-10 {
+    > .page-tile {
+     border-top-color: #12d888!important;
     }
   }
 
@@ -2957,6 +2976,9 @@ body.trial {
   }
   .page-tile {
     pointer-events: none;
+    &:before, &:after {
+      display: none;
+    };
   }
   .btn {
     font-size: 12px;
@@ -3204,7 +3226,7 @@ body.trial {
   background: #ffffff;
   position: fixed;
   top: 0px;
-  z-index: 15;
+  z-index: 30;
   height: 80px;
   left: 0;
   width: 100%;
@@ -3474,7 +3496,6 @@ body.trial {
       color: $primaryBlack;
       left: 50px;
       top: 50%;
-      margin-top: -7px;
       max-width: 250px;
       h3 {
         font-size: 14px;
@@ -3925,5 +3946,34 @@ body.trial {
     position: relative;
     top: 6px;
     left: -1px;
+  }
+}
+
+.public-intro {
+  position: relative;
+  z-index: 30;
+}
+
+.share-footer {
+  height: 46px;
+  background: $primaryWhite;
+  border: 1px solid #d6d8da;
+  padding: 0 44px;
+  line-height: 44px;
+  font-style: 12px;
+  a {
+    color: $primaryGrey;
+    vertical-align: middle;
+    cursor: pointer;
+    &:hover {
+      color: $primaryPink;
+    }
+  }
+  img {
+    width: 23px;
+    height: 20px;
+    position: relative;
+    bottom: 1px;
+    margin-right: 10px;
   }
 }

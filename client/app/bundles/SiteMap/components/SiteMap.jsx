@@ -53,6 +53,14 @@ class SiteMap extends React.Component {
           <ConnectedSecionContainer sitemapNumber='' />
         </div>
         <ConnectedFooter />
+        { this.props.publicShare &&
+          <div className="share-footer">
+            <a href="https://timblee.io?utm_source=timblee&utm_medium=web-app&utm_campaign=general&utm_content=public-view-footer" target="_blank">
+              <img src="/assets/Timblee-icon-footer.svg" alt=" "/>
+              Designed with Timblee
+            </a>
+          </div>
+        }
         <CustomDragLayer />
         <ConnectedGuestInfoFormModal />
         { !this.props.publicShare &&
