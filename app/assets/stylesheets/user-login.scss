@@ -374,3 +374,15 @@
     color: #62717f;
   }
 }
+
+#sitemap-share-preview-modal {
+  .modal-dialog {
+    @include alignCenter(-310px, -292px);
+  }
+}
+
+#invite-user-preview-modal {
+  .modal-dialog {
+    @include alignCenter(-310px, -342px);
+  }
+}
