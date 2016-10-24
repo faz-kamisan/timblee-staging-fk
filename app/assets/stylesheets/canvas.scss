@@ -3964,6 +3964,7 @@ body.trial {
   a {
     color: $primaryGrey;
     vertical-align: middle;
+    cursor: pointer;
     &:hover {
       color: $primaryPink;
     }
