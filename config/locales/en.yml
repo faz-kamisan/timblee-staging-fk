@@ -99,7 +99,7 @@ en:
           failure: Some error occurred
       subscriptions:
         create:
-          success: You are successfully subscribed to selected plan
+          success: Your plan has been changed successfully.
           plan_not_found: Plan not found
           failure: Something went wrong.
 
