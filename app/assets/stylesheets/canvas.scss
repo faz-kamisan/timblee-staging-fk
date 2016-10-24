@@ -3223,7 +3223,7 @@ body.trial {
   background: #ffffff;
   position: fixed;
   top: 0px;
-  z-index: 15;
+  z-index: 30;
   height: 80px;
   left: 0;
   width: 100%;
@@ -3944,4 +3944,9 @@ body.trial {
     top: 6px;
     left: -1px;
   }
+}
+
+.public-intro {
+  position: relative;
+  z-index: 30;
 }
