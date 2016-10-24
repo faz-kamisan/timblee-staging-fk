@@ -368,6 +368,9 @@
 
 #delete-section-modal {
   .modal-dialog {
-    @include alignCenter(-310px, -144px);
-  } 
+    @include alignCenter(-310px, -153px);
+  }
+  .modal-message {
+    color: #62717f;
+  }
 }

@@ -350,7 +350,7 @@ ul.tagit li.tagit-choice-editable {
   color: $primaryGrey;
   border: 0;
   height: 33px;
-  margin: 0 3px 3px 0;
+  margin: 2px 3px 3px 0;
 }
 
 .border-top {
@@ -1123,4 +1123,10 @@ label.avatar-label > input[type=radio]:checked + img{
 
 .invite-message-preview > p {
   word-wrap: break-word;
+}
+
+.cc-add {
+  .cc-errors {
+    padding-top: 10px;
+  }
 }

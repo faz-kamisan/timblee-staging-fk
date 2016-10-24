@@ -52,7 +52,7 @@ class DeleteSectionModal extends React.Component {
               </button>
               <h4 className="modal-title">Delete section</h4>
               <p className="modal-message">{'Are you sure you want to delete this section: ' + this.props.section.name}</p>
-              <p className="modal-message">Pages in this section will not be deleted but added back to the main sitemap. To delete any sub-pages, delete the parent page in the main sitemap.</p>
+              <p className="modal-message">Pages in this section will not be deleted but added back to the main sitemap. <br/> To delete any sub-pages, delete the parent page in the main sitemap.</p>
             </div>
             <div className="modal-body">
               <div className="modal-button text-center">

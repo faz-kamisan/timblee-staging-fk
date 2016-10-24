@@ -124,7 +124,7 @@ class Header extends React.Component {
         <div className="row">
           <div className="col-xs-5">
             <div className="row">
-              <div className="col-xs-9">
+              <div className="col-xs-9 p-l-10">
                 <span className="logo-dark relative">
                   <a href="/home">
                     <img src="/assets/go-back.svg" className="go-back-link"></img>

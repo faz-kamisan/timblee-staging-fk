@@ -172,6 +172,10 @@
   }
 }
 
+.ui-widget {
+  font-family: "proxima-nova",sans-serif!important;
+}
+
 #search-sitemap-form {
   width: 220px;
   max-height: 320px;
@@ -183,9 +187,6 @@
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.35);
   font-family: "proxima-nova",sans-serif!important;
   position: absolute;
-  .ui-widget {
-    font-family: "proxima-nova",sans-serif!important;
-  }
   .ui-widget-content {
     position: relative;
     background: transparent!important;
@@ -193,7 +194,7 @@
     border: 0;
     width: 100%!important;
     padding-bottom: 20px;
-    height: 275px;
+    max-height: 275px;
     overflow-y: auto;
     li {
       min-height: 45px;

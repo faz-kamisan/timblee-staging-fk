@@ -80,7 +80,6 @@ class Footer extends React.Component {
     })
     return connectDropTarget(
       <div className={"scrollable-div-footer" + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted')}>
-        <span className="span-indicator">Footer</span>
         <div className='sitemap-footer' style={{ width: width }}>
           { (usablePages.length > 0) &&
             <ul className='footer-page-list'>

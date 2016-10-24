@@ -55689,7 +55689,7 @@
 	              { className: 'row' },
 	              _react2.default.createElement(
 	                'div',
-	                { className: 'col-xs-9' },
+	                { className: 'col-xs-9 p-l-10' },
 	                _react2.default.createElement(
 	                  'span',
 	                  { className: 'logo-dark relative' },
@@ -71339,11 +71339,6 @@
 	        'div',
 	        { className: "scrollable-div-footer" + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') },
 	        _react2.default.createElement(
-	          'span',
-	          { className: 'span-indicator' },
-	          'Footer'
-	        ),
-	        _react2.default.createElement(
 	          'div',
 	          { className: 'sitemap-footer', style: { width: width } },
 	          usablePages.length > 0 && _react2.default.createElement(
@@ -72518,7 +72513,9 @@
 	              _react2.default.createElement(
 	                'p',
 	                { className: 'modal-message' },
-	                'Pages in this section will not be deleted but added back to the main sitemap. To delete any sub-pages, delete the parent page in the main sitemap.'
+	                'Pages in this section will not be deleted but added back to the main sitemap. ',
+	                _react2.default.createElement('br', null),
+	                ' To delete any sub-pages, delete the parent page in the main sitemap.'
 	              )
 	            ),
 	            _react2.default.createElement(
