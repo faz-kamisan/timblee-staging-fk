@@ -53628,6 +53628,7 @@
 	  }, {
 	    key: 'setSelectedPage',
 	    value: function setSelectedPage(e) {
+	      this.props.pageTree.tempLevel = this.props.level;
 	      this.props.setSelectedPage(this.props.pageTree);
 	    }
 	  }, {
@@ -71445,6 +71446,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _page_container = __webpack_require__(/*! ./page_container */ 860);
+	
+	var _page_container2 = _interopRequireDefault(_page_container);
+	
 	var _connected_page_tile = __webpack_require__(/*! ../containers/connected_page_tile */ 861);
 	
 	var _connected_page_tile2 = _interopRequireDefault(_connected_page_tile);
@@ -71531,7 +71536,7 @@
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'page-tile-clone text-center' },
-	                this.props.pageTree.pageType && _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: true, childrenLength: 0, name: this.props.pageTree.name })
+	                this.props.pageTree.pageType && _react2.default.createElement(_page_container2.default, { pageTree: this.props.pageTree, childrenLength: 0, level: this.props.pageTree.tempLevel, sitemapNumber: this.props.pageTree.sitemapNumber })
 	              ),
 	              _react2.default.createElement(
 	                'div',

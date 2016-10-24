@@ -156,6 +156,7 @@ class PageTile extends React.Component {
   }
 
   setSelectedPage(e) {
+    this.props.pageTree.tempLevel = this.props.level
     this.props.setSelectedPage(this.props.pageTree)
   }
 
