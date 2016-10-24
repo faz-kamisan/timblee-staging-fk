@@ -7,10 +7,10 @@
           <%= image_tag('Timblee-icon.svg', class: 'logo-inner') %>
         </div>
         <h1 class="modal-heading">
-          Didn't receive confirmation email?
+          Didn't receive the account confirmation email?
         </h1>
         <p class="small">
-          Don't worry. We will help you with that.
+          Just enter the email again and we'll resend it
         </p>
         <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post, class: 'user-form' }) do |f| %>
           <div class="form-group">
