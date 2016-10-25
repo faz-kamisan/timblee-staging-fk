@@ -47,6 +47,12 @@ $(window).on('load resize', function() {
   $bussinessName.css('margin-top', -$bussinessName.height()/2);
 });
 
+$(window).on('load', function() {
+  var outerContent = $('.scrollable-div-sitemaps');
+  var innerContent = $('.scrollable-div-sitemaps > div');
+  outerContent.scrollLeft((innerContent.width() - outerContent.width()) / 2);
+});
+
 $(document).ready(function() {
   var rename = $('.sitemap-rename-input');
   rename.each(function() {
@@ -61,4 +67,3 @@ $(document).ready(function() {
   });
 
 });
-

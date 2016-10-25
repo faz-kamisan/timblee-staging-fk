@@ -59,14 +59,14 @@ class SectionContainer extends React.Component {
     }
 
     if(this.props.leftSidebarExpanded) {
-        var width = ((pageTree.children.length * 240) + 240)
+        var width = ((pageTree.children.filter(function(page) { return(page.state != 'archived') }).length * 240) + 240)
       } else {
-        var width = ((pageTree.children.length * 240) + 100 + 240)
+        var width = ((pageTree.children.filter(function(page) { return(page.state != 'archived') }).length * 240) + 100 + 240)
       }
       if(this.props.publicShare) {
         width -= 170
       }
-      width = width.toString() + 'px'
+      width = width.toString() + 'px';
 
     return (
       <div className={'sitemap-sections' + (this.props.trial ? ' trial' : '')} style={{width: width}}>
