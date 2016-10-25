@@ -16,8 +16,8 @@ RenameSitemap.prototype.bindEvents = function() {
   _this.sitemapNameInputField.focusout(function (e) {
     if(_this.flag) {
       if($(this).data('original-value') != $(this).val()) {
-        $(this).closest('form').submit();
         $(this).data('original-value', $(this).val())
+        $(this).closest('form').submit();
       } else {
         $(this).closest('.site-card').find('.saved-sitemap-name').removeClass('hide');
         $(this).closest('.site-card').find('.edit-sitemap-name').addClass('hide');

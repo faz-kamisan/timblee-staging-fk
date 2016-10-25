@@ -50673,7 +50673,7 @@
 	        }
 	
 	        width = width.toString() + 'px';
-	        var className = 'page-container level-' + this.props.level.toString() + (this.props.level > 0 ? ' border-level-' + (this.props.level % 10 == 0 ? 10 : this.props.level % 10).toString() : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + (children.length == 0 ? ' no-children' : '');
+	        var className = 'page-container level-' + this.props.level.toString() + (this.props.level > 0 ? ' border-level-' + (this.props.level % 10 == 0 ? 10 : this.props.level % 10).toString() : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + (children.length == 0 ? ' no-children' : '') + (this.props.level < 6 ? '' : ' to-be-faded');
 	        return _react2.default.createElement(
 	          'div',
 	          { 'data-level': this.props.level, className: className },
@@ -50690,7 +50690,7 @@
 	          )
 	        );
 	      } else {
-	        var className = 'page-container level-' + this.props.level.toString() + (this.props.level > 0 ? ' border-level-' + (this.props.level % 10 == 0 ? 10 : this.props.level % 10).toString() : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted');
+	        var className = 'page-container level-' + this.props.level.toString() + (this.props.level > 0 ? ' border-level-' + (this.props.level % 10 == 0 ? 10 : this.props.level % 10).toString() : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + (this.props.level < 6 ? '' : ' to-be-faded');
 	        return _react2.default.createElement(
 	          'div',
 	          { 'data-level': this.props.level, className: className },
@@ -50856,6 +50856,7 @@
 	    _this2.addFaded = _this2.addFaded.bind(_this2);
 	    _this2.removeFaded = _this2.removeFaded.bind(_this2);
 	    _this2.handeNameChange = _this2.handeNameChange.bind(_this2);
+	    _this2.nameFormatter = _this2.nameFormatter.bind(_this2);
 	    _this2.state = { nameChangeDisabled: !props.pageTree.newRecord, hover: false, showOverLay: false, name: _this2.props.name, originalName: _this2.props.name, counter: 0 };
 	    return _this2;
 	  }
@@ -51026,16 +51027,21 @@
 	    value: function addFaded() {
 	      $(this.refs.pageTile).addClass('not-faded');
 	      $(this.refs.pageTile).parents('.parent.to-be-not-faded').addClass('not-faded');
+	      $(this.refs.pageTile).parents('.child-page').siblings().addClass('faded');
+	      $('.parent.to-be-faded').addClass('faded');
 	      $(this.refs.pageTile).parents('.parent.to-be-faded').addClass('faded');
 	      $(this.refs.pageTile).siblings('.parent.to-be-faded').addClass('faded');
 	      $(this.refs.pageTile).siblings('.parent').find('.parent.to-be-faded').addClass('faded');
 	      $('.page-container').not($(this.refs.pageTile).parents('.page-container')).addClass('faded');
+	      $('.page-container.to-be-faded').addClass('faded');
 	    }
 	  }, {
 	    key: 'removeFaded',
 	    value: function removeFaded() {
 	      $(this.refs.pageTile).removeClass('not-faded');
 	      $(this.refs.pageTile).parents('.parent.to-be-not-faded').removeClass('not-faded');
+	      $('.child-page').removeClass('faded');
+	      $('.parent.to-be-faded').removeClass('faded');
 	      $(this.refs.pageTile).parents('.parent.to-be-faded').removeClass('faded');
 	      $(this.refs.pageTile).siblings('.parent.to-be-faded').removeClass('faded');
 	      $(this.refs.pageTile).siblings('.parent').find('.parent.to-be-faded').addClass('faded');
@@ -51050,6 +51056,11 @@
 	    key: 'showLinkedSection',
 	    value: function showLinkedSection(e) {
 	      this.props.changeActiveSectionId(this.props.pageTree.alt_section_id);
+	    }
+	  }, {
+	    key: 'nameFormatter',
+	    value: function nameFormatter() {
+	      return this.props.name.length > 24 ? this.props.name.substr(0, 24) + '...' : this.props.name;
 	    }
 	  }, {
 	    key: 'componentDidUpdate',
@@ -51128,7 +51139,7 @@
 	              'div',
 	              { onClick: this.enableNameChangeInput, className: this.state.nameChangeDisabled ? '' : 'hide' },
 	              ' ',
-	              this.props.name
+	              this.nameFormatter()
 	            ),
 	            _react2.default.createElement('textarea', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', defaultValue: this.props.name, onBlur: this.disableNameChangeInput, onKeyPress: this.handeNameChange })
 	          ),
@@ -51268,7 +51279,7 @@
 	              'div',
 	              { onClick: this.enableNameChangeInput, className: this.state.nameChangeDisabled ? '' : 'hide' },
 	              ' ',
-	              this.props.name
+	              this.nameFormatter()
 	            ),
 	            _react2.default.createElement('textarea', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', defaultValue: this.props.name, onBlur: this.disableNameChangeInput, onKeyPress: this.handeNameChange })
 	          ),
@@ -52936,7 +52947,7 @@
 	        $.ajax({
 	          url: '/sitemaps/' + this.props.id + '/rename',
 	          method: 'patch',
-	          dataType: 'script',
+	          dataType: 'json',
 	          data: { dont_show_flash: true, sitemap: { name: this.state.name } },
 	          error: function error(result) {
 	            var name = _this.props.name;

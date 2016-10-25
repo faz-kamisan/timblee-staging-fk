@@ -23,9 +23,14 @@
   }
 }
 
-.faded.parent {
-  &:before {
-    display: none;
+.faded {
+  &.parent {
+    &:before {
+      display: none;
+    }
+  }
+  &.child-page {
+    z-index: 0;
   }
 }
 
