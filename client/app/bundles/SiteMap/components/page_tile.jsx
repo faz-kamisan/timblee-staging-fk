@@ -32,6 +32,7 @@ class PageTile extends React.Component {
     this.addFaded = this.addFaded.bind(this);
     this.removeFaded = this.removeFaded.bind(this);
     this.handeNameChange = this.handeNameChange.bind(this);
+    this.nameFormatter = this.nameFormatter.bind(this);
     this.state = { nameChangeDisabled: !props.pageTree.newRecord, hover: false, showOverLay: false, name: this.props.name, originalName: this.props.name, counter: 0 }
   }
 
@@ -185,15 +186,20 @@ class PageTile extends React.Component {
   addFaded() {
     $(this.refs.pageTile).addClass('not-faded');
     $(this.refs.pageTile).parents('.parent.to-be-not-faded').addClass('not-faded');
+    $(this.refs.pageTile).parents('.child-page').siblings().addClass('faded')
+    $('.parent.to-be-faded').addClass('faded')
     $(this.refs.pageTile).parents('.parent.to-be-faded').addClass('faded');
     $(this.refs.pageTile).siblings('.parent.to-be-faded').addClass('faded');
     $(this.refs.pageTile).siblings('.parent').find('.parent.to-be-faded').addClass('faded');
     $('.page-container').not($(this.refs.pageTile).parents('.page-container')).addClass('faded')
+    $('.page-container.to-be-faded').addClass('faded')
   }
 
   removeFaded() {
     $(this.refs.pageTile).removeClass('not-faded');
     $(this.refs.pageTile).parents('.parent.to-be-not-faded').removeClass('not-faded');
+    $('.child-page').removeClass('faded')
+    $('.parent.to-be-faded').removeClass('faded')
     $(this.refs.pageTile).parents('.parent.to-be-faded').removeClass('faded');
     $(this.refs.pageTile).siblings('.parent.to-be-faded').removeClass('faded');
     $(this.refs.pageTile).siblings('.parent').find('.parent.to-be-faded').addClass('faded');
@@ -206,6 +212,10 @@ class PageTile extends React.Component {
 
   showLinkedSection(e) {
     this.props.changeActiveSectionId(this.props.pageTree.alt_section_id)
+  }
+
+  nameFormatter() {
+    return(this.props.name.length > 24 ? (this.props.name.substr(0, 24) + '...') : this.props.name)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -260,7 +270,7 @@ class PageTile extends React.Component {
             }
           </div>
           <h1 className="tile-name-edit">
-            <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
+            <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.nameFormatter()}</div>
             <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' defaultValue={this.props.name} onBlur={this.disableNameChangeInput} onKeyPress={this.handeNameChange}></textarea>
           </h1>
           <ConnectedPageTileBottom pageTree={this.props.pageTree} commentsLength={this.props.pageTree.comments.length} />
@@ -352,7 +362,7 @@ class PageTile extends React.Component {
             }
           </div>
           <h1 className="tile-name-edit">
-            <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
+            <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.nameFormatter()}</div>
             <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' defaultValue={this.props.name} onBlur={this.disableNameChangeInput}  onKeyPress={this.handeNameChange}></textarea>
           </h1>
           <ConnectedPageTileBottom pageTree={this.props.pageTree} commentsLength={this.props.pageTree.comments.length} />

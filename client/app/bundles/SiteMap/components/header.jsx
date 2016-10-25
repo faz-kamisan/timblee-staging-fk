@@ -62,7 +62,7 @@ class Header extends React.Component {
       $.ajax({
         url: '/sitemaps/' + this.props.id + '/rename',
         method: 'patch',
-        dataType: 'script',
+        dataType: 'json',
         data: { dont_show_flash: true, sitemap: { name: this.state.name } },
         error: (result) => {
           var name = _this.props.name
@@ -118,89 +118,97 @@ class Header extends React.Component {
         </li>
       )
     })
-    var otherUsersLength = this.props.business.users.length - 3
+    var otherUsersLength = this.props.business.users.length - 3;
     return (
       <div className="react-header">
-        <div className="row">
-          <div className="col-xs-5">
-            <div className="row">
-              <div className="col-xs-9 p-l-10">
-                <span className="logo-dark relative">
-                  <a href="/home">
-                    <img src="/assets/go-back.svg" className="go-back-link"></img>
-                  </a>
-                </span>
-                <input value = {this.state.name} onChange={this.handleNameChange} onBlur={this.handleNameInputBlur} className={"site-map-name site-map-name-input" + (this.state.nameFocused ? '' : ' hide')} ref='sitemapNameInput' onKeyPress={this.handleNameKeyPressed} />
-                <h3 className={"site-map-name truncate " + (this.state.nameFocused ? ' hide' : '')} onClick={this.handleNameInputFocus} ref='nameEditor'>{this.state.name}</h3>
-              </div>
-              <div className="col-xs-3 state-status text-center">
-                <h5>
-                  <span className={this.props.state}>
-                    {this.props.state}
-                    <i className="icon-caret"></i>
-                  </span>
-                  <ul className="state-drop-down">
-                    {renderStates}
-                  </ul>
-                </h5>
-              </div>
-            </div>
+        <div className="logo-dark relative pull-left sitemap-back-link">
+          <a href="/home">
+            <img src="/assets/go-back.svg" className="go-back-link"></img>
+          </a>
+        </div>
+
+        <div className="pull-left sitemap-name-div">
+          <div className="sitemap-name-div">
+            <input value = {this.state.name} onChange={this.handleNameChange} onBlur={this.handleNameInputBlur} className={"site-map-name site-map-name-input" + (this.state.nameFocused ? '' : ' hide')} ref='sitemapNameInput' onKeyPress={this.handleNameKeyPressed} />
+            <h3 className={"site-map-name truncate " + (this.state.nameFocused ? ' hide' : '')} onClick={this.handleNameInputFocus} ref='nameEditor'>{this.state.name}</h3>
           </div>
-          <div className="col-xs-1 saved-status">
-            <span>
-              { this.props.saving &&
-                <div>
-                  <i className="icon-save-circle"></i> Saved
-                </div>
-              }
+        </div>
+
+        <div className="state-status text-center pull-left">
+          <h5>
+            <span className={this.props.state}>
+              {this.props.state}
+              <i className="icon-caret"></i>
             </span>
-          </div>
-          <div className="col-xs-6">
-            <div className="toggle-comments">
-              <a href="javascript:void(0)" className={"btn-toggle-comments" + (this.state.commentSidebarOpen ? ' active' : '')} onClick={this.toggleCommentState}>
-                <span className="icon-comment"></span>
-                Comments
-                <span>click to toggle</span>
-              </a>
-            </div>
-            <div className="pull-right users-block">
-              { this.props.currentUser.isAdmin &&
-                <span className="icon-invite-female user-invite cursor" data-remote={true}>
-                  <span className="path1"></span>
-                  <span className="path2"></span>
-                  <span className="path3"></span>
-                  <span className="path4"></span>
-                  <span className="path5"></span>
-                </span>
-              }
-              <ul className='users-list'>
-                {renderUsers}
-              </ul>
-              {(otherUsersLength > 1) &&
-                <a className='other-users cursor'>
-                  + { otherUsersLength } others
-                </a>
-              }
-              {(otherUsersLength == 1) &&
-                <a className='other-users'>
-                  + { otherUsersLength } other
-                </a>
-              }
-            </div>
-            <div className="pull-right share-sitemap-btn-div">
-              <a href="javascript:void(0)" className="btn btn-share action sitemap-share-modal-link" data-url={this.props.publicShareUrl} data-name={this.props.name} data-id={this.props.id} data-shared-users={this.props.sharedUsers.map(function(user) { return(user.user_email) }).join(',')}>
-               <span className="share-icon"></span> Share
-              </a>
-            </div>
-          </div>
+            <ul className="state-drop-down">
+              {renderStates}
+            </ul>
+          </h5>
         </div>
-        <div className="toggle-header" onClick={this.handleMainHeaderToggle}>
-          <div className={this.state.showMainHeader ? 'caret-up' : ''}>
+
+        <div className="saved-status pull-left">
+          <span>
+            { this.props.saving &&
+              <div>
+                <i className="icon-save-circle"></i> Saved
+              </div>
+            }
+          </span>
+        </div>
+
+        <div className="toggle-header pull-right" onClick={this.handleMainHeaderToggle}>
+          <div className={"inner-toggle " + (this.state.showMainHeader ? 'caret-up' : '')}>
             <i className="icon-caret"></i>
+            {this.state.showMainHeader && <div>hide</div>}
+            {!this.state.showMainHeader && <div>show</div>}
           </div>
-          {this.state.showMainHeader && <div>hide</div>}
-          {!this.state.showMainHeader && <div>show</div>}
         </div>
+
+        <div className="toggle-comments-outer pull-right">
+          <div className="toggle-comments">
+            <a href="javascript:void(0)" className={"btn-toggle-comments" + (this.state.commentSidebarOpen ? ' active' : '')} onClick={this.toggleCommentState}>
+              <span className="icon-comment"></span>
+              Comments
+              <span>click to toggle</span>
+            </a>
+          </div>
+        </div>
+
+        <div className="pull-right users-block">
+          <div className="inner-user-block">
+            { this.props.currentUser.isAdmin &&
+              <span className="icon-invite-female user-invite cursor" data-remote={true}>
+                <span className="path1"></span>
+                <span className="path2"></span>
+                <span className="path3"></span>
+                <span className="path4"></span>
+                <span className="path5"></span>
+              </span>
+            }
+            <ul className='users-list'>
+              {renderUsers}
+            </ul>
+            {(otherUsersLength > 1) &&
+              <a className='other-users cursor'>
+                + { otherUsersLength } others
+              </a>
+            }
+            {(otherUsersLength == 1) &&
+              <a className='other-users'>
+                + { otherUsersLength } other
+              </a>
+            }
+          </div>
+        </div>
+
+        <div className="pull-right share-sitemap-btn-div">
+          <div className="share-sitemap-btn-div">
+            <a href="javascript:void(0)" className="btn btn-share action sitemap-share-modal-link" data-url={this.props.publicShareUrl} data-name={this.props.name} data-id={this.props.id} data-shared-users={this.props.sharedUsers.map(function(user) { return(user.user_email) }).join(',')}>
+             <span className="share-icon"></span> Share
+            </a>
+          </div>
+        </div>
+
       </div>
     );
   }
