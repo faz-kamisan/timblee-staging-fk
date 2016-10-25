@@ -108,7 +108,27 @@
   </div>
 
 </header>
-<%= javascript_include_tag('sitemaps', 'jump_to', 'notification') %>
+<%= javascript_include_tag('sitemaps', 'jump_to', 'notification', 'invitations', 'team') %>
 
 <%= render 'sitemaps/sitemap_error_modal'%>
 <%= render 'sitemaps/sitemap_warning_modal'%>
+<!-- Choose Plan Modal -->
+<%= render 'users/choose_plan_modal' %>
+
+<!-- Pro Plan Modal -->
+<%= render 'users/pro_plan_modal' %>
+
+<!-- Starter Plan Modal -->
+<%= render 'users/starter_plan_modal' %>
+<%= render 'users/starter_error_modal'%>
+
+
+<%= render 'users/invite_user_modal' %>
+<%= render 'users/invite_user_preview_modal' %>
+
+
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/1.4.3/jquery.payment.min.js"></script>
+<script type="text/javascript">
+  Stripe.setPublishableKey('<%= STRIPE_PUBLISHABLE_KEY %>');
+</script>

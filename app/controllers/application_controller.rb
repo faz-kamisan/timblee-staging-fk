@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_filter :authenticate_user!, unless: :proxy_login?
-  before_filter :load_notifications, if: :current_user
+  before_filter :load_notifications, :load_card, if: :current_user
   before_filter :lock_business_after_trial_end, if: :current_user
 
   def current_user_with_proxy_login
@@ -44,6 +44,10 @@ class ApplicationController < ActionController::Base
 
   def analytics
     @analytics ||= Analytics.new(current_user) if current_user
+  end
+
+  def load_card
+    @card = current_business.active_card
   end
 
   def load_notifications
