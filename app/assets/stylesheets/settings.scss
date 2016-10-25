@@ -1131,3 +1131,7 @@ label.avatar-label > input[type=radio]:checked + img{
     display: block;
   }
 }
+
+#personalization .editable-input.name-field{
+  text-overflow: ellipsis;
+}
