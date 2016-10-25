@@ -65501,6 +65501,8 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
+	var _tree_helper = __webpack_require__(/*! ../helpers/tree_helper */ 609);
+	
 	var _mark_as_resolved_check = __webpack_require__(/*! ../components/mark_as_resolved_check */ 1032);
 	
 	var _mark_as_resolved_check2 = _interopRequireDefault(_mark_as_resolved_check);
@@ -65508,16 +65510,19 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { publicShare: state.publicShare };
+	  return { publicShare: state.publicShare, sections: state.sections, selectedPage: state.selectedPage };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    updatePageState: function updatePageState(pageId, footer, sectionId, state) {
+	    updatePageState: function updatePageState(pageId, footer, sectionId, state, sections, selectedPage) {
 	      if (footer) {
 	        dispatch((0, _actions.updateFooterPageState)(pageId, state));
 	      } else {
 	        dispatch((0, _actions.updatePageState)(pageId, sectionId, state));
+	        dispatch((0, _actions.setSelectedPage)((0, _tree_helper.getNodeById)(sections.filter(function (section) {
+	          return section.default;
+	        })[0].pageTree, selectedPage.id)));
 	      }
 	    },
 	    setSaving: function setSaving(saving) {
@@ -65578,7 +65583,7 @@
 	      var _this3 = this;
 	
 	      var _this = this;
-	      this.props.updatePageState(this.props.page.id, this.props.page.footer, this.props.page.sectionId || this.props.page.section_id, state);
+	      this.props.updatePageState(this.props.page.id, this.props.page.footer, this.props.page.sectionId || this.props.page.section_id, state, this.props.sections, this.props.selectedPage);
 	      $.ajax({
 	        url: '/pages/' + this.props.page.id,
 	        method: 'put',
@@ -67015,7 +67020,7 @@
 	                      { className: 'page-name truncate pull-left' },
 	                      this.props.pageTree.name
 	                    ),
-	                    _react2.default.createElement(_connected_mark_as_resolved_check2.default, { page: this.props.pageTree, pageState: this.props.pageTree.state })
+	                    _react2.default.createElement(_connected_mark_as_resolved_check2.default, { page: this.props.pageTree, id: this.props.pageTree.id, pageState: this.props.pageTree.state })
 	                  )
 	                ),
 	                _react2.default.createElement(
