@@ -12,11 +12,7 @@
         <p>Want unlimited sitemaps, or more users?</p>
         <div class="warning-footer">
           <div class="warning-left">
-            <% if request.original_fullpath == settings_users_path %>
               <%= link_to 'SWITCH TO THE PRO PLAN', "#choose-plan-modal", class: 'btn btn-right', 'data-toggle': "modal", 'data-dismiss': 'modal' %>
-            <% else %>
-              <%= link_to 'SWITCH TO THE PRO PLAN', billing_settings_users_path, class: 'btn btn-right' %>
-            <% end %>
           </div>
          </div>
       </div>

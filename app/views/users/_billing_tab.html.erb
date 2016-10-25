@@ -161,14 +161,7 @@
   <!-- <a href="#thanks-modal" data-toggle="modal">modal 1</a> -->
 
 </div>
-<!-- Choose Plan Modal -->
-<%= render 'users/choose_plan_modal' %>
 
-<!-- Pro Plan Modal -->
-<%= render 'users/pro_plan_modal' %>
-
-<!-- Starter Plan Modal -->
-<%= render 'users/starter_plan_modal' %>
 
 <%= render 'businesses/delete_business_modal' %>
 
@@ -198,13 +191,6 @@
 </div>
 
 
-<%= render 'users/starter_error_modal'%>
 
 
 
-
-<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/1.4.3/jquery.payment.min.js"></script>
-<script type="text/javascript">
-  Stripe.setPublishableKey('<%= STRIPE_PUBLISHABLE_KEY %>');
-</script>

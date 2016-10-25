@@ -29,10 +29,10 @@
         <div class="dashboard-search">
           <span class="search-inner">
             <input type='search' id='search-sitemap' class='search-sitemap' placeholder="Search Sitemaps" />
-            <span class="icon-search"></span>  
+            <span class="icon-search"></span>
           </span>
         </div>
-        
+
         <div class="row p-t-40">
           <div class="col-xs-4 sitemap-container new-sitemap">
             <%= form_for Sitemap.new do |f| %>
@@ -54,7 +54,5 @@
 <%= javascript_include_tag('rename_sitemap', 'invitations', 'team') %>
 <%= render 'users/invite_error_modal'%>
 <%= render 'users/invite_warning_modal'%>
-<%= render 'users/invite_user_modal' %>
 <%= render 'sitemaps/sitemap_share_modal' %>
 <%= render 'users/sitemap_share_preview_modal' %>
-<%= render 'users/invite_user_preview_modal' %>
