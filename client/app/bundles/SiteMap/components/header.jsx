@@ -62,7 +62,7 @@ class Header extends React.Component {
       $.ajax({
         url: '/sitemaps/' + this.props.id + '/rename',
         method: 'patch',
-        dataType: 'script',
+        dataType: 'json',
         data: { dont_show_flash: true, sitemap: { name: this.state.name } },
         error: (result) => {
           var name = _this.props.name

@@ -23,6 +23,17 @@
   }
 }
 
+.faded {
+  &.parent {
+    &:before {
+      display: none;
+    }
+  }
+  &.child-page {
+    z-index: 0;
+  }
+}
+
 .page-container.faded {
   z-index: 1;
 }

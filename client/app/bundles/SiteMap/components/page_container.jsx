@@ -27,7 +27,7 @@ class PageContainer extends React.Component {
       }
 
       width = width.toString() + 'px'
-      var className = 'page-container level-' + this.props.level.toString() + ((this.props.level > 0) ? (' border-level-' + ((this.props.level % 10) == 0 ? 10 : (this.props.level % 10)).toString()) : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + ((children.length == 0) ? ' no-children' : '')
+      var className = 'page-container level-' + this.props.level.toString() + ((this.props.level > 0) ? (' border-level-' + ((this.props.level % 10) == 0 ? 10 : (this.props.level % 10)).toString()) : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + ((children.length == 0) ? ' no-children' : '') + ((this.props.level < 6) ? '' : ' to-be-faded')
       return (
         <div data-level={this.props.level} className={ className }>
           { this.props.sitemapNumber == '1.0' &&
@@ -42,13 +42,13 @@ class PageContainer extends React.Component {
             <ConnectedIntroductionScreenOne />
           }
           <ConnectedLevelSupport pageTree={this.props.pageTree} />
-          <div className={ 'parent parent-' + this.props.level.toString() + (this.props.pageTree.collapsed ? ' hide' : '') + ((this.props.level > 4) ? '' : ' to-be-faded')} data-level={this.props.level}>
+          <div className={ 'parent parent-' + this.props.level.toString() + (this.props.pageTree.collapsed ? ' hide' : '') + ((this.props.level > 4) ? '' : ' to-be-not-faded') + ((this.props.level < 6) ? '' : ' to-be-faded')} data-level={this.props.level}>
             {this.props.children}
           </div>
         </div>
       );
     } else {
-      var className = 'page-container level-' + this.props.level.toString() + ((this.props.level > 0) ? (' border-level-' + ((this.props.level % 10) == 0 ? 10 : (this.props.level % 10)).toString()) : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted')
+      var className = 'page-container level-' + this.props.level.toString() + ((this.props.level > 0) ? (' border-level-' + ((this.props.level % 10) == 0 ? 10 : (this.props.level % 10)).toString()) : '') + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted') + ((this.props.level < 6) ? '' : ' to-be-faded')
       return (
         <div data-level={this.props.level} className={ className }>
           { this.props.sitemapNumber == '1.0' &&
@@ -57,7 +57,7 @@ class PageContainer extends React.Component {
           <ConnectedPageTile pageTree={this.props.pageTree} collapsed={this.props.pageTree.collapsed} childrenLength={children.length} sitemapNumber={this.props.sitemapNumber} name={this.props.pageTree.name} level={this.props.level} isDragging={this.props.isDragging} />
           <ConnectedGutter pageTree={this.props.pageTree} />
           <ConnectedLevelSupport pageTree={this.props.pageTree} />
-          <div className={ 'parent parent-' + this.props.level.toString() + (this.props.pageTree.collapsed ? ' hide' : '') + ((this.props.level > 4) ? '' : ' to-be-faded')} data-level={this.props.level}>
+          <div className={ 'parent parent-' + this.props.level.toString() + (this.props.pageTree.collapsed ? ' hide' : '') + ((this.props.level > 4) ? '' : ' to-be-not-faded') + ((this.props.level < 6) ? '' : ' to-be-faded')} data-level={this.props.level}>
             {this.props.children}
           </div>
         </div>
