@@ -23,6 +23,12 @@
   }
 }
 
+.faded.parent {
+  &:before {
+    display: none;
+  }
+}
+
 .page-container.faded {
   z-index: 1;
 }

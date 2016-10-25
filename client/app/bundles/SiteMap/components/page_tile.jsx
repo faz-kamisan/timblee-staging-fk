@@ -184,13 +184,19 @@ class PageTile extends React.Component {
 
   addFaded() {
     $(this.refs.pageTile).addClass('not-faded');
-    $(this.refs.pageTile).parents('.parent.to-be-faded').addClass('not-faded');
+    $(this.refs.pageTile).parents('.parent.to-be-not-faded').addClass('not-faded');
+    $(this.refs.pageTile).parents('.parent.to-be-faded').addClass('faded');
+    $(this.refs.pageTile).siblings('.parent.to-be-faded').addClass('faded');
+    $(this.refs.pageTile).siblings('.parent').find('.parent.to-be-faded').addClass('faded');
     $('.page-container').not($(this.refs.pageTile).parents('.page-container')).addClass('faded')
   }
 
   removeFaded() {
     $(this.refs.pageTile).removeClass('not-faded');
-    $(this.refs.pageTile).parents('.parent.to-be-faded').removeClass('not-faded');
+    $(this.refs.pageTile).parents('.parent.to-be-not-faded').removeClass('not-faded');
+    $(this.refs.pageTile).parents('.parent.to-be-faded').removeClass('faded');
+    $(this.refs.pageTile).siblings('.parent.to-be-faded').removeClass('faded');
+    $(this.refs.pageTile).siblings('.parent').find('.parent.to-be-faded').addClass('faded');
     $('.page-container').removeClass('faded');
   }
 
