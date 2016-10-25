@@ -3147,7 +3147,7 @@ body.trial {
       font-weight: 400;
       margin-top: 20px;
       &.truncate {
-        max-width: 95%;
+        max-width: 80%;
       }
     }
 
@@ -3622,7 +3622,7 @@ body.trial {
   line-height: 44px;
   font-style: 12px;
   a {
-    color: $primaryGrey;
+    color: #d5d7da;
     vertical-align: middle;
     cursor: pointer;
     &:hover {
