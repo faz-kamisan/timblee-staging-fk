@@ -78,7 +78,7 @@ class Comment extends React.Component {
   }
 
   render() {
-    var commenterImageUrl = this.props.commenter.avatar ? this.props.commenter.avatar.avatar.url : '/assets/guest-icon.svg'
+    var commenterImageUrl = this.props.commenter.avatar ? this.props.commenter.avatar.avatar.url : '/assets/guest-icon.png'
     if((this.props.currentUser && (this.props.commenter.email == this.props.currentUser.email)) || (this.props.currentGuest && (this.props.commenter.email == this.props.currentGuest.email))) {
       return (
         <div className='comment-block'>

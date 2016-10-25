@@ -53014,148 +53014,148 @@
 	        { className: 'react-header' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'row' },
+	          { className: 'logo-dark relative pull-left sitemap-back-link' },
+	          _react2.default.createElement(
+	            'a',
+	            { href: '/home' },
+	            _react2.default.createElement('img', { src: '/assets/go-back.svg', className: 'go-back-link' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'pull-left sitemap-name-div' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'col-xs-5' },
+	            { className: 'sitemap-name-div' },
+	            _react2.default.createElement('input', { value: this.state.name, onChange: this.handleNameChange, onBlur: this.handleNameInputBlur, className: "site-map-name site-map-name-input" + (this.state.nameFocused ? '' : ' hide'), ref: 'sitemapNameInput', onKeyPress: this.handleNameKeyPressed }),
 	            _react2.default.createElement(
-	              'div',
-	              { className: 'row' },
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'col-xs-9 p-l-10' },
-	                _react2.default.createElement(
-	                  'span',
-	                  { className: 'logo-dark relative' },
-	                  _react2.default.createElement(
-	                    'a',
-	                    { href: '/home' },
-	                    _react2.default.createElement('img', { src: '/assets/go-back.svg', className: 'go-back-link' })
-	                  )
-	                ),
-	                _react2.default.createElement('input', { value: this.state.name, onChange: this.handleNameChange, onBlur: this.handleNameInputBlur, className: "site-map-name site-map-name-input" + (this.state.nameFocused ? '' : ' hide'), ref: 'sitemapNameInput', onKeyPress: this.handleNameKeyPressed }),
-	                _react2.default.createElement(
-	                  'h3',
-	                  { className: "site-map-name truncate " + (this.state.nameFocused ? ' hide' : ''), onClick: this.handleNameInputFocus, ref: 'nameEditor' },
-	                  this.state.name
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'col-xs-3 state-status text-center' },
-	                _react2.default.createElement(
-	                  'h5',
-	                  null,
-	                  _react2.default.createElement(
-	                    'span',
-	                    { className: this.props.state },
-	                    this.props.state,
-	                    _react2.default.createElement('i', { className: 'icon-caret' })
-	                  ),
-	                  _react2.default.createElement(
-	                    'ul',
-	                    { className: 'state-drop-down' },
-	                    renderStates
-	                  )
-	                )
-	              )
+	              'h3',
+	              { className: "site-map-name truncate " + (this.state.nameFocused ? ' hide' : ''), onClick: this.handleNameInputFocus, ref: 'nameEditor' },
+	              this.state.name
 	            )
-	          ),
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'state-status text-center pull-left' },
 	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-xs-1 saved-status' },
+	            'h5',
+	            null,
 	            _react2.default.createElement(
 	              'span',
-	              null,
-	              this.props.saving && _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement('i', { className: 'icon-save-circle' }),
-	                ' Saved'
-	              )
+	              { className: this.props.state },
+	              this.props.state,
+	              _react2.default.createElement('i', { className: 'icon-caret' })
+	            ),
+	            _react2.default.createElement(
+	              'ul',
+	              { className: 'state-drop-down' },
+	              renderStates
 	            )
-	          ),
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'saved-status pull-left' },
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            this.props.saving && _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement('i', { className: 'icon-save-circle' }),
+	              ' Saved'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'toggle-header pull-right', onClick: this.handleMainHeaderToggle },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'col-xs-6' },
-	            _react2.default.createElement(
+	            { className: "inner-toggle " + (this.state.showMainHeader ? 'caret-up' : '') },
+	            _react2.default.createElement('i', { className: 'icon-caret' }),
+	            this.state.showMainHeader && _react2.default.createElement(
 	              'div',
-	              { className: 'toggle-comments' },
-	              _react2.default.createElement(
-	                'a',
-	                { href: 'javascript:void(0)', className: "btn-toggle-comments" + (this.state.commentSidebarOpen ? ' active' : ''), onClick: this.toggleCommentState },
-	                _react2.default.createElement('span', { className: 'icon-comment' }),
-	                'Comments',
-	                _react2.default.createElement(
-	                  'span',
-	                  null,
-	                  'click to toggle'
-	                )
-	              )
+	              null,
+	              'hide'
 	            ),
-	            _react2.default.createElement(
+	            !this.state.showMainHeader && _react2.default.createElement(
 	              'div',
-	              { className: 'pull-right users-block' },
-	              this.props.currentUser.isAdmin && _react2.default.createElement(
+	              null,
+	              'show'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'toggle-comments-outer pull-right' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'toggle-comments' },
+	            _react2.default.createElement(
+	              'a',
+	              { href: 'javascript:void(0)', className: "btn-toggle-comments" + (this.state.commentSidebarOpen ? ' active' : ''), onClick: this.toggleCommentState },
+	              _react2.default.createElement('span', { className: 'icon-comment' }),
+	              'Comments',
+	              _react2.default.createElement(
 	                'span',
-	                { className: 'icon-invite-female user-invite cursor', 'data-remote': true },
-	                _react2.default.createElement('span', { className: 'path1' }),
-	                _react2.default.createElement('span', { className: 'path2' }),
-	                _react2.default.createElement('span', { className: 'path3' }),
-	                _react2.default.createElement('span', { className: 'path4' }),
-	                _react2.default.createElement('span', { className: 'path5' })
-	              ),
-	              _react2.default.createElement(
-	                'ul',
-	                { className: 'users-list' },
-	                renderUsers
-	              ),
-	              otherUsersLength > 1 && _react2.default.createElement(
-	                'a',
-	                { className: 'other-users cursor' },
-	                '+ ',
-	                otherUsersLength,
-	                ' others'
-	              ),
-	              otherUsersLength == 1 && _react2.default.createElement(
-	                'a',
-	                { className: 'other-users' },
-	                '+ ',
-	                otherUsersLength,
-	                ' other'
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'pull-right share-sitemap-btn-div' },
-	              _react2.default.createElement(
-	                'a',
-	                { href: 'javascript:void(0)', className: 'btn btn-share action sitemap-share-modal-link', 'data-url': this.props.publicShareUrl, 'data-name': this.props.name, 'data-id': this.props.id, 'data-shared-users': this.props.sharedUsers.map(function (user) {
-	                    return user.user_email;
-	                  }).join(',') },
-	                _react2.default.createElement('span', { className: 'share-icon' }),
-	                ' Share'
+	                null,
+	                'click to toggle'
 	              )
 	            )
 	          )
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'toggle-header', onClick: this.handleMainHeaderToggle },
+	          { className: 'pull-right users-block' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: this.state.showMainHeader ? 'caret-up' : '' },
-	            _react2.default.createElement('i', { className: 'icon-caret' })
-	          ),
-	          this.state.showMainHeader && _react2.default.createElement(
+	            { className: 'inner-user-block' },
+	            this.props.currentUser.isAdmin && _react2.default.createElement(
+	              'span',
+	              { className: 'icon-invite-female user-invite cursor', 'data-remote': true },
+	              _react2.default.createElement('span', { className: 'path1' }),
+	              _react2.default.createElement('span', { className: 'path2' }),
+	              _react2.default.createElement('span', { className: 'path3' }),
+	              _react2.default.createElement('span', { className: 'path4' }),
+	              _react2.default.createElement('span', { className: 'path5' })
+	            ),
+	            _react2.default.createElement(
+	              'ul',
+	              { className: 'users-list' },
+	              renderUsers
+	            ),
+	            otherUsersLength > 1 && _react2.default.createElement(
+	              'a',
+	              { className: 'other-users cursor' },
+	              '+ ',
+	              otherUsersLength,
+	              ' others'
+	            ),
+	            otherUsersLength == 1 && _react2.default.createElement(
+	              'a',
+	              { className: 'other-users' },
+	              '+ ',
+	              otherUsersLength,
+	              ' other'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'pull-right share-sitemap-btn-div' },
+	          _react2.default.createElement(
 	            'div',
-	            null,
-	            'hide'
-	          ),
-	          !this.state.showMainHeader && _react2.default.createElement(
-	            'div',
-	            null,
-	            'show'
+	            { className: 'share-sitemap-btn-div' },
+	            _react2.default.createElement(
+	              'a',
+	              { href: 'javascript:void(0)', className: 'btn btn-share action sitemap-share-modal-link', 'data-url': this.props.publicShareUrl, 'data-name': this.props.name, 'data-id': this.props.id, 'data-shared-users': this.props.sharedUsers.map(function (user) {
+	                  return user.user_email;
+	                }).join(',') },
+	              _react2.default.createElement('span', { className: 'share-icon' }),
+	              ' Share'
+	            )
 	          )
 	        )
 	      );
@@ -55021,7 +55021,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var commenterImageUrl = this.props.commenter.avatar ? this.props.commenter.avatar.avatar.url : '/assets/guest-icon.svg';
+	      var commenterImageUrl = this.props.commenter.avatar ? this.props.commenter.avatar.avatar.url : '/assets/guest-icon.png';
 	      if (this.props.currentUser && this.props.commenter.email == this.props.currentUser.email || this.props.currentGuest && this.props.commenter.email == this.props.currentGuest.email) {
 	        return _react2.default.createElement(
 	          'div',
