@@ -49,7 +49,7 @@ class PageCommentsModal extends React.Component {
                   <span className="page-id">ID: {this.props.pageTree.uid}</span>
                   <div className="clearfix">
                     <span className="page-name truncate pull-left">{this.props.pageTree.name}</span>
-                      <ConnectedMarkAsResolvedCheck page={this.props.pageTree} pageState={this.props.pageTree.state} />
+                      <ConnectedMarkAsResolvedCheck page={this.props.pageTree} id={this.props.pageTree.id} pageState={this.props.pageTree.state} />
                   </div>
                 </div>
                 <ul className="comment-group">
