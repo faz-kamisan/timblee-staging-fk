@@ -4,7 +4,6 @@ import ConnectedLevelSupport from '../containers/connected_level_support'
 import ConnectedLevelSupportBefore from '../containers/connected_level_support_before'
 import ConnectedGutter from '../containers/connected_gutter'
 import ConnectedFirstPageDroppable from '../containers/connected_first_page_droppable'
-import ConnectedIntroductionScreenOne from '../containers/connected_introduction_screen_one';
 
 class PageContainer extends React.Component {
   static propTypes = {
@@ -37,9 +36,6 @@ class PageContainer extends React.Component {
           <ConnectedGutter pageTree={this.props.pageTree} />
           { (children.length == 0) &&
             <ConnectedFirstPageDroppable pageTree={this.props.pageTree} leftSidebarExpanded={this.props.leftSidebarExpanded} />
-          }
-          { this.props.publicShare &&
-            <ConnectedIntroductionScreenOne />
           }
           <ConnectedLevelSupport pageTree={this.props.pageTree} />
           <div className={ 'parent parent-' + this.props.level.toString() + (this.props.pageTree.collapsed ? ' hide' : '') + ((this.props.level > 4) ? '' : ' to-be-not-faded') + ((this.props.level < 6) ? '' : ' to-be-faded')} data-level={this.props.level}>
