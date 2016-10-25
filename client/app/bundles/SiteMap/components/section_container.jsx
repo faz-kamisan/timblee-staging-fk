@@ -64,9 +64,8 @@ class SectionContainer extends React.Component {
         var width = ((pageTree.children.length * 240) + 100 + 240)
       }
       if(this.props.publicShare) {
-        width -= 372
+        width -= 170
       }
-
       width = width.toString() + 'px'
 
     return (
