@@ -92,7 +92,7 @@ class Analytics
   def business_traits
     {
       owner_id: business.owner.id,
-      business_name: business.name,
+      name: business.name,
       trial_end_date: business.trial_end_at.strftime('%d %b %Y'),
       'monthly Spend': business.monthly_charge,
       plan: business.plan_name,
