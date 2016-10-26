@@ -1,7 +1,7 @@
-set :rails_env, 'staging'
+set :rails_env, 'prep'
 set :branch, 'staging'
 
-set :deploy_to, '/var/www/timblee'
+set :deploy_to, '/var/www/timblee-prep'
 # role-based syntax
 # ==================
 
