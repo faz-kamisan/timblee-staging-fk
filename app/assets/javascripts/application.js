@@ -38,6 +38,7 @@
 //= require header
 //= require browsers
 //= require animate_shared_view
+//= require jquery.mentions
 
 $(window).on('load resize', function() {
   var $bussinessName = $('.business-name');
@@ -56,11 +57,15 @@ $(document).ready(function() {
     document.moveCaretToEnd(this);
   });
 
-  $('.twemoji-list span').each(function() {
-    var $this = $(this);
-    $this.on('click', function() {
-      $this.closest('.twemoji-wrap').find('.twemoji-icon-picker img').click();
-    });
-  });
+  $('body').on('click', '.twemoji-list span', function(e) {
+    $(e.target).closest('.twemoji-wrap').find('.twemoji-icon-picker img').click();
+  })
+
+  // $('.twemoji-list span').each(function() {
+  //   var $this = $(this);
+  //   $this.on('click', function() {
+  //     $this.closest('.twemoji-wrap').find('.twemoji-icon-picker img').click();
+  //   });
+  // });
 
 });

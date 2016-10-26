@@ -618,7 +618,7 @@ ul.tagit input[type="text"] {
   }
 }
 
-#invite-user-modal, #sitemap-share-modal {
+#invite-user-modal, #sitemap-share-modal, .sitemap-right-sidebar, #page-comments-modal {
   .twemoji-picker {
     width: 215px!important;
     height: 150px;
@@ -667,9 +667,32 @@ ul.tagit input[type="text"] {
   }
 }
 
+.sitemap-right-sidebar {
+  .twemoji-picker {
+    right: -10px;
+  }
+  .twemoji-textarea {
+    padding: 15px 15px 40px 15px!important;
+  }
+}
+
 #invite-user-modal, #sitemap-share-modal {
   .emoji-section {
     margin-top: 28px;
+  }
+}
+
+#page-comments-modal {
+  .comment-holder {
+    border: 1px solid #ccc;
+    margin-top: 35px;
+  }
+  .twemoji-picker {
+    right: -25px;
+    top: -25px;
+  }
+  .twemoji-textarea {
+    padding: 15px 15px 40px 15px!important;
   }
 }
 

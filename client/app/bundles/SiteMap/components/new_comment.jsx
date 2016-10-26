@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import { MentionsInput, Mention } from 'react-mentions'
 
 class NewComment extends React.Component {
   static propTypes = {
@@ -16,35 +15,37 @@ class NewComment extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = { newCommentMessage: '' }
-    this.handleCommentChange = this.handleCommentChange.bind(this)
     this.handleAddComment = this.handleAddComment.bind(this)
     this.handleClearComment = this.handleClearComment.bind(this)
   }
 
-  handleCommentChange(e) {
-    this.setState({ newCommentMessage: e.target.value, showGuestInfoForm: false })
-  }
-
   componentDidMount() {
-    var _this = this
-    $(this.refs.newComment.refs.container).find('textarea').watermark('Add a comment...<br/>You can mention people by typing @.', {fallback: false});
-    // $(function(){
-    //   $(_this.refs.newComment.refs.container).find('textarea').emojiPicker();
-    //   // $(_this.refs.newComments).emojiPicker();
-    // });
+    var data = this.props.business.users
+    var formatted_data = data.map(function(object, index){
+      var d = {}
+      d["value"] = object["full_name"]
+      d["uid"] = object["id"]
+      return d
+    })
+    $(this.refs.newComment).twemojiPicker()
+    $(this.refs.newComment).siblings('.twemoji-textarea').mentionsInput({source: formatted_data});
   }
 
   handleAddComment(e) {
-    if(this.state.newCommentMessage.trim().length > 0) {
+    var textarea = $(this.refs.newComment).siblings('.twemoji-textarea')
+    var textareaDup = $(this.refs.newComment).siblings('.twemoji-textarea-duplicate')
+
+    var commentMessage = textarea.html()
+
+    if(commentMessage.trim().length > 0) {
       var _this = this;
       var timeStamp = new Date().getTime();
-      this.props.addComment(this.props.commentableId, this.props.commentableType, _this.props.footer, this.state.newCommentMessage, (this.props.currentUser || this.props.currentGuest), this.props.sectionId, timeStamp, this.props.sections, this.props.selectedPage)
+      this.props.addComment(this.props.commentableId, this.props.commentableType, _this.props.footer, commentMessage, (this.props.currentUser || this.props.currentGuest), this.props.sectionId, timeStamp, this.props.sections, this.props.selectedPage)
       $.ajax({
         url: '/comments/',
         method: 'post',
         dataType: 'JSON',
-        data: { comment: { commentable_id: this.props.commentableId, commentable_type: this.props.commentableType, message: this.state.newCommentMessage } },
+        data: { comment: { commentable_id: this.props.commentableId, commentable_type: this.props.commentableType, message: commentMessage } },
         error: (result) => {
           document.setFlash(result.responseText)
         },
@@ -56,16 +57,21 @@ class NewComment extends React.Component {
           _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, _this.props.footer, timeStamp, result.id, _this.props.sectionId, this.props.sections, this.props.selectedPage)
         }
       });
-      this.setState({ newCommentMessage: '' })
+      this.refs.newComment.innerHTML = ''
+
+      textarea.html('')
+      textareaDup.html('')
     }
   }
 
   handleClearComment(e) {
-    this.setState({ newCommentMessage: '' })
+    this.refs.newComment.innerHTML = ''
+    $(this.refs.newComment).siblings('.twemoji-textarea').text('');
+    $(this.refs.newComment).siblings('.twemoji-textarea-duplicate').text('');
   }
 
   componentDidUpdate(e) {
-    if(this.state.newCommentMessage == '') {
+    if(this.refs.newComment.innerHTML == '') {
       $(this.refs.newComment).focus()
       $(this.refs.newComment).blur()
     }
@@ -73,10 +79,8 @@ class NewComment extends React.Component {
 
   render() {
     return (
-      <div className="relative">
-        <MentionsInput className='comment-input' value={this.state.newCommentMessage} onChange={this.handleCommentChange} displayTransform={function(id, display, type) { return('@' + display + '') }} markup={'@[__display__]'} ref='newComment'>
-          <Mention trigger="@" data={this.props.business.users} appendSpaceOnAdd={true} />
-        </MentionsInput>
+      <div className="comment-holder">
+        <textarea ref='newComment' id="temp" className="emoji-decorated comment-editor comment-input__input"></textarea>
         <div className="add-remove-comment">
           <span onClick={this.handleAddComment} className='cursor add'>Add my comment </span>
           <span className="or">or</span>
