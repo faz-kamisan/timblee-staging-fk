@@ -40,9 +40,6 @@
 //= require animate_shared_view
 
 $(window).on('load resize', function() {
-  if($('.level-0').length) {
-    $('.intro-box-1').css('left', $('.level-0 > .page-tile').offset().left + 224);
-  }
   var $bussinessName = $('.business-name');
   $bussinessName.css('margin-top', -$bussinessName.height()/2);
 });

@@ -53273,10 +53273,6 @@
 	
 	var _connected_first_page_droppable2 = _interopRequireDefault(_connected_first_page_droppable);
 	
-	var _connected_introduction_screen_one = __webpack_require__(/*! ../containers/connected_introduction_screen_one */ 877);
-	
-	var _connected_introduction_screen_one2 = _interopRequireDefault(_connected_introduction_screen_one);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -53320,7 +53316,6 @@
 	          _react2.default.createElement(_connected_page_tile2.default, { pageTree: this.props.pageTree, collapsed: this.props.pageTree.collapsed, childrenLength: children.length, sitemapNumber: this.props.sitemapNumber, name: this.props.pageTree.name, level: this.props.level, isDragging: this.props.isDragging }),
 	          _react2.default.createElement(_connected_gutter2.default, { pageTree: this.props.pageTree }),
 	          children.length == 0 && _react2.default.createElement(_connected_first_page_droppable2.default, { pageTree: this.props.pageTree, leftSidebarExpanded: this.props.leftSidebarExpanded }),
-	          this.props.publicShare && _react2.default.createElement(_connected_introduction_screen_one2.default, null),
 	          _react2.default.createElement(_connected_level_support2.default, { pageTree: this.props.pageTree }),
 	          _react2.default.createElement(
 	            'div',
@@ -53462,6 +53457,10 @@
 	var _connected_page_tile_bottom = __webpack_require__(/*! ../containers/connected_page_tile_bottom */ 867);
 	
 	var _connected_page_tile_bottom2 = _interopRequireDefault(_connected_page_tile_bottom);
+	
+	var _connected_introduction_screen_one = __webpack_require__(/*! ../containers/connected_introduction_screen_one */ 877);
+	
+	var _connected_introduction_screen_one2 = _interopRequireDefault(_connected_introduction_screen_one);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -53727,6 +53726,7 @@
 	        return _react2.default.createElement(
 	          'div',
 	          { className: "page-tile " + (this.props.level == 0 && this.props.childrenLength % 2 == 0 ? 'even-tree' : 'odd-tree') + (this.props.level > 7 && this.props.pageTree.alt_section_id ? " level-with-section" : ""), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile' },
+	          this.props.publicShare && this.props.level == 0 && _react2.default.createElement(_connected_introduction_screen_one2.default, null),
 	          !this.props.isDragging && !this.props.publicShare && _react2.default.createElement(
 	            'div',
 	            { style: { zIndex: 100 } },
@@ -53867,6 +53867,7 @@
 	        return _react2.default.createElement(
 	          'div',
 	          { className: "page-tile " + (this.props.level > 7 && this.props.pageTree.alt_section_id ? " level-with-section" : ""), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile' },
+	          this.props.publicShare && this.props.level == 0 && _react2.default.createElement(_connected_introduction_screen_one2.default, null),
 	          !this.props.isDragging && !this.props.publicShare && _react2.default.createElement(
 	            'div',
 	            null,

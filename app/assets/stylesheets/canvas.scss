@@ -3343,7 +3343,6 @@ body.trial {
   z-index: 12;
 }
 
-.intro-box-1,
 .intro-box-trial {
   right: auto;
   top: 147px;
@@ -3351,6 +3350,21 @@ body.trial {
   .hotspot {
     top: 100px;
     left: -69px;
+  }
+}
+
+.intro-box-1 {
+  right: 0;
+  top: 0;
+  z-index: 21;
+  .hotspot {
+    top: 34px;
+    right: 23px;
+  }
+  .intro-box {
+    position: absolute;
+    left: 28px;
+    top: -65px;
   }
 }
 
