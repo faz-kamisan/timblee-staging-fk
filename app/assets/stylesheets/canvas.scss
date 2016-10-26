@@ -27,9 +27,10 @@
   &.parent {
     &:before {
       display: none;
+      z-index: 0;
     }
   }
-  &.child-page {
+  &.child-page, &.page-tile {
     z-index: 0;
   }
 }

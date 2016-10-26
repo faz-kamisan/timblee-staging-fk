@@ -53257,19 +53257,19 @@
 	
 	var _connected_page_tile2 = _interopRequireDefault(_connected_page_tile);
 	
-	var _connected_level_support = __webpack_require__(/*! ../containers/connected_level_support */ 869);
+	var _connected_level_support = __webpack_require__(/*! ../containers/connected_level_support */ 871);
 	
 	var _connected_level_support2 = _interopRequireDefault(_connected_level_support);
 	
-	var _connected_level_support_before = __webpack_require__(/*! ../containers/connected_level_support_before */ 871);
+	var _connected_level_support_before = __webpack_require__(/*! ../containers/connected_level_support_before */ 873);
 	
 	var _connected_level_support_before2 = _interopRequireDefault(_connected_level_support_before);
 	
-	var _connected_gutter = __webpack_require__(/*! ../containers/connected_gutter */ 873);
+	var _connected_gutter = __webpack_require__(/*! ../containers/connected_gutter */ 875);
 	
 	var _connected_gutter2 = _interopRequireDefault(_connected_gutter);
 	
-	var _connected_first_page_droppable = __webpack_require__(/*! ../containers/connected_first_page_droppable */ 875);
+	var _connected_first_page_droppable = __webpack_require__(/*! ../containers/connected_first_page_droppable */ 877);
 	
 	var _connected_first_page_droppable2 = _interopRequireDefault(_connected_first_page_droppable);
 	
@@ -53458,7 +53458,7 @@
 	
 	var _connected_page_tile_bottom2 = _interopRequireDefault(_connected_page_tile_bottom);
 	
-	var _connected_introduction_screen_one = __webpack_require__(/*! ../containers/connected_introduction_screen_one */ 877);
+	var _connected_introduction_screen_one = __webpack_require__(/*! ../containers/connected_introduction_screen_one */ 869);
 	
 	var _connected_introduction_screen_one2 = _interopRequireDefault(_connected_introduction_screen_one);
 	
@@ -53664,10 +53664,13 @@
 	    key: 'addFaded',
 	    value: function addFaded() {
 	      $(this.refs.pageTile).addClass('not-faded');
+	      $('.page-tile').not($(this.refs.pageTile)).addClass('faded');
 	      $(this.refs.pageTile).parents('.parent.to-be-not-faded').addClass('not-faded');
 	      $(this.refs.pageTile).parents('.child-page').siblings().addClass('faded');
+	      $(this.refs.pageTile).parents('.child-page').siblings().find('.child-page').addClass('faded');
 	      $('.parent.to-be-faded').addClass('faded');
 	      $(this.refs.pageTile).parents('.parent.to-be-faded').addClass('faded');
+	      $(this.refs.pageTile).closest('.child-page').siblings().find('.parent.to-be-faded').addClass('faded');
 	      $(this.refs.pageTile).siblings('.parent.to-be-faded').addClass('faded');
 	      $(this.refs.pageTile).siblings('.parent').find('.parent.to-be-faded').addClass('faded');
 	      $('.page-container').not($(this.refs.pageTile).parents('.page-container')).addClass('faded');
@@ -53677,6 +53680,7 @@
 	    key: 'removeFaded',
 	    value: function removeFaded() {
 	      $(this.refs.pageTile).removeClass('not-faded');
+	      $('.page-tile').not($(this.refs.pageTile)).removeClass('faded');
 	      $(this.refs.pageTile).parents('.parent.to-be-not-faded').removeClass('not-faded');
 	      $('.child-page').removeClass('faded');
 	      $('.parent.to-be-faded').removeClass('faded');
@@ -54534,6 +54538,156 @@
 
 /***/ },
 /* 869 */
+/*!******************************************************************************!*\
+  !*** ./app/bundles/SiteMap/containers/connected_introduction_screen_one.jsx ***!
+  \******************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 578);
+	
+	var _actions = __webpack_require__(/*! ../actions */ 608);
+	
+	var _introduction_screen_one = __webpack_require__(/*! ../components/introduction_screen_one */ 870);
+	
+	var _introduction_screen_one2 = _interopRequireDefault(_introduction_screen_one);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return { introSlideNumber: state.introSlideNumber };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    setIntroSlideNumber: function setIntroSlideNumber(introSlideNumber) {
+	      dispatch((0, _actions.setIntroSlideNumber)(introSlideNumber));
+	    }
+	  };
+	};
+	
+	var ConnectedIntroductionScreenOne = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_introduction_screen_one2.default);
+	
+	exports.default = ConnectedIntroductionScreenOne;
+
+/***/ },
+/* 870 */
+/*!********************************************************************!*\
+  !*** ./app/bundles/SiteMap/components/introduction_screen_one.jsx ***!
+  \********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 301);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactClickOutside = __webpack_require__(/*! react-click-outside */ 863);
+	
+	var _reactClickOutside2 = _interopRequireDefault(_reactClickOutside);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var IntroductionScreensOne = function (_React$Component) {
+	  _inherits(IntroductionScreensOne, _React$Component);
+	
+	  function IntroductionScreensOne(props) {
+	    _classCallCheck(this, IntroductionScreensOne);
+	
+	    var _this2 = _possibleConstructorReturn(this, (IntroductionScreensOne.__proto__ || Object.getPrototypeOf(IntroductionScreensOne)).call(this, props));
+	
+	    _this2.setIntroSlideNumber = _this2.setIntroSlideNumber.bind(_this2);
+	    _this2.hideFirstScreenHandle = _this2.hideFirstScreenHandle.bind(_this2);
+	    _this2.handleClickOutside = _this2.handleClickOutside.bind(_this2);
+	    _this2.state = { showFirstScreenHandle: true };
+	    return _this2;
+	  }
+	
+	  _createClass(IntroductionScreensOne, [{
+	    key: 'hideFirstScreenHandle',
+	    value: function hideFirstScreenHandle(e) {
+	      this.setState({ showFirstScreenHandle: false });
+	      this.props.setIntroSlideNumber(0);
+	    }
+	  }, {
+	    key: 'setIntroSlideNumber',
+	    value: function setIntroSlideNumber(number) {
+	      this.props.setIntroSlideNumber(number);
+	    }
+	  }, {
+	    key: 'handleClickOutside',
+	    value: function handleClickOutside() {
+	      if (this.state.showFirstScreenHandle && this.props.introSlideNumber == 1) {
+	        this.hideFirstScreenHandle();
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this = this;
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'intro-box-1' },
+	        _react2.default.createElement(
+	          'span',
+	          { className: "hotspot " + (this.state.showFirstScreenHandle ? '' : 'hide'), onClick: function onClick(e) {
+	              _this.setIntroSlideNumber(1);
+	            } },
+	          _react2.default.createElement('span', { className: 'pulse pulse-1' }),
+	          _react2.default.createElement('span', { className: 'pulse pulse-2' }),
+	          _react2.default.createElement('span', { className: 'pulse pulse-3' })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: "intro-box share-1" + (this.props.introSlideNumber == 1 ? '' : ' hide') },
+	          _react2.default.createElement(
+	            'figure',
+	            null,
+	            _react2.default.createElement('img', { alt: ' ', src: '/assets/share-intro-1.jpg' })
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Click on an individual page to add comments to that page'
+	          ),
+	          _react2.default.createElement(
+	            'a',
+	            { href: 'javascript:void(0);', onClick: this.hideFirstScreenHandle },
+	            'Got it'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return IntroductionScreensOne;
+	}(_react2.default.Component);
+	
+	IntroductionScreensOne.propTypes = {
+	  introSlideNumber: _react.PropTypes.number.isRequired
+	};
+	exports.default = (0, _reactClickOutside2.default)(IntroductionScreensOne);
+
+/***/ },
+/* 871 */
 /*!********************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_level_support.jsx ***!
   \********************************************************************/
@@ -54549,7 +54703,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 608);
 	
-	var _level_support = __webpack_require__(/*! ../components/level_support */ 870);
+	var _level_support = __webpack_require__(/*! ../components/level_support */ 872);
 	
 	var _level_support2 = _interopRequireDefault(_level_support);
 	
@@ -54583,7 +54737,7 @@
 	exports.default = ConnectedLevelSupport;
 
 /***/ },
-/* 870 */
+/* 872 */
 /*!**********************************************************!*\
   !*** ./app/bundles/SiteMap/components/level_support.jsx ***!
   \**********************************************************/
@@ -54725,7 +54879,7 @@
 	exports.default = DroppableLevelSupport;
 
 /***/ },
-/* 871 */
+/* 873 */
 /*!***************************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_level_support_before.jsx ***!
   \***************************************************************************/
@@ -54741,7 +54895,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 608);
 	
-	var _level_support_before = __webpack_require__(/*! ../components/level_support_before */ 872);
+	var _level_support_before = __webpack_require__(/*! ../components/level_support_before */ 874);
 	
 	var _level_support_before2 = _interopRequireDefault(_level_support_before);
 	
@@ -54775,7 +54929,7 @@
 	exports.default = ConnectedLevelSupportBefore;
 
 /***/ },
-/* 872 */
+/* 874 */
 /*!*****************************************************************!*\
   !*** ./app/bundles/SiteMap/components/level_support_before.jsx ***!
   \*****************************************************************/
@@ -54912,7 +55066,7 @@
 	exports.default = DroppableLevelSupportBefore;
 
 /***/ },
-/* 873 */
+/* 875 */
 /*!*************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_gutter.jsx ***!
   \*************************************************************/
@@ -54928,7 +55082,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 608);
 	
-	var _gutter = __webpack_require__(/*! ../components/gutter */ 874);
+	var _gutter = __webpack_require__(/*! ../components/gutter */ 876);
 	
 	var _gutter2 = _interopRequireDefault(_gutter);
 	
@@ -54962,7 +55116,7 @@
 	exports.default = ConnectedGutter;
 
 /***/ },
-/* 874 */
+/* 876 */
 /*!***************************************************!*\
   !*** ./app/bundles/SiteMap/components/gutter.jsx ***!
   \***************************************************/
@@ -55104,7 +55258,7 @@
 	exports.default = DroppableGutter;
 
 /***/ },
-/* 875 */
+/* 877 */
 /*!***************************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_first_page_droppable.jsx ***!
   \***************************************************************************/
@@ -55120,7 +55274,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 608);
 	
-	var _first_page_droppable = __webpack_require__(/*! ../components/first_page_droppable */ 876);
+	var _first_page_droppable = __webpack_require__(/*! ../components/first_page_droppable */ 878);
 	
 	var _first_page_droppable2 = _interopRequireDefault(_first_page_droppable);
 	
@@ -55163,7 +55317,7 @@
 	exports.default = ConnectedFirstPageDroppable;
 
 /***/ },
-/* 876 */
+/* 878 */
 /*!*****************************************************************!*\
   !*** ./app/bundles/SiteMap/components/first_page_droppable.jsx ***!
   \*****************************************************************/
@@ -55350,156 +55504,6 @@
 	
 	var DroppableFirstPageDroppable = DropTargetDecorator(FirstPageDroppable);
 	exports.default = DroppableFirstPageDroppable;
-
-/***/ },
-/* 877 */
-/*!******************************************************************************!*\
-  !*** ./app/bundles/SiteMap/containers/connected_introduction_screen_one.jsx ***!
-  \******************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _reactRedux = __webpack_require__(/*! react-redux */ 578);
-	
-	var _actions = __webpack_require__(/*! ../actions */ 608);
-	
-	var _introduction_screen_one = __webpack_require__(/*! ../components/introduction_screen_one */ 878);
-	
-	var _introduction_screen_one2 = _interopRequireDefault(_introduction_screen_one);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var mapStateToProps = function mapStateToProps(state) {
-	  return { introSlideNumber: state.introSlideNumber };
-	};
-	
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {
-	    setIntroSlideNumber: function setIntroSlideNumber(introSlideNumber) {
-	      dispatch((0, _actions.setIntroSlideNumber)(introSlideNumber));
-	    }
-	  };
-	};
-	
-	var ConnectedIntroductionScreenOne = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_introduction_screen_one2.default);
-	
-	exports.default = ConnectedIntroductionScreenOne;
-
-/***/ },
-/* 878 */
-/*!********************************************************************!*\
-  !*** ./app/bundles/SiteMap/components/introduction_screen_one.jsx ***!
-  \********************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 301);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactClickOutside = __webpack_require__(/*! react-click-outside */ 863);
-	
-	var _reactClickOutside2 = _interopRequireDefault(_reactClickOutside);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var IntroductionScreensOne = function (_React$Component) {
-	  _inherits(IntroductionScreensOne, _React$Component);
-	
-	  function IntroductionScreensOne(props) {
-	    _classCallCheck(this, IntroductionScreensOne);
-	
-	    var _this2 = _possibleConstructorReturn(this, (IntroductionScreensOne.__proto__ || Object.getPrototypeOf(IntroductionScreensOne)).call(this, props));
-	
-	    _this2.setIntroSlideNumber = _this2.setIntroSlideNumber.bind(_this2);
-	    _this2.hideFirstScreenHandle = _this2.hideFirstScreenHandle.bind(_this2);
-	    _this2.handleClickOutside = _this2.handleClickOutside.bind(_this2);
-	    _this2.state = { showFirstScreenHandle: true };
-	    return _this2;
-	  }
-	
-	  _createClass(IntroductionScreensOne, [{
-	    key: 'hideFirstScreenHandle',
-	    value: function hideFirstScreenHandle(e) {
-	      this.setState({ showFirstScreenHandle: false });
-	      this.props.setIntroSlideNumber(0);
-	    }
-	  }, {
-	    key: 'setIntroSlideNumber',
-	    value: function setIntroSlideNumber(number) {
-	      this.props.setIntroSlideNumber(number);
-	    }
-	  }, {
-	    key: 'handleClickOutside',
-	    value: function handleClickOutside() {
-	      if (this.state.showFirstScreenHandle && this.props.introSlideNumber == 1) {
-	        this.hideFirstScreenHandle();
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this = this;
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'intro-box-1' },
-	        _react2.default.createElement(
-	          'span',
-	          { className: "hotspot " + (this.state.showFirstScreenHandle ? '' : 'hide'), onClick: function onClick(e) {
-	              _this.setIntroSlideNumber(1);
-	            } },
-	          _react2.default.createElement('span', { className: 'pulse pulse-1' }),
-	          _react2.default.createElement('span', { className: 'pulse pulse-2' }),
-	          _react2.default.createElement('span', { className: 'pulse pulse-3' })
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: "intro-box share-1" + (this.props.introSlideNumber == 1 ? '' : ' hide') },
-	          _react2.default.createElement(
-	            'figure',
-	            null,
-	            _react2.default.createElement('img', { alt: ' ', src: '/assets/share-intro-1.jpg' })
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Click on an individual page to add comments to that page'
-	          ),
-	          _react2.default.createElement(
-	            'a',
-	            { href: 'javascript:void(0);', onClick: this.hideFirstScreenHandle },
-	            'Got it'
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return IntroductionScreensOne;
-	}(_react2.default.Component);
-	
-	IntroductionScreensOne.propTypes = {
-	  introSlideNumber: _react.PropTypes.number.isRequired
-	};
-	exports.default = (0, _reactClickOutside2.default)(IntroductionScreensOne);
 
 /***/ },
 /* 879 */
@@ -71285,7 +71289,7 @@
 	
 	var _connected_page_tile2 = _interopRequireDefault(_connected_page_tile);
 	
-	var _connected_first_page_droppable = __webpack_require__(/*! ../containers/connected_first_page_droppable */ 875);
+	var _connected_first_page_droppable = __webpack_require__(/*! ../containers/connected_first_page_droppable */ 877);
 	
 	var _connected_first_page_droppable2 = _interopRequireDefault(_connected_first_page_droppable);
 	
