@@ -172,12 +172,15 @@ class PageTile extends React.Component {
   }
 
   mouseOver(e) {
+    $(this.refs.pageTile).addClass('hovered');
+    $('.page-tile').not($(this.refs.pageTile)).removeClass('hovered');
     if(!this.props.pageTree.footer) {
       this.addFaded()
     }
   }
 
   mouseOut(e) {
+    $(this.refs.pageTile).removeClass('hovered');
     if(!this.props.pageTree.footer) {
       this.removeFaded()
     }

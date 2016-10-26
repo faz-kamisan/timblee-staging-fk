@@ -51012,6 +51012,9 @@
 	  }, {
 	    key: 'mouseOver',
 	    value: function mouseOver(e) {
+	      debugger;
+	      $(this.refs.pageTile).addClass('hovered');
+	      $('.page-tile').not($(this.refs.pageTile)).removeClass('hovered');
 	      if (!this.props.pageTree.footer) {
 	        this.addFaded();
 	      }
@@ -51019,6 +51022,7 @@
 	  }, {
 	    key: 'mouseOut',
 	    value: function mouseOut(e) {
+	      $(this.refs.pageTile).removeClass('hovered');
 	      if (!this.props.pageTree.footer) {
 	        this.removeFaded();
 	      }
