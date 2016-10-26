@@ -30,7 +30,7 @@
       z-index: 0;
     }
   }
-  &.child-page, &.page-tile {
+  &.child-page, &.page-tile, &.page-container {
     z-index: 0;
   }
 }
@@ -110,7 +110,7 @@
     z-index: 1;
     @include rotate(-45deg);
     border-top: solid 2px #ddd;
-    border-left: solid 2px #ddd; 
+    border-left: solid 2px #ddd;
   }
 }
 
@@ -130,7 +130,7 @@
     z-index: 1;
     @include rotate(45deg);
     border-top: solid 2px #ddd;
-    border-left: solid 2px #ddd; 
+    border-left: solid 2px #ddd;
   }
 }
 
@@ -210,8 +210,9 @@
   }
 
   .tile-number {
-    color: $primaryGrey;
-    font-size: 9px;
+    color: #858b9c;
+    font-size: 10px;
+    font-weight: 400;
     display: inline-block;
     margin: 0 0 2px 0;
   }
@@ -241,9 +242,10 @@
     font-size: 12px;
     margin: 0;
     text-align: left;
-    line-height: 12px;
+    line-height: 14px;
     position: absolute;
     top: 27px;
+    color: #545c64;
     z-index: 4;
     width: 100%;
     font-weight: 600;
@@ -292,7 +294,7 @@
         top: -1px;
         margin-right: 4px;
         position: relative;
-        background: #62717f;
+        background: #62717E;
       }
     }
     &.drag-over {
@@ -303,7 +305,7 @@
   }
 
   .tile-top {
-    padding-top: 12px;
+    padding-top: 8px;
   }
 
   .tile-bottom {
@@ -1054,7 +1056,7 @@
   display: inline-block;
   margin-right: 1px;
   @include border-radius(50%);
-  background: #b7b6bc;
+  background: #62717E;
 }
 
 .page-type-wrapper {
@@ -2329,7 +2331,7 @@ body.trial {
     display: inline-block;
     margin-right: 1px;
     @include border-radius(50%);
-    background: #b7b6bc;
+    background: #62717E;
   }
 
   .page-type-details {
@@ -2596,6 +2598,8 @@ body.trial {
   min-width: calc(100% - 372px);
   margin-left: 372px;
   min-height: calc(100vh - 80px - 95px - 36px);
+  z-index: 10;
+  position: relative;
   @include animate(.35s);
   &.left-bar-contracted {
     min-width: calc(100% - 30px);
@@ -2613,6 +2617,7 @@ body.trial {
   min-height: 130px;
   @include animate(.35s);
   position: relative;
+  z-index: 9;
   &.left-bar-contracted {
     min-width: calc(100% - 30px);
     margin-left: 30px;
@@ -3640,7 +3645,7 @@ body.trial {
     padding-right: 0!important;
     display: inline-block;
     position: relative;
-    top: 6px;
+    top: 2px;
     left: -1px;
   }
 }
