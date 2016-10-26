@@ -50858,7 +50858,6 @@
 	    _this2.addFaded = _this2.addFaded.bind(_this2);
 	    _this2.removeFaded = _this2.removeFaded.bind(_this2);
 	    _this2.handeNameChange = _this2.handeNameChange.bind(_this2);
-	    _this2.nameFormatter = _this2.nameFormatter.bind(_this2);
 	    _this2.state = { nameChangeDisabled: !props.pageTree.newRecord, showOverLay: false, name: _this2.props.name, originalName: _this2.props.name, counter: 0 };
 	    return _this2;
 	  }
@@ -51058,11 +51057,6 @@
 	      this.props.changeActiveSectionId(this.props.pageTree.alt_section_id);
 	    }
 	  }, {
-	    key: 'nameFormatter',
-	    value: function nameFormatter() {
-	      return this.props.name.length > 24 ? this.props.name.substr(0, 24) + '...' : this.props.name;
-	    }
-	  }, {
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate(prevProps, prevState) {
 	      if (prevState.nameChangeDisabled && !this.state.nameChangeDisabled) {
@@ -51140,7 +51134,7 @@
 	              'div',
 	              { onClick: this.enableNameChangeInput, className: this.state.nameChangeDisabled ? '' : 'hide' },
 	              ' ',
-	              this.nameFormatter()
+	              this.props.name
 	            ),
 	            _react2.default.createElement('textarea', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', defaultValue: this.props.name, onBlur: this.disableNameChangeInput, onKeyPress: this.handeNameChange })
 	          ),
@@ -51281,7 +51275,7 @@
 	              'div',
 	              { onClick: this.enableNameChangeInput, className: this.state.nameChangeDisabled ? '' : 'hide' },
 	              ' ',
-	              this.nameFormatter()
+	              this.props.name
 	            ),
 	            _react2.default.createElement('textarea', { className: "form-control" + (this.state.nameChangeDisabled ? ' hide' : ''), ref: 'nameInput', defaultValue: this.props.name, onBlur: this.disableNameChangeInput, onKeyPress: this.handeNameChange })
 	          ),

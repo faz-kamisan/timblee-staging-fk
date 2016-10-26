@@ -33,7 +33,6 @@ class PageTile extends React.Component {
     this.addFaded = this.addFaded.bind(this);
     this.removeFaded = this.removeFaded.bind(this);
     this.handeNameChange = this.handeNameChange.bind(this);
-    this.nameFormatter = this.nameFormatter.bind(this);
     this.state = { nameChangeDisabled: !props.pageTree.newRecord, showOverLay: false, name: this.props.name, originalName: this.props.name, counter: 0 }
   }
 
@@ -213,10 +212,6 @@ class PageTile extends React.Component {
     this.props.changeActiveSectionId(this.props.pageTree.alt_section_id)
   }
 
-  nameFormatter() {
-    return(this.props.name.length > 24 ? (this.props.name.substr(0, 24) + '...') : this.props.name)
-  }
-
   componentDidUpdate(prevProps, prevState) {
     if(prevState.nameChangeDisabled && !this.state.nameChangeDisabled) {
       this.refs.nameInput.focus();
@@ -272,7 +267,7 @@ class PageTile extends React.Component {
             }
           </div>
           <h1 className="tile-name-edit">
-            <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.nameFormatter()}</div>
+            <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
             <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' defaultValue={this.props.name} onBlur={this.disableNameChangeInput} onKeyPress={this.handeNameChange}></textarea>
           </h1>
           <ConnectedPageTileBottom pageTree={this.props.pageTree} commentsLength={this.props.pageTree.comments.length} />
@@ -367,7 +362,7 @@ class PageTile extends React.Component {
             }
           </div>
           <h1 className="tile-name-edit">
-            <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.nameFormatter()}</div>
+            <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
             <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' defaultValue={this.props.name} onBlur={this.disableNameChangeInput}  onKeyPress={this.handeNameChange}></textarea>
           </h1>
           <ConnectedPageTileBottom pageTree={this.props.pageTree} commentsLength={this.props.pageTree.comments.length} />
