@@ -23,19 +23,32 @@ class NewComment extends React.Component {
   }
 
   handleCommentChange(e) {
+    console.log("comment change")
+    console.log(e)
+    console.log(this)
     this.setState({ newCommentMessage: e.target.value, showGuestInfoForm: false })
   }
 
   componentDidMount() {
-    var _this = this
-    $(this.refs.newComment.refs.container).find('textarea').watermark('Add a comment...<br/>You can mention people by typing @.', {fallback: false});
-    // $(function(){
-    //   $(_this.refs.newComment.refs.container).find('textarea').emojiPicker();
-    //   // $(_this.refs.newComments).emojiPicker();
-    // });
+    var data = this.props.business.users
+
+    var formatted_data = data.map(function(object, index){
+      var d = {}
+      d["value"] = object["full_name"]
+      d["uid"] = object["id"]
+      return d
+    })
+
+    $('.comment-editor').twemojiPicker()
+
+    $('.comment-editor').siblings('.twemoji-textarea').mentionsInput({source: formatted_data});
   }
 
   handleAddComment(e) {
+    console.log("comment add")
+    console.log(e)
+    console.log(this)
+
     if(this.state.newCommentMessage.trim().length > 0) {
       var _this = this;
       var timeStamp = new Date().getTime();
@@ -61,6 +74,10 @@ class NewComment extends React.Component {
   }
 
   handleClearComment(e) {
+    console.log("comment clear")
+    console.log(e)
+    console.log(this)
+
     this.setState({ newCommentMessage: '' })
   }
 
@@ -73,14 +90,11 @@ class NewComment extends React.Component {
 
   render() {
     return (
-      <div className="relative">
-        <MentionsInput className='comment-input' value={this.state.newCommentMessage} onChange={this.handleCommentChange} displayTransform={function(id, display, type) { return('@' + display + '') }} markup={'@[__display__]'} ref='newComment'>
-          <Mention trigger="@" data={this.props.business.users} appendSpaceOnAdd={true} />
-        </MentionsInput>
-        <div className="add-remove-comment">
-          <span onClick={this.handleAddComment} className='cursor add'>Add my comment </span>
-          <span className="or">or</span>
-          <span onClick={this.handleClearComment} className='cursor cancel'> cancel</span>
+      <div>
+        <textarea className="emoji-decorated comment-editor" value={this.state.newCommentMessage} onChange={this.handleCommentChange}></textarea>
+        <div className="emoji-section">
+          <a className="add-message add-invite-message" onClick={this.handleAddComment}>Add my message</a> or
+          <a className="clear-text clear-custom-message" onClick={this.handleClearComment}>Cancel</a>
         </div>
       </div>
     )

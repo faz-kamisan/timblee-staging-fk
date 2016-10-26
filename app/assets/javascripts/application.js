@@ -38,6 +38,7 @@
 //= require header
 //= require browsers
 //= require animate_shared_view
+//= require jquery.mentions
 
 $(window).on('load resize', function() {
   if($('.level-0').length) {
