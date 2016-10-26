@@ -34,7 +34,7 @@ class PageTile extends React.Component {
     this.removeFaded = this.removeFaded.bind(this);
     this.handeNameChange = this.handeNameChange.bind(this);
     this.nameFormatter = this.nameFormatter.bind(this);
-    this.state = { nameChangeDisabled: !props.pageTree.newRecord, hover: false, showOverLay: false, name: this.props.name, originalName: this.props.name, counter: 0 }
+    this.state = { nameChangeDisabled: !props.pageTree.newRecord, showOverLay: false, name: this.props.name, originalName: this.props.name, counter: 0 }
   }
 
   handleClickOutside() {
@@ -171,14 +171,12 @@ class PageTile extends React.Component {
   }
 
   mouseOver(e) {
-    this.setState({hover: true});
     if(!this.props.pageTree.footer) {
       this.addFaded()
     }
   }
 
   mouseOut(e) {
-    this.setState({hover: false});
     if(!this.props.pageTree.footer) {
       this.removeFaded()
     }
@@ -281,7 +279,7 @@ class PageTile extends React.Component {
           <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }>
           </div>
           { !((this.props.level == 0) && this.props.pageTree.alt_section_id) &&
-            <div className={ "tile-right-hover " + (this.state.hover ? 'hovered' : '') }>
+            <div className="tile-right-hover">
               <ul className="tile-more">
                 { !this.props.publicShare &&
                   <li className="first-item">
@@ -376,7 +374,7 @@ class PageTile extends React.Component {
           <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }>
           </div>
           { !((this.props.level == 0) && this.props.pageTree.alt_section_id) &&
-            <div className={ "tile-right-hover " + (this.state.hover ? 'hovered' : '') }>
+            <div className="tile-right-hover">
               <ul className="tile-more">
                 { !this.props.publicShare &&
                   <li className="first-item">

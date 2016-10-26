@@ -50859,7 +50859,7 @@
 	    _this2.removeFaded = _this2.removeFaded.bind(_this2);
 	    _this2.handeNameChange = _this2.handeNameChange.bind(_this2);
 	    _this2.nameFormatter = _this2.nameFormatter.bind(_this2);
-	    _this2.state = { nameChangeDisabled: !props.pageTree.newRecord, hover: false, showOverLay: false, name: _this2.props.name, originalName: _this2.props.name, counter: 0 };
+	    _this2.state = { nameChangeDisabled: !props.pageTree.newRecord, showOverLay: false, name: _this2.props.name, originalName: _this2.props.name, counter: 0 };
 	    return _this2;
 	  }
 	
@@ -51011,7 +51011,6 @@
 	  }, {
 	    key: 'mouseOver',
 	    value: function mouseOver(e) {
-	      this.setState({ hover: true });
 	      if (!this.props.pageTree.footer) {
 	        this.addFaded();
 	      }
@@ -51019,7 +51018,6 @@
 	  }, {
 	    key: 'mouseOut',
 	    value: function mouseOut(e) {
-	      this.setState({ hover: false });
 	      if (!this.props.pageTree.footer) {
 	        this.removeFaded();
 	      }
@@ -51150,7 +51148,7 @@
 	          _react2.default.createElement('div', { className: "tile-right " + this.props.pageTree.pageType.icon_name }),
 	          !(this.props.level == 0 && this.props.pageTree.alt_section_id) && _react2.default.createElement(
 	            'div',
-	            { className: "tile-right-hover " + (this.state.hover ? 'hovered' : '') },
+	            { className: 'tile-right-hover' },
 	            _react2.default.createElement(
 	              'ul',
 	              { className: 'tile-more' },
@@ -51291,7 +51289,7 @@
 	          _react2.default.createElement('div', { className: "tile-right " + this.props.pageTree.pageType.icon_name }),
 	          !(this.props.level == 0 && this.props.pageTree.alt_section_id) && _react2.default.createElement(
 	            'div',
-	            { className: "tile-right-hover " + (this.state.hover ? 'hovered' : '') },
+	            { className: 'tile-right-hover' },
 	            _react2.default.createElement(
 	              'ul',
 	              { className: 'tile-more' },
