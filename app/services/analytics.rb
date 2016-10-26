@@ -85,7 +85,7 @@ class Analytics
       email: user.email,
       full_name: user.full_name,
       comments_count: user.comments.count,
-      signed_up_at: user.created_at
+      createdAt: user.created_at
     }
   end
 
@@ -98,7 +98,7 @@ class Analytics
       plan: business.plan_name,
       no_of_sitemaps: business.sitemaps.count,
       first_sitemap_date: business.sitemaps.order(:created_at).first.try(:created_at).try(:strftime, '%d %b %Y'),
-      signed_up_at: business.created_at,
+      createdAt: business.created_at,
       comments_count: business.comments_count
     }
   end
