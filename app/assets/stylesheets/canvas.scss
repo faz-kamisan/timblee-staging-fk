@@ -2355,18 +2355,22 @@ body.trial {
 }
 
 .section-list {
-  padding-left: 372px;
+  padding-left: 0;
+  left: 372px;
   position: fixed;
   top: 175px;
-  left: 0;
-  width: 100%;
+  width: calc(100% - 372px);
   margin: 0;
   z-index: 16;
   &.left-bar-contracted {
     padding-left: 0;
     padding-right: 0;
+    left: 30px;
+    width: calc(100% - 30px);
     &.public-share {
       padding-left: 0;
+      left: 0;
+      width: 100%;
     }
   }
   @include animate(.35s);
@@ -3523,7 +3527,7 @@ body.trial {
   font-size: 8px;
   text-transform: uppercase;
   color: $primaryBlack;
-  top: 10px;
+  top: 5px;
   @include border-radius(4px);
   padding: 2px 5px;
   cursor: pointer;
@@ -3678,3 +3682,15 @@ body.trial {
     margin-right: 10px;
   }
 }
+
+// .loader {
+//   position: fixed;
+//   height: 100%;
+//   width: 100%;
+//   max-height: 100%;
+//   max-width: 100%;
+//   z-index: 100;
+//   background: red;
+//   left: 0;
+//   top: 0;
+// }
