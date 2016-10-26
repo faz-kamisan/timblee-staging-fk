@@ -35,9 +35,16 @@
 
         <div class="row p-t-40">
           <div class="col-xs-4 sitemap-container new-sitemap">
-            <%= form_for Sitemap.new do |f| %>
-              <%= f.hidden_field :folder_id %>
-              <%= render 'sitemaps/new_sitemap'%>
+            <% if current_business.account_locked?%>
+              <a href="<%= billing_settings_users_path %>" class="site-card new_sitemap_link">
+                <span class="cus-icon-add"></span> <br>
+                New Sitemap
+              </a>
+            <% else %>
+              <%= form_for Sitemap.new do |f| %>
+                <%= f.hidden_field :folder_id %>
+                <%= render 'sitemaps/new_sitemap'%>
+              <% end %>
             <% end %>
           </div>
           <div class='sitemaps-listing'>

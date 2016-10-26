@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   def settings
     @current_tab = params[:tab] || 'my-info'
+    flash[:alert] ||= t('account_locked', scope: :flash) if @current_tab == 'billing' && current_business.account_locked?
 
     if(current_business.stripe_customer_id)
       @card = current_business.active_card

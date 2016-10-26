@@ -26,12 +26,16 @@
           </div>
         <div class="col-xs-3 text-right edit-info">
           <div class="edit">
-            <% if current_business.is_starter_plan? && !current_business.in_trial_period? %>
-                <a href="#invite-error-modal" data-toggle="modal" class="btn btn-pink invite-user-modal-link">Invite</a>
-            <% elsif current_business.is_starter_plan? && current_business.in_trial_period? %>
-                <a href="#invite-warning-modal" data-toggle="modal" class="btn btn-pink invite-user-modal-link">Invite</a>
+            <% if current_business.account_locked? %>
+              <a href="<%= billing_settings_users_path %>" class="btn btn-pink ">Invite</a>
             <% else %>
-              <a data-toggle="modal" class="btn btn-pink invite-user-modal-link invite-link">Invite</a>
+              <% if current_business.is_starter_plan? && !current_business.in_trial_period? %>
+                  <a href="#invite-error-modal" data-toggle="modal" class="btn btn-pink invite-user-modal-link">Invite</a>
+              <% elsif current_business.is_starter_plan? && current_business.in_trial_period? %>
+                  <a href="#invite-warning-modal" data-toggle="modal" class="btn btn-pink invite-user-modal-link">Invite</a>
+              <% else %>
+                <a data-toggle="modal" class="btn btn-pink invite-user-modal-link invite-link">Invite</a>
+              <% end %>
             <% end %>
           </div>
         </div>

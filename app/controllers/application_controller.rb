@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
   end
 
   def lock_business_after_trial_end
-    if !current_user.is_super_admin? && !current_business.in_trial_period? && current_business.is_starter_plan? && !current_business.allow_downgrade_to_starter?
+    if !current_user.is_super_admin? && current_business.account_locked?
       if request.xhr?.nil?
         redirect_to billing_settings_users_path, alert: t('account_locked', scope: :flash)
       else

@@ -10,6 +10,10 @@ class Business < ActiveRecord::Base
   has_one :active_card, -> { order(created_at: :desc) }, class_name: :Card
   mount_uploader :logo, AvatarUploader
 
+  def account_locked?
+    !in_trial_period? && is_starter_plan? && !allow_downgrade_to_starter?
+  end
+
   def no_of_users
     users.count
   end
