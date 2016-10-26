@@ -30,7 +30,7 @@
       z-index: 0;
     }
   }
-  &.child-page, &.page-tile {
+  &.child-page, &.page-tile, &.page-container {
     z-index: 0;
   }
 }
@@ -110,7 +110,7 @@
     z-index: 1;
     @include rotate(-45deg);
     border-top: solid 2px #ddd;
-    border-left: solid 2px #ddd; 
+    border-left: solid 2px #ddd;
   }
 }
 
@@ -130,7 +130,7 @@
     z-index: 1;
     @include rotate(45deg);
     border-top: solid 2px #ddd;
-    border-left: solid 2px #ddd; 
+    border-left: solid 2px #ddd;
   }
 }
 
