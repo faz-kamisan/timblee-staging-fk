@@ -4,64 +4,54 @@
   <title>The page you were looking for doesn't exist (404)</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
-  body {
-    background-color: #EFEFEF;
-    color: #2E2F30;
-    text-align: center;
-    font-family: arial, sans-serif;
-    margin: 0;
-  }
-
-  div.dialog {
-    width: 95%;
-    max-width: 33em;
-    margin: 4em auto 0;
-  }
-
-  div.dialog > div {
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
-    background-color: white;
-    padding: 7px 12% 0;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
-
-  h1 {
-    font-size: 100%;
-    color: #730E15;
-    line-height: 1.5em;
-  }
-
-  div.dialog > p {
-    margin: 0 0 1em;
-    padding: 1em;
-    background-color: #F7F7F7;
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #999;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-color: #DADADA;
-    color: #666;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
+    body { background: #262B30; font-family: "proxima-nova",sans-serif; }
+    .error-div { display: table; width: 100%; height: 100%; overflow: hidden; position: absolute; left: 0; top: 0; }
+    .inner-404 { display: table-cell; vertical-align: middle; padding: 0 50px; text-align: center; color: #ffffff }
+    .error-heading { font-size: 36px; line-height: 42px; font-weight: 300; padding-bottom: 10px; }
+    .error-para { font-size: 18px; line-height: 24px; font-weight: 300; }
+    .error-para a { color: #ffffff; }
+    .error-para a:hover { color: #ec008c; }
+    .error-text { font-style: 18px; line-height: 24px; font-weight: 300; color: #414952; padding-top: 10px; }
   </style>
+  <script type="text/javascript">
+    (function() {
+      var config = {
+        kitId: 'rru5bof',
+        scriptTimeout: 3000
+      };
+      var h = document.getElementsByTagName('html')[0];
+      h.className += ' wf-loading';
+      var t = setTimeout(function() {
+        h.className = h.className.replace(/(\s|^)wf-loading(\s|$)/g, ' ');
+        h.className += ' wf-inactive';
+      }, config.scriptTimeout);
+      var d = false;
+      var tk = document.createElement('script');
+      tk.src = '//use.typekit.net/' + config.kitId + '.js';
+      tk.type = 'text/javascript';
+      tk.async = 'true';
+      tk.onload = tk.onreadystatechange = function() {
+        var rs = this.readyState;
+        if (d || rs && rs != 'complete' && rs != 'loaded') return;
+        d = true;
+        clearTimeout(t);
+        try { Typekit.load(config); } catch (e) {}
+      };
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(tk, s);
+    })();
+  </script>
 </head>
 
 <body>
   <!-- This file lives in public/404.html -->
-  <div class="dialog">
-    <div>
-      <h1>The page you were looking for doesn't exist.</h1>
-      <p>You may have mistyped the address or the page may have moved.</p>
+  <div class="error-div">
+    <div class="inner-404">
+      <h1 class="error-heading">Uh oh. Looks like you've reached an <br> unknown place.</h1>
+      <p class="error-para">The good: You discovered it, so you get to name it <br> anything you want :)</p>
+      <p class="error-para">The bad: This is clearly not what you were looking <br> for. Let's get you <a href="/dashboard">back to the home screen</a>.</p>
+      <p class="error-text">404 Error</p>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
   </div>
 </body>
 </html>
