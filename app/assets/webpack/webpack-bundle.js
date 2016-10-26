@@ -53495,7 +53495,7 @@
 	    _this2.removeFaded = _this2.removeFaded.bind(_this2);
 	    _this2.handeNameChange = _this2.handeNameChange.bind(_this2);
 	    _this2.nameFormatter = _this2.nameFormatter.bind(_this2);
-	    _this2.state = { nameChangeDisabled: !props.pageTree.newRecord, hover: false, showOverLay: false, name: _this2.props.name, originalName: _this2.props.name, counter: 0 };
+	    _this2.state = { nameChangeDisabled: !props.pageTree.newRecord, showOverLay: false, name: _this2.props.name, originalName: _this2.props.name, counter: 0 };
 	    return _this2;
 	  }
 	
@@ -53647,7 +53647,6 @@
 	  }, {
 	    key: 'mouseOver',
 	    value: function mouseOver(e) {
-	      this.setState({ hover: true });
 	      if (!this.props.pageTree.footer) {
 	        this.addFaded();
 	      }
@@ -53655,7 +53654,6 @@
 	  }, {
 	    key: 'mouseOut',
 	    value: function mouseOut(e) {
-	      this.setState({ hover: false });
 	      if (!this.props.pageTree.footer) {
 	        this.removeFaded();
 	      }
@@ -53664,17 +53662,13 @@
 	    key: 'addFaded',
 	    value: function addFaded() {
 	      $(this.refs.pageTile).addClass('not-faded');
-	      $('.page-tile').not($(this.refs.pageTile)).addClass('faded');
 	      $(this.refs.pageTile).parents('.parent.to-be-not-faded').addClass('not-faded');
-	      $(this.refs.pageTile).parents('.child-page').siblings().addClass('faded');
-	      $(this.refs.pageTile).parents('.child-page').siblings().find('.child-page').addClass('faded');
+	      $(this.refs.pageTile).parents('.child-page').siblings().find('.page-container').addClass('faded');
 	      $('.parent.to-be-faded').addClass('faded');
 	      $(this.refs.pageTile).parents('.parent.to-be-faded').addClass('faded');
 	      $(this.refs.pageTile).closest('.child-page').siblings().find('.parent.to-be-faded').addClass('faded');
 	      $(this.refs.pageTile).siblings('.parent.to-be-faded').addClass('faded');
 	      $(this.refs.pageTile).siblings('.parent').find('.parent.to-be-faded').addClass('faded');
-	      $('.page-container').not($(this.refs.pageTile).parents('.page-container')).addClass('faded');
-	      $('.page-container.to-be-faded').addClass('faded');
 	    }
 	  }, {
 	    key: 'removeFaded',
@@ -53790,7 +53784,7 @@
 	          _react2.default.createElement('div', { className: "tile-right " + this.props.pageTree.pageType.icon_name }),
 	          !(this.props.level == 0 && this.props.pageTree.alt_section_id) && _react2.default.createElement(
 	            'div',
-	            { className: "tile-right-hover " + (this.state.hover ? 'hovered' : '') },
+	            { className: 'tile-right-hover' },
 	            _react2.default.createElement(
 	              'ul',
 	              { className: 'tile-more' },
@@ -53931,7 +53925,7 @@
 	          _react2.default.createElement('div', { className: "tile-right " + this.props.pageTree.pageType.icon_name }),
 	          !(this.props.level == 0 && this.props.pageTree.alt_section_id) && _react2.default.createElement(
 	            'div',
-	            { className: "tile-right-hover " + (this.state.hover ? 'hovered' : '') },
+	            { className: 'tile-right-hover' },
 	            _react2.default.createElement(
 	              'ul',
 	              { className: 'tile-more' },
