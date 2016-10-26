@@ -53718,7 +53718,7 @@
 	        return _react2.default.createElement(
 	          'div',
 	          { className: "page-tile " + (this.props.level == 0 && this.props.childrenLength % 2 == 0 ? 'even-tree' : 'odd-tree') + (this.props.level > 7 && this.props.pageTree.alt_section_id ? " level-with-section" : ""), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile' },
-	          this.props.publicShare && this.props.level == 0 && _react2.default.createElement(_connected_introduction_screen_one2.default, null),
+	          this.props.publicShare && this.props.level == 0 && !this.props.pageTree.footer && _react2.default.createElement(_connected_introduction_screen_one2.default, null),
 	          !this.props.isDragging && !this.props.publicShare && _react2.default.createElement(
 	            'div',
 	            { style: { zIndex: 100 } },
@@ -53859,7 +53859,7 @@
 	        return _react2.default.createElement(
 	          'div',
 	          { className: "page-tile " + (this.props.level > 7 && this.props.pageTree.alt_section_id ? " level-with-section" : ""), onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, ref: 'pageTile' },
-	          this.props.publicShare && this.props.level == 0 && _react2.default.createElement(_connected_introduction_screen_one2.default, null),
+	          this.props.publicShare && this.props.level == 0 && !this.props.pageTree.footer && _react2.default.createElement(_connected_introduction_screen_one2.default, null),
 	          !this.props.isDragging && !this.props.publicShare && _react2.default.createElement(
 	            'div',
 	            null,
