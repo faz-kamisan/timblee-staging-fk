@@ -32,7 +32,11 @@ class NewComment extends React.Component {
   }
 
   handleAddComment(e) {
-    var commentMessage = this.refs.newComment.innerHTML
+    var textarea = $(this.refs.newComment).siblings('.twemoji-textarea')
+    var textareaDup = $(this.refs.newComment).siblings('.twemoji-textarea-duplicate')
+
+    var commentMessage = textarea.html()
+
     if(commentMessage.trim().length > 0) {
       var _this = this;
       var timeStamp = new Date().getTime();
@@ -54,8 +58,9 @@ class NewComment extends React.Component {
         }
       });
       this.refs.newComment.innerHTML = ''
-      $(this.refs.newComment).siblings('.twemoji-textarea').text('');
-      $(this.refs.newComment).siblings('.twemoji-textarea-duplicate').text('');
+
+      textarea.html('')
+      textareaDup.html('')
     }
   }
 
