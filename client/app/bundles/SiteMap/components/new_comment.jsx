@@ -53,7 +53,7 @@ class NewComment extends React.Component {
           setTimeout(function() {
             _this.props.setSaving(false)
           }, 2000)
-          _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, _this.props.footer, timeStamp, result.id, _this.props.sectionId)
+          _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, _this.props.footer, timeStamp, result.id, _this.props.sectionId, this.props.sections, this.props.selectedPage)
         }
       });
       this.setState({ newCommentMessage: '' })

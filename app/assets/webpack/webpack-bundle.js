@@ -39108,7 +39108,7 @@
 	  page.comments.removeIf(function (comment) {
 	    return comment.id == commentId;
 	  });
-	  return sectionsCopy;
+	  return (0, _deepcopy2.default)(sectionsCopy);
 	}
 	
 	function createNewSection(sections, id, sectionId, newSectionName, timeStamp) {
@@ -51012,7 +51012,6 @@
 	  }, {
 	    key: 'mouseOver',
 	    value: function mouseOver(e) {
-	      debugger;
 	      $(this.refs.pageTile).addClass('hovered');
 	      $('.page-tile').not($(this.refs.pageTile)).removeClass('hovered');
 	      if (!this.props.pageTree.footer) {
@@ -65688,12 +65687,15 @@
 	        dispatch((0, _actions.addGeneralComment)(message, commenter, tempId));
 	      }
 	    },
-	    onCommentIdUpdate: function onCommentIdUpdate(commentableType, commentableId, footer, oldId, newId, sectionId) {
+	    onCommentIdUpdate: function onCommentIdUpdate(commentableType, commentableId, footer, oldId, newId, sectionId, sections, selectedPage) {
 	      if (commentableType == 'Page') {
 	        if (footer) {
 	          dispatch((0, _actions.updateFooterPageCommentId)(oldId, newId, commentableId));
 	        } else {
 	          dispatch((0, _actions.updatePageCommentId)(oldId, newId, sectionId, commentableId));
+	          dispatch((0, _actions.setSelectedPage)((0, _tree_helper.getNodeById)(sections.filter(function (section) {
+	            return section.default;
+	          })[0].pageTree, selectedPage.id)));
 	        }
 	      } else if (commentableType == 'Sitemap') {
 	        dispatch((0, _actions.updateGeneralCommentId)(oldId, newId));
@@ -65772,6 +65774,8 @@
 	  }, {
 	    key: 'handleAddComment',
 	    value: function handleAddComment(e) {
+	      var _this3 = this;
+	
 	      if (this.state.newCommentMessage.trim().length > 0) {
 	        var _this = this;
 	        var timeStamp = new Date().getTime();
@@ -65789,7 +65793,7 @@
 	            setTimeout(function () {
 	              _this.props.setSaving(false);
 	            }, 2000);
-	            _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, _this.props.footer, timeStamp, result.id, _this.props.sectionId);
+	            _this.props.onCommentIdUpdate(_this.props.commentableType, _this.props.commentableId, _this.props.footer, timeStamp, result.id, _this.props.sectionId, _this3.props.sections, _this3.props.selectedPage);
 	          }
 	        });
 	        this.setState({ newCommentMessage: '' });
@@ -66261,6 +66265,8 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 606);
 	
+	var _tree_helper = __webpack_require__(/*! ../helpers/tree_helper */ 609);
+	
 	var _comment_delete_modal = __webpack_require__(/*! ../components/comment_delete_modal */ 1040);
 	
 	var _comment_delete_modal2 = _interopRequireDefault(_comment_delete_modal);
@@ -66268,17 +66274,20 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { comment: state.selectedComment };
+	  return { comment: state.selectedComment, sections: state.sections, selectedPage: state.selectedPage };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    deleteComment: function deleteComment(id, commentableId, commentableType, footer, sectionId) {
+	    deleteComment: function deleteComment(id, commentableId, commentableType, footer, sectionId, sections, selectedPage) {
 	      if (commentableType == 'Page') {
 	        if (footer) {
 	          dispatch((0, _actions.deleteFooterPageComment)(id, commentableId));
 	        } else {
 	          dispatch((0, _actions.deletePageComment)(id, commentableId, sectionId));
+	          dispatch((0, _actions.setSelectedPage)((0, _tree_helper.getNodeById)(sections.filter(function (section) {
+	            return section.default;
+	          })[0].pageTree, selectedPage.id)));
 	        }
 	      } else {
 	        dispatch((0, _actions.deleteGeneralComment)(id));
@@ -66344,7 +66353,7 @@
 	      var _this3 = this;
 	
 	      var _this = this;
-	      this.props.deleteComment(this.props.comment.id, this.props.comment.commentableId, this.props.comment.commentableType, this.props.comment.footer, this.props.comment.sectionId);
+	      this.props.deleteComment(this.props.comment.id, this.props.comment.commentableId, this.props.comment.commentableType, this.props.comment.footer, this.props.comment.sectionId, this.props.sections, this.props.selectedPage);
 	      $.ajax({
 	        url: '/comments/' + this.props.comment.id,
 	        method: 'delete',
@@ -66417,12 +66426,12 @@
 	                { className: 'modal-button text-center' },
 	                _react2.default.createElement(
 	                  'a',
-	                  { href: '#', 'data-dismiss': 'modal', 'data-target': '#page-comments-modal', 'data-toggle': this.props.comment.modalView ? 'modal' : '', className:  true ? ' btn-modal-open' : '', onClick: this.deleteComment },
+	                  { href: '#', 'data-dismiss': 'modal', 'data-target': '#page-comments-modal', 'data-toggle': this.props.comment.modalView ? 'modal' : '', className: "btn btn-red" + (this.props.comment.modalView ? ' btn-modal-open-delay' : ''), onClick: this.deleteComment },
 	                  'Delete Comment'
 	                ),
 	                _react2.default.createElement(
 	                  'a',
-	                  { href: '#', 'data-dismiss': 'modal', 'data-target': '#page-comments-modal', 'data-toggle': this.props.comment.modalView ? 'modal' : '', className:  true ? ' btn-modal-open' : '' },
+	                  { href: '#', 'data-dismiss': 'modal', 'data-target': '#page-comments-modal', 'data-toggle': this.props.comment.modalView ? 'modal' : '', className: "btn btn-transparent btn-last" + (this.props.comment.modalView ? ' btn-modal-open' : '') },
 	                  'Cancel'
 	                )
 	              )

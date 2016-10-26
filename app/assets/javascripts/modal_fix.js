@@ -12,6 +12,11 @@ ModalFix.prototype.fixScroll = function() {
       _this.target.addClass(_this.targetClass);
     }, _this.delayTime);
   });
+   $('body').on('click', '.btn-modal-open-delay', function() {
+    setTimeout(function() {
+      _this.target.addClass(_this.targetClass);
+    }, 1000);
+  });
 };
 
 $(function() {
