@@ -120,28 +120,30 @@ class PageTile extends React.Component {
   }
 
   addSubPage(e) {
-    var timeStamp = new Date();
-    var _this = this;
-    $.ajax({
-      url: '/pages/',
-      method: 'post',
-      dataType: 'JSON',
-      data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.id, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: 1, section_id: this.props.activeSectionId } },
-      error: (result) => {
-        document.setFlash(result.responseText)
-      },
-      success: (result) => {
-        var onPageIdUpdate = _this.props.onPageIdUpdate
-        onPageIdUpdate(timeStamp, _this.props.activeSectionId, result.id)
-      },
-      complete: (result) => {
-        _this.props.setSaving(true)
-        setTimeout(function() {
-          _this.props.setSaving(false)
-        }, 2000)
-      }
-    });
-    this.props.onPageTypeDrop(this.props.activeSectionId, this.props.pageType, this.props.pageTree.id, 'begining', timeStamp, this.props.maxPageUid);
+    if(this.props.level < 12) {
+      var timeStamp = new Date();
+      var _this = this;
+      $.ajax({
+        url: '/pages/',
+        method: 'post',
+        dataType: 'JSON',
+        data: { page: { page_type_id: this.props.pageType.id, parent_id: this.props.pageTree.id, sitemap_id: this.props.sitemapId, name: this.props.pageType.name, position: 1, section_id: this.props.activeSectionId } },
+        error: (result) => {
+          document.setFlash(result.responseText)
+        },
+        success: (result) => {
+          var onPageIdUpdate = _this.props.onPageIdUpdate
+          onPageIdUpdate(timeStamp, _this.props.activeSectionId, result.id)
+        },
+        complete: (result) => {
+          _this.props.setSaving(true)
+          setTimeout(function() {
+            _this.props.setSaving(false)
+          }, 2000)
+        }
+      });
+      this.props.onPageTypeDrop(this.props.activeSectionId, this.props.pageType, this.props.pageTree.id, 'begining', timeStamp, this.props.maxPageUid);
+    }
     this.removeFaded();
   }
 
@@ -170,12 +172,15 @@ class PageTile extends React.Component {
   }
 
   mouseOver(e) {
+    $(this.refs.pageTile).addClass('hovered');
+    $('.page-tile').not($(this.refs.pageTile)).removeClass('hovered');
     if(!this.props.pageTree.footer) {
       this.addFaded()
     }
   }
 
   mouseOut(e) {
+    $(this.refs.pageTile).removeClass('hovered');
     if(!this.props.pageTree.footer) {
       this.removeFaded()
     }
@@ -244,7 +249,7 @@ class PageTile extends React.Component {
                   Add same level page
                 </div>
               </div>
-              { !(this.props.pageTree.alt_section_id && (this.props.pageTree.alt_section_id != this.props.activeSectionId)) &&
+              { !(this.props.pageTree.alt_section_id && (this.props.pageTree.alt_section_id != this.props.activeSectionId)) && (this.props.level < 12) &&
                 <div className="bottom-button-div">
                   <div className='bottom-button' onClick={this.addSubPage}>
                     <div className="collapse-open collapse-close"></div>
@@ -270,7 +275,7 @@ class PageTile extends React.Component {
             <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
             <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' defaultValue={this.props.name} onBlur={this.disableNameChangeInput} onKeyPress={this.handeNameChange}></textarea>
           </h1>
-          <ConnectedPageTileBottom pageTree={this.props.pageTree} commentsLength={this.props.pageTree.comments.length} />
+          <ConnectedPageTileBottom pageTree={this.props.pageTree} commentsLength={this.props.pageTree.comments.length} level={this.props.level} />
           <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }>
           </div>
           { !((this.props.level == 0) && this.props.pageTree.alt_section_id) &&
@@ -339,7 +344,7 @@ class PageTile extends React.Component {
                   Add same level page
                 </div>
               </div>
-              { !(this.props.pageTree.alt_section_id && (this.props.pageTree.alt_section_id != this.props.activeSectionId)) &&
+              { !(this.props.pageTree.alt_section_id && (this.props.pageTree.alt_section_id != this.props.activeSectionId)) && (this.props.level < 12) &&
                 <div className="bottom-button-div">
                   <div className='bottom-button' onClick={this.addSubPage}>
                     <div className="collapse-open collapse-close"></div>
@@ -365,7 +370,7 @@ class PageTile extends React.Component {
             <div onClick={this.enableNameChangeInput} className={this.state.nameChangeDisabled ? '' : 'hide'}> {this.props.name}</div>
             <textarea className={"form-control" + (this.state.nameChangeDisabled ? ' hide' : '') } ref='nameInput' defaultValue={this.props.name} onBlur={this.disableNameChangeInput}  onKeyPress={this.handeNameChange}></textarea>
           </h1>
-          <ConnectedPageTileBottom pageTree={this.props.pageTree} commentsLength={this.props.pageTree.comments.length} />
+          <ConnectedPageTileBottom pageTree={this.props.pageTree} commentsLength={this.props.pageTree.comments.length} level={this.props.level} />
           <div className={ "tile-right " + this.props.pageTree.pageType.icon_name }>
           </div>
           { !((this.props.level == 0) && this.props.pageTree.alt_section_id) &&
