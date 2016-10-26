@@ -24,7 +24,7 @@ en:
       update:
         success: Sitemap updated successfully
         failure: Couldn't update sitemap
-        folder : "%{sitemap_name} successfully moved under %{folder_name}"
+        folder : "%{sitemap_name} successfully moved to %{folder_name} folder"
       destroy:
         success: Sitemap deleted permanently :(
         failure: Couldn't delete sitemap
