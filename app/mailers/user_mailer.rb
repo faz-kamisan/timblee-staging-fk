@@ -16,6 +16,7 @@ class UserMailer < ActionMailer::Base
             'business-name' => @user.business.name,
             'admin_user_name' => @admin_user.full_name,
             'business_name' => @user.business.name,
+            'show the whole verification link here' => settings_users_url
           }
         }
         response = tx_smart_mailer.send(message)

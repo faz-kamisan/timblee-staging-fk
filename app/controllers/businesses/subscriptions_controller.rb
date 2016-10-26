@@ -106,7 +106,7 @@ class Businesses::SubscriptionsController < ApplicationController
       @plan = Plan.find_by(stripe_plan_id: params[:stripe_plan_id])
       unless @plan
         LoggerExtension.stripe_log "Exception Plan not found"
-        PaymentNotifier.delay.exception(current_user,  "Exception Plan not found")
+        PaymentNotifier.delay.exception(current_user,  "Exception Plan #{params[:stripe_plan_id]} not found")
         redirect_to billing_settings_users_path, alert: t('.plan_not_found', scope: :flash)
       end
     end
