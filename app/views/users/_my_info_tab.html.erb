@@ -30,7 +30,7 @@
             <span class="primary-link-color">(You need to verify this email)</span>
           <% end %>
           <% if current_user.pending_reconfirmation? %>
-            <div class="primary-link-color">Currently waiting confirmation for: <%= current_user.unconfirmed_email %></div>
+            <div class="primary-link-color">You need to confirm your new email: <%= current_user.unconfirmed_email %></div>
           <% end %>
         </div>
         <div class="col-xs-6 text-right edit-info">
