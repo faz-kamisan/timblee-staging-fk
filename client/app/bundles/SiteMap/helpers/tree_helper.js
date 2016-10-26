@@ -135,7 +135,7 @@ function deletePageComment(sections, commentId, pageId, sectionId) {
   var treeCopy = sectionsCopy.filter(function(section) { return(section.default) })[0].pageTree
   var page = getNodeById(treeCopy, pageId)
   page.comments.removeIf(function(comment) { return comment.id == commentId })
-  return sectionsCopy
+  return deepcopy(sectionsCopy)
 }
 
 function createNewSection(sections, id, sectionId, newSectionName, timeStamp) {

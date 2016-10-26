@@ -21,12 +21,13 @@ const mapDispatchToProps = (dispatch) => {
         dispatch(addGeneralComment(message, commenter, tempId));
       }
     },
-    onCommentIdUpdate: (commentableType, commentableId, footer, oldId, newId, sectionId) => {
+    onCommentIdUpdate: (commentableType, commentableId, footer, oldId, newId, sectionId, sections, selectedPage) => {
       if(commentableType == 'Page') {
         if(footer) {
           dispatch(updateFooterPageCommentId(oldId, newId, commentableId));
         } else {
           dispatch(updatePageCommentId(oldId, newId, sectionId, commentableId));
+          dispatch(setSelectedPage(getNodeById(sections.filter(function(section) {return(section.default)})[0].pageTree, selectedPage.id)))
         }
       } else if(commentableType == 'Sitemap') {
         dispatch(updateGeneralCommentId(oldId, newId));
