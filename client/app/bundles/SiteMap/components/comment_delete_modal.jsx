@@ -37,7 +37,7 @@ class CommentDeleteModal extends React.Component {
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header text-center">
-              <button type="button" className="close btn-modal-open" data-dismiss="modal" data-target="#page-comments-modal" data-toggle={this.props.comment.modalView? 'modal' : ''} aria-label="Close">
+              <button type="button" className={"close btn-modal-open" + (this.props.comment.modalView ? ' btn-modal-open' : '')} data-dismiss="modal" data-target="#page-comments-modal" data-toggle={this.props.comment.modalView? 'modal' : ''} aria-label="Close">
                 <span aria-hidden="true">
                   <img src='/assets/close-modal.svg' className='close-modal hide-delete-modal'></img>
                 </span>
@@ -56,8 +56,8 @@ class CommentDeleteModal extends React.Component {
                 }
               </div>
               <div className="modal-button text-center">
-                <a href="#" data-dismiss="modal" data-target="#page-comments-modal" data-toggle={this.props.comment.modalView? 'modal' : ''} className="btn btn-red" onClick={this.deleteComment}>Delete Comment</a>
-                <a href="#" data-dismiss="modal" data-target="#page-comments-modal" data-toggle={this.props.comment.modalView? 'modal' : ''} className="btn btn-transparent btn-last">Cancel</a>
+                <a href="#" data-dismiss="modal" data-target="#page-comments-modal" data-toggle={this.props.comment.modalView? 'modal' : ''} className={"btn btn-red" + this.props.comment.modalView ? ' btn-modal-open' : ''} onClick={this.deleteComment}>Delete Comment</a>
+                <a href="#" data-dismiss="modal" data-target="#page-comments-modal" data-toggle={this.props.comment.modalView? 'modal' : ''} className={"btn btn-transparent btn-last" + this.props.comment.modalView ? ' btn-modal-open' : ''}>Cancel</a>
               </div>
             </div>
           </div>
