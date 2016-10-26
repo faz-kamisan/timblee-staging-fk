@@ -74,7 +74,7 @@ class NewComment extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="comment-holder">
         <textarea ref='newComment' id="temp" className="emoji-decorated comment-editor comment-input__input"></textarea>
         <div className="add-remove-comment">
           <span onClick={this.handleAddComment} className='cursor add'>Add my comment </span>
