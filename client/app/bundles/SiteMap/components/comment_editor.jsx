@@ -30,17 +30,25 @@ class CommentEditor extends React.Component {
     })
     $(this.refs.commentEditor).twemojiPicker()
     $(this.refs.commentEditor).siblings('.twemoji-textarea').mentionsInput({source: formatted_data});
+
     this.refs.commentEditor.innerHTML = this.props.message
-    $(this.refs.commentEditor).siblings('.twemoji-textarea').text(this.props.message);
-    $(this.refs.commentEditor).siblings('.twemoji-textarea-duplicate').text(this.props.message);
+
+    $(this.refs.commentEditor).siblings('.twemoji-textarea').html(this.props.message);
+    $(this.refs.commentEditor).siblings('.twemoji-textarea-duplicate').html(this.props.message);
   }
 
 
   handleUpdateComment(e) {
-    var commentMessage = this.refs.commentEditor.innerHTML
+    var textarea = $(this.refs.commentEditor).siblings('.twemoji-textarea')
+    var textareaDup = $(this.refs.commentEditor).siblings('.twemoji-textarea-duplicate')
+
+    var commentMessage = textarea.html()
+
     this.refs.commentEditor.innerHTML = ''
-    $(this.refs.commentEditor).siblings('.twemoji-textarea').text('');
-    $(this.refs.commentEditor).siblings('.twemoji-textarea-duplicate').text('');
+
+    textarea.html('');
+    textareaDup.html('');
+
     if(commentMessage.trim() != this.props.message.trim()) {
       var _this = this;
       this.props.updateComment(this.props.id, this.props.commentableId, this.props.commentableType, this.props.footer, commentMessage, this.props.sectionId)
