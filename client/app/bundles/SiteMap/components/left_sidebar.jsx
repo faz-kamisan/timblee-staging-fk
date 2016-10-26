@@ -90,7 +90,7 @@ class LeftSidebar extends React.Component {
               </div>
             </div>
             <form className="search-page-type">
-              <input type="search" id="page-type" value={this.state.searchQuery} name="page-type" placeholder="Page type" className={(this.state.searchQuery.length > 0) ? ' search-active' : ''} onChange={this.handleSearch} />
+              <input type="search" id="page-type" value={this.state.searchQuery} name="page-type" placeholder="Page types" className={(this.state.searchQuery.length > 0) ? ' search-active' : ''} onChange={this.handleSearch} />
               <label htmlFor="page-type">
                 <i className="icon-search"></i>
               </label>

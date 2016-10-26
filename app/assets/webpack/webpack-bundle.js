@@ -57094,7 +57094,7 @@
 	          _react2.default.createElement(
 	            'form',
 	            { className: 'search-page-type' },
-	            _react2.default.createElement('input', { type: 'search', id: 'page-type', value: this.state.searchQuery, name: 'page-type', placeholder: 'Page type', className: this.state.searchQuery.length > 0 ? ' search-active' : '', onChange: this.handleSearch }),
+	            _react2.default.createElement('input', { type: 'search', id: 'page-type', value: this.state.searchQuery, name: 'page-type', placeholder: 'Page types', className: this.state.searchQuery.length > 0 ? ' search-active' : '', onChange: this.handleSearch }),
 	            _react2.default.createElement(
 	              'label',
 	              { htmlFor: 'page-type' },
@@ -71731,7 +71731,7 @@
 	              { className: 'modal-header text-center' },
 	              _react2.default.createElement(
 	                'button',
-	                { type: 'button', className: 'close btn-modal-open', 'data-dismiss': 'modal', 'data-target': '#page-comments-modal', 'data-toggle': this.props.comment.modalView ? 'modal' : '', 'aria-label': 'Close' },
+	                { type: 'button', className: "close btn-modal-open" + (this.props.comment.modalView ? ' btn-modal-open' : ''), 'data-dismiss': 'modal', 'data-target': '#page-comments-modal', 'data-toggle': this.props.comment.modalView ? 'modal' : '', 'aria-label': 'Close' },
 	                _react2.default.createElement(
 	                  'span',
 	                  { 'aria-hidden': 'true' },
@@ -71770,12 +71770,12 @@
 	                { className: 'modal-button text-center' },
 	                _react2.default.createElement(
 	                  'a',
-	                  { href: '#', 'data-dismiss': 'modal', 'data-target': '#page-comments-modal', 'data-toggle': this.props.comment.modalView ? 'modal' : '', className: 'btn btn-red', onClick: this.deleteComment },
+	                  { href: '#', 'data-dismiss': 'modal', 'data-target': '#page-comments-modal', 'data-toggle': this.props.comment.modalView ? 'modal' : '', className:  true ? ' btn-modal-open' : '', onClick: this.deleteComment },
 	                  'Delete Comment'
 	                ),
 	                _react2.default.createElement(
 	                  'a',
-	                  { href: '#', 'data-dismiss': 'modal', 'data-target': '#page-comments-modal', 'data-toggle': this.props.comment.modalView ? 'modal' : '', className: 'btn btn-transparent btn-last' },
+	                  { href: '#', 'data-dismiss': 'modal', 'data-target': '#page-comments-modal', 'data-toggle': this.props.comment.modalView ? 'modal' : '', className:  true ? ' btn-modal-open' : '' },
 	                  'Cancel'
 	                )
 	              )
