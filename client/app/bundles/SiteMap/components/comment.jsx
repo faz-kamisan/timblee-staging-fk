@@ -54,7 +54,7 @@ class Comment extends React.Component {
   }
 
   messageFormatter() {
-    return { __html: this.state.message.replace(/@\[(.*)\]/g, function(match, p1) { return('<span class="comment-mention">@' + p1 + '</span>') }) }
+    return this.state.message.replace(/&lt;strong(.*)&gt;(.*)&lt;\/strong&gt;/g, function(match, p1, p2) { return('<span class="comment-mention">@' + p2 + '</span>') })
   }
 
   editMessage(message) {
@@ -99,7 +99,7 @@ class Comment extends React.Component {
             <ConnectedCommentEditor message={ this.state.message } commentableId={this.props.commentableId} commentableType={this.props.commentableType} sectionId={this.props.sectionId} id={this.props.id} closeEditor={this.closeEditor} modalView={this.props.modalView} editMessage={this.editMessage} footer={this.props.footer} />
           }
           {!this.state.editMode &&
-            <p dangerouslySetInnerHTML={this.messageFormatter()} />
+            <p dangerouslySetInnerHTML={{ __html: this.messageFormatter() }} />
           }
         </div>
       );
@@ -113,7 +113,7 @@ class Comment extends React.Component {
           <h6>
             {this.props.createdAt}
           </h6>
-          <p dangerouslySetInnerHTML={this.messageFormatter()} />
+          <p dangerouslySetInnerHTML={{ __html: this.messageFormatter() }} />
         </div>
       );
     }
