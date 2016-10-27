@@ -56037,8 +56037,6 @@
 	
 	    var _this2 = _possibleConstructorReturn(this, (PublicHeader.__proto__ || Object.getPrototypeOf(PublicHeader)).call(this, props));
 	
-	    _this2.handleMainHeaderToggle = _this2.handleMainHeaderToggle.bind(_this2);
-	    _this2.handleSitemapShareClick = _this2.handleSitemapShareClick.bind(_this2);
 	    _this2.toggleCommentState = _this2.toggleCommentState.bind(_this2);
 	    _this2.toggleInductionState = _this2.toggleInductionState.bind(_this2);
 	    _this2.state = { name: props.name, showMainHeader: true, commentSidebarOpen: false, inductionSidebarOpen: false };
@@ -56046,21 +56044,10 @@
 	  }
 	
 	  _createClass(PublicHeader, [{
-	    key: 'handleMainHeaderToggle',
-	    value: function handleMainHeaderToggle(e) {
-	      $('body').toggleClass('hide-header');
-	      this.setState({ showMainHeader: !this.state.showMainHeader });
-	    }
-	  }, {
-	    key: 'handleSitemapShareClick',
-	    value: function handleSitemapShareClick(e) {
-	      this.props.showSitemapShareModal();
-	    }
-	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var _this = this;
-	      $('.loader').addClass('hide');
+	      $('body').addClass('hide-header');
 	      $('body').on('click', function (e) {
 	        if (!(e.target.closest('.sitemap-induction-sidebar') || e.target.closest('.sitemap-right-sidebar') || e.target.closest('.show-comments-sidebar-link') || e.target.closest('.show-induction-sidebar-link'))) {
 	          _this.setState({ commentSidebarOpen: false, inductionSidebarOpen: false });

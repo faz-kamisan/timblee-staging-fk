@@ -19,12 +19,6 @@
         kitId: 'rru5bof',
         scriptTimeout: 3000
       };
-      var h = document.getElementsByTagName('html')[0];
-      h.className += ' wf-loading';
-      var t = setTimeout(function() {
-        h.className = h.className.replace(/(\s|^)wf-loading(\s|$)/g, ' ');
-        h.className += ' wf-inactive';
-      }, config.scriptTimeout);
       var d = false;
       var tk = document.createElement('script');
       tk.src = '//use.typekit.net/' + config.kitId + '.js';
@@ -45,7 +39,7 @@
   <%= csrf_meta_tags %>
 </head>
 
-<body>
+<body class='hide-header'>
   <div class="loader">
     <div class="loader-logo">
       <img src="/assets/Timblee-icon.svg" alt=" ">

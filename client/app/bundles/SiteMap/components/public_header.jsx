@@ -12,25 +12,14 @@ class PublicHeader extends React.Component {
   };
   constructor(props) {
     super(props);
-    this.handleMainHeaderToggle = this.handleMainHeaderToggle.bind(this);
-    this.handleSitemapShareClick = this.handleSitemapShareClick.bind(this);
     this.toggleCommentState = this.toggleCommentState.bind(this);
     this.toggleInductionState = this.toggleInductionState.bind(this);
     this.state = { name: props.name, showMainHeader: true, commentSidebarOpen: false, inductionSidebarOpen: false }
   }
 
-  handleMainHeaderToggle(e) {
-    $('body').toggleClass('hide-header');
-    this.setState({showMainHeader: !this.state.showMainHeader})
-  }
-
-  handleSitemapShareClick(e) {
-    this.props.showSitemapShareModal();
-  }
-
   componentDidMount() {
     var _this = this
-    $('.loader').addClass('hide');
+    $('body').addClass('hide-header');
     $('body').on('click', function(e) {
       if(!(e.target.closest('.sitemap-induction-sidebar') || e.target.closest('.sitemap-right-sidebar') || e.target.closest('.show-comments-sidebar-link') || e.target.closest('.show-induction-sidebar-link'))) {
         _this.setState({commentSidebarOpen: false, inductionSidebarOpen: false})
