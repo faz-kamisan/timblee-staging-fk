@@ -42,7 +42,7 @@
   input.site-map-name {
     border-bottom: solid 1px #56626F;
     color: $primaryWhite;
-    max-width: 460px;
+    max-width: 400px;
     cursor: text;
     font-weight: 400;
   }
@@ -371,4 +371,28 @@
     }
   }
 
+}
+
+@media(max-width: 1350px) {
+  .react-header {
+    .sitemap-name-div { margin-left: 20px; }
+    .state-status { margin-left: 0; }
+    .toggle-comments-outer,
+    .users-block,
+    .share-sitemap-btn-div { margin-right: 35px; }
+    input.site-map-name { max-width: 250px; }
+  }
+}
+
+@media(max-width: 1300px) {
+  .react-header {
+    .sitemap-name-div, .site-map-name { max-width: 250px; }
+  }
+}
+
+@media(max-width: 1150px) {
+  .react-header {
+    .toggle-comments-outer,
+    .share-sitemap-btn-div { margin-right: 25px; }
+  }
 }
