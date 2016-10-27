@@ -43,10 +43,11 @@ protected
   end
 
   def set_notice
-    flash[:notice] = ''
-    flash[:notice] = t('.success', scope: :flash, emails: @email_categories[:invitable_emails].join(', ')) if @email_categories[:invitable_emails].present?
-    invalid_emails = @email_categories[:already_signed_up_user_emails] + @email_categories[:invalid_emails]
-    flash[:notice] += t('.failure', scope: :flash, emails: invalid_emails.join(', ')) if invalid_emails.present?
+    if @email_categories[:invitable_emails].present?
+      flash[:notice] = t('.success', scope: :flash)
+    else
+      flash[:alert] = t('.failure', scope: :flash)
+    end
   end
 
   private

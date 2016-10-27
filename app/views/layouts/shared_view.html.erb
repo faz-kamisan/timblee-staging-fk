@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Timblee</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <script src="https://use.typekit.net/rru5bof.js"></script>
+  <script>try{Typekit.load({ async: true });}catch(e){}</script>
+  <%= csrf_meta_tags %>
+</head>
+
+<body>
+  <div class="loader">
+    <div class="loader-logo">
+      <img src="/assets/Timblee-icon.svg" alt=" ">
+    </div>
+    <div class="timblee text-center">
+      <h1>Timblee</h1>
+      <p>Beautiful Visual Sitemaps</p>
+    </div>
+  </div>
+  <%= yield %>
+</body>
+</html>
