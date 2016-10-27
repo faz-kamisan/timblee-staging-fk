@@ -1686,7 +1686,7 @@ body.trial {
 
   .comment-group {
     margin-bottom: 25px;
-    li:last-child {
+    li:not(.ui-menu-item):last-child {
       position: relative;
       &:before {
         content: ' ';
@@ -2466,7 +2466,7 @@ body.trial {
       p {
         color: #414952;
       }
-      + li {
+      + li:not(.ui-menu-item) {
         margin-top: 43px;
       }
       &:last-child {
@@ -2523,8 +2523,12 @@ body.trial {
   }
   .comment-input {
     textarea {
-      border: 1px solid #d4d4d4!important;
+      border: 1px solid #dcdcdc!important;
     }
+  }
+  .comment-editor-div {
+    border: 1px solid #dcdcdc!important;
+    @include border-radius(4px);
   }
 }
 
@@ -2549,6 +2553,16 @@ body.trial {
       &:hover {
         color: $primaryPink;
       }
+    }
+  }
+}
+
+.comment-block {
+  p {
+    img {
+      width: 15px!important;
+      height: 15px!important;
+      margin: 1px;
     }
   }
 }
@@ -3826,4 +3840,28 @@ ul.ui-autocomplete {
   color: #dadada;
   font-size: 14px;
   pointer-events: none;
+}
+
+.comment-editor-div {
+  height: 170px;
+  background: $primaryWhite;
+  @include border-radius(4px);
+  position: relative;
+  .twemoji-textarea {
+    height: 136px!important;
+    padding-bottom: 0!important;
+  }
+  .add-remove-comment {
+    bottom: 10px;
+  }
+  .twemoji-icon-picker {
+    &:before {
+      bottom: -63px;
+      right: 10px;
+    }
+    img {
+      bottom: -59px!important;
+      right: 8px!important;
+    }
+  }
 }
