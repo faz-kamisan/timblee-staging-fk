@@ -54736,13 +54736,13 @@
 	
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'sitemap-right-sidebar open' },
+	        { className: 'sitemap-right-sidebar' },
 	        !this.props.publicShare && _react2.default.createElement(
 	          'div',
 	          { className: 'sitemap-comment-tabs comment-header' },
 	          _react2.default.createElement(
 	            'ul',
-	            { className: 'comment-list clearfix open' },
+	            { className: 'comment-list clearfix' },
 	            renderedCommentTabs,
 	            _react2.default.createElement('li', { className: 'animated-bar-react' })
 	          )
