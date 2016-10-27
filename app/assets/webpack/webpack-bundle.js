@@ -65707,6 +65707,7 @@
 	        return d;
 	      });
 	      $(this.refs.newComment).twemojiPicker();
+	      $(this.refs.newComment).parent().append($('<div class="new-comment-place-holder">Add a comment... <br> You can mention people by typing @.</div>'));
 	      $(this.refs.newComment).siblings('.twemoji-textarea').mentionsInput({ source: formatted_data, showAtCaret: true });
 	    }
 	  }, {
