@@ -61,11 +61,12 @@ $(document).ready(function() {
     $(e.target).closest('.twemoji-wrap').find('.twemoji-icon-picker img').click();
   })
 
-  // $('.twemoji-list span').each(function() {
-  //   var $this = $(this);
-  //   $this.on('click', function() {
-  //     $this.closest('.twemoji-wrap').find('.twemoji-icon-picker img').click();
-  //   });
-  // });
-
+  $('body').on('input', '.twemoji-textarea.ui-autocomplete-input', function(e) {
+    if($(e.target).text().length > 0) {
+      $(e.target).addClass('has-content')
+    } else {
+      $(e.target).removeClass('has-content')
+    }
+  })
 });
+
