@@ -13,7 +13,7 @@ class PaymentNotifier < ActionMailer::Base
       message = {
       'To' => "#{@user.full_name} <#{@user.email}>",
         'Data' => {
-          'firstname' => @user.full_name,
+          'firstname' => @user.first_name,
           'card-last-four-digits' => @event.data.object.source.last4,
           'dollar-amount' => @amount,
           'x' => @business.no_of_users,
@@ -38,7 +38,7 @@ class PaymentNotifier < ActionMailer::Base
       message = {
       'To' => "#{@user.full_name} <#{@user.email}>",
         'Data' => {
-          'firstname' => @user.full_name,
+          'firstname' => @user.first_name,
           'dollar-amount' => @amount_refunded,
           'card-last-4-digits' => @event.data.object.source.last4
         }
@@ -58,7 +58,7 @@ class PaymentNotifier < ActionMailer::Base
       message = {
       'To' => "#{@user.full_name} <#{@user.email}>",
         'Data' => {
-          'firstname' => @user.full_name,
+          'firstname' => @user.first_name,
           'card-last-four-digits' => @event.data.object.source.last4,
           'dollar-amount' => @amount,
           'x' => @business.no_of_users,
