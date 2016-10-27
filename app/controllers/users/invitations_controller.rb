@@ -47,6 +47,7 @@ protected
       flash[:notice] = t('.success', scope: :flash)
     else
       flash[:alert] = t('.failure', scope: :flash)
+    end
   end
 
   private
