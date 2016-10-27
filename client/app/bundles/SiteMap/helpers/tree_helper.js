@@ -1,7 +1,7 @@
 import deepcopy from 'deepcopy';
 
 function addPage(sections, sectionId, pageType, parentId, position, tempId, uid) {
-  var sectionsCopy = Object.assign([], sections);
+  var sectionsCopy = deepcopy(sections);
   var treeCopy = sectionsCopy.filter(function(section) { return(section.default) })[0].pageTree
   var pageTypeCopy = Object.assign({}, pageType);
   pageTypeCopy.icon_name = pageTypeCopy.iconName || pageTypeCopy.icon_name
@@ -80,7 +80,7 @@ function updatePagePosition(sections, id, sectionId, newParentId, position) {
 }
 
 function removePage(sections, id, sectionId) {
-  var sectionsCopy = Object.assign([], sections);
+  var sectionsCopy = deepcopy(sections);
   var treeCopy = sectionsCopy.filter(function(section) { return(section.default) })[0].pageTree
   var page = getNodeById(treeCopy, id)
   page.state = 'archived'

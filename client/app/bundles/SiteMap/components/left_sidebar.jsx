@@ -42,9 +42,9 @@ class LeftSidebar extends React.Component {
     }
   }
 
-  getPageCount() {
+  getPageCount(sections, footerPages) {
     var pageCount = 0
-    this.props.sections.forEach(function(section, index) {
+    sections.forEach(function(section, index) {
       traverse(section.pageTree, function(page) {
         if(page.state != 'archived') {
           pageCount ++
@@ -52,12 +52,22 @@ class LeftSidebar extends React.Component {
       })
     })
 
-    this.props.footerPages.forEach(function(page, index) {
+    footerPages.forEach(function(page, index) {
       if(page.state != 'archived') {
         pageCount ++
       }
     })
     return pageCount
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      (this.props.leftSidebarExpanded != nextProps.leftSidebarExpanded) ||
+      (this.props.updatedAt != nextProps.updatedAt) ||
+      (this.getPageCount(this.props.sections, this.props.footerPages) != this.getPageCount(nextProps.sections, nextProps.footerPages)) ||
+      (this.props.footerPages.length != nextProps.footerPages.length) ||
+      (this.state.searchQuery != nextState.searchQuery)
+    )
   }
 
   render() {
@@ -85,7 +95,7 @@ class LeftSidebar extends React.Component {
                   Hide Sidebar
                 </span>
                 <span className="last-updated col-xs-7 p-r-0 text-right">
-                  {this.getPageCount()} {(this.getPageCount() == 1) ? 'Page' : 'Pages'} | Last updated {this.props.updatedAt}
+                  {this.getPageCount(this.props.sections, this.props.footerPages)} {(this.getPageCount(this.props.sections, this.props.footerPages) == 1) ? 'Page' : 'Pages'} | Last updated {this.props.updatedAt}
                 </span>
               </div>
             </div>

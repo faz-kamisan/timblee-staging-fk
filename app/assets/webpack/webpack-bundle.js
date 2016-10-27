@@ -39062,7 +39062,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function addPage(sections, sectionId, pageType, parentId, position, tempId, uid) {
-	  var sectionsCopy = Object.assign([], sections);
+	  var sectionsCopy = (0, _deepcopy2.default)(sections);
 	  var treeCopy = sectionsCopy.filter(function (section) {
 	    return section.default;
 	  })[0].pageTree;
@@ -39159,7 +39159,7 @@
 	}
 	
 	function removePage(sections, id, sectionId) {
-	  var sectionsCopy = Object.assign([], sections);
+	  var sectionsCopy = (0, _deepcopy2.default)(sections);
 	  var treeCopy = sectionsCopy.filter(function (section) {
 	    return section.default;
 	  })[0].pageTree;
@@ -57004,9 +57004,9 @@
 	    }
 	  }, {
 	    key: 'getPageCount',
-	    value: function getPageCount() {
+	    value: function getPageCount(sections, footerPages) {
 	      var pageCount = 0;
-	      this.props.sections.forEach(function (section, index) {
+	      sections.forEach(function (section, index) {
 	        (0, _tree_helper.traverse)(section.pageTree, function (page) {
 	          if (page.state != 'archived') {
 	            pageCount++;
@@ -57014,12 +57014,17 @@
 	        });
 	      });
 	
-	      this.props.footerPages.forEach(function (page, index) {
+	      footerPages.forEach(function (page, index) {
 	        if (page.state != 'archived') {
 	          pageCount++;
 	        }
 	      });
 	      return pageCount;
+	    }
+	  }, {
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      return this.props.leftSidebarExpanded != nextProps.leftSidebarExpanded || this.props.updatedAt != nextProps.updatedAt || this.getPageCount(this.props.sections, this.props.footerPages) != this.getPageCount(nextProps.sections, nextProps.footerPages) || this.props.footerPages.length != nextProps.footerPages.length || this.state.searchQuery != nextState.searchQuery;
 	    }
 	  }, {
 	    key: 'render',
@@ -57065,9 +57070,9 @@
 	              _react2.default.createElement(
 	                'span',
 	                { className: 'last-updated col-xs-7 p-r-0 text-right' },
-	                this.getPageCount(),
+	                this.getPageCount(this.props.sections, this.props.footerPages),
 	                ' ',
-	                this.getPageCount() == 1 ? 'Page' : 'Pages',
+	                this.getPageCount(this.props.sections, this.props.footerPages) == 1 ? 'Page' : 'Pages',
 	                ' | Last updated ',
 	                this.props.updatedAt
 	              )
