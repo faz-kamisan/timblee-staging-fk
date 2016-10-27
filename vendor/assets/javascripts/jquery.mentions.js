@@ -512,6 +512,7 @@
         suffix: this.marker,
         select: this._onSelect,
         source: this.options.source,
+        appendTo: this.input.parent(),
         showAtCaret: this.options.showAtCaret
       }, this.options.autocomplete);
       this.autocomplete = this.input[this.options.widget](options);
@@ -663,7 +664,7 @@
 
   })(MentionsBase);
 
-  
+
 /*
     Copyright (c) 2009-2011, Kevin Decker <kpdecker@gmail.com>
 */

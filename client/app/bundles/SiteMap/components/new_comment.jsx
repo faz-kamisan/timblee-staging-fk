@@ -29,7 +29,7 @@ class NewComment extends React.Component {
       return d
     })
     $(this.refs.newComment).twemojiPicker()
-    $(this.refs.newComment).siblings('.twemoji-textarea').mentionsInput({source: formatted_data});
+    $(this.refs.newComment).siblings('.twemoji-textarea').mentionsInput({source: formatted_data, showAtCaret: true});
   }
 
   handleAddComment(e) {
