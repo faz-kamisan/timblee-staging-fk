@@ -54930,7 +54930,7 @@
 	  }, {
 	    key: 'messageFormatter',
 	    value: function messageFormatter() {
-	      return this.state.message.replace(/<strong(.*)>(.*)<\/strong>/g, function (match, p1, p2) {
+	      return this.state.message.replace(/<strong(.*?)>(.*?)<\/strong>/g, function (match, p1, p2) {
 	        return '<span class="comment-mention">@' + p2 + '</span>';
 	      });
 	    }
