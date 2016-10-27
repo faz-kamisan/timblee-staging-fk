@@ -54704,7 +54704,11 @@
 	                { className: 'page-name truncate pull-left' },
 	                page.name
 	              ),
-	              page.state != 'archived' && _react2.default.createElement(_connected_mark_as_resolved_check2.default, { page: page })
+	              _react2.default.createElement(
+	                'div',
+	                { className: page.state != 'archived' ? '' : ' hide' },
+	                _react2.default.createElement(_connected_mark_as_resolved_check2.default, { page: page })
+	              )
 	            )
 	          ),
 	          _react2.default.createElement(
@@ -54712,7 +54716,11 @@
 	            { className: 'comment-group' },
 	            renderedPageComments
 	          ),
-	          _this.state.currentTab == 'active' && _react2.default.createElement(_connected_new_comment2.default, { commentableId: page.id, commentableType: 'Page', sectionId: page.sectionId, footer: page.footer })
+	          _react2.default.createElement(
+	            'div',
+	            { className: _this.state.currentTab == 'active' ? '' : ' hide' },
+	            _react2.default.createElement(_connected_new_comment2.default, { commentableId: page.id, commentableType: 'Page', sectionId: page.sectionId, footer: page.footer })
+	          )
 	        );
 	      });
 	
@@ -54758,9 +54766,9 @@
 	              }
 	            }()
 	          ),
-	          this.state.currentTab == 'active' && _react2.default.createElement(
+	          _react2.default.createElement(
 	            'div',
-	            { className: 'general-comments' },
+	            { className: 'general-comments' + (this.state.currentTab == 'active' ? '' : ' hide') },
 	            _react2.default.createElement(
 	              'h2',
 	              { className: 'comment-type-heading' },
@@ -54987,8 +54995,16 @@
 	            null,
 	            this.props.createdAt
 	          ),
-	          this.state.editMode && _react2.default.createElement(_connected_comment_editor2.default, { message: this.state.message, commentableId: this.props.commentableId, commentableType: this.props.commentableType, sectionId: this.props.sectionId, id: this.props.id, closeEditor: this.closeEditor, modalView: this.props.modalView, editMessage: this.editMessage, footer: this.props.footer }),
-	          !this.state.editMode && _react2.default.createElement('p', { dangerouslySetInnerHTML: { __html: this.messageFormatter() } })
+	          _react2.default.createElement(
+	            'div',
+	            { className: this.state.editMode ? '' : ' hide' },
+	            _react2.default.createElement(_connected_comment_editor2.default, { message: this.state.message, commentableId: this.props.commentableId, commentableType: this.props.commentableType, sectionId: this.props.sectionId, id: this.props.id, closeEditor: this.closeEditor, modalView: this.props.modalView, editMessage: this.editMessage, footer: this.props.footer })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: this.state.editMode ? 'hide' : '' },
+	            _react2.default.createElement('p', { dangerouslySetInnerHTML: { __html: this.messageFormatter() } })
+	          )
 	        );
 	      } else {
 	        return _react2.default.createElement(

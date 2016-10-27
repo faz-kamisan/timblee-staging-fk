@@ -54,17 +54,17 @@ class RightSidebar extends React.Component {
             <span className="page-id">ID: {page.uid}</span>
             <div className="clearfix">
               <span className="page-name truncate pull-left">{page.name}</span>
-              { page.state != 'archived' &&
+              <div className={(page.state != 'archived') ? '': ' hide'}>
                 <ConnectedMarkAsResolvedCheck page={page} />
-              }
+              </div>
             </div>
           </div>
           <ul className="comment-group">
             {renderedPageComments}
           </ul>
-          { (_this.state.currentTab == 'active') &&
+          <div className={((_this.state.currentTab == 'active') ? '': ' hide')}>
             <ConnectedNewComment commentableId={page.id} commentableType='Page' sectionId={page.sectionId} footer={page.footer} />
-          }
+          </div>
         </li>
       )
     })
@@ -96,17 +96,15 @@ class RightSidebar extends React.Component {
               })()}
             </p>
           }
-          { (this.state.currentTab == 'active') &&
-            <div className='general-comments'>
-              <h2 className="comment-type-heading">
-                General comments
-              </h2>
-              <ul className="comment-group">
-                {renderedComments}
-              </ul>
-              <ConnectedNewComment commentableId={this.props.sitemapId} commentableType='Sitemap' footer={false} />
-            </div>
-          }
+          <div className={'general-comments' + ((this.state.currentTab == 'active') ? '': ' hide')}>
+            <h2 className="comment-type-heading">
+              General comments
+            </h2>
+            <ul className="comment-group">
+              {renderedComments}
+            </ul>
+            <ConnectedNewComment commentableId={this.props.sitemapId} commentableType='Sitemap' footer={false} />
+          </div>
           <ul>
             {renderedPageWithComments}
           </ul>
