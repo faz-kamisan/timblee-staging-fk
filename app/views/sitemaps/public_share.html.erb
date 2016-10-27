@@ -1,7 +1,5 @@
 <%= react_component("SitemapApp", props: @sitemap_props, prerender: false) %>
-<%= javascript_include_tag('webpack-bundle') %>
-
-<div class="loader hide">
+<div class="loader">
   <div class="loader-logo">
     <img src="/assets/Timblee-icon.svg" alt=" ">
   </div>
@@ -10,3 +8,4 @@
     <p>Beautiful Visual Sitemaps</p>
   </div>
 </div>
+<%= javascript_include_tag('webpack-bundle') %>

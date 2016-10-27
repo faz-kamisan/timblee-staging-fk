@@ -21,6 +21,9 @@ import UserSignupModal from './user_signup_modal'
 import CustomDragLayer from '../components/custom_drag_layer';
 
 class SiteMap extends React.Component {
+  componentDidMount() {
+    $('.loader').hide()
+  }
   render() {
     return (
       <div className={this.props.publicShare ? 'shared-view' : ''}>
