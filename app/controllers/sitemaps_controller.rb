@@ -6,6 +6,8 @@ class SitemapsController < ApplicationController
   before_filter :fetch_sitemap_from_sitemap_id, only: [:rename, :duplicate]
   around_action :wrap_in_transaction, only: :duplicate
 
+  layout 'shared_view', only: :public_share
+
   def create
     @sitemap = current_business.sitemaps.build(sitemap_params)
     @sitemap.business = current_business
