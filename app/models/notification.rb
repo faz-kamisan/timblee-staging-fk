@@ -7,13 +7,13 @@ class Notification < ActiveRecord::Base
 
   def self.delete_sitemap_notification(sitemap, user)
     path = '#'
-    message = "#{sitemap.name} was deleted by #{user.full_name}."
+    message = "#{sitemap.name} was deleted by #{user.first_name}."
     add_notifications(user, sitemap, path, message)
   end
 
   def self.sitemap_status_update_notification(sitemap, user)
     path = Rails.application.routes.url_helpers.progress_users_path
-    message = "#{user.full_name} updated the status of the #{sitemap.name} to #{sitemap.state.titleize}."
+    message = "#{user.first_name} updated the status of the #{sitemap.name} to #{sitemap.state.titleize}."
     add_notifications(user, sitemap, path, message)
   end
 
@@ -21,21 +21,21 @@ class Notification < ActiveRecord::Base
     user = comment.commenter
     sitemap = comment.sitemap
     path = Rails.application.routes.url_helpers.sitemap_path(sitemap)
-    message = comment.commentable_type == 'Sitemap' ? "#{user.full_name} commented on #{sitemap.name}" : "#{sitemap.name} - #{user.full_name} #{state} a comment on #{comment.commentable.name}"
+    message = comment.commentable_type == 'Sitemap' ? "#{user.first_name} commented on #{sitemap.name}" : "#{sitemap.name} - #{user.first_name} #{state} a comment on #{comment.commentable.name}"
     add_notifications(user, sitemap, path, message)
   end
 
   def self.resolved_comment_notification(page, user)
     sitemap = page.sitemap
     path = Rails.application.routes.url_helpers.sitemap_path(sitemap)
-    message =  "#{sitemap.name}  - #{user.full_name} resolved a comment on #{page.name} "
+    message =  "#{sitemap.name}  - #{user.first_name} resolved a comment on #{page.name} "
     add_notifications(user, sitemap, path, message)
   end
 
   def self.user_mention_notification(comment, mentioned_user)
     user = comment.commenter
     sitemap = comment.sitemap
-    message = "#{sitemap.name} - #{user.full_name} mentioned you in a comment on " +
+    message = "#{sitemap.name} - #{user.first_name} mentioned you in a comment on " +
               (comment.commentable_type == 'Sitemap' ? 'General Comments' : "#{comment.commentable.name}")
     path = Rails.application.routes.url_helpers.sitemap_path(sitemap)
     Notification.create(message: message, link_to: path, user: user, recipient: mentioned_user) unless mentioned_user == user

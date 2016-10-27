@@ -45,6 +45,10 @@ class User < ActiveRecord::Base
   validates :full_name, uniqueness: {scope: :business, message: "There's already an account with this name in your business. Please use some other name."}
   validate :minimum_image_size, on: :update
 
+  def first_name
+    full_name.split(' ').first
+  end
+
   def all_sitemaps
     business.sitemaps.order_by_alphanumeric_lower_name
   end
