@@ -26,6 +26,7 @@ class CommentEditor extends React.Component {
       var d = {}
       d["value"] = object["full_name"]
       d["uid"] = object["id"]
+      d['image'] = object['avatarUrl']
       return d
     })
     $(this.refs.commentEditor).twemojiPicker()

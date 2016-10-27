@@ -3762,10 +3762,19 @@ body.trial {
     }
     .twemoji-icon-picker img {
       right: 16px!important;
-      bottom: 12px!important; 
+      bottom: 12px!important;
     }
   }
   .add-remove-comment {
     bottom: 13px;
+  }
+}
+
+ul.ui-autocomplete {
+  .ui-menu-item {
+    img {
+      height: 50px;
+      widows: 50px;
+    }
   }
 }
