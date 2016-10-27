@@ -39,17 +39,17 @@ class Comment < ActiveRecord::Base
 
     def create_comment_notification
       Notification.add_comment_notification(self, :added)
-      notify_mentioned_user if message.match('@')
+      notify_mentioned_user if message.match(/<strong(.*)>(.*)<\/strong>/)
     end
 
     def update_comment_notification
       Notification.add_comment_notification(self, :updated)
-      notify_mentioned_user if message.match('@')
+      notify_mentioned_user if message.match(/<strong(.*)>(.*)<\/strong>/)
     end
 
     def notify_mentioned_user
       sitemap.users.each do |user|
-        Notification.user_mention_notification(self, user) if message.match("@#{user.full_name}")
+        Notification.user_mention_notification(self, user) if message.match(/<strong(.*)>#{user.full_name}<\/strong>/)
       end
     end
 end
