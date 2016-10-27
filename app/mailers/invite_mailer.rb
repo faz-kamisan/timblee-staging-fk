@@ -16,7 +16,7 @@ class InviteMailer < ActionMailer::Base
       message = {
       'To' => "#{@user.full_name} <#{@user.email}>",
         'Data' => {
-          'inviting_user_first_name' => @inviter.full_name,
+          'inviting_user_first_name' => @inviter.first_name,
           'inviting_user_name' => @inviter.full_name,
           'Here is a personal message from inviter' => @custom_message_header,
           'Insert personal message here' => @custom_message,

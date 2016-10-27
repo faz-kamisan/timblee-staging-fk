@@ -3754,6 +3754,11 @@ body.trial {
       height: 133px!important;
       overflow-x: hidden;
       width: 100%;
+      &:focus {
+        ~ .new-comment-place-holder {
+          opacity: 0;
+        }
+      }
     }
     .twemoji-icon-picker:before {
       right: 18px;
@@ -3812,4 +3817,13 @@ ul.ui-autocomplete {
       }
     }
   }
+}
+
+.new-comment-place-holder {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  color: #dadada;
+  font-size: 14px;
+  pointer-events: none;
 }
