@@ -30,7 +30,7 @@ class CommentEditor extends React.Component {
       return d
     })
     $(this.refs.commentEditor).twemojiPicker()
-    $(this.refs.commentEditor).siblings('.twemoji-textarea').mentionsInput({source: formatted_data});
+    $(this.refs.commentEditor).siblings('.twemoji-textarea').mentionsInput({source: formatted_data, showAtCaret: true});
 
     this.refs.commentEditor.innerHTML = this.props.message
 

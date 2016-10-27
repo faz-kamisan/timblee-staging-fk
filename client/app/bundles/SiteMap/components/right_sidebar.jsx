@@ -74,10 +74,10 @@ class RightSidebar extends React.Component {
     })
 
     return (
-      <div className='sitemap-right-sidebar'>
+      <div className='sitemap-right-sidebar open'>
         {!this.props.publicShare &&
           <div className='sitemap-comment-tabs comment-header'>
-            <ul className="comment-list clearfix">
+            <ul className="comment-list clearfix open">
               {renderedCommentTabs}
               <li className="animated-bar-react"></li>
             </ul>

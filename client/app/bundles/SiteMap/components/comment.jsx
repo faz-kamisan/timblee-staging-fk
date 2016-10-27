@@ -54,7 +54,7 @@ class Comment extends React.Component {
   }
 
   messageFormatter() {
-    return this.state.message.replace(/&lt;strong(.*)&gt;(.*)&lt;\/strong&gt;/g, function(match, p1, p2) { return('<span class="comment-mention">@' + p2 + '</span>') })
+    return this.state.message.replace(/<strong(.*)>(.*)<\/strong>/g, function(match, p1, p2) { return('<span class="comment-mention">@' + p2 + '</span>') })
   }
 
   editMessage(message) {
