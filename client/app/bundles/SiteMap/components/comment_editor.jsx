@@ -89,7 +89,7 @@ class CommentEditor extends React.Component {
 
   render() {
     return (
-      <div className="relative">
+      <div className="comment-editor-div">
         <textarea ref='commentEditor' defaultValue={this.props.message} id="temp" className="emoji-decorated comment-editor comment-input__input"></textarea>
         <div className="add-remove-comment">
           <span onClick={this.handleUpdateComment} className='cursor add'>Update my comment </span>

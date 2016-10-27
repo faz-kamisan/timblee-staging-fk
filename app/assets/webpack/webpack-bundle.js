@@ -55211,7 +55211,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        "div",
-	        { className: "relative" },
+	        { className: "comment-editor-div" },
 	        _react2.default.createElement("textarea", { ref: "commentEditor", defaultValue: this.props.message, id: "temp", className: "emoji-decorated comment-editor comment-input__input" }),
 	        _react2.default.createElement(
 	          "div",
