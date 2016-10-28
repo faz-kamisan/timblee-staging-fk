@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   before_create :add_business, unless: :business_id
   after_create :set_confirmation_instructions_to_be_sent, unless: [:confirmed?, :invitation_not_accepted?]
   before_destroy :restrict_owner_destroy
+  before_destroy :clear_email!
+  before_restore :set_email!
   after_destroy :update_business_subscription
   before_update :restrict_owner_role_update, if: :is_admin_changed?
   after_create :add_default_avatar
@@ -136,6 +138,17 @@ class User < ActiveRecord::Base
 
     def email_required?
       false
+    end
+
+    def clear_email!
+      update_column(:preserved_email, email)
+      update_column(:email, nil)
+    end
+
+    def set_email!
+      self.email = preserved_email
+      self.preserved_email = nil
+      true
     end
 
     def update_business_subscription
