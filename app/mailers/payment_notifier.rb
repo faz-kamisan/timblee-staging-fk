@@ -7,7 +7,7 @@ class PaymentNotifier < ActionMailer::Base
     @business = user.business
     @amount = @event.data.object.amount / 100.to_f
     attachments['invoice.pdf'] = PdfGeneratorService.new("#{ Rails.root }/app/views/payment_notifier/success_invoice.html.erb", binding).generate_pdf
-    if Rails.env.staging?
+    if Rails.env.staging? || Rails.env.prep?
       smart_email_id = CampaignMonitor::SMART_EMAIL_IDS[:payment_success]
       tx_smart_mailer = CreateSend::Transactional::SmartEmail.new(CampaignMonitor::AUTH, smart_email_id)
       message = {
@@ -32,7 +32,7 @@ class PaymentNotifier < ActionMailer::Base
     @user = user
     @amount_refunded = @event.data.object.amount_refunded / 100.to_f
     attachments['invoice.pdf'] = PdfGeneratorService.new("#{ Rails.root }/app/views/payment_notifier/refund_invoice.html.erb", binding).generate_pdf
-    if Rails.env.staging?
+    if Rails.env.staging? || Rails.env.prep?
       smart_email_id = CampaignMonitor::SMART_EMAIL_IDS[:payment_refund]
       tx_smart_mailer = CreateSend::Transactional::SmartEmail.new(CampaignMonitor::AUTH, smart_email_id)
       message = {
@@ -52,7 +52,7 @@ class PaymentNotifier < ActionMailer::Base
   def failure(user, event)
     @event = event
     @user = user
-    if Rails.env.staging?
+    if Rails.env.staging? || Rails.env.prep?
       smart_email_id = CampaignMonitor::SMART_EMAIL_IDS[:payment_failure]
       tx_smart_mailer = CreateSend::Transactional::SmartEmail.new(CampaignMonitor::AUTH, smart_email_id)
       message = {

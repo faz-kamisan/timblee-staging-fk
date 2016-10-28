@@ -100,6 +100,17 @@ class Sitemap < ActiveRecord::Base
     end
   end
 
+  def public_share_url
+    subdomain, host = case Rails.env
+                      when 'development' then ['share',         'timblee.dev']
+                      when 'staging'     then ['share-staging', 'timblee.io']
+                      when 'prep'        then ['share-prep',    'timblee.io']
+                      when 'production'  then ['share',         'timblee.io']
+                      end
+
+    Rails.application.routes.url_helpers.sitemap_public_share_url(public_share_token, subdomain: subdomain, host: host)
+  end
+
   private
 
 

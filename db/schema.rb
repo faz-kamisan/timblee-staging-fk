@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161007063346) do
+ActiveRecord::Schema.define(version: 20161028075958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,7 +142,7 @@ ActiveRecord::Schema.define(version: 20161007063346) do
   add_index "subscriptions", ["business_id"], name: "index_subscriptions_on_business_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "",    null: false
+    t.string   "email"
     t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -173,6 +173,7 @@ ActiveRecord::Schema.define(version: 20161007063346) do
     t.boolean  "notify_by_email",        default: true
     t.datetime "deleted_at"
     t.boolean  "is_super_admin",         default: false
+    t.string   "preserved_email"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

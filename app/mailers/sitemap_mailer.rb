@@ -9,7 +9,7 @@ class SitemapMailer < ActionMailer::Base
     @sitemap = Sitemap.find_by(id: sitemap_id)
     @custom_message_header = "Here is a personal message from #{@inviter_first_name}" if custom_message.present?
 
-    if Rails.env.staging?
+    if Rails.env.staging?  || Rails.env.prep?
       smart_email_id = CampaignMonitor::SMART_EMAIL_IDS[:share_sitemap]
       tx_smart_mailer = CreateSend::Transactional::SmartEmail.new(CampaignMonitor::AUTH, smart_email_id)
       message = {
@@ -22,7 +22,7 @@ class SitemapMailer < ActionMailer::Base
           'inviting_user_firstname' => @inviter_first_name,
           'Here is a personal message from inviter:' => @custom_message_header,
           'Insert personal message here' => @custom_message,
-          'public share link' => sitemap_public_share_url(@sitemap.public_share_token).gsub(/(?<protocol>http(s?):\/\/)/, '\k<protocol>share.')
+          'public share link' => @sitemap.public_share_url
         }
       }
       response = tx_smart_mailer.send(message)

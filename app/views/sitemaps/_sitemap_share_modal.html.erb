@@ -26,7 +26,7 @@
             <span id='sitemap-public-share-url' class='backend'>
               <span class="truncate">
                 <% if @sitemap %>
-                  <%= sitemap_public_share_url(@sitemap.public_share_token).gsub(/(?<protocol>http(s?):\/\/)/, '\k<protocol>share.') %>
+                  <%= @sitemap.public_share_url %>
                 <% end %>
               </span>
             </span>
