@@ -33,6 +33,9 @@
       var s = document.getElementsByTagName('script')[0];
       s.parentNode.insertBefore(tk, s);
     })();
+    $(window).on('load', function() {
+      $('.loader').addClass('hide')
+    })
 
   </script>
   <%= csrf_meta_tags %>

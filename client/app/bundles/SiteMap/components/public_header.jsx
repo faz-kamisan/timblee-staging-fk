@@ -19,7 +19,6 @@ class PublicHeader extends React.Component {
 
   componentDidMount() {
     var _this = this
-    $('body').addClass('hide-header');
     $('body').on('click', function(e) {
       if(!(e.target.closest('.sitemap-induction-sidebar') || e.target.closest('.sitemap-right-sidebar') || e.target.closest('.show-comments-sidebar-link') || e.target.closest('.show-induction-sidebar-link'))) {
         _this.setState({commentSidebarOpen: false, inductionSidebarOpen: false})
