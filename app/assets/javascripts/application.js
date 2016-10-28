@@ -62,7 +62,7 @@ $(document).ready(function() {
   })
 
   $('body').on('input', '.twemoji-textarea.ui-autocomplete-input', function(e) {
-    if($(e.target).text().length > 0) {
+    if($(e.target).html().length > 0) {
       $(e.target).addClass('has-content')
     } else {
       $(e.target).removeClass('has-content')

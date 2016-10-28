@@ -45,6 +45,6 @@ class SectionsController < ApplicationController
     end
 
     def conditional_authenticate_user!
-      proxy_login? || (request.subdomains[0] == 'app') || authenticate_user!
+      proxy_login? || request.subdomains[0].match('app') || authenticate_user!
     end
 end

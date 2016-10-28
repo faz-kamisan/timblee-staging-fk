@@ -4,7 +4,7 @@ import { traverse } from '../helpers/tree_helper'
 
 class TrialHeader extends React.Component {
   componentDidMount() {
-    var remainingTime = (15 * 60 * 1000) - ((new Date()) - new Date(this.props.createdAt))
+    var remainingTime = (60 * 1000) - ((new Date()) - new Date(this.props.createdAt))
     setTimeout(function() {
       $('#user-signup-modal').modal('show');
     }, remainingTime)

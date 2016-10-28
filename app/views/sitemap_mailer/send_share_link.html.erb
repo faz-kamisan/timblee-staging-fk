@@ -9,7 +9,7 @@
 
 <p>You can view and comment on the sitemap through the below link:</p>
 
-<p><%= link_to 'View Sitemap', sitemap_public_share_url(@sitemap.public_share_token).gsub(/(?<protocol>http(s?):\/\/)/, '\k<protocol>share.') %></p>
+<p><%= link_to 'View Sitemap', @sitemap.public_share_url %></p>
 
 Thanks and Regards
 Timblee

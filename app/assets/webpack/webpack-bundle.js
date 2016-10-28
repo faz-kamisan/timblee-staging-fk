@@ -53494,7 +53494,7 @@
 	  _createClass(TrialHeader, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var remainingTime = 15 * 60 * 1000 - (new Date() - new Date(this.props.createdAt));
+	      var remainingTime = 60 * 1000 - (new Date() - new Date(this.props.createdAt));
 	      setTimeout(function () {
 	        $('#user-signup-modal').modal('show');
 	      }, remainingTime);

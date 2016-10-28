@@ -42,7 +42,7 @@ class SitemapsController < ApplicationController
                                                    email: current_user.email,
                                                    avatar: current_user.avatar,
                                                    isAdmin: current_user.is_admin? },
-                                                   publicShareUrl: (sitemap_public_share_url(@sitemap.public_share_token).gsub(/(?<protocol>http(s?):\/\/)/, '\k<protocol>share.')),
+                                                   publicShareUrl: @sitemap.public_share_url,
                                                    publicShare: false,
                                                    newSitemap: !!flash[:new_sitemap]
                                                    )
