@@ -193,13 +193,13 @@
     min-width: 1px!important;
     border: 0;
     width: 100%!important;
-    padding-bottom: 20px;
+    padding-bottom: 0;
     max-height: 275px;
     overflow-y: auto;
     li {
       min-height: 45px;
       font-size: 14px;
-      padding: 10px 19px;
+      padding: 13px 19px 10px 19px;
       line-height: 20px;
       color: #414952;
       background: #fff;
@@ -227,7 +227,7 @@
     overflow: hidden;
     border: 0;
     font-size: 14px;
-    color: $primaryLabel;
+    color: #414952;
     width: 100%;
     padding: 0 20px 0 44px;
     position: relative;

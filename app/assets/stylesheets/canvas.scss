@@ -1686,7 +1686,7 @@ body.trial {
 
   .comment-group {
     margin-bottom: 25px;
-    li:not(.ui-menu-item):last-child {
+    li:not(.sitemap-right-sidebar .ui-menu-item):last-child {
       position: relative;
       &:before {
         content: ' ';
@@ -3797,7 +3797,7 @@ ul.ui-autocomplete {
   }
 }
 
-.ui-autocomplete.ui-front {
+.sitemap-right-sidebar .ui-autocomplete.ui-front, #page-comments-modal .ui-autocomplete.ui-front {
   width: 185px!important;
   max-height: 115px!important;
   @include border-radius(4px);
