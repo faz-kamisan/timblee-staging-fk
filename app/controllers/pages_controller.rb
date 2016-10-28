@@ -42,6 +42,6 @@ class PagesController < ApplicationController
     end
 
     def conditional_authenticate_user!
-      proxy_login? || request.subdomains[0].match('app') || authenticate_user!
+      proxy_login? || request.subdomains[0].try(:match, 'app') || authenticate_user!
     end
 end

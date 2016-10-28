@@ -2456,30 +2456,45 @@ body.trial {
   }
   .comment-group {
     padding-left: 0;
+    max-height: 320px;
+    overflow-y: auto;
     &:before {
-      background: #d6d8da;
-      left: 17px;
+      display: none;
     }
     li {
       padding-left: 50px;
       padding-right: 0;
+      position: relative;
+      &:before {
+        content: ' ';
+        position: absolute;
+        width: 2px;
+        height: 100%;
+        background: #d6d8da;
+        left: 17px;
+        top: 0;
+      }
       p {
         color: #414952;
       }
       + li:not(.ui-menu-item) {
-        margin-top: 43px;
+        padding-top: 43px;
+        margin-top: 0;
       }
       &:last-child {
-        position: relative;
-        &:before {
+        &:after {
           content: ' ';
           position: absolute;
           left: 17px;
-          top: 36px;
-          height: calc(100% - 36px);
-          background: $primaryWhite;
+          top: 75px;
           width: 2px;
-          z-index: 5;
+          height: calc(100% - 75px);
+          background: $primaryWhite;
+        }
+      }
+      &:first-child {
+        .user-comment-image {
+          top: -2px;
         }
       }
     }
@@ -2507,6 +2522,7 @@ body.trial {
   .user-comment-image {
     border: 0;
     left: 0;
+    top: 41px;
   }
   .page-comment-details {
     border: 0;
