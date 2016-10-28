@@ -6,7 +6,7 @@ class BusinessMailer < ActionMailer::Base
     @user = User.find_by_id(user_id)
     @business = Business.find_by_id(business_id)
 
-    if Rails.env.staging?
+    if Rails.env.staging? || Rails.env.prep?
       smart_email_id = CampaignMonitor::SMART_EMAIL_IDS[:account_deletion_request]
       tx_smart_mailer = CreateSend::Transactional::SmartEmail.new(CampaignMonitor::AUTH, smart_email_id)
       message = {
