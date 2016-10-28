@@ -1094,6 +1094,7 @@
             }
             else if(document.selection && document.selection.type != 'Control')
                 document.selection.createRange().pasteHTML(text);
+            this.$textarea.trigger('input')
         }
     };
 
