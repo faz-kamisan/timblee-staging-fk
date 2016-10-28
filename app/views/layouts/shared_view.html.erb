@@ -28,7 +28,6 @@
         var rs = this.readyState;
         if (d || rs && rs != 'complete' && rs != 'loaded') return;
         d = true;
-        clearTimeout(t);
         try { Typekit.load(config); } catch (e) {}
       };
       var s = document.getElementsByTagName('script')[0];
