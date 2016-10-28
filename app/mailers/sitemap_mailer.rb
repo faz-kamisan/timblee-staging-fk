@@ -22,7 +22,7 @@ class SitemapMailer < ActionMailer::Base
           'inviting_user_firstname' => @inviter_first_name,
           'Here is a personal message from inviter:' => @custom_message_header,
           'Insert personal message here' => @custom_message,
-          'public share link' => sitemap_public_share_url(@sitemap.public_share_token).gsub(/(?<protocol>http(s?):\/\/)/, '\k<protocol>share.')
+          'public share link' => @sitemap.public_share_url
         }
       }
       response = tx_smart_mailer.send(message)
