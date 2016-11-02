@@ -200,7 +200,7 @@
       min-height: 45px;
       font-size: 14px;
       padding: 13px 19px 10px 19px;
-      line-height: 20px;
+      line-height: 19px;
       color: #414952;
       background: #fff;
       word-wrap: break-word;
@@ -209,6 +209,10 @@
       }
       &:hover {
         color: $primaryPink;
+      }
+      &:last-child {
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
       }
     }
     .ui-state-focus,
@@ -233,6 +237,8 @@
     position: relative;
     font-family: "proxima-nova",sans-serif!important;
     line-height: 45px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
   .icon-search {
     font-size: 13px;
