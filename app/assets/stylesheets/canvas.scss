@@ -2461,6 +2461,9 @@ body.trial {
     &:before {
       display: none;
     }
+    &:empty {
+      min-height: 0;
+    }
     li {
       padding-left: 50px;
       padding-right: 0;
@@ -2483,6 +2486,7 @@ body.trial {
       + li:not(.ui-menu-item) {
         padding-top: 43px;
         margin-top: 0;
+        padding-bottom: 3px;
         h6 {
           top: 43px;
         }
