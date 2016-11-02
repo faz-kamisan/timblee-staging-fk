@@ -9,7 +9,6 @@ config = {
     'es5-shim/es5-shim',
     'es5-shim/es5-sham',
     'babel-polyfill',
-    './app/bundles/HelloWorld/startup/HelloWorldApp',
     './app/bundles/SiteMap/startup/sitemap_app'
   ],
 
