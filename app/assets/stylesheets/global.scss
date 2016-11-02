@@ -738,3 +738,7 @@ ul.tagit input[type="text"] {
 .no-pointer {
   pointer-events: none;
 }
+
+[data-mention] {
+  background: $transparent!important;
+}

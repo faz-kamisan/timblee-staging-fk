@@ -224,7 +224,7 @@
     left: 27px;
     bottom: 8px;
     font-size: 8px;
-    color: #b7b6bc;
+    color: #b7b6bd;
     display: block;
   }
 
@@ -1021,7 +1021,7 @@
   }
 
   .dummy-id {
-    color: #b7b6bc;
+    color: #b7b6bd;
     font-size: 7px;
     position: absolute;
     bottom: 5px;
@@ -2039,7 +2039,7 @@ body.trial {
   position: absolute;
   text-align: right;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 10px);
   left: 0;
   top: 0;
   @include scale(0);
@@ -2321,7 +2321,7 @@ body.trial {
   }
 
   .dummy-id {
-    color: #b7b6bc;
+    color: #b7b6bd;
     font-size: 7px;
     position: absolute;
     bottom: 5px;
@@ -2480,6 +2480,10 @@ body.trial {
       + li:not(.ui-menu-item) {
         padding-top: 43px;
         margin-top: 0;
+        padding-bottom: 10px;
+        h6 {
+          top: 43px;
+        }
       }
       &:last-child {
         &:after {
@@ -2520,7 +2524,7 @@ body.trial {
     color: #a3acb5;
   }
   .user-comment-image {
-    border: 0;
+    border: 2px solid #d6d8da;
     left: 0;
     top: 41px;
   }
@@ -3161,6 +3165,11 @@ body.trial {
 
 .shared-view {
 
+  .intro-box-2,
+  .intro-box-1 {
+    display: none!important;
+  }
+
   .scrollable-div-sitemaps {
     width: 100%;
     margin-left: 0;
@@ -3695,7 +3704,7 @@ body.trial {
 .share-footer {
   height: 46px;
   background: $primaryWhite;
-  border: 1px solid #d6d8da;
+  border: 1px solid #D6D8DA;
   padding: 0 44px;
   line-height: 44px;
   font-style: 12px;
