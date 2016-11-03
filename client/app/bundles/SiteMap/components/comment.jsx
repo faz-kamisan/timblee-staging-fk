@@ -95,7 +95,7 @@ class Comment extends React.Component {
           <h6>
             {this.props.createdAt}
           </h6>
-          <div className={this.state.editMode ? '': ' hide'}>
+          <div className={ 'comment-editor-container' + (this.state.editMode ? '': ' hide' )}>
             <ConnectedCommentEditor message={ this.state.message } commentableId={this.props.commentableId} commentableType={this.props.commentableType} sectionId={this.props.sectionId} id={this.props.id} closeEditor={this.closeEditor} modalView={this.props.modalView} editMessage={this.editMessage} footer={this.props.footer} />
           </div>
           <div className={this.state.editMode ? 'hide': ''}>
