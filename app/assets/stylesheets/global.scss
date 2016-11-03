@@ -195,6 +195,9 @@ input:-webkit-autofill {
   &:hover {
     color: $primaryPink;
   }
+  &.regular {
+    font-weight: 400;
+  }
 }
 
 .link-light {

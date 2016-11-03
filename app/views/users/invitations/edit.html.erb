@@ -1,16 +1,16 @@
 <!-- Sign Up Page for invited users -->
 <main class="main">
-  <section class="user-entry registration-page">
+  <section class="user-entry registration-page invited-user">
     <div class="panel">
       <div class="panel-body text-center">
         <div class="logo">
           <%= image_tag('Timblee-icon.svg', class: 'logo-inner') %>
         </div>
         <h1 class="modal-heading">
-          Try Timblee free for 30 days and create beautiful <br> visual sitemaps for your web projects.
+          Join your team on Timblee to create and <br> share beautiful visual sitemaps.
         </h1>
         <p class="small">
-          No credit card required. Invite unlimited team <br> members to try it out with you.
+          Choose a password to complete signing up.
         </p>
         <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { method:  :put, class: 'user-form' } do |f| %>
 
@@ -29,14 +29,14 @@
            <span class='error-message'><%= f.object.errors[:password].join(',') %></span>
           </div>
           <div class="form-group">
-            <%= f.submit "Sign up for free", class: 'btn btn-pink btn-block' %>
+            <%= f.submit "JOIN THE TEAM", class: 'btn btn-pink btn-block' %>
           </div>
         <% end %>
-        <p class="go-to-login">
-          Already signed up?
-          <%= link_to "Log in here", new_session_path(resource_name), class: 'link' %>.
-        </p>
         <p class="go-to-terms">By signing up, you agree to our straightforward <a href="http://timblee.io/terms" class="link" target='_blank'>terms</a>.</p>
+        <p class="go-to-login">
+          Already have a Timblee account
+          <%= link_to "using another email?", new_session_path(resource_name), class: 'link regular' %>.
+        </p>
       </div>
     </div>
   </section>

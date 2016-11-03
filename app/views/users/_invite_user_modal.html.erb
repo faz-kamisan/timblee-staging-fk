@@ -40,7 +40,7 @@
             </div>
           </div>
           <div class="col-xs-6 text-center">
-            <h3>You're adding <span class='added-pro-users-count' data-total-users-count=<%= current_business.users.count %>>0 <%='user'.pluralize(current_business.users.count)%></span></h3>
+            <h3>You're adding <span class='added-pro-users-count' data-total-users-count=<%= current_business.users.count %>>0 users</span></h3>
             <% if current_business.is_pro_plan? %>
               <% if current_business.in_trial_period? %>
                 <p>
