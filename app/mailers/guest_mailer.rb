@@ -11,7 +11,7 @@ class GuestMailer < ActionMailer::Base
       message = {
       'To' => "#{@guest.full_name} <#{@guest.email}>",
         'Data' => {
-          'guest-first-name' => @guest.full_name,
+          'guest-first-name' => @guest.first_name,
           'business-name' => @notification.sitemap.business.name,
           'notification-text' => @notification.message,
           'notification-link' => root_url.chop + @notification.path
