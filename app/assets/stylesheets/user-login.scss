@@ -386,3 +386,28 @@
     @include alignCenter(-310px, -342px);
   }
 }
+
+.invited-user {
+  .panel {
+    @include alignCenter(-310px, -263px); 
+  }
+}
+
+.invited-user.user-entry {
+  .small {
+    font-weight: 600;
+    padding-bottom: 8px;
+    margin-top: 13px;
+  }
+  .go-to-terms {
+    margin-bottom: 10px;
+  }
+  form .form-group {
+    &:last-of-type {
+      margin-bottom: 10px;
+    }
+  }
+  .go-to-login {
+    margin-bottom: 6px;
+  }
+}
