@@ -3846,7 +3846,7 @@ ul.ui-autocomplete {
     &:focus {
       border: 0!important;
     }
-    &:hover {
+    &:hover, &.ui-state-focus {
       border: 0!important;
       background: #f9fafc;
     }
