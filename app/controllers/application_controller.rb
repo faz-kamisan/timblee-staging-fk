@@ -46,6 +46,10 @@ class ApplicationController < ActionController::Base
     @analytics ||= Analytics.new(current_user) if current_user
   end
 
+   def track_user_custom_fields
+    analytics.track_user if current_user
+  end
+
   def load_card
     @card = current_business.active_card
   end

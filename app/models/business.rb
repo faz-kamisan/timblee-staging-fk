@@ -47,7 +47,7 @@ class Business < ActiveRecord::Base
   end
 
   def plan_name
-    is_pro ? Plan::PRO : Plan::STARTER
+    is_pro ? Plan::PRO : has_plan ? Plan::STARTER : nil
   end
 
   def is_pro_plan?

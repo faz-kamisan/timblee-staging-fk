@@ -5,6 +5,7 @@ class SitemapsController < ApplicationController
   skip_before_filter :authenticate_user!, only: [:public_share, :trial]
   before_filter :fetch_sitemap_from_sitemap_id, only: [:rename, :duplicate]
   around_action :wrap_in_transaction, only: :duplicate
+  after_filter :track_user_custom_fields, only: [:create, :update, :rename, :duplicate, :destroy]
 
   layout 'shared_view', only: :public_share
 

@@ -90,8 +90,8 @@ class Businesses::SubscriptionsController < ApplicationController
         LoggerExtension.highlight
       end
 
-      analytics.track_starter_plan(@current_subscription)
       current_business.update(is_pro: false, has_plan: true)
+      analytics.track_starter_plan(@current_subscription)
       respond_to do |format|
         format.html do
           redirect_to billing_settings_users_path, notice: t('.success', scope: :flash)
