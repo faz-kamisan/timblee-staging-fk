@@ -1,0 +1,11 @@
+<p>Hello <%= @guest.first_name %></p>
+
+<p>You have received the following notification from the sitemap - <%= @notification.sitemap.name %>.</p>
+
+<p> <%= @notification.message %></p>
+
+<p>You can visit this url to know more: <%= link_to nil, root_url.chop + @notification.path %></p>
+
+
+Thanks and Regards
+Timblee

@@ -28,6 +28,8 @@ class CampaignMonitor
     share_sitemap:                            '3707da03-0c49-47a0-878e-c33955e64b33',
     payment_success:                          '340f25ef-942d-435d-8b67-e1d3feb6609d',
     payment_failure:                          '3904f499-cc31-4717-baf2-5cf16830ca23',
-    payment_refund:                           'd559e4a1-2c9c-4508-a081-08651d44456a'
+    payment_refund:                           'd559e4a1-2c9c-4508-a081-08651d44456a',
+    
+    guest_notification_email:                 '5032a076-acef-4efa-9914-5fdcda216d62'
   }
 end

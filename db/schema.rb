@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161028075958) do
+ActiveRecord::Schema.define(version: 20161102104817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,13 +62,17 @@ ActiveRecord::Schema.define(version: 20161028075958) do
 
   create_table "notifications", force: :cascade do |t|
     t.string   "message"
-    t.string   "link_to"
+    t.string   "path"
     t.integer  "user_id"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.boolean  "email_sent",   default: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.boolean  "email_sent",     default: false
     t.integer  "recipient_id"
+    t.string   "recipient_type"
+    t.integer  "sitemap_id"
   end
+
+  add_index "notifications", ["sitemap_id"], name: "index_notifications_on_sitemap_id", using: :btree
 
   create_table "page_types", force: :cascade do |t|
     t.string   "name"

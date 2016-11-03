@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import { MentionsInput, Mention } from 'react-mentions'
 
 class MarkAsResolvedCheck extends React.Component {
   static propTypes = {

@@ -29,6 +29,7 @@ class Sitemap < ActiveRecord::Base
   before_destroy :delete_associations
   before_validation :set_default_state, on: :create, unless: :state
   after_create :create_default_section_and_page
+
   strip_fields :name
 
   scope :order_by_alphanumeric_lower_name, -> { order("lower(SUBSTRING(name FROM '([^0-9]+)')) ASC, SUBSTRING(name FROM '[0-9]+$')::BIGINT ASC, lower(name)") }
@@ -112,7 +113,6 @@ class Sitemap < ActiveRecord::Base
   end
 
   private
-
 
     def business_can_have_more_sitemaps
       unless business.allow_more_sitemaps?

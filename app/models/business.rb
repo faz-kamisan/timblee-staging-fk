@@ -93,7 +93,8 @@ class Business < ActiveRecord::Base
       id: id,
       logo: logo,
       name: name,
-      users: users.select{ |user| user.active? }.map(&:to_react_data).shuffle
+      users: users.active.map(&:to_react_data),
+      guestUsers: Guest.all.map(&:to_react_data)
     }
   end
 
