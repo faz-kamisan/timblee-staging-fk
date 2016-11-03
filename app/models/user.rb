@@ -6,7 +6,9 @@ class User < ActiveRecord::Base
   attr_accessor :admin_access, :trial_days
 
   belongs_to :business, autosave: true
-  has_many :notifications, foreign_key: :recipient_id, dependent: :destroy
+
+  has_many :notifications, as: :recipient
+
   has_many :shared_sitemaps, through: :sitemap_invites, source: :sitemap
   has_many :comments, as: :commenter
   mount_uploader :avatar, AvatarUploader
@@ -46,6 +48,9 @@ class User < ActiveRecord::Base
   validates :password, length: { within: password_length, message: 'Your password needs to be at least 6 characters.' }, allow_blank: true
   validates :full_name, uniqueness: {scope: :business, message: "There's already an account with this name in your business. Please use some other name."}
   validate :minimum_image_size, on: :update
+
+  scope :active, -> { where(invitation_token: nil) }
+  scope :notify_by_email, -> { where(notify_by_email: true) }
 
   def first_name
     full_name.split(' ').first

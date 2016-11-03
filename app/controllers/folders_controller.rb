@@ -12,7 +12,7 @@ class FoldersController < ApplicationController
   def destroy
     sitemaps = @folder.sitemaps.to_a
     if @folder.destroy
-      sitemaps.each {|sitemap| Notification.delay.delete_sitemap_notification(sitemap, current_user)}
+      sitemaps.each {|sitemap| Notification.generate(kind: :delete_sitemap, sitemap: sitemap, actor: current_user) }
       @destroyed = true
       flash.now[:notice] = t('.success', scope: :flash)
     else

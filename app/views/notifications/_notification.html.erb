@@ -3,7 +3,7 @@
     <%= image_tag(notification.user.try(:avatar) || 'guest-icon.png', class: 'profile-image') %>
   </div>
   <div class="pull-left notification-content">
-    <%= link_to notification.message, notification.link_to, class: "notification-message" %>
+    <%= link_to notification.message, notification.path, class: "notification-message" %>
     <span class="notification-time"><%= time_ago_in_words(notification.created_at) + ' ago' %></span>
   </div>
 </li>
