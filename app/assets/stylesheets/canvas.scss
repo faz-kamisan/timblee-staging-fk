@@ -2496,10 +2496,16 @@ body.trial {
           content: ' ';
           position: absolute;
           left: 17px;
-          top: 75px;
+          top: 44px;
           width: 2px;
-          height: calc(100% - 75px);
+          height: calc(100% - 44px);
           background: $primaryWhite;
+        }
+      }
+      &:first-child {
+        &:after {
+          top: 33px;
+          height: calc(100% - 33px);
         }
       }
       &:first-child {
@@ -2555,6 +2561,7 @@ body.trial {
   .comment-editor-div {
     border: 1px solid #dcdcdc!important;
     @include border-radius(4px);
+    margin-top: 5px;
   }
 }
 
