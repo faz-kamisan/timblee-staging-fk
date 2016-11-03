@@ -7,12 +7,13 @@ class Notification < ActiveRecord::Base
               resolve_comments
               mention_user )
 
-  belongs_to :user
+
   belongs_to :sitemap
 
+  belongs_to :actor,     polymorphic: true
   belongs_to :recipient, polymorphic: true
 
-  validates :kind, :user, :sitemap, :recipient, presence: true
+  validates :kind, :actor, :sitemap, :recipient, presence: true
 
   before_create :set_path, :set_message
 
@@ -32,7 +33,7 @@ class Notification < ActiveRecord::Base
   end
 
   def actor_name
-    user.first_name
+    actor.first_name
   end
 
   def message_keys
@@ -78,7 +79,7 @@ class Notification < ActiveRecord::Base
     recipients = Array(recipients.presence || (sitemap.active_users - [actor]))
 
     recipients.each do |recipient|
-      notification = self.new(user: actor, sitemap: sitemap, recipient: recipient)
+      notification = self.new(actor: actor, sitemap: sitemap, recipient: recipient)
       notification.kind = kind
       notification.resource = resource
       notification.save

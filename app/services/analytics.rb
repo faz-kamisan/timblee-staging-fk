@@ -7,6 +7,10 @@ class Analytics
     @business = user.business
   end
 
+  def track_user
+    identify
+  end
+
   def track_user_sign_up
     identify
     track(
@@ -83,7 +87,7 @@ class Analytics
   def user_traits
     {
       email: user.email,
-      full_name: user.full_name,
+      name: user.full_name,
       comments_count: user.comments.count,
       createdAt: user.created_at
     }
@@ -99,7 +103,8 @@ class Analytics
       no_of_sitemaps: business.sitemaps.count,
       first_sitemap_date: business.sitemaps.order(:created_at).first.try(:created_at).try(:strftime, '%d %b %Y'),
       createdAt: business.created_at,
-      comments_count: business.comments_count
+      comments_count: business.comments_count,
+      trial_type: business.trial_days.to_s + ' days'
     }
   end
 

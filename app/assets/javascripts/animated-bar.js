@@ -23,7 +23,7 @@ AnimateTab.prototype.move = function() {
   }
 };
 
-$(window).on('load', function() {
+$(function() {
   var shareTab = $('.share-method-tabs .animated-tab'),
       commentTab = $('.comment-list .animated-tab'),
       settingsTab = $('.nav-tabs .animated-tab'),

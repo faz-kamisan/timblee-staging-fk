@@ -1,8 +1,10 @@
 class CommentsController < ApplicationController
 
-  skip_before_action :authenticate_user!, only: [:create, :update]
+  skip_before_action :authenticate_user!, only: [:create, :update, :destroy]
+
   before_action :fetch_user_or_guest, only: [:create, :update, :destroy]
   before_filter :fetch_comment, only: [:destroy, :update]
+  after_filter :track_user_custom_fields, only: [:create, :update, :destroy]
 
   def create
     @comment = @commenter.comments.build(comment_params)

@@ -2,6 +2,7 @@ class BusinessesController < ApplicationController
 
   skip_before_action :lock_business_after_trial_end, only: [:delete_account]
   before_filter :fetch_business, only: [:update]
+  after_filter :track_user_custom_fields, only: [:update]
 
   def delete_account
     BusinessMailer.delay.send_admin_account_destroy_request(current_business, current_user)
