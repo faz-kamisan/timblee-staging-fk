@@ -1,51 +1,104 @@
 class Notification < ActiveRecord::Base
 
+  TYPES = %i( delete_sitemap
+              update_sitemap_status
+              add_comment
+              update_comment
+              resolve_comments
+              mention_user )
+
   belongs_to :user
-  belongs_to :recipient, class_name: 'User'
+  belongs_to :sitemap
 
-  scope :not_mailed, -> { where(email_sent: false) }
+  belongs_to :recipient, polymorphic: true
 
-  def self.delete_sitemap_notification(sitemap, user)
-    path = '#'
-    message = "#{sitemap.name} was deleted by #{user.first_name}."
-    add_notifications(user, sitemap, path, message)
+  validates :kind, :user, :sitemap, :recipient, presence: true
+
+  before_create :set_path, :set_message
+
+  after_create :send_via_email, if: :for_guest?
+
+  scope :sent, -> { where(email_sent: true) }
+  scope :not_sent, -> { where(email_sent: false) }
+
+  attr_accessor :kind, :resource
+
+  def for_guest?
+    recipient.is_a? Guest
   end
 
-  def self.sitemap_status_update_notification(sitemap, user)
-    path = Rails.application.routes.url_helpers.progress_users_path
-    message = "#{user.first_name} updated the status of the #{sitemap.name} to #{sitemap.state.titleize}."
-    add_notifications(user, sitemap, path, message)
+  def sitemap_name
+    sitemap.name
   end
 
-  def self.add_comment_notification(comment, state)
-    user = comment.commenter
-    sitemap = comment.sitemap
-    path = Rails.application.routes.url_helpers.sitemap_path(sitemap)
-    message = comment.commentable_type == 'Sitemap' ? "#{user.first_name} commented on #{sitemap.name}" : "#{sitemap.name} - #{user.first_name} #{state} a comment on #{comment.commentable.name}"
-    add_notifications(user, sitemap, path, message)
+  def actor_name
+    user.first_name
   end
 
-  def self.resolved_comment_notification(page, user)
-    sitemap = page.sitemap
-    path = Rails.application.routes.url_helpers.sitemap_path(sitemap)
-    message =  "#{sitemap.name}  - #{user.first_name} resolved a comment on #{page.name} "
-    add_notifications(user, sitemap, path, message)
+  def message_keys
+    keys = []
+    keys.unshift(kind)
+    keys.unshift("#{kind}_on_#{resource.class.name.underscore}".to_sym) if resource
+    keys
   end
 
-  def self.user_mention_notification(comment, mentioned_user)
-    user = comment.commenter
-    sitemap = comment.sitemap
-    message = "#{sitemap.name} - #{user.first_name} mentioned you in a comment on " +
-              (comment.commentable_type == 'Sitemap' ? 'General Comments' : "#{comment.commentable.name}")
-    path = Rails.application.routes.url_helpers.sitemap_path(sitemap)
-    Notification.create(message: message, link_to: path, user: user, recipient: mentioned_user) unless mentioned_user == user
+  def path_value(key)
+    case key
+    when :delete_sitemap        then Rails.application.routes.url_helpers.root_path
+    when :update_sitemap_status then Rails.application.routes.url_helpers.progress_users_path
+    else  Rails.application.routes.url_helpers.sitemap_path(sitemap)
+    end
+  end
+
+  def message_value(key)
+    case key
+    when :delete_sitemap
+      "#{sitemap_name} was deleted by #{actor_name}."
+    when :update_sitemap_status
+      "#{actor_name} updated the status of the #{sitemap_name} to #{sitemap.state.titleize}."
+    when :add_comment
+      "#{actor_name} commented on #{sitemap_name}."
+    when :add_comment_on_page
+      "#{sitemap_name} - #{actor_name} added a comment on #{resource.name}."
+    when :update_comment
+      "#{actor_name} updated comment on #{sitemap_name}."
+    when :update_comment_on_page
+      "#{sitemap_name} - #{actor_name} updated a comment on #{resource.name}."
+    when :resolve_comments
+      "#{sitemap.name}  - #{actor_name} resolved a comment on #{resource.name}."
+    when :mention_user
+      "#{sitemap.name} - #{actor_name} mentioned you in a comment on General Comments."
+    when :mention_user_on_page
+      "#{sitemap.name} - #{actor_name} mentioned you in a comment on #{resource.name}."
+    end
+  end
+
+
+  def self.generate(kind: nil, actor: nil, sitemap: nil, resource: nil, recipients: [])
+    recipients = Array(recipients.presence || (sitemap.users - [actor]))
+
+    recipients.each do |recipient|
+      notification = self.new(user: actor, sitemap: sitemap, recipient: recipient)
+      notification.kind = kind
+      notification.resource = resource
+      notification.save
+    end
   end
 
   private
 
-    def self.add_notifications(user, sitemap, path, message)
-      sitemap.users.each do |sitemap_user|
-        Notification.create(message: message, link_to: path, user: (user.class == User ? user : nil), recipient: sitemap_user) unless sitemap_user == user
-      end
-    end
+  def set_path
+    self.path = path_value(kind)
+  end
+
+  def set_message
+    message = nil
+    message_keys.detect { |k| message = message_value(k) }
+    self.message = message
+  end
+
+  def send_via_email
+    GuestMailer.delay.send_notification(id)
+  end
+
 end

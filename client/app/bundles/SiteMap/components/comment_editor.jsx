@@ -21,14 +21,27 @@ class CommentEditor extends React.Component {
   }
 
   componentDidMount() {
-    var data = this.props.business.users
-    var formatted_data = data.map(function(object, index){
-      var d = {}
-      d["value"] = object["full_name"]
-      d["uid"] = object["id"]
-      d['image'] = object['avatarUrl']
-      return d
-    })
+    var users_data =  this.props.business.users.map(function(object, index){
+                        var d = {}
+                        d["value"] = object["full_name"]
+                        d["uid"] = "user:" + object["id"]
+                        d['image'] = object['avatarUrl']
+                        return d
+                      })
+
+    var guests_data = this.props.business.guestUsers.map(function(object, index){
+                        var d = {}
+                        d["value"] = object["full_name"]
+                        d["uid"] = "guest:" + object["id"]
+                        d['image'] = object['avatarUrl']
+                        return d
+                      })
+
+    var formatted_data = []
+
+    formatted_data = formatted_data.concat(users_data)
+    formatted_data = formatted_data.concat(guests_data)
+
     $(this.refs.commentEditor).twemojiPicker()
     $(this.refs.commentEditor).siblings('.twemoji-textarea').mentionsInput({source: formatted_data, showAtCaret: true});
 
