@@ -16,7 +16,7 @@ class Notification < ActiveRecord::Base
 
   before_create :set_path, :set_message
 
-  after_create :send_via_email, if: :for_guest?
+  after_commit :send_via_email, on: :create, if: :for_guest?
 
   scope :sent, -> { where(email_sent: true) }
   scope :not_sent, -> { where(email_sent: false) }
@@ -75,7 +75,7 @@ class Notification < ActiveRecord::Base
 
 
   def self.generate(kind: nil, actor: nil, sitemap: nil, resource: nil, recipients: [])
-    recipients = Array(recipients.presence || (sitemap.users - [actor]))
+    recipients = Array(recipients.presence || (sitemap.active_users - [actor]))
 
     recipients.each do |recipient|
       notification = self.new(user: actor, sitemap: sitemap, recipient: recipient)

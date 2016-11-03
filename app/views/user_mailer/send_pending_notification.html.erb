@@ -1,8 +1,165 @@
-<p>Hello <%= @user.full_name %></p>
+<!DOCTYPE html>
+  <html>
+    <head>
+      <title></title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <style type="text/css">
+          /* CLIENT-SPECIFIC STYLES */
+          body, table, td, a{-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;} /* Prevent WebKit and Windows mobile changing default text sizes */
+          table, td{mso-table-lspace: 0pt; mso-table-rspace: 0pt;} /* Remove spacing between tables in Outlook 2007 and up */
+          img{-ms-interpolation-mode: bicubic;} /* Allow smoother rendering of resized image in Internet Explorer */
+          /* RESET STYLES */
+          img{border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none;}
+          table{border-collapse: collapse !important;}
+          body{height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important;}
 
-<p>Your notifications</p>
-<% @notifications.each do |notification| %>
-  <p><%= notification.message %></p>
-<% end %>
-Thanks and Regards
-Timblee
+          /* iOS BLUE LINKS */
+        a[x-apple-data-detectors] {
+          color: inherit !important;
+          text-decoration: none !important;
+          font-size: inherit !important;
+          font-family: inherit !important;
+          font-weight: inherit !important;
+          line-height: inherit !important;
+        }
+
+        span[class="status"] {
+          font-weight: 700;
+        }
+
+        /* MOBILE STYLES */
+        @media screen and (max-width: 525px) {
+
+        /* ALLOWS FOR FLUID TABLES */
+        .wrapper {
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+
+        /* ADJUSTS LAYOUT OF LOGO IMAGE */
+        .logo img {
+          margin: 0 auto !important;
+        }
+
+        /* USE THESE CLASSES TO HIDE CONTENT ON MOBILE */
+        .mobile-hide {
+          display: none !important;
+        }
+
+        .img-max {
+          max-width: 100% !important;
+          width: 100% !important;
+          height: auto !important;
+        }
+
+        /* FULL-WIDTH TABLES */
+        .responsive-table {
+          width: 100% !important;
+        }
+
+        /* UTILITY CLASSES FOR ADJUSTING PADDING ON MOBILE */
+        .padding {
+          padding: 10px 5% 15px 5% !important;
+        }
+
+        .padding-meta {
+          padding: 30px 5% 0px 5% !important;
+          text-align: center;
+        }
+
+        .padding-copy {
+             padding: 10px 5% 10px 5% !important;
+          text-align: center;
+        }
+
+        .no-padding {
+          padding: 0 !important;
+        }
+
+        .section-padding {
+          padding: 50px 15px 50px 15px !important;
+        }
+
+        /* ADJUST BUTTONS ON MOBILE */
+        .mobile-button-container {
+          margin: 0 auto;
+          width: 100% !important;
+        }
+
+        .mobile-button {
+          padding: 15px !important;
+          border: 0 !important;
+          font-size: 16px !important;
+          display: block !important;
+        }
+      }
+
+      /* ANDROID CENTER FIX */
+      div[style*="margin: 16px 0;"] { margin: 0 !important; }
+    </style>
+  </head>
+  <body style="margin: 0 !important; padding: 0 !important;">
+
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td>
+          <table border="0" cellpadding="0" cellspacing="0" width="625px" width="625" align="center">
+            <tr>
+              <td style="width: 525px; padding-bottom: 35px;">
+                <p style="color: #9B9B9B; font-size: 14px; font-family: 'avenir'; font-weight: 400;">Timblee Account Activity | <%= Time.zone.now.strftime("%A, %d %B %Y at %I:%M %P") %></p>
+                <p style="color: #414952; font-size: 18px; font-family: 'avenir'; font-weight: 400;">Hi <%= @user.first_name %>, here’s what's happened in the last 10 minutes.</p>
+              </td>
+              <td style="width: 100px; vertical-align: top; padding-top: 15px;">
+                <img src="timblee-mail.png" alt=" " style="border: 0; width: 100px;" border="0" width="100">
+              </td>
+            </tr>
+          </table>
+          <table border="0" cellpadding="0" cellspacing="0" width="623px" width="623" align="center" style="border: solid 1px #E2E2E2; border-bottom: 0;">
+            <tr>
+              <td>
+                <% @notifications.each do |notification| %>
+                  <a href="<%= sitemap_url(notification.sitemap_id) %>" style="display: block; width: 545px; text-decoration: none; min-height: 50px; padding-left: 39px; padding-right: 39px; border-bottom: solid 1px #E2E2E2; padding-top: 10px; padding-bottom: 10px; background: #ffffff;">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td style="vertical-align: middle; width: 45px; padding-right: 15px;">
+                          <img src="<%= root_url.chop + notification.user.avatar_url %>" alt="" style="border:0; width: 45px; height: 45px; border-radius: 50%; vertical-align: middle;">
+                        </td>
+                        <td style="vertical-align: middle; font-family: 'avenir'; font-size: 14px; color: #545C64; font-weight: 400; width: 385px; padding-right: 15px;">
+                          <%= notification.message %>
+                        </td>
+                        <td style="vertical-align: middle; color: #9B9B9B; font-size: 12px; font-family: 'avenir'; font-weight: 400; text-align: right; width: 85px;">
+                          <%= time_ago_in_words(notification.created_at) %>
+                        </td>
+                      </tr>
+                    </table>
+                  </a>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td style="height: 70px; border: 1px solid #E2E2E2; vertical-align: middle; text-align: center; border-top: 0; background: #ffffff;">
+                <a href="<%= settings_users_url %>" style="color: #EC008C; font-size: 14px; font-weight: 400; text-decoration: none; font-family: 'avenir'; ">Go to my account</a>
+              </td>
+            </tr>
+          </table>
+          <table border="0" cellpadding="0" cellspacing="0" width="625px" width="625" align="center">
+            <tr>
+              <td style="padding-top: 52px; text-align: center;">
+                <p style="color: #62717F; font-size: 12px; line-height: 18px; margin: 0; font-family: 'avenir'; margin-bottom: 10px;">Activities from the last 10 minutes are grouped together in this email.</p>
+                <p style="color: #62717F; font-size: 12px; line-height: 18px; margin: 0; font-family: 'avenir'; margin-bottom: 20px;">Don’t want notifications like this? Switch them off in your <a href="<%= settings_users_url %>" style="color: #62717F; font-size: 12px; line-height: 18px; margin: 0; font-family: 'avenir';">account settings</a>.</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <!--[if (gte mso 9)|(IE)]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
+  </body>
+</html>

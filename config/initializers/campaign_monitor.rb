@@ -30,6 +30,6 @@ class CampaignMonitor
     payment_failure:                          '3904f499-cc31-4717-baf2-5cf16830ca23',
     payment_refund:                           'd559e4a1-2c9c-4508-a081-08651d44456a',
     
-    guest_notification_email:                 ''
+    guest_notification_email:                 '5032a076-acef-4efa-9914-5fdcda216d62'
   }
 end
