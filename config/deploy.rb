@@ -9,8 +9,6 @@ set :repo_url, 'git@github.com:TimbleeApp/web-app.git'
 
 # Default deploy_to directory is /var/www/my_app_name
 
-set :user, 'deploy'
-
 # Default value for :scm is :git
 # set :scm, :git
 
@@ -27,12 +25,6 @@ set :user, 'deploy'
 set :linked_dirs, fetch(:linked_dirs, []).push('tmp/pids', 'tmp/sockets', 'log', 'public/assets', 'public/system')
 set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml', 'config/sidekiq.yml')
 
-set :ssh_options, {
-  user: 'deploy',
-  keys: %w(~/.ssh/id_rsa),
-  forward_agent: false,
-  paranoid: true
-}
 
 set :passenger_restart_with_touch, true
 

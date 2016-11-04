@@ -2,6 +2,16 @@ set :rails_env, 'staging'
 set :branch, 'staging'
 
 set :deploy_to, '/var/www/timblee'
+
+set :user, 'deploy'
+
+set :ssh_options, {
+  user: 'deploy',
+  keys: %w(~/.ssh/id_rsa),
+  forward_agent: false,
+  paranoid: true
+}
+
 # role-based syntax
 # ==================
 
