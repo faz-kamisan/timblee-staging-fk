@@ -76,5 +76,18 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :user_name => '693ce70b565399',
+    :password => '9c0e85713c7a5f',
+    :address => 'mailtrap.io',
+    :domain => 'mailtrap.io',
+    :port => '2525',
+    :authentication => :cram_md5
+  }
 
+  config.action_mailer.default_url_options = { host: "http://www.timblee.io/" }
+
+  # Path for convert utility (for mini_magick).
+  ENV['PATHEXT'] ||= '/usr/local/bin'
 end

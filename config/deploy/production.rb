@@ -1,5 +1,15 @@
+set :rails_env, 'production'
+set :branch, 'production'
 set :deploy_to, '/var/www/timblee'
 
+set :user, 'timblee'
+
+set :ssh_options, {
+  user: 'timblee',
+  keys: %w(~/.ssh/id_rsa),
+  forward_agent: false,
+  paranoid: true
+}
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.
@@ -9,6 +19,7 @@ set :deploy_to, '/var/www/timblee'
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 
+server '52.62.95.90', user: 'timblee', roles: %w{web app db}
 
 
 # role-based syntax
