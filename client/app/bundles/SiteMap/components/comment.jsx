@@ -12,13 +12,13 @@ class Comment extends React.Component {
     id: PropTypes.number.isRequired,
     editable: PropTypes.bool.isRequired,
     modalView: PropTypes.bool.isRequired,
-    footer: PropTypes.bool.isRequired,
+    footer: PropTypes.bool,
     createdAt: PropTypes.string.isRequired
   };
 
   constructor(props) {
     super(props);
-    this.state = {editMode: (this.props.id == this.props.commentInEditionId), editable: this.props.editable, message: this.props.message }
+    this.state = {editMode: (this.props.id == this.props.commentInEditionId), editable: this.props.editable, message: this.props.message}
     this.setSelectedComment = this.setSelectedComment.bind(this);
     this.showEditor = this.showEditor.bind(this);
     this.closeEditor = this.closeEditor.bind(this);
@@ -27,6 +27,8 @@ class Comment extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    this.setState({message: nextProps.message})
+    this.setState({editable: nextProps.editable})
     this.setState({editMode: (nextProps.id == nextProps.commentInEditionId)})
   }
 

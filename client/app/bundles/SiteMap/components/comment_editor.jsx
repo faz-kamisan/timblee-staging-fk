@@ -17,7 +17,7 @@ class CommentEditor extends React.Component {
   constructor(props) {
     super(props)
     this.handleUpdateComment = this.handleUpdateComment.bind(this)
-    this.handleClearComment = this.handleClearComment.bind(this)
+    this.handleCancelComment = this.handleCancelComment.bind(this)
   }
 
   componentDidMount() {
@@ -58,11 +58,6 @@ class CommentEditor extends React.Component {
 
     var commentMessage = textarea.html()
 
-    this.refs.commentEditor.innerHTML = ''
-
-    textarea.html('');
-    textareaDup.html('');
-
     if(commentMessage.trim() != this.props.message.trim()) {
       var _this = this;
       this.props.updateComment(this.props.id, this.props.commentableId, this.props.commentableType, this.props.footer, commentMessage, this.props.sectionId)
@@ -86,10 +81,7 @@ class CommentEditor extends React.Component {
     this.props.closeEditor()
   }
 
-  handleClearComment(e) {
-    this.refs.commentEditor.innerHTML = ''
-    $(this.refs.commentEditor).siblings('.twemoji-textarea').text('');
-    $(this.refs.commentEditor).siblings('.twemoji-textarea-duplicate').text('');
+  handleCancelComment(e) {
     this.props.closeEditor()
   }
 
@@ -107,7 +99,7 @@ class CommentEditor extends React.Component {
         <div className="add-remove-comment">
           <span onClick={this.handleUpdateComment} className='cursor add'>Update my comment </span>
           <span className="or">or</span>
-          <span onClick={this.handleClearComment} className='cursor cancel'> cancel</span>
+          <span onClick={this.handleCancelComment} className='cursor cancel'> cancel</span>
         </div>
       </div>
     )
