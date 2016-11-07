@@ -6,40 +6,44 @@ var AnimateTab = function(options) {
 
 AnimateTab.prototype.calcuate = function($this) {
   var _this = this;
+
+  var animatedBar = $(_this.animatedTab).siblings(_this.animatedBar)
+
   if($this.is(':first-child')) {
-    _this.animatedBar.animate({left: $this.position().left, width: $this.outerWidth() }, 200);
+    animatedBar.animate({left: $this.position().left, width: $this.outerWidth() }, 200);
   }
   else {
-    _this.animatedBar.animate({left: $this.position().left + _this.listItemMargin, width: $this.outerWidth() }, 200);
+    animatedBar.animate({left: $this.position().left + _this.listItemMargin, width: $this.outerWidth() }, 200);
   }
 };
 
 AnimateTab.prototype.move = function() {
   var _this = this;
-  if(this.animatedTab.length) {
-    _this.animatedTab.on('click', function() {
+
+  if(_this.animatedTab) {
+    $(document).on('click', _this.animatedTab, function(){
       _this.calcuate($(this));
-    });
+    })
   }
 };
 
 $(function() {
-  var shareTab = $('.share-method-tabs .animated-tab'),
-      commentTab = $('.comment-list .animated-tab'),
-      settingsTab = $('.nav-tabs .animated-tab'),
+  var shareTab = '.share-method-tabs .animated-tab',
+      commentTab = '.comment-list .animated-tab',
+      settingsTab = '.nav-tabs .animated-tab',
       options = {
         animatedTab: commentTab,
-        animatedBar: commentTab.siblings('.animated-bar-react'),
+        animatedBar: '.animated-bar-react',
         listItemMargin: 33
       },
       optionsSettings = {
         animatedTab: settingsTab,
-        animatedBar: settingsTab.siblings('.animated-bar-rails'),
+        animatedBar: '.animated-bar-rails',
         listItemMargin: 27
       },
       optionsShare = {
         animatedTab: shareTab,
-        animatedBar: shareTab.siblings('.animated-bar-share'),
+        animatedBar: '.animated-bar-share',
         listItemMargin: 0
       },
       animateTab = new AnimateTab(options);

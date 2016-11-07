@@ -122,7 +122,7 @@ class SitemapsController < ApplicationController
           flash.now[:alert] = set_flash_message_for_rename_failure
         end
         format.json do
-          render json: t('.sitemaps.rename.failure', scope: :flash), status: 422
+          render json: t('.failure', scope: :flash), status: 422
         end
       end
     end
