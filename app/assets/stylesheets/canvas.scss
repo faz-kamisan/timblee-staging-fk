@@ -2755,6 +2755,9 @@ body.trial {
   }
   .page-tile {
     pointer-events: none;
+    margin: 0!important;
+    width: 200px!important;
+    height: 87px!important;
     &:before, &:after {
       display: none;
     };
@@ -2764,6 +2767,21 @@ body.trial {
   }
   .btn-grey {
     text-transform: capitalize;
+  }
+  .page-container {
+    padding: 0!important;
+  }
+  .first-page,
+  .collapse-open,
+  .gutter,
+  .section-tag {
+    display: none;
+  }
+  .tile-bottom {
+    height: 42px!important;
+  }
+  .tile-right {
+    display: block!important;
   }
 }
 
