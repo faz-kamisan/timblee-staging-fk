@@ -25,6 +25,14 @@ class RightSidebar extends React.Component {
     this.setState({ currentTab: tabName })
   }
 
+  businessName(){
+    if(this.props.business.name){
+      return " " + this.props.business.name + " "
+    } else {
+      return " "
+    }
+  }
+
   render() {
     const CommentTabs = ['active', 'resolved', 'archived']
     var _this = this;
@@ -88,9 +96,9 @@ class RightSidebar extends React.Component {
             <p className="comment-text">
               {(() => {
                 switch (this.state.currentTab) {
-                case "active"   : return "Anyone who has the share link can see active comments. Only " + (this.props.business.name || "") + " team members can see resolved and deleted comments.";
-                case "resolved" : return "Resolved conversations are only visible to logged in " + (this.props.business.name || "") + " team members.";
-                case "archived" : return "If a page with comments is deleted, the conversation is moved here. This is to ensure there is a record of all conversations. Archived conversations are only visible to logged in " + this.props.business.name + " team members.";
+                case "active"   : return "Anyone who has the share link can see active comments. Only" + this.businessName() + "team members can see resolved and deleted comments.";
+                case "resolved" : return "Resolved conversations are only visible to logged in" + this.businessName() + "team members.";
+                case "archived" : return "If a page with comments is deleted, the conversation is moved here. This is to ensure there is a record of all conversations. Archived conversations are only visible to logged in" + this.businessName() + "team members.";
                 default         : return "";
               }
               })()}

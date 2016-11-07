@@ -15,7 +15,9 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(addFooterPageComment(commentableId, message, commenter, tempId));
         } else {
           dispatch(addPageComment(commentableId, message, commenter, sectionId, tempId));
-          dispatch(setSelectedPage(getNodeById(sections.filter(function(section) {return(section.default)})[0].pageTree, selectedPage.id)))
+          if(selectedPage) {
+            dispatch(setSelectedPage(getNodeById(sections.filter(function(section) {return(section.default)})[0].pageTree, selectedPage.id)))
+          }
         }
       } else if(commentableType == 'Sitemap') {
         dispatch(addGeneralComment(message, commenter, tempId));
@@ -27,7 +29,9 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(updateFooterPageCommentId(oldId, newId, commentableId));
         } else {
           dispatch(updatePageCommentId(oldId, newId, sectionId, commentableId));
-          dispatch(setSelectedPage(getNodeById(sections.filter(function(section) {return(section.default)})[0].pageTree, selectedPage.id)))
+          if(selectedPage) {
+            dispatch(setSelectedPage(getNodeById(sections.filter(function(section) {return(section.default)})[0].pageTree, selectedPage.id)))
+          }
         }
       } else if(commentableType == 'Sitemap') {
         dispatch(updateGeneralCommentId(oldId, newId));

@@ -10,7 +10,8 @@ class NewComment extends React.Component {
     setSaving: PropTypes.func.isRequired,
     onCommentIdUpdate: PropTypes.func.isRequired,
     business: PropTypes.object.isRequired,
-    currentUser: PropTypes.object
+    currentUser: PropTypes.object,
+    selectedPage: PropTypes.object
   };
 
   constructor(props) {
@@ -56,6 +57,7 @@ class NewComment extends React.Component {
       var _this = this;
       var timeStamp = new Date().getTime();
       this.props.addComment(this.props.commentableId, this.props.commentableType, _this.props.footer, commentMessage, (this.props.currentUser || this.props.currentGuest), this.props.sectionId, timeStamp, this.props.sections, this.props.selectedPage)
+
       $.ajax({
         url: '/comments/',
         method: 'post',
