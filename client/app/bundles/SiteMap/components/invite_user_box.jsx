@@ -66,8 +66,6 @@ class InviteUserBox extends React.Component {
         data: { emails: emailsValue, custom_message: this.state.lastFinalisedMessage },
         error: (result) => {
           document.setFlash(result.responseText)
-        },
-        complete: (result) => {
         }
       });
     }

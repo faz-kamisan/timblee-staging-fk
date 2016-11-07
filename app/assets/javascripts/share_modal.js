@@ -35,19 +35,20 @@ ShareModal.prototype.bindEvents = function() {
   })
   this.shareSitemapButton.on('click', function() {
     var tags = $('.share-emails-input').val().split(',').join(' ')
+
+    if(!tags) { return }
+
     if(_this.inviteCustomMessage.data('send')) {
       var customMessage = _this.inviteCustomMessage.val();
     }
+
     $.ajax({
       url: '/sitemaps/' + _this.sitemapShareModal.data('sitemap-id') + '/share_via_email',
       method: 'post',
-      dataType: 'JSON',
+      dataType: 'script',
       data: { emails: tags, custom_message: (customMessage || '') },
-      success: function() {
-        document.location.href = document.location.pathname;
-      },
-      error: function() {
-        document.setFlash(result.responseText)
+      complete: function(){
+        _this.sitemapShareModal.modal('hide')
       }
     });
   })

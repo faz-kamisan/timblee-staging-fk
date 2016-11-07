@@ -45,8 +45,8 @@ class SitemapsController < ApplicationController
                                                    isAdmin: current_user.is_admin? },
                                                    publicShareUrl: @sitemap.public_share_url,
                                                    publicShare: false,
-                                                   newSitemap: !!flash[:new_sitemap]
-                                                   )
+                                                   newSitemap: !!flash[:new_sitemap])
+
     if(current_business.stripe_customer_id)
       @card = current_business.active_card
     end
@@ -64,8 +64,7 @@ class SitemapsController < ApplicationController
   def share_via_email
     emails = params[:emails].split(' ')
     SitemapShareService.share_sitemap(emails, current_user, @sitemap, params[:custom_message])
-    flash[:notice] = 'Email sent successfully'
-    render json: { success: 'Email sent successfully' }, status: 200
+    flash.now.notice = "Email(s) were sent successfully"
   end
 
   def destroy

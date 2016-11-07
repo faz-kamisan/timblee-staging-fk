@@ -1,0 +1,17 @@
+<% if @sitemap %>
+  <% if @sitemap.sitemap_shared_users.length > 0 %>
+    <p>These people have already been emailed</p>
+  <% end %>
+  <ul>
+    <% @sitemap.sitemap_shared_users.each_with_index do |user, index| %>
+      <li class='<%= index > 1 ? 'extra-shared-users hide' : '' %>'>
+        <%= user.user_email %>
+        <span class="icon-save-circle"></span>
+      </li>
+    <% end %>
+  </ul>
+  <% extra_user_count = @sitemap.sitemap_shared_users.length - 2 %>
+  <% if extra_user_count > 0 %>
+    <a href="javascript:void(0)" id="show-others">+ <%= (extra_user_count).to_s + ' other'.pluralize(extra_user_count) %></a>
+  <% end %>
+<% end %>
