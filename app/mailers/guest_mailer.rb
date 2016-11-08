@@ -5,7 +5,7 @@ class GuestMailer < ActionMailer::Base
     @notification = Notification.find(notification_id)
     @guest = @notification.recipient
 
-    if Rails.env.staging? || Rails.env.prep?
+    if Rails.env.staging? || Rails.env.prep? || Rails.env.production?
       smart_email_id = CampaignMonitor::SMART_EMAIL_IDS[:guest_notification_email]
       tx_smart_mailer = CreateSend::Transactional::SmartEmail.new(CampaignMonitor::AUTH, smart_email_id)
       message = {

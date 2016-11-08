@@ -10,7 +10,7 @@ class InviteMailer < ActionMailer::Base
     @inviter = User.find(@user.invited_by_id)
     @custom_message_header = "Here is a personal message from #{@inviter.full_name}" if custom_message.present?
 
-    if Rails.env.staging? || Rails.env.prep?
+    if Rails.env.staging? || Rails.env.prep? || Rails.env.production?
       smart_email_id = CampaignMonitor::SMART_EMAIL_IDS[:invite_users_to_timble]
       tx_smart_mailer = CreateSend::Transactional::SmartEmail.new(CampaignMonitor::AUTH, smart_email_id)
       message = {
