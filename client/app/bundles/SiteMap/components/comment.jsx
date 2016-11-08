@@ -27,7 +27,7 @@ class Comment extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({message: nextProps.message})
+    // this.setState({message: nextProps.message})
     this.setState({editable: nextProps.editable})
     this.setState({editMode: (nextProps.id == nextProps.commentInEditionId)})
   }
