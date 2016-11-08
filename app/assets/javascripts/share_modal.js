@@ -12,7 +12,7 @@ var ShareModal = function(options) {
 ShareModal.prototype.bindEvents = function() {
   var _this = this;
   this.addMessageLink.on('click', function() {
-    var message = _this.commentInputDiv.find('.twemoji-textarea').html().trim()
+    var message = _this.commentInputDiv.find('.emoji-wysiwyg-editor').html().trim()
     if(message.length > 0) {
       _this.inviteCustomMessage.data('send', true);
       _this.inviteCustomMessage.val(message);
@@ -24,7 +24,7 @@ ShareModal.prototype.bindEvents = function() {
   this.clearMessageLink.on('click', function() {
     _this.inviteCustomMessage.data('send', false);
     _this.inviteCustomMessage.val('');
-    _this.commentInputDiv.find('.twemoji-textarea').html('');
+    _this.commentInputDiv.find('.emoji-wysiwyg-editor').html('');
     _this.messagePreview.find('p:first').html('')
   })
   this.editMessageLink.on('click', function() {
