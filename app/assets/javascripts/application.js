@@ -22,7 +22,6 @@
 //= require document_decorator
 //= require date_decorator
 //= require editFields
-//= require apply_twemoji
 //= require select2.min
 //= require settings
 //= require constants
@@ -33,12 +32,12 @@
 //= require animated-bar
 //= require settings_tabs
 //= require share_modal
-//= require twemoji-picker
 //= require full_body
 //= require header
 //= require browsers
 //= require animate_shared_view
 //= require jquery.mentions
+//= require emoji
 
 $(window).on('load resize', function() {
   var $bussinessName = $('.business-name');
@@ -66,6 +65,17 @@ $(document).ready(function() {
       $(e.target).addClass('has-content')
     } else {
       $(e.target).removeClass('has-content')
+    }
+  })
+
+  var ep = new EmojiPicker({ assetsPath: "/assets/emoji" })
+  ep.discover()
+
+  $(document).on('keyup', '.emoji-wysiwyg-editor', function(){
+    if(!$(this).html()) {
+      $(this).siblings('.new-comment-place-holder').show()
+    } else {
+      $(this).siblings('.new-comment-place-holder').hide()
     }
   })
 });

@@ -160,6 +160,8 @@ GEM
     pdfkit (0.8.2)
     pg (0.18.4)
     pkg-config (1.1.7)
+    quiet_assets (1.1.0)
+      railties (>= 3.1, < 5.0)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -322,6 +324,7 @@ DEPENDENCIES
   paranoia (~> 2.1.5)
   pdfkit (~> 0.8.2)
   pg (~> 0.18.4)
+  quiet_assets (~> 1.1.0)
   rails (= 4.2.6)
   react_on_rails (~> 6.0.5)
   rspec-rails (~> 3.5)

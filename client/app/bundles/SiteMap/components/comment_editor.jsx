@@ -42,19 +42,18 @@ class CommentEditor extends React.Component {
     formatted_data = formatted_data.concat(users_data)
     formatted_data = formatted_data.concat(guests_data)
 
-    $(this.refs.commentEditor).twemojiPicker()
-    $(this.refs.commentEditor).siblings('.twemoji-textarea').mentionsInput({source: formatted_data, showAtCaret: true});
+    var ep = new EmojiPicker({ assetsPath: '/assets/emoji' })
+    ep.discover()
 
-    this.refs.commentEditor.innerHTML = this.props.message
+    $(this.refs.commentEditor).next().mentionsInput({source: formatted_data, showAtCaret: true})
 
-    $(this.refs.commentEditor).siblings('.twemoji-textarea').html(this.props.message);
-    $(this.refs.commentEditor).siblings('.twemoji-textarea-duplicate').html(this.props.message);
+    $(this.refs.commentEditor).html(this.props.message)
+    $(this.refs.commentEditor).next().html(this.props.message)
   }
 
 
   handleUpdateComment(e) {
-    var textarea = $(this.refs.commentEditor).siblings('.twemoji-textarea')
-    var textareaDup = $(this.refs.commentEditor).siblings('.twemoji-textarea-duplicate')
+    var textarea = $(this.refs.commentEditor).next()
 
     var commentMessage = textarea.html()
 
@@ -95,7 +94,7 @@ class CommentEditor extends React.Component {
   render() {
     return (
       <div className="comment-editor-div">
-        <textarea ref='commentEditor' defaultValue={this.props.message} id="temp" className="emoji-decorated comment-editor comment-input__input"></textarea>
+        <textarea ref='commentEditor' defaultValue={this.props.message} id="temp" className="emoji-decorated comment-editor comment-input__input" data-emojiable="true"></textarea>
         <div className="add-remove-comment">
           <span onClick={this.handleUpdateComment} className='cursor add'>Update my comment </span>
           <span className="or">or</span>

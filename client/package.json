@@ -35,7 +35,8 @@
     "react-dom": "^0.14.8 || ^15.0.0",
     "react-on-rails": "6.0.5",
     "react-redux": "^4.4.5",
-    "webpack": "^1.12.14"
+    "webpack": "^1.12.14",
+    "emojione-picker": ""
   },
   "devDependencies": {}
 }
