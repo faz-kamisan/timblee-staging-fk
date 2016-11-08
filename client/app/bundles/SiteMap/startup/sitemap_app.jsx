@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactOnRails from 'react-on-rails';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import sitemapAppReducer from '../reducers/index';
 import ConnectedSitemap from '../containers/connected_sitemap';
+import createLogger from 'redux-logger';
 
 // See documentation for https://github.com/reactjs/react-redux.
 // This is how you get props from the Rails view into the redux store.
@@ -11,7 +12,8 @@ import ConnectedSitemap from '../containers/connected_sitemap';
 // railsContext provides contextual information especially useful for server rendering, such as
 // knowing the locale. See the React on Rails documentation for more info on the railsContext
 const SitemapApp = (props, _railsContext) => {
-  const store = createStore(sitemapAppReducer, props);
+  const logger = createLogger();
+  const store = createStore(sitemapAppReducer, props, applyMiddleware(logger));
   const reactComponent = (
     <Provider store={store}>
       <ConnectedSitemap />
