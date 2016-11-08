@@ -5,7 +5,7 @@ class UserMailer < ActionMailer::Base
     @user = User.find_by_id(user_id)
     @admin_user = User.find_by_id(admin_user_id)
     @role = @user.is_admin ? 'Admin' : 'Standard'
-    if Rails.env.staging? || Rails.env.prep? || Rails.env.production?
+    if Rails.env.production?
       if(@user.is_admin)
         smart_email_id = CampaignMonitor::SMART_EMAIL_IDS[:admin_changes_user_role_to_admin]
         tx_smart_mailer = CreateSend::Transactional::SmartEmail.new(CampaignMonitor::AUTH, smart_email_id)
@@ -33,10 +33,24 @@ class UserMailer < ActionMailer::Base
   def send_pending_notification(user_id, notification_ids)
     @user = User.find_by_id(user_id)
     @notifications = Notification.where(id: notification_ids)
-    mail(
-      to: @user.email,
-      subject: "Notifications"
-    )
+
+    if Rails.env.production?
+      classic_mailer = CreateSend::Transactional::ClassicEmail.new(CampaignMonitor::AUTH)
+
+      message = {
+        "Subject": "Notifications",
+        "From": "Timblee <admin@timblee.com>",
+        "To": @user.email,
+        "Html": render,
+      }
+
+      classic_mailer.send(message)
+    else
+      mail(
+        to: @user.email,
+        subject: "Notifications"
+      )
+    end
   end
 
 end
