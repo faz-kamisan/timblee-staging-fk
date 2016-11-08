@@ -9,3 +9,9 @@ set :output, '/var/www/timblee/shared/log/cron.log'
 every 10.minutes do
   rake "notifications:send"
 end
+
+if @environment == 'production'
+  every 6.hours do
+    command 'backup perform --trigger timblee_backup'
+  end
+end
