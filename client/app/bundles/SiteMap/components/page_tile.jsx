@@ -43,7 +43,7 @@ class PageTile extends React.Component {
   }
 
   enableNameChangeInput(e) {
-    if(!(this.props.pageTree.alt_section_id && (this.props.level == 0))) {
+    if((!(this.props.pageTree.alt_section_id && (this.props.level == 0))) && !this.props.publicShare) {
       this.setState({ nameChangeDisabled: false })
       this.refs.nameInput.focus();
     }
