@@ -64,7 +64,7 @@ class SitemapsController < ApplicationController
   def share_via_email
     emails = params[:emails].split(' ')
     SitemapShareService.share_sitemap(emails, current_user, @sitemap, params[:custom_message])
-    flash.now.notice = "Email(s) were sent successfully"
+    flash.now.notice = "Invites successfully sent :)"
   end
 
   def destroy

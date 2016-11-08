@@ -40,7 +40,7 @@ class Sitemap < ActiveRecord::Base
 
     Sitemap.skip_callback(:create, :after, :create_default_section_and_page)
     Page.skip_callback(:update, :before, :update_children_section_id)
-    Page.skip_callback(:update, :before, :archive_children_pages)
+    Page.skip_callback(:update, :before, :archive_children_pages_and_delete_section)
     duplicate.save
 
     sections.order(:default).each { |section| section.duplicate(duplicate) }
@@ -48,7 +48,7 @@ class Sitemap < ActiveRecord::Base
 
     Sitemap.set_callback(:create, :after, :create_default_section_and_page)
     Page.set_callback(:update, :before, :update_children_section_id, if: :section_id_changed?)
-    Page.set_callback(:update, :before, :archive_children_pages, if: :state_changed?)
+    Page.set_callback(:update, :before, :archive_children_pages_and_delete_section, if: :state_changed?)
     duplicate
   end
 

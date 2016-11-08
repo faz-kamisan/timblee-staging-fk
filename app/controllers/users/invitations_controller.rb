@@ -8,8 +8,7 @@ class Users::InvitationsController < Devise::InvitationsController
     emails = params[:email].split(/\s* \s*/)
     @email_categories = InvitationService.invite_users(emails, current_user, params[:custom_message])
     set_notice
-    redirect_path = request.referrer || team_settings_users_path
-    redirect_to redirect_path
+    redirect_to(request.referrer || team_settings_users_path)
   end
 
   def re_invite
