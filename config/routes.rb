@@ -62,6 +62,7 @@ Rails.application.routes.draw do
   subdomain = Rails.env.production? ? /start/ : /app/
   get '/' => 'sitemaps#trial', :constraints => { :subdomain => subdomain }, as: :sitemap_trial
 
+
   devise_scope :user do
     root to: "users/sessions#new"
     post 'users/bulk_invitation' => 'users/invitations#bulk_invitation'

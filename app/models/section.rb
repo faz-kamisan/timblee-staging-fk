@@ -17,7 +17,7 @@ class Section < ActiveRecord::Base
     duplicate = dup
     duplicate.sitemap = duplicate_sitemap
     duplicate.save
-    root_page.duplicate(duplicate, nil)
+    root_page.duplicate(duplicate, nil, duplicate.sitemap)
   end
 
   def root_page
