@@ -317,6 +317,14 @@
     margin: 0;
     padding: 37px 0 50px 0;
   }
+  .optional-message {
+    padding: 0;
+    position: relative;
+  }
+  .emoji-section {
+    margin-top: 4px;
+    padding-left: 15px;
+  }
 }
 
 ul.tagit {
@@ -384,11 +392,8 @@ ul.tagit li.tagit-choice-editable {
     @extend .font-14;
     padding-bottom: 15px;
     img {
-      width: 16px!important;
-      height: 16px!important;
-      margin-right: 2px;
-      position: relative;
-      bottom: 1px;
+      margin: -3px;
+      @include scale(.7);
     }
   }
   a {
