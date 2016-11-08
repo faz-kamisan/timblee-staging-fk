@@ -13,10 +13,7 @@ class PageContainer extends React.Component {
   };
 
   render() {
-    var children = [];
-    if (this.props.pageTree.children) {
-      children = this.props.pageTree.children.filter(function(page) { return(page.state != 'archived') })
-    }
+    var children = this.props.pageTree.children.filter(function(page) { return(page.state != 'archived') })
     var _this = this
     if(this.props.level == 0) {
       if(this.props.leftSidebarExpanded) {

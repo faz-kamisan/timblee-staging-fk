@@ -34,6 +34,8 @@ class Page < ActiveRecord::Base
     tree
   end
 
+  ## This adds an empty children property for footer pages. For section pages,
+  ## this property is overriden by +get_tree+ method.
   def to_react_data
     {
       name: name.to_s,
@@ -49,7 +51,8 @@ class Page < ActiveRecord::Base
       sitemapId: sitemap_id,
       state: state,
       footer: footer,
-      newRecord: false
+      newRecord: false,
+      children: []
     }
   end
 
