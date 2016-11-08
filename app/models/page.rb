@@ -18,13 +18,18 @@ class Page < ActiveRecord::Base
   validates :state, inclusion: { in: STATES }
   validates :uid, uniqueness: { scope: :sitemap_id }
 
-  def duplicate(duplicate_section, duplicate_parent_id)
-    duplicate = dup
-    duplicate.section = duplicate_section
-    duplicate.parent_id = duplicate_parent_id
-    duplicate.sitemap = duplicate_section.sitemap
-    duplicate.save
-    child_pages.order(:position).each { |page| page.duplicate(duplicate_section, duplicate.id)}
+  def duplicate(duplicate_section, duplicate_parent_id, duplicate_sitemap)
+    if alt_section_id && !duplicate_section.default?
+      duplicate = duplicate_sitemap.pages.find_by(uid: uid)
+      duplicate.update(alt_section_id: duplicate_section.id)
+    else
+      duplicate = dup
+      duplicate.section = duplicate_section
+      duplicate.parent_id = duplicate_parent_id
+      duplicate.sitemap = duplicate_sitemap
+      duplicate.save
+    end
+    child_pages.order(:position).each { |page| page.duplicate(duplicate_section, duplicate.id, duplicate_sitemap)} unless (alt_section_id && duplicate_section.default?)
   end
 
   def get_tree(collection, level = 0)

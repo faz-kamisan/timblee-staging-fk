@@ -3,7 +3,7 @@ Devise::Mailers::Helpers.module_eval do
   def devise_mail(record, action, opts={})
     initialize_from_record(record)
     # override action when reconfirmation is requested.
-    if Rails.env.staging? || Rails.env.prep? || Rails.env.production?
+    if Rails.env.production?
       if action == :confirmation_instructions && record.pending_reconfirmation?
         action = :reconfirmation_instructions
       end
