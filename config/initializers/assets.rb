@@ -19,7 +19,6 @@ Rails.application.config.assets.precompile += %w(
   invitations.js
   delete_user.js
   delete_sitemap.js
-  apply-twemoji.js
   payments.js
   billing.js
   progress.js

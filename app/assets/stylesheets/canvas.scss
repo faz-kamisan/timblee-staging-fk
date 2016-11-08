@@ -3812,27 +3812,6 @@ body.trial {
   height: 170px;
   @include border-radius(4px);
   background: #fff;
-  .twemoji-wrap {
-    height: 170px!important;
-    .twemoji-textarea {
-      height: 133px!important;
-      overflow-x: hidden;
-      width: 100%;
-      &.has-content {
-        ~ .new-comment-place-holder {
-          opacity: 0;
-        }
-      }
-    }
-    .twemoji-icon-picker:before {
-      right: 18px;
-      bottom: 9px;
-    }
-    .twemoji-icon-picker img {
-      right: 16px!important;
-      bottom: 12px!important;
-    }
-  }
   .add-remove-comment {
     bottom: 13px;
   }
@@ -3897,22 +3876,8 @@ ul.ui-autocomplete {
   background: $primaryWhite;
   @include border-radius(4px);
   position: relative;
-  .twemoji-textarea {
-    height: 136px!important;
-    padding-bottom: 0!important;
-  }
   .add-remove-comment {
     bottom: 10px;
-  }
-  .twemoji-icon-picker {
-    &:before {
-      bottom: -63px;
-      right: 10px;
-    }
-    img {
-      bottom: -59px!important;
-      right: 8px!important;
-    }
   }
 }
 

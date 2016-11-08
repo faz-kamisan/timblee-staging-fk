@@ -401,14 +401,6 @@ ul.tagit li.tagit-choice-editable {
   }
 }
 
-.twemoji-textarea {
-  height: 120px;
-  padding: 15px;
-  border: 1px solid #d4d4d4;
-  @include border-radius(6px);
-  background: $primaryWhite;
-}
-
 #invite-user-modal {
   .modal-button {
     padding-top: 30px;

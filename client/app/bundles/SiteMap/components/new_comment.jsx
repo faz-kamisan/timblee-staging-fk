@@ -84,9 +84,8 @@ class NewComment extends React.Component {
   }
 
   handleClearComment(e) {
-    this.refs.newComment.innerHTML = ''
-    $(this.refs.newComment).siblings('.twemoji-textarea').text('');
-    $(this.refs.newComment).siblings('.twemoji-textarea-duplicate').text('');
+    $(this.refs.newComment).text('')
+    $(this.refs.newComment).next().html('')
   }
 
   componentDidUpdate(e) {

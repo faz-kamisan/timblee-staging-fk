@@ -56,18 +56,6 @@ $(document).ready(function() {
     document.moveCaretToEnd(this);
   });
 
-  $('body').on('click', '.twemoji-list span', function(e) {
-    $(e.target).closest('.twemoji-wrap').find('.twemoji-icon-picker img').click();
-  })
-
-  $('body').on('input', '.twemoji-textarea.ui-autocomplete-input', function(e) {
-    if($(e.target).html().length > 0) {
-      $(e.target).addClass('has-content')
-    } else {
-      $(e.target).removeClass('has-content')
-    }
-  })
-
   var ep = new EmojiPicker({ assetsPath: "/assets/emoji" })
   ep.discover()
 
