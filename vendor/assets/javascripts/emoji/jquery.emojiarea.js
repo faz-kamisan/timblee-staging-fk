@@ -528,8 +528,9 @@
 	var EmojiMenu = function(emojiarea) {
 		var self = this;
     self.id = emojiarea.id;
+    
 		var $body = $(document.body);
-		var $window = $(window);
+		var $container = emojiarea.$textarea.siblings('.emoji-picker-icon');
 
 		this.visible = false;
 		this.emojiarea = emojiarea;
@@ -563,7 +564,7 @@
 				this.$itemsWrap);
 		/* ! MODIFICATION END */
 
-		$body.append(this.$menu);
+		$container.after(this.$menu);
 
 		/*
 		 * ! MODIFICATION: Following 3 lines were added by Igor Zhukov, in order
@@ -614,10 +615,10 @@
 			self.hide();
 		});
 
-		$window.on('resize', function() {
-			if (self.visible)
-				self.reposition();
-		});
+    // $window.on('resize', function() {
+    //   if (self.visible)
+    //     self.reposition();
+    // });
 
 		this.$menu.on('mouseup', 'a', function(e) {
 			e.stopPropagation();
@@ -793,7 +794,7 @@
      */
     if (this.visible)
       return this.hide();
-    this.reposition();
+    // this.reposition();
 		$(this.$menu).css('z-index', ++EmojiMenu.menuZIndex);
     this.$menu.show("fast");
     /*

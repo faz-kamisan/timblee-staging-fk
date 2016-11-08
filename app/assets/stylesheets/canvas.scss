@@ -1989,28 +1989,6 @@ body.trial {
   @include border-radius(6px);
   background: $primaryWhite;
   @include box-shadow(1px, 1px, 2px, rgba(106, 113, 127, .2));
-  // &:before {
-  //   content: ' ';
-  //   position: absolute;
-  //   left: 4px;
-  //   top: -10px;
-  //   width: 0;
-  //   height: 0;
-  //   border-style: solid;
-  //   border-width: 0 8px 14px 8px;
-  //   border-color: transparent transparent $primaryWhite transparent;
-  // }
-  // &:after {
-  //   content: ' ';
-  //   position: absolute;
-  //   left: 4px;
-  //   top: -10px;
-  //   width: 0;
-  //   height: 0;
-  //   border-style: solid;
-  //   border-width: 0 8px 14px 8px;
-  //   border-color: transparent transparent #dddfe1 transparent;
-  // }
   .comment-input__suggestions__item {
     height: 33px;
     line-height: 33px;
@@ -2592,11 +2570,11 @@ body.trial {
 
 .comment-block {
   p {
-    img {
-      width: 15px!important;
-      height: 15px!important;
-      margin: 1px;
-    }
+    // img {
+    //   width: 15px!important;
+    //   height: 15px!important;
+    //   margin: 1px;
+    // }
   }
 }
 
@@ -3926,4 +3904,41 @@ ul.ui-autocomplete {
       right: 8px!important;
     }
   }
+}
+
+.emoji-wysiwyg-editor {
+  height: 137px;
+  @include border-radius(4px);
+  padding: 15px;
+  border: 0;
+}
+
+.emoji-picker-icon {
+  top: auto;
+  bottom: 10px;
+  right: 15px;
+  width: 20px;
+  cursor: pointer;
+  background: transparent;
+  opacity: 1;
+  &:hover {
+    &:before {
+      color: $primaryPink;
+    }
+  }
+  &:before {
+    content: "\e91d";
+    font-family: 'icomoon' !important;
+    font-size: 20px;
+    color: #62717f;
+    bottom: 0;
+    position: absolute;
+    right: 0;
+    font-style: normal;
+  }
+}
+
+.emoji-menu {
+  left: -170px!important;
+  top: -260px!important;
 }
