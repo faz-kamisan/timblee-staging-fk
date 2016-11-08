@@ -1684,9 +1684,15 @@ body.trial {
     right: 0;
   }
 
+  .ui-menu-item {
+    &:before {
+      display: none;
+    }
+  }
+
   .comment-group {
     margin-bottom: 25px;
-    li:not(.sitemap-right-sidebar .ui-menu-item):last-child {
+    li:last-child {
       position: relative;
       &:before {
         content: ' ';
@@ -2570,11 +2576,10 @@ body.trial {
 
 .comment-block {
   p {
-    // img {
-    //   width: 15px!important;
-    //   height: 15px!important;
-    //   margin: 1px;
-    // }
+    img {
+      margin: -3px;
+      @include scale(.65);
+    }
   }
 }
 
@@ -2764,6 +2769,12 @@ body.trial {
 }
 
 #sitemap-share-modal {
+
+  .emoji-wysiwyg-editor {
+    border: 1px solid #d4d4d4;
+    @include border-radius(4px);
+    height: 175px!important;
+  }
 
   .m-b-20 {
     margin-bottom: 20px;
@@ -3220,7 +3231,6 @@ body.trial {
     min-height: 137px;
     position: relative;
     background: $primaryWhite;
-    border: solid 3px #f9fafc;
     border-bottom: 0;
     padding: 0 50px;
     position: fixed;
@@ -3921,6 +3931,7 @@ ul.ui-autocomplete {
   cursor: pointer;
   background: transparent;
   opacity: 1;
+  z-index: 1;
   &:hover {
     &:before {
       color: $primaryPink;
@@ -3938,7 +3949,54 @@ ul.ui-autocomplete {
   }
 }
 
+.emoji-items-wrap1 .emoji-menu-tabs {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 33px;
+  border-top: solid 2px #eff0f0;
+  z-index: 1;
+  margin: 0;
+  background: $primaryWhite;
+}
+
+.emoji-menu-tabs {
+  td {
+    cursor: pointer;
+  }
+}
+
+.emoji-items-wrap {
+  height: calc(100% - 33px)!important;
+  position: absolute!important;
+  top: 4px;
+  left: 8px;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: $primaryWhite;
+}
+
 .emoji-menu {
-  left: -170px!important;
-  top: -260px!important;
+  right: -10px!important;
+  bottom: 50px!important;
+  width: 210px!important;
+  height: 150px!important;
+  > div {
+    height: 150px!important;
+  }
+  .emoji-items {
+    a {
+      padding: 0;
+    }
+    img {
+      @include scale(.75);
+    }
+  }
+
+  .emoji-menu-tab.icon-bell {
+    &:before {
+      display: none;
+    }
+  }
 }

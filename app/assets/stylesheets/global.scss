@@ -575,6 +575,9 @@ input#toggle:checked + label:after {
 ul.tagit {
   max-height: 100px;
   overflow: auto;
+  > :first-child.tagit-new {
+    width: 100%!important;
+  }
 }
 
 ul.tagit input[type="text"] {
