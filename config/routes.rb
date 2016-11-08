@@ -58,7 +58,9 @@ Rails.application.routes.draw do
   end
 
   get '/:token' => 'sitemaps#public_share', :constraints => { :subdomain => /share/ }, as: :sitemap_public_share
-  get '/' => 'sitemaps#trial', :constraints => { :subdomain => /app/ }, as: :sitemap_trial
+
+  subdomain = Rails.env.production? ? /start/ : /app/
+  get '/' => 'sitemaps#trial', :constraints => { :subdomain => subdomain }, as: :sitemap_trial
 
   devise_scope :user do
     root to: "users/sessions#new"
