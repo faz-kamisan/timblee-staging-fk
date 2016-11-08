@@ -33,10 +33,24 @@ class UserMailer < ActionMailer::Base
   def send_pending_notification(user_id, notification_ids)
     @user = User.find_by_id(user_id)
     @notifications = Notification.where(id: notification_ids)
-    mail(
-      to: @user.email,
-      subject: "Notifications"
-    )
+
+    if Rails.env.production?
+      classic_mailer = CreateSend::Transactional::ClassicEmail.new(CampaignMonitor::AUTH)
+
+      message = {
+        "Subject": "Notifications",
+        "From": "Timblee <admin@timblee.com>",
+        "To": @user.email,
+        "Html": render,
+      }
+
+      classic_mailer.send(message)
+    else
+      mail(
+        to: @user.email,
+        subject: "Notifications"
+      )
+    end
   end
 
 end
