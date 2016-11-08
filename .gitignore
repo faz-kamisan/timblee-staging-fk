@@ -37,3 +37,4 @@ dump.rdb
 npm-debug.log
 node_modules
 client/npm-debug.log.*
+app/assets/webpack/*.js
