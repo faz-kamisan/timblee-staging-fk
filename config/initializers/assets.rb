@@ -51,3 +51,4 @@ Rails.application.config.assets.precompile += %w(
 
 # Add folder with webpack generated assets to assets.paths
 Rails.application.config.assets.paths << Rails.root.join("app", "assets", "webpack")
+Rails.application.config.assets.paths << Rails.root.join("vendor", "assets", "javascripts", "emoji")
