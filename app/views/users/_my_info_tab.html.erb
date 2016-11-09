@@ -124,7 +124,7 @@
                   <% (1..13).each do |index| %>
                     <label for='avatar<%=index%>' class='avatar-label'>
                       <input type='radio' id='avatar<%=index%>' value='avatar_<%=index%>.svg' name='default_avatar' class='default_avatars' />
-                        <%= image_tag(asset_url("avatars/avatar_#{index}.png"), class: "profile-image-lg pull-left profile-image avatar-link") %>
+                        <%= image_tag(asset_url('avatar_' + index.to_s + '.svg'), class: "profile-image-lg pull-left profile-image avatar-link") %>
                     </label>
                   <%end%>
                   <label class='avatar-label no-pointer'>

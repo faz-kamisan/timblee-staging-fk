@@ -50,18 +50,14 @@ $(window).on('load', function() {
   outerContent.scrollLeft((innerContent.width() - outerContent.width()) / 2);
 });
 
-function setupEmojiPicker(){
-  var ep = new EmojiPicker({ assetsPath: EmojiAssetsPath })
-  ep.discover()
-}
-
 $(document).ready(function() {
   var rename = $('.sitemap-rename-input');
   rename.each(function() {
     document.moveCaretToEnd(this);
   });
 
-  setupEmojiPicker()
+  var ep = new EmojiPicker({ assetsPath: "/assets/emoji" })
+  ep.discover()
 
   $(document).on('keyup', '.emoji-wysiwyg-editor', function(){
     if(!$(this).html()) {

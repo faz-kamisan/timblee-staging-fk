@@ -86,7 +86,7 @@ Rails.application.configure do
     :authentication => :cram_md5
   }
 
-  config.action_mailer.default_url_options = { host: "http://app.timblee.io" }
+  config.action_mailer.default_url_options = { host: "http://app.timblee.io/" }
 
   # Path for convert utility (for mini_magick).
   ENV['PATHEXT'] ||= '/usr/local/bin'
