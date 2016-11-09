@@ -28,11 +28,13 @@ class Analytics
   def track_pro_plan(old_subscription)
     identify
     business.reload
+    trial_days_left = (Business.first.trial_end_at.to_date - Date.current).to_i
     track(
       {
         user_id: business.owner.id,
         event: 'Pro Plan taken',
         properties: {
+          trial_days_left: (trial_days_left > 0 ? trial_days_left : 0),
           no_of_users: business.no_of_users,
           'monthly Spend': business.monthly_charge,
           old_plan: get_plan(old_subscription)
