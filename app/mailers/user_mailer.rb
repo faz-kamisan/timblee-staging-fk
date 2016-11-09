@@ -39,7 +39,7 @@ class UserMailer < ActionMailer::Base
 
       message = {
         "Subject": "Notifications",
-        "From": "Timblee <admin@timblee.com>",
+        "From": "Timblee <hello@timblee.io>",
         "To": @user.email,
         "Html": render,
       }
