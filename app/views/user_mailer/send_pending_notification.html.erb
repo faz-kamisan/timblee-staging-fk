@@ -94,6 +94,9 @@
           font-size: 16px !important;
           display: block !important;
         }
+        td[class="normal"] * {
+          font-style: normal!important;
+        }
       }
 
       /* ANDROID CENTER FIX */
@@ -126,7 +129,7 @@
                         <td style="vertical-align: middle; width: 45px; padding-right: 15px;">
                           <img src="<%= root_url.chop + notification.actor.avatar_url %>" alt="" style="border:0; width: 45px; height: 45px; border-radius: 50%; vertical-align: middle;">
                         </td>
-                        <td style="vertical-align: middle; font-family: 'avenir'; font-size: 14px; color: #545C64; font-weight: 400; width: 385px; padding-right: 15px;">
+                        <td class="normal" style="vertical-align: middle; font-family: 'avenir'; font-size: 14px; color: #545C64; font-weight: 400; width: 385px; padding-right: 15px;">
                           <%= notification.message %>
                         </td>
                         <td style="vertical-align: middle; color: #9B9B9B; font-size: 12px; font-family: 'avenir'; font-weight: 400; text-align: right; width: 85px;">
