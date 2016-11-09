@@ -9,7 +9,7 @@ class SitemapMailer < ActionMailer::Base
     @sitemap = Sitemap.find_by(id: sitemap_id)
     @custom_message_header = "Here is a personal message from #{@inviter_first_name}" if custom_message.present?
 
-    if Rails.env.development?
+    if Rails.env.production?
       smart_email_id = CampaignMonitor::SMART_EMAIL_IDS[:share_sitemap]
       tx_smart_mailer = CreateSend::Transactional::SmartEmail.new(CampaignMonitor::AUTH, smart_email_id)
       message = {
