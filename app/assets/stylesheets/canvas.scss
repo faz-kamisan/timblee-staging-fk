@@ -2774,6 +2774,7 @@ body.trial {
     border: 1px solid #d4d4d4;
     @include border-radius(4px);
     height: 175px!important;
+    background: $primaryWhite;
   }
 
   .m-b-20 {
