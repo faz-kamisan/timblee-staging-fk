@@ -649,6 +649,10 @@
 				if (e.ctrlKey || e.metaKey) {
 					self.hide();
 				}
+
+        //NOTE - Added by us.
+        displayPlaceholderText($(e.target).closest(".emoji-menu"))
+
 				/* ! MODIFICATION END */
 			}, 0);
 			e.stopPropagation();

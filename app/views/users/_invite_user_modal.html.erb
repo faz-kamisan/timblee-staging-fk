@@ -30,7 +30,7 @@
                 <%= form_tag (current_business.is_pro_plan? ? businesses_subscription_path : users_bulk_invitation_path), { method: :post, class: 'bulk-invitation-form'} do %>
                   <%= hidden_field_tag :stripe_plan_id %>
                   <%= text_field_tag :email, nil, { autofocus: true, class: 'bulk-invite-emails-input hidden' } %>
-                  <%= text_area_tag :custom_message, nil, { class: 'form-control clear-field invite-custom-message invite-personal-message emoji-decorated', id: 'invite-personal-message', placeholder: 'Include an optional personal message.', 'data-send' => false, 'data-emojiable' => true } %>
+                  <%= text_area_tag :custom_message, nil, { class: 'form-control clear-field invite-custom-message invite-personal-message emoji-decorated', id: 'invite-personal-message', placeholder: 'Include an optional personal message.', 'data-send' => false, 'data-emojiable' => true, 'data-emoji-input' => 'unicode' } %>
                   <div class="emoji-section">
                     <a href="#" class="add-message add-invite-message">Add my message</a> or
                     <a href="javascript:void(0);" class="clear-text clear-custom-message"> Cancel</a>

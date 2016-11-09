@@ -41,12 +41,11 @@ class NewComment extends React.Component {
 
     formatted_data = formatted_data.concat(users_data)
     formatted_data = formatted_data.concat(guests_data)
+
+    setupEmojiPicker()
+
     var placeholderText = $('<div class="new-comment-place-holder">Add a comment... <br> You can mention people by typing @.</div>')
-
     $(this.refs.newComment).parent().append(placeholderText)
-
-    var ep = new EmojiPicker({ assetsPath: '/assets/emoji' })
-    ep.discover()
 
     $(this.refs.newComment).next().mentionsInput({source: formatted_data, showAtCaret: true})
   }
@@ -98,7 +97,7 @@ class NewComment extends React.Component {
   render() {
     return (
       <div className="comment-holder">
-        <textarea ref='newComment' id="temp" className="emoji-decorated comment-editor comment-input__input" data-emojiable="true"></textarea>
+        <textarea ref='newComment' id="temp" className="emoji-decorated comment-editor comment-input__input" data-emojiable="true" data-emoji-input="unicode"></textarea>
         <div className="add-remove-comment">
           <span onClick={this.handleAddComment} className='cursor add'>Add my comment </span>
           <span className="or">or</span>
