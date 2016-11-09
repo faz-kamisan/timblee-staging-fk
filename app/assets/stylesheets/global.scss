@@ -578,6 +578,9 @@ ul.tagit {
   > :first-child.tagit-new {
     width: 100%!important;
   }
+  input[type="text"] {
+    width: 250px;
+  }
 }
 
 ul.tagit input[type="text"] {
@@ -612,11 +615,8 @@ ul.tagit input[type="text"] {
 .message-preview p {
   word-wrap: break-word;
   img {
-    width: 16px!important;
-    height: 16px!important;
-    position: relative;
-    bottom: 1px;
-    margin-right: 1px;
+    @include scale(.65);
+    margin: -3px;
   }
 }
 
