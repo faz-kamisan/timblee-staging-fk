@@ -1,5 +1,5 @@
 class SitemapMailer < ActionMailer::Base
-  default from: 'admin@timblee.com'
+  default from: 'hello@timblee.io'
   def send_share_link(email, inviter_name, sitemap_id, custom_message)
     @inviter_name = inviter_name
     @inviter_first_name = @inviter_name.split(' ').first

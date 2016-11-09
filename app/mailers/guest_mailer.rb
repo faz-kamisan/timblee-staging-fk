@@ -1,5 +1,5 @@
 class GuestMailer < ActionMailer::Base
-  default from: 'admin@timblee.com'
+  default from: 'hello@timblee.io'
 
   def send_notification(notification_id)
     @notification = Notification.find(notification_id)

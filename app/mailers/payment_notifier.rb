@@ -1,5 +1,5 @@
 class PaymentNotifier < ActionMailer::Base
-  default from: 'admin@timblee.com', to: 'pratibha@vinsol.com'
+  default from: 'hello@timblee.io', to: 'pratibha@vinsol.com'
 
   def success(user, event)
     @event = event

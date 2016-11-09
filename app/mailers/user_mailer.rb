@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: 'admin@timblee.com'
+  default from: 'hello@timblee.io'
 
   def send_updated_role_details(user_id, admin_user_id)
     @user = User.find_by_id(user_id)

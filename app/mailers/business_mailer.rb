@@ -1,6 +1,6 @@
 class BusinessMailer < ActionMailer::Base
-  default from: 'admin@timblee.com',
-          to: 'superadmin@timblee.com'
+  default from: 'hello@timblee.io',
+          to: 'superadmin@timblee.io'
 
   def send_admin_account_destroy_request(business_id, user_id)
     @user = User.find_by_id(user_id)
