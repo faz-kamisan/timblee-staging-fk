@@ -109,7 +109,7 @@ class User < ActiveRecord::Base
     end
 
     def add_default_avatar
-      avatar.store!(File.open(File.join(Rails.root, "app/assets/images/avatar_#{[*1..13].sample}.svg")))
+      avatar.store!(File.open(File.join(Rails.root, "app/assets/images/avatars/avatar_#{[*1..13].sample}.png")))
       self.save(validate: false)
     end
 
