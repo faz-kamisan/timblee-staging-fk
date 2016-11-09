@@ -50,21 +50,29 @@ $(window).on('load', function() {
   outerContent.scrollLeft((innerContent.width() - outerContent.width()) / 2);
 });
 
+function setupEmojiPicker(){
+  var ep = new EmojiPicker({ assetsPath: EmojiAssetsPath });
+  ep.discover();
+};
+
+function displayPlaceholderText($element) {
+  if(!$element.html()) {
+    $element.siblings('.new-comment-place-holder').show()
+  } else {
+    $element.siblings('.new-comment-place-holder').hide()
+  }
+};
+
 $(document).ready(function() {
   var rename = $('.sitemap-rename-input');
   rename.each(function() {
     document.moveCaretToEnd(this);
   });
 
-  var ep = new EmojiPicker({ assetsPath: "/assets/emoji" })
-  ep.discover()
+  setupEmojiPicker();
 
   $(document).on('keyup', '.emoji-wysiwyg-editor', function(){
-    if(!$(this).html()) {
-      $(this).siblings('.new-comment-place-holder').show()
-    } else {
-      $(this).siblings('.new-comment-place-holder').hide()
-    }
-  })
+    displayPlaceholderText($(this))
+  });
 });
 
