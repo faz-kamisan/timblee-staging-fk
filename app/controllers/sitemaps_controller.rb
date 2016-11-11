@@ -11,6 +11,7 @@ class SitemapsController < ApplicationController
 
   def create
     @sitemap = current_business.sitemaps.build(sitemap_params)
+    @sitemap.user = current_user
     @sitemap.business = current_business
     if @sitemap.save
       flash[:new_sitemap] = true

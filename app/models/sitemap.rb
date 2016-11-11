@@ -8,6 +8,7 @@ class Sitemap < ActiveRecord::Base
   TRIAL_SITEMAP_TTL = 24.hours
 
   belongs_to :folder
+  belongs_to :user
   belongs_to :business
   has_many :pages
   has_many :sections
