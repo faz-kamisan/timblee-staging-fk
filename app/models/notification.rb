@@ -89,7 +89,11 @@ class Notification < ActiveRecord::Base
   private
 
   def set_path
-    self.path = path_value(kind)
+    if for_guest?
+      self.path = self.sitemap.public_share_url
+    else
+      self.path = path_value(kind)
+    end
   end
 
   def set_message

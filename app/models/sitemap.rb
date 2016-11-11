@@ -115,7 +115,13 @@ class Sitemap < ActiveRecord::Base
                       when 'production'  then ['share',         'timblee.io']
                       end
 
-    Rails.application.routes.url_helpers.sitemap_public_share_url(public_share_token, subdomain: subdomain, host: host)
+    options = { subdomain: subdomain, host: host }
+
+    options.merge!(port: '3000')      if Rails.env.development?
+    options.merge!(protocol: 'https') if Rails.env.production?
+
+
+    Rails.application.routes.url_helpers.sitemap_public_share_url(public_share_token, options)
   end
 
   private

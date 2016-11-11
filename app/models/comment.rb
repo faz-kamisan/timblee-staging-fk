@@ -61,6 +61,6 @@ class Comment < ActiveRecord::Base
     end
 
     def notify_mentioned_users
-      Notification.generate(kind: :mention_user, sitemap: sitemap, actor: commenter, resource: commentable, recipients: mentioned_people)
+      Notification.generate(kind: :mention_user, sitemap: sitemap, actor: commenter, resource: commentable, recipients: mentioned_people) if mentioned_people.present?
     end
   end

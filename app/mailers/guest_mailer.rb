@@ -14,7 +14,7 @@ class GuestMailer < ActionMailer::Base
           'guest-first-name' => @guest.first_name,
           'business-name' => @notification.sitemap.business.name,
           'notification-text' => @notification.message,
-          'notification-link' => root_url.chop + @notification.path
+          'notification-link' => @notification.path
         }
       }
       response = tx_smart_mailer.send(message)
