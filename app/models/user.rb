@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
 
   has_many :notifications, as: :recipient
 
+  has_many :sitemaps
   has_many :shared_sitemaps, through: :sitemap_invites, source: :sitemap
   has_many :comments, as: :commenter
   mount_uploader :avatar, AvatarUploader
