@@ -57,7 +57,7 @@ Rails.application.routes.draw do
     post '/impersonate', to: 'main#impersonate', as: 'admin_impersonate'
   end
 
-  get '/:token' => 'sitemaps#public_share', :constraints => { subdomain: /share/, protocol: 'https' }, as: :sitemap_public_share
+  get '/:token' => 'sitemaps#public_share', :constraints => { subdomain: /share/ }, as: :sitemap_public_share
 
   subdomain = Rails.env.production? ? /start/ : /app/
   get '/' => 'sitemaps#trial', :constraints => { :subdomain => subdomain }, as: :sitemap_trial
