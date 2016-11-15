@@ -17,39 +17,22 @@ class Businesses::SubscriptionsController < ApplicationController
 
   def webhook
     @event = Stripe::Event.retrieve(params['id'])
-    business =  Business.find_by(stripe_customer_id: @event.data.object.customer)
-    LoggerExtension.stripe_log "Params:#{params}\n\Event: #{@event.inspect}\n\nBusiness: #{business.inspect}\n\n}"
-    user = business.owner
+    WebhookService.new(@event, params).perform
 
-    if @event.type == 'charge.succeeded'
-      PaymentNotifier.delay.success(user, @event)
-
-    elsif @event.type == 'charge.refunded'
-      PaymentNotifier.delay.refund(user, @event)
-
-    elsif @event.type == 'charge.failed'
-      PaymentNotifier.delay.failure(user, @event)
-
-    elsif @event.type == 'customer.subscription.updated'
-      renew_subscription if @event.data.object.quantity > 0
-    end
     render status: :ok, json: 'success'
 
   end
 
   private
 
-    def renew_subscription
-      subscription = Subscription.where(stripe_subscriptions_id: @event.data.object.id).order(:created_at).last
-      subscription.update_end_time(Time.at(@event.data.object.current_period_end))
-    end
 
     def activate_pro_plan
       LoggerExtension.highlight
       LoggerExtension.stripe_log "Params:#{params}\n\nUser: #{current_user.inspect}\n\nBusiness: #{current_business.inspect}\n\nOld Subscription: #{@current_subscription.try(:inspect)}"
 
       emails = params[:email].split(/\s* \s*/)
-      current_business.set_new_subscription(emails)
+      current_business.set_new_subscription(emails, current_user)
+
       LoggerExtension.stripe_log "New Subscription: #{current_business.subscriptions.last.inspect}"
 
       StripePaymentService.new(current_business).update_subscription

@@ -28,7 +28,7 @@ class Analytics
   def track_pro_plan(old_subscription)
     identify
     business.reload
-    trial_days_left = (Business.first.trial_end_at.to_date - Date.current).to_i
+    trial_days_left = (business.trial_end_at.to_date - Date.current).to_i
     track(
       {
         user_id: business.owner.id,

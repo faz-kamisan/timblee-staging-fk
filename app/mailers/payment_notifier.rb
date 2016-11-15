@@ -74,7 +74,15 @@ class PaymentNotifier < ActionMailer::Base
   def exception(user, exception)
     @exception = exception
     @user = user
-    @business = user.business
+    @business = user.try(:business)
     mail subject: 'Exception while taking subscription!'
+  end
+
+
+  def webhook_error(params, event, exception)
+    @exception = exception
+    @params = params
+    @event = event
+    mail subject: 'Stripe Webhook Error.'
   end
 end

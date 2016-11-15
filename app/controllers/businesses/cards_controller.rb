@@ -7,7 +7,7 @@ class Businesses::CardsController < ApplicationController
     StripePaymentService.new(current_business).add_card(params[:stripeToken])
     customer = Stripe::Customer.retrieve(current_business.stripe_customer_id)
     card = customer.sources.retrieve(customer.default_source)
-    @card = Card.create(last4: card.last4, brand: card.brand, business: current_business)
+    @card = Card.create(last4: card.last4, brand: card.brand, business: current_business, user: current_user)
     LoggerExtension.stripe_log "User card created: #{@card.inspect}"
     LoggerExtension.highlight
 
