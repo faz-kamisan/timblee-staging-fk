@@ -1,4 +1,14 @@
 class WebhookService
+  class BusinessNotFound < StandardError
+    def initialize(event)
+      @event = event
+    end
+
+    def message
+      "Business not found for stripe id - '#{@event.data.object.customer}' in the webhook"
+    end
+  end
+
   EVENTS = %w(charge.succeeded charge.refunded charge.failed customer.subscription.updated)
 
   def initialize(event, params)
@@ -7,43 +17,39 @@ class WebhookService
   end
 
   def perform
-    begin
-      if @event.type.in?(EVENTS)
-        send(@event.type.gsub('.', '_'))
-      end
-    rescue => e
-      PaymentNotifier.delay.webhook_error(@params, @event, e.inspect)
-    end
+    return unless @event.type.in?(EVENTS)
+
+    load_business
+
+    LoggerExtension.stripe_log "Webhook Params:#{@params}\n\nEvent: #{@event.inspect}\n\nBusiness: #{@business.inspect}\n\n}"
+
+    send(@event.type.gsub('.', '_'))
+  rescue => e
+    PaymentNotifier.delay.webhook_error(@params, @event, e)
   end
 
   private
 
     def load_business
       @business =  Business.find_by(stripe_customer_id: @event.data.object.customer)
-      if @business.present?
-        LoggerExtension.stripe_log "Webhook Params:#{@params}\n\nEvent: #{@event.inspect}\n\nBusiness: #{@business.inspect}\n\n}"
-       true
-      else
-        LoggerExtension.stripe_log "Webhook Error Business not found"
-        PaymentNotifier.delay.webhook_error(@params, @event, nil)
-        false
-      end
+
+      raise BusinessNotFound.new(@event) unless @business
     end
 
     def charge_succeeded
-      PaymentNotifier.delay.success(@business.owner, @event) if load_business
+      PaymentNotifier.delay.success(@business.owner, @event)
     end
 
     def charge_refunded
-      PaymentNotifier.delay.refund(@business.owner, @event) if load_business
+      PaymentNotifier.delay.refund(@business.owner, @event)
     end
 
     def charge_failed
-      PaymentNotifier.delay.failure(@business.owner, @event) if load_business
+      PaymentNotifier.delay.failure(@business.owner, @event)
     end
 
     def customer_subscription_updated
-      renew_subscription if load_business && @event.data.object.quantity > 0
+      renew_subscription if @event.data.object.quantity > 0
    end
 
 
