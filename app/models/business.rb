@@ -98,9 +98,9 @@ class Business < ActiveRecord::Base
     }
   end
 
-  def set_new_subscription(emails)
+  def set_new_subscription(emails, user)
     new_users_count = users.count + InvitationService.get_invitable_users_count(emails)
-    subscriptions.build(no_of_users: new_users_count, quantity: Business.monthly_charge(new_users_count))
+    subscriptions.build(no_of_users: new_users_count, quantity: Business.monthly_charge(new_users_count), user: user)
     assign_attributes(is_pro: true, has_plan: true)
   end
 

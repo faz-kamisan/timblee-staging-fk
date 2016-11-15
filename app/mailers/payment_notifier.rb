@@ -79,7 +79,7 @@ class PaymentNotifier < ActionMailer::Base
   end
 
 
-  def webhook_error(params, event, exception = 'Business not found')
+  def webhook_error(params, event, exception)
     @exception = exception
     @params = params
     @event = event

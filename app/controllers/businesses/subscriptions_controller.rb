@@ -31,7 +31,8 @@ class Businesses::SubscriptionsController < ApplicationController
       LoggerExtension.stripe_log "Params:#{params}\n\nUser: #{current_user.inspect}\n\nBusiness: #{current_business.inspect}\n\nOld Subscription: #{@current_subscription.try(:inspect)}"
 
       emails = params[:email].split(/\s* \s*/)
-      current_business.set_new_subscription(emails)
+      current_business.set_new_subscription(emails, current_user)
+
       LoggerExtension.stripe_log "New Subscription: #{current_business.subscriptions.last.inspect}"
 
       StripePaymentService.new(current_business).update_subscription

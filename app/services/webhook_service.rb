@@ -25,7 +25,7 @@ class WebhookService
 
     send(@event.type.gsub('.', '_'))
   rescue => e
-    PaymentNotifier.delay.webhook_error(@params, @event, e)
+    PaymentNotifier.delay.webhook_error(@params, @event, e.message)
   end
 
   private
