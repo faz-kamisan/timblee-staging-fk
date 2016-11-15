@@ -17,22 +17,31 @@ class Businesses::SubscriptionsController < ApplicationController
 
   def webhook
     @event = Stripe::Event.retrieve(params['id'])
-    business =  Business.find_by(stripe_customer_id: @event.data.object.customer)
-    LoggerExtension.stripe_log "Params:#{params}\n\Event: #{@event.inspect}\n\nBusiness: #{business.inspect}\n\n}"
-    user = business.owner
 
-    if @event.type == 'charge.succeeded'
-      PaymentNotifier.delay.success(user, @event)
+    if @event.type == 'charge.succeeded' || @event.type == 'charge.refunded' || @event.type == 'charge.failed' || @event.type == 'customer.subscription.updated'
+      business =  Business.find_by(stripe_customer_id: @event.data.object.customer)
+      if business.present?
+        LoggerExtension.stripe_log "Webhook Params:#{params}\n\nEvent: #{@event.inspect}\n\nBusiness: #{business.inspect}\n\n}"
+        user = business.owner
 
-    elsif @event.type == 'charge.refunded'
-      PaymentNotifier.delay.refund(user, @event)
+        if @event.type == 'charge.succeeded'
+          PaymentNotifier.delay.success(user, @event)
 
-    elsif @event.type == 'charge.failed'
-      PaymentNotifier.delay.failure(user, @event)
+        elsif @event.type == 'charge.refunded'
+          PaymentNotifier.delay.refund(user, @event)
 
-    elsif @event.type == 'customer.subscription.updated'
-      renew_subscription if @event.data.object.quantity > 0
+        elsif @event.type == 'charge.failed'
+          PaymentNotifier.delay.failure(user, @event)
+
+        elsif @event.type == 'customer.subscription.updated'
+          renew_subscription if @event.data.object.quantity > 0
+        end
+      else
+        LoggerExtension.stripe_log "Webhook Business not found"
+        PaymentNotifier.delay.webhook_error(params, @event)
+      end
     end
+
     render status: :ok, json: 'success'
 
   end
@@ -42,6 +51,7 @@ class Businesses::SubscriptionsController < ApplicationController
     def renew_subscription
       subscription = Subscription.where(stripe_subscriptions_id: @event.data.object.id).order(:created_at).last
       subscription.update_end_time(Time.at(@event.data.object.current_period_end))
+      LoggerExtension.stripe_log "Subscription: #{subscription.inspect} end_at updated."
     end
 
     def activate_pro_plan
