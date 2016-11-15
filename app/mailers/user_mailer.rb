@@ -38,7 +38,7 @@ class UserMailer < ActionMailer::Base
       classic_mailer = CreateSend::Transactional::ClassicEmail.new(CampaignMonitor::AUTH)
 
       message = {
-        "Subject": "Notifications",
+        "Subject": "Timblee Account Activity",
         "From": "Timblee <hello@timblee.io>",
         "To": @user.email,
         "Html": render,
@@ -48,7 +48,7 @@ class UserMailer < ActionMailer::Base
     else
       mail(
         to: @user.email,
-        subject: "Notifications"
+        subject: "Timblee Account Activity"
       )
     end
   end
