@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   acts_as_paranoid
 
-  attr_accessor :admin_access, :trial_days
+  attr_accessor :admin_access, :trial_days, :force_destroy
 
   belongs_to :business, autosave: true
 
@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   before_create :set_is_admin, unless: :business_id
   before_create :add_business, unless: :business_id
   after_create :set_confirmation_instructions_to_be_sent, unless: [:confirmed?, :invitation_not_accepted?]
-  before_destroy :restrict_owner_destroy
+  before_destroy :restrict_owner_destroy, unless: :forced?
   before_destroy :clear_email!
   before_restore :set_email!
   after_destroy :update_business_subscription
@@ -52,6 +52,10 @@ class User < ActiveRecord::Base
 
   scope :active, -> { where(invitation_token: nil) }
   scope :notify_by_email, -> { where(notify_by_email: true) }
+
+  def forced?
+    !!force_destroy
+  end
 
   def first_name
     full_name.split(' ').first

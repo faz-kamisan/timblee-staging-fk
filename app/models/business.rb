@@ -8,6 +8,7 @@ class Business < ActiveRecord::Base
   has_many :cards, dependent: :destroy
   has_one :current_subscription, ->{ where('subscriptions.end_at >= :today', { today: Time.current }) }, class_name: :Subscription
   has_one :active_card, -> { order(created_at: :desc) }, class_name: :Card
+
   mount_uploader :logo, AvatarUploader
 
   def account_locked?
@@ -102,6 +103,14 @@ class Business < ActiveRecord::Base
     new_users_count = users.count + InvitationService.get_invitable_users_count(emails)
     subscriptions.build(no_of_users: new_users_count, quantity: Business.monthly_charge(new_users_count), user: user)
     assign_attributes(is_pro: true, has_plan: true)
+  end
+
+  def force_destroy
+    ActiveRecord::Base.transaction do
+      self.owner.force_destroy = true
+      self.owner.destroy
+      self.destroy
+    end
   end
 
 end
