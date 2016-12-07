@@ -1,10 +1,10 @@
 $("div.flash-message").html("<%==j render partial: 'shared/flash_message' %>");
 $("ul.notifications-listing").html("<%==j render partial: 'notifications/notification', collection: @notifications %>");
 $('div.sitemap-container[data-id=<%= @sitemap.id %>]').find('.saved-sitemap-name').removeClass('hide');
-$('div.sitemap-container[data-id=<%= @sitemap.id %>]').data('name', '<%== @sitemap.reload.name %>');
+$('div.sitemap-container[data-id=<%= @sitemap.id %>]').data('name', "<%== @sitemap.reload.name %>");
 $('div.sitemap-container[data-id=<%= @sitemap.id %>]').find('.edit-sitemap-name').addClass('hide');
-$('div.sitemap-container[data-id=<%= @sitemap.id %>]').find('.saved-card-name').html('<%= @sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %>')
-$('div.sitemap-container[data-id=<%= @sitemap.id %>]').find('.edit-card-name textarea').val('<%= @sitemap.name %>')
-$('div.sitemap-container[data-id=<%= @sitemap.id %>]').find('.edit-card-name textarea').data('original-value', '<%= @sitemap.name %>')
-$('#search-sitemap').data('source', '<%== current_user.all_sitemaps.map {|s| {label: s.name, value: s.id}}.to_json %>')
-$("#search-sitemap").autocomplete({source: JSON.parse($('#search-sitemap').data('source'))})
+$('div.sitemap-container[data-id=<%= @sitemap.id %>]').find('.saved-card-name').html("<%== @sitemap.name.truncate(Sitemap::LENGTH_TO_TRUNCATE) %>");
+$('div.sitemap-container[data-id=<%= @sitemap.id %>]').find('.edit-card-name textarea').val("<%== @sitemap.name %>");
+$('div.sitemap-container[data-id=<%= @sitemap.id %>]').find('.edit-card-name textarea').data('original-value', "<%== @sitemap.name %>");
+$('#search-sitemap').data('source', JSON.stringify(<%== current_user.all_sitemaps.map {|s| {label: s.name, value: s.id}}.to_json %>));
+$("#search-sitemap").autocomplete({source: JSON.parse($('#search-sitemap').data('source'))});
