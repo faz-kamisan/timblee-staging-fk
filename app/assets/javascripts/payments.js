@@ -73,6 +73,7 @@ Payment.prototype.stripeResponseHandler = function (status, response) {
 
     $form.trigger('submit.rails');
   }
+  this.loading_image.hide();
 };
 
 $(function($) {

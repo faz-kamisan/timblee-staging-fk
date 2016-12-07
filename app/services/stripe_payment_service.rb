@@ -7,7 +7,7 @@ class StripePaymentService
   end
 
   def add_card(stripe_token)
-    if @current_business.stripe_customer_id
+    if @current_business.stripe_customer_id.present?
       create_card(stripe_token)
     else
       create_customer_with_card(stripe_token)
