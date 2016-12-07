@@ -7,6 +7,6 @@ $("ul.notifications-listing").html("<%==j render partial: 'notifications/notific
   $('div.sitemap-container[data-folder-id=<%= @folder.id %>]').closest('.sitemap-outer-wrapper').remove();
   $('.all-sitemap-folder').find('.folder-info-block').click();
   $('.new-sitemap-link').data('allow-more-sitemaps', '<%== current_business.allow_more_sitemaps %>');
-  $('#search-sitemap').data('source', '<%== current_user.all_sitemaps.map {|s| {label: s.name, value: s.id}}.to_json %>')
-  $("#search-sitemap").autocomplete({source: JSON.parse($('#search-sitemap').data('source'))})
+  $('#search-sitemap').data('source', JSON.stringify(<%== current_user.all_sitemaps.map {|s| {label: s.name, value: s.id}}.to_json %>));
+  $("#search-sitemap").autocomplete({source: JSON.parse($('#search-sitemap').data('source'))});
 <% end %>
