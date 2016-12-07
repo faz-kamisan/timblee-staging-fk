@@ -97,7 +97,7 @@ class Sitemap < ActiveRecord::Base
     if trial?
       self.name = "#{default_name}1"
     else
-      new_site_map_numbers = self.business.sitemaps.where("name ~* '^"+ default_name +"\\d+$'").pluck(:name).map {|name| name.match(/\d*$/)[0].to_i}.sort
+      new_site_map_numbers = self.business.sitemaps.where("name ~* ?", "^#{default_name}\\d+$").pluck(:name).map {|name| name.match(/\d*$/)[0].to_i}.sort
       if(new_site_map_numbers[0] == 1)
         first_unoccupied_number = (new_site_map_numbers.select.with_index { |number, index| number == index + 1 }[-1]) + 1
         self.name = "#{default_name}" + first_unoccupied_number.to_s
