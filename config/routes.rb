@@ -1,5 +1,6 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
+  mount ForestLiana::Engine => '/forest'
   mount Sidekiq::Web, at: '/sidekiq'
 
   devise_scope :user do

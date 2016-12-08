@@ -27,6 +27,7 @@ gem 'mini_magick', '~> 4.5.1'
 gem 'whenever', require: false
 gem 'analytics-ruby', require: "segment"
 gem 'createsend'
+gem 'forest_liana'
 
 group :production do
   gem 'skylight'
