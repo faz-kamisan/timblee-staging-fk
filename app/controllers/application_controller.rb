@@ -13,7 +13,6 @@ class ApplicationController < ActionController::Base
   def current_user_with_proxy_login
     current_proxy_user || current_user_without_proxy_login
   end
-  alias_method_chain :current_user, :proxy_login
   helper_method :current_user_with_proxy_login,
                 :current_user_without_proxy_login
 
