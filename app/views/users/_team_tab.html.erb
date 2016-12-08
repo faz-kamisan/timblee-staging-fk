@@ -16,7 +16,7 @@
                 <h3 class="team-member-name">Invite a team member to Timblee</h3>
                 <span class="active-since">
                   <% if current_business.in_trial_period? %>
-                  You’re currently in your free unlimited trial period. Invite as many team members as you want for no charge. After the trial, you’ll need to pay US $19 for the first user + US $12 for subsequent users.
+                  You’re currently in your free unlimited trial till <%= current_business.trial_end_at.strftime('%d %b %Y') %> period. Invite as many team members as you want for no charge. After the trial, you’ll need to pay US $19 for the first user + US $12 for subsequent users.
                   <% else %>
                   Each new user is US $12 per month. You'll be billed pro-rata for this billing period once you invite them.
                   <% end %>
