@@ -164,7 +164,7 @@ class User < ActiveRecord::Base
     def update_business_subscription
       if business.is_pro_plan?
         business.current_subscription.update(end_at: Time.current)
-        business.subscriptions.build(no_of_users: business.users.count, quantity: Business.monthly_charge(business.users.count), user: self)
+        business.subscriptions.build(no_of_users: business.users.count, quantity: Business.monthly_charge(business.users.count))
         StripePaymentService.new(business).update_subscription
       end
     end
