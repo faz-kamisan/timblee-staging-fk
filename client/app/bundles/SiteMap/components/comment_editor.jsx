@@ -11,7 +11,8 @@ class CommentEditor extends React.Component {
     setSaving: PropTypes.func.isRequired,
     editMessage: PropTypes.func.isRequired,
     footer: PropTypes.bool.isRequired,
-    business: PropTypes.object.isRequired
+    business: PropTypes.object.isRequired,
+    guestUsers: PropTypes.array
   };
 
   constructor(props) {
@@ -29,7 +30,7 @@ class CommentEditor extends React.Component {
                         return d
                       })
 
-    var guests_data = this.props.business.guestUsers.map(function(object, index){
+    var guests_data = this.props.guestUsers.map(function(object, index){
                         var d = {}
                         d["value"] = object["full_name"]
                         d["uid"] = "guest:" + object["id"]

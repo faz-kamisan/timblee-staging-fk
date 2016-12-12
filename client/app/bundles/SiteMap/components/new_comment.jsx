@@ -10,6 +10,7 @@ class NewComment extends React.Component {
     setSaving: PropTypes.func.isRequired,
     onCommentIdUpdate: PropTypes.func.isRequired,
     business: PropTypes.object.isRequired,
+    guestUsers: PropTypes.array,
     currentUser: PropTypes.object,
     selectedPage: PropTypes.object
   };
@@ -29,7 +30,7 @@ class NewComment extends React.Component {
                         return d
                       })
 
-    var guests_data = this.props.business.guestUsers.map(function(object, index){
+    var guests_data = this.props.guestUsers.map(function(object, index){
                         var d = {}
                         d["value"] = object["full_name"]
                         d["uid"] = "guest:" + object["id"]

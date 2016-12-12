@@ -4,6 +4,8 @@ class Guest < ActiveRecord::Base
 
   has_many :comments, as: :commenter
   has_many :notifications, as: :recipient
+  has_many :guests_sitemaps
+  has_many :sitemaps, through: :guests_sitemaps
 
   strip_fields :full_name, :email
 
