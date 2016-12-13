@@ -8,6 +8,7 @@ class Comment < ActiveRecord::Base
   scope :order_by_created_at, -> { order('created_at ASC') }
 
   after_create :create_comment_notification
+  after_create :create_guests_sitemaps, if: Proc.new {|comment| comment.commenter_type == 'Guest' }
   after_update :update_comment_notification, if: :message_changed?
 
   after_save :notify_mentioned_users, if: :message_changed?
@@ -51,6 +52,9 @@ class Comment < ActiveRecord::Base
   end
 
   private
+    def create_guests_sitemaps
+      self.commenter.sitemaps << sitemap if commenter.sitemaps.find_by(id: sitemap.id).blank?
+    end
 
     def create_comment_notification
       Notification.generate(kind: :add_comment, sitemap: sitemap, actor: commenter, resource: commentable)

@@ -3,7 +3,7 @@ import { setSaving, changeUpdatedAt, updatePageComment, updateFooterPageComment,
 import CommentEditor from '../components/comment_editor'
 
 const mapStateToProps = (state) => {
-  return { business: state.business }
+  return { business: state.business, guestUsers: state.guestUsers }
 }
 
 const mapDispatchToProps = (dispatch) => {

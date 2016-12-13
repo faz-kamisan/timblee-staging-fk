@@ -16,6 +16,8 @@ class Sitemap < ActiveRecord::Base
   has_many :sitemap_shared_users
   has_many :comments, as: :commentable
   has_many :page_comments, source: :comments, through: :pages
+  has_many :guests_sitemaps
+  has_many :guests, through: :guests_sitemaps
 
   acts_as_list scope: [:state, :business_id]
 
@@ -89,7 +91,8 @@ class Sitemap < ActiveRecord::Base
       business:  business && business.to_react_data,
       sharedUsers: sitemap_shared_users,
       activeSectionId: default_section.id,
-      trial: trial
+      trial: trial,
+      guestUsers: guests.map(&:to_react_data)
     }
   end
 

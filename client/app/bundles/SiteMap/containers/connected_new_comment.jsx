@@ -4,7 +4,7 @@ import { getNodeById } from '../helpers/tree_helper'
 import NewComment from '../components/new_comment'
 
 const mapStateToProps = (state) => {
-  return { currentUser: state.currentUser, currentGuest: state.currentGuest, business: state.business, sections: state.sections, selectedPage: state.selectedPage }
+  return { currentUser: state.currentUser, currentGuest: state.currentGuest, business: state.business, sections: state.sections, selectedPage: state.selectedPage, guestUsers: state.guestUsers }
 }
 
 const mapDispatchToProps = (dispatch) => {
