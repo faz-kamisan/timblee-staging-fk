@@ -4,6 +4,8 @@ class Admin::UsersController < ApplicationController
   before_filter :load_user, only: [:destroy, :edit, :update]
   before_filter :restrict_current_user, only: [:destroy]
   after_filter :track, only: [:destroy]
+  after_filter :track_user_custom_fields, only: [:update]
+
   def edit
   end
 
@@ -42,6 +44,11 @@ class Admin::UsersController < ApplicationController
   end
 
   private
+
+    def track_user_custom_fields
+      @analytics = Analytics.new(@user)
+      super
+    end
 
     def track
       analytics.track_pro_plan(Plan::PRO) if current_business.is_pro_plan? && @user.destroyed?
