@@ -91,7 +91,7 @@ class Analytics
       email: user.email,
       name: user.full_name,
       comments_count: user.comments.count,
-      user_type: (user.is_admin ? 'Admin' : 'Standard'),
+      user_type: user.user_type,
       createdAt: user.created_at
     }
   end

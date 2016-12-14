@@ -57,6 +57,10 @@ class User < ActiveRecord::Base
     !!force_destroy
   end
 
+  def user_type
+    is_admin ? 'Admin' : 'Standard'
+  end
+
   def first_name
     full_name.split(' ').first
   end
