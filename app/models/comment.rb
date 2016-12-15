@@ -14,11 +14,15 @@ class Comment < ActiveRecord::Base
   after_save :notify_mentioned_users, if: :message_changed?
 
   def to_react_data
-    { id: id, message: CGI.unescapeHTML(message), created_at: created_at_decorated, commenter: { fullName: cached_commenter.full_name, email: cached_commenter.email, avatar: (commenter_type == 'User' ? cached_commenter.avatar : nil) } }
+    { id: id, message: CGI.unescapeHTML(message), created_at: created_at_decorated, commenter: { fullName: cached_commenter.full_name, email: cached_email, avatar: (commenter_type == 'User' ? cached_commenter.avatar : nil) } }
   end
 
   def cached_commenter
     commenter_type == 'User' ? commenter || User.unscoped.find_by(id: commenter_id) : commenter
+  end
+
+  def cached_email
+    cached_commenter.email || cached_commenter.preserved_email
   end
 
   def sitemap
