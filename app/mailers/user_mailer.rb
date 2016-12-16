@@ -4,7 +4,7 @@ class UserMailer < ActionMailer::Base
   def send_updated_role_details(user_id, admin_user_id)
     @user = User.find_by_id(user_id)
     @admin_user = User.find_by_id(admin_user_id)
-    @role = @user.is_admin ? 'Admin' : 'Standard'
+    @role = @user.user_type
     if Rails.env.production?
       if(@user.is_admin)
         smart_email_id = CampaignMonitor::SMART_EMAIL_IDS[:admin_changes_user_role_to_admin]
