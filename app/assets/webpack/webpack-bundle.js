@@ -57689,6 +57689,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _url_parser = __webpack_require__(/*! ../helpers/url_parser */ 877);
+	
+	var _url_parser2 = _interopRequireDefault(_url_parser);
+	
 	var _connected_comment = __webpack_require__(/*! ../containers/connected_comment */ 845);
 	
 	var _connected_comment2 = _interopRequireDefault(_connected_comment);
@@ -57782,7 +57786,7 @@
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'form-group' },
-	              _react2.default.createElement('input', { type: 'email', placeholder: 'Your work email', ref: 'emailInput', className: 'form-control' }),
+	              _react2.default.createElement('input', { type: 'email', placeholder: 'Your work email', ref: 'emailInput', className: 'form-control', defaultValue: _url_parser2.default.getQueryVariable('email') || '' }),
 	              _react2.default.createElement('div', { className: 'error-div email-error', dangerouslySetInnerHTML: this.createMarkup(this.state.emailError) })
 	            ),
 	            _react2.default.createElement(
@@ -59003,6 +59007,35 @@
 	  transformer: undefined
 	};
 	module.exports = exports['default'];
+
+/***/ },
+/* 877 */
+/*!***************************************************!*\
+  !*** ./app/bundles/SiteMap/helpers/url_parser.js ***!
+  \***************************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var UrlParser = {
+	
+	  getQueryVariable: function getQueryVariable(variable) {
+	    var query = window.location.search.substring(1);
+	    var vars = query.split('&');
+	    for (var i = 0; i < vars.length; i++) {
+	      var pair = vars[i].split('=');
+	      if (decodeURIComponent(pair[0]) == variable) {
+	        return decodeURIComponent(pair[1]);
+	      }
+	    }
+	    console.log('Query variable %s not found', variable);
+	  }
+	};
+	
+	exports.default = UrlParser;
 
 /***/ }
 /******/ ]);

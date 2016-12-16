@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import UrlParser from '../helpers/url_parser';
 import ConnectedComment from '../containers/connected_comment'
 
 class UserSignupModal extends React.Component {
@@ -54,7 +55,7 @@ class UserSignupModal extends React.Component {
               <div className='error-div name-error' dangerouslySetInnerHTML={this.createMarkup(this.state.nameError)} />
             </div>
             <div className="form-group">
-              <input type='email' placeholder='Your work email' ref='emailInput' className='form-control'></input>
+              <input type='email' placeholder='Your work email' ref='emailInput' className='form-control' defaultValue={UrlParser.getQueryVariable('email') || ''}></input>
               <div className='error-div email-error' dangerouslySetInnerHTML={this.createMarkup(this.state.emailError)} />
             </div>
             <div className="form-group">
