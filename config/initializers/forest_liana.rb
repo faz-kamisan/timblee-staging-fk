@@ -1,2 +1,2 @@
-ForestLiana.secret_key = '10263487f558a3eadc554e5e03eec2ca294651031d2684e6460e70e3e99f31ff'
-ForestLiana.auth_key = 'Vrs5pX2W4DV0Vi0vT1_Vfw'
+ForestLiana.secret_key =  Rails.application.secrets.forest_admin['secret_key']
+ForestLiana.auth_key =  Rails.application.secrets.forest_admin['auth_key']
