@@ -14,7 +14,7 @@ $(function () {
     },
     close: function (event, ui) {
       if(event.originalEvent && event.originalEvent.type == 'blur'){
-        $("#search-sitemap-form").addClass('hide');
+        $("#search-sitemap-form").removeClass('show-this');
         flag = false;
       }
     }
@@ -23,7 +23,7 @@ $(function () {
 
   $('#jump-to').click(function (event) {
     if(flag){
-      $("#search-sitemap-form").removeClass('hide');
+      $("#search-sitemap-form").addClass('show-this');
       var downKeyEvent = $.Event("keydown");
       downKeyEvent.keyCode = $.ui.keyCode.DOWN;  // event for pressing "down" key
       $('#search-sitemap').trigger(downKeyEvent);
@@ -35,7 +35,7 @@ $(function () {
 
   $('body').click(function (event) {
     if($(event.target).closest('#jump-to').length == 0) {
-      $("#search-sitemap-form").addClass('hide');
+      $("#search-sitemap-form").removeClass('show-this');
       flag = true;
     }
   })
