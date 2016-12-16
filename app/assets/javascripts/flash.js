@@ -17,15 +17,16 @@ $(function() {
     flashDiv: $('.flash-message'),
     closeBtn : $('.close')
   },
+  flashTimer = $('.flash_message').html() === FLASH_FOR_TRIAL_OVER ? 30000 : 5000,
   flash = new Flash(options);
   $('body').on('DOMNodeInserted', '.flash', function () {
     var $this = $(this)
     window.setTimeout(function() {
       $this.remove();
-    }, 5000)
+    }, flashTimer)
   });
   window.setTimeout(function() {
     $('.flash').remove();
-  }, 5000)
+  }, flashTimer)
   flash.closeMessage();
 });
