@@ -3,7 +3,7 @@
     <% if message.present? %>
       <div class="message <%= type %>">
         <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <span><%= message %></span>
+        <span class='flash_message'><%= message %></span>
       </div>
     <% end %>
   <% end %>
