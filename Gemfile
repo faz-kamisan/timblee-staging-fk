@@ -28,6 +28,7 @@ gem 'whenever', require: false
 gem 'analytics-ruby', require: "segment"
 gem 'createsend'
 gem 'intercom', "~> 3.5.9"
+gem 'forest_liana'
 
 group :production do
   gem 'skylight'
