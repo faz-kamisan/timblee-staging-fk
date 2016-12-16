@@ -189,7 +189,7 @@
   position: absolute;
   opacity: 0;
   visibility: hidden;
-  top: 36px;
+  top: 16px;
   @include animate(.35s);
   &.show-this {
     opacity: 1;
