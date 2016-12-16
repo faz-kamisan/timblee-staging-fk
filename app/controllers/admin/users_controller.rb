@@ -46,8 +46,9 @@ class Admin::UsersController < ApplicationController
   private
 
     def track_user_custom_fields
-      @analytics = Analytics.new(@user)
-      super
+      intercom_user = IntercomClient.users.find(user_id: @user.id)
+      intercom_user.custom_attributes["user_type"] = @user.user_type
+      IntercomClient.users.save(intercom_user)
     end
 
     def track

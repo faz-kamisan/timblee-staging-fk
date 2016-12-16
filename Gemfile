@@ -27,6 +27,7 @@ gem 'mini_magick', '~> 4.5.1'
 gem 'whenever', require: false
 gem 'analytics-ruby', require: "segment"
 gem 'createsend'
+gem 'intercom', "~> 3.5.9"
 
 group :production do
   gem 'skylight'
