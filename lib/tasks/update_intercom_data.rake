@@ -6,6 +6,8 @@ namespace :intercom do
       if user
         intercom_user.custom_attributes["user_type"] = user.user_type
         IntercomClient.users.save(intercom_user)
+      else
+        p intercom_user.user_id
       end
     end
   end
