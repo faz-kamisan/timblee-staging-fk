@@ -10,7 +10,6 @@ class Page < ActiveRecord::Base
   acts_as_list scope: :parent
 
   before_validation :set_uid, on: :create, unless: :uid
-  before_update :update_children_section_id, if: :should_change_section?
   before_update :archive_children_pages_and_delete_section, if: :state_changed?
 
   validates :name, :page_type, :sitemap, :uid, presence: true
@@ -61,17 +60,7 @@ class Page < ActiveRecord::Base
     }
   end
 
-  def should_change_section?
-    alt_section_id_changed? || section_id_changed?
-  end
-
   private
-
-    def update_children_section_id
-      children.each do |child|
-        child.update(section_id: self.alt_section_id || self.section_id)
-      end
-    end
 
     def archive_children_pages_and_delete_section
       if(state == 'archived')
