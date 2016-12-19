@@ -29,7 +29,7 @@ class Sitemap < ActiveRecord::Base
 
   before_validation :set_default_name, on: :create, unless: :name
   before_validation :set_unique_public_share_token, on: :create
-  # before_destroy :delete_associations, prepend: true
+  before_destroy :delete_page_comments_association, prepend: true
   before_validation :set_default_state, on: :create, unless: :state
   after_create :create_default_section_and_page
 
@@ -142,12 +142,7 @@ class Sitemap < ActiveRecord::Base
       self.public_share_token = Digest::SHA1.hexdigest([Time.now, rand].join)[0,10]
     end
 
-    def delete_associations
-      debugger
+    def delete_page_comments_association
       Comment.where(commentable_type: :Page, commentable_id: pages.pluck(:id)).delete_all
-      comments.delete_all
-      sitemap_shared_users.delete_all
-      pages.delete_all
-      sections.delete_all
     end
 end
