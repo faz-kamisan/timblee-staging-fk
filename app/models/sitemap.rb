@@ -10,13 +10,13 @@ class Sitemap < ActiveRecord::Base
   belongs_to :folder
   belongs_to :user
   belongs_to :business
-  has_many :pages
-  has_many :sections
+  has_many :pages, dependent: :delete_all
+  has_many :sections, dependent: :delete_all
   has_one :default_section, ->{ where(default: true) }, class_name: :Section
-  has_many :sitemap_shared_users
-  has_many :comments, as: :commentable
+  has_many :sitemap_shared_users, dependent: :delete_all
+  has_many :comments, as: :commentable, dependent: :delete_all
   has_many :page_comments, source: :comments, through: :pages
-  has_many :guests_sitemaps
+  has_many :guests_sitemaps, dependent: :delete_all
   has_many :guests, through: :guests_sitemaps
 
   acts_as_list scope: [:state, :business_id]
@@ -29,7 +29,7 @@ class Sitemap < ActiveRecord::Base
 
   before_validation :set_default_name, on: :create, unless: :name
   before_validation :set_unique_public_share_token, on: :create
-  before_destroy :delete_associations
+  # before_destroy :delete_associations, prepend: true
   before_validation :set_default_state, on: :create, unless: :state
   after_create :create_default_section_and_page
 
@@ -143,6 +143,7 @@ class Sitemap < ActiveRecord::Base
     end
 
     def delete_associations
+      debugger
       Comment.where(commentable_type: :Page, commentable_id: pages.pluck(:id)).delete_all
       comments.delete_all
       sitemap_shared_users.delete_all
