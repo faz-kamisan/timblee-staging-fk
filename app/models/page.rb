@@ -1,6 +1,8 @@
 class Page < ActiveRecord::Base
   STATES = ['active', 'archived', 'resolved']
 
+  attr_accessor :skip_callback
+
   belongs_to :sitemap
   belongs_to :section, touch: true
   belongs_to :page_type
@@ -10,7 +12,7 @@ class Page < ActiveRecord::Base
   acts_as_list scope: :parent
 
   before_validation :set_uid, on: :create, unless: :uid
-  before_update :archive_children_pages_and_delete_section, if: :state_changed?
+  before_update :archive_children_pages_and_delete_section, if: :state_changed?, unless: :skip_callback
 
   validates :name, :page_type, :sitemap, :uid, presence: true
   validates :section, presence: true, unless: :footer?
@@ -20,12 +22,14 @@ class Page < ActiveRecord::Base
   def duplicate(duplicate_section, duplicate_parent_id, duplicate_sitemap)
     if alt_section_id && !duplicate_section.default?
       duplicate = duplicate_sitemap.pages.find_by(uid: uid)
-      duplicate.update(alt_section_id: duplicate_section.id)
+      duplicate.update(skip_callback: true, alt_section_id: duplicate_section.id)
     else
       duplicate = dup
       duplicate.section = duplicate_section
       duplicate.parent_id = duplicate_parent_id
       duplicate.sitemap = duplicate_sitemap
+      duplicate.skip_callback = true
+
       duplicate.save
     end
     child_pages.order(:position).each { |page| page.duplicate(duplicate_section, duplicate.id, duplicate_sitemap)} unless (alt_section_id && duplicate_section.default?)

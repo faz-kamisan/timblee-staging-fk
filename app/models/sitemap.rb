@@ -1,6 +1,8 @@
 class Sitemap < ActiveRecord::Base
   include ::SiteMapTransitions
 
+  attr_accessor :skip_callback
+
   LENGTH_TO_TRUNCATE = 44
   DEFAULT_NAME_PREFIX = 'New Sitemap '
   DEFAULT_SECTION_NAME = 'Main sitemap'
@@ -31,7 +33,7 @@ class Sitemap < ActiveRecord::Base
   before_validation :set_unique_public_share_token, on: :create
   before_destroy :delete_page_comments_association, prepend: true
   before_validation :set_default_state, on: :create, unless: :state
-  after_create :create_default_section_and_page
+  after_create :create_default_section_and_page, unless: :skip_callback
 
   strip_fields :name
 
@@ -41,15 +43,12 @@ class Sitemap < ActiveRecord::Base
     duplicate = dup
     duplicate.set_default_name("Copy of #{name}-")
 
-    Sitemap.skip_callback(:create, :after, :create_default_section_and_page)
-    Page.skip_callback(:update, :before, :archive_children_pages_and_delete_section)
+    duplicate.skip_callback = true
     duplicate.save
 
     sections.order(:default).each { |section| section.duplicate(duplicate) }
     footer_pages.each { |footer_page| footer_page.duplicate(nil, nil, duplicate) }
 
-    Sitemap.set_callback(:create, :after, :create_default_section_and_page)
-    Page.set_callback(:update, :before, :archive_children_pages_and_delete_section, if: :state_changed?)
     duplicate
   end
 
