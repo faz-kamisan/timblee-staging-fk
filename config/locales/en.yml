@@ -112,7 +112,7 @@ en:
       users:
         destroy:
           not_found: User not found.
-          success: User successfully soft deleted.
+          success: User successfully deleted.
           failure: User cannot be deleted.
           self_destroy: You Cannot delete yourself.
         update:
