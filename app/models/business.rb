@@ -11,7 +11,7 @@ class Business < ActiveRecord::Base
   has_many :cards, dependent: :destroy
   has_one :current_subscription, ->{ where('subscriptions.end_at >= :today', { today: Time.current }) }, class_name: :Subscription
   has_one :active_card, -> { order(created_at: :desc) }, class_name: :Card
-  after_commit :seed_account
+  after_commit :seed_account, on: :create
 
   mount_uploader :logo, AvatarUploader
 
