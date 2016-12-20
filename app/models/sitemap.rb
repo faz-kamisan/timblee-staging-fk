@@ -1,6 +1,8 @@
 class Sitemap < ActiveRecord::Base
   include ::SiteMapTransitions
 
+  attr_accessor :skip_callback
+
   LENGTH_TO_TRUNCATE = 44
   DEFAULT_NAME_PREFIX = 'New Sitemap '
   DEFAULT_SECTION_NAME = 'Main sitemap'
@@ -10,13 +12,13 @@ class Sitemap < ActiveRecord::Base
   belongs_to :folder
   belongs_to :user
   belongs_to :business
-  has_many :pages
-  has_many :sections
+  has_many :pages, dependent: :delete_all
+  has_many :sections, dependent: :delete_all
   has_one :default_section, ->{ where(default: true) }, class_name: :Section
-  has_many :sitemap_shared_users
-  has_many :comments, as: :commentable
+  has_many :sitemap_shared_users, dependent: :delete_all
+  has_many :comments, as: :commentable, dependent: :delete_all
   has_many :page_comments, source: :comments, through: :pages
-  has_many :guests_sitemaps
+  has_many :guests_sitemaps, dependent: :delete_all
   has_many :guests, through: :guests_sitemaps
 
   acts_as_list scope: [:state, :business_id]
@@ -29,9 +31,9 @@ class Sitemap < ActiveRecord::Base
 
   before_validation :set_default_name, on: :create, unless: :name
   before_validation :set_unique_public_share_token, on: :create
-  before_destroy :delete_associations
+  before_destroy :delete_page_comments_association, prepend: true
   before_validation :set_default_state, on: :create, unless: :state
-  after_create :create_default_section_and_page
+  after_create :create_default_section_and_page, unless: :skip_callback
 
   strip_fields :name
 
@@ -41,17 +43,12 @@ class Sitemap < ActiveRecord::Base
     duplicate = dup
     duplicate.set_default_name("Copy of #{name}-")
 
-    Sitemap.skip_callback(:create, :after, :create_default_section_and_page)
-    Page.skip_callback(:update, :before, :update_children_section_id)
-    Page.skip_callback(:update, :before, :archive_children_pages_and_delete_section)
+    duplicate.skip_callback = true
     duplicate.save
 
     sections.order(:default).each { |section| section.duplicate(duplicate) }
     footer_pages.each { |footer_page| footer_page.duplicate(nil, nil, duplicate) }
 
-    Sitemap.set_callback(:create, :after, :create_default_section_and_page)
-    Page.set_callback(:update, :before, :update_children_section_id, if: :section_id_changed?)
-    Page.set_callback(:update, :before, :archive_children_pages_and_delete_section, if: :state_changed?)
     duplicate
   end
 
@@ -144,11 +141,7 @@ class Sitemap < ActiveRecord::Base
       self.public_share_token = Digest::SHA1.hexdigest([Time.now, rand].join)[0,10]
     end
 
-    def delete_associations
+    def delete_page_comments_association
       Comment.where(commentable_type: :Page, commentable_id: pages.pluck(:id)).delete_all
-      comments.delete_all
-      sitemap_shared_users.delete_all
-      pages.delete_all
-      sections.delete_all
     end
 end
