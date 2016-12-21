@@ -5,17 +5,26 @@ class BusinessDefaultSitemapsService
 
   def initialize(business)
     @business = business
-    @seeded_business = Business.find(SEEDED_BUSINESS_ID)
-    @seeded_guest = Guest.find_by(id: SEEDED_GUEST_ID)
   end
 
-  def add_default_sitemaps
-    @seeded_business.sitemaps.where(folder_id: nil).each do |sitemap|
-      add_sitemap(sitemap, nil)
-    end
+  def seeded_business
+    @seeded_business ||= Business.find_by(id: SEEDED_BUSINESS_ID)
+  end
 
-    @seeded_business.folders.each do |folder|
-      add_folders(folder)
+  def seeded_guest
+    @seeded_guest ||= Guest.find_by(id: SEEDED_GUEST_ID)
+  end
+
+
+  def add_default_sitemaps
+    if seeded_business
+      seeded_business.sitemaps.where(folder_id: nil).each do |sitemap|
+        add_sitemap(sitemap, nil)
+      end
+
+      seeded_business.folders.each do |folder|
+        add_folders(folder)
+      end
     end
   end
 
@@ -24,14 +33,13 @@ class BusinessDefaultSitemapsService
   def add_folders(folder)
     new_folder = @business.folders.create(name: folder.name)
     folder.sitemaps.each do |sitemap|
-      add_sitemap(sitemap, new_folder)
+      add_sitemap(sitemap, new_folder.id)
     end
   end
 
-  def add_sitemap(sitemap, new_folder)
-    sitemap.assign_attributes(folder_id: new_folder.try(:id), business: @business, user: @business.owner)
-    new_sitemap = sitemap.duplicate
-    new_sitemap.update_column(:name, sitemap.name)
+  def add_sitemap(sitemap, new_folder_id)
+    sitemap.assign_attributes(folder_id: new_folder_id, business: @business, user: @business.owner)
+    new_sitemap = sitemap.duplicate(sitemap.name)
     (sitemap.comments + sitemap.page_comments).each do |comment|
       add_comment(comment, new_sitemap)
     end
@@ -39,8 +47,13 @@ class BusinessDefaultSitemapsService
 
   def add_comment(comment, new_sitemap)
     new_comment = comment.dup
-    new_comment.commentable = comment.commentable_type == 'Sitemap' ? new_sitemap : new_sitemap.pages.find_by(uid: comment.commentable.uid)
-    new_comment.commenter = @seeded_guest
+    new_comment.commentable = if comment.commentable_type == 'Sitemap'
+                                new_sitemap
+                              else
+                                new_sitemap.pages.find_by(uid: comment.commentable.uid)
+                              end
+
+    new_comment.commenter = seeded_guest
     new_comment.save
   end
 
