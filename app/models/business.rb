@@ -1,4 +1,5 @@
 class Business < ActiveRecord::Base
+
   belongs_to :owner, class_name: :User
 
   has_many :users, dependent: :destroy
@@ -9,7 +10,13 @@ class Business < ActiveRecord::Base
   has_one :current_subscription, ->{ where('subscriptions.end_at >= :today', { today: Time.current }) }, class_name: :Subscription
   has_one :active_card, -> { order(created_at: :desc) }, class_name: :Card
 
+  after_commit :create_default_sitemaps, on: :create
+
   mount_uploader :logo, AvatarUploader
+
+  def create_default_sitemaps
+    BusinessDefaultSitemapsService.new(self).add_default_sitemaps
+  end
 
   def account_locked?
     !in_trial_period? && is_starter_plan? && !allow_downgrade_to_starter?

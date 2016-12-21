@@ -39,9 +39,9 @@ class Sitemap < ActiveRecord::Base
 
   scope :order_by_alphanumeric_lower_name, -> { order("lower(SUBSTRING(name FROM '([^0-9]+)')) ASC, SUBSTRING(name FROM '[0-9]+$')::BIGINT ASC, lower(name)") }
 
-  def duplicate
+  def duplicate(name = nil)
     duplicate = dup
-    duplicate.set_default_name("Copy of #{name}-")
+    self.name = name || duplicate.set_default_name("Copy of #{name}-")
 
     duplicate.skip_callback = true
     duplicate.save
