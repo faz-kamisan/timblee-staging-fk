@@ -1,7 +1,5 @@
 class Business < ActiveRecord::Base
 
-  SEEDED_BUSINESS_ID = 827
-
   belongs_to :owner, class_name: :User
 
   has_many :users, dependent: :destroy
@@ -11,18 +9,14 @@ class Business < ActiveRecord::Base
   has_many :cards, dependent: :destroy
   has_one :current_subscription, ->{ where('subscriptions.end_at >= :today', { today: Time.current }) }, class_name: :Subscription
   has_one :active_card, -> { order(created_at: :desc) }, class_name: :Card
-  after_commit :seed_account, on: :create
+
+  after_commit :create_default_sitemaps, on: :create
 
   mount_uploader :logo, AvatarUploader
 
-  def seed_account
-    seeded_business = Business.find(SEEDED_BUSINESS_ID)
-    ([Folder.new(business: seeded_business)] + seeded_business.folders).each do |folder|
-      folder.seed_folder(self)
-    end
+  def create_default_sitemaps
+    BusinessDefaultSitemapsService.new(self).add_default_sitemaps
   end
-
-
 
   def account_locked?
     !in_trial_period? && is_starter_plan? && !allow_downgrade_to_starter?

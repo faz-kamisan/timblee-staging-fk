@@ -9,15 +9,6 @@ class Folder < ActiveRecord::Base
 
   scope :order_by_alphanumeric_lower_name, -> { order("SUBSTRING(name FROM '(^[0-9]+)')::BIGINT ASC, lower(name)") }
 
-  def seed_folder(new_business)
-    duplicate = new_business.folders.create(name: name) if persisted?
-    original_sitemaps = persisted? ? sitemaps : business.sitemaps.where(folder_id: nil)
-
-    original_sitemaps.each do |sitemap|
-      sitemap.seed_sitemap(duplicate, new_business)
-    end
-  end
-
   private
     def check_name_is_not_all_sitemaps
       if self.name && self.name.squeeze(' ').downcase == 'all sitemaps'

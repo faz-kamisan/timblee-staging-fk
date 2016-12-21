@@ -52,15 +52,6 @@ class Sitemap < ActiveRecord::Base
     duplicate
   end
 
-  def seed_sitemap(duplicate_folder, new_business)
-    assign_attributes(folder_id: duplicate_folder.try(:id), business: new_business, user: new_business.owner)
-    duplicate_sitemap = duplicate
-    duplicate_sitemap.update_column(:name, name)
-    (comments + page_comments).each do |comment|
-      comment.seed_comment(duplicate_sitemap)
-    end
-  end
-
   def footer_pages
     pages.where(footer: true)
   end

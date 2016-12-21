@@ -1,6 +1,5 @@
 class Comment < ActiveRecord::Base
 
-  SEEDED_GUEST_ID = 34
   belongs_to :commentable, polymorphic: true, touch: true
   belongs_to :commenter, polymorphic: true
   validates :message, :commentable, :commenter, presence: true
@@ -14,13 +13,6 @@ class Comment < ActiveRecord::Base
   after_update :update_comment_notification, if: :message_changed?
 
   after_save :notify_mentioned_users, if: :message_changed?
-
-  def seed_comment(duplicate_sitemap)
-    duplicate = dup
-    duplicate.commentable = commentable_type == 'Sitemap' ? duplicate_sitemap : duplicate_sitemap.pages.find_by(uid: commentable.uid)
-    duplicate.commenter = Guest.find_by(id: SEEDED_GUEST_ID)
-    duplicate.save
-  end
 
   def to_react_data
     { id: id, message: CGI.unescapeHTML(message), created_at: created_at_decorated, commenter: { fullName: cached_commenter.full_name, email: cached_email, avatar: (commenter_type == 'User' ? cached_commenter.avatar : nil) } }
