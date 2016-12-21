@@ -187,6 +187,15 @@
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.35);
   font-family: "proxima-nova",sans-serif!important;
   position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  top: 16px;
+  @include animate(.35s);
+  &.show-this {
+    opacity: 1;
+    visibility: visible;
+    top: 26px;
+  }
   .ui-widget-content {
     position: relative;
     background: transparent!important;
