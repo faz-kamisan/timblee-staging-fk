@@ -10,7 +10,11 @@ class BusinessDefaultSitemapsService
   end
 
   def add_default_sitemaps
-    ([nil] + @seeded_business.folders).each do |folder|
+    @seeded_business.sitemaps.where(folder_id: nil).each do |sitemap|
+      add_sitemap(sitemap, nil)
+    end
+
+    @seeded_business.folders.each do |folder|
       add_folders(folder)
     end
   end
@@ -18,10 +22,8 @@ class BusinessDefaultSitemapsService
   private
 
   def add_folders(folder)
-    new_folder = @business.folders.create(name: folder.name) if folder
-    original_sitemaps = folder ? folder.sitemaps : @seeded_business.sitemaps.where(folder_id: nil)
-
-    original_sitemaps.each do |sitemap|
+    new_folder = @business.folders.create(name: folder.name)
+    folder.sitemaps.each do |sitemap|
       add_sitemap(sitemap, new_folder)
     end
   end
