@@ -144,6 +144,7 @@ function createNewSection(sections, id, sectionId, newSectionName, timeStamp) {
   var page = getNodeById(treeCopy, id)
   var parentPage = getNodeById(treeCopy, page.parentId)
   page.alt_section_id = timeStamp
+  page.collapsed = false
   traverse(page, function(node) {
     if(page.id != node.id && node.section_id == sectionId) {
       node.section_id = timeStamp
