@@ -9,7 +9,7 @@ class SectionsController < ApplicationController
     @section.sitemap_id = @page.sitemap_id
     if(@section.save)
       @page.update_column(:alt_section_id, @section.id)
-      Page.where(id: @page.descendants).update_all(section_id: @section.id)
+      Page.where(id: @page.descendants, section_id: @page.section_id).update_all(section_id: @section.id)
       render json: @section.as_json, status: 200
     else
       render json: t('.failure', scope: :flash) , status: 422
