@@ -2,6 +2,8 @@ class Analytics
   class_attribute :backend
   self.backend = ::AnalyticsRuby
 
+  ORPHAN_USERS_COMPANY = {name: 'Purgatory', id: 0}
+
   def initialize(user)
     @user = user
     @business = user.business
@@ -22,6 +24,10 @@ class Analytics
         }
       }
     )
+  end
+
+  def track_soft_delete
+    disassociate_user_from_company
   end
 
 
@@ -67,6 +73,27 @@ class Analytics
   def identify
     backend.identify(identify_params)
     backend.group(group_params)
+  end
+
+  def disassociate_user_from_company
+    backend.identify(
+    {
+      user_id: user.id,
+      traits: {
+        company: {
+          id: business.id,
+          remove: true
+        }
+      }
+    })
+    backend.group(
+    {
+      user_id: user.id,
+      group_id: ORPHAN_USERS_COMPANY[:id],
+      traits: {
+        name: ORPHAN_USERS_COMPANY[:name]
+      }
+    })
   end
 
   attr_reader :user, :business
