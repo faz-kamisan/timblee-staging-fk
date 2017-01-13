@@ -11759,7 +11759,7 @@
 	
 	var _connected_sitemap2 = _interopRequireDefault(_connected_sitemap);
 	
-	var _reduxLogger = __webpack_require__(/*! redux-logger */ 871);
+	var _reduxLogger = __webpack_require__(/*! redux-logger */ 872);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
@@ -39153,8 +39153,9 @@
 	  var page = getNodeById(treeCopy, id);
 	  var parentPage = getNodeById(treeCopy, page.parentId);
 	  page.alt_section_id = timeStamp;
+	  page.collapsed = false;
 	  traverse(page, function (node) {
-	    if (page.id != node.id) {
+	    if (page.id != node.id && node.section_id == sectionId) {
 	      node.section_id = timeStamp;
 	    }
 	  });
@@ -39171,7 +39172,7 @@
 	  section.id = newId;
 	  section.pageTree.alt_section_id = newId;
 	  traverse(section.pageTree, function (node) {
-	    if (section.pageTree.id != node.id) {
+	    if (section.pageTree.id != node.id && node.section_id == oldId) {
 	      node.section_id = newId;
 	    }
 	  });
@@ -39189,7 +39190,7 @@
 	  var sectionPage = getNodeByAltSectionId(defaultSection.pageTree, id);
 	  sectionPage.alt_section_id = null;
 	  traverse(sectionPage, function (node) {
-	    if (sectionPage.id != node.id) {
+	    if (sectionPage.id != node.id && node.section_id == id) {
 	      node.section_id = sectionPage.section_id;
 	    }
 	  });
@@ -42622,7 +42623,7 @@
 	
 	var _user_signup_modal2 = _interopRequireDefault(_user_signup_modal);
 	
-	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 868);
+	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 869);
 	
 	var _custom_drag_layer2 = _interopRequireDefault(_custom_drag_layer);
 	
@@ -57689,7 +57690,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _url_parser = __webpack_require__(/*! ../helpers/url_parser */ 877);
+	var _url_parser = __webpack_require__(/*! ../helpers/url_parser */ 868);
 	
 	var _url_parser2 = _interopRequireDefault(_url_parser);
 	
@@ -57838,6 +57839,35 @@
 
 /***/ },
 /* 868 */
+/*!***************************************************!*\
+  !*** ./app/bundles/SiteMap/helpers/url_parser.js ***!
+  \***************************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var UrlParser = {
+	
+	  getQueryVariable: function getQueryVariable(variable) {
+	    var query = window.location.search.substring(1);
+	    var vars = query.split('&');
+	    for (var i = 0; i < vars.length; i++) {
+	      var pair = vars[i].split('=');
+	      if (decodeURIComponent(pair[0]) == variable) {
+	        return decodeURIComponent(pair[1]);
+	      }
+	    }
+	    console.log('Query variable %s not found', variable);
+	  }
+	};
+	
+	exports.default = UrlParser;
+
+/***/ },
+/* 869 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/custom_drag_layer.jsx ***!
   \**************************************************************/
@@ -57859,11 +57889,11 @@
 	
 	var _reactDnd = __webpack_require__(/*! react-dnd */ 753);
 	
-	var _page_container_preview = __webpack_require__(/*! ./page_container_preview */ 869);
+	var _page_container_preview = __webpack_require__(/*! ./page_container_preview */ 870);
 	
 	var _page_container_preview2 = _interopRequireDefault(_page_container_preview);
 	
-	var _page_type_preview = __webpack_require__(/*! ./page_type_preview */ 870);
+	var _page_type_preview = __webpack_require__(/*! ./page_type_preview */ 871);
 	
 	var _page_type_preview2 = _interopRequireDefault(_page_type_preview);
 	
@@ -57985,7 +58015,7 @@
 	exports.default = DragLayerDecorator(CustomDragLayer);
 
 /***/ },
-/* 869 */
+/* 870 */
 /*!*******************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_container_preview.jsx ***!
   \*******************************************************************/
@@ -58068,7 +58098,7 @@
 	exports.default = PageContainerPreview;
 
 /***/ },
-/* 870 */
+/* 871 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_type_preview.jsx ***!
   \**************************************************************/
@@ -58132,7 +58162,7 @@
 	exports.default = PageTypePreview;
 
 /***/ },
-/* 871 */
+/* 872 */
 /*!*************************************!*\
   !*** ./~/redux-logger/lib/index.js ***!
   \*************************************/
@@ -58146,11 +58176,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(/*! ./core */ 872);
+	var _core = __webpack_require__(/*! ./core */ 873);
 	
-	var _helpers = __webpack_require__(/*! ./helpers */ 873);
+	var _helpers = __webpack_require__(/*! ./helpers */ 874);
 	
-	var _defaults = __webpack_require__(/*! ./defaults */ 876);
+	var _defaults = __webpack_require__(/*! ./defaults */ 877);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -58253,7 +58283,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 872 */
+/* 873 */
 /*!************************************!*\
   !*** ./~/redux-logger/lib/core.js ***!
   \************************************/
@@ -58266,9 +58296,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(/*! ./helpers */ 873);
+	var _helpers = __webpack_require__(/*! ./helpers */ 874);
 	
-	var _diff = __webpack_require__(/*! ./diff */ 874);
+	var _diff = __webpack_require__(/*! ./diff */ 875);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -58397,7 +58427,7 @@
 	}
 
 /***/ },
-/* 873 */
+/* 874 */
 /*!***************************************!*\
   !*** ./~/redux-logger/lib/helpers.js ***!
   \***************************************/
@@ -58424,7 +58454,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 874 */
+/* 875 */
 /*!************************************!*\
   !*** ./~/redux-logger/lib/diff.js ***!
   \************************************/
@@ -58437,7 +58467,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(/*! deep-diff */ 875);
+	var _deepDiff = __webpack_require__(/*! deep-diff */ 876);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -58523,7 +58553,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 875 */
+/* 876 */
 /*!******************************!*\
   !*** ./~/deep-diff/index.js ***!
   \******************************/
@@ -58955,7 +58985,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 876 */
+/* 877 */
 /*!****************************************!*\
   !*** ./~/redux-logger/lib/defaults.js ***!
   \****************************************/
@@ -59007,35 +59037,6 @@
 	  transformer: undefined
 	};
 	module.exports = exports['default'];
-
-/***/ },
-/* 877 */
-/*!***************************************************!*\
-  !*** ./app/bundles/SiteMap/helpers/url_parser.js ***!
-  \***************************************************/
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var UrlParser = {
-	
-	  getQueryVariable: function getQueryVariable(variable) {
-	    var query = window.location.search.substring(1);
-	    var vars = query.split('&');
-	    for (var i = 0; i < vars.length; i++) {
-	      var pair = vars[i].split('=');
-	      if (decodeURIComponent(pair[0]) == variable) {
-	        return decodeURIComponent(pair[1]);
-	      }
-	    }
-	    console.log('Query variable %s not found', variable);
-	  }
-	};
-	
-	exports.default = UrlParser;
 
 /***/ }
 /******/ ]);
