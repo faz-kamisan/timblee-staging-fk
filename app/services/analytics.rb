@@ -24,6 +24,10 @@ class Analytics
     )
   end
 
+  def track_soft_delete
+    disassociate_user_from_company
+  end
+
 
   def track_pro_plan(old_subscription)
     identify
@@ -67,6 +71,27 @@ class Analytics
   def identify
     backend.identify(identify_params)
     backend.group(group_params)
+  end
+
+  def disassociate_user_from_company
+    backend.identify(
+    {
+      user_id: user.id,
+      traits: {
+        company: {
+          id: business.id,
+          remove: true
+        }
+      }
+    })
+    backend.group(
+    {
+      user_id: user.id,
+      group_id: 0,
+      traits: {
+        name: 'Purgatory'
+      }
+    })
   end
 
   attr_reader :user, :business
