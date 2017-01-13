@@ -2,6 +2,8 @@ class Analytics
   class_attribute :backend
   self.backend = ::AnalyticsRuby
 
+  ORPHAN_USERS_COMPANY = {name: 'Purgatory', id: 0}
+
   def initialize(user)
     @user = user
     @business = user.business
@@ -87,9 +89,9 @@ class Analytics
     backend.group(
     {
       user_id: user.id,
-      group_id: 0,
+      group_id: ORPHAN_USERS_COMPANY[:id],
       traits: {
-        name: 'Purgatory'
+        name: ORPHAN_USERS_COMPANY[:name]
       }
     })
   end
