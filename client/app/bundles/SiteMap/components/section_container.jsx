@@ -48,7 +48,7 @@ class SectionContainer extends React.Component {
           { !section.default &&
             <span>
               <span className='remove-section' onClick={function() {_this.setSelectedSection(section)} } data-target='#delete-section-modal' data-toggle='modal'>&times;</span>
-              <span className='edit-section' onClick={function() {_this.setSelectedSection(section)} } data-target='#update-section-name-modal' data-toggle='modal'><img src="/assets/Edit_Section_Icon.svg" alt=" "></img></span>
+              <span className='edit-section' onClick={function() {_this.setSelectedSection(section)} } data-target='#update-section-name-modal' data-toggle='modal'></span>
             </span>
           }
           <span className="truncate">{section.name}</span>

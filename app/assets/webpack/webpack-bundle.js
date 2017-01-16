@@ -50967,13 +50967,9 @@
 	                }, 'data-target': '#delete-section-modal', 'data-toggle': 'modal' },
 	              '\xD7'
 	            ),
-	            _react2.default.createElement(
-	              'span',
-	              { className: 'edit-section', onClick: function onClick() {
-	                  _this.setSelectedSection(section);
-	                }, 'data-target': '#update-section-name-modal', 'data-toggle': 'modal' },
-	              _react2.default.createElement('img', { src: '/assets/Edit_Section_Icon.svg', alt: ' ' })
-	            )
+	            _react2.default.createElement('span', { className: 'edit-section', onClick: function onClick() {
+	                _this.setSelectedSection(section);
+	              }, 'data-target': '#update-section-name-modal', 'data-toggle': 'modal' })
 	          ),
 	          _react2.default.createElement(
 	            'span',

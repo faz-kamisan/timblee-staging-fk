@@ -3179,6 +3179,9 @@ body.trial {
     .remove-section, .edit-section {
       color: #414952;
     }
+    .edit-section {
+      background-position: 0 0;
+    }
   }
   + .sitemap-section-tab {
     .truncate {
@@ -3190,10 +3193,16 @@ body.trial {
     left: 30px;
     color: #d6d8da;
     line-height: 36px;
-    top: 6px;
+    top: 18px;
     font-size: 20px;
+    width: 10px;
+    height: 10px;
+    background: url('/assets/edit-icon.png') no-repeat;
+    background-size: 10px;
+    background-position: 0 -12px;
     &:hover {
       color: $primaryPink;
+      background-position: 0 -24px;
     }
   }
 
