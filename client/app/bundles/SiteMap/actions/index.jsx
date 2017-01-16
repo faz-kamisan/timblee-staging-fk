@@ -44,6 +44,7 @@ export const REMOVE_SECTION = 'REMOVE_SECTION'
 export const SET_INTRO_SLIDE_NUMBER = 'SET_INTRO_SLIDE_NUMBER'
 export const UPDATE_SECTION_ID = 'UPDATE_SECTION_ID'
 export const CHANGE_ACTIVE_SECTION_ID = 'CHANGE_ACTIVE_SECTION_ID'
+export const UPDATE_SECTION_NAME = 'UPDATE_SECTION_NAME'
 
 export function setName(name) {
   return { type: SET_NAME, name }
@@ -227,4 +228,8 @@ export function updateSectionId(oldId, newId) {
 
 export function changeActiveSectionId(sectionId) {
   return {type: CHANGE_ACTIVE_SECTION_ID, sectionId}
+}
+
+export function updateSectionName(section_id, newName) {
+  return {type: UPDATE_SECTION_NAME, section_id, newName}
 }

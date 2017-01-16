@@ -168,6 +168,13 @@ function updateSectionId(sections, oldId, newId) {
   return sectionsCopy;
 }
 
+function updateSectionName(sections, section_id, newName) {
+  var sectionsCopy = Object.assign([], sections);
+  var section = sectionsCopy.filter(function(section) { return(section.id == section_id) })[0];
+  section.name = newName;
+  return sectionsCopy;
+}
+
 function removeSection(sections, id) {
   var sectionsCopy = Object.assign([], sections);
   var section = sectionsCopy.filter(function(section) { return(section.id == id) })[0]
@@ -251,4 +258,4 @@ function getNodeByPosition(tree, position){
 }
 
 
-export { addPage, removePage, updatePagePosition, updatePageName, traverse, updateCollapse, updatePageId, addPageComment, updateCommentId, updatePageType, createNewSection, updatePageState, deletePageComment, updatePageComment, updatePagePersitence, removeSection, updateSectionId, getNodeByAltSectionId, getNodeById }
+export { addPage, removePage, updatePagePosition, updatePageName, traverse, updateCollapse, updatePageId, addPageComment, updateCommentId, updatePageType, createNewSection, updatePageState, deletePageComment, updatePageComment, updatePagePersitence, removeSection, updateSectionId, updateSectionName, getNodeByAltSectionId, getNodeById }

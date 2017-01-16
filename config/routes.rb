@@ -46,7 +46,7 @@ Rails.application.routes.draw do
   end
   resources :comments, only: [:create, :update, :destroy]
   resources :pages, only: [:create, :update, :destroy]
-  resources :sections, only: [:create, :destroy]
+  resources :sections, only: [:create, :destroy, :update]
   resources :guests, only: [:create]
 
   get  'home', to: 'home#dashboard', as: 'home_dashboard'

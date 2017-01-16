@@ -324,7 +324,7 @@
   }
 }
 
-#new-section-modal {
+#new-section-modal, #update-section-name-modal {
   .modal-dialog {
     @include alignCenter(-310px, -118px);
   }
@@ -394,7 +394,7 @@
 
 .invited-user {
   .panel {
-    @include alignCenter(-310px, -263px); 
+    @include alignCenter(-310px, -263px);
   }
 }
 

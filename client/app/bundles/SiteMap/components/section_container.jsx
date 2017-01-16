@@ -46,7 +46,10 @@ class SectionContainer extends React.Component {
       return (
         <li key={section.id} className={'sitemap-section-tab' + (_this.props.activeSectionId == section.id ? ' active' : '')} onClick={function(e) { ($(e.target).closest('.remove-section').length == 0) ? _this.changeActiveSectionId(section.id) : '' } } style={ {width: tabWidth} }>
           { !section.default &&
-            <span className='remove-section' onClick={function() {_this.setSelectedSection(section)} } data-target='#delete-section-modal' data-toggle='modal'>&times;</span>
+            <span>
+              <span className='remove-section' onClick={function() {_this.setSelectedSection(section)} } data-target='#delete-section-modal' data-toggle='modal'>&times;</span>
+              <span className='edit-section' onClick={function() {_this.setSelectedSection(section)} } data-target='#update-section-name-modal' data-toggle='modal'><img src="/assets/Edit_Section_Icon.svg" alt=" "></img></span>
+            </span>
           }
           <span className="truncate">{section.name}</span>
         </li>

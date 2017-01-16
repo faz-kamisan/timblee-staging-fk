@@ -11759,7 +11759,7 @@
 	
 	var _connected_sitemap2 = _interopRequireDefault(_connected_sitemap);
 	
-	var _reduxLogger = __webpack_require__(/*! redux-logger */ 872);
+	var _reduxLogger = __webpack_require__(/*! redux-logger */ 874);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
@@ -38638,6 +38638,7 @@
 	exports.setIntroSlideNumber = setIntroSlideNumber;
 	exports.updateSectionId = updateSectionId;
 	exports.changeActiveSectionId = changeActiveSectionId;
+	exports.updateSectionName = updateSectionName;
 	var SET_NAME = exports.SET_NAME = 'SET_NAME';
 	var ADD_NEW_PAGE = exports.ADD_NEW_PAGE = 'ADD_NEW_PAGE';
 	var REMOVE_PAGE = exports.REMOVE_PAGE = 'REMOVE_PAGE';
@@ -38684,6 +38685,7 @@
 	var SET_INTRO_SLIDE_NUMBER = exports.SET_INTRO_SLIDE_NUMBER = 'SET_INTRO_SLIDE_NUMBER';
 	var UPDATE_SECTION_ID = exports.UPDATE_SECTION_ID = 'UPDATE_SECTION_ID';
 	var CHANGE_ACTIVE_SECTION_ID = exports.CHANGE_ACTIVE_SECTION_ID = 'CHANGE_ACTIVE_SECTION_ID';
+	var UPDATE_SECTION_NAME = exports.UPDATE_SECTION_NAME = 'UPDATE_SECTION_NAME';
 	
 	function setName(name) {
 	  return { type: SET_NAME, name: name };
@@ -38868,6 +38870,10 @@
 	function changeActiveSectionId(sectionId) {
 	  return { type: CHANGE_ACTIVE_SECTION_ID, sectionId: sectionId };
 	}
+	
+	function updateSectionName(section_id, newName) {
+	  return { type: UPDATE_SECTION_NAME, section_id: section_id, newName: newName };
+	}
 
 /***/ },
 /* 614 */
@@ -38938,6 +38944,8 @@
 	      return (0, _tree_helper.createNewSection)(state, action.pageId, action.sectionId, action.newSectionName, action.timeStamp);
 	    case _index.UPDATE_SECTION_ID:
 	      return (0, _tree_helper.updateSectionId)(state, action.oldId, action.newId);
+	    case _index.UPDATE_SECTION_NAME:
+	      return (0, _tree_helper.updateSectionName)(state, action.section_id, action.newName);
 	    case _index.REMOVE_SECTION:
 	      return (0, _tree_helper.removeSection)(state, action.id);
 	    case _index.UPDATE_PAGE_STATE:
@@ -38963,7 +38971,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.getNodeById = exports.getNodeByAltSectionId = exports.updateSectionId = exports.removeSection = exports.updatePagePersitence = exports.updatePageComment = exports.deletePageComment = exports.updatePageState = exports.createNewSection = exports.updatePageType = exports.updateCommentId = exports.addPageComment = exports.updatePageId = exports.updateCollapse = exports.traverse = exports.updatePageName = exports.updatePagePosition = exports.removePage = exports.addPage = undefined;
+	exports.getNodeById = exports.getNodeByAltSectionId = exports.updateSectionName = exports.updateSectionId = exports.removeSection = exports.updatePagePersitence = exports.updatePageComment = exports.deletePageComment = exports.updatePageState = exports.createNewSection = exports.updatePageType = exports.updateCommentId = exports.addPageComment = exports.updatePageId = exports.updateCollapse = exports.traverse = exports.updatePageName = exports.updatePagePosition = exports.removePage = exports.addPage = undefined;
 	
 	var _deepcopy = __webpack_require__(/*! deepcopy */ 617);
 	
@@ -39179,6 +39187,15 @@
 	  return sectionsCopy;
 	}
 	
+	function updateSectionName(sections, section_id, newName) {
+	  var sectionsCopy = Object.assign([], sections);
+	  var section = sectionsCopy.filter(function (section) {
+	    return section.id == section_id;
+	  })[0];
+	  section.name = newName;
+	  return sectionsCopy;
+	}
+	
 	function removeSection(sections, id) {
 	  var sectionsCopy = Object.assign([], sections);
 	  var section = sectionsCopy.filter(function (section) {
@@ -39283,6 +39300,7 @@
 	exports.updatePagePersitence = updatePagePersitence;
 	exports.removeSection = removeSection;
 	exports.updateSectionId = updateSectionId;
+	exports.updateSectionName = updateSectionName;
 	exports.getNodeByAltSectionId = getNodeByAltSectionId;
 	exports.getNodeById = getNodeById;
 
@@ -42615,15 +42633,19 @@
 	
 	var _connected_page_comments_modal2 = _interopRequireDefault(_connected_page_comments_modal);
 	
-	var _connected_delete_section_modal = __webpack_require__(/*! ../containers/connected_delete_section_modal */ 865);
+	var _connected_update_section_name_modal = __webpack_require__(/*! ../containers/connected_update_section_name_modal */ 865);
+	
+	var _connected_update_section_name_modal2 = _interopRequireDefault(_connected_update_section_name_modal);
+	
+	var _connected_delete_section_modal = __webpack_require__(/*! ../containers/connected_delete_section_modal */ 867);
 	
 	var _connected_delete_section_modal2 = _interopRequireDefault(_connected_delete_section_modal);
 	
-	var _user_signup_modal = __webpack_require__(/*! ./user_signup_modal */ 867);
+	var _user_signup_modal = __webpack_require__(/*! ./user_signup_modal */ 869);
 	
 	var _user_signup_modal2 = _interopRequireDefault(_user_signup_modal);
 	
-	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 869);
+	var _custom_drag_layer = __webpack_require__(/*! ../components/custom_drag_layer */ 871);
 	
 	var _custom_drag_layer2 = _interopRequireDefault(_custom_drag_layer);
 	
@@ -42686,7 +42708,8 @@
 	          _react2.default.createElement(_connected_delete_page_modal2.default, null),
 	          _react2.default.createElement(_connected_page_change_modal2.default, null),
 	          _react2.default.createElement(_connected_new_section_modal2.default, null),
-	          _react2.default.createElement(_connected_delete_section_modal2.default, null)
+	          _react2.default.createElement(_connected_delete_section_modal2.default, null),
+	          _react2.default.createElement(_connected_update_section_name_modal2.default, null)
 	        ),
 	        !this.props.trial && _react2.default.createElement(
 	          'div',
@@ -50936,10 +50959,21 @@
 	            }, style: { width: tabWidth } },
 	          !section.default && _react2.default.createElement(
 	            'span',
-	            { className: 'remove-section', onClick: function onClick() {
-	                _this.setSelectedSection(section);
-	              }, 'data-target': '#delete-section-modal', 'data-toggle': 'modal' },
-	            '\xD7'
+	            null,
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'remove-section', onClick: function onClick() {
+	                  _this.setSelectedSection(section);
+	                }, 'data-target': '#delete-section-modal', 'data-toggle': 'modal' },
+	              '\xD7'
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'edit-section', onClick: function onClick() {
+	                  _this.setSelectedSection(section);
+	                }, 'data-target': '#update-section-name-modal', 'data-toggle': 'modal' },
+	              _react2.default.createElement('img', { src: '/assets/Edit_Section_Icon.svg', alt: ' ' })
+	            )
 	          ),
 	          _react2.default.createElement(
 	            'span',
@@ -57479,6 +57513,203 @@
 
 /***/ },
 /* 865 */
+/*!********************************************************************************!*\
+  !*** ./app/bundles/SiteMap/containers/connected_update_section_name_modal.jsx ***!
+  \********************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 581);
+	
+	var _actions = __webpack_require__(/*! ../actions */ 613);
+	
+	var _update_section_name_modal = __webpack_require__(/*! ../components/update_section_name_modal */ 866);
+	
+	var _update_section_name_modal2 = _interopRequireDefault(_update_section_name_modal);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return { section: state.selectedSection };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    onUpdateSection: function onUpdateSection(sectionName, section_id) {
+	      dispatch((0, _actions.updateSectionName)(section_id, sectionName));
+	    },
+	    setSaving: function setSaving(saving) {
+	      dispatch((0, _actions.setSaving)(saving));
+	      dispatch((0, _actions.changeUpdatedAt)());
+	    }
+	  };
+	};
+	
+	var ConnectedUpdateSectionNameModal = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_update_section_name_modal2.default);
+	
+	exports.default = ConnectedUpdateSectionNameModal;
+
+/***/ },
+/* 866 */
+/*!**********************************************************************!*\
+  !*** ./app/bundles/SiteMap/components/update_section_name_modal.jsx ***!
+  \**********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 301);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _page_type = __webpack_require__(/*! ./page_type */ 842);
+	
+	var _page_type2 = _interopRequireDefault(_page_type);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var UpdateSectionNameModal = function (_React$Component) {
+	  _inherits(UpdateSectionNameModal, _React$Component);
+	
+	  function UpdateSectionNameModal(props) {
+	    _classCallCheck(this, UpdateSectionNameModal);
+	
+	    var _this2 = _possibleConstructorReturn(this, (UpdateSectionNameModal.__proto__ || Object.getPrototypeOf(UpdateSectionNameModal)).call(this, props));
+	
+	    _this2.updateSection = _this2.updateSection.bind(_this2);
+	    _this2.handleSectionNameChange = _this2.handleSectionNameChange.bind(_this2);
+	    _this2.state = { sectionName: '' };
+	    return _this2;
+	  }
+	
+	  _createClass(UpdateSectionNameModal, [{
+	    key: 'handleSectionNameChange',
+	    value: function handleSectionNameChange(e) {
+	      this.setState({ sectionName: e.target.value });
+	    }
+	  }, {
+	    key: 'updateSection',
+	    value: function updateSection(e) {
+	      var _this = this;
+	      var name = this.state.sectionName.trim();
+	      var id = this.props.section.id;
+	      if (name) {
+	        this.props.onUpdateSection(name, id);
+	        $.ajax({
+	          url: '/sections/' + this.props.section.id,
+	          method: 'put',
+	          dataType: 'JSON',
+	          data: { id: id, section: { name: name } },
+	          error: function error(result) {
+	            document.setFlash(result.responseText);
+	          },
+	          complete: function complete(result) {
+	            _this.props.setSaving(true);
+	            setTimeout(function () {
+	              _this.props.setSaving(false);
+	            }, 2000);
+	          }
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this = this;
+	      $('.update-section-name-modal').on('hidden.bs.modal', function () {
+	        setTimeout(function () {
+	          _this.setState({ sectionName: _this.props.section.name });
+	        }, 500);
+	      });
+	
+	      $('.update-section-name-modal').on('shown.bs.modal', function () {
+	        _this.setState({ sectionName: _this.props.section.name });
+	        $('#section-name-new').focus();
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this = this;
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'modal fade update-section-name-modal', id: 'update-section-name-modal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'update-section-name-modalLabel' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'modal-dialog', role: 'document' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'modal-content' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'modal-body' },
+	              _react2.default.createElement(
+	                'button',
+	                { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+	                _react2.default.createElement(
+	                  'span',
+	                  { 'aria-hidden': 'true' },
+	                  _react2.default.createElement('img', { src: '/assets/close-modal.svg', className: 'close-modal hide-delete-modal' })
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'create-section-heading' },
+	                'Give this section a new name'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement('input', { className: 'form-control', type: 'text', value: this.state.sectionName, id: 'section-name-new', name: 'section-name-new', onChange: this.handleSectionNameChange })
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'modal-button' },
+	                _react2.default.createElement(
+	                  'a',
+	                  { href: 'javascript:void(0);', 'data-dismiss': 'modal', className: 'btn btn-red', onClick: this.updateSection },
+	                  'Update name'
+	                ),
+	                _react2.default.createElement(
+	                  'a',
+	                  { href: 'javascript:void(0);', 'data-dismiss': 'modal', className: 'btn btn-grey btn-last' },
+	                  'Cancel'
+	                )
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return UpdateSectionNameModal;
+	}(_react2.default.Component);
+	
+	UpdateSectionNameModal.propTypes = {
+	  section: _react.PropTypes.object.isRequired
+	};
+	exports.default = UpdateSectionNameModal;
+
+/***/ },
+/* 867 */
 /*!***************************************************************************!*\
   !*** ./app/bundles/SiteMap/containers/connected_delete_section_modal.jsx ***!
   \***************************************************************************/
@@ -57494,7 +57725,7 @@
 	
 	var _actions = __webpack_require__(/*! ../actions */ 613);
 	
-	var _delete_section_modal = __webpack_require__(/*! ../components/delete_section_modal */ 866);
+	var _delete_section_modal = __webpack_require__(/*! ../components/delete_section_modal */ 868);
 	
 	var _delete_section_modal2 = _interopRequireDefault(_delete_section_modal);
 	
@@ -57524,7 +57755,7 @@
 	exports.default = ConnectedDeleteSectionModal;
 
 /***/ },
-/* 866 */
+/* 868 */
 /*!*****************************************************************!*\
   !*** ./app/bundles/SiteMap/components/delete_section_modal.jsx ***!
   \*****************************************************************/
@@ -57672,7 +57903,7 @@
 	exports.default = DeleteSectionModal;
 
 /***/ },
-/* 867 */
+/* 869 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/user_signup_modal.jsx ***!
   \**************************************************************/
@@ -57690,7 +57921,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _url_parser = __webpack_require__(/*! ../helpers/url_parser */ 868);
+	var _url_parser = __webpack_require__(/*! ../helpers/url_parser */ 870);
 	
 	var _url_parser2 = _interopRequireDefault(_url_parser);
 	
@@ -57838,7 +58069,7 @@
 	exports.default = UserSignupModal;
 
 /***/ },
-/* 868 */
+/* 870 */
 /*!***************************************************!*\
   !*** ./app/bundles/SiteMap/helpers/url_parser.js ***!
   \***************************************************/
@@ -57867,7 +58098,7 @@
 	exports.default = UrlParser;
 
 /***/ },
-/* 869 */
+/* 871 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/custom_drag_layer.jsx ***!
   \**************************************************************/
@@ -57889,11 +58120,11 @@
 	
 	var _reactDnd = __webpack_require__(/*! react-dnd */ 753);
 	
-	var _page_container_preview = __webpack_require__(/*! ./page_container_preview */ 870);
+	var _page_container_preview = __webpack_require__(/*! ./page_container_preview */ 872);
 	
 	var _page_container_preview2 = _interopRequireDefault(_page_container_preview);
 	
-	var _page_type_preview = __webpack_require__(/*! ./page_type_preview */ 871);
+	var _page_type_preview = __webpack_require__(/*! ./page_type_preview */ 873);
 	
 	var _page_type_preview2 = _interopRequireDefault(_page_type_preview);
 	
@@ -58015,7 +58246,7 @@
 	exports.default = DragLayerDecorator(CustomDragLayer);
 
 /***/ },
-/* 870 */
+/* 872 */
 /*!*******************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_container_preview.jsx ***!
   \*******************************************************************/
@@ -58098,7 +58329,7 @@
 	exports.default = PageContainerPreview;
 
 /***/ },
-/* 871 */
+/* 873 */
 /*!**************************************************************!*\
   !*** ./app/bundles/SiteMap/components/page_type_preview.jsx ***!
   \**************************************************************/
@@ -58162,7 +58393,7 @@
 	exports.default = PageTypePreview;
 
 /***/ },
-/* 872 */
+/* 874 */
 /*!*************************************!*\
   !*** ./~/redux-logger/lib/index.js ***!
   \*************************************/
@@ -58176,11 +58407,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(/*! ./core */ 873);
+	var _core = __webpack_require__(/*! ./core */ 875);
 	
-	var _helpers = __webpack_require__(/*! ./helpers */ 874);
+	var _helpers = __webpack_require__(/*! ./helpers */ 876);
 	
-	var _defaults = __webpack_require__(/*! ./defaults */ 877);
+	var _defaults = __webpack_require__(/*! ./defaults */ 879);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -58283,7 +58514,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 873 */
+/* 875 */
 /*!************************************!*\
   !*** ./~/redux-logger/lib/core.js ***!
   \************************************/
@@ -58296,9 +58527,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(/*! ./helpers */ 874);
+	var _helpers = __webpack_require__(/*! ./helpers */ 876);
 	
-	var _diff = __webpack_require__(/*! ./diff */ 875);
+	var _diff = __webpack_require__(/*! ./diff */ 877);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -58427,7 +58658,7 @@
 	}
 
 /***/ },
-/* 874 */
+/* 876 */
 /*!***************************************!*\
   !*** ./~/redux-logger/lib/helpers.js ***!
   \***************************************/
@@ -58454,7 +58685,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 875 */
+/* 877 */
 /*!************************************!*\
   !*** ./~/redux-logger/lib/diff.js ***!
   \************************************/
@@ -58467,7 +58698,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(/*! deep-diff */ 876);
+	var _deepDiff = __webpack_require__(/*! deep-diff */ 878);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -58553,7 +58784,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 876 */
+/* 878 */
 /*!******************************!*\
   !*** ./~/deep-diff/index.js ***!
   \******************************/
@@ -58985,7 +59216,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 877 */
+/* 879 */
 /*!****************************************!*\
   !*** ./~/redux-logger/lib/defaults.js ***!
   \****************************************/

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="10px" viewBox="0 0 10 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Live-App" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home-w/-trial-expiring-banner-Copy" transform="translate(-1138.000000, -104.000000)" fill="#414952">
+            <g id="Group" transform="translate(1138.000000, 104.000000)">
+                <path d="M9.43701222,2.08406802 C9.70118986,1.81989038 9.70118986,1.39427086 9.43701222,1.14476976 L8.57109664,0.278854171 C8.306919,0.0146765353 7.88129948,0.0146765353 7.63179838,0.278854171 L6.69250011,1.21815243 L8.5123905,3.00868974 L9.43701222,2.08406802 Z" id="Shape"></path>
+                <rect id="Rectangle-path" transform="translate(4.706789, 5.008112) rotate(-45.000000) translate(-4.706789, -5.008112) " x="1.4559677" y="3.73126525" width="6.5016428" height="2.55369266"></rect>
+                <polygon id="Shape" points="0.0733826767 9.62780718 2.74451211 8.74721506 0.968651332 6.95667775"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

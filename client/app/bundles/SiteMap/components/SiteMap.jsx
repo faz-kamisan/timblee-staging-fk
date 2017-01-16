@@ -16,6 +16,7 @@ import ConnectedCommentDeleteModal from '../containers/connected_comment_delete_
 import ConnectedPageChangeModal from '../containers/connected_page_change_modal';
 import ConnectedNewSectionModal from '../containers/connected_new_section_modal';
 import ConnectedPageCommentsModal from '../containers/connected_page_comments_modal';
+import ConnectedUpdateSectionNameModal from '../containers/connected_update_section_name_modal'
 import ConnectedDeleteSectionModal from '../containers/connected_delete_section_modal'
 import UserSignupModal from './user_signup_modal'
 import CustomDragLayer from '../components/custom_drag_layer';
@@ -69,6 +70,7 @@ class SiteMap extends React.Component {
             <ConnectedPageChangeModal />
             <ConnectedNewSectionModal />
             <ConnectedDeleteSectionModal />
+            <ConnectedUpdateSectionNameModal />
           </div>
         }
         { !this.props.trial &&
