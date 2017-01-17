@@ -2,7 +2,7 @@ class SectionsController < ApplicationController
   skip_before_filter :authenticate_user!
   before_filter :conditional_authenticate_user!
   before_filter :fetch_page, only: [:create]
-  before_filter :fetch_section, only: [:destroy]
+  before_filter :fetch_section, only: [:destroy, :update]
 
   def create
     @section = Section.new(section_params)
@@ -18,6 +18,10 @@ class SectionsController < ApplicationController
 
   def destroy
     send_conditional_json_response(@section.destroy)
+  end
+
+  def update
+    send_conditional_json_response(@section.update(section_params))
   end
 
   private
