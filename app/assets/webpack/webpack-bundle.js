@@ -50957,7 +50957,7 @@
 	          { key: section.id, className: 'sitemap-section-tab' + (_this.props.activeSectionId == section.id ? ' active' : ''), onClick: function onClick(e) {
 	              $(e.target).closest('.remove-section').length == 0 ? _this.changeActiveSectionId(section.id) : '';
 	            }, style: { width: tabWidth } },
-	          !section.default && _react2.default.createElement(
+	          !section.default && !_this.props.publicShare && _react2.default.createElement(
 	            'span',
 	            null,
 	            _react2.default.createElement(
