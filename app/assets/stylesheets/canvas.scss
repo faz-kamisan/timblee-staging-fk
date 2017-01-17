@@ -2372,6 +2372,8 @@ body.trial {
     background: #EEEEEE;
     cursor: pointer;
     position: relative;
+    padding-left: 50px;
+    padding-right: 20px;
     .truncate {
       max-width: calc(100% - 10px);
     }
