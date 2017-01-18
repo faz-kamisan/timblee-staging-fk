@@ -293,7 +293,7 @@ class PageTile extends React.Component {
                 { !this.props.trial &&
                   <li className="second-item">
                     <span className="icon-page-comments tile-icons" onClick={this.checkUserOrGuest}>
-                      <span className="card-tooltip">View Comments</span>
+                      <span className="card-tooltip">Comments &amp; Notes</span>
                     </span>
                   </li>
                 }
@@ -307,11 +307,11 @@ class PageTile extends React.Component {
               </div>
               { !this.props.trial &&
                 <a href="javascript:void(0)" className="icon-page-comments" onClick={this.checkUserOrGuest} data-toggle='modal'>
-                  <span className="card-tooltip">View Comments</span>
+                  <span className="card-tooltip">Comments &amp; Notes</span>
                 </a>
               }
               <a href="#page-change-modal" className="icon-page-change" onClick={this.setSelectedPage} data-toggle='modal'>
-                <span className="card-tooltip">Change Page</span>
+                <span className="card-tooltip">Change Page Type</span>
               </a>
               {
                 !(this.props.level == 0) && !this.props.pageTree.alt_section_id &&
@@ -388,7 +388,7 @@ class PageTile extends React.Component {
                 { !this.props.trial &&
                   <li className="second-item">
                     <span className="icon-page-comments tile-icons" onClick={this.checkUserOrGuest}>
-                      <span className="card-tooltip">View Comments</span>
+                      <span className="card-tooltip">Comments &amp; Notes</span>
                     </span>
                   </li>
                 }
@@ -402,11 +402,11 @@ class PageTile extends React.Component {
               </div>
               { !this.props.trial &&
                 <a href="javascript:void(0)" className="icon-page-comments" onClick={this.checkUserOrGuest} data-toggle='modal'>
-                  <span className="card-tooltip">View Comments</span>
+                  <span className="card-tooltip">Comments &amp; Notes</span>
                 </a>
               }
               <a href="#page-change-modal" className="icon-page-change" onClick={this.setSelectedPage} data-toggle='modal'>
-                <span className="card-tooltip">Change Page</span>
+                <span className="card-tooltip">Change Page Type</span>
               </a>
               {
                 !(this.props.level == 0) && !this.props.pageTree.alt_section_id &&

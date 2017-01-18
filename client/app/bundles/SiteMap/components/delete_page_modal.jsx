@@ -44,7 +44,7 @@ class DeletePageModal extends React.Component {
                 </span>
               </button>
               <h4 className="modal-title">Delete page</h4>
-              <p className="modal-message">{"You're about to delete the " + this.props.pageTree.name + " page. Any comments about this page will be archived and available via the comments sidebar."}</p>
+              <p className="modal-message">{"You're about to delete the " + this.props.pageTree.name + " page and any sub pages underneath it. Any comments linked to deleted pages will be archived and available via the comments sidebar."}</p>
             </div>
             <div className="modal-body">
               <div className="page-tile-clone text-center">
