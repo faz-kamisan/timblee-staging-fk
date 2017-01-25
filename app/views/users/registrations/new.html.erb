@@ -18,7 +18,11 @@
             <span class='error-message'><%= f.object.errors[:full_name].join(',') %></span>
           </div>
           <div class="form-group">
-            <%= f.text_field :email, placeholder: 'Your work email', class: 'form-control', value: params[:email] %>
+            <%= f.text_field :business_name, placeholder: 'Your Business name', class: 'form-control' %>
+            <span class='error-message'><%= f.object.errors[:business_name].join(',').html_safe %></span>
+          </div>
+          <div class="form-group">
+            <%= f.text_field :email, placeholder: 'Your work email', class: 'form-control' %>
             <span class='error-message'><%= f.object.errors[:email].join(',').html_safe %></span>
           </div>
           <div class="form-group">

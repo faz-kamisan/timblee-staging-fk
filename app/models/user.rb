@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   acts_as_paranoid
 
-  attr_accessor :admin_access, :trial_days, :force_destroy
+  attr_accessor :admin_access, :trial_days, :force_destroy, :business_name
 
   belongs_to :business, autosave: true
 
@@ -47,6 +47,7 @@ class User < ActiveRecord::Base
   validates :password, confirmation: true, if: :password_required?
   validates :password, length: { within: password_length, message: 'Your password needs to be at least 6 characters.' }, allow_blank: true
   validates :full_name, uniqueness: {scope: :business, message: "There's already an account with this name in your business. Please use some other name."}
+  validates :business_name, presence: { message: 'We really do need a business name. Pretty please.' }, on: :create
   validate :minimum_image_size, on: :update
 
   scope :active, -> { where(invitation_token: nil) }
@@ -126,7 +127,7 @@ class User < ActiveRecord::Base
     end
 
     def add_business
-      build_business(owner: self, trial_days: trial_days.presence || DEFAULT_TRIAL_DAYS)
+      build_business(owner: self, name: business_name, trial_days: trial_days.presence || DEFAULT_TRIAL_DAYS)
     end
 
     def set_confirmation_instructions_to_be_sent
