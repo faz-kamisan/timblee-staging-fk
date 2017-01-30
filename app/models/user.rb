@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
   validates :password, confirmation: true, if: :password_required?
   validates :password, length: { within: password_length, message: 'Your password needs to be at least 6 characters.' }, allow_blank: true
   validates :full_name, uniqueness: {scope: :business, message: "There's already an account with this name in your business. Please use some other name."}
-  validates :business_name, presence: { message: 'We really do need a business name. Pretty please.' }, on: :create
+  validates :business_name, presence: { message: 'This is used in sitemaps you share.' }, on: :create
   validate :minimum_image_size, on: :update
 
   scope :active, -> { where(invitation_token: nil) }
