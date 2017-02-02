@@ -46,6 +46,10 @@ class Business < ActiveRecord::Base
     created_at + trial_days.days
   end
 
+  def days_till_trial_end
+    trial_days - ((Time.current - created_at)/86400).to_i
+  end
+
   def in_trial_period?
     trial_end_at > Time.current
   end

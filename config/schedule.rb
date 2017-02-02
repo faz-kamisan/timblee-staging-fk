@@ -10,6 +10,10 @@ every 10.minutes do
   rake "notifications:send"
 end
 
+every 1.day, :at => '12:00 am' do
+  rake "intercom:update_days_till_trial_end"
+end
+
 if @environment == 'production'
   every 6.hours do
     command 'backup perform --trigger timblee_backup'
