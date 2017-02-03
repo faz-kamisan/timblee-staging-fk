@@ -357,7 +357,7 @@
 }
 .react-sign-up {
   .modal-body {
-    @include alignCenter(-310px, -274px);
+    @include alignCenter(-310px, -306px);
     z-index: 99999;
     &.modal-with-error {
       @include alignCenter(-310px, -325px);
