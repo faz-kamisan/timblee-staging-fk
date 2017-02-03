@@ -57942,7 +57942,7 @@
 	
 	    var _this2 = _possibleConstructorReturn(this, (UserSignupModal.__proto__ || Object.getPrototypeOf(UserSignupModal)).call(this, props));
 	
-	    _this2.state = { nameError: '', emailError: '', passwordError: '' };
+	    _this2.state = { nameError: '', emailError: '', passwordError: '', businessNameError: '' };
 	    _this2.signup = _this2.signup.bind(_this2);
 	    _this2.createMarkup = _this2.createMarkup.bind(_this2);
 	    return _this2;
@@ -57958,10 +57958,10 @@
 	        url: '/users',
 	        method: 'post',
 	        dataType: 'JSON',
-	        data: { user: { full_name: this.refs.nameInput.value, email: this.refs.emailInput.value, password: this.refs.passwordInput.value } },
+	        data: { user: { full_name: this.refs.nameInput.value, email: this.refs.emailInput.value, password: this.refs.passwordInput.value, business_name: this.refs.businessNameInput.value } },
 	        error: function error(result) {
 	          var errors = result.responseJSON;
-	          _this3.setState({ nameError: errors.full_name && errors.full_name.join('<br />'), emailError: errors.email && errors.email.join('<br />'), passwordError: errors.password && errors.password.join('<br />') });
+	          _this3.setState({ nameError: errors.full_name && errors.full_name.join('<br />'), emailError: errors.email && errors.email.join('<br />'), passwordError: errors.password && errors.password.join('<br />'), businessNameError: errors.business_name && errors.business_name.join('<br />') });
 	        },
 	        success: function success(result) {
 	          window.location = "/sitemaps/" + _this3.props.sitemapId;
@@ -57977,7 +57977,7 @@
 	    key: 'render',
 	    value: function render() {
 	      var _this = this;
-	      var error = this.state.nameError.length > 0 || this.state.emailError.length > 0 || this.state.passwordError.length > 0;
+	      var error = this.state.nameError && this.state.nameError.length > 0 || this.state.emailError && this.state.emailError.length > 0 || this.state.passwordError && this.state.passwordError.length > 0 || this.state.businessNameError && this.state.businessNameError.length > 0;
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'modal fade react-sign-up', id: 'user-signup-modal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'user-signup-modalLabel' },
@@ -58011,6 +58011,12 @@
 	              { className: 'form-group' },
 	              _react2.default.createElement('input', { type: 'text', placeholder: 'Your name', ref: 'nameInput', className: 'form-control' }),
 	              _react2.default.createElement('div', { className: 'error-div name-error', dangerouslySetInnerHTML: this.createMarkup(this.state.nameError) })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'form-group' },
+	              _react2.default.createElement('input', { type: 'text', placeholder: 'Business name', ref: 'businessNameInput', className: 'form-control', defaultValue: _url_parser2.default.getQueryVariable('business_name') || '' }),
+	              _react2.default.createElement('div', { className: 'error-div email-error', dangerouslySetInnerHTML: this.createMarkup(this.state.businessNameError) })
 	            ),
 	            _react2.default.createElement(
 	              'div',
