@@ -10,7 +10,7 @@ class BusinessMailer < ActionMailer::Base
       smart_email_id = CampaignMonitor::SMART_EMAIL_IDS[:account_deletion_request]
       tx_smart_mailer = CreateSend::Transactional::SmartEmail.new(CampaignMonitor::AUTH, smart_email_id)
       message = {
-      'To' => "Timblee <roohbir@timblee.io>",
+      'To' => ["Timblee <roohbir@timblee.io>", 'Timblee <faz@timblee.io>'],
         'Data' => {
           'business-name' => @business.name,
           'account-ID' => @business.id,
