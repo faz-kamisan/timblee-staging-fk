@@ -41,7 +41,7 @@ class Sitemap < ActiveRecord::Base
 
   def duplicate(name = nil)
     duplicate = dup
-    self.name = name || duplicate.set_default_name("Copy of #{name}-")
+    duplicate.name = name || duplicate.set_default_name("Copy of #{self.name}-")
 
     duplicate.skip_callback = true
     duplicate.save
