@@ -54884,7 +54884,7 @@
 	        $(this).prop('placeholder', 'Search page types');
 	      });
 	      $('body').on('blur', '#page-type', function () {
-	        $(this).prop('placeholder', 'Page type');
+	        $(this).prop('placeholder', 'Page types');
 	      });
 	      if (this.props.trial) {
 	        $('body').addClass('trial');
