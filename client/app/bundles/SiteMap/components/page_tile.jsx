@@ -151,6 +151,9 @@ class PageTile extends React.Component {
     if(this.props.currentUser || this.props.currentGuest) {
       this.props.setSelectedPage(this.props.pageTree)
       $('#page-comments-modal').modal('show')
+    } else if(this.props.trial){
+      $('.modal').modal('hide');
+      $('#user-signup-modal').modal('show');
     } else {
       this.props.setShowGuestInfoForm(true)
       $('.modal').modal('hide');
@@ -290,13 +293,11 @@ class PageTile extends React.Component {
                     </span>
                   </li>
                 }
-                { !this.props.trial &&
-                  <li className="second-item">
-                    <span className="icon-page-comments tile-icons" onClick={this.checkUserOrGuest}>
-                      <span className="card-tooltip">Comments &amp; Notes</span>
-                    </span>
-                  </li>
-                }
+                <li className="second-item">
+                  <span className="icon-page-comments tile-icons" onClick={this.checkUserOrGuest}>
+                    <span className="card-tooltip">Comments &amp; Notes</span>
+                  </span>
+                </li>
               </ul>
             </div>
           }
@@ -305,11 +306,9 @@ class PageTile extends React.Component {
               <div className="close-card-overlay">
                 <a href="javascript:void(0)" className="icon-close" onClick={this.closeOverLay}></a>
               </div>
-              { !this.props.trial &&
-                <a href="javascript:void(0)" className="icon-page-comments" onClick={this.checkUserOrGuest} data-toggle='modal'>
-                  <span className="card-tooltip">Comments &amp; Notes</span>
-                </a>
-              }
+              <a href="javascript:void(0)" className="icon-page-comments" onClick={this.checkUserOrGuest} data-toggle='modal'>
+                <span className="card-tooltip">Comments &amp; Notes</span>
+              </a>
               <a href="#page-change-modal" className="icon-page-change" onClick={this.setSelectedPage} data-toggle='modal'>
                 <span className="card-tooltip">Change Page Type</span>
               </a>
@@ -385,13 +384,11 @@ class PageTile extends React.Component {
                     </span>
                   </li>
                 }
-                { !this.props.trial &&
-                  <li className="second-item">
-                    <span className="icon-page-comments tile-icons" onClick={this.checkUserOrGuest}>
-                      <span className="card-tooltip">Comments &amp; Notes</span>
-                    </span>
-                  </li>
-                }
+                <li className="second-item">
+                  <span className="icon-page-comments tile-icons" onClick={this.checkUserOrGuest}>
+                    <span className="card-tooltip">Comments &amp; Notes</span>
+                  </span>
+                </li>
               </ul>
             </div>
           }
@@ -400,11 +397,9 @@ class PageTile extends React.Component {
               <div className="close-card-overlay">
                 <a href="javascript:void(0)" className="icon-close" onClick={this.closeOverLay}></a>
               </div>
-              { !this.props.trial &&
-                <a href="javascript:void(0)" className="icon-page-comments" onClick={this.checkUserOrGuest} data-toggle='modal'>
-                  <span className="card-tooltip">Comments &amp; Notes</span>
-                </a>
-              }
+              <a href="javascript:void(0)" className="icon-page-comments" onClick={this.checkUserOrGuest} data-toggle='modal'>
+                <span className="card-tooltip">Comments &amp; Notes</span>
+              </a>
               <a href="#page-change-modal" className="icon-page-change" onClick={this.setSelectedPage} data-toggle='modal'>
                 <span className="card-tooltip">Change Page Type</span>
               </a>

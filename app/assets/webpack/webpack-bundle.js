@@ -51321,7 +51321,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { publicShare: state.publicShare, pageType: state.pageTypes.filter(function (pageType) {
+	  return { trial: state.trial, publicShare: state.publicShare, pageType: state.pageTypes.filter(function (pageType) {
 	      return pageType.name == 'General 1';
 	    })[0], maxPageUid: state.maxPageUid, sitemapId: state.id, currentUser: state.currentUser, currentGuest: state.currentGuest, activeSectionId: state.activeSectionId };
 	};
@@ -51568,6 +51568,9 @@
 	      if (this.props.currentUser || this.props.currentGuest) {
 	        this.props.setSelectedPage(this.props.pageTree);
 	        $('#page-comments-modal').modal('show');
+	      } else if (this.props.trial) {
+	        $('.modal').modal('hide');
+	        $('#user-signup-modal').modal('show');
 	      } else {
 	        this.props.setShowGuestInfoForm(true);
 	        $('.modal').modal('hide');
@@ -51743,7 +51746,7 @@
 	                  _react2.default.createElement('span', null)
 	                )
 	              ),
-	              !this.props.trial && _react2.default.createElement(
+	              _react2.default.createElement(
 	                'li',
 	                { className: 'second-item' },
 	                _react2.default.createElement(
@@ -51766,7 +51769,7 @@
 	              { className: 'close-card-overlay' },
 	              _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-close', onClick: this.closeOverLay })
 	            ),
-	            !this.props.trial && _react2.default.createElement(
+	            _react2.default.createElement(
 	              'a',
 	              { href: 'javascript:void(0)', className: 'icon-page-comments', onClick: this.checkUserOrGuest, 'data-toggle': 'modal' },
 	              _react2.default.createElement(
@@ -51884,7 +51887,7 @@
 	                  _react2.default.createElement('span', null)
 	                )
 	              ),
-	              !this.props.trial && _react2.default.createElement(
+	              _react2.default.createElement(
 	                'li',
 	                { className: 'second-item' },
 	                _react2.default.createElement(
@@ -51907,7 +51910,7 @@
 	              { className: 'close-card-overlay' },
 	              _react2.default.createElement('a', { href: 'javascript:void(0)', className: 'icon-close', onClick: this.closeOverLay })
 	            ),
-	            !this.props.trial && _react2.default.createElement(
+	            _react2.default.createElement(
 	              'a',
 	              { href: 'javascript:void(0)', className: 'icon-page-comments', onClick: this.checkUserOrGuest, 'data-toggle': 'modal' },
 	              _react2.default.createElement(
