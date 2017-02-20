@@ -431,6 +431,9 @@
           border-left: 1px dashed #e3e5e7;
           background: $transparent;
         }
+        .bottom-button-div {
+          visibility: hidden;
+        }
       }
     }
     > .page-tile {
