@@ -155,7 +155,12 @@ class SitemapsController < ApplicationController
     Zip::File.open("tmp/pngs/#{@sitemap.name}.zip", Zip::File::CREATE) do |zipfile|
       @sitemap.sections.order(:id).each_with_index do |section, index|
         html  = render_to_string(layout: 'png', locals: {section: section})
-        kit = IMGKit.new(html, width: (ExportService.calculate_width(section.level_one_pages) + 200), quality: 89)
+        if section.default? && section.level_one_pages < @sitemap.footer_pages.where.not(state: :archived).count
+          level_one_pages_screen_count = @sitemap.footer_pages.where.not(state: :archived).count
+        else
+          level_one_pages_screen_count = section.level_one_pages
+        end
+        kit = IMGKit.new(html, width: (ExportService.calculate_width(level_one_pages_screen_count) + 200), quality: 89)
         file = kit.to_file("tmp/pngs/#{@sitemap.id}-#{index}.png")
         zipfile.add("#{@sitemap.name.gsub(':', '-')} - #{index + 1} of #{section_count}.png",  "#{Rails.root}/tmp/pngs/#{@sitemap.id}-#{index}.png"){true}
       end

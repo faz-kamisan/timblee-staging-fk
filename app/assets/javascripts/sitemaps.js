@@ -22,7 +22,7 @@ var Sitemaps = function(options) {
 Sitemaps.prototype.bindEvents = function() {
   var _this = this;
 
-  this.sitemapShareModal.find('form.generate_pdf_link').on('submit', function (e) {
+  this.sitemapShareModal.find('form.generate_pdf_link').off('submit').on('submit', function (e) {
     e.preventDefault();
     $(this).find('button.share-sitemap-button').html('GENERATING PDF...')
     $(this).find('button.share-sitemap-button').attr('disabled', true)
@@ -42,7 +42,7 @@ Sitemaps.prototype.bindEvents = function() {
       $('.flash-message').html('<div class=flash><div class=message alert>Something went wrong.</div></div>');
     })
   });
-  this.sitemapShareModal.find('form.generate_png_link').on('submit', function (e) {
+  this.sitemapShareModal.find('form.generate_png_link').off('submit').on('submit', function (e) {
     e.preventDefault();
     $(this).find('button.share-sitemap-button').html('GENERATING PNG...')
     $(this).find('button.share-sitemap-button').attr('disabled', true)
