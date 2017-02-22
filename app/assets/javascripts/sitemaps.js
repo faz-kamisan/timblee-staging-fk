@@ -186,7 +186,7 @@ Sitemaps.prototype.copyUrl = function() {
 Sitemaps.prototype.configureSitemapShareModal = function(obj) {
   var _this = this;
   if(obj.data('url')) {
-    this.sitemapShareModal.find('#sitemap-public-share-url span').html(obj.data('url'))
+    this.sitemapShareModal.find('#sitemap-public-share-url').html(obj.data('url'))
     this.sitemapShareModal.data('sitemap-id', obj.data('sitemap-id'));
     this.sitemapShareModal.find('.warning-message').data('level-one-pages', obj.attr("data-level-one-pages"));
     if(obj.attr("data-level-one-pages") > 15){
