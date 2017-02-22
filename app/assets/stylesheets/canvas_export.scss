@@ -6114,7 +6114,7 @@ h1.hidden { opacity: 0; }
 .pdf-comment { position: relative; padding-bottom: 30px; padding-left: 40px; }
 .pdf-comment:last-child { padding-bottom: 0px;}
 .pdf-comment {
-  img.commenter-image{
+  img.commenter-image {
     position: absolute;
     top: -4px;
     left: 0;
@@ -6125,6 +6125,8 @@ h1.hidden { opacity: 0; }
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
     border: 1px solid #62717F;
+    margin: 0;
+    padding: 0;
   }
   span.emojione{
     zoom: .22;
