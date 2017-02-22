@@ -35,6 +35,15 @@ en:
       duplicate:
         success: Duplicate Sitemap created successfully
         failure: Couldn't duplicate sitemap
+      generate_pdf:
+        failure: Something went wrong.
+      generate_png:
+        failure: Something went wrong.
+      download_pdf:
+        failure: Something went wrong.
+      download_png:
+        failure: Something went wrong.
+
     comments:
       not_found: Can't find comment
       create:

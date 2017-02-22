@@ -1,0 +1,42 @@
+  <!doctype html>
+  <html>
+    <body style="border:0; margin: 0;">
+      <div style="border-bottom: 1px solid #62717F; width: 100%; padding-bottom: 30px; margin-bottom: 30px;" class="pdf-header pdf-wrapper">
+        <% if @sitemap.business.logo.present? %>
+            <%= image_tag(@sitemap.business.logo, class: 'pdf-business-logo') %>
+        <% end %>
+        <div class='content' style="text-align:center;">
+          <% if params[:section] ==  'Comments' %>
+            <h1 id="sitemap" class="content-1"><span>Comments: </span><%= @sitemap.name %></h1>
+            <div id="updated-at" class="content-2">Last updated <%= @sitemap.updated_at.strftime('%d %b %Y') %></div>
+          <% elsif params[:section] ==  @sitemap.name %>
+            <h1 class="content-1"><%= @sitemap.name %></h1>
+            <div id="updated-at" class="content-2">Last updated <%= @sitemap.updated_at.strftime('%d %b %Y') %></div>
+          <% elsif params[:section] == 'Footer'%>
+            <div id="sitemap" class="content-1"><%= @sitemap.name %></div>
+            <div id="section" class="content-2">Footer Pages</div>
+          <% else %>
+            <div id="section" class="content-1">Section: <%= params[:section]%> </div>
+            <div id="sitemap" class="content-2"><%= @sitemap.name %></div>
+          <%end%>
+
+          <div id="about">
+            <span id='topage'>
+              <img src="/assets/page-count.png" alt=" " class="count-icon">
+              Pages <%= @sitemap.pages.count %>
+            </span>
+            <span id='comments'>
+              <img src="/assets/comment-count.png" alt=" " class="count-icon">
+              Comments <%= @sitemap.comments.count + @sitemap.page_comments.count %>
+            </span>
+            <span id='sections'>
+              <img src="/assets/section-count.png" alt=" " class="count-icon">
+              Sections <%= @sitemap.sections.count %>
+            </span>
+          </div>
+
+        </div>
+      </div>
+    </body>
+
+  </html>

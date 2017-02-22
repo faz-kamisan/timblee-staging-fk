@@ -41,6 +41,10 @@ class Section < ActiveRecord::Base
     }
   end
 
+  def level_one_pages
+    root_page.children.where.not(state: :archived).count
+  end
+
   private
 
     def archive_pages

@@ -84,7 +84,7 @@
             <% end %>
 
             <li>
-              <%= link_to 'javascript:void(0)', class: 'action sitemap-share-modal-link', 'data-url': sitemap.public_share_url, 'data-sitemap-id': sitemap.id, 'data-name': sitemap.name, 'data-shared-users': sitemap.sitemap_shared_users.pluck(:user_email).join(',') do %>
+              <%= link_to 'javascript:void(0)', class: 'action sitemap-share-modal-link', 'data-url': sitemap.public_share_url, 'data-sitemap-id': sitemap.id, 'data-name': sitemap.name, 'data-shared-users': sitemap.sitemap_shared_users.pluck(:user_email).join(','), 'data-pdf-url': generate_pdf_sitemap_url(sitemap), 'data-png-url': generate_png_sitemap_url(sitemap), 'data-level-one-pages': sitemap.max_level_one_page_count do %>
                 <span class="icon icon-share-circle"></span>
                 <span class="link-text">Share</span>
               <% end %>

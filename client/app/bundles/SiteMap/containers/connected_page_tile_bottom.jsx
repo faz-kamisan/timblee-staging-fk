@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { updatePagePosition, addNewPage, setMaxPageUid, changeUpdatedAt, updateId, setSaving } from '../actions'
-import DroppablePageTileBottom from '../components/page_tile_Bottom'
+import DroppablePageTileBottom from '../components/page_tile_bottom'
 
 const mapStateToProps = (state) => {
   return { sitemapId: state.id, maxPageUid: state.maxPageUid, trial: state.trial, activeSectionId: state.activeSectionId }

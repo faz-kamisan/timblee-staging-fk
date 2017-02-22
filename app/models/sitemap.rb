@@ -56,6 +56,10 @@ class Sitemap < ActiveRecord::Base
     pages.where(footer: true)
   end
 
+  def max_level_one_page_count
+    sections.map{|s| s.level_one_pages}.max
+  end
+
   def all_comment_ids
     page_comment_ids + comment_ids
   end

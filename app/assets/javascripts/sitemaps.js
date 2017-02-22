@@ -16,10 +16,51 @@ var Sitemaps = function(options) {
   this.dropContainers = options.dropContainers;
   this.draggableSitemaps = options.draggableSitemaps;
   this.searchSitemapInput = options.searchSitemapInput;
+  this.shareEmailsInputTags = options.shareEmailsInputTags;
 };
 
 Sitemaps.prototype.bindEvents = function() {
   var _this = this;
+
+  this.sitemapShareModal.find('form.generate_pdf_link').on('submit', function (e) {
+    e.preventDefault();
+    $(this).find('button.share-sitemap-button').html('GENERATING PDF...')
+    $(this).find('button.share-sitemap-button').attr('disabled', true)
+    $.ajax({
+      method: 'post',
+      url: this.action,
+      data: { include_comments: $(this).find('input.include_comments').prop('checked'), page_size:  $(this).find('input.page_size').val()}
+    }).always(function () {
+      $('.modal').modal('hide');
+      $('.sitemap-share-modal').find('form.generate_pdf_link button.share-sitemap-button').html('CREATE PDF')
+      $('.sitemap-share-modal').find('form.generate_pdf_link button.share-sitemap-button').attr('disabled', false)
+    }).done(function () {
+      $.when( window.location = this.url.replace('generate_pdf', 'download_pdf') + '?' + this.data ).then(function( data, textStatus, jqXHR ) {
+        $('.flash-message').html('<div class=flash><div class=message success>PDF successfully downloaded</div></div>');
+      });
+    }).fail(function () {
+      $('.flash-message').html('<div class=flash><div class=message alert>Something went wrong.</div></div>');
+    })
+  });
+  this.sitemapShareModal.find('form.generate_png_link').on('submit', function (e) {
+    e.preventDefault();
+    $(this).find('button.share-sitemap-button').html('GENERATING PNG...')
+    $(this).find('button.share-sitemap-button').attr('disabled', true)
+    $.ajax({
+      method: 'get',
+      url: this.action
+    }).always(function () {
+      $('.modal').modal('hide');
+      $('.sitemap-share-modal').find('form.generate_png_link button.share-sitemap-button').html('CREATE PNG')
+      $('.sitemap-share-modal').find('form.generate_png_link button.share-sitemap-button').attr('disabled', false)
+    }).done(function () {
+      $.when( window.location = this.url.replace('generate_png', 'download_png') ).then(function( data, textStatus, jqXHR ) {
+        $('.flash-message').html('<div class=flash><div class=message success>PNG successfully downloaded</div></div>');
+      });
+    }).fail(function () {
+      $('.flash-message').html('<div class=flash><div class=message alert>Something went wrong.</div></div>');
+    })
+  });
 
   this.newSitemap.on('click', _this.newSitemapLink, function() {
     if($(this).find(_this.newSitemapLink).data('allow-more-sitemaps') == 'yes') {
@@ -55,10 +96,18 @@ Sitemaps.prototype.bindEvents = function() {
     _this.sitemapShareModal.modal('show')
   })
 
+  $('.export-list li').on('click',function (e) {
+    $('form.pdf-export input.page_size').val($(this).data('page-size'))
+  })
+
   $('body').on('click', '.copy-link-button', function(e) {
     _this.copyUrl();
-    $(this).html('Copied');
-  })
+    $(this).addClass('copied').html('SHARE LINK COPIED');
+  });
+
+  if(!$('.sitemap-share-modal').hasClass('in')) {
+    $('.copy-link-button').removeClass('copied')
+  }
 
   this.shareMethodTabs.on('click', 'li', function(e) {
     $(this).addClass('active')
@@ -92,9 +141,13 @@ Sitemaps.prototype.bindEvents = function() {
     }
   });
 
-  $('.share-emails-input').tagit({
+  this.shareEmailsInputTags.tagit({
+    placeholderText: 'Enter their emails seperated by commas.',
     afterTagAdded: function(event, ui) {
       _this.afterTagAdded(event, ui);
+    },
+    afterTagRemoved: function (event, ui) {
+      _this.afterTagRemoved(event, ui)
     }
   })
 };
@@ -102,9 +155,18 @@ Sitemaps.prototype.bindEvents = function() {
 Sitemaps.prototype.afterTagAdded = function(event, ui) {
   var tagValue = $(ui.tag.find('span')[0]).html();
   if (!this.isEmail(tagValue)){
-    $('.share-emails-input').tagit("removeTagByLabel", tagValue);
+    this.shareEmailsInputTags.tagit("removeTagByLabel", tagValue);
+  }
+  this.shareEmailsInputTags.data("ui-tagit").tagInput.attr('placeholder', '')
+};
+
+
+Sitemaps.prototype.afterTagRemoved = function(event, ui) {
+  if(this.shareEmailsInputTags.tagit('assignedTags').length == 0) {
+    this.shareEmailsInputTags.data("ui-tagit").tagInput.attr('placeholder', 'Enter their emails seperated by commas.')
   }
 };
+
 
 Sitemaps.prototype.isEmail = function(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -122,25 +184,39 @@ Sitemaps.prototype.copyUrl = function() {
 };
 
 Sitemaps.prototype.configureSitemapShareModal = function(obj) {
+  var _this = this;
   if(obj.data('url')) {
     this.sitemapShareModal.find('#sitemap-public-share-url span').html(obj.data('url'))
     this.sitemapShareModal.data('sitemap-id', obj.data('sitemap-id'));
-    if(obj.data('shared-users').length > 0) {
-      var sharedUserEmails = obj.data('shared-users').split(',');
-      this.addSharedUsersToModal(sharedUserEmails)
+    this.sitemapShareModal.find('.warning-message').data('level-one-pages', obj.attr("data-level-one-pages"));
+    if(obj.attr("data-level-one-pages") > 15){
+      this.sitemapShareModal.find('.warning-message span.warning-size').html('A2');
+      this.sitemapShareModal.find('.warning-message span.warning-pages').html(15);
+      this.sitemapShareModal.find('.warning-message').removeClass('hide');
+    } else if(obj.attr("data-level-one-pages") > 10){
+      this.sitemapShareModal.find('.warning-message').removeClass('hide');
+    } else{
+      this.sitemapShareModal.find('.warning-message').addClass('hide');
     }
+
+    this.sitemapShareModal.find('form.generate_pdf_link').attr('action', obj.data('pdf-url'));
+    this.sitemapShareModal.find('form.generate_png_link').attr('action', obj.data('png-url'));
+    var sharedUserEmails = obj.data('shared-users').split(',');
+    this.addSharedUsersToModal(sharedUserEmails)
   }
   $('.share-emails-input').tagit('removeAll');
+  $('.share-comment-input').find('.emoji-wysiwyg-editor').html('');
   this.sitemapShareModal.find('.share-method-tabs li:first').click()
   this.sitemapShareModal.find('.share-method-tabs .url').click()
-  this.sitemapShareModal.find('.copy-link-button').html('Copy');
+  this.sitemapShareModal.find('.copy-link-button').html('Copy the share link');
   this.sitemapShareModal.find('a.demo-share').attr('href', obj.data('url'))
 };
 
 Sitemaps.prototype.addSharedUsersToModal = function(sharedUserEmails) {
   var sharedUsersDiv = this.sitemapShareModal.find('.already-emailed')
+  this.sitemapShareModal.find('.share-personal-message').val('')
   sharedUsersDiv.html('');
-  sharedUsersDiv.append('<p>These people have already been emailed</p>');
+  sharedUsersDiv.append('<p>These people have already been emailed:</p>');
   var userList = $('<ul>')
   sharedUserEmails.forEach(function(user_email, index) {
     var classForListItem = (index > 1 ? 'extra-shared-users hide' : '')
@@ -201,7 +277,8 @@ $(function() {
     copyButtonLink: $('.copy-link-button'),
     shareMethodTabs: $('.share-method-tabs'),
     draggableSitemaps: $('.sitemap-container').not('.new-sitemap'),
-    searchSitemapInput: $('.search-sitemap')
+    searchSitemapInput: $('.search-sitemap'),
+    shareEmailsInputTags: $('.share-emails-input')
   }
   var sitemaps = new Sitemaps(options);
   sitemaps.init();

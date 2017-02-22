@@ -9,60 +9,164 @@
         </button>
         <h4 class="modal-title">Share Your Sitemap</h4>
         <ul class='share-method-tabs'>
-          <li class='animated-tab active' data-target='url'>
-            <span class="icon-url"></span> URL
+          <li class='animated-tab share-by-email' data-target='email'>
+            <div class="icon-container">
+              <span class="email-icon"></span>
+            </div>
+            <div>Email</div>
           </li>
-          <li class='animated-tab' data-target='email'>
-            <span class="icon-email"></span> Email
+          <li class='animated-tab active share-by-url' data-target='url'>
+            <div class="icon-container">
+              <span class="share-link-icon"></span>
+            </div>
+            <div>Share Link</div>
+          </li>
+          <li class="animated-tab share-by-pdf" data-target="pdf">
+            <div class="icon-container">
+              <span class="pdf-icon"></span>
+            </div>
+            <div>PDF</div>
+          </li>
+          <li class="animated-tab share-by-image" data-target="image">
+            <div class="icon-container">
+              <span class="image-icon"></span>
+            </div>
+            <div>Image</div>
           </li>
           <li class="animated-bar-share"></li>
         </ul>
       </div>
-      <div class='modal-body url sitemap-share-method'>
-        <div>
-          <p class="m-b-2">Here's your sharing link.</p>  <span class='hide'>'</span>
-          <p class="m-b-20">Anyone with the link can view the sitemap.</p>
-          <div class="public-url clearfix">
-            <span id='sitemap-public-share-url' class='backend'>
-              <span class="truncate">
-                <% if @sitemap %>
-                  <%= @sitemap.public_share_url %>
-                <% end %>
-              </span>
-            </span>
-            <button class='btn copy-link-button'>Copy</button>
-          </div>
-          <a class="demo-share" href='' target='_blank'>Here's what they'll see.</a>
-        </div>
-      </div>
+
       <div class='for-email email sitemap-share-method hide'>
-        <div>
-          <p>Enter the emails of the people you want to invite to view the sitemap. We'll send them a beautiful email with the link. They'll also be able to add comments. To invite co-workers who can edit things, go to the sitemap editor.</p>
-          <div>
+        <div class="text-center">
+          <p class="invite-text">Invite as many people as you want to view and comment on the sitemap. We’ll email them with the sitemap share link.</p>
+          <div class="email-inner">
             <div>
-              <input type='text' class='share-emails-input' name='emails' id='emails' ref='emails'></input>
+              <input type='text' class='share-emails-input' name='emails' id='emails' ref='emails'>
             </div>
             <div class="already-emailed">
               <%= render 'sitemaps/sitemap_share_users_list' %>
             </div>
-            <div class="message-preview hidden">
-              <p></p>
-              <a class='edit-message-link'>Edit Message</a>
-            </div>
             <div class="share-comment-input comment-input">
-              <textarea placeholder='Include an optional personal message.' class='custom-message share-personal-message emoji-decorated' id='share-personal-message' data-send='false' data-emojiable='true' data-emoji-input='unicode'></textarea>
-              <div class="emoji-section add-remove-comment">
-                <a href="#" class="cursor add add-message add-share-message">Add my message</a> or
-                <a href="javascript:void(0);" class="clear-text cursor cancel cancel-message"> Cancel</a>
-              </div>
+              <textarea placeholder='Include an optional personal message.' class='custom-message share-personal-message emoji-decorated' id='share-personal-message' data-send='true' data-emojiable='true' data-emoji-input='unicode'></textarea>
+
             </div>
             <div class="bottom-btns text-center">
-              <a href="#sitemap-share-preview-modal" data-dismiss="modal" data-toggle='modal' class="btn btn-grey btn-modal-open">Here's what they'll see</a>
-              <button class='btn btn-pink-hover share-sitemap-button'>Send the email</button>
+              <div>
+                <a href="#sitemap-share-preview-modal" data-dismiss="modal" data-toggle='modal' class="btn-modal-open">Here's what we'll send them</a>
+              </div>
+              <button class='btn share-sitemap-button'>Send the email</button>
             </div>
           </div>
         </div>
       </div>
+      <div class='modal-body url sitemap-share-method'>
+        <div>
+          <p class="m-b-10 text-center">Share this unique URL with anyone to allow them to view the <br> sitemap, and after they identify themselves, they can add <br> comments too.</p>
+          <div class="public-url clearfix">
+            <span id='sitemap-public-share-url' class='backend text-center'>
+              <% if @sitemap %>
+                <%= @sitemap.public_share_url %>
+              <% end %>
+            </span>
+            <div class="text-center sitemap-small-image">
+              <img src='/assets/url-image.png' alt=" " />
+              <div>
+                <a class="demo-share" href='' target='_blank'>Here's what they'll see.</a>
+              </div>
+            </div>
+            <div class="bottom-btns text-center">
+              <button class='btn share-sitemap-button copy-link-button'>Copy the share link</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-body sitemap-share-method pdf hide">
+        <ul class="export-list clearfix m-b-35">
+          <li class="a4 active" data-page-size='A4'>
+            <figure class="export-type-image">
+              <img src='/assets/a4.png' alt=" " align="bottom" />
+            </figure>
+            <div class="export-type-description">
+              <span class='page-size'>A4</span>
+              <span>297 x 210mm</span>
+            </div>
+          </li>
+          <li class="a3" data-page-size='A3'>
+            <figure class="export-type-image">
+              <img src='/assets/a3.png' alt=" " />
+            </figure>
+            <div class="export-type-description">
+              <span class='page-size'>A3</span>
+              <span>420 x 297mm</span>
+            </div>
+          </li>
+          <li class="a2" data-page-size='A2'>
+            <figure class="export-type-image">
+              <img src='/assets/a2.png' alt=" " />
+            </figure>
+            <div class="export-type-description">
+              <span class='page-size'>A2</span>
+              <span>594 x 420mm</span>
+            </div>
+          </li>
+        </ul>
+          <p class="text-center warning-message  <%=  'hide'  %>">
+            You have more than
+            <span class='warning-pages'>
+              <%=  '10'  %>
+            </span> level 1 screens. We recommend exporting your PDF in <br>
+            <span class='warning-size'>
+              <%=  'A3'  %>
+            </span>.
+        </p>
+        <%= form_tag(@sitemap.present? ? generate_pdf_sitemap_url(@sitemap) :'#', method: "post", class: "pdf-export generate_pdf_link") do %>
+          <div class="include-comments">
+            <label>
+              <input type="hidden" class='page_size' name="page_size" value="A4">
+              <input type="checkbox" class="include_comments" name="include_comments">
+              <div class="include-comments-radio">
+              </div>
+            </label>
+            <span class="text-uppercase">INCLUDE COMMENTS IN THE EXPORT</span>
+            <span class="mini">This will add all comments as additional pages</span>
+          </div>
+          <div class="bottom-btns text-center">
+            <%= button_tag( "Create pdf", class: 'btn share-sitemap-button') %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="modal-body sitemap-share-method image hide">
+        <p class="text-center m-b-20">Sitemaps with sections, or larger sitemaps will generate multiple image <br>files. These will download as a .zip file.</p>
+        <ul class="export-list for-images clearfix">
+          <li class="white-bg active">
+            <figure class="export-type-image">
+              <img src='/assets/white-bg.png' alt=" " align="bottom" />
+            </figure>
+            <div class="export-type-description">
+              <span>White</span>
+              <span>.PNG file with a white background</span>
+            </div>
+          </li>
+          <!-- <li class="transparent-bg">
+            <figure class="export-type-image">
+              <img src='/assets/transparent-bg.png' alt=" " />
+            </figure>
+            <div class="export-type-description">
+              <span>Transparent</span>
+              <span>.PNG file with a white background</span>
+            </div>
+          </li> -->
+        </ul>
+        <div class="bottom-btns text-center">
+        <%= form_tag(@sitemap.present? ? generate_png_sitemap_url(@sitemap) :'#', method: "get", class: "pdf-export generate_png_link") do %>
+            <%= button_tag( "Create Image File", class: 'btn share-sitemap-button') %>
+        <% end %>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

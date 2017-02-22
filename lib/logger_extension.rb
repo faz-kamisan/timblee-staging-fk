@@ -12,4 +12,17 @@ class LoggerExtension
     stripe_logger.info "\n#{ ':' * 140 }\n#{ ':' * 140 }\n"
   end
 
+
+  def self.export_logger
+    @export_logger ||= Logger.new("#{Rails.root}/log/export.log")
+  end
+
+  def self.export_log(text)
+    export_logger.info "\n#{ text }\n"
+  end
+
+  def self.export_highlight
+    export_logger.info "\n#{ ':' * 140 }\n#{ ':' * 140 }\n"
+  end
+
 end

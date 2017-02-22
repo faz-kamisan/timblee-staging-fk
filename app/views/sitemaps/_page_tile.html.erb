@@ -1,0 +1,25 @@
+<% if(page.children.where.not(state: :archived).count > 0) %>
+    <div class=" page-tile <%= ((level == 0) && (page.children.where.not(state: :archived).count % 2 == 0)) ? 'even-tree' : 'odd-tree' + (((level > 4) && (page.alt_section_id)) ? " level-with-section" : "") %>">
+<%else%>
+    <div class=" page-tile <%= (((level > 4) && (page.alt_section_id)) ? " level-with-section" : "" ) %>">
+<% end %>
+
+        <div class="tile-top "></div>
+        <div class="tile-top-data ">
+          <div class="tile-name fittext"><span class="tile-number fittext"><%=sitemap_number%></span></div>
+          <% if page.alt_section_id && !(level == 0) %>
+            <span class="section-tag fittext">
+              section
+                <img src=<%= image_path("link.png")%> ></img>
+            </span>
+          <% end %>
+        </div>
+        <div class="tile-name-edit fittext"><div class=""> <%= page.name %></div></div>
+        <div class="tile-bottom "><span class="tile-id fittext">ID: <%= page.uid.to_s.length < 3 ? (('000' + page.uid.to_s)[-3,3]) : page.uid.to_s %></span>
+        </div>
+        <div class= " tile-right <%= page.page_type.icon_name %>"></div>
+      <% if page.children.where.not(state: :archived).count > 0 && level > 0 && (!page.alt_section_id) %>
+        <div class="collapse-open " ></div>
+      <% end %>
+
+    </div>

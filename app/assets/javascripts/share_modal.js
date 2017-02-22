@@ -11,28 +11,28 @@ var ShareModal = function(options) {
 
 ShareModal.prototype.bindEvents = function() {
   var _this = this;
-  this.addMessageLink.on('click', function() {
-    var message = _this.commentInputDiv.find('.emoji-wysiwyg-editor').html().trim()
-    if(message.length > 0) {
-      _this.inviteCustomMessage.data('send', true);
-      _this.inviteCustomMessage.val(message);
-      _this.messagePreview.find('p:first').html(message)
-      _this.messagePreview.removeClass('hidden')
-      _this.commentInputDiv.addClass('hidden')
-    }
-  })
-  this.clearMessageLink.on('click', function() {
-    _this.inviteCustomMessage.data('send', false);
-    _this.inviteCustomMessage.val('');
-    _this.commentInputDiv.find('.emoji-wysiwyg-editor').html('');
-    _this.messagePreview.find('p:first').html('')
-  })
-  this.editMessageLink.on('click', function() {
-    _this.inviteCustomMessage.data('send', false);
-    _this.messagePreview.find('p:first').html('')
-    _this.messagePreview.addClass('hidden')
-    _this.commentInputDiv.removeClass('hidden')
-  })
+  // this.addMessageLink.on('click', function() {
+  //   var message = _this.commentInputDiv.find('.emoji-wysiwyg-editor').html().trim()
+  //   if(message.length > 0) {
+  //     _this.inviteCustomMessage.data('send', true);
+  //     _this.inviteCustomMessage.val(message);
+  //     _this.messagePreview.find('p:first').html(message)
+  //     _this.messagePreview.removeClass('hidden')
+  //     _this.commentInputDiv.addClass('hidden')
+  //   }
+  // })
+  // this.clearMessageLink.on('click', function() {
+  //   _this.inviteCustomMessage.data('send', false);
+  //   _this.inviteCustomMessage.val('');
+  //   _this.commentInputDiv.find('.emoji-wysiwyg-editor').html('');
+  //   _this.messagePreview.find('p:first').html('')
+  // })
+  // this.editMessageLink.on('click', function() {
+  //   _this.inviteCustomMessage.data('send', false);
+  //   _this.messagePreview.find('p:first').html('')
+  //   _this.messagePreview.addClass('hidden')
+  //   _this.commentInputDiv.removeClass('hidden')
+  // })
   this.shareSitemapButton.on('click', function() {
     var tags = $('.share-emails-input').val().split(',').join(' ')
 

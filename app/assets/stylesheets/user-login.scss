@@ -139,6 +139,12 @@
   }
 }
 
+#sitemap-share-modal {
+  .modal-dialog {
+    @include alignCenter(-372px, -355px); 
+  }
+}
+
 #sucessful_reset_password_sent_modal {
   .modal-dialog {
     @include alignCenter(-310px, -116px);

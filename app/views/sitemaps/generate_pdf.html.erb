@@ -1,0 +1,82 @@
+<title><%=@sitemap.name%></title>
+<% @sitemap.sections.order(:id).each do |section| %>
+  <div id="section-<%= section.id %>" class="section-container-wrapper <%= (section == @sitemap.sections.order(:id).last && @sitemap.footer_pages.where.not(state: :archived).blank?) ? '' : 'pb_after'%> page-container-wrapper" data-width='<%= @width[section.id] %>' data-zoom='<%=@zoom[section.id]%>'>
+      <% params[:section] = section.default? ? @sitemap.name : section.name %>
+      <%= render file: 'sitemaps/header' %>
+      <%= render partial: 'page_container', locals: {page: section.root_page, section: section, level: 0} %>
+  </div>
+  <% if @sitemap.footer_pages.where.not(state: :archived).present? && section.default? %>
+    <div class="scrollable-div-footer <%= @sitemap.sections.count > 1 ? 'pb_after' : ''%>" data-width='<%= @width[:footer] %>' data-zoom='<%=@zoom[:footer]%>'>
+    <% params[:section] = 'Footer'%>
+    <%= render file: 'sitemaps/header' %>
+      <div class="sitemap-footer">
+        <ul class="footer-page-list">
+          <% @sitemap.footer_pages.where.not(state: :archived).each do |page| %>
+            <li class="footer-page">
+              <%= render partial: 'page_tile', locals: {page: page, sitemap_number: nil, level: 0} %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+<% if params[:include_comments] == 'true' && (@sitemap.page_comments.count + @sitemap.comments.count) > 0 %>
+  <div class="comments pb_before">
+    <% params[:section] = 'Comments' %>
+    <%= render file: 'sitemaps/header' %>
+
+    <div class="comments-holder">
+      <div class="inner-comment-holder">
+        <div class="full-page-comments">
+          <div class="comment-row">
+            <div class="pdf-page-name">
+              <strong>General Comments</strong>
+            </div>
+            <div class="text-right pdf-page-id">
+            </div>
+          </div>
+
+          <% @sitemap.comments.each do |comment| %>
+            <div class="pdf-comment">
+              <div class="inline-container">
+                <h3 class="comment-person"><b><%= comment.cached_commenter.full_name %></b></h3>
+                <span class="comment-date"><%= comment.created_at.strftime('%d %b %Y')%></span>
+              </div>
+              <p class="pbi_avoid message">
+                <%= Gemojione.replace_unicode_moji_with_images(comment.message.html_safe)%>
+              </p>
+              <%= image_tag(comment.cached_commenter.avatar_url, class: 'commenter-image')%>
+            </div>
+          <% end %>
+        </div>
+        <% @sitemap.page_comments.map(&:commentable).uniq.each do |page| %>
+          <div class="full-page-comments">
+            <div class="pdf-id"><%= @display_sitemap_page_number[page.id]%></div>
+            <div class="comment-row">
+              <div class="pdf-page-name">
+                <b><%= page.name %></b>
+              </div>
+              <div class="text-right pdf-page-id">
+                ID: <%= page.uid %>
+              </div>
+            </div>
+
+            <%page.comments.each do |comment|  %>
+              <div class="pdf-comment">
+              <%= image_tag(comment.cached_commenter.avatar_url, class: 'commenter-image')%>
+                <div class="inline-container">
+                  <h3 class="comment-person"><b><%= comment.cached_commenter.full_name %></b></h3>
+                  <span class="comment-date"><%= comment.created_at.strftime('%d %b %Y')%></span>
+                </div>
+                <p class="pbi_avoid message">
+                  <%= Gemojione.replace_unicode_moji_with_images(comment.message.html_safe)%>
+                </p>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

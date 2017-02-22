@@ -1,0 +1,18 @@
+  <div class="page-container-wrapper">
+      <% params[:section] = section.default? ? @sitemap.name : section.name %>
+      <%= render file: 'sitemaps/header' %>
+      <%= render partial: 'page_container', locals: {page: section.root_page, section: section, level: 0} %>
+  </div>
+  <% if @sitemap.footer_pages.present? && section.default? %>
+    <div class="scrollable-div-footer">
+      <div class="sitemap-footer">
+        <ul class="footer-page-list">
+          <% @sitemap.footer_pages.each do |page| %>
+            <li class="footer-page">
+              <%= render partial: 'page_tile', locals: {page: page, sitemap_number: nil, level: 0} %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
