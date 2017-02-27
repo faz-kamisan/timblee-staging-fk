@@ -2322,11 +2322,7 @@ body {
       > .page-tile {
         margin-bottom: 20px;
         &:before {
-          bottom: -20px;
-          width: 1px;
-          height: 20px;
-          border-left: 1px dashed #e3e5e7;
-          background: $transparent;
+          display: none;
         }
       }
     }
