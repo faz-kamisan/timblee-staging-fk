@@ -39,35 +39,12 @@
               </div>
             </div>
           </div>
-          <div class="col-xs-6 text-center">
-            <h3>You're adding <span class='added-pro-users-count' data-total-users-count=<%= current_business.users.count %>>0 users</span></h3>
-            <% if current_business.is_pro_plan? %>
-              <% if current_business.in_trial_period? %>
-                <p>
-                  On <%= current_business.trial_end_at.strftime('%d %b %Y') %>, once your trial finishes, your card ending in <span class='card-last4'><%= @card.last4 %></span> will be charged:
-                </p>
-              <% else %>
-                <p>
-                  You'll be charged $12 for each new user on a pro-rata basis for this billing cycle as part of your next payment. After that, your new monthly charge will be:
-                </p>
-              <% end %>
-            <% else %>
-              <% if current_business.in_trial_period? %>
-                <p class='trial-starter-user-on-invite'>
-                  On <%= current_business.trial_end_at.strftime('%d %b %Y') %>, once your trial finishes, if you switch to the Pro plan, you will be charged:
-                </p>
-                <p class='trial-starter-user-on-switch-plan hide'>
-                  On <%= current_business.trial_end_at.strftime('%d %b %Y') %>, once your trial finishes, your card ending in <span class='card-last4'><%= @card.last4 if @card%></span> will be charged:
-                </p>
-              <% else %>
-                <p>
-                  You'll be charged $12 for each new user on a pro-rata basis immediately. Your new monthly charge is:
-                </p>
-              <% end %>
-            <% end %>
-
-            <h1>$<span class='new-pro-charges'><%= Business.monthly_charge(current_business.users.count) %></span></h1>
-            <p>That's $19 for the first user + $12 for each <br> additional user. All prices are in USD.</p>
+          <div class="col-xs-6 text-center avatars-group">
+            <%= image_tag('avatars/avatar_5.png') %>
+            <%= image_tag('avatars/avatar_13.png') %>
+            <br>
+            <%= image_tag('avatars/avatar_8.png') %>
+            <%= image_tag('avatars/avatar_4.png') %>
           </div>
           <div class="col-xs-12">
             <div class="modal-button text-center">

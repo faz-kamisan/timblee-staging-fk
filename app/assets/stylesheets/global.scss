@@ -649,3 +649,13 @@ ul.tagit input[type="text"] {
 .m-t-1 {
   margin-top: 1px!important;
 }
+
+.avatars-group {
+  padding-top: 42px;
+  min-height: 265px;
+  img {
+    width: 90px;
+    height: 90px;
+    margin: 7px 11px;
+  }
+}
