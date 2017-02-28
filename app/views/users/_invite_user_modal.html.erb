@@ -40,6 +40,13 @@
             </div>
           </div>
           <% if current_business.in_trial_period? %>
+            <div class="col-xs-6 text-center avatars-group">
+              <%= image_tag('avatars/avatar_5.png') %>
+              <%= image_tag('avatars/avatar_13.png') %>
+              <br>
+              <%= image_tag('avatars/avatar_8.png') %>
+              <%= image_tag('avatars/avatar_4.png') %>
+            </div>
           <% else %>
             <div class="col-xs-6 text-center">
               <h3>You're adding <span class='added-pro-users-count' data-total-users-count=<%= current_business.users.count %>>0 users</span></h3>
