@@ -9,7 +9,7 @@ class Business < ActiveRecord::Base
   has_many :cards, dependent: :destroy
   has_one :current_subscription, ->{ where('subscriptions.end_at >= :today', { today: Time.current }) }, class_name: :Subscription
   has_one :active_card, -> { order(created_at: :desc) }, class_name: :Card
-
+  after_create :create_initial_subscription
   after_commit :create_default_sitemaps, on: :create
 
   mount_uploader :logo, AvatarUploader
@@ -19,11 +19,15 @@ class Business < ActiveRecord::Base
   end
 
   def account_locked?
-    !in_trial_period? && is_starter_plan? && !allow_downgrade_to_starter?
+    !has_plan || !(in_trial_period? || cards.present?)
   end
 
   def no_of_users
     users.count
+  end
+
+  def free_sitemaps_count_in_words
+    "#{free_sitemaps_count.humanize} #{'sitemap'.pluralize(free_sitemaps_count)}"
   end
 
   def active_subscription
@@ -71,7 +75,7 @@ class Business < ActiveRecord::Base
   end
 
   def allow_downgrade_to_starter?
-    in_trial_period? || (users.count == 1 && sitemaps.count <= 3)
+    in_trial_period? || (users.count == 1 && sitemaps.count <= free_sitemaps_count)
   end
 
   def monthly_charge
@@ -83,7 +87,7 @@ class Business < ActiveRecord::Base
   end
 
   def allow_more_sitemaps
-    if is_pro_plan? || sitemaps.count < 3 || (in_trial_period? && !has_plan)
+    if is_pro_plan? || sitemaps.count < free_sitemaps_count || (in_trial_period? && !has_plan)
       'yes'
     elsif in_trial_period?
       'warn'
@@ -93,7 +97,7 @@ class Business < ActiveRecord::Base
   end
 
   def allow_more_sitemaps?
-    is_pro_plan? || in_trial_period? || sitemaps.count < 3
+    is_pro_plan? || in_trial_period? || sitemaps.count < free_sitemaps_count
   end
 
   def self.monthly_charge(no_of_users)
@@ -123,4 +127,11 @@ class Business < ActiveRecord::Base
     end
   end
 
+  private
+
+    def create_initial_subscription
+      assign_attributes(is_pro: true, has_plan: true)
+      subscriptions.build(no_of_users: 1, quantity: Business.monthly_charge(1), user: owner)
+      StripePaymentService.new(self).create_customer_with_initial_subscription
+    end
 end

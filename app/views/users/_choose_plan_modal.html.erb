@@ -30,12 +30,10 @@
           </div>
           <div class="starter-plan-benefits plan-benefits">
             <h1 class="choose-plan-heading">Starter</h1>
-            <h3>Business owners and those looking to plan the <br> occasional web project.</h3>
+            <h3>If you're planning a simple site as a<br> one-off.</h3>
             <ul>
               <li>One user</li>
-              <li>Unlimited guests</li>
-              <li>Three sitemaps</li>
-              <li>All features</li>
+              <li><%= current_business.free_sitemaps_count_in_words.capitalize %></li>
             </ul>
             <p>Free</p>
             <% if current_business.is_starter_plan? %>

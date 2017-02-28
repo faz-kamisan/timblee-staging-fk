@@ -46,6 +46,17 @@ class StripePaymentService
     LoggerExtension.stripe_log "NEW SUBSCRIPTION: #{@current_business.reload.current_subscription.inspect}"
   end
 
+  def create_customer_with_initial_subscription
+    @customer = Stripe::Customer.create(
+      email:  @current_business.owner.email
+    )
+    LoggerExtension.stripe_log "CUSTOMER CREATED SUCCESSFULLY: #{customer.inspect}"
+    @current_business.update_column(:stripe_customer_id, @customer.id)
+    create_subscription
+    @current_business.save!
+    LoggerExtension.stripe_log "NEW SUBSCRIPTION: #{@current_business.reload.current_subscription.inspect}"
+  end
+
   private
 
     def settle_all_balances

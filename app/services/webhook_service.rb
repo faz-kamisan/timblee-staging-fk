@@ -37,6 +37,8 @@ class WebhookService
     end
 
     def charge_succeeded
+      @business.update(has_plan: true, is_pro: true)
+      LoggerExtension.stripe_log "PAYMENT SUCCESSFULL Business: #{@business.reload.inspect}\n\n"
       PaymentNotifier.delay.success(@business.owner, @event)
     end
 
@@ -45,11 +47,18 @@ class WebhookService
     end
 
     def charge_failed
+      lock_account
       PaymentNotifier.delay.failure(@business.owner, @event)
     end
 
     def customer_subscription_updated
       renew_subscription if @event.data.object.quantity > 0
+   end
+
+   def lock_account
+    @business.update(has_plan: false, is_pro: false)
+    LoggerExtension.stripe_log "Card: #{@business.cards.last.inspect}\n\n"
+    LoggerExtension.stripe_log "Account Locked due to charge_failed. Business: #{@business.inspect}\n\n"
    end
 
 
