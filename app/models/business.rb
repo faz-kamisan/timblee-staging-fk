@@ -19,11 +19,15 @@ class Business < ActiveRecord::Base
   end
 
   def account_locked?
-    !has_plan || !(in_trial_period? || cards.present?)
+    !in_trial_period? && !(has_plan && cards.present?)
   end
 
   def no_of_users
     users.count
+  end
+
+  def in_trial_without_plan_for_less_than_10_days?
+    in_trial_period_without_any_card? && trial_end_at < Time.current + 10.days
   end
 
   def free_sitemaps_count_in_words
@@ -60,6 +64,10 @@ class Business < ActiveRecord::Base
 
   def in_trial_period_without_any_plan?
     in_trial_period? && !has_plan
+  end
+
+  def in_trial_period_without_any_card?
+    in_trial_period? && !cards.present?
   end
 
   def plan_name

@@ -44,6 +44,7 @@ Rails.application.config.assets.precompile += %w(
   canvas_export_png.scss
   pdf.js
   png.js
+  banner.js
 )
 # Add client/assets/ folders to asset pipeline's search path.
 # If you do not want to move existing images and fonts from your Rails app

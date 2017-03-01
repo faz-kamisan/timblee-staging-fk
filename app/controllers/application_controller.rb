@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user!, unless: :proxy_login?
   before_filter :load_notifications, :load_card, if: :current_user
   before_filter :lock_business_after_trial_end, if: :current_user
+  before_filter :set_show_expiry_banner, if: :current_user
 
   def current_user_with_proxy_login
     current_proxy_user || current_user_without_proxy_login
@@ -25,6 +26,15 @@ class ApplicationController < ActionController::Base
   def current_business
     current_user.try(:business)
   end
+
+  def set_show_expiry_banner
+    if current_business.in_trial_without_plan_for_less_than_10_days? && current_user.is_admin?
+      cookies[:show_expiry_banner] ||= 'true'
+    else
+      cookies.delete(:show_expiry_banner)
+    end
+  end
+
 
   def after_sign_in_path_for(resource)
     home_dashboard_path
@@ -68,9 +78,9 @@ class ApplicationController < ActionController::Base
   def lock_business_after_trial_end
     if !current_user.is_super_admin? && current_business.account_locked?
       if request.xhr?.nil?
-        redirect_to billing_settings_users_path, alert: t('account_locked', scope: :flash)
+        redirect_to billing_settings_users_path, alert: t('account_locked', scope: :flash, free_sitemaps_count_in_words: current_business.free_sitemaps_count_in_words)
       else
-        flash.now[:alert] = t('account_locked', scope: :flash)
+        flash.now[:alert] = t('account_locked', scope: :flash, free_sitemaps_count_in_words: current_business.free_sitemaps_count_in_words)
         render 'shared/show_flash'
       end
     end

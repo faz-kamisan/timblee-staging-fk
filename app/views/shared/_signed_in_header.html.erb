@@ -1,30 +1,43 @@
 <section class="expiring-header">
-  <!-- Admin User Banner Content -->
-  <div class="clearfix">
-    <div class="pull-left">
-      <p> <%= image_tag('scary-emoji.png') %>
-      Your free trial is over. Please enter your billing info. Unlimited sitemaps are only $19 per month for one user.</p>
-    </div>
-    <div class="pull-right text-right">
-      <a href="#" class="btn btn-grey btn-pink">Add Billing info</a>
-      <a href="#" class="btn btn-grey">Downgrade</a>
-    </div>
-  </div>
+  <% if current_business.account_locked? %>
+    <!-- Admin User Banner Content -->
+    <% if current_user.is_admin? %>
+      <div class="clearfix">
+        <div class="pull-left">
+          <p> <%= image_tag('scary-emoji.png') %>
+          Your free trial is over. Please enter your billing info. Unlimited sitemaps are only $19 per month for one user.</p>
+        </div>
+        <div class="pull-right text-right">
+          <a data-toggle="modal" data-dismiss="modal" class="btn btn-grey btn-pink" href="#pro-plan-modal">Add Billing info</a>
+          <a data-toggle="modal" data-dismiss="modal" class="btn btn-grey" href="#starter-plan-modal">Downgrade</a>
+        </div>
+      </div>
+    <% else %>
+      <div class="clearfix">
+        <div class="pull-left">
+          <p> <%= image_tag('scary-emoji.png') %>
+          Your free trial is over. Please ask an admin on your account to enter billing details to continue. Unlimited sitemaps are only $19 per month for the first user, and $12 for each additional user.</p>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
   <!-- Admin User Banner Content -->
 
   <!-- Standard User Banner Content -->
-  <!-- <div class="clearfix">
+  <% if cookies[:show_expiry_banner] == 'true' %>
+  <div class="clearfix">
     <div class="pull-left">
       <p> <%= image_tag('scary-emoji.png') %>
-      Your free trial finishes in 10 days on 9 Dec 2016. Please add billing information now for uninterrupted access.</p>
+      Your free trial finishes in <%= "#{current_business.days_till_trial_end} #{'day'.pluralize(current_business.days_till_trial_end)}" %> on <%= current_business.trial_end_at.strftime('%d %b %Y') %>. Please add billing information now for uninterrupted access.</p>
     </div>
     <div class="pull-right text-right">
-      <a href="#" class="btn btn-grey btn-white">Add billing info</a>
+      <a data-toggle="modal" data-dismiss="modal" class="btn btn-grey btn-white" href="#pro-plan-modal">Add billing info</a>
       <a href="#">
         <span class="icon icon-close"></span>
       </a>
     </div>
-  </div> -->
+  </div>
+  <% end %>
   <!-- Standard User Banner Content -->
 </section>
 
@@ -145,7 +158,7 @@
 
 </header>
 <div class="hide business-info" data-business-id="<%=current_business.id%>"></div>
-<%= javascript_include_tag('sitemaps', 'jump_to', 'notification', 'invitations', 'team', 'intercom') %>
+<%= javascript_include_tag('sitemaps', 'jump_to', 'notification', 'invitations', 'team', 'intercom', 'banner') %>
 
 <%= render 'sitemaps/sitemap_error_modal'%>
 <%= render 'sitemaps/sitemap_warning_modal'%>

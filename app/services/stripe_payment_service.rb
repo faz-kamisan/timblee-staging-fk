@@ -65,7 +65,7 @@ class StripePaymentService
       if upcoming_invoice.total > 0
         charge_customer(upcoming_invoice.total)
 
-      elsif upcoming_invoice.total < 0
+      elsif upcoming_invoice.total < 0 && upcoming_invoice.charge
         refund_customer(upcoming_invoice.total.abs)
       end
     end
