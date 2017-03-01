@@ -1,8 +1,8 @@
 /* Header */
 .with-dark-header {
   .main-header {
-    top: 64px ; 
-  }  
+    top: 64px ;
+  }
 }
 
 .main-header {
@@ -331,6 +331,7 @@
 
 .expiring-header {
   height: 64px;
+  z-index: 20;
   background: #262B30;
   position: fixed;
   top: 0;

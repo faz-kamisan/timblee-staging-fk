@@ -17,7 +17,7 @@ $(function() {
     flashDiv: $('.flash-message'),
     closeBtn : $('.close')
   },
-  flashTimer = $('.flash_message').html() === FLASH_FOR_TRIAL_OVER ? 30000 : 5000,
+  flashTimer = ($('.flash_message').html() && $('.flash_message').html().substr(0,200)) === FLASH_FOR_TRIAL_OVER.substr(0,200) ? 30000 : 5000,
   flash = new Flash(options);
   $('body').on('DOMNodeInserted', '.flash', function () {
     var $this = $(this)

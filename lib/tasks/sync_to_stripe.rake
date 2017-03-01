@@ -6,6 +6,8 @@ namespace :sync_to_stripe do
         business.assign_attributes(is_pro: true, has_plan: true)
         business.subscriptions.build(no_of_users: business.users.count, quantity: Business.monthly_charge(business.users.count), user: business.owner)
         StripePaymentService.new(business).create_customer_with_initial_subscription
+      else
+        business.update(has_plan: true)
       end
     end
   end

@@ -19,13 +19,15 @@ class StripePaymentService
     @customer = Stripe::Customer.retrieve(@current_business.stripe_customer_id)
     LoggerExtension.stripe_log "STRIPE CUSTOMER: #{@customer.inspect}"
     current_subscription = @customer.subscriptions.first
-    LoggerExtension.stripe_log "STRIPE SUBSCRIPTION TO BE DELETED: #{current_subscription.inspect}"
-    current_subscription.quantity = 0
-    current_subscription.save
-    settle_all_balances
-    LoggerExtension.stripe_log "OLD BALANCES SETTLED!!"
-    current_subscription.delete
-    LoggerExtension.stripe_log "STRIPE SUBSCRIPTION DELETED SUCCESSFULLY!"
+    if current_subscription
+      LoggerExtension.stripe_log "STRIPE SUBSCRIPTION TO BE DELETED: #{current_subscription.inspect}"
+      current_subscription.quantity = 0
+      current_subscription.save
+      settle_all_balances
+      LoggerExtension.stripe_log "OLD BALANCES SETTLED!!"
+      current_subscription.delete
+      LoggerExtension.stripe_log "STRIPE SUBSCRIPTION DELETED SUCCESSFULLY!"
+    end
   end
 
   def update_subscription

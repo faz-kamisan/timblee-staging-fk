@@ -19,15 +19,15 @@ class Business < ActiveRecord::Base
   end
 
   def account_locked?
-    !in_trial_period? && !(has_plan && cards.present?)
+    !has_plan || (!in_trial_period? && is_pro && !cards.present?) || (!in_trial_period? && is_starter_plan? && !allow_downgrade_to_starter?)
   end
 
   def no_of_users
     users.count
   end
 
-  def in_trial_without_plan_for_less_than_10_days?
-    in_trial_period_without_any_card? && trial_end_at < Time.current + 10.days
+  def in_trial_without_card_for_more_than_15_days?
+    in_trial_period_without_any_card? && Time.current > created_at + 15.days
   end
 
   def free_sitemaps_count_in_words
@@ -71,7 +71,7 @@ class Business < ActiveRecord::Base
   end
 
   def plan_name
-    is_pro ? Plan::PRO : has_plan ? Plan::STARTER : nil
+    is_pro ? Plan::PRO : has_plan ? Object.const_get("Plan::STARTER#{free_sitemaps_count}") : nil
   end
 
   def is_pro_plan?
@@ -79,7 +79,7 @@ class Business < ActiveRecord::Base
   end
 
   def is_starter_plan?
-    !is_pro && (has_plan || !in_trial_period?)
+    !is_pro && has_plan
   end
 
   def allow_downgrade_to_starter?

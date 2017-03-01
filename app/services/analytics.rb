@@ -67,7 +67,7 @@ class Analytics
   private
 
   def get_plan(subscription)
-    subscription.present? ? Plan::PRO : Plan::STARTER
+    subscription.present? ? Plan::PRO : Object.const_get("Plan::STARTER#{ business.free_sitemaps_count }")
   end
 
   def identify
