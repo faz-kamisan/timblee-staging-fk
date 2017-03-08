@@ -409,18 +409,37 @@ ul.tagit li.tagit-choice-editable {
 #invite-user-modal {
   .modal-button {
     padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  .modal-title {
+    color: $primaryGrey;
+  }
+  .modal-body {
+    background: $primaryWhite;
   }
   .btn-transparent {
     border-color: $primaryGreyLight;
     color: $primaryGreyLight;
   }
-  .btn {
-    line-height: 31px;
-    min-width: 200px!important;
-    height: 45px!important;
+  .btn-success {
+    line-height: 51px;
+    min-width: 301px!important;
+    height: 53px!important;
     margin-bottom: 0;
-    @extend .font-14;
+    font-size: 15px;
     text-transform: uppercase;
+    @include border-radius(6px);
+    border-color: #00af40;
+    color: #00af40;
+    background: $primaryWhite;
+    margin: 0;
+    font-weight: bold;
+    padding-top: 0;
+    padding-bottom: 0;
+    &:hover {
+      color: $primaryWhite;
+      background: #00af40;
+    }
   }
   .modal-message, p {
     color: $primaryGrey;
@@ -428,6 +447,20 @@ ul.tagit li.tagit-choice-editable {
   .btn-success:hover {
     border-color: #449D44;
   }
+  .preview-invite-button {
+    color: $primaryGrey;
+    font-size: 14px;
+    display: inline-block;
+    margin-top: 15px;
+    text-decoration: underline;
+    &:hover {
+      color: $primaryPink;
+    }
+  }
+}
+
+.p-r-60 {
+  padding-right: 60px!important;
 }
 
 .emoji-section {

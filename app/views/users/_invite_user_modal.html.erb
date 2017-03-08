@@ -8,12 +8,12 @@
             <%= image_tag('close-modal.svg', class: 'close-modal') %>
           </span>
         </button>
-        <h4 class="modal-title">Invite Your Team</h4>
-        <p class="modal-message">Timblee is designed for teams to work together. Invite team members to join <br> you so they can create and edit sitemaps, add comments, and more. Invite <br> unlimited team members free during the trial.</p>
+        <h4 class="modal-title">Invite your team for free :)</h4>
+        <p class="modal-message">Invite team members to join you so they can create and edit sitemaps, add comments, <br> and access all the features. Invite unlimited members free during your trial. After your trial <br> you can keep or delete users as you want.</p>
       </div>
       <div class="modal-body">
         <div class="row">
-          <div class="col-xs-6 p-t-b-20">
+          <div class="col-xs-6 p-t-b-20 p-r-60">
             <ul id="myTags" data-url='<%= validate_unique_email_users_path %>'>
             </ul>
             <div class='tags-error error-message'></div>
@@ -34,6 +34,7 @@
                 <% end %>
               </div>
             </div>
+            <a href="#invite-user-preview-modal" data-dismiss="modal" data-toggle='modal' class=" preview-invite-button btn-modal-open">Preview the email we'll send</a>
           </div>
           <% if current_business.in_trial_period? %>
             <div class="col-xs-6 text-center avatars-group">
@@ -61,8 +62,7 @@
             </div>
           <% end %>
           <div class="col-xs-12">
-            <div class="modal-button text-center">
-              <a href="#invite-user-preview-modal" data-dismiss="modal" data-toggle='modal' class="btn btn-transparent preview-invite-button btn-modal-open">Here's what we'll send</a>
+            <div class="modal-button text-center invite-users-btn-section">
               <a href="#" class="btn btn-success btn-last btn-border send-invite-button" data-dismiss="modal">
                 <% if current_business.in_trial_period? %>
                   INVITE USERS
