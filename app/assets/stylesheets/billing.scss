@@ -50,13 +50,14 @@
 }
 
 .plan-benefits {
-  float: left;
+  float: none;
   background: $primaryWhite;
   @include border-radius(6px);
   position: relative;
   border: 1px solid #f4f5f5;
   padding: 10px;
   text-align: center;
+  margin: 0 auto;
   @include box-shadow(1px, 1px, 2px, rgba(106, 113, 127, .2));
   .choose-plan-heading {
     @extend .font-24;
