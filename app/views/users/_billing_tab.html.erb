@@ -33,7 +33,10 @@
         </div>
         <div class="col-xs-3 text-right edit-info">
           <div class="edit">
-            <a href="#choose-plan-modal" data-toggle="modal" class="btn btn-pink btn-single"><%= current_business.has_plan? ? 'Edit Plan' : 'Choose a plan' %></a>
+            <!-- <a href="#choose-plan-modal" data-toggle="modal" class="btn btn-pink btn-single"><%= current_business.has_plan? ? 'Edit Plan' : 'Choose a plan' %></a> -->
+            <% unless current_business.has_plan? %>
+              <a href="#choose-plan-modal" data-toggle="modal" class="btn btn-pink btn-single"><%= 'Choose a plan' %></a>
+            <% end %>
           </div>
         </div>
       </div>

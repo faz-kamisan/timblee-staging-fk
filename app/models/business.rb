@@ -80,10 +80,12 @@ class Business < ActiveRecord::Base
 
   def is_starter_plan?
     !is_pro && has_plan
+    false
   end
 
   def allow_downgrade_to_starter?
     in_trial_period? || (users.count == 1 && sitemaps.count <= free_sitemaps_count)
+    false
   end
 
   def monthly_charge
@@ -102,6 +104,15 @@ class Business < ActiveRecord::Base
     else
       'no'
     end
+  end
+
+  def activate_pro_plan(user)
+    assign_attributes(is_pro: true, has_plan: true)
+    subscriptions.build(no_of_users: users.count, quantity: Business.monthly_charge(users.count), user: user)
+    StripePaymentService.new(self).update_subscription
+    LoggerExtension.stripe_log "Subscription on stripe created/updated successfully"
+    analytics.track_pro_plan(nil)
+
   end
 
   def allow_more_sitemaps?

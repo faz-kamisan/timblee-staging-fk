@@ -5,11 +5,11 @@
       <div class="clearfix">
         <div class="pull-left">
           <p> <%= image_tag('scary-emoji.png') %>
-          Your free trial is over. Please enter your billing info. Unlimited sitemaps are only $19 per month for one user.</p>
+          Your free trial is over. Please enter your billing info to keep using Timblee. Unlimited sitemaps are only $19 per month for one user.</p>
         </div>
         <div class="pull-right text-right">
-          <a data-toggle="modal" data-dismiss="modal" class="btn btn-grey btn-pink" href="#pro-plan-modal">Add Billing info</a>
-          <a data-toggle="modal" data-dismiss="modal" class="btn btn-grey" href="#starter-plan-modal">Downgrade</a>
+          <a data-toggle="modal" data-dismiss="modal" class="btn btn-grey btn-pink" href="#account-summary-modal">Add Billing info</a>
+          <a class='get-in-touch btn btn-grey' href="javascript:void(0)" data-user-email="<%= current_user.email %>">Request More Time</a>
         </div>
       </div>
     <% else %>
@@ -25,18 +25,18 @@
 
   <!-- Standard User Banner Content -->
   <% if cookies[:show_expiry_banner] == 'true' %>
-  <div class="clearfix">
-    <div class="pull-left">
-      <p> <%= image_tag('scary-emoji.png') %>
-      Your free trial finishes in <%= "#{current_business.days_till_trial_end} #{'day'.pluralize(current_business.days_till_trial_end)}" %> on <%= current_business.trial_end_at.strftime('%d %b %Y') %>. Please add billing information now for uninterrupted access.</p>
+    <div class="clearfix">
+      <div class="pull-left">
+        <p> <%= image_tag('scary-emoji.png') %>
+        Your free trial finishes in <%= "#{current_business.days_till_trial_end} #{'day'.pluralize(current_business.days_till_trial_end)}" %> on <%= current_business.trial_end_at.strftime('%d %b %Y') %>. Please add billing information now for uninterrupted access. Unlimited sitemaps are only $19 per month.</p>
+      </div>
+      <div class="pull-right text-right">
+        <a data-toggle="modal" data-dismiss="modal" class="btn btn-grey btn-white" href="#account-summary-modal">Add billing info</a>
+        <a href="#">
+          <span class="icon icon-close"></span>
+        </a>
+      </div>
     </div>
-    <div class="pull-right text-right">
-      <a data-toggle="modal" data-dismiss="modal" class="btn btn-grey btn-white" href="#pro-plan-modal">Add billing info</a>
-      <a href="#">
-        <span class="icon icon-close"></span>
-      </a>
-    </div>
-  </div>
   <% end %>
   <!-- Standard User Banner Content -->
 </section>
@@ -167,6 +167,7 @@
 
 <!-- Pro Plan Modal -->
 <%= render 'users/pro_plan_modal' %>
+<%= render 'users/account_summary_modal' %>
 
 <!-- Starter Plan Modal -->
 <%= render 'users/starter_plan_modal' %>

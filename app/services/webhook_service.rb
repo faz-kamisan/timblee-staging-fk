@@ -9,7 +9,7 @@ class WebhookService
     end
   end
 
-  EVENTS = %w(charge.succeeded charge.refunded charge.failed customer.subscription.updated)
+  EVENTS = %w(charge.succeeded charge.refunded charge.failed customer.subscription.updated invoice.payment_failed)
 
   def initialize(event, params)
     @event = event
@@ -36,6 +36,10 @@ class WebhookService
       raise BusinessNotFound.new(@event) unless @business
     end
 
+    def invoice_payment_failed
+      lock_account
+    end
+
     def charge_succeeded
       @business.update(has_plan: true, is_pro: true)
       LoggerExtension.stripe_log "PAYMENT SUCCESSFULL Business: #{@business.reload.inspect}\n\n"
@@ -58,7 +62,9 @@ class WebhookService
    def lock_account
     @business.update(has_plan: false, is_pro: false)
     LoggerExtension.stripe_log "Card: #{@business.cards.last.inspect}\n\n"
-    LoggerExtension.stripe_log "Account Locked due to charge_failed. Business: #{@business.inspect}\n\n"
+    LoggerExtension.stripe_log "Account Locked due to failed payment. Business: #{@business.inspect}\n\n"
+
+    StripePaymentService.new(@business).remove_old_subscription
    end
 
 

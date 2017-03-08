@@ -7,7 +7,7 @@ class Subscription < ActiveRecord::Base
   before_create :add_start_at_and_end_at
 
   def add_start_at_and_end_at
-    self.start_at = business.in_trial_period? ? business.trial_end_at : Time.current
+    self.start_at = (business.in_trial_period? || ((Time.current - business.trial_end_at) < 10.days)) ? business.trial_end_at : Time.current
     self.end_at = start_at + 1.month
   end
 

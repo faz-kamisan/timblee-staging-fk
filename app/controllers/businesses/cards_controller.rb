@@ -9,6 +9,7 @@ class Businesses::CardsController < ApplicationController
     card = customer.sources.retrieve(customer.default_source)
     @card = Card.create(last4: card.last4, brand: card.brand, business: current_business, user: current_user)
     LoggerExtension.stripe_log "User card created: #{@card.inspect}"
+    current_business.activate_pro_plan(current_user) unless current_business.is_pro?
     LoggerExtension.highlight
 
     respond_to do |format|
