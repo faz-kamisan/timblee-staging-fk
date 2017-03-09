@@ -19,7 +19,8 @@ class Business < ActiveRecord::Base
   end
 
   def account_locked?
-    !has_plan || (!in_trial_period? && is_pro && !cards.present?) || (!in_trial_period? && is_starter_plan? && !allow_downgrade_to_starter?)
+    # !has_plan || (!in_trial_period? && is_pro && !cards.present?) || (!in_trial_period? && is_starter_plan? && !allow_downgrade_to_starter?)
+    !is_pro
   end
 
   def no_of_users
