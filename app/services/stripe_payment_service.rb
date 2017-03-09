@@ -99,7 +99,7 @@ class StripePaymentService
           quantity: @current_business.subscriptions.last.quantity
       }
 
-      subscription_hash.merge!({ trial_end: @current_business.trial_end_at.to_time.to_i }) if @current_business.in_trial_period?
+      subscription_hash.merge!({ trial_end: (Time.current + 15.minutes).to_time.to_i }) if @current_business.in_trial_period?
       LoggerExtension.stripe_log "SUBSCRIPTION_HASH: #{subscription_hash.inspect}"
       new_subscription = Stripe::Subscription.create(subscription_hash)
       LoggerExtension.stripe_log "STRIPE SUBSCRIPTION CREATED SUCCESSFULLY: #{new_subscription.inspect}"
