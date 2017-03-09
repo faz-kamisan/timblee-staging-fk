@@ -8,8 +8,13 @@
             <%= image_tag('close-modal.svg', class: 'close-modal') %>
           </span>
         </button>
-        <h4 class="modal-title">Invite your team for free :)</h4>
-        <p class="modal-message">Invite team members to join you so they can create and edit sitemaps, add comments, <br> and access all the features. Invite unlimited members free during your trial. After your trial <br> you can keep or delete users as you want.</p>
+        <% if current_business.in_trial_period? %>
+          <h4 class="modal-title">Invite your team for free :)</h4>
+          <p class="modal-message">Invite team members to join you so they can create and edit sitemaps, add comments, <br> and access all the features. Invite unlimited members free during your trial. After your trial <br> you can keep or delete users as you want.</p>
+        <% else %>
+         <h4 class="modal-title">Invite more people :)</h4>
+          <p class="modal-message">Invite more people to join you so they can create and edit sitemaps, add comments, and <br>  access all the features. You can easily add or remove users any time.</p>
+        <% end %>
       </div>
       <div class="modal-body">
         <div class="row">
@@ -67,7 +72,7 @@
                 <% if current_business.in_trial_period? %>
                   INVITE USERS
                 <% else %>
-                  CONFIRM &amp; PAY
+                  SEND THE INVITES
                 <% end %>
               </a>
           </div>

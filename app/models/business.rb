@@ -111,8 +111,6 @@ class Business < ActiveRecord::Base
     subscriptions.build(no_of_users: users.count, quantity: Business.monthly_charge(users.count), user: user)
     StripePaymentService.new(self).update_subscription
     LoggerExtension.stripe_log "Subscription on stripe created/updated successfully"
-    analytics.track_pro_plan(nil)
-
   end
 
   def allow_more_sitemaps?

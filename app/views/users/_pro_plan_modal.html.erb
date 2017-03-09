@@ -1,6 +1,6 @@
 <div class="modal fade" id="pro-plan-modal" tabindex="-1" role="dialog" aria-labelledby="pro-plan-modalLabel">
   <div class="modal-dialog" role="document">
-    <%= form_tag businesses_card_path, remote: true, id: 'add-card-modal-form', class: 'settings-form'  do |f| %>
+    <%= form_tag businesses_card_path, id: 'add-card-modal-form', class: 'settings-form'  do |f| %>
       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
       <div class="modal-content">
@@ -10,17 +10,17 @@
               <%= image_tag('close-modal.svg', class: 'close-modal') %>
             </span>
           </button>
-          <a href="#choose-plan-modal" class="go-back btn-modal-open" data-dismiss="modal" data-toggle="modal">
+          <a href="#account-summary-modal" class="go-back btn-modal-open" data-dismiss="modal" data-toggle="modal">
             <span class="icon icon-caret"></span>
             Back
           </a>
-          <h4 class="modal-title">Pro plan</h4>
-          <p class="modal-message">Awesome choice! The Pro plan is just $19 for the first user (you) and then $12 per month for each additional user. Choose or add your payment method below, then invite your team.</p>
+          <h4 class="modal-title">Enter your billing info</h4>
+          <p class="modal-message">Your monthly charge will be $<span class='new-pro-charges'><%= Business.monthly_charge(current_business.users.count) %></span>. Add a payment card below.</p>
         </div>
         <div class="modal-body text-center">
           <div class="pay">
             <% if @card %>
-              <p class="font-12-light cc-detail-save">You already have a saved card. You can continue with that, or replace it with a new card.</p>
+              <p class="font-12-light cc-detail-save">You already have a saved card. Continue with that, or replace it with a new card.</p>
               <ul class="select-card text-left">
                 <li class="active">
                   <a href='javascript:void(0);' id='use-saved-card'>Use my existing card ending in <span class='card-last4'><%= @card.last4 %></span></a>
@@ -53,8 +53,8 @@
                   <input type="password" class="form-control default-input cc-cvv" placeholder="CVV">
                 </div>
                 <div class="text-center col-xs-12">
-                  <button type="submit" class="btn btn-pink btn-single" id="add-card">NEXT: INVITE USERS</button>
-                  <p class="charge">We won't charge your card yet.</p>
+                  <button type="submit" class="btn btn-pink btn-single" id="add-card">CONFIRM &amp; PAY</button>
+                  <p class="charge">Your payment will be processed.</p>
                 </div>
               </div>
             </div>
