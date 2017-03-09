@@ -845,6 +845,32 @@ label.avatar-label > input[type=radio]:checked + img{
   .font-12-light {
     font-size: 14px;
   }
+  .modal-title {
+    color: $primaryGrey;
+  }
+  .modal-body {
+    background: $primaryWhite;
+  }
+  .modal-message {
+    padding-bottom: 30px;
+  }
+  #add-card {
+    font-size: 15px;
+    font-weight: bold;
+    height: 53px;
+    color: $primarySuccess;
+    min-width: 301px;
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 51px;
+    border-color: $primarySuccess;
+    @include border-radius(6px);
+    margin-top: 15px;
+    &:hover {
+      background: $primarySuccess!important;
+      color: $primaryWhite;
+    }
+  }
 }
 
 .p-t-b-20 {
