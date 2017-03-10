@@ -19,8 +19,7 @@ class Business < ActiveRecord::Base
   end
 
   def account_locked?
-    # !has_plan || (!in_trial_period? && is_pro && !cards.present?) || (!in_trial_period? && is_starter_plan? && !allow_downgrade_to_starter?)
-    !is_pro
+    !in_trial_period? && (!has_plan || (is_pro && !cards.present?) || (is_starter_plan? && !allow_downgrade_to_starter?))
   end
 
   def no_of_users
@@ -81,12 +80,10 @@ class Business < ActiveRecord::Base
 
   def is_starter_plan?
     !is_pro && has_plan
-    false
   end
 
   def allow_downgrade_to_starter?
     in_trial_period? || (users.count == 1 && sitemaps.count <= free_sitemaps_count)
-    false
   end
 
   def monthly_charge
