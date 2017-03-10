@@ -9,7 +9,11 @@
         </div>
         <div class="pull-right text-right">
           <a data-toggle="modal" data-dismiss="modal" class="btn btn-grey btn-pink" href="#account-summary-modal">Add Billing info</a>
+          <% if current_business.free_sitemaps_count == 3 %>
+            <a data-toggle="modal" data-dismiss="modal" class="btn btn-grey" href="#starter-plan-modal">Downgrade</a>
+          <% else %>
           <a class='get-in-touch btn btn-grey' href="javascript:void(0)" data-user-email="<%= current_user.email %>">Request More Time</a>
+          <% end %>
         </div>
       </div>
     <% else %>

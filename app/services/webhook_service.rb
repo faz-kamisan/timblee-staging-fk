@@ -41,7 +41,7 @@ class WebhookService
     end
 
     def charge_succeeded
-      @business.update(has_plan: true, is_pro: true)
+      @business.update(has_plan: true, is_pro: true, free_sitemaps_count: 1)
       LoggerExtension.stripe_log "PAYMENT SUCCESSFULL Business: #{@business.reload.inspect}\n\n"
       PaymentNotifier.delay.success(@business.owner, @event)
     end
