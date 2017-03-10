@@ -25,7 +25,7 @@
             <% if current_business.is_pro_plan? %>
               <span class="current-plan-text">YOUR CURRENT PLAN</span>
             <% else %>
-              <a href="#pro-plan-modal" data-toggle="modal" data-dismiss="modal" class="btn btn-pink btn-modal-open"><%= current_business.has_plan ? "SWITCH TO PRO": "Choose this plan"%></a>
+              <a href="#account-summary-modal" data-toggle="modal" data-dismiss="modal" class="btn btn-pink btn-modal-open"><%= current_business.has_plan ? "SWITCH TO PRO": "Choose this plan"%></a>
             <% end %>
           </div>
           <div class="starter-plan-benefits plan-benefits">

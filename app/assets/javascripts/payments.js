@@ -84,4 +84,8 @@ $(function($) {
 
   new Payment(form1, null).createToken();
   new Payment(form2, loading_image).createToken();
+  $('#choose-pro').on('click', function (e) {
+    e.preventDefault();
+    $('#choose-pro-form').submit();
+  });
 });

@@ -31,8 +31,8 @@
               </ul>
               <div class="old-card-info show">
                 <div class="text-center">
-                  <a href='javascript:void(0);' class="btn btn-pink btn-single btn-modal-open" id='confirm-saved-card' data-url='<%= businesses_subscription_path %>'>NEXT: INVITE USERS</a>
-                  <p class="charge">We won't charge your card yet.</p>
+                  <button type="submit" class="btn btn-pink btn-single" id="choose-pro">CONFIRM &amp; PAY</button>
+                  <p class="charge">Your payment will be processed.</p>
                 </div>
               </div>
             <% end %>
@@ -61,6 +61,11 @@
           </div>
         </div>
       </div>
+    <% end %>
+    <%= form_tag (businesses_subscription_path), { method: :post, id: 'choose-pro-form' } do %>
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <%= hidden_field_tag :stripe_plan_id, PRO_STRIPE_ID %>
+      <%= hidden_field_tag :email, nil %>
     <% end %>
   </div>
 </div>
