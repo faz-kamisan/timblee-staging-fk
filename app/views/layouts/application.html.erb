@@ -45,7 +45,7 @@
   </script>
   <%= csrf_meta_tags %>
 </head>
-<body class="<%= (current_user && (current_business.account_locked? || cookies[:show_expiry_banner] == 'true')) ? 'with-dark-header' : '' %>">
+<body class="<%= (current_user && (current_business.account_locked? || cookies[EXPIRY_BANNER_COOKIE_NAME] == 'true')) ? 'with-dark-header' : '' %>">
   <% if current_user %>
       <%= render 'shared/signed_in_header' %>
   <% end %>

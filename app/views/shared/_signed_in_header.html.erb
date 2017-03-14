@@ -28,7 +28,7 @@
   <!-- Admin User Banner Content -->
 
   <!-- Standard User Banner Content -->
-  <% if cookies[:show_expiry_banner] == 'true' %>
+  <% if cookies[EXPIRY_BANNER_COOKIE_NAME] == 'true' %>
     <div class="clearfix">
       <div class="pull-left">
         <p> <%= image_tag('scary-emoji.png') %>

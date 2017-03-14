@@ -29,9 +29,9 @@ class ApplicationController < ActionController::Base
 
   def set_show_expiry_banner
     if current_business.in_trial_without_card_for_more_than_15_days? && current_user.is_admin?
-      cookies[:show_expiry_banner] ||= 'true'
+      cookies[EXPIRY_BANNER_COOKIE_NAME] ||= 'true'
     else
-      cookies.delete(:show_expiry_banner)
+      cookies.delete(EXPIRY_BANNER_COOKIE_NAME)
     end
   end
 

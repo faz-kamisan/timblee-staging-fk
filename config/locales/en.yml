@@ -138,7 +138,6 @@ en:
 
     pro_plan_success: "You are now on the Pro plan with %{users} users."
     account_locked:  ''
-    # account_locked:   "Your trial period is over. Please enter billing details and choose the Pro plan to continue with your current users and sitemaps. To choose the Starter plan, you must delete all other users and all but %{free_sitemaps_count_in_words}."
   activerecord:
       errors:
         models:

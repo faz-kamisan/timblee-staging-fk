@@ -71,7 +71,22 @@ class Business < ActiveRecord::Base
   end
 
   def plan_name
-    is_pro ? Plan::PRO : has_plan ? Object.const_get("Plan::STARTER#{free_sitemaps_count}") : nil
+    if is_pro
+      Plan::PRO
+    elsif has_plan
+      case free_sitemaps_count
+        when 3
+          Plan::STARTER3
+        else
+          Plan::STARTER1
+      end
+    else
+      nil
+    end
+  end
+
+  def get_plan(subscription)
+    subscription.present? ? Plan::PRO : nil
   end
 
   def is_pro_plan?
@@ -141,6 +156,7 @@ class Business < ActiveRecord::Base
       self.destroy
     end
   end
+
 
   private
 

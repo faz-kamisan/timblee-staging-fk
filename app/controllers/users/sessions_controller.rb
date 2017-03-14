@@ -38,7 +38,7 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def delete_cookie
-    cookies.delete :show_expiry_banner
+    cookies.delete EXPIRY_BANNER_COOKIE_NAME
   end
 
   # DELETE /resource/sign_out
