@@ -34,7 +34,10 @@
         <div class="col-xs-3 text-right edit-info">
           <div class="edit">
             <% if current_business.free_sitemaps_count == 3 %>
-            <a href="#choose-plan-modal" data-toggle="modal" class="btn btn-pink btn-single"><%= current_business.has_plan? ? 'Edit Plan' : 'Choose a plan' %></a>
+              <a href="#choose-plan-modal" data-toggle="modal" class="btn btn-pink btn-single"><%= current_business.has_plan? ? 'Edit Plan' : 'Choose a plan' %></a>
+            <% else %>
+              <a href="#account-summary-modal" data-toggle="modal" class="btn btn-pink btn-single">PLAN &amp; BILLING</a>
+
             <% end %>
           </div>
         </div>
