@@ -30,7 +30,7 @@
            <span class='error-message'><%= f.object.errors[:password].join(',') %></span>
           </div>
 
-          <%= hidden_field_tag :trial_days, (request.path == new_user_registration_60_day_trial_path || params[:trial_days] == '60') ? 60 : 30 %>
+          <%= hidden_field_tag :trial_days, (request.path == new_user_registration_60_day_trial_path || params[:trial_days] == '60') ? 60 : 0.01 %>
 
           <div class="form-group">
             <%= f.submit "Sign up for free", class: 'btn btn-pink btn-block' %>
