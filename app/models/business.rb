@@ -85,10 +85,6 @@ class Business < ActiveRecord::Base
     end
   end
 
-  def get_plan(subscription)
-    subscription.present? ? Plan::PRO : nil
-  end
-
   def is_pro_plan?
     is_pro
   end

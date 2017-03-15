@@ -23,4 +23,8 @@ class Subscription < ActiveRecord::Base
     update(end_at: time)
   end
 
+  def plan
+    Plan::PRO
+  end
+
 end

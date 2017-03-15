@@ -43,7 +43,7 @@ class Analytics
           trial_days_left: (trial_days_left > 0 ? trial_days_left : 0),
           no_of_users: business.no_of_users,
           'monthly Spend': business.monthly_charge,
-          old_plan: business.get_plan(old_subscription)
+          old_plan: old_subscription.try(:plan)
         }
       }
     )
@@ -57,7 +57,7 @@ class Analytics
         user_id: business.owner.id,
         event: 'Starter Plan taken',
         properties: {
-          old_plan: business.get_plan(old_subscription),
+          old_plan: old_subscription.try(:plan),
           owner_id: business.owner.id
         }
       }
