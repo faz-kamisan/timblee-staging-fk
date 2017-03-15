@@ -161,7 +161,7 @@
   </div>
 
 </header>
-<div class="hide business-info" data-business-id="<%=current_business.id%>"></div>
+<div class="hide business-info" data-business-id="<%= current_business.id %>" data-user-id="<%= current_user.id %>" ></div>
 <%= javascript_include_tag('sitemaps', 'jump_to', 'notification', 'invitations', 'team', 'intercom', 'banner') %>
 
 <%= render 'sitemaps/sitemap_error_modal'%>
