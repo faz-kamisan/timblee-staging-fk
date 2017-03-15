@@ -9,14 +9,18 @@
           </span>
         </button>
         <h4 class="modal-title">Your Account Summary</h4>
-        <p class="modal-message">Your monthly charge and current users are shown below.</p>
+        <% if current_business.in_trial_period? %>
+          <p class="modal-message">Your current users and monthly charge is shown below. You should add a card for uninterrupted access<br> after your trial finishes on <%= current_business.trial_end_at.strftime('%d %b %Y')%>. We won't charge the card till after your trial is over.</p>
+        <% else %>
+          <p class="modal-message">Your monthly charge and current users are shown below.</p>
+        <% end %>
       </div>
       <div class="modal-body">
         <div class="row flex">
 
           <div class="col-xs-6 text-center after-line">
             <div class="stat-text">
-              Current users    
+              Current users
             </div>
             <div class="stat-data pro-users-count">
               <%= "#{current_business.users.count}" %>
