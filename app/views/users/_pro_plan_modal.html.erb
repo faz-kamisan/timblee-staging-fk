@@ -15,7 +15,11 @@
             Back
           </a>
           <h4 class="modal-title">Enter your billing info</h4>
-          <p class="modal-message">Your monthly charge will be $<span class='new-pro-charges'><%= Business.monthly_charge(current_business.users.count) %></span>. Add a payment card below.</p>
+          <% if current_business.in_trial_period? %>
+            <p class="modal-message">After your free trial is over, on <%= current_business.trial_end_at.strftime('%d %b %Y')%>, your card will be charged $<span class='new-pro-charges'><%= Business.monthly_charge(current_business.users.count) %></span>.</p>
+          <% else %>
+            <p class="modal-message">Your monthly charge will be $<span class='new-pro-charges'><%= Business.monthly_charge(current_business.users.count) %></span>. Add a payment card below.</p>
+          <% end %>
         </div>
         <div class="modal-body text-center">
           <div class="pay">
@@ -32,7 +36,11 @@
               <div class="old-card-info show">
                 <div class="text-center">
                   <button type="submit" class="btn btn-pink btn-single" id="choose-pro">CONFIRM &amp; PAY</button>
-                  <p class="charge">Your payment will be processed.</p>
+                  <% if current_business.in_trial_period? %>
+                    <p class="charge">Your card will be saved on file and your payment <br>will be processed after your trial.</p>
+                  <% else %>
+                    <p class="charge">Your payment will be processed.</p>
+                  <% end %>
                 </div>
               </div>
             <% end %>
@@ -54,7 +62,11 @@
                 </div>
                 <div class="text-center col-xs-12">
                   <button type="submit" class="btn btn-pink btn-single" id="add-card">CONFIRM &amp; PAY</button>
-                  <p class="charge">Your payment will be processed.</p>
+                  <% if current_business.in_trial_period? %>
+                    <p class="charge">Your card will be saved on file and your payment <br>will be processed after your trial.</p>
+                  <% else %>
+                    <p class="charge">Your payment will be processed.</p>
+                  <% end %>
                 </div>
               </div>
             </div>
