@@ -9,10 +9,14 @@ class Businesses::CardsController < ApplicationController
     card = customer.sources.retrieve(customer.default_source)
     @card = Card.create(last4: card.last4, brand: card.brand, business: current_business, user: current_user)
     LoggerExtension.stripe_log "User card created: #{@card.inspect}"
+    unless current_business.is_pro?
+      current_business.activate_pro_plan(current_user)
+      analytics.track_pro_plan(nil)
+    end
     LoggerExtension.highlight
 
     respond_to do |format|
-      format.html{ redirect_to billing_settings_users_path, notice: t('.success', scope: :flash) }
+      format.html{ redirect_to team_settings_users_path, notice: t('.success', scope: :flash) }
       format.js  { flash.now[:notice] = t('.success', scope: :flash) }
     end
 

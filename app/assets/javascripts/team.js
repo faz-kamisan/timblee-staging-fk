@@ -9,7 +9,6 @@ Team.prototype.bindEvents = function() {
   var _this = this;
   $('body').on('click', '.invite-link', function(e) {
     e.preventDefault();
-    _this.inviteModal.find('form .bulk-invite-emails-input').attr('required', true);
     _this.inviteModal.find('form').find('input#stripe_plan_id').val(PRO_STRIPE_ID);
     _this.inviteModal.find('.go-back').addClass('hide');
     if($(this).data('remote')) {

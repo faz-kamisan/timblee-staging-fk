@@ -8,5 +8,6 @@ $(function() {
     window.intercomSettings['company']= {
       id: $('.business-info').data('business-id')
     }
+    window.intercomSettings['user_id'] = $('.business-info').data('user-id')
   }
 });

@@ -1,0 +1,52 @@
+<!-- Invite Team Modal -->
+<div class="modal fade" id="account-summary-modal" tabindex="-1" role="dialog" aria-labelledby="account-summary-modalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">
+            <%= image_tag('close-modal.svg', class: 'close-modal') %>
+          </span>
+        </button>
+        <h4 class="modal-title">Your Account Summary</h4>
+        <p class="modal-message">Your monthly charge and current users are shown below.</p>
+      </div>
+      <div class="modal-body">
+        <div class="row flex">
+
+          <div class="col-xs-6 text-center after-line">
+            <div class="stat-text">
+              Current users    
+            </div>
+            <div class="stat-data pro-users-count">
+              <%= "#{current_business.users.count}" %>
+            </div>
+            <p class="stat-para">Add or remove users via the Team tab in <br> settings. You’ll then see updated totals here.</p>
+          </div>
+
+          <div class="col-xs-6 text-center">
+            <div class="stat-text">
+              Monthly charge
+            </div>
+            <div class="stat-data new-pro-charges">
+              $<span class=''><%= Business.monthly_charge(current_business.users.count) %></span>
+            </div>
+            <p class="stat-para">$19 for the first user (you) and $12 for each <br> additional user.  All amounts are in USD.</p>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 add-credit-card-modal-btn-section">
+            <div class="modal-button text-center">
+              <a data-toggle="modal" data-dismiss="modal" class="btn btn-pink" href="#pro-plan-modal">Next: Add A Credit Card</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag('tagIt') %>

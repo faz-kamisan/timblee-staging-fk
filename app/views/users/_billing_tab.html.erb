@@ -15,22 +15,30 @@
               You're on the Pro plan with <span class='pro-users-count'><%= current_business.no_of_users %></span> <%= 'user'.pluralize(current_business.no_of_users)%>. Your monthly charge is $<span class='pro-charges'><%= current_business.monthly_charge%></span>. To add more users, click on the 'Team' tab above.
               You're on the free trial till  <%= current_business.trial_end_at.strftime('%d %b %Y') %>.
             <% elsif current_business.in_trial_period? && current_business.is_starter_plan? %>
-              You're on the Starter plan with one user and a maximum of three sitemaps. This is a free plan.
-              <a href="#choose-plan-modal" data-toggle="modal" data-dismiss="modal" id="upgrade">Upgrade to the Pro plan</a> for only $19 to have unlimited sitemaps.
+              You're on the Starter plan with one user and <%= current_business.free_sitemaps_count_in_words %>. This is a limited free plan.
+              <a href="#account-summary-modal" data-toggle="modal" data-dismiss="modal" id="upgrade">Upgrade to the Pro plan</a> for only $19 for unlimited sitemaps and to support future development.
               You're on the free trial till  <%= current_business.trial_end_at.strftime('%d %b %Y') %> with no restrictions.
             <% elsif current_business.is_pro_plan? %>
               You're on the Pro plan with <span class='pro-users-count'><%= current_business.no_of_users %></span> <%= 'user'.pluralize(current_business.no_of_users)%>. Your monthly charge is $<span class='pro-charges'><%= current_business.monthly_charge%></span>. To add more users, click on the 'Team' tab above.
 
-            <% else %>
-              You're on the Starter plan with one user and a maximum of three sitemaps. This is a free plan.
-              <a href="#choose-plan-modal" data-toggle="modal" data-dismiss="modal" id="upgrade">Upgrade to the Pro plan</a> for only $19 to have unlimited sitemaps.
 
+            <% elsif current_business.is_starter_plan? %>
+              You're on the Starter plan with one user and <%= current_business.free_sitemaps_count_in_words %>. This is a limited free plan.
+              <a href="#account-summary-modal" data-toggle="modal" data-dismiss="modal" id="upgrade">Upgrade to the Pro plan</a> for only $19 for unlimited sitemaps and to support future development.
+
+            <% else %>
+                Your free trial is over. Please enter your billing info. Unlimited sitemaps are only $19 per month for one user.
             <% end %>
           </p>
         </div>
         <div class="col-xs-3 text-right edit-info">
           <div class="edit">
-            <a href="#choose-plan-modal" data-toggle="modal" class="btn btn-pink btn-single"><%= current_business.in_trial_period_without_any_plan? ? 'Choose a plan' : 'Edit Plan' %></a>
+            <% if current_business.free_sitemaps_count == 3 %>
+              <a href="#choose-plan-modal" data-toggle="modal" class="btn btn-pink btn-single"><%= current_business.has_plan? ? 'Edit Plan' : 'Choose a plan' %></a>
+            <% else %>
+              <a href="#account-summary-modal" data-toggle="modal" class="btn btn-pink btn-single">PLAN &amp; BILLING</a>
+
+            <% end %>
           </div>
         </div>
       </div>

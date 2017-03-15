@@ -137,7 +137,7 @@ en:
           failure: Couldn't sent reset link
 
     pro_plan_success: "You are now on the Pro plan with %{users} users."
-    account_locked:   "Your trial period is over. Please enter billing details and choose the Pro plan to continue with your current users and sitemaps. To choose the Starter plan, you must delete all other users and all but three sitemaps."
+    account_locked:  ''
   activerecord:
       errors:
         models:

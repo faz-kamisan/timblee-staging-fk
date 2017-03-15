@@ -320,13 +320,13 @@
 
 #pro-plan-modal {
   .modal-dialog {
-    @include alignCenter(-470px, -326px);
+    @include alignCenter(-471px, -308px);
   }
 }
 
 #invite-user-modal {
   .modal-dialog {
-    @include alignCenter(-470px, -317px);
+    @include alignCenter(-470px, -344px);
   }
 }
 
@@ -404,6 +404,12 @@
   }
 }
 
+#account-summary-modal {
+  .modal-dialog {
+    @include alignCenter(-471px, -339px);
+  } 
+}
+
 .invited-user.user-entry {
   .small {
     font-weight: 600;
@@ -420,5 +426,95 @@
   }
   .go-to-login {
     margin-bottom: 6px;
+  }
+}
+
+#account-summary-modal {
+  .modal-title {
+    color: $primaryGrey;
+    font-size: 20px;
+    line-height: 30px;
+    padding-bottom: 10px;
+    padding-top: 43px;
+  }
+
+  .modal-dialog {
+    width: 942px;
+  }
+
+  .modal-body {
+    padding: 20px;
+  }
+
+  .modal-message,
+  .stat-para {
+    color: $primaryGrey;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 0;
+  }
+
+  .stat-para {
+    padding-bottom: 40px;
+  }
+
+  .modal-header {
+    padding-bottom: 63px;
+  }
+
+  .modal-body {
+    background: $primaryWhite;
+  }
+
+  .stat-text {
+    color: $primaryGrey;
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: bold;
+    padding-top: 57px;
+  }
+
+  .stat-data {
+    color: $primaryGrey;
+    font-size: 48px;
+    line-height: 50px;
+    font-weight: bold;
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  .add-credit-card-modal-btn-section {
+    padding-top: 50px;
+    padding-bottom: 38px;
+  }
+
+  .btn-pink {
+    font-size: 15px;
+    font-weight: bold;
+    height: 53px;
+    min-width: 301px;
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 51px;
+    @include border-radius(6px);
+  }
+}
+
+.flex {
+  display: flex;
+  -moz-display: flex;
+  -webkit-display: flex;
+}
+
+.after-line {
+  position: relative;
+  &:after {
+    content: ' ';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background: #D6D8DA;
   }
 }

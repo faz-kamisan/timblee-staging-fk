@@ -19,13 +19,15 @@ class StripePaymentService
     @customer = Stripe::Customer.retrieve(@current_business.stripe_customer_id)
     LoggerExtension.stripe_log "STRIPE CUSTOMER: #{@customer.inspect}"
     current_subscription = @customer.subscriptions.first
-    LoggerExtension.stripe_log "STRIPE SUBSCRIPTION TO BE DELETED: #{current_subscription.inspect}"
-    current_subscription.quantity = 0
-    current_subscription.save
-    settle_all_balances
-    LoggerExtension.stripe_log "OLD BALANCES SETTLED!!"
-    current_subscription.delete
-    LoggerExtension.stripe_log "STRIPE SUBSCRIPTION DELETED SUCCESSFULLY!"
+    if current_subscription
+      LoggerExtension.stripe_log "STRIPE SUBSCRIPTION TO BE DELETED: #{current_subscription.inspect}"
+      current_subscription.quantity = 0
+      current_subscription.save
+      settle_all_balances
+      LoggerExtension.stripe_log "OLD BALANCES SETTLED!!"
+      current_subscription.delete
+      LoggerExtension.stripe_log "STRIPE SUBSCRIPTION DELETED SUCCESSFULLY!"
+    end
   end
 
   def update_subscription
@@ -46,6 +48,17 @@ class StripePaymentService
     LoggerExtension.stripe_log "NEW SUBSCRIPTION: #{@current_business.reload.current_subscription.inspect}"
   end
 
+  def create_customer_with_initial_subscription
+    @customer = Stripe::Customer.create(
+      email:  @current_business.owner.email
+    )
+    LoggerExtension.stripe_log "CUSTOMER CREATED SUCCESSFULLY: #{customer.inspect}"
+    @current_business.update_column(:stripe_customer_id, @customer.id)
+    create_subscription
+    @current_business.save!
+    LoggerExtension.stripe_log "NEW SUBSCRIPTION: #{@current_business.reload.current_subscription.inspect}"
+  end
+
   private
 
     def settle_all_balances
@@ -54,7 +67,7 @@ class StripePaymentService
       if upcoming_invoice.total > 0
         charge_customer(upcoming_invoice.total)
 
-      elsif upcoming_invoice.total < 0
+      elsif upcoming_invoice.total < 0 && upcoming_invoice.charge
         refund_customer(upcoming_invoice.total.abs)
       end
     end

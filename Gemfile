@@ -33,6 +33,7 @@ gem 'wkhtmltoimage-binary', "~> 0.12.2"
 gem 'rubyzip', '>= 1.0.0'
 gem 'zip-zip', "~> 0.3"
 gem 'gemojione', "~> 3.2.0"
+gem 'humanize', '1.3.0'
 
 group :production do
   gem 'skylight', '1.0.0'

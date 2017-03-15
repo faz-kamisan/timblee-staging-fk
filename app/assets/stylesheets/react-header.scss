@@ -1,3 +1,9 @@
+.with-dark-header {
+  .react-header {
+    top: 159px;  
+  }
+}
+
 .react-header {
   background: $primaryBlack;
   position: fixed;
