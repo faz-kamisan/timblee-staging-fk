@@ -42,6 +42,13 @@ function bindAddScreenEvent() {
       tempGroup.add(this)
     })
 
+    if(node.bottomNode){
+      updateNode(node.bottomNode, {parentNode: null})
+    }else if(node.bottomLeftNode){
+      updateNode(node.bottomLeftNode, {parentNode: null})
+      updateNode(node.bottomRightNode, {parentNode: null})
+    }
+
     var newTile = addTile(newX, newY, tile, getNode(tile.id()).level + 1, newPath);
 
     bottomNode = getNode(newTile.id());
@@ -77,6 +84,11 @@ function bindAddScreenEvent() {
       }
     }, true)
 
+    var maxPos = calculateMAxPosAndLevel()[0],
+        maxLevel = calculateMAxPosAndLevel()[1];
+    var width = (maxPos * 150 + TILE_WIDTH + 100) + 'px';
+    var height = (maxLevel * (TILE_HEIGHT + 50) + 100) + 'px'
+    SVG.get(SVG_CANVAS_ID).width(width).height(height);
   })
 }
 
@@ -100,6 +112,13 @@ function bindAddDecisionEvent() {
       tempGroup.add(this)
     })
 
+    if(node.bottomNode){
+      updateNode(node.bottomNode, {parentNode: null})
+    }else if(node.bottomLeftNode){
+      updateNode(node.bottomLeftNode, {parentNode: null})
+      updateNode(node.bottomRightNode, {parentNode: null})
+    }
+
     var newTile1 = addTile(newX1, newY, tile, getNode(tile.id()).level + 1, newPath1).addClass('leftTile'),
     shift = newTile1.x() - newX1,
     newTile2 = addTile(newX2 + shift, newY, tile, getNode(tile.id()).level + 1, newPath2).addClass('rightTile'),
@@ -121,7 +140,6 @@ function bindAddDecisionEvent() {
     tempGroup.each(function(i, e){
       newGroup.add(this)
     })
-
     newGroup.each(function(i, e){
 
       if(this.type != "g") {
@@ -139,35 +157,39 @@ function bindAddDecisionEvent() {
       }
     }, true)
 
+    var maxPos = calculateMAxPosAndLevel()[0],
+        maxLevel = calculateMAxPosAndLevel()[1];
+    var width = (maxPos * 150 + TILE_WIDTH + 100) + 'px';
+    var height = (maxLevel * (TILE_HEIGHT + 50) + 200) + 'px'
+    SVG.get(SVG_CANVAS_ID).width(width).height(height);
+
     MinPos = Math.min(MinPos, getPosition(newTile1));
     if(MinPos < 1){
-      moveTile(rect1, 1 - MinPos, true)
+      moveTileWithGroup(rect1, 1 - MinPos, true)
       MinPos = 1;
     }
   })
 }
 
-
-function moveTile (tile, shift, istopMostTile=false) {
-  var moveBy = 150 * shift,
-  node = getNode(tile.id()),
-  children = [];
-  if (!istopMostTile) {
-    var parentTile = SVG.get(node.parentNode),
-    edge = getEdge(node.topEdge);
-  };
-  tileGroup = SVG.get(node.id + 'Group');
-
+function moveTile(tile, shift) {
+  var moveBy = 150 * shift;
   $("#" + tile.id() + "Tile").css({ left: tile.x() + moveBy })
   tile.x(tile.x() + moveBy);
-  updateNode(tile.id(), { position: getPosition(tile)})
+  updateNode(tile.id(), { position: getPosition(tile)});
+}
+
+
+function moveTileWithGroup (tile, shift, istopMostTile=false) {
+  var moveBy = 150 * shift,
+      node = getNode(tile.id()),
+      children = [];
+  moveTile(tile, shift);
+
+  var tileGroup = SVG.get(node.id + 'Group');
   tileGroup.each(function(i, e){
-
     if(this.type != "g") {
-      x = this.x() + moveBy
-
+      var x = this.x() + moveBy;
       this.x(x);
-
       if(this.type == "rect") {
         $("#" + this.id() + "Tile").css({ left: x })
         updateNode(this.id(), { position: getPosition(this)})
@@ -177,27 +199,61 @@ function moveTile (tile, shift, istopMostTile=false) {
   }, true);
 
   if(!istopMostTile){
-    SVG.get(edge.id).remove();
-    var connector = connect(parentTile, tile);
-    SVG.get(tile.id() + "Group")
-       .add(connector)
+    reconstructParent(tile);
     for (var i = 0; i < children.length; i++) {
-      currentNode = getNode(children[i].id());
+      var currentNode = getNode(children[i].id());
       reconstruct(children[i], currentNode.position, currentNode.level)
     };
   }
 }
 
+function reconstructParent (tile) {
+  var node = getNode(tile.id());
+  if (node.parentNode) {
+    var parentTile = SVG.get(node.parentNode),
+        parentNode = getNode(node.parentNode);
+    if (parentNode.bottomEdge && parentNode.position != node.position) {
+      moveTile(parentTile, node.position - parentNode.position)
+      var bottomEdge = getEdge(parentNode.bottomEdge);
+      SVG.get(bottomEdge.id).remove();
+      var connector = connect(parentTile, tile);
+      SVG.get(parentTile.id() + "Group").add(connector);
+      updateNode(parentNode.id, {position: getPosition(parentTile)})
+      reconstruct(parentTile, parentNode.position, parentNode.level)
+      reconstructParent(parentTile);
+    }else{
+      var bottomLeftEdge = getEdge(parentNode.bottomLeftEdge);
+      var bottomRightEdge = getEdge(parentNode.bottomRightEdge);
+      var rightTile = SVG.get(parentNode.bottomRightNode);
+      var leftTile = SVG.get(parentNode.bottomLeftNode);
+      var rightNode = getNode(rightTile.id());
+      var leftNode = getNode(leftTile.id());
+      var shift = ((rightNode.position - leftNode.position)/2) + leftNode.position  - parentNode.position
+      if(shift != 0){
+        moveTile(parentTile, shift);
+        SVG.get(bottomLeftEdge.id).remove();
+        SVG.get(bottomRightEdge.id).remove();
+        var connector1 = connect(parentTile, leftTile);
+        var connector2 = connect(parentTile, rightTile);
+        SVG.get(parentTile.id() + "Group").add(connector1).add(connector2);
+        updateNode(parentNode.id, {position: getPosition(parentTile)})
+        reconstruct(parentTile, parentNode.position, parentNode.level)
+        reconstructParent(parentTile);
+      }
+    }
+  };
+}
+
 function reconstruct (tile, position, level) {
-  oldNode = getNodeFromPosition(level, position, tile.id());
-  node = getNode(tile.id())
-  if(oldNode && oldNode.parentNode != node.parentNode){
-    var shift = 2 - Math.abs(oldNode.position - node.position);
-    parentDecisionNode = getNodeByPath(calculateCommonPath(node.path, oldNode.path))
-    parentDecisionTile = SVG.get(parentDecisionNode.id)
-    rightTile = SVG.get(parentDecisionNode.bottomRightNode)
-    rightNode = getNode(rightTile.id())
-    moveTile(rightTile, shift);
+  var oldNode = getNodeFromPosition(level, position, tile.id()),
+      node = getNode(tile.id());
+  if(oldNode && oldNode.parentNode != null){
+    var shift = 2 - Math.abs(oldNode.position - node.position),
+        parentDecisionNode = getNodeByPath(calculateCommonPath(node.path, oldNode.path)),
+        parentDecisionTile = SVG.get(parentDecisionNode.id),
+        rightTile = SVG.get(parentDecisionNode.bottomRightNode),
+        rightNode = getNode(rightTile.id());
+    moveTileWithGroup(rightTile, shift);
     reconstruct(rightTile, rightNode.position + shift, rightNode.level)
   }
 }
@@ -319,6 +375,12 @@ function calculatePath (nodePath, path, addValue) {
   return commonPath + addValue + path.slice(commonPath.length)
 }
 
+function calculateMAxPosAndLevel() {
+  var maxPos = Math.max.apply(this, NODES.map(function(o){return o.position;}))
+  var maxLevel = Math.max.apply(this, NODES.map(function(o){return o.level;}))
+  return [maxPos, maxLevel]
+}
+
 function calculateCommonPath (path1, path2) {
   char = 0;
   for (var i = 0; i < path1.length; i++) {
@@ -383,7 +445,7 @@ function getEdge(edgeID) {
 
 function getNodeFromPosition(level, position, id) {
   return NODES.filter(function(node, idx){
-    return node.level == level && node.id != id && (node.position == position || node.position == position - 1 || node.position == position + 1)
+    return node.level == level && node.id != id && (Math.abs(node.position - position) <= 1)
   })[0]
 }
 

@@ -3,7 +3,7 @@ body { margin: 0; padding: 0; font-family: 'Arial'; background: #f8f9fc; }
 h1 { text-align: center; margin: 0 0 20px 0; padding: 20px; border-bottom: solid 1px #ececec; color: #EC008C; }
 
 /* Flow Chart Section */
-#flow-chart { padding: 10px; width: 2000px; height: 1500px; }
+#flow-chart { padding: 10px;}
 #tile-blueprint { display: none; }
 #tile-container{ position: relative; }
 .top-level { text-align: center; }
