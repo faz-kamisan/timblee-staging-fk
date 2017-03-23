@@ -22,6 +22,7 @@ function init() {
 function bindEvents() {
   bindAddScreenEvent();
   bindAddDecisionEvent();
+  bindDeleteTileEvent();
 }
 
 function bindAddScreenEvent() {
@@ -201,8 +202,7 @@ function moveTileWithGroup (tile, shift, istopMostTile=false) {
   if(!istopMostTile){
     reconstructParent(tile);
     for (var i = 0; i < children.length; i++) {
-      var currentNode = getNode(children[i].id());
-      reconstruct(children[i], currentNode.position, currentNode.level)
+      reconstruct(children[i])
     };
   }
 }
@@ -219,7 +219,7 @@ function reconstructParent (tile) {
       var connector = connect(parentTile, tile);
       SVG.get(parentTile.id() + "Group").add(connector);
       updateNode(parentNode.id, {position: getPosition(parentTile)})
-      reconstruct(parentTile, parentNode.position, parentNode.level)
+      reconstruct(parentTile)
       reconstructParent(parentTile);
     }else{
       var bottomLeftEdge = getEdge(parentNode.bottomLeftEdge);
@@ -237,25 +237,70 @@ function reconstructParent (tile) {
         var connector2 = connect(parentTile, rightTile);
         SVG.get(parentTile.id() + "Group").add(connector1).add(connector2);
         updateNode(parentNode.id, {position: getPosition(parentTile)})
-        reconstruct(parentTile, parentNode.position, parentNode.level)
+        reconstruct(parentTile)
         reconstructParent(parentTile);
       }
     }
   };
 }
 
-function reconstruct (tile, position, level) {
-  var oldNode = getNodeFromPosition(level, position, tile.id()),
-      node = getNode(tile.id());
-  if(oldNode && oldNode.parentNode != null){
-    var shift = 2 - Math.abs(oldNode.position - node.position),
-        parentDecisionNode = getNodeByPath(calculateCommonPath(node.path, oldNode.path)),
-        parentDecisionTile = SVG.get(parentDecisionNode.id),
-        rightTile = SVG.get(parentDecisionNode.bottomRightNode),
-        rightNode = getNode(rightTile.id());
-    moveTileWithGroup(rightTile, shift);
-    reconstruct(rightTile, rightNode.position + shift, rightNode.level)
+function reconstruct (tile) {
+  var node = getNode(tile.id()),
+      position = node.position,
+      level = node.level,
+      shift = null;
+  if(node.parentNode){
+    var parentDecisionGroup = SVG.get(node.parentNode).parent('.decisionGroup');
+  if(parentDecisionGroup){
+      var parentDecisionTile = SVG.get(parentDecisionGroup.id().slice(0,-5))
+          parentDecisionNode = getNode(parentDecisionTile.id()),
+          parentDecisionNodePath = getNode(parentDecisionTile.id()).path,
+          pos = null;
+      if(node.path.slice(parentDecisionNodePath.length)[0] == 'L'){
+        rightNodePath = parentDecisionNodePath + 'R';
+        pos = calculateLeftmostPos(rightNodePath, level);
+        if(pos && pos - position < 2){
+          shift =  2 + position - pos;
+          var rightTile = SVG.get(parentDecisionNode.bottomRightNode);
+        }
+
+      }else{
+        leftNodePath = parentDecisionNodePath + 'L';
+        pos = calculateRightmostPos(leftNodePath, level);
+        if(pos && position - pos < 2){
+          shift = 2 + pos - position;
+          var rightTile = SVG.get(parentDecisionNode.bottomRightNode);
+        }
+      }
+    }
+    if(shift){
+      moveTileWithGroup(rightTile, shift);
+      reconstruct(rightTile)
+    }else{
+      var oldNode = getNodeFromPosition(level, position, tile.id());
+      if(oldNode && oldNode.parentNode != null){
+        shift = (2 - Math.abs(oldNode.position - node.position));
+        var commonParentDecisionNode = getNodeByPath(calculateCommonPath(node.path, oldNode.path));
+        var rightTile = SVG.get(commonParentDecisionNode.bottomRightNode);
+        moveTileWithGroup(rightTile, shift);
+        reconstruct(rightTile)
+      }
+    }
   }
+}
+
+function bindDeleteTileEvent () {
+  // $(document).on('click', '.more', function() {
+  //   var tileID = $(this).closest('.tile')[0].id.slice(0, -4);
+  //   var tile = SVG.get(tileID);
+  //   var node = getNode(tileID);
+  //   if (!(tile.classes()[0] && (tile.classes().includes('rightTile') || tile.classes().includes('leftTile')) && (node.bottomLeftNode || node.bottomNode))){
+  //     tile.remove();
+  //     $("#" + tile.id() + "Tile").remove();
+  //     SVG.get(node.topEdge).remove();
+  //   }
+  // })
+
 }
 
 function addTile(x, y, parentNode, level, path) {
@@ -287,7 +332,7 @@ function addTile(x, y, parentNode, level, path) {
 
   $('#tile-container').append(div)
 
-  reconstruct(tile, position, level);
+  reconstruct(tile);
   return tile
 }
 
@@ -436,6 +481,23 @@ function getNodeByPath(path) {
   })[0]
 }
 
+function calculateRightmostPos(leftNodePath, level) {
+  var nodes = NODES.filter(function(node, idx){
+    return node.level == level && node.path.startsWith(leftNodePath)
+  })
+  if(nodes.length > 0){
+    return Math.max.apply(this, nodes.map(function(o){return o.position;}))
+  }
+}
+
+function calculateLeftmostPos(rightNodePath, level) {
+  var nodes = NODES.filter(function(node, idx){
+    return node.level == level && node.path.startsWith(rightNodePath)
+  })
+  if(nodes.length > 0){
+    return Math.min.apply(this, nodes.map(function(o){return o.position;}))
+  }
+}
 
 function getEdge(edgeID) {
   return EDGES.filter(function(edge, idx){
@@ -445,7 +507,7 @@ function getEdge(edgeID) {
 
 function getNodeFromPosition(level, position, id) {
   return NODES.filter(function(node, idx){
-    return node.level == level && node.id != id && (Math.abs(node.position - position) <= 1)
+    return node.level == level && node.id != id && (Math.abs(node.position - position) < 2)
   })[0]
 }
 
