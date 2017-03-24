@@ -212,15 +212,17 @@ function reconstructParent (tile) {
   if (node.parentNode) {
     var parentTile = SVG.get(node.parentNode),
         parentNode = getNode(node.parentNode);
-    if (parentNode.bottomEdge && parentNode.position != node.position) {
-      moveTile(parentTile, node.position - parentNode.position)
-      var bottomEdge = getEdge(parentNode.bottomEdge);
-      SVG.get(bottomEdge.id).remove();
-      var connector = connect(parentTile, tile);
-      SVG.get(parentTile.id() + "Group").add(connector);
-      updateNode(parentNode.id, {position: getPosition(parentTile)})
-      reconstruct(parentTile)
-      reconstructParent(parentTile);
+    if (parentNode.bottomEdge) {
+      if( parentNode.position != node.position){
+        moveTile(parentTile, node.position - parentNode.position)
+        var bottomEdge = getEdge(parentNode.bottomEdge);
+        SVG.get(bottomEdge.id).remove();
+        var connector = connect(parentTile, tile);
+        SVG.get(parentTile.id() + "Group").add(connector);
+        updateNode(parentNode.id, {position: getPosition(parentTile)})
+        reconstruct(parentTile)
+        reconstructParent(parentTile);
+      }
     }else{
       var bottomLeftEdge = getEdge(parentNode.bottomLeftEdge);
       var bottomRightEdge = getEdge(parentNode.bottomRightEdge);
@@ -294,28 +296,39 @@ function bindDeleteTileEvent () {
   //   var tileID = $(this).closest('.tile')[0].id.slice(0, -4);
   //   var tile = SVG.get(tileID);
   //   var node = getNode(tileID);
-  //   if (!(tile.classes()[0] && (tile.classes().includes('rightTile') || tile.classes().includes('leftTile')) && (node.bottomLeftNode || node.bottomNode))){
-  //     tile.remove();
-  //     $("#" + tile.id() + "Tile").remove();
-  //     SVG.get(node.topEdge).remove();
+  //   if (node.parentNode && !(tile.classes()[0] && (tile.classes().includes('rightTile') || tile.classes().includes('leftTile')) && (node.bottomLeftNode || node.bottomNode))){
+  //     var parentNode = getNode(node.parentNode),
+  //         parentTile = SVG.get(parentNode.id)
+  //     if(tile.classes()[0] && tile.classes().includes('rightTile')){
+  //       leftNode = getNode(parentNode.bottomLeftNode)
+  //       leftTile = SVG.get(leftNode.id)
+  //       tile.remove();
+  //       $("#" + tile.id() + "Tile").remove();
+  //       SVG.get(node.topEdge).remove();
+  //       SVG.get(leftNode.topEdge).remove();
+  //       updateNode(parentNode.id, {bottomLeftNode: null, bottomRightNode: null, bottomNode: leftNode.id, bottomLeftEdge: null, bottomRightEdge: null, bottomEdge: node.topEdge})
+  //       moveTileWithGroup(leftTile, (parentNode.position - leftNode.position))
+  //       connector = connect(parentTile, leftTile);
+  //       SVG.get(parentTile.id() + "Group").add(connector);
+  //     }
   //   }
   // })
 
 }
 
-function addTile(x, y, parentNode, level, path) {
+function addTile(x, y, parentTile, level, path) {
   var canvas = SVG.get(SVG_CANVAS_ID)
 
   var tile = canvas.rect(TILE_WIDTH,TILE_HEIGHT).move(x, y);
   var position = x/150;
 
-  NODES.push({ id: tile.id(), topEdge: null, leftEdge: null, rightEdge: null, bottomEdge: null, bottomLeftEdge: null, bottomRightEdge: null, bottomNode: null, bottomLeftNode: null, bottomRightNode: null, parentNode: parentNode && parentNode.id(), level: level, position: getPosition(tile), path: path })
+  NODES.push({ id: tile.id(), topEdge: null, leftEdge: null, rightEdge: null, bottomEdge: null, bottomLeftEdge: null, bottomRightEdge: null, bottomNode: null, bottomLeftNode: null, bottomRightNode: null, parentNode: parentTile && parentTile.id(), level: level, position: getPosition(tile), path: path })
   var group = canvas.group().attr({ id: tile.id() + "Group" })
 
-  if(parentNode) {
-    var connector = connect(parentNode, tile)
+  if(parentTile) {
+    var connector = connect(parentTile, tile)
 
-    SVG.get(parentNode.id() + "Group")
+    SVG.get(parentTile.id() + "Group")
        .add(tile)
        .add(group)
        .add(connector)
