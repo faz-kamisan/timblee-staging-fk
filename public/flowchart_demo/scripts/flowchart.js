@@ -319,7 +319,7 @@ function bindDeleteTileEvent () {
 function addTile(x, y, parentTile, level, path) {
   var canvas = SVG.get(SVG_CANVAS_ID)
 
-  var tile = canvas.rect(TILE_WIDTH,TILE_HEIGHT).move(x, y);
+  var tile = canvas.rect(TILE_WIDTH,TILE_HEIGHT).move(x, y).style('fill', 'transparent');
   var position = x/150;
 
   NODES.push({ id: tile.id(), topEdge: null, leftEdge: null, rightEdge: null, bottomEdge: null, bottomLeftEdge: null, bottomRightEdge: null, bottomNode: null, bottomLeftNode: null, bottomRightNode: null, parentNode: parentTile && parentTile.id(), level: level, position: getPosition(tile), path: path })
