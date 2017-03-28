@@ -5,10 +5,9 @@ h1 { text-align: center; margin: 0 0 20px 0; padding: 20px; border-bottom: solid
 
 /* Flow Chart Section */
 #flow-chart { padding: 10px;}
-#tile-blueprint { display: none; }
+#tile-blueprint-action, #tile-blueprint-decision, #tile-blueprint-decision-left-right, #tile-blueprint-screen { display: none; }
 #tile-container{ position: relative; }
-.top-level { text-align: center; }
-.screen-tile-container { position: relative; width: 182px; height: 85px; display: inline-block; vertical-align: top; }
+.screen-tile-container, .screen-tile-rounded-container { position: relative; width: 182px; height: 85px; display: inline-block; vertical-align: top; }
 .screen-tile-svg, .screen-tile-rect { width: 182px; height: 85px; }
 .screen-tile-svg-clone { width: 100%; height: 100%; top: 0; left: 0; box-shadow: 0 0 20px rgba(222,222,222,50); -moz-box-shadow: 0 0 20px rgba(222,222,222,50); -webkit-box-shadow: 0 0 20px rgba(222,222,222,50); border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; position: absolute; z-index: 1; background: #ffffff; }
 .screen-tile-right, .screen-tile-right-hover { position: absolute; right: 0; width: 54px; height: 100%; top: 0; border-left: solid 2px #f9fafc; z-index: 2; background: #ffffff; border-top-right-radius: 5px; -moz-border-top-right-radius: 5px; -webkit-border-top-right-radius: 5px; border-bottom-right-radius: 5px; -moz-border-bottom-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; }
@@ -37,7 +36,8 @@ h1 { text-align: center; margin: 0 0 20px 0; padding: 20px; border-bottom: solid
 .screen-tile-type { position: absolute; bottom: 0; font-size: 8px; color: #9B9B9B; text-transform: uppercase; font-weight: 600; width: 128px; padding: 0 0 5px 10px; }
 .screen-comment-indicator { width: 4px; height: 4px; border-radius: 50%; -moz-border-radius: 50%; -webkit-border-radius: 50%; background: #62717F; display: inline-block; position: relative; bottom: 1px; margin-right: 1px; }
 .screen-type-text { position: absolute; left: 0; width: 128px; font-size: 12px; color: #545C64; font-weight: 600; line-height: 14px; padding: 17px 10px 0 10px; }
-.screen-tile-container-rounded { position: relative; display: table; width: 121px; height: 43px; border-radius: 59px; -moz-border-radius: 59px; -webkit-border-radius: 59px; background: #ffffff; box-shadow: 1px 1px 3px 0 rgba(106,113,127,.2); -moz-box-shadow: 1px 1px 3px 0 rgba(106,113,127,.2); -webkit-box-shadow: 1px 1px 3px 0 rgba(106,113,127,.2); text-align: center; }
+.screen-tile-container-rounded { position: relative; display: table; width: 121px; height: 50px; border-radius: 59px; -moz-border-radius: 59px; -webkit-border-radius: 59px; background: #ffffff; box-shadow: 1px 1px 3px 0 rgba(106,113,127,.2); -moz-box-shadow: 1px 1px 3px 0 rgba(106,113,127,.2); -webkit-box-shadow: 1px 1px 3px 0 rgba(106,113,127,.2); text-align: center; margin: 20px auto; }
 .screen-tile-rounded-text { font-size: 12px; font-weight: 700; color: #545C64; line-height: 14px; display: table-cell; vertical-align: middle; }
 .screen-tile-container-rounded .screen-hover-options { top: 59px; left: 50%; margin-left: -127px; }
 .screen-tile-container-rounded:hover .screen-hover-options { top: 64px; visibility: visible; opacity: 1; }
+.screen-tile-rounded-container { text-align: center; }

@@ -12,7 +12,7 @@ function init() {
 
   SVG_CANVAS_ID = svg.id()
 
-  rect1 = addTile(300, 50, null, 0, 'S')
+  rect1 = addTile(450, 50, null, 0, 'S', "#tile-blueprint-screen")
 
 
   svg.group().attr({ id: "tempGroup" })
@@ -22,6 +22,7 @@ function bindEvents() {
   bindAddScreenEvent();
   bindAddDecisionEvent();
   bindDeleteTileEvent();
+  bindAddActionEvent();
 }
 
 function bindAddScreenEvent() {
@@ -49,7 +50,7 @@ function bindAddScreenEvent() {
       updateNode(node.bottomRightNode, {parentNode: null})
     }
 
-    var newTile = addTile(newX, newY, tile, getNode(tile.id()).level + 1, newPath);
+    var newTile = addTile(newX, newY, tile, getNode(tile.id()).level + 1, newPath, "#tile-blueprint-screen");
 
     bottomNode = getNode(newTile.id());
     if(node.bottomNode || node.bottomLeftNode){
@@ -92,6 +93,73 @@ function bindAddScreenEvent() {
   })
 }
 
+function bindAddActionEvent() {
+  $(document).on('click', '.addAction', function() {
+    var tileID = $(this).closest('.tile')[0].id.slice(0, -4)
+    var tile = SVG.get(tileID);
+    var node = getNode(tileID),
+    nodeData = {bottomLeftNode: node.bottomLeftNode, bottomRightNode: node.bottomRightNode, bottomNode: node.bottomNode, bottomEdge: node.bottomEdge, bottomLeftEdge: node.bottomLeftEdge, bottomRightEdge: node.bottomRightEdge},
+
+    newX = tile.x(),
+    newY = tile.y() + TILE_HEIGHT + 50,
+    newPath = node.path + 'D';
+    var children = [];
+    var tempGroup = SVG.get("tempGroup"),
+
+    oldGroup = SVG.get(tile.id() + "Group")
+    oldGroup.each(function(i, e){
+      tempGroup.add(this)
+    })
+
+    if(node.bottomNode){
+      updateNode(node.bottomNode, {parentNode: null})
+    }else if(node.bottomLeftNode){
+      updateNode(node.bottomLeftNode, {parentNode: null})
+      updateNode(node.bottomRightNode, {parentNode: null})
+    }
+
+    var newTile = addTile(newX, newY, tile, getNode(tile.id()).level + 1, newPath, "#tile-blueprint-action");
+
+    bottomNode = getNode(newTile.id());
+    if(node.bottomNode || node.bottomLeftNode){
+      updateNode(bottomNode.id, nodeData)
+
+      if(node.bottomNode){
+        updateNode(node.bottomNode, {parentNode: newTile.id()})
+      }else{
+        updateNode(node.bottomLeftNode, {parentNode: newTile.id()})
+        updateNode(node.bottomRightNode, {parentNode: newTile.id()})
+      }
+    }
+    updateNode(node.id, {bottomNode: newTile.id(), bottomLeftEdge: null, bottomRightEdge: null, bottomRightNode: null, bottomLeftNode: null})
+
+
+    newGroup = SVG.get(newTile.id() + "Group")
+    tempGroup.each(function(i, e){
+      newGroup.add(this)
+    })
+
+    newGroup.each(function(i, e){
+      if(this.type != "g") {
+        x2 = this.x()
+        y2 = this.y() + 50 + TILE_HEIGHT
+
+        this.x(x2).y(y2)
+
+        if(this.type == "rect") {
+          $("#" + this.id() + "Tile").css({ top: y2, left: x2 });
+          updateNode(this.id(), {level: getNode(this.id()).level + 1, path: calculatePath(node.path, getNode(this.id()).path, 'D')})
+          children.push(this);
+        }
+      }
+    }, true)
+
+    for (var i = 0; i < children.length; i++) {
+      validatePositionOf(children[i])
+    };
+    resetCanvasHeightWidth();
+  })
+}
 
 function bindAddDecisionEvent() {
   $(document).on('click', '.addDecision', function() {
@@ -121,15 +189,15 @@ function bindAddDecisionEvent() {
       updateNode(node.bottomRightNode, {parentNode: null})
     }
 
-    var topTile = addTile(newX, newY, tile, getNode(tile.id()).level + 1, newPath).addClass('decisionTile'),
+    var topTile = addTile(newX, newY, tile, getNode(tile.id()).level + 1, newPath, "#tile-blueprint-decision").addClass('decisionTile'),
         newX1 = topTile.x() - 150,
         newX2 = topTile.x() + 150,
         topNode = getNode(topTile.id());
     SVG.get(topTile.id() + "Group").addClass('decisionGroup');
 
-    var leftTile = addTile(newX1, newY12, topTile, getNode(tile.id()).level + 2, newPath1).addClass('leftTile'),
+    var leftTile = addTile(newX1, newY12, topTile, getNode(tile.id()).level + 2, newPath1, "#tile-blueprint-decision-left-right").addClass('leftTile'),
     xShift = leftTile.x() - newX1,
-    rightTile = addTile(newX2 + xShift, newY12, topTile, getNode(tile.id()).level + 2, newPath2).addClass('rightTile'),
+    rightTile = addTile(newX2 + xShift, newY12, topTile, getNode(tile.id()).level + 2, newPath2, "#tile-blueprint-decision-left-right").addClass('rightTile'),
     leftNode = getNode(leftTile.id()),
     rightNode = getNode(rightTile.id());
     if(node.bottomNode || node.bottomLeftNode){
@@ -180,7 +248,7 @@ function bindDeleteTileEvent () {
     var tile = SVG.get(tileID);
     var node = getNode(tileID);
     var bottomNode = null;
-    if(tile.classes().includes('decisionTile')){
+    if(node.parentNode && tile.classes().includes('decisionTile')){
       var leftNode = getNode(node.bottomLeftNode);
       var rightNode = getNode(node.bottomRightNode);
       if (rightNode.bottomNode && leftNode.bottomNode) {
@@ -228,7 +296,7 @@ function bindDeleteTileEvent () {
           validatePositionOf(bottomTile);
         }
       }
-    }else{
+    }else if(node.parentNode){
 
       tile.remove();
       removeNode(node.id);
@@ -251,13 +319,12 @@ function bindDeleteTileEvent () {
       if(bottomNode){
         updateNode(bottomTile.id(), {parentNode: node.parentNode})
         moveTileWithGroup(bottomTile, 0, -1, 'D');
-    debugger
 
         validatePositionOf(bottomTile);
       }
     }
-
-  })
+    resetCanvasHeightWidth();
+  });
 
 }
 
@@ -383,7 +450,7 @@ function validatePositionOf(tile) {
 }
 
 
-function addTile(x, y, parentTile, level, path) {
+function addTile(x, y, parentTile, level, path, blueprintID) {
   var canvas = SVG.get(SVG_CANVAS_ID)
 
   var tile = canvas.rect(TILE_WIDTH,TILE_HEIGHT).move(x, y).style('fill', 'transparent');
@@ -405,7 +472,7 @@ function addTile(x, y, parentTile, level, path) {
                left: tile.x(),
                position: "absolute" }
 
-  div = $("#tile-blueprint").clone()
+  div = $(blueprintID).clone()
                             .css(cssProps);
 
   div[0].id = tile.id() + "Tile"
@@ -419,12 +486,14 @@ function addTile(x, y, parentTile, level, path) {
 function resetCanvasHeightWidth (argument) {
   var maxPos = calculateMAxPosAndLevel()[0],
       maxLevel = calculateMAxPosAndLevel()[1];
-  var width = (maxPos * 150 + TILE_WIDTH + 100) + 'px';
-  var height = (maxLevel * (TILE_HEIGHT + 50) + 200) + 'px';
+  var width = ((maxPos + 2) * 150 + TILE_WIDTH) + 'px';
+  var height = (maxLevel + 2) * (TILE_HEIGHT + 50) + 'px';
   SVG.get(SVG_CANVAS_ID).width(width).height(height);
   var minPos = calculateMinPos();
     if(minPos < 1){
       moveTileWithGroup(rect1, 1 - minPos, 0, null, true)
+    }else if(minPos > 3){
+      moveTileWithGroup(rect1, 3 - minPos, 0, null, true)
     }
 }
 
@@ -459,7 +528,7 @@ function connect(source, target) {
       var s = tileBottomPin(source)
       var t = tileTopPin(target)
 
-      var edge = buildConnector([[s.x, s.y], [t.x, t.y]], "Polyline" + source.id())
+      var edge = buildConnector([[s.x, s.y - 30], [t.x, t.y]], "Polyline" + source.id())
 
       updateNode(target, {topEdge: edge.id()})
       updateNode(source, {bottomEdge: edge.id()})
@@ -467,7 +536,7 @@ function connect(source, target) {
       var s = tileBottomPin(target)
       var t = tileTopPin(source)
 
-      var edge = buildConnector([[s.x, s.y], [t.x, t.y]], "Polyline" + source.id())
+      var edge = buildConnector([[s.x, s.y - 30], [t.x, t.y]], "Polyline" + source.id())
 
       updateNode(source, {topEdge: edge.id()})
       updateNode(target, {bottomEdge: edge.id()})
@@ -496,7 +565,7 @@ function connect(source, target) {
       var s = tileBottomPin(source)
       var t = tileTopPin(target)
 
-      var edge = buildConnector([[s.x, s.y], [s.x, s.y + 25], [t.x, s.y + 25], [t.x, t.y]], polyline_pos + source.id())
+      var edge = buildConnector([[s.x, s.y], [s.x, s.y + 35], [t.x, s.y + 35], [t.x, t.y + 20]], polyline_pos + source.id())
 
       updateNode(target, {topEdge: edge.id()})
       source.x() > target.x() ? updateNode(source, {bottomLeftEdge: edge.id()}) : updateNode(source, {bottomRightEdge: edge.id()})
@@ -505,7 +574,7 @@ function connect(source, target) {
      var s = tileBottomPin(target)
      var t = tileTopPin(source)
 
-     var edge = buildConnector([[s.x, s.y], [s.x, s.y + 25], [t.x, s.y + 25], [t.x, t.y]], polyline_pos + source.id())
+     var edge = buildConnector([[s.x, s.y], [s.x, s.y + 35], [t.x, s.y + 35], [t.x, t.y + 20]], polyline_pos + source.id())
 
      updateNode(source, {topEdge: edge.id()})
       target.x() > source.x() ? updateNode(target, {bottomLeftEdge: edge.id()}) : updateNode(source, {bottomRightEdge: edge.id()})

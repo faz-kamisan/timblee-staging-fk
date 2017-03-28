@@ -42,135 +42,8 @@
   <body>
     <h1>FLOWCHART USING SVG</h1>
 
-    <div id="tile-blueprint" class="tile top-level">
-      <div class="screen-tile-container">
-        <div class="screen-tile-svg-clone">
-          <div class="screen-tile-right">
-            <div class="right-options screen-tile-right-top">
-              <a href="javascript:void(0);" class="right-option-link more">
-                <img src="images/more.png">
-              </a>
-            </div>
-            <div class="right-options screen-tile-right-bottom">
-              <a href="javascript:void(0);" class="right-option-link">
-                <img src="images/comments.png">
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="screen-hover-options">
-
-          <div class="option option-1 addScreen">
-            <a href="javascript:void(0);" class="option-link">
-              <img src="images/option-1.png">
-            </a>
-          </div>
-          <div class="option option-2 addDecision">
-            <a href="javascript:void(0);" class="option-link">
-              <img src="images/option-2.png">
-            </a>
-          </div>
-
-          <div class="option option-3">
-            <a href="javascript:void(0);" class="option-link">
-              <img src="images/option-3.png">
-            </a>
-          </div>
-          <div class="option option-4">
-            <a href="javascript:void(0);" class="option-link">
-              <img src="images/option-4.png">
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <section id="flow-chart">
-      <div id="tile-container">
-      </div>
-    </section>
-
-    <div class="pl-100">
-
-      <div class="screen-tile-container">
-        <div class="screen-tile-svg-clone">
-          <div class="screen-type-text">
-            This is an action tile with a comment.
-          </div>
-          <div class="screen-tile-type">
-            <span class="screen-comment-indicator"></span> ID:001
-          </div>
-          <div class="screen-tile-right">
-            <div class="screen-tile-right-icon">
-              <img src="images/option-1.png">
-            </div>
-          </div>
-          <div class="screen-tile-right-hover">
-            <div class="right-options screen-tile-right-top">
-              <a href="javascript:void(0);" class="right-option-link more">
-                <img src="images/more.png">
-              </a>
-            </div>
-            <div class="right-options screen-tile-right-bottom">
-              <a href="javascript:void(0);" class="right-option-link">
-                <img src="images/comments.png">
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="screen-hover-options">
-          <div class="option option-1 addScreen">
-            <a href="javascript:void(0);" class="option-link">
-              <img src="images/option-1.png">
-            </a>
-          </div>
-          <div class="option option-2 addDecision">
-            <a href="javascript:void(0);" class="option-link">
-              <img src="images/option-2.png">
-            </a>
-          </div>
-          <div class="option option-3">
-            <a href="javascript:void(0);" class="option-link">
-              <img src="images/option-3.png">
-            </a>
-          </div>
-          <div class="option option-4">
-            <a href="javascript:void(0);" class="option-link">
-              <img src="images/option-4.png">
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="screen-tile-container">
-        <div class="screen-tile-svg-clone">
-          <div class="screen-type-text">
-            Curabitur arcu erat, accumsan id imperdiet et, port...
-          </div>
-          <div class="screen-tile-right">
-            <div class="screen-tile-right-icon">
-              <img src="images/option-2.png">
-            </div>
-          </div>
-          <div class="screen-tile-right-hover">
-            <div class="right-options screen-tile-right-top">
-              <a href="javascript:void(0);" class="right-option-link more">
-                <img src="images/more.png">
-              </a>
-            </div>
-            <div class="right-options screen-tile-right-bottom">
-              <a href="javascript:void(0);" class="right-option-link">
-                <img src="images/comments.png">
-              </a>
-            </div>
-          </div>
-          <div class="screen-tile-type">
-            Decision
-          </div>
-        </div>
-      </div>
-
-      <div class="screen-tile-container">
+    <div id="tile-blueprint-action" class="tile top-level">
+      <div class="screen-tile-container action">
         <div class="screen-tile-svg-clone">
           <div class="screen-type-text">
             This is an action.
@@ -207,7 +80,7 @@
               <img src="images/option-2.png">
             </a>
           </div>
-          <div class="option option-3">
+          <div class="option option-3 addAction">
             <a href="javascript:void(0);" class="option-link">
               <img src="images/option-3.png">
             </a>
@@ -219,12 +92,33 @@
           </div>
         </div>
       </div>
-
-      <br><br><br><br>
-
-      <div class="screen-tile-container-rounded">
-        <div class="screen-tile-rounded-text">
-          This is my text aaa that goes into ta..
+    </div>
+    <div id="tile-blueprint-screen" class="tile top-level">
+      <div class="screen-tile-container screen">
+        <div class="screen-tile-svg-clone">
+          <div class="screen-type-text">
+            This is an action tile with a comment.
+          </div>
+          <div class="screen-tile-type">
+            <span class="screen-comment-indicator"></span> ID:001
+          </div>
+          <div class="screen-tile-right">
+            <div class="screen-tile-right-icon">
+              <img src="images/option-1.png">
+            </div>
+          </div>
+          <div class="screen-tile-right-hover">
+            <div class="right-options screen-tile-right-top">
+              <a href="javascript:void(0);" class="right-option-link more">
+                <img src="images/more.png">
+              </a>
+            </div>
+            <div class="right-options screen-tile-right-bottom">
+              <a href="javascript:void(0);" class="right-option-link">
+                <img src="images/comments.png">
+              </a>
+            </div>
+          </div>
         </div>
         <div class="screen-hover-options">
           <div class="option option-1 addScreen">
@@ -237,7 +131,7 @@
               <img src="images/option-2.png">
             </a>
           </div>
-          <div class="option option-3">
+          <div class="option option-3 addAction">
             <a href="javascript:void(0);" class="option-link">
               <img src="images/option-3.png">
             </a>
@@ -249,7 +143,72 @@
           </div>
         </div>
       </div>
-
     </div>
+    <div id="tile-blueprint-decision" class="tile top-level">
+
+      <div class="screen-tile-container decision">
+        <div class="screen-tile-svg-clone">
+          <div class="screen-type-text">
+            Curabitur arcu erat, accumsan id imperdiet et, port...
+          </div>
+          <div class="screen-tile-right">
+            <div class="screen-tile-right-icon">
+              <img src="images/option-2.png">
+            </div>
+          </div>
+          <div class="screen-tile-right-hover">
+            <div class="right-options screen-tile-right-top">
+              <a href="javascript:void(0);" class="right-option-link more">
+                <img src="images/more.png">
+              </a>
+            </div>
+            <div class="right-options screen-tile-right-bottom">
+              <a href="javascript:void(0);" class="right-option-link">
+                <img src="images/comments.png">
+              </a>
+            </div>
+          </div>
+          <div class="screen-tile-type">
+            Decision
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="tile-blueprint-decision-left-right" class="tile top-level">
+      <div class="screen-tile-rounded-container">
+        <div class="screen-tile-container-rounded decisionLeftRight">
+          <div class="screen-tile-rounded-text">
+            yes
+          </div>
+          <div class="screen-hover-options">
+            <div class="option option-1 addScreen">
+              <a href="javascript:void(0);" class="option-link">
+                <img src="images/option-1.png">
+              </a>
+            </div>
+            <div class="option option-2 addDecision">
+              <a href="javascript:void(0);" class="option-link">
+                <img src="images/option-2.png">
+              </a>
+            </div>
+            <div class="option option-3 addAction">
+              <a href="javascript:void(0);" class="option-link">
+                <img src="images/option-3.png">
+              </a>
+            </div>
+            <div class="option option-4">
+              <a href="javascript:void(0);" class="option-link">
+                <img src="images/option-4.png">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section id="flow-chart">
+      <div id="tile-container">
+      </div>
+    </section>
+
   </body>
 </html>
