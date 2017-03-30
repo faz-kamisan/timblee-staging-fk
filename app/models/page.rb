@@ -6,8 +6,9 @@ class Page < ActiveRecord::Base
   belongs_to :sitemap
   belongs_to :section, touch: true
   belongs_to :page_type
+  has_many :screens, dependent: :nullify
   has_many :child_pages, class_name: 'Page', foreign_key: :parent_id, primary_key: :id
-  has_many :comments, as: :commentable, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy #if screen exist move comments from page to screen
   acts_as_tree order: :position
   acts_as_list scope: :parent
 

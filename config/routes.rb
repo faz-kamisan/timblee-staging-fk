@@ -37,6 +37,7 @@ Rails.application.routes.draw do
 
   resources :folders
   resources :sitemaps do
+    resources :userflows
     member do
       post :generate_pdf
       get :download_pdf

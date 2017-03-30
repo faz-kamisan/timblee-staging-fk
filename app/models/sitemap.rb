@@ -12,6 +12,7 @@ class Sitemap < ActiveRecord::Base
   belongs_to :folder
   belongs_to :user
   belongs_to :business
+  has_many :userflows, dependent: :destroy
   has_many :pages, dependent: :delete_all
   has_many :sections, dependent: :delete_all
   has_one :default_section, ->{ where(default: true) }, class_name: :Section

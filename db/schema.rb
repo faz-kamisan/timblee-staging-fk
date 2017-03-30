@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170228122148) do
+ActiveRecord::Schema.define(version: 20170328105850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20170228122148) do
     t.integer  "owner_id"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.integer  "trial_days"
+    t.float    "trial_days"
     t.boolean  "has_plan",            default: false
     t.boolean  "is_pro",              default: false
     t.integer  "free_sitemaps_count", default: 1
@@ -112,6 +112,20 @@ ActiveRecord::Schema.define(version: 20170228122148) do
     t.datetime "updated_at",     null: false
   end
 
+  create_table "screens", force: :cascade do |t|
+    t.string   "type"
+    t.string   "message"
+    t.integer  "level"
+    t.float    "position"
+    t.integer  "parent_id"
+    t.string   "path"
+    t.integer  "userflow_id"
+    t.integer  "page_id"
+    t.integer  "linking_screen_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
   create_table "sections", force: :cascade do |t|
     t.string   "name"
     t.boolean  "default"
@@ -154,6 +168,13 @@ ActiveRecord::Schema.define(version: 20170228122148) do
   end
 
   add_index "subscriptions", ["business_id"], name: "index_subscriptions_on_business_id", using: :btree
+
+  create_table "userflows", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "sitemap_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email"
