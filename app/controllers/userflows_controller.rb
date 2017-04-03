@@ -20,7 +20,7 @@ class UserflowsController < ApplicationController
       if @sitemap && params[:userflow_id]
         @userflow = Userflow.find_by(id: params[:userflow_id])
       elsif @sitemap
-        @userflow = @sitemap.userflows.order(:id).first.presence || @sitemap.userflows.build
+        @userflow = @sitemap.userflows.order(:id).first.presence || @sitemap.userflows.create
       end
     end
 

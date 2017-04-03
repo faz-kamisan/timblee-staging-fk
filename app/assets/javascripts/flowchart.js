@@ -503,7 +503,7 @@ function resetCanvasSize() {
 function saveDbChanges() {
   $.ajax({
     type: 'post',
-    url: '/sitemaps/1464/userflows/1/crud_screens',
+    url: location.href + '/crud_screens',
     data: {updated_nodes: getUpdatedNodes(), new_nodes: getNewNodes(), deleted_nodes: DELETED_NODE_IDS },
     dataType: 'json',
     success: function(result) {
