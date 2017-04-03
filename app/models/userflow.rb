@@ -7,7 +7,7 @@ class Userflow < ActiveRecord::Base
 
   private
     def set_name
-      default_name = sitemap.name + ' Userflow'
+      default_name = sitemap.name + ' Userflow '
       new_userflow_numbers = self.sitemap.userflows.where("name ~* ?", "^#{default_name}\\d+$").pluck(:name).map {|name| name.match(/\d*$/)[0].to_i}.sort
       if(new_userflow_numbers[0] == 1)
         first_unoccupied_number = (new_userflow_numbers.select.with_index { |number, index| number == index + 1 }[-1]) + 1
