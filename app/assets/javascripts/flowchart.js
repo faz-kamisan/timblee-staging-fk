@@ -2,7 +2,7 @@ COUNT = 0
 SVG_CANVAS_ID = null
 TILE_WIDTH = 182
 TILE_HEIGHT = 85
-
+ID = 0
 NODES = [];
 EDGES = [];
 DELETED_NODE_IDS = [];
@@ -35,14 +35,48 @@ function init() {
   svg.group().attr({ id: "tempGroup" });
   if (STARTING_TILE) {
     resetCanvasSize();
+    ID = calculateMaxId();
+  }else{
+    $('.default-screen-hover-options').removeClass('hide');
   }
 }
 
 function bindEvents() {
   bindAddScreenEvent();
   bindAddDecisionScreensEvent();
-  bindDeleteScreenEvent();
   bindAddActionScreenEvent();
+  bindAddInitialScreenEvent();
+  bindAddInitialDecisionScreensEvent();
+  bindAddInitialActionScreenEvent();
+  bindDeleteScreenEvent();
+}
+
+function bindAddInitialScreenEvent () {
+  $(document).on('click', '.addInitialScreen', function() {
+    $('.default-screen-hover-options').addClass('hide');
+    STARTING_TILE = addTile(450, 135, null, 1, 'S', "#tile-blueprint-page");
+    saveDbChanges();
+  });
+}
+
+function bindAddInitialActionScreenEvent () {
+  $(document).on('click', '.addInitialAction', function() {
+    $('.default-screen-hover-options').addClass('hide');
+    STARTING_TILE = addTile(450, 135, null, 1, 'S', "#tile-blueprint-action");
+    saveDbChanges();
+  });
+}
+
+function bindAddInitialDecisionScreensEvent () {
+  $(document).on('click', '.addInitialDecision', function() {
+    $('.default-screen-hover-options').addClass('hide');
+    STARTING_TILE = addTile(450, 135, null, 1, 'S', "#tile-blueprint-decision");
+    var leftTile = addTile(300, 270, STARTING_TILE, 2, 'SL', "#tile-blueprint-conclusion");
+    var rightTile = addTile(600, 270, STARTING_TILE, 2, 'SR', "#tile-blueprint-conclusion");
+    updateNode(STARTING_TILE.id(), {bottomLeftNode: leftTile.id(), bottomRightNode: rightTile.id()})
+    resetCanvasSize();
+    saveDbChanges();
+  });
 }
 
 function bindAddDecisionScreensEvent() {
@@ -335,7 +369,6 @@ function repositionParentTileOf(tile){
 }
 
 function validatePositionOf(tile){
-
   var node = getNode(tile.id()),
       position = node.position,
       level = node.level,
@@ -419,13 +452,13 @@ function addTile(x, y, parentTile, level, path, blueprintID) {
 
   var canvas = SVG.get(SVG_CANVAS_ID)
   var position = x/150;
-
-  var tile = canvas.rect(TILE_WIDTH,TILE_HEIGHT).move(x, y).style('fill', 'transparent').id('Tile' + NODES.length);
+  ID = ID + 1;
+  var tile = canvas.rect(TILE_WIDTH,TILE_HEIGHT).move(x, y).style('fill', 'transparent').id('Tile' + (ID));
 
   NODES.push({ id: tile.id(), type: blueprintID.match(/.*-(.*)/)[1], updated: false, saved: false, topEdge: null, leftEdge: null, rightEdge: null, bottomEdge: null, bottomLeftEdge: null, bottomRightEdge: null, bottomNode: null, bottomLeftNode: null, bottomRightNode: null, parentNode: parentTile && parentTile.id(), level: level, position: getPosition(tile), path: path })
   var group = canvas.group().attr({ id: tile.id() + "Group" })
 
-  if (blueprintID == 'tile-blueprint-decision') {
+  if (blueprintID == '#tile-blueprint-decision') {
     tile.addClass('decisionTile');
     group.addClass('decisionGroup');
   };
@@ -648,6 +681,12 @@ function tileBottomPin(tile) {
 
 function getPosition (tile) {
   return tile.x()/150;
+}
+
+function calculateMaxId() {
+  var regex = /\d+$/g;
+  var ids = NODES.map(function(node) { return node.id.match(regex)[0] })
+  return Math.max.apply(this, ids)
 }
 
 function calculateRightmostPos(leftNodePath, level) {
