@@ -1,94 +1,53 @@
-  COUNT = 0
-
+COUNT = 0
 SVG_CANVAS_ID = null
 TILE_WIDTH = 182
 TILE_HEIGHT = 85
 
-NODES = []
-EDGES = []
+NODES = [];
+EDGES = [];
+DELETED_NODE_IDS = [];
+STARTING_TILE = null;
 
 function init() {
-  var svg = SVG('flow-chart')
 
-  SVG_CANVAS_ID = svg.id()
+  var svg = SVG('flow-chart');
+  SVG_CANVAS_ID = svg.id();
 
-  rect1 = addTile(450, 135, null, 1, 'S', "#tile-blueprint-screen")
+  // STARTING_TILE = addTile(450, 135, null, 1, 'S', "#tile-blueprint-page");
+  var screeenData = $('#nodes').data('screens') || [];
+  for (var i = 0; i < screeenData.length; i++) {
+    var parentNode = screeenData.filter(function(node) {return node.id == screeenData[i].parent_id })[0]
+    var bottomNodesData = screeenData.filter(function(node) {return node.parent_id == screeenData[i].id });
+    var bottomNode = bottomLeftNode = bottomRightNode = null;
+    if (bottomNodesData.length == 1) {
+      var bottomNode = bottomNodesData[0].node_id
+    }else if(bottomNodesData.length == 2){
+      var bottomLeftNode = bottomNodesData[0].node_id
+      var bottomRightNode = bottomNodesData[1].node_id
+    }
+    if (parentNode) {
+      var parentNodeId = parentNode.node_id;
+    };
+    var tile = initAddTiles(screeenData[i].node_id, screeenData[i].position, screeenData[i].level, parentNodeId, screeenData[i].path, screeenData[i].node_type, bottomNode, bottomLeftNode, bottomRightNode)
 
-
-  svg.group().attr({ id: "tempGroup" })
+    if (screeenData[i].level == 1) {STARTING_TILE = tile};
+  };
+  svg.group().attr({ id: "tempGroup" });
+  if (STARTING_TILE) {
+    resetCanvasSize();
+  }
 }
 
 function bindEvents() {
   bindAddScreenEvent();
-  bindAddDecisionEvent();
-  bindDeleteTileEvent();
+  bindAddDecisionScreensEvent();
+  bindDeleteScreenEvent();
   bindAddActionScreenEvent();
 }
 
-function bindAddScreenEvent() {
-  $(document).on('click', '.addScreen', function() {
-    addScreenEvent(this, "#tile-blueprint-screen")
-  })
-}
-
-function bindAddActionScreenEvent() {
-  $(document).on('click', '.addAction', function() {
-    addScreenEvent(this, "#tile-blueprint-action")
-  })
-}
-
-function addScreenEvent (target, tileSelector) {
-  var tileID = $(target).closest('.tile')[0].id.slice(0, -4)
-  var tile = SVG.get(tileID);
-  var node = getNode(tileID),
-  nodeData = {bottomLeftNode: node.bottomLeftNode, bottomRightNode: node.bottomRightNode, bottomNode: node.bottomNode, bottomEdge: node.bottomEdge, bottomLeftEdge: node.bottomLeftEdge, bottomRightEdge: node.bottomRightEdge},
-
-  newX = tile.x(),
-  newY = tile.y() + TILE_HEIGHT + 50,
-  newPath = node.path + 'D';
-  var children = [];
-  var tempGroup = SVG.get("tempGroup"),
-
-  oldGroup = SVG.get(tile.id() + "Group")
-  oldGroup.each(function(i, e){
-    tempGroup.add(this)
-  })
-
-  if(node.bottomNode){
-    updateNode(node.bottomNode, {parentNode: null})
-  }else if(node.bottomLeftNode){
-    updateNode(node.bottomLeftNode, {parentNode: null})
-    updateNode(node.bottomRightNode, {parentNode: null})
-  }
-
-  var newTile = addTile(newX, newY, tile, getNode(tile.id()).level + 1, newPath, tileSelector);
-
-  bottomNode = getNode(newTile.id());
-  if(node.bottomNode || node.bottomLeftNode){
-    updateNode(bottomNode.id, nodeData)
-
-    if(node.bottomNode){
-      updateNode(node.bottomNode, {parentNode: newTile.id()})
-    }else{
-      updateNode(node.bottomLeftNode, {parentNode: newTile.id()})
-      updateNode(node.bottomRightNode, {parentNode: newTile.id()})
-    }
-  }
-  updateNode(node.id, {bottomNode: newTile.id(), bottomLeftEdge: null, bottomRightEdge: null, bottomRightNode: null, bottomLeftNode: null})
-
-
-  newGroup = SVG.get(newTile.id() + "Group")
-  tempGroup.each(function(i, e){
-    newGroup.add(this)
-  })
-
-  moveGroup(newTile, 0, 1, 'D', true)
-
-  resetCanvasHeightWidth();
-}
-
-function bindAddDecisionEvent() {
+function bindAddDecisionScreensEvent() {
   $(document).on('click', '.addDecision', function() {
+
     var tileID = $(this).closest('.tile')[0].id.slice(0, -4)
     var tile = SVG.get(tileID);
     var node = getNode(tileID),
@@ -115,15 +74,14 @@ function bindAddDecisionEvent() {
       updateNode(node.bottomRightNode, {parentNode: null})
     }
 
-    var topTile = addTile(newX, newY, tile, getNode(tile.id()).level + 1, newPath, "#tile-blueprint-decision").addClass('decisionTile'),
+    var topTile = addTile(newX, newY, tile, getNode(tile.id()).level + 1, newPath, "#tile-blueprint-decision"),
         newX1 = topTile.x() - 150,
         newX2 = topTile.x() + 150,
         topNode = getNode(topTile.id());
-    SVG.get(topTile.id() + "Group").addClass('decisionGroup');
 
-    var leftTile = addTile(newX1, newY12, topTile, getNode(tile.id()).level + 2, newPath1, "#tile-blueprint-decision-left-right").addClass('leftTile'),
+    var leftTile = addTile(newX1, newY12, topTile, getNode(tile.id()).level + 2, newPath1, "#tile-blueprint-conclusion"),
     xShift = leftTile.x() - newX1,
-    rightTile = addTile(newX2 + xShift, newY12, topTile, getNode(tile.id()).level + 2, newPath2, "#tile-blueprint-decision-left-right").addClass('rightTile'),
+    rightTile = addTile(newX2 + xShift, newY12, topTile, getNode(tile.id()).level + 2, newPath2, "#tile-blueprint-conclusion"),
     leftNode = getNode(leftTile.id()),
     rightNode = getNode(rightTile.id());
     if(node.bottomNode || node.bottomLeftNode){
@@ -143,13 +101,14 @@ function bindAddDecisionEvent() {
     tempGroup.each(function(i, e){
       newGroup.add(this)
     })
-    moveGroup(leftTile, (xShift - 1), 2, 'DL', true)
+    moveGroup(leftTile, (xShift - 1), 2, 'DL', 'add', false)
 
-    resetCanvasHeightWidth();
+    resetCanvasSize();
+    saveDbChanges();
   })
 }
 
-function bindDeleteTileEvent () {
+function bindDeleteScreenEvent() {
   $(document).on('click', '.more', function() {
     var tileID = $(this).closest('.tile')[0].id.slice(0, -4);
     var tile = SVG.get(tileID);
@@ -199,7 +158,7 @@ function bindDeleteTileEvent () {
         rightGroup = SVG.get(node.bottomLeftNode + "Group")
         if(bottomNode){
           updateNode(bottomTile.id(), {parentNode: node.parentNode})
-          moveTileWithGroup(bottomTile, position, -2, RemovePathValue);
+          moveTileWithGroup(bottomTile, position, -2, RemovePathValue, 'remove');
           validatePositionOf(bottomTile);
         }
       }
@@ -225,16 +184,80 @@ function bindDeleteTileEvent () {
       }
       if(bottomNode){
         updateNode(bottomTile.id(), {parentNode: node.parentNode})
-        moveTileWithGroup(bottomTile, 0, -1, 'D');
+        moveTileWithGroup(bottomTile, 0, -1, 'D', 'remove');
 
         validatePositionOf(bottomTile);
       }
     }
-    resetCanvasHeightWidth();
+    resetCanvasSize();
+    saveDbChanges();
   });
 }
 
-function moveTile(tile, xShift, yShift, AddValueForPath, toBeAdded) {
+function bindAddScreenEvent() {
+  $(document).on('click', '.addScreen', function() {
+    addScreenEvent(this, "#tile-blueprint-page")
+  })
+}
+
+function bindAddActionScreenEvent() {
+  $(document).on('click', '.addAction', function() {
+    addScreenEvent(this, "#tile-blueprint-action")
+  })
+}
+
+function addScreenEvent(target, tileSelector) {
+  var tileID = $(target).closest('.tile')[0].id.slice(0, -4)
+  var tile = SVG.get(tileID);
+  var node = getNode(tileID),
+  nodeData = {bottomLeftNode: node.bottomLeftNode, bottomRightNode: node.bottomRightNode, bottomNode: node.bottomNode, bottomEdge: node.bottomEdge, bottomLeftEdge: node.bottomLeftEdge, bottomRightEdge: node.bottomRightEdge},
+
+  newX = tile.x(),
+  newY = tile.y() + TILE_HEIGHT + 50,
+  newPath = node.path + 'D';
+  var children = [];
+  var tempGroup = SVG.get("tempGroup"),
+
+  oldGroup = SVG.get(tile.id() + "Group")
+  oldGroup.each(function(i, e){
+    tempGroup.add(this)
+  })
+
+  if(node.bottomNode){
+    updateNode(node.bottomNode, {parentNode: null})
+  }else if(node.bottomLeftNode){
+    updateNode(node.bottomLeftNode, {parentNode: null})
+    updateNode(node.bottomRightNode, {parentNode: null})
+  }
+
+  var newTile = addTile(newX, newY, tile, getNode(tile.id()).level + 1, newPath, tileSelector);
+
+  bottomNode = getNode(newTile.id());
+  if(node.bottomNode || node.bottomLeftNode){
+    updateNode(bottomNode.id, nodeData)
+
+    if(node.bottomNode){
+      updateNode(node.bottomNode, {parentNode: newTile.id()})
+    }else{
+      updateNode(node.bottomLeftNode, {parentNode: newTile.id()})
+      updateNode(node.bottomRightNode, {parentNode: newTile.id()})
+    }
+  }
+  updateNode(node.id, {bottomNode: newTile.id(), bottomLeftEdge: null, bottomRightEdge: null, bottomRightNode: null, bottomLeftNode: null})
+
+
+  newGroup = SVG.get(newTile.id() + "Group")
+  tempGroup.each(function(i, e){
+    newGroup.add(this)
+  })
+
+  moveGroup(newTile, 0, 1, 'D', 'add', false)
+
+  resetCanvasSize();
+  saveDbChanges();
+}
+
+function moveTile(tile, xShift, yShift, AddValueForPath, action) {
   var x = tile.x() + (150 * xShift),
       y = tile.y() + (50 + TILE_HEIGHT) * yShift,
       node = getNode(tile.id());
@@ -242,10 +265,10 @@ function moveTile(tile, xShift, yShift, AddValueForPath, toBeAdded) {
   tile.x(x).y(y);
   currentNode = getNode(tile.id());
   updateNode(tile.id(), { level: currentNode.level + yShift, position: getPosition(tile)});
-  if (AddValueForPath) {updateNode(tile.id(), {path: calculatePath(node.path, currentNode.path, AddValueForPath, toBeAdded)})};
+  if (AddValueForPath) {updateNode(tile.id(), {path: calculatePath(node.path, currentNode.path, AddValueForPath, action)})};
 }
 
-function moveGroup (tile, xShift, yShift, AddValueForPath, toBeAdded, istopMostTile=false) {
+function moveGroup(tile, xShift, yShift, AddValueForPath, action, istopMostTile, repos = true) {
   var moveX = 150 * xShift,
       moveY = (50 + TILE_HEIGHT) * yShift,
       node = getNode(tile.id()),
@@ -262,26 +285,26 @@ function moveGroup (tile, xShift, yShift, AddValueForPath, toBeAdded, istopMostT
         $("#" + this.id() + "Tile").css({ top: y, left: x })
         currentNode = getNode(this.id());
         updateNode(this.id(), { level: currentNode.level + yShift, position: getPosition(this)})
-        if (AddValueForPath) {updateNode(this.id(), {path: calculatePath(nodePath, currentNode.path, AddValueForPath, toBeAdded)})};
+        if (AddValueForPath) {updateNode(this.id(), {path: calculatePath(nodePath, currentNode.path, AddValueForPath, action)})};
         children.push(this);
       }
     }
   }, true);
 
   if(!istopMostTile){
-    repositionParentTileOf(tile);
+    if (repos) {repositionParentTileOf(tile)};
     for (var i = 0; i < children.length; i++) {
       validatePositionOf(children[i])
     };
   }
 }
 
-function moveTileWithGroup (tile, xShift, yShift, AddValueForPath, toBeAdded, istopMostTile=false) {
-  moveTile(tile, xShift, yShift, AddValueForPath, toBeAdded);
-  moveGroup(tile, xShift, yShift, AddValueForPath, toBeAdded, istopMostTile)
+function moveTileWithGroup(tile, xShift, yShift, AddValueForPath, action, istopMostTile=false) {
+  moveTile(tile, xShift, yShift, AddValueForPath, action);
+  moveGroup(tile, xShift, yShift, AddValueForPath, action, istopMostTile, true)
 }
 
-function repositionParentTileOf(tile) {
+function repositionParentTileOf(tile){
   var node = getNode(tile.id());
   if (node.parentNode) {
     var parentTile = SVG.get(node.parentNode),
@@ -311,7 +334,8 @@ function repositionParentTileOf(tile) {
   };
 }
 
-function validatePositionOf(tile) {
+function validatePositionOf(tile){
+
   var node = getNode(tile.id()),
       position = node.position,
       level = node.level,
@@ -341,7 +365,7 @@ function validatePositionOf(tile) {
       }
     }
     if(xShift){
-      moveTileWithGroup(rightTile, xShift, 0, null);
+      moveTileWithGroup(rightTile, xShift, 0, null, null);
       validatePositionOf(rightTile);
     }else{
       var oldNode = getNodeFromPosition(level, position, tile.id());
@@ -350,22 +374,61 @@ function validatePositionOf(tile) {
         xShift = (2 - Math.abs(oldNode.position - node.position));
         var commonParentDecisionNode = getNodeByPath(calculateCommonPath(node.path, oldNode.path));
         var rightTile = SVG.get(commonParentDecisionNode.bottomRightNode);
-        moveTileWithGroup(rightTile, xShift, 0, null);
+        moveTileWithGroup(rightTile, xShift, 0, null, null);
         validatePositionOf(rightTile);
       }
     }
   }
 }
 
-function addTile(x, y, parentTile, level, path, blueprintID) {
+function initAddTiles(id, position, level, parentNodeId, path, node_type, bottomNode, bottomLeftNode, bottomRightNode) {
   var canvas = SVG.get(SVG_CANVAS_ID)
+  var x = position * 150;
+  var y = level * 135
+  var blueprintID = "#tile-blueprint-" + node_type
+  var tile = canvas.rect(TILE_WIDTH,TILE_HEIGHT).move(x, y).style('fill', 'transparent').id(id);
 
-  var tile = canvas.rect(TILE_WIDTH,TILE_HEIGHT).move(x, y).style('fill', 'transparent');
+  NODES.push({ id: id, type: node_type, updated: false, saved: true, topEdge: null, leftEdge: null, rightEdge: null, bottomEdge: null, bottomLeftEdge: null, bottomRightEdge: null, bottomNode: bottomNode, bottomLeftNode: bottomLeftNode, bottomRightNode: bottomRightNode, parentNode: parentNodeId , level: level, position: position, path: path })
+
+  var group = canvas.group().attr({ id: tile.id() + "Group" })
+  if(parentNodeId) {
+    var connector = connect(SVG.get(parentNodeId), tile)
+    SVG.get(parentNodeId + "Group")
+       .add(tile)
+       .add(group)
+       .add(connector)
+  }
+  if (node_type == 'decision') {
+    tile.addClass('decisionTile');
+    group.addClass('decisionGroup');
+  };
+  cssProps = { top: tile.y(),
+               left: tile.x(),
+               position: "absolute" }
+
+  div = $(blueprintID).clone()
+                            .css(cssProps);
+
+  div[0].id = tile.id() + "Tile";
+
+  $('#tile-container').append(div)
+  return tile
+}
+
+function addTile(x, y, parentTile, level, path, blueprintID) {
+
+  var canvas = SVG.get(SVG_CANVAS_ID)
   var position = x/150;
 
-  NODES.push({ id: tile.id(), topEdge: null, leftEdge: null, rightEdge: null, bottomEdge: null, bottomLeftEdge: null, bottomRightEdge: null, bottomNode: null, bottomLeftNode: null, bottomRightNode: null, parentNode: parentTile && parentTile.id(), level: level, position: getPosition(tile), path: path })
+  var tile = canvas.rect(TILE_WIDTH,TILE_HEIGHT).move(x, y).style('fill', 'transparent').id('Tile' + NODES.length);
+
+  NODES.push({ id: tile.id(), type: blueprintID.match(/.*-(.*)/)[1], updated: false, saved: false, topEdge: null, leftEdge: null, rightEdge: null, bottomEdge: null, bottomLeftEdge: null, bottomRightEdge: null, bottomNode: null, bottomLeftNode: null, bottomRightNode: null, parentNode: parentTile && parentTile.id(), level: level, position: getPosition(tile), path: path })
   var group = canvas.group().attr({ id: tile.id() + "Group" })
 
+  if (blueprintID == 'tile-blueprint-decision') {
+    tile.addClass('decisionTile');
+    group.addClass('decisionGroup');
+  };
   if(parentTile) {
     var connector = connect(parentTile, tile)
 
@@ -382,7 +445,7 @@ function addTile(x, y, parentTile, level, path, blueprintID) {
   div = $(blueprintID).clone()
                             .css(cssProps);
 
-  div[0].id = tile.id() + "Tile"
+  div[0].id = tile.id() + "Tile";
 
   $('#tile-container').append(div)
 
@@ -390,21 +453,41 @@ function addTile(x, y, parentTile, level, path, blueprintID) {
   return tile
 }
 
-function resetCanvasHeightWidth (argument) {
+function resetCanvasSize() {
   var maxPos = calculateMAxPosAndLevel()[0],
       maxLevel = calculateMAxPosAndLevel()[1];
   var width = ((maxPos + 2) * 150 + TILE_WIDTH) + 'px';
   var height = (maxLevel + 2) * (TILE_HEIGHT + 50) + 'px';
   SVG.get(SVG_CANVAS_ID).width(width).height(height);
   var minPos = calculateMinPos();
-    if(minPos < 1){
-      moveTileWithGroup(rect1, 1 - minPos, 0, null, true)
-    }else if(minPos > 3){
-      moveTileWithGroup(rect1, 3 - minPos, 0, null, true)
-    }
+  if(minPos < 1){
+    moveTileWithGroup(STARTING_TILE, 1 - minPos, 0, null, null, true)
+  }else if(minPos > 3){
+    moveTileWithGroup(STARTING_TILE, 3 - minPos, 0, null, null, true)
+  }
 }
 
-function reconnectBottomEdges (tile) {
+function saveDbChanges() {
+  $.ajax({
+    type: 'post',
+    url: '/sitemaps/1464/userflows/1/crud_screens',
+    data: {updated_nodes: getUpdatedNodes(), new_nodes: getNewNodes(), deleted_nodes: DELETED_NODE_IDS },
+    dataType: 'json',
+    success: function(result) {
+      if (result['updated_ids']) {
+        for (var i = 0; i < result['updated_ids'].length; i++) {
+          updateNode(result['updated_ids'][i], {updated: false})
+        };
+      };
+      if (result['saved_ids']) {
+        for (var i = 0; i < result['saved_ids'].length; i++) {
+          updateNode(result['saved_ids'][i], {saved: true})
+        };
+      }
+    }
+  });
+}
+function reconnectBottomEdges(tile) {
   var node = getNode(tile.id());
   if (node.bottomEdge) {
     var bottomTile = SVG.get(node.bottomNode);
@@ -436,17 +519,16 @@ function connect(source, target) {
       var t = tileTopPin(target)
 
       var edge = buildConnector([[s.x, s.y - 30], [t.x, t.y]], "Polyline" + source.id())
-
-      updateNode(target, {topEdge: edge.id()})
-      updateNode(source, {bottomEdge: edge.id()})
+      updateNode(target.id(), {topEdge: edge.id()})
+      updateNode(source.id(), {bottomEdge: edge.id()})
     } else {
       var s = tileBottomPin(target)
       var t = tileTopPin(source)
 
       var edge = buildConnector([[s.x, s.y - 30], [t.x, t.y]], "Polyline" + source.id())
 
-      updateNode(source, {topEdge: edge.id()})
-      updateNode(target, {bottomEdge: edge.id()})
+      updateNode(source.id(), {topEdge: edge.id()})
+      updateNode(target.id(), {bottomEdge: edge.id()})
     }
   } else if (source.y() == target.y()) {
     if(source.x() < target.x()) {
@@ -455,16 +537,16 @@ function connect(source, target) {
 
       var edge = buildConnector([[s.x, s.y], [t.x, t.y]], "Polyline" + source.id())
 
-      updateNode(target, {leftEdge: edge.id()})
-      updateNode(source, {rightEdge: edge.id()})
+      updateNode(target.id(), {leftEdge: edge.id()})
+      updateNode(source.id(), {rightEdge: edge.id()})
     } else {
       var s = tileRightPin(target)
       var t = tileLeftPin(source)
 
       var edge = buildConnector([[s.x, s.y], [t.x, t.y]], "Polyline" + source.id())
 
-      updateNode(source, {leftEdge: edge.id()})
-      updateNode(target, {rightEdge: edge.id()})
+      updateNode(source.id(), {leftEdge: edge.id()})
+      updateNode(target.id(), {rightEdge: edge.id()})
     }
   } else {
     if(source.y() < target.y()) {
@@ -474,8 +556,8 @@ function connect(source, target) {
 
       var edge = buildConnector([[s.x, s.y], [s.x, s.y + 35], [t.x, s.y + 35], [t.x, t.y + 20]], polyline_pos + source.id())
 
-      updateNode(target, {topEdge: edge.id()})
-      source.x() > target.x() ? updateNode(source, {bottomLeftEdge: edge.id()}) : updateNode(source, {bottomRightEdge: edge.id()})
+      updateNode(target.id(), {topEdge: edge.id()})
+      source.x() > target.x() ? updateNode(source.id(), {bottomLeftEdge: edge.id()}) : updateNode(source.id(), {bottomRightEdge: edge.id()})
     } else {
     var polyline_pos = target.x() > source.x() ? 'PolylineLeft' : 'PolylineRight'
      var s = tileBottomPin(target)
@@ -483,8 +565,8 @@ function connect(source, target) {
 
      var edge = buildConnector([[s.x, s.y], [s.x, s.y + 35], [t.x, s.y + 35], [t.x, t.y + 20]], polyline_pos + source.id())
 
-     updateNode(source, {topEdge: edge.id()})
-      target.x() > source.x() ? updateNode(target, {bottomLeftEdge: edge.id()}) : updateNode(source, {bottomRightEdge: edge.id()})
+     updateNode(source.id(), {topEdge: edge.id()})
+      target.x() > source.x() ? updateNode(target.id(), {bottomLeftEdge: edge.id()}) : updateNode(source.id(), {bottomRightEdge: edge.id()})
     }
   }
 
@@ -504,11 +586,13 @@ function buildConnector(points, id) {
             .stroke({ width: 1, color: '#cccccc' })
 }
 
-function calculatePath (nodePath, path, addValue, toBeAdded) {
-  if(toBeAdded){
+function calculatePath(nodePath, path, addValue, action) {
+  if(action == 'add'){
     return nodePath.slice(0,-addValue.length) + addValue + path.slice(nodePath.slice(0,-addValue.length).length)
-  }else{
+  }else if(action == 'remove'){
     return nodePath.slice(0, -addValue.length) + path.slice(nodePath.length)
+  }else{
+    return path
   }
 }
 
@@ -566,24 +650,6 @@ function getPosition (tile) {
   return tile.x()/150;
 }
 
-function getNode(nodeID) {
-  return NODES.filter(function(node, idx){
-    return node.id == nodeID
-  })[0]
-}
-
-function removeNode(nodeID) {
-  NODES = NODES.filter(function(node, idx){
-    return node.id != nodeID
-  })
-}
-
-function getNodeByPath(path) {
-  return NODES.filter(function(node, idx){
-    return node.path == path
-  })[0]
-}
-
 function calculateRightmostPos(leftNodePath, level) {
   var nodes = NODES.filter(function(node, idx){
     return node.level == level && node.path.startsWith(leftNodePath)
@@ -602,6 +668,25 @@ function calculateLeftmostPos(rightNodePath, level) {
   }
 }
 
+function removeNode(nodeID) {
+  DELETED_NODE_IDS.push(nodeID)
+  NODES = NODES.filter(function(node, idx){
+    return node.id != nodeID
+  })
+}
+
+function getNode(nodeID) {
+  return NODES.filter(function(node, idx){
+    return node.id == nodeID
+  })[0]
+}
+
+function getNodeByPath(path) {
+  return NODES.filter(function(node, idx){
+    return node.path == path
+  })[0]
+}
+
 function getEdge(edgeID) {
   return EDGES.filter(function(edge, idx){
     return edge.id == edgeID
@@ -615,12 +700,32 @@ function getNodeFromPosition(level, position, id) {
 }
 
 function updateNode(nodeID, props) {
+  if (containsAny(Object.keys(props), ['level', 'position', 'path', 'parentNode'])){
+    props.updated = true;
+  }
   NODES = NODES.map(function(node, idx){
     if (node.id == nodeID) {
       return Object.assign(node, props)
     } else {
       return node
     }
+  })
+}
+
+function containsAny(source,target){
+    var result = source.filter(function(item){ return target.indexOf(item) > -1});
+    return (result.length > 0);
+}
+
+function getUpdatedNodes() {
+  return NODES.filter(function(node, idx){
+    return node.updated && node.saved
+  })
+}
+
+function getNewNodes() {
+  return NODES.filter(function(node, idx){
+    return !node.saved
   })
 }
 

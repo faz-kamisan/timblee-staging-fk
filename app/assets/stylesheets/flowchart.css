@@ -5,7 +5,7 @@ h1 { text-align: center; margin: 0 0 20px 0; padding: 20px; border-bottom: solid
 
 /* Flow Chart Section */
 #flow-chart { padding: 10px;}
-#tile-blueprint-action, #tile-blueprint-decision, #tile-blueprint-decision-left-right, #tile-blueprint-screen { display: none; }
+#tile-blueprint-action, #tile-blueprint-decision, #tile-blueprint-conclusion, #tile-blueprint-page { display: none; }
 #tile-container{ position: relative; }
 .screen-tile-container, .screen-tile-rounded-container { position: relative; width: 182px; height: 85px; display: inline-block; vertical-align: top; }
 .screen-tile-svg, .screen-tile-rect { width: 182px; height: 85px; }
@@ -13,6 +13,7 @@ h1 { text-align: center; margin: 0 0 20px 0; padding: 20px; border-bottom: solid
 .screen-tile-right, .screen-tile-right-hover { position: absolute; right: 0; width: 54px; height: 100%; top: 0; border-left: solid 2px #f9fafc; z-index: 2; background: #ffffff; border-top-right-radius: 5px; -moz-border-top-right-radius: 5px; -webkit-border-top-right-radius: 5px; border-bottom-right-radius: 5px; -moz-border-bottom-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; }
 .screen-tile-right-hover { transform: scale(0); -moz-transform: scale(0); -webkit-transform: scale(0); visibility: hidden; opacity: 0; transition: .35s; -moz-transition: .35s; -webkit-transition: .35s; }
 .screen-hover-options { background: #ffffff; height: 73px; width: 255px; position: absolute; box-shadow: 0 0 20px rgba(222,222,222,50); -moz-box-shadow: 0 0 20px rgba(222,222,222,50); -webkit-box-shadow: 0 0 20px rgba(222,222,222,50); left: -36px; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; top: 100px; visibility: hidden; opacity: 0; transition: .5s; -moz-transition: .5s; -webkit-transition: .5s; z-index: 99; }
+.default-screen-hover-options { background: #ffffff; height: 73px; width: 255px; position: absolute; box-shadow: 0 0 20px rgba(222,222,222,50); -moz-box-shadow: 0 0 20px rgba(222,222,222,50); -webkit-box-shadow: 0 0 20px rgba(222,222,222,50); left: 450px; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; top: 100px; transition: .5s; -moz-transition: .5s; -webkit-transition: .5s; z-index: 99; }
 .screen-hover-options:before { content: ' '; background: #ffffff; left: 50%; width: 20px; height: 20px; transform: rotate(45deg); position: absolute; top: -10px; margin-left: -10px; }
 .screen-tile-container:hover .screen-hover-options { opacity: 1; visibility: visible; top: 105px; }
 .screen-tile-container:hover .screen-tile-right-hover { opacity: 1; visibility: visible; z-index: 3; transform: scale(1); -moz-transform: scale(1); -webkit-transform: scale(1); }

@@ -1,6 +1,6 @@
 class Screen < ActiveRecord::Base
 
-  TYPES = [:action, :decision, :conclusion, :page]
+  TYPES = ['action', 'decision', 'conclusion', 'page']
 
   belongs_to :userflow
   belongs_to :page
@@ -8,7 +8,7 @@ class Screen < ActiveRecord::Base
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :page_comments, source: :comments, through: :page
 
-  validates :userflow, :message, :type, :level, :position, :path, presence: true
-  validates :type, inclusion: { in: TYPES }
+  validates :userflow, :node_type, :level, :position, :path, presence: true
+  validates :node_type, inclusion: { in: TYPES }
 
 end

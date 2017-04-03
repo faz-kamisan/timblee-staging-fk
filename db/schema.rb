@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170328105850) do
+ActiveRecord::Schema.define(version: 20170331080321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(version: 20170328105850) do
   end
 
   create_table "screens", force: :cascade do |t|
-    t.string   "type"
+    t.string   "node_type"
     t.string   "message"
     t.integer  "level"
     t.float    "position"
@@ -124,6 +124,7 @@ ActiveRecord::Schema.define(version: 20170328105850) do
     t.integer  "linking_screen_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.string   "node_id"
   end
 
   create_table "sections", force: :cascade do |t|

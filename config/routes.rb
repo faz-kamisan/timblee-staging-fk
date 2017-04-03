@@ -37,7 +37,9 @@ Rails.application.routes.draw do
 
   resources :folders
   resources :sitemaps do
-    resources :userflows
+    resources :userflows do
+      post 'crud_screens'
+    end
     member do
       post :generate_pdf
       get :download_pdf
