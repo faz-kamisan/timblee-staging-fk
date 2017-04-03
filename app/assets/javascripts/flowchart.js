@@ -190,7 +190,7 @@ function bindDeleteScreenEvent() {
         var rightGroup = SVG.get(node.bottomLeftNode + "Group");
         if(bottomNode){
           updateNode(bottomTile.id(), {parentNode: node.parentNode});
-          moveTileWithGroup(bottomTile, position, -2, RemovePathValue, 'remove');
+          moveTileWithGroup(bottomTile, position, -2, RemovePathValue, 'remove', false);
           validatePositionOf(bottomTile);
         }
       }
@@ -216,7 +216,7 @@ function bindDeleteScreenEvent() {
       }
       if(bottomNode){
         updateNode(bottomTile.id(), {parentNode: node.parentNode});
-        moveTileWithGroup(bottomTile, 0, -1, 'D', 'remove');
+        moveTileWithGroup(bottomTile, 0, -1, 'D', 'remove', false);
 
         validatePositionOf(bottomTile);
       }
