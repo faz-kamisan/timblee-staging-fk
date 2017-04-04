@@ -56,7 +56,11 @@ class Comment extends React.Component {
   }
 
   messageFormatter() {
-    return this.state.message.replace(/<strong(.*?)>(.*?)<\/strong>/g, function(match, p1, p2) { return('<span class="comment-mention">@' + p2 + '</span>') })
+    var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
+    var text1 = this.state.message.replace(exp, "<a target='_blank' href='$1'>$1</a>")
+    var exp2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim
+
+    return text1.replace(exp2, '$1<a target="_blank" href="http://$2">$2</a>').replace(/<strong(.*?)>(.*?)<\/strong>/g, function(match, p1, p2) { return('<span class="comment-mention">@' + p2 + '</span>') })
   }
 
   editMessage(message) {
