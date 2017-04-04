@@ -1,5 +1,5 @@
 set :rails_env, 'production'
-set :branch, 'production'
+set :branch, 'master'
 set :deploy_to, '/var/www/timblee'
 
 set :user, 'timblee'
