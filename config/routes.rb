@@ -1,5 +1,6 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
+  mount ForestLiana::Engine => '/forest'
   mount Sidekiq::Web, at: '/sidekiq'
 
   devise_scope :user do
@@ -37,6 +38,12 @@ Rails.application.routes.draw do
   resources :folders
   resources :sitemaps do
     member do
+      post :generate_pdf
+      get :download_pdf
+      get :generate_png
+      get :download_png
+      get :preview
+      get :preview_png
       post :share_via_email
     end
     patch 'rename'
@@ -45,12 +52,13 @@ Rails.application.routes.draw do
   end
   resources :comments, only: [:create, :update, :destroy]
   resources :pages, only: [:create, :update, :destroy]
-  resources :sections, only: [:create, :destroy]
+  resources :sections, only: [:create, :destroy, :update]
   resources :guests, only: [:create]
 
   get  'home', to: 'home#dashboard', as: 'home_dashboard'
   get  'home/intro'
-  get  'home/settings'
+  # get  'home/settings'
+
 
   scope module: :super_admin do
     get '/admin', to: 'main#dashboard', as: 'admin_dashboard'

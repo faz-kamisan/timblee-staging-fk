@@ -15,7 +15,7 @@ Notification.prototype.bindEvents = function() {
         url: this.dataset.url,
         dataType: 'script',
         data: { 'offset': this.dataset.offset },
-        success: function () {
+        complete: function () {
           _this.loading.css('display', 'none');
         }
       });

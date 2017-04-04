@@ -3,7 +3,7 @@ import { changeCollapse, updatePageName, updateFooterPageName, updatePagePersite
 import PageTile from '../components/page_tile'
 
 const mapStateToProps = (state) => {
-  return {publicShare: state.publicShare , pageType: (state.pageTypes.filter(function(pageType) { return(pageType.name == 'General 1') })[0]), maxPageUid: state.maxPageUid, sitemapId: state.id, currentUser: state.currentUser, currentGuest: state.currentGuest, activeSectionId: state.activeSectionId }
+  return {trial: state.trial, publicShare: state.publicShare , pageType: (state.pageTypes.filter(function(pageType) { return(pageType.name == 'General 1') })[0]), maxPageUid: state.maxPageUid, sitemapId: state.id, currentUser: state.currentUser, currentGuest: state.currentGuest, activeSectionId: state.activeSectionId }
 }
 
 const mapDispatchToProps = (dispatch) => {

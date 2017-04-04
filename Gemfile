@@ -21,15 +21,22 @@ gem 'react_on_rails', '~> 6.0.5'
 gem 'jc-validates_timeliness', '~> 3.1.1'
 gem 'acts_as_tree', '~> 2.4.0'
 gem 'pdfkit', '~> 0.8.2'
-gem 'wkhtmltopdf-binary', '~> 0.12.3'
 gem 'acts_as_list', '~> 0.7.4'
 gem 'mini_magick', '~> 4.5.1'
 gem 'whenever', require: false
 gem 'analytics-ruby', require: "segment"
-gem 'createsend'
+gem 'createsend', '4.1.0'
+gem 'intercom', "~> 3.5.9"
+gem 'forest_liana', "~> 1.4.7"
+gem 'imgkit', "~> 1.6.1"
+gem 'wkhtmltoimage-binary', "~> 0.12.2"
+gem 'rubyzip', '>= 1.0.0'
+gem 'zip-zip', "~> 0.3"
+gem 'gemojione', "~> 3.2.0"
+gem 'humanize', '1.3.0'
 
 group :production do
-  gem 'skylight'
+  gem 'skylight', '1.0.0'
 end
 
 
@@ -37,6 +44,7 @@ group :development, :test do
   gem 'byebug', '~> 9.0.5'
   gem 'rspec-rails', '~> 3.5'
   gem 'ultrahook'
+  gem 'unicorn', '5.2.0'
 end
 
 group :development do
@@ -48,7 +56,8 @@ group :development do
   gem 'capistrano-passenger', '~> 0.2.0'
   gem 'capistrano-sidekiq', '~> 0.5.4'
   gem 'bullet', '~> 5.2.0'
-  gem 'quiet_assets', '~> 1.1.0'
+  # gem 'quiet_assets', '~> 1.1.0'
+  gem 'wkhtmltopdf-binary', '~> 0.12.3'
 end
 
 

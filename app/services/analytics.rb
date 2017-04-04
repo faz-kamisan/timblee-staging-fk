@@ -2,6 +2,8 @@ class Analytics
   class_attribute :backend
   self.backend = ::AnalyticsRuby
 
+  ORPHAN_USERS_COMPANY = {name: 'Purgatory', id: 0}
+
   def initialize(user)
     @user = user
     @business = user.business
@@ -24,6 +26,10 @@ class Analytics
     )
   end
 
+  def track_soft_delete
+    disassociate_user_from_company
+  end
+
 
   def track_pro_plan(old_subscription)
     identify
@@ -37,7 +43,7 @@ class Analytics
           trial_days_left: (trial_days_left > 0 ? trial_days_left : 0),
           no_of_users: business.no_of_users,
           'monthly Spend': business.monthly_charge,
-          old_plan: get_plan(old_subscription)
+          old_plan: old_subscription.try(:plan)
         }
       }
     )
@@ -51,7 +57,7 @@ class Analytics
         user_id: business.owner.id,
         event: 'Starter Plan taken',
         properties: {
-          old_plan: get_plan(old_subscription),
+          old_plan: old_subscription.try(:plan),
           owner_id: business.owner.id
         }
       }
@@ -60,13 +66,30 @@ class Analytics
 
   private
 
-  def get_plan(subscription)
-    subscription.present? ? Plan::PRO : Plan::STARTER
-  end
-
   def identify
     backend.identify(identify_params)
     backend.group(group_params)
+  end
+
+  def disassociate_user_from_company
+    backend.identify(
+    {
+      user_id: user.id,
+      traits: {
+        company: {
+          id: business.id,
+          remove: true
+        }
+      }
+    })
+    backend.group(
+    {
+      user_id: user.id,
+      group_id: ORPHAN_USERS_COMPANY[:id],
+      traits: {
+        name: ORPHAN_USERS_COMPANY[:name]
+      }
+    })
   end
 
   attr_reader :user, :business
@@ -91,6 +114,7 @@ class Analytics
       email: user.email,
       name: user.full_name,
       comments_count: user.comments.count,
+      user_type: user.user_type,
       createdAt: user.created_at
     }
   end

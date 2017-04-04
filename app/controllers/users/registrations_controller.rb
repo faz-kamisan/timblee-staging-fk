@@ -88,7 +88,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   protected
 
   def configure_sign_up_params
-    devise_parameter_sanitizer.for(:sign_up) << :full_name
+    devise_parameter_sanitizer.for(:sign_up) << [:full_name, :business_name]
   end
 
   def configure_account_update_params

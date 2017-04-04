@@ -1,0 +1,31 @@
+<% sitemap_number = if level == 0
+    nil
+  elsif level == 1
+    "#{ index + 1 }"
+  else
+    parent_sitemap_number + ".#{index + 1}"
+  end
+  display_sitemap_number = if level == 1
+    "#{sitemap_number}.0"
+  else
+    sitemap_number
+  end
+  @display_sitemap_page_number ||=[]
+  @display_sitemap_page_number[page.id] = display_sitemap_number
+%>
+  <div class="page-container level-<%= level %> <%= (page.children.where.not(state: :archived).length == 0) ? ' no-children' : '' %> <%= (level > 0) ? ' border-level-' + ((level % 10) == 0 ? 10 : (level % 10)).to_s : ''  %> " data-zoom='<%=@zoom[section.id]%>'>
+    <%= render partial: 'page_tile', locals: {page: page, sitemap_number: display_sitemap_number, level: level} %>
+    <div class='<%= "gutter #{ page.children.where.not(state: :archived).length > 0 ? 'with-children' : '' }" %>' ></div>
+    <div class="level-support"></div>
+    <% if !page.alt_section_id || page.alt_section_id == section.id %>
+      <div class="parent parent-<%= level %> parent-id-<%= page.id %>">
+        <% page.children.where.not(state: :archived).where(section: section).order(:position).each_with_index do |item, index| %>
+          <div class="child-page">
+            <div class="page-container-wrapper">
+              <%= render partial: 'page_container', locals: {page: item, index: index, parent_sitemap_number: sitemap_number, section: section, level: level + 1} %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>

@@ -1,3 +1,3 @@
-$('.already-emailed').html("<%= j render('sitemaps/sitemap_share_users_list')%>")
-
+$('a.sitemap-share-modal-link*[data-sitemap-id="<%= @sitemap.id %>"]').data('sharedUsers', "<%= @sitemap.sitemap_shared_users.pluck(:user_email).join(',') %>")
+$('a.sitemap-share-modal-link*[data-id="<%= @sitemap.id %>"]').data('sharedUsers', "<%= @sitemap.sitemap_shared_users.pluck(:user_email).join(',') %>")
 document.setFlash("<%= flash[:notice] %>")

@@ -12,14 +12,14 @@
           Back
         </a>
         <h4 class="modal-title">Starter plan</h4>
-        <p class="modal-message">You have chosen the Starter plan. It's perfect if you only plan the <br> occassional web project and don't work in a team. You can always upgrade later.</p>
+        <p class="modal-message">You have chosen the Starter plan. It's suitable if you're planning a <br> simple site as a one-off, by yourself. You can upgrade any time.</p>
       </div>
       <div class="modal-body">
         <%= form_tag businesses_subscription_path, { method: :post, class: 'pay' } do %>
           <ul class="starter-plan-list">
             <li>
               <span class="icon-close"></span>
-              You won't have unlimited sitemaps. You'll only be able to have three sitemaps at any one time
+              You won't have unlimited sitemaps. You'll only be able to have <%= current_business.free_sitemaps_count_in_words %> at any one time
             </li>
             <li>
               <span class="icon-close"></span>

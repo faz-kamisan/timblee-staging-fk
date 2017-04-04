@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href=<%= root_url %> target="_blank" />
+  <%= javascript_include_tag 'png', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag  'canvas_export_png', media: 'all', 'data-turbolinks-track' => true %>
+</head>
+<body id='body' class="png">
+  <%= yield %>
+</body>
+  <%= render 'layouts/emoji_assets_path' %>
+</html>

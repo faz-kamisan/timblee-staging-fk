@@ -35,6 +35,15 @@ en:
       duplicate:
         success: Duplicate Sitemap created successfully
         failure: Couldn't duplicate sitemap
+      generate_pdf:
+        failure: Something went wrong.
+      generate_png:
+        failure: Something went wrong.
+      download_pdf:
+        failure: Something went wrong.
+      download_png:
+        failure: Something went wrong.
+
     comments:
       not_found: Can't find comment
       create:
@@ -112,7 +121,7 @@ en:
       users:
         destroy:
           not_found: User not found.
-          success: User successfully soft deleted.
+          success: User successfully deleted.
           failure: User cannot be deleted.
           self_destroy: You Cannot delete yourself.
         update:
@@ -128,7 +137,7 @@ en:
           failure: Couldn't sent reset link
 
     pro_plan_success: "You are now on the Pro plan with %{users} users."
-    account_locked:   Your trial period is finished. Now either switch to Pro Plan or delete extra users and sitemaps to continue.
+    account_locked:  ''
   activerecord:
       errors:
         models:

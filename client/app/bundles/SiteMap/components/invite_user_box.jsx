@@ -92,7 +92,7 @@ class InviteUserBox extends React.Component {
         </div>
         <div className="already-emailed">
           { (this.props.sharedUsers.length > 0) &&
-            <p>These people have already been emailed</p>
+            <p>These people have already been emailed:</p>
           }
           <ul>
             {renderdsharedUsers}

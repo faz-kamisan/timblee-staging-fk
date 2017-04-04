@@ -3,6 +3,7 @@ class Users::SessionsController < Devise::SessionsController
   before_action :redirect_to_dashboard_if_login, except: [:destroy]
   prepend_before_action :destroy_proxy_user_id_in_session, only: [:destroy]
   skip_before_action :lock_business_after_trial_end, only: [:create, :destroy]
+  before_action :delete_cookie, only: [:destroy]
 # before_filter :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
@@ -34,6 +35,10 @@ class Users::SessionsController < Devise::SessionsController
 
   def destroy_proxy_user_id_in_session
     session[:proxy_user_id] = nil
+  end
+
+  def delete_cookie
+    cookies.delete EXPIRY_BANNER_COOKIE_NAME
   end
 
   # DELETE /resource/sign_out

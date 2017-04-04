@@ -36,6 +36,7 @@ class PageChangeModal extends React.Component {
     });
     this.setState({currentPageType: pageType})
     this.props.onPageTypeChange(this.props.pageTree, pageType)
+    $('#page-change-modal').modal('hide')
   }
 
   render() {

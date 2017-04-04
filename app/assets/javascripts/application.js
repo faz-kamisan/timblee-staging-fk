@@ -38,6 +38,9 @@
 //= require animate_shared_view
 //= require jquery.mentions
 //= require emoji
+//= require analytics
+//= require modalCenter
+//= require comment
 
 $(window).on('load resize', function() {
   var $bussinessName = $('.business-name');

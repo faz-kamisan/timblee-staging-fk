@@ -4,6 +4,8 @@ class Admin::UsersController < ApplicationController
   before_filter :load_user, only: [:destroy, :edit, :update]
   before_filter :restrict_current_user, only: [:destroy]
   after_filter :track, only: [:destroy]
+  after_filter :track_user_custom_fields, only: [:update]
+
   def edit
   end
 
@@ -43,8 +45,30 @@ class Admin::UsersController < ApplicationController
 
   private
 
+    def intercom_user
+      IntercomClient.users.find(user_id: @user.id)
+    end
+
+    def track_user_custom_fields
+      user = intercom_user
+      user.custom_attributes["user_type"] = @user.user_type
+      IntercomClient.users.save(user)
+      super
+    end
+
+    def unsubscribe_from_emails
+      user = intercom_user
+      user.unsubscribed_from_emails = true
+      IntercomClient.users.save(user)
+    end
+
+
     def track
-      analytics.track_pro_plan(Plan::PRO) if current_business.is_pro_plan? && @user.destroyed?
+      if @user.deleted_at
+        Analytics.new(@user).track_soft_delete
+        unsubscribe_from_emails
+        analytics.track_user
+      end
     end
 
     def restrict_current_user

@@ -144,8 +144,9 @@ function createNewSection(sections, id, sectionId, newSectionName, timeStamp) {
   var page = getNodeById(treeCopy, id)
   var parentPage = getNodeById(treeCopy, page.parentId)
   page.alt_section_id = timeStamp
+  page.collapsed = false
   traverse(page, function(node) {
-    if(page.id != node.id) {
+    if(page.id != node.id && node.section_id == sectionId) {
       node.section_id = timeStamp
     }
   })
@@ -160,10 +161,17 @@ function updateSectionId(sections, oldId, newId) {
   section.id = newId;
   section.pageTree.alt_section_id = newId;
   traverse(section.pageTree, function(node) {
-    if(section.pageTree.id != node.id) {
+    if(section.pageTree.id != node.id && node.section_id == oldId) {
       node.section_id = newId
     }
   })
+  return sectionsCopy;
+}
+
+function updateSectionName(sections, section_id, newName) {
+  var sectionsCopy = Object.assign([], sections);
+  var section = sectionsCopy.filter(function(section) { return(section.id == section_id) })[0];
+  section.name = newName;
   return sectionsCopy;
 }
 
@@ -174,7 +182,7 @@ function removeSection(sections, id) {
   var sectionPage = getNodeByAltSectionId(defaultSection.pageTree, id)
   sectionPage.alt_section_id = null
   traverse(sectionPage, function(node) {
-    if(sectionPage.id != node.id) {
+    if(sectionPage.id != node.id && node.section_id == id) {
       node.section_id = sectionPage.section_id
     }
   })
@@ -250,4 +258,4 @@ function getNodeByPosition(tree, position){
 }
 
 
-export { addPage, removePage, updatePagePosition, updatePageName, traverse, updateCollapse, updatePageId, addPageComment, updateCommentId, updatePageType, createNewSection, updatePageState, deletePageComment, updatePageComment, updatePagePersitence, removeSection, updateSectionId, getNodeByAltSectionId, getNodeById }
+export { addPage, removePage, updatePagePosition, updatePageName, traverse, updateCollapse, updatePageId, addPageComment, updateCommentId, updatePageType, createNewSection, updatePageState, deletePageComment, updatePageComment, updatePagePersitence, removeSection, updateSectionId, updateSectionName, getNodeByAltSectionId, getNodeById }

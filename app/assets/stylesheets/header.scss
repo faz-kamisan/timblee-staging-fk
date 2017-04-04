@@ -1,4 +1,10 @@
 /* Header */
+.with-dark-header {
+  .main-header {
+    top: 64px ;
+  }
+}
+
 .main-header {
   height: 95px;
   background: $primaryWhite;
@@ -187,6 +193,15 @@
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.35);
   font-family: "proxima-nova",sans-serif!important;
   position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  top: 16px;
+  @include animate(.35s);
+  &.show-this {
+    opacity: 1;
+    visibility: visible;
+    top: 26px;
+  }
   .ui-widget-content {
     position: relative;
     background: transparent!important;
@@ -311,5 +326,90 @@
     font-size: 10px;
     color: #d6d8da;
     line-height: 16px;
+  }
+}
+
+.expiring-header {
+  height: 64px;
+  z-index: 20;
+  background: #262B30;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 13px 0 30px;
+  transition: top 0.35s ease 0s;
+  -moz-transition: top 0.35s ease 0s;
+  -webkit-transition: top 0.35s ease 0s;
+  .clearfix {
+    width: 100%;
+  }
+  p {
+    color: #ffffff;
+    font-size: 14px;
+    margin: 5px 0 0 0;
+    line-height: 24px;
+    img {
+      width: 24px;
+      height: auto;
+      vertical-align: top;
+      margin-right: 10px;
+      position: relative;
+      top: -1px;
+    }
+  }
+
+  .btn {
+    height: 30px;
+    padding: 0;
+    line-height: 28px;
+    min-width: 172px;
+    font-size: 14px;
+  }
+
+  .btn-grey.btn-pink {
+    background: $primaryPink;
+    border-color: $primaryPink;
+    color: $primaryWhite;
+    &:hover {
+      background: transparent;
+      color: $primaryPink;
+    }
+  }
+
+  .btn-grey.btn-white {
+    background: transparent;
+    border-color: $primaryWhite;
+    color: $primaryWhite;
+    margin-right: 21px;
+    &:hover {
+      background: $primaryWhite;
+      color: #262B30;
+    }
+  }
+
+  .icon-close {
+    color: $primaryWhite;
+    font-size: 22px;
+    position: relative;
+    top: 6px;
+    &:hover {
+      color: $primaryPink;
+    }
+  }
+
+  .btn-grey {
+    background: transparent;
+    border-color: #62717F;
+    color: #62717F;
+    &:hover {
+      color: $primaryWhite;
+      background: #62717F;
+    }
+    + .btn-grey {
+      margin-left: 8px;
+    }
   }
 }

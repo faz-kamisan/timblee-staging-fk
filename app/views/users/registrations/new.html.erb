@@ -7,7 +7,7 @@
           <%= image_tag('Timblee-icon.svg', class: 'logo-inner') %>
         </div>
         <h1 class="modal-heading">
-          Try Timblee free for <%= request.path == new_user_registration_60_day_trial_path ? 60 : params[:trial_days] || 30 %> days and create beautiful <br> visual sitemaps for your web projects.
+          Try Timblee free for <%= (request.path == new_user_registration_60_day_trial_path || params[:trial_days] == '60') ? 60 : 30 %> days and create beautiful <br> visual sitemaps for your web projects.
         </h1>
         <p class="small">
           No credit card required. Invite unlimited team <br> members to try it out with you.
@@ -18,6 +18,10 @@
             <span class='error-message'><%= f.object.errors[:full_name].join(',') %></span>
           </div>
           <div class="form-group">
+            <%= f.text_field :business_name, placeholder: 'Business name', class: 'form-control' %>
+            <span class='error-message'><%= f.object.errors[:business_name].join(',').html_safe %></span>
+          </div>
+          <div class="form-group">
             <%= f.text_field :email, placeholder: 'Your work email', class: 'form-control' %>
             <span class='error-message'><%= f.object.errors[:email].join(',').html_safe %></span>
           </div>
@@ -26,7 +30,7 @@
            <span class='error-message'><%= f.object.errors[:password].join(',') %></span>
           </div>
 
-          <%= hidden_field_tag :trial_days, request.path == new_user_registration_60_day_trial_path ? 60 : params[:trial_days] || 30 %>
+          <%= hidden_field_tag :trial_days, (request.path == new_user_registration_60_day_trial_path || params[:trial_days] == '60') ? 60 : 30 %>
 
           <div class="form-group">
             <%= f.submit "Sign up for free", class: 'btn btn-pink btn-block' %>

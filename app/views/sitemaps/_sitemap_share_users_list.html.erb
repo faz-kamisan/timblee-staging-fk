@@ -1,6 +1,6 @@
 <% if @sitemap %>
   <% if @sitemap.sitemap_shared_users.length > 0 %>
-    <p>These people have already been emailed</p>
+    <p>These people have already been emailed:</p>
   <% end %>
   <ul>
     <% @sitemap.sitemap_shared_users.each_with_index do |user, index| %>

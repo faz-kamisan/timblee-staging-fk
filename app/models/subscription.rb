@@ -1,5 +1,6 @@
 class Subscription < ActiveRecord::Base
   belongs_to :business
+  belongs_to :user
 
   validates :no_of_users, :quantity, :business, presence: true
 
@@ -20,6 +21,10 @@ class Subscription < ActiveRecord::Base
 
   def update_end_time(time)
     update(end_at: time)
+  end
+
+  def plan
+    Plan::PRO
   end
 
 end

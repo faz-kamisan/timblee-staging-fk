@@ -1,4 +1,5 @@
 class Comment < ActiveRecord::Base
+
   belongs_to :commentable, polymorphic: true, touch: true
   belongs_to :commenter, polymorphic: true
   validates :message, :commentable, :commenter, presence: true
@@ -8,12 +9,21 @@ class Comment < ActiveRecord::Base
   scope :order_by_created_at, -> { order('created_at ASC') }
 
   after_create :create_comment_notification
+  after_create :create_guests_sitemaps, if: Proc.new {|comment| comment.commenter_type == 'Guest' }
   after_update :update_comment_notification, if: :message_changed?
 
   after_save :notify_mentioned_users, if: :message_changed?
 
   def to_react_data
-    { id: id, message: CGI.unescapeHTML(message), created_at: created_at_decorated, commenter: { fullName: commenter.full_name, email: commenter.email, avatar: (commenter_type == 'User' ? commenter.avatar : nil) } }
+    { id: id, message: CGI.unescapeHTML(message), created_at: created_at_decorated, commenter: { fullName: cached_commenter.full_name, email: cached_email, avatar: (commenter_type == 'User' ? cached_commenter.avatar : nil) } }
+  end
+
+  def cached_commenter
+    commenter_type == 'User' ? commenter || User.unscoped.find_by(id: commenter_id) : commenter
+  end
+
+  def cached_email
+    cached_commenter.email || cached_commenter.preserved_email
   end
 
   def sitemap
@@ -51,6 +61,9 @@ class Comment < ActiveRecord::Base
   end
 
   private
+    def create_guests_sitemaps
+      self.commenter.sitemaps << sitemap if commenter.sitemaps.find_by(id: sitemap.id).blank?
+    end
 
     def create_comment_notification
       Notification.generate(kind: :add_comment, sitemap: sitemap, actor: commenter, resource: commentable)

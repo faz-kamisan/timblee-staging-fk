@@ -151,6 +151,9 @@ class PageTile extends React.Component {
     if(this.props.currentUser || this.props.currentGuest) {
       this.props.setSelectedPage(this.props.pageTree)
       $('#page-comments-modal').modal('show')
+    } else if(this.props.trial){
+      $('.modal').modal('hide');
+      $('#user-signup-modal').modal('show');
     } else {
       this.props.setShowGuestInfoForm(true)
       $('.modal').modal('hide');
@@ -237,7 +240,7 @@ class PageTile extends React.Component {
   render() {
     if(this.props.childrenLength > 0) {
       return (
-        <div className={"page-tile " + (((this.props.level == 0) && (this.props.childrenLength % 2 == 0)) ? 'even-tree' : 'odd-tree') + (((this.props.level > 7) && (this.props.pageTree.alt_section_id)) ? " level-with-section" : "") } onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile'>
+        <div className={"page-tile " + (((this.props.level == 0) && (this.props.childrenLength % 2 == 0)) ? 'even-tree' : 'odd-tree') + (((this.props.level > 4) && (this.props.pageTree.alt_section_id)) ? " level-with-section" : "") } onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile'>
           { this.props.publicShare && (this.props.level == 0) && (!this.props.pageTree.footer) &&
             <ConnectedIntroductionScreenOne />
           }
@@ -290,13 +293,11 @@ class PageTile extends React.Component {
                     </span>
                   </li>
                 }
-                { !this.props.trial &&
-                  <li className="second-item">
-                    <span className="icon-page-comments tile-icons" onClick={this.checkUserOrGuest}>
-                      <span className="card-tooltip">View Comments</span>
-                    </span>
-                  </li>
-                }
+                <li className="second-item">
+                  <span className="icon-page-comments tile-icons" onClick={this.checkUserOrGuest}>
+                    <span className="card-tooltip">Comments &amp; Notes</span>
+                  </span>
+                </li>
               </ul>
             </div>
           }
@@ -305,13 +306,11 @@ class PageTile extends React.Component {
               <div className="close-card-overlay">
                 <a href="javascript:void(0)" className="icon-close" onClick={this.closeOverLay}></a>
               </div>
-              { !this.props.trial &&
-                <a href="javascript:void(0)" className="icon-page-comments" onClick={this.checkUserOrGuest} data-toggle='modal'>
-                  <span className="card-tooltip">View Comments</span>
-                </a>
-              }
+              <a href="javascript:void(0)" className="icon-page-comments" onClick={this.checkUserOrGuest} data-toggle='modal'>
+                <span className="card-tooltip">Comments &amp; Notes</span>
+              </a>
               <a href="#page-change-modal" className="icon-page-change" onClick={this.setSelectedPage} data-toggle='modal'>
-                <span className="card-tooltip">Change Page</span>
+                <span className="card-tooltip">Change Page Type</span>
               </a>
               {
                 !(this.props.level == 0) && !this.props.pageTree.alt_section_id &&
@@ -332,7 +331,7 @@ class PageTile extends React.Component {
       );
     } else {
       return (
-        <div className={ "page-tile " + (((this.props.level > 7) && (this.props.pageTree.alt_section_id)) ? " level-with-section" : "" )} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile'>
+        <div className={ "page-tile " + (((this.props.level > 4) && (this.props.pageTree.alt_section_id)) ? " level-with-section" : "" )} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} ref='pageTile'>
           { this.props.publicShare && (this.props.level == 0) && (!this.props.pageTree.footer) &&
             <ConnectedIntroductionScreenOne />
           }
@@ -385,13 +384,11 @@ class PageTile extends React.Component {
                     </span>
                   </li>
                 }
-                { !this.props.trial &&
-                  <li className="second-item">
-                    <span className="icon-page-comments tile-icons" onClick={this.checkUserOrGuest}>
-                      <span className="card-tooltip">View Comments</span>
-                    </span>
-                  </li>
-                }
+                <li className="second-item">
+                  <span className="icon-page-comments tile-icons" onClick={this.checkUserOrGuest}>
+                    <span className="card-tooltip">Comments &amp; Notes</span>
+                  </span>
+                </li>
               </ul>
             </div>
           }
@@ -400,13 +397,11 @@ class PageTile extends React.Component {
               <div className="close-card-overlay">
                 <a href="javascript:void(0)" className="icon-close" onClick={this.closeOverLay}></a>
               </div>
-              { !this.props.trial &&
-                <a href="javascript:void(0)" className="icon-page-comments" onClick={this.checkUserOrGuest} data-toggle='modal'>
-                  <span className="card-tooltip">View Comments</span>
-                </a>
-              }
+              <a href="javascript:void(0)" className="icon-page-comments" onClick={this.checkUserOrGuest} data-toggle='modal'>
+                <span className="card-tooltip">Comments &amp; Notes</span>
+              </a>
               <a href="#page-change-modal" className="icon-page-change" onClick={this.setSelectedPage} data-toggle='modal'>
-                <span className="card-tooltip">Change Page</span>
+                <span className="card-tooltip">Change Page Type</span>
               </a>
               {
                 !(this.props.level == 0) && !this.props.pageTree.alt_section_id &&

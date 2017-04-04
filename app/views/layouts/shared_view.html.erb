@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=yes">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'webpack-vendor' %>
   <% if Rails.env == 'staging' %>
     <%= javascript_include_tag 'staging_hotjar', 'data-turbolinks-track' => true %>
   <% elsif Rails.env == 'production' %>

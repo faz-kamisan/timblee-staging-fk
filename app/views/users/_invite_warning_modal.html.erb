@@ -10,11 +10,11 @@
         <h4 class="warning">A warning about the starter plan</h4>
         <p>You currently have more sitemaps or users(or both) than the Starter plan allows.</p>
         <p>Since you're on your free, unlimited trial till <%= current_business.trial_end_at.strftime('%d %b %Y') %>, you will be able to choose the free Starter plan for now. However after your trial finishes, you'll either need to upgrade to the
-          <%= link_to 'Pro plan', "#choose-plan-modal", 'data-toggle': "modal", 'data-dismiss': 'modal' %>
+          <%= link_to 'Pro plan', "#account-summary-modal", 'data-toggle': "modal", 'data-dismiss': 'modal' %>
          or delete any sitemaps and users over the Starter plan limits.</p>
         <div class="warning-footer">
           <div class="warning-left">
-              <%= link_to 'Choose Pro instead', "#choose-plan-modal", class: 'btn btn-left', 'data-toggle': "modal", 'data-dismiss': 'modal' %>
+              <%= link_to 'Choose Pro instead', "#account-summary-modal", class: 'btn btn-left', 'data-toggle': "modal", 'data-dismiss': 'modal' %>
           </div>
           <div class="warning-right">
           <%= link_to 'Choose Starter Plan', "", 'data-toggle': "modal", 'data-dismiss': 'modal', class: 'invite-link btn btn-right' %>

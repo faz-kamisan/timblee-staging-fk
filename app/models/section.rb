@@ -41,6 +41,10 @@ class Section < ActiveRecord::Base
     }
   end
 
+  def level_one_pages
+    root_page.children.where.not(state: :archived).count
+  end
+
   private
 
     def archive_pages
@@ -50,6 +54,6 @@ class Section < ActiveRecord::Base
     end
 
   def unlink_root_page
-    root_page.update(alt_section_id: nil)
+    pages.update_all(section_id: root_page.section_id) && root_page.update_column(:alt_section_id, nil)
   end
 end

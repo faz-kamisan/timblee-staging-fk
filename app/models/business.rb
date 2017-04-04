@@ -1,4 +1,5 @@
 class Business < ActiveRecord::Base
+
   belongs_to :owner, class_name: :User
 
   has_many :users, dependent: :destroy
@@ -8,14 +9,29 @@ class Business < ActiveRecord::Base
   has_many :cards, dependent: :destroy
   has_one :current_subscription, ->{ where('subscriptions.end_at >= :today', { today: Time.current }) }, class_name: :Subscription
   has_one :active_card, -> { order(created_at: :desc) }, class_name: :Card
+  after_create :create_initial_subscription
+  after_commit :create_default_sitemaps, on: :create
+
   mount_uploader :logo, AvatarUploader
 
+  def create_default_sitemaps
+    BusinessDefaultSitemapsService.new(self).add_default_sitemaps
+  end
+
   def account_locked?
-    !in_trial_period? && is_starter_plan? && !allow_downgrade_to_starter?
+    !in_trial_period? && (!has_plan || (is_pro && !cards.present?) || (is_starter_plan? && !allow_downgrade_to_starter?))
   end
 
   def no_of_users
     users.count
+  end
+
+  def in_trial_without_card_for_more_than_15_days?
+    in_trial_period_without_any_card? && Time.current > created_at + 15.days
+  end
+
+  def free_sitemaps_count_in_words
+    "#{free_sitemaps_count.humanize} #{'sitemap'.pluralize(free_sitemaps_count)}"
   end
 
   def active_subscription
@@ -38,6 +54,10 @@ class Business < ActiveRecord::Base
     created_at + trial_days.days
   end
 
+  def days_till_trial_end
+    trial_days - ((Time.current - created_at)/86400).to_i
+  end
+
   def in_trial_period?
     trial_end_at > Time.current
   end
@@ -46,8 +66,23 @@ class Business < ActiveRecord::Base
     in_trial_period? && !has_plan
   end
 
+  def in_trial_period_without_any_card?
+    in_trial_period? && !cards.present?
+  end
+
   def plan_name
-    is_pro ? Plan::PRO : has_plan ? Plan::STARTER : nil
+    if is_pro
+      Plan::PRO
+    elsif has_plan
+      case free_sitemaps_count
+        when 3
+          Plan::STARTER3
+        else
+          Plan::STARTER1
+      end
+    else
+      nil
+    end
   end
 
   def is_pro_plan?
@@ -55,11 +90,11 @@ class Business < ActiveRecord::Base
   end
 
   def is_starter_plan?
-    !is_pro && (has_plan || !in_trial_period?)
+    !is_pro && has_plan
   end
 
   def allow_downgrade_to_starter?
-    in_trial_period? || (users.count == 1 && sitemaps.count <= 3)
+    in_trial_period? || (users.count == 1 && sitemaps.count <= free_sitemaps_count)
   end
 
   def monthly_charge
@@ -71,7 +106,7 @@ class Business < ActiveRecord::Base
   end
 
   def allow_more_sitemaps
-    if is_pro_plan? || sitemaps.count < 3 || (in_trial_period? && !has_plan)
+    if is_pro_plan? || sitemaps.count < free_sitemaps_count || (in_trial_period? && !has_plan)
       'yes'
     elsif in_trial_period?
       'warn'
@@ -80,8 +115,15 @@ class Business < ActiveRecord::Base
     end
   end
 
+  def activate_pro_plan(user)
+    assign_attributes(is_pro: true, has_plan: true)
+    subscriptions.build(no_of_users: users.count, quantity: Business.monthly_charge(users.count), user: user)
+    StripePaymentService.new(self).update_subscription
+    LoggerExtension.stripe_log "Subscription on stripe created/updated successfully"
+  end
+
   def allow_more_sitemaps?
-    is_pro_plan? || in_trial_period? || sitemaps.count < 3
+    is_pro_plan? || in_trial_period? || sitemaps.count < free_sitemaps_count
   end
 
   def self.monthly_charge(no_of_users)
@@ -93,8 +135,7 @@ class Business < ActiveRecord::Base
       id: id,
       logo: logo,
       name: name,
-      users: users.active.map(&:to_react_data),
-      guestUsers: Guest.all.map(&:to_react_data)
+      users: users.active.map(&:to_react_data)
     }
   end
 
@@ -104,4 +145,20 @@ class Business < ActiveRecord::Base
     assign_attributes(is_pro: true, has_plan: true)
   end
 
+  def force_destroy
+    ActiveRecord::Base.transaction do
+      self.owner.force_destroy = true
+      self.owner.destroy
+      self.destroy
+    end
+  end
+
+
+  private
+
+    def create_initial_subscription
+      assign_attributes(is_pro: true, has_plan: true)
+      subscriptions.build(no_of_users: 1, quantity: Business.monthly_charge(1), user: owner)
+      StripePaymentService.new(self).create_customer_with_initial_subscription
+    end
 end

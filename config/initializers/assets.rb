@@ -39,6 +39,14 @@ Rails.application.config.assets.precompile += %w(
   dragula.min.js
   dragula.min.css
   webpack-bundle.js
+  webpack-vendor.js
+  canvas_export.scss
+  canvas_export_png.scss
+  pdf.js
+  png.js
+  banner.js
+  editor.scss
+  comment.js
 )
 # Add client/assets/ folders to asset pipeline's search path.
 # If you do not want to move existing images and fonts from your Rails app

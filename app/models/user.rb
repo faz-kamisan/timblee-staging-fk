@@ -3,21 +3,20 @@ class User < ActiveRecord::Base
 
   acts_as_paranoid
 
-  attr_accessor :admin_access, :trial_days
+  attr_accessor :admin_access, :trial_days, :force_destroy, :business_name
 
   belongs_to :business, autosave: true
 
   has_many :notifications, as: :recipient
 
   has_many :sitemaps
-  has_many :shared_sitemaps, through: :sitemap_invites, source: :sitemap
   has_many :comments, as: :commenter
   mount_uploader :avatar, AvatarUploader
 
   before_create :set_is_admin, unless: :business_id
   before_create :add_business, unless: :business_id
   after_create :set_confirmation_instructions_to_be_sent, unless: [:confirmed?, :invitation_not_accepted?]
-  before_destroy :restrict_owner_destroy
+  before_destroy :restrict_owner_destroy, unless: :forced?
   before_destroy :clear_email!
   before_restore :set_email!
   after_destroy :update_business_subscription
@@ -48,10 +47,19 @@ class User < ActiveRecord::Base
   validates :password, confirmation: true, if: :password_required?
   validates :password, length: { within: password_length, message: 'Your password needs to be at least 6 characters.' }, allow_blank: true
   validates :full_name, uniqueness: {scope: :business, message: "There's already an account with this name in your business. Please use some other name."}
+  validates :business_name, presence: { message: 'This is used in sitemaps you share.' }, on: :create
   validate :minimum_image_size, on: :update
 
   scope :active, -> { where(invitation_token: nil) }
   scope :notify_by_email, -> { where(notify_by_email: true) }
+
+  def forced?
+    !!force_destroy
+  end
+
+  def user_type
+    is_admin ? 'Admin' : 'Standard'
+  end
 
   def first_name
     full_name.split(' ').first
@@ -119,7 +127,7 @@ class User < ActiveRecord::Base
     end
 
     def add_business
-      build_business(owner: self, trial_days: trial_days.presence || DEFAULT_TRIAL_DAYS)
+      build_business(owner: self, name: business_name, trial_days: trial_days.presence || DEFAULT_TRIAL_DAYS)
     end
 
     def set_confirmation_instructions_to_be_sent
@@ -160,7 +168,7 @@ class User < ActiveRecord::Base
     def update_business_subscription
       if business.is_pro_plan?
         business.current_subscription.update(end_at: Time.current)
-        business.subscriptions.build(no_of_users: business.users.count, quantity: Business.monthly_charge(business.users.count), user: self)
+        business.subscriptions.build(no_of_users: business.users.count, quantity: Business.monthly_charge(business.users.count))
         StripePaymentService.new(business).update_subscription
       end
     end

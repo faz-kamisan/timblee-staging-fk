@@ -15,13 +15,14 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleShareModalClick = this.handleShareModalClick.bind(this);
     this.handleNameInputBlur = this.handleNameInputBlur.bind(this);
     this.handleNameInputFocus = this.handleNameInputFocus.bind(this);
     this.handleMainHeaderToggle = this.handleMainHeaderToggle.bind(this);
     this.handleSitemapShareClick = this.handleSitemapShareClick.bind(this);
     this.toggleCommentState = this.toggleCommentState.bind(this);
     this.handleNameKeyPressed = this.handleNameKeyPressed.bind(this);
-    this.state = { nameFocused: false, name: props.name, showMainHeader: true, commentSidebarOpen: false }
+    this.state = { nameFocused: false, name: props.name, showMainHeader: true, commentSidebarOpen: false, maxLevelOnePages: 0 }
   }
 
   handleNameKeyPressed(e) {
@@ -86,6 +87,10 @@ class Header extends React.Component {
 
   handleSitemapShareClick(e) {
     this.props.showSitemapShareModal();
+  }
+
+  handleShareModalClick(e) {
+    this.setState({maxLevelOnePages: Math.max(...this.props.sections.map(function(section) {return (section.pageTree && section.pageTree.children.filter(function (child) {  return child.state == 'active'  }).length)}))})
   }
 
   componentDidUpdate() {
@@ -203,7 +208,7 @@ class Header extends React.Component {
 
         <div className="pull-right share-sitemap-btn-div">
           <div className="share-sitemap-btn-div">
-            <a href="javascript:void(0)" className="btn btn-share action sitemap-share-modal-link" data-url={this.props.publicShareUrl} data-name={this.props.name} data-id={this.props.id} data-shared-users={this.props.sharedUsers.map(function(user) { return(user.user_email) }).join(',')}>
+            <a href="javascript:void(0)" onMouseEnter={this.handleShareModalClick} className="btn btn-share action sitemap-share-modal-link" data-url={this.props.publicShareUrl} data-name={this.props.name} data-id={this.props.id} data-level-one-pages={this.state.maxLevelOnePages} data-shared-users={this.props.sharedUsers.map(function(user) { return(user.user_email) }).join(',')}>
              <span className="share-icon"></span> Share
             </a>
           </div>

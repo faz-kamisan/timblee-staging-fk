@@ -9,10 +9,10 @@
         </button>
         <h4>You can't proceed with this plan <%= image_tag('sad.png', class: 'sad') %> </h4>
         <p>You currently have more sitemaps or users (or both), than the Starter plan <br> allows.</p>
-        <p>To choose the Starter plan, you'll need to go and delete all but three <br> sitemaps, and any other users you have on the team (except you).</p>
+        <p>To choose the Starter plan, you'll need to go and delete all but <br> <%= current_business.free_sitemaps_count_in_words %>, and any other users you have on the team (except you).</p>
         <p>Then, come back here, and you'll be able to choose this plan.</p>
         <p>Don't want to delete users or sitemaps? <br>
-        <a href="#choose-plan-modal" data-toggle="modal" data-dismiss="modal" class='btn-modal-open'>Choose the Pro plan</a> instead. </p>
+        <a href="#account-summary-modal" data-toggle="modal" data-dismiss="modal" class='btn-modal-open'>Choose the Pro plan</a> instead. </p>
         <div class="modal-button text-center">
           <%= link_to 'Go to the home screen', home_dashboard_path, class: "btn btn-pink" %>
         </div>

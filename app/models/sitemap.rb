@@ -1,6 +1,8 @@
 class Sitemap < ActiveRecord::Base
   include ::SiteMapTransitions
 
+  attr_accessor :skip_callback
+
   LENGTH_TO_TRUNCATE = 44
   DEFAULT_NAME_PREFIX = 'New Sitemap '
   DEFAULT_SECTION_NAME = 'Main sitemap'
@@ -10,12 +12,14 @@ class Sitemap < ActiveRecord::Base
   belongs_to :folder
   belongs_to :user
   belongs_to :business
-  has_many :pages
-  has_many :sections
+  has_many :pages, dependent: :delete_all
+  has_many :sections, dependent: :delete_all
   has_one :default_section, ->{ where(default: true) }, class_name: :Section
-  has_many :sitemap_shared_users
-  has_many :comments, as: :commentable
+  has_many :sitemap_shared_users, dependent: :delete_all
+  has_many :comments, as: :commentable, dependent: :delete_all
   has_many :page_comments, source: :comments, through: :pages
+  has_many :guests_sitemaps, dependent: :delete_all
+  has_many :guests, through: :guests_sitemaps
 
   acts_as_list scope: [:state, :business_id]
 
@@ -27,34 +31,33 @@ class Sitemap < ActiveRecord::Base
 
   before_validation :set_default_name, on: :create, unless: :name
   before_validation :set_unique_public_share_token, on: :create
-  before_destroy :delete_associations
+  before_destroy :delete_page_comments_association, prepend: true
   before_validation :set_default_state, on: :create, unless: :state
-  after_create :create_default_section_and_page
+  after_create :create_default_section_and_page, unless: :skip_callback
 
   strip_fields :name
 
   scope :order_by_alphanumeric_lower_name, -> { order("lower(SUBSTRING(name FROM '([^0-9]+)')) ASC, SUBSTRING(name FROM '[0-9]+$')::BIGINT ASC, lower(name)") }
 
-  def duplicate
+  def duplicate(name = nil)
     duplicate = dup
-    duplicate.set_default_name("Copy of #{name}-")
+    duplicate.name = name || duplicate.set_default_name("Copy of #{self.name}-")
 
-    Sitemap.skip_callback(:create, :after, :create_default_section_and_page)
-    Page.skip_callback(:update, :before, :update_children_section_id)
-    Page.skip_callback(:update, :before, :archive_children_pages_and_delete_section)
+    duplicate.skip_callback = true
     duplicate.save
 
     sections.order(:default).each { |section| section.duplicate(duplicate) }
     footer_pages.each { |footer_page| footer_page.duplicate(nil, nil, duplicate) }
 
-    Sitemap.set_callback(:create, :after, :create_default_section_and_page)
-    Page.set_callback(:update, :before, :update_children_section_id, if: :section_id_changed?)
-    Page.set_callback(:update, :before, :archive_children_pages_and_delete_section, if: :state_changed?)
     duplicate
   end
 
   def footer_pages
     pages.where(footer: true)
+  end
+
+  def max_level_one_page_count
+    sections.map{|s| s.level_one_pages}.max
   end
 
   def all_comment_ids
@@ -89,7 +92,8 @@ class Sitemap < ActiveRecord::Base
       business:  business && business.to_react_data,
       sharedUsers: sitemap_shared_users,
       activeSectionId: default_section.id,
-      trial: trial
+      trial: trial,
+      guestUsers: guests.map(&:to_react_data)
     }
   end
 
@@ -97,7 +101,7 @@ class Sitemap < ActiveRecord::Base
     if trial?
       self.name = "#{default_name}1"
     else
-      new_site_map_numbers = self.business.sitemaps.where("name ~* '^"+ default_name +"\\d+$'").pluck(:name).map {|name| name.match(/\d*$/)[0].to_i}.sort
+      new_site_map_numbers = self.business.sitemaps.where("name ~* ?", "^#{default_name}\\d+$").pluck(:name).map {|name| name.match(/\d*$/)[0].to_i}.sort
       if(new_site_map_numbers[0] == 1)
         first_unoccupied_number = (new_site_map_numbers.select.with_index { |number, index| number == index + 1 }[-1]) + 1
         self.name = "#{default_name}" + first_unoccupied_number.to_s
@@ -128,7 +132,7 @@ class Sitemap < ActiveRecord::Base
 
     def business_can_have_more_sitemaps
       unless business.allow_more_sitemaps?
-        errors.add(:base, "Could not duplicate the sitemap since you've reached your plan's limit of three sitemaps.")
+        errors.add(:base, "Could not duplicate the sitemap since you've reached your plan's limit of #{business.free_sitemaps_count_in_words}.")
       end
     end
 
@@ -141,11 +145,7 @@ class Sitemap < ActiveRecord::Base
       self.public_share_token = Digest::SHA1.hexdigest([Time.now, rand].join)[0,10]
     end
 
-    def delete_associations
+    def delete_page_comments_association
       Comment.where(commentable_type: :Page, commentable_id: pages.pluck(:id)).delete_all
-      comments.delete_all
-      sitemap_shared_users.delete_all
-      pages.delete_all
-      sections.delete_all
     end
 end

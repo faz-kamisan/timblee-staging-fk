@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import UrlParser from '../helpers/url_parser';
 import ConnectedComment from '../containers/connected_comment'
 
 class UserSignupModal extends React.Component {
@@ -7,7 +8,7 @@ class UserSignupModal extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { nameError: '', emailError: '', passwordError: '' }
+    this.state = { nameError: '', emailError: '', passwordError: '', businessNameError: '' }
     this.signup = this.signup.bind(this);
     this.createMarkup = this.createMarkup.bind(this);
   }
@@ -18,10 +19,10 @@ class UserSignupModal extends React.Component {
       url: '/users',
       method: 'post',
       dataType: 'JSON',
-      data: { user: { full_name: this.refs.nameInput.value, email: this.refs.emailInput.value, password: this.refs.passwordInput.value } },
+      data: { user: { full_name: this.refs.nameInput.value, email: this.refs.emailInput.value, password: this.refs.passwordInput.value, business_name: this.refs.businessNameInput.value } },
       error: (result) => {
         var errors = result.responseJSON
-        this.setState({ nameError: (errors.full_name && errors.full_name.join('<br />')), emailError: (errors.email && errors.email.join('<br />')), passwordError: (errors.password && errors.password.join('<br />')) })
+        this.setState({ nameError: (errors.full_name && errors.full_name.join('<br />')), emailError: (errors.email && errors.email.join('<br />')), passwordError: (errors.password && errors.password.join('<br />')), businessNameError: (errors.business_name && errors.business_name.join('<br />')) })
       },
       success: (result) => {
         window.location = "/sitemaps/" + this.props.sitemapId;
@@ -35,7 +36,7 @@ class UserSignupModal extends React.Component {
 
   render() {
     var _this = this;
-    var error = ((this.state.nameError.length > 0) || (this.state.emailError.length > 0) || (this.state.passwordError.length > 0));
+    var error = ((this.state.nameError && this.state.nameError.length > 0) || (this.state.emailError && this.state.emailError.length > 0) || (this.state.passwordError && this.state.passwordError.length > 0) || (this.state.businessNameError && this.state.businessNameError.length > 0));
     return (
       <div className="modal fade react-sign-up" id="user-signup-modal" tabIndex="-1" role="dialog" aria-labelledby="user-signup-modalLabel">
         <div className={"modal-body user-entry registration-page text-center" +  (error ? " modal-with-error": "" )}>
@@ -54,7 +55,11 @@ class UserSignupModal extends React.Component {
               <div className='error-div name-error' dangerouslySetInnerHTML={this.createMarkup(this.state.nameError)} />
             </div>
             <div className="form-group">
-              <input type='email' placeholder='Your work email' ref='emailInput' className='form-control'></input>
+              <input type='text' placeholder='Business name' ref='businessNameInput' className='form-control' defaultValue={UrlParser.getQueryVariable('business_name') || ''}></input>
+              <div className='error-div email-error' dangerouslySetInnerHTML={this.createMarkup(this.state.businessNameError)} />
+            </div>
+            <div className="form-group">
+              <input type='email' placeholder='Your work email' ref='emailInput' className='form-control' defaultValue={UrlParser.getQueryVariable('email') || ''}></input>
               <div className='error-div email-error' dangerouslySetInnerHTML={this.createMarkup(this.state.emailError)} />
             </div>
             <div className="form-group">

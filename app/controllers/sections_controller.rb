@@ -2,13 +2,14 @@ class SectionsController < ApplicationController
   skip_before_filter :authenticate_user!
   before_filter :conditional_authenticate_user!
   before_filter :fetch_page, only: [:create]
-  before_filter :fetch_section, only: [:destroy]
+  before_filter :fetch_section, only: [:destroy, :update]
 
   def create
     @section = Section.new(section_params)
     @section.sitemap_id = @page.sitemap_id
     if(@section.save)
-      @page.update(alt_section_id: @section.id)
+      @page.update_column(:alt_section_id, @section.id)
+      Page.where(id: @page.descendants, section_id: @page.section_id).update_all(section_id: @section.id)
       render json: @section.as_json, status: 200
     else
       render json: t('.failure', scope: :flash) , status: 422
@@ -17,6 +18,10 @@ class SectionsController < ApplicationController
 
   def destroy
     send_conditional_json_response(@section.destroy)
+  end
+
+  def update
+    send_conditional_json_response(@section.update(section_params))
   end
 
   private
@@ -45,6 +50,8 @@ class SectionsController < ApplicationController
     end
 
     def conditional_authenticate_user!
-      proxy_login? || request.subdomains[0].try(:match, 'app') || authenticate_user!
+      subdomain = request.subdomains[0]
+
+      proxy_login? || subdomain || subdomain.in?(['app', 'start']) || authenticate_user!
     end
 end
