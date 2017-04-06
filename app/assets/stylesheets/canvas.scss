@@ -4339,3 +4339,9 @@ ul.ui-autocomplete {
 #sitemap-share-modal .export-list.for-images { text-align: center; }
 #sitemap-share-modal .export-list li.white-bg { float: none; display: inline-block; margin: 0; }
 
+.comment-group p a {
+  color: $primaryPink;
+  &:hover {
+    color: $primaryWhite;
+  }
+}
