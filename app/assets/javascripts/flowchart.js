@@ -50,6 +50,8 @@ function bindEvents() {
   bindSelectScreen();
   bindAddInitialActionScreenEvent();
   bindDeleteScreenEvent();
+  bindShowMoreOptions();
+  bindHideMoreOptions();
 }
 
 function bindSelectInitialScreen () {
@@ -64,6 +66,19 @@ function bindSelectScreen () {
     $(this).closest('div.tile').find('.add-screen-dropdown').removeClass('hide');
   })
 }
+function bindShowMoreOptions() {
+  $(document).on('click', '.more', function() {
+    var svg = $(this).closest('.screen-tile-container');
+    svg.addClass('options-open');
+  });
+};
+
+function bindHideMoreOptions() {
+  $(document).on('click', '.close-options', function() {
+    var svg = $(this).closest('.screen-tile-container');
+    svg.removeClass('options-open');
+  });
+};
 
 function bindAddInitialScreenEvent () {
   $(document).on('click', '.addInitialScreen', function() {
@@ -157,7 +172,7 @@ function bindAddDecisionScreensEvent() {
 }
 
 function bindDeleteScreenEvent() {
-  $(document).on('click', '.more', function() {
+  $(document).on('click', '.screen-delete-node', function() {
     var tileID = $(this).closest('.tile')[0].id.slice(0, -4);
     var tile = SVG.get(tileID);
     var node = getNode(tileID);

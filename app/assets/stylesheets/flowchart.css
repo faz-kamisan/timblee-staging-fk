@@ -65,4 +65,37 @@ h1 { text-align: center; margin: 0 0 20px 0; padding: 20px; border-bottom: solid
 .dropdowns a:hover { color: #EC008C; }
 /* Css For Search Screen Dropdown */
 
+/* Css For More Options */
+.screen-tile-more { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: #ffffff; z-index: 3; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; padding: 20px 21px 18px 21px; visibility: hidden; opacity: 0; transition: .35s; -moz-transition: .35s; -webkit-transition: .35s; }
+.screen-tile-container.options-open .screen-tile-more { visibility: visible; opacity: 1; }
+.screen-tile-container.options-open .screen-hover-options { display: none; }
+.more-options-list { margin: 0; padding: 0; position: absolute; left: 21px; bottom: 18px; width: 145px; z-index: 3; }
+.more-options-list li { width: 19px; float: left; text-align: left; position: relative; }
+.more-options-list .node-icon  { display: block; cursor: pointer; }
+.screen-comment-node .node-icon { background: url(/assets/screen-comments.png); background-size: 100%; width: 18px; height: 15px; }
+.screen-comment-node .node-icon:hover { background-position: 0 -16.5px; }
+.screen-change-node .node-icon { background: url(/assets/change-screen-type.png); background-size: 100%; width: 17px; height: 15px; }
+.screen-change-node .node-icon:hover { background-position: 0 -16.5px; }
+.screen-new-node .node-icon { background: url(/assets/new-user-flow.png); background-size: 100%; width: 19px; height: 15px; }
+.screen-new-node .node-icon:hover { background-position: 0 -16.5px; }
+.screen-delete-node .node-icon { background: url(/assets/delete-screen-type.png); background-size: 100%; width: 13px; height: 15px; }
+.screen-delete-node .node-icon:hover { background-position: 0 -16.5px; }
+.screen-comment-node { width: 18px; }
+.screen-change-node { width: 17px; margin-left: 23px; }
+.screen-new-node { width: 19px; margin-left: 23px; }
+.screen-delete-node { width: 13px; margin-left: 23px; }
+.close-options { background: url('/assets/close-options.png'); background-size: 100%; position: absolute; right: 23px; top: 20px; width: 9px; height: 9px; }
+.close-options:hover { background-position: 0 -10px; }
+.card-tooltip { background: #EC008C; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; color: $primaryWhite; font-size: 12px; height: 30px; line-height: 8px; padding: 10px; position: absolute; text-align: center; top: 33px; font-family: "proxima-nova",sans-serif!important; width: auto; transition: .25s; -moz-transition: .25s; -webkit-transition: .25s; left: 50%; z-index: 10; white-space: nowrap; margin-left: -61px; }
+.card-tooltip:before { content: ' '; position: absolute; left: 50%; top: -8px; margin-left: -8px; width: 0; height: 0; border-style: solid; border-width: 0 8px 14px 8px; border-color: transparent transparent #EC008C transparent; }
+.node-icon:hover + .card-tooltip { opacity: 1; visibility: visible; }
+.screen-change-node .card-tooltip { margin-left: -65px; background: #067AB4; }
+.screen-change-node .card-tooltip:before { border-color: transparent transparent #067AB4; transparent; }
+.screen-new-node .card-tooltip { margin-left: -50px; background: #2CA15F; }
+.screen-new-node .card-tooltip:before { border-color: transparent transparent #2CA15F; transparent; }
+.screen-delete-node .card-tooltip { margin-left: -28px; background: #E2232E; }
+.screen-delete-node .card-tooltip:before { border-color: transparent transparent #E2232E; transparent; }
+
+/* Css For More Options */
+
 .screen-hover-options .add-screen-dropdown { padding-top: 73px; }
