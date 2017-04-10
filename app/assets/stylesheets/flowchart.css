@@ -45,6 +45,7 @@ h1 { text-align: center; margin: 0 0 20px 0; padding: 20px; border-bottom: solid
 .screen-tile-right-bottom img { width: 18px; height: 15px; vertical-align: top; margin: -11px 0 0 -9px; }
 .screen-tile-right-top:hover img.grey, .screen-tile-right-bottom:hover img.grey { opacity: 0; }
 .screen-tile-right-top:hover img.pink, .screen-tile-right-bottom:hover img.pink { opacity: 1; }
+.screen .screen-tile-right-icon { background-size: 50%!important; }
 .screen-tile-right-icon { position: absolute; width: 100%; text-align: center; left: 0; height: 25px; top: 50%; margin-top: -12px }
 .screen-tile-right-icon img { width: 25px; height: auto; }
 .screen-tile-type { position: absolute; bottom: 0; font-size: 8px; color: #9B9B9B; text-transform: uppercase; font-weight: 600; width: 128px; padding: 0 0 5px 10px; }
@@ -106,7 +107,7 @@ h1 { text-align: center; margin: 0 0 20px 0; padding: 20px; border-bottom: solid
 .screen-new-node .card-tooltip:before { border-color: transparent transparent #2CA15F; transparent; }
 .screen-delete-node .card-tooltip { margin-left: -28px; background: #E2232E; }
 .screen-delete-node .card-tooltip:before { border-color: transparent transparent #E2232E; transparent; }
-.action .screen-comment-node { margin-left: 42px; }
+.action .screen-comment-node, .decision .screen-comment-node { margin-left: 42px; }
 /* Css For More Options */
 
 .screen-hover-options .add-screen-dropdown { padding-top: 73px; }

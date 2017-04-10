@@ -3,7 +3,7 @@ class UserflowsController < ApplicationController
   around_action :wrap_in_transaction, only: :crud_screens
 
   def index
-    @screens = @userflow.screens.order(:level, :position).includes(:page).to_json(include: :page)
+    @screens = @userflow.screens.order(:level, :position).includes(page: :page_type).to_json(include: [:page, :page_type])
   end
 
   def crud_screens

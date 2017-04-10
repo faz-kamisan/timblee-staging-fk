@@ -26,6 +26,8 @@ function init() {
     if (parentNode) {
       var parentNodeId = parentNode.node_id;
     };
+    if (screeenData[i].page) {screeenData[i].page.page_type = screeenData[i].page_type};
+
     var tile = initAddTiles(screeenData[i].node_id, screeenData[i].position, screeenData[i].level, parentNodeId, screeenData[i].path, screeenData[i].node_type, bottomNode, bottomLeftNode, bottomRightNode, screeenData[i].message, screeenData[i].page)
 
     if (screeenData[i].level == 1) {STARTING_TILE = tile};
@@ -52,11 +54,11 @@ function bindEvents() {
   bindDeleteScreenEvent();
   bindShowMoreOptions();
   bindHideMoreOptions();
-  bindInitialScreenDropdownEvent();
 }
 
 function bindSelectInitialScreen () {
-  $(document).on('click', '.selectInitialScreen', function () {
+  $(document).on('click', '.initialScreenDropdown', function () {
+    $(this).closest('.default-screen-hover-options').addClass('show-dropdown');
     $('.starter-text').addClass('hide');
     $('.add-initial-screen-dropdown').removeClass('hide');
   })
@@ -109,12 +111,6 @@ function bindAddInitialDecisionScreensEvent () {
   });
 }
 
-function bindInitialScreenDropdownEvent() {
-  $(document).on('click', '.initialScreenDropdown', function() {
-    $(this).closest('.default-screen-hover-options').addClass('show-dropdown');
-    $('.add-screen-dropdown').removeClass('hide');
-  });
-};
 
 function bindAddDecisionScreensEvent() {
   $(document).on('click', '.addDecision', function() {
@@ -267,7 +263,8 @@ function bindDeleteScreenEvent() {
 
 function bindAddScreenEvent() {
   $(document).on('click', '.addScreen', function() {
-    $(this).closest('.screen-tile-container').unbind('hover mouseenter mouseleave')
+
+    $(this).closest('div.tile').find('.add-screen-dropdown').addClass('hide');
     addScreenEvent(this, "#tile-blueprint-page");
   })
 }
@@ -481,7 +478,11 @@ function initAddTiles(id, position, level, parentNodeId, path, node_type, bottom
   div = $(blueprintID).clone()
                             .css(cssProps);
   if (name) { div.find('.message').html(name) };
-  if (page) {div.find('.uid').html("ID:" + page.uid)};
+  if (page) {
+    div.find('.uid').html("ID:" + (page.uid || 'xxx'))
+    div.find('.screen-tile-right-icon').addClass(page.page_type.icon_name)
+
+  };
 
   div[0].id = tile.id() + "Tile";
 
@@ -521,8 +522,12 @@ function addTile(x, y, parentTile, level, path, blueprintID, page, name) {
 
   div[0].id = tile.id() + "Tile";
   if (name) { div.find('.message').html(name) };
-  if (page) {div.find('.uid').html("ID:" + page.uid)};
+  if (page) {
+    div.find('.screen-tile-right-icon').addClass(page.page_type.icon_name)
+    div.find('.uid').html("ID:" + (page.uid || 'xxx'))
+  };
   $('#tile-container').append(div)
+  if (page && page.id) { $('li.page-id-' + page.id).remove()};
 
   validatePositionOf(tile);
   return tile
