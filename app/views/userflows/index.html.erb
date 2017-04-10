@@ -1,28 +1,54 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.4.0/svg.min.js" type="text/javascript"></script>
     <%= stylesheet_link_tag    'flowchart' %>
     <%= javascript_include_tag 'flowchart' %>
-    <div id="nodes" class="hide" data-screens= <%= @screens%>></div>
-    <div class="default-screen-hover-options hide">
-      <div class="option option-1 addInitialScreen">
-        <a href="javascript:void(0);" class="option-link">
-          <%= image_tag("option-1.png") %>
-        </a>
+    <div id="nodes" class="hide" data-screens= '<%= @screens%>'></div>
+
+    <div class="default-screen-hover-options basic hide">
+      <div class="clearfix">
+        <div class="option option-1 selectInitialScreen">
+          <a href="javascript:void(0);" class="option-link">
+            <%= image_tag("option-1.png") %>
+          </a>
+        </div>
+        <div class="option option-2 addInitialDecision">
+          <a href="javascript:void(0);" class="option-link">
+            <%= image_tag("option-2.png") %>
+          </a>
+        </div>
+        <div class="option option-3 addInitialAction">
+          <a href="javascript:void(0);" class="option-link">
+            <%= image_tag("option-3.png") %>
+          </a>
+        </div>
       </div>
-      <div class="option option-2 addInitialDecision">
-        <a href="javascript:void(0);" class="option-link">
-          <%= image_tag("option-2.png") %>
-        </a>
+      <div class="starter-text hide">
+        Choose a screen, decision point or action to start building this user <br> flow
       </div>
-      <div class="option option-3 addInitialAction">
-        <a href="javascript:void(0);" class="option-link">
-          <%= image_tag("option-3.png") %>
-        </a>
+      <div class="add-initial-screen-dropdown hide">
+        <form class="search-screen-form">
+          <input type="text" name="" class="search-screen-input" placeholder="Search for a screen">
+          <div class="dropdowns">
+            <h4>Screens in the sitemap</h4>
+            <ul class="screens-list in-sitemap">
+              <% @sitemap.pages.each do |page|%>
+                <li class="addInitialScreen" data-page="<%= page.to_json %>"><%=page.name %></li>
+              <% end %>
+            </ul>
+            <h4 class="new-screens">New screens</h4>
+            <ul class="screens-list">
+              <% PageType.all.each do |page|%>
+              <li class="addInitialScreen"><%= page.name %></li>
+              <% end %>
+            </ul>
+          </div>
+        </form>
       </div>
     </div>
+
     <div id="tile-blueprint-action" class="tile top-level">
       <div class="screen-tile-container action">
         <div class="screen-tile-svg-clone">
-          <div class="screen-type-text">
+          <div class="screen-type-text message">
             This is an action.
           </div>
           <div class="screen-tile-type">
@@ -47,7 +73,7 @@
           </div>
         </div>
         <div class="screen-hover-options">
-          <div class="option option-1 addScreen">
+          <div class="option option-1 selectScreen">
             <a href="javascript:void(0);" class="option-link">
               <%= image_tag("option-1.png") %>
             </a>
@@ -67,17 +93,36 @@
               <%= image_tag("option-4.png") %>
             </a>
           </div>
+          <div class="add-screen-dropdown hide">
+            <form class="search-screen-form">
+              <input type="text" name="" class="search-screen-input" placeholder="Search for a screen">
+              <div class="dropdowns">
+                <h4>Screens in the sitemap</h4>
+                <ul class="screens-list in-sitemap">
+                  <% @sitemap.pages.each do |page|%>
+                    <li class="addScreen" data-page="<%= page.to_json %>"><%=page.name %></li>
+                  <% end %>
+                </ul>
+                <h4 class="new-screens">New screens</h4>
+                <ul class="screens-list">
+                  <% PageType.all.each do |page|%>
+                  <li class="addScreen"><%= page.name %></li>
+                  <% end %>
+                </ul>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
     <div id="tile-blueprint-page" class="tile top-level">
       <div class="screen-tile-container screen">
         <div class="screen-tile-svg-clone">
-          <div class="screen-type-text">
+          <div class="screen-type-text message">
             This is a page with comment.
           </div>
           <div class="screen-tile-type">
-            <span class="screen-comment-indicator"></span> ID:001
+            <span class="screen-comment-indicator-"></span> <span class='uid'></span>
           </div>
           <div class="screen-tile-right">
             <div class="screen-tile-right-icon">
@@ -98,7 +143,7 @@
           </div>
         </div>
         <div class="screen-hover-options">
-          <div class="option option-1 addScreen">
+          <div class="option option-1 selectScreen">
             <a href="javascript:void(0);" class="option-link">
               <%= image_tag("option-1.png") %>
             </a>
@@ -118,6 +163,25 @@
               <%= image_tag("option-4.png") %>
             </a>
           </div>
+          <div class="add-screen-dropdown hide">
+            <form class="search-screen-form">
+              <input type="text" name="" class="search-screen-input" placeholder="Search for a screen">
+              <div class="dropdowns">
+                <h4>Screens in the sitemap</h4>
+                <ul class="screens-list in-sitemap">
+                  <% @sitemap.pages.each do |page|%>
+                    <li class="addScreen" data-page="<%= page.to_json %>"><%=page.name %></li>
+                  <% end %>
+                </ul>
+                <h4 class="new-screens">New screens</h4>
+                <ul class="screens-list">
+                  <% PageType.all.each do |page|%>
+                  <li class="addScreen"><%= page.name %></li>
+                  <% end %>
+                </ul>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -125,7 +189,7 @@
 
       <div class="screen-tile-container decision">
         <div class="screen-tile-svg-clone">
-          <div class="screen-type-text">
+          <div class="screen-type-text message">
             Take a decision...
           </div>
           <div class="screen-tile-right">
@@ -154,11 +218,11 @@
     <div id="tile-blueprint-conclusion" class="tile top-level">
       <div class="screen-tile-rounded-container">
         <div class="screen-tile-container-rounded decisionLeftRight">
-          <div class="screen-tile-rounded-text">
+          <div class="screen-tile-rounded-text message">
             yes
           </div>
           <div class="screen-hover-options">
-            <div class="option option-1 addScreen">
+            <div class="option option-1 selectScreen">
               <a href="javascript:void(0);" class="option-link">
                 <%= image_tag("option-1.png") %>
               </a>
@@ -177,6 +241,25 @@
               <a href="javascript:void(0);" class="option-link">
                 <%= image_tag("option-4.png") %>
               </a>
+            </div>
+            <div class="add-screen-dropdown hide">
+              <form class="search-screen-form">
+                <input type="text" name="" class="search-screen-input" placeholder="Search for a screen">
+                <div class="dropdowns">
+                  <h4>Screens in the sitemap</h4>
+                  <ul class="screens-list in-sitemap">
+                    <% @sitemap.pages.each do |page|%>
+                      <li class="addScreen" data-page="<%= page.to_json %>"><%=page.name %></li>
+                    <% end %>
+                  </ul>
+                  <h4 class="new-screens">New screens</h4>
+                  <ul class="screens-list">
+                    <% PageType.all.each do |page|%>
+                    <li class="addScreen"><%= page.name %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              </form>
             </div>
           </div>
         </div>

@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20170331080321) do
     t.integer  "owner_id"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.float    "trial_days"
+    t.integer  "trial_days"
     t.boolean  "has_plan",            default: false
     t.boolean  "is_pro",              default: false
     t.integer  "free_sitemaps_count", default: 1

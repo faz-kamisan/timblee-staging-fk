@@ -3,7 +3,7 @@ class UserflowsController < ApplicationController
   around_action :wrap_in_transaction, only: :crud_screens
 
   def index
-    @screens = @userflow.screens.order(:level, :position).to_json
+    @screens = @userflow.screens.order(:level, :position).includes(:page).to_json(include: :page)
   end
 
   def crud_screens
@@ -28,7 +28,7 @@ class UserflowsController < ApplicationController
       @saved_ids = []
       nodes.each_with_index do |node, i|
         parent_screen = @userflow.screens.find_by(node_id: node[:parentNode]) if node[:parentNode]
-        screen = @userflow.screens.create(node_id: node[:id], parent_id: parent_screen.try(:id), level: node[:level].to_i, position: node[:position].to_f, path: node[:path], node_type: node[:type])
+        screen = @userflow.screens.create(node_id: node[:id], parent_id: parent_screen.try(:id), level: node[:level].to_i, position: node[:position].to_f, path: node[:path], node_type: node[:type], page_id: node[:pageId], message: node[:name])
         @saved_ids << screen.node_id if screen.id
       end
     end
