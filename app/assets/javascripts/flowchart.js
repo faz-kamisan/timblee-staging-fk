@@ -479,6 +479,10 @@ function initAddTiles(id, position, level, parentNodeId, path, node_type, bottom
                             .css(cssProps);
   if (name) { div.find('.message').html(name) };
   if (page) {
+
+    if (page.uid && (page.uid + '').length < 3) {
+      page.uid = ('000' + page.uid).slice(-3)
+    };
     div.find('.uid').html("ID:" + (page.uid || 'xxx'))
     div.find('.screen-tile-right-icon').addClass(page.page_type.icon_name)
 
@@ -524,6 +528,9 @@ function addTile(x, y, parentTile, level, path, blueprintID, page, name) {
   if (name) { div.find('.message').html(name) };
   if (page) {
     div.find('.screen-tile-right-icon').addClass(page.page_type.icon_name)
+    if (page.uid && (page.uid + '').length < 3) {
+      page.uid = ('000' + page.uid).slice(-3)
+    };
     div.find('.uid').html("ID:" + (page.uid || 'xxx'))
   };
   $('#tile-container').append(div)
