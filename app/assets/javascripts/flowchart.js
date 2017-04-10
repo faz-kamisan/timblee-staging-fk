@@ -52,6 +52,7 @@ function bindEvents() {
   bindDeleteScreenEvent();
   bindShowMoreOptions();
   bindHideMoreOptions();
+  bindInitialScreenDropdownEvent();
 }
 
 function bindSelectInitialScreen () {
@@ -107,6 +108,13 @@ function bindAddInitialDecisionScreensEvent () {
     saveDbChanges();
   });
 }
+
+function bindInitialScreenDropdownEvent() {
+  $(document).on('click', '.initialScreenDropdown', function() {
+    $(this).closest('.default-screen-hover-options').addClass('show-dropdown');
+    $('.add-screen-dropdown').removeClass('hide');
+  });
+};
 
 function bindAddDecisionScreensEvent() {
   $(document).on('click', '.addDecision', function() {

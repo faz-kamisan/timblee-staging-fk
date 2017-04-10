@@ -5,19 +5,21 @@
 
     <div class="default-screen-hover-options basic hide">
       <div class="clearfix">
-        <div class="option option-1 selectInitialScreen">
+        <div class="option option-1 initialScreenDropdown"> <!-- addInitialScreen -->
           <a href="javascript:void(0);" class="option-link">
             <%= image_tag("option-1.png") %>
           </a>
         </div>
         <div class="option option-2 addInitialDecision">
           <a href="javascript:void(0);" class="option-link">
-            <%= image_tag("option-2.png") %>
+            <%= image_tag("option-2.png", class: 'colored') %>
+            <%= image_tag("decide-gray.png", class: 'grayscale') %>
           </a>
         </div>
         <div class="option option-3 addInitialAction">
           <a href="javascript:void(0);" class="option-link">
-            <%= image_tag("option-3.png") %>
+            <%= image_tag("option-3.png", class: 'colored') %>
+            <%= image_tag("action-gray.png", class: 'grayscale') %>
           </a>
         </div>
       </div>
@@ -30,14 +32,14 @@
           <div class="dropdowns">
             <h4>Screens in the sitemap</h4>
             <ul class="screens-list in-sitemap">
-              <% @sitemap.pages.each do |page|%>
-                <li class="addInitialScreen" data-page="<%= page.to_json %>"><%=page.name %></li>
+              <% @sitemap.pages.where.not(id: @userflow.screens.pluck(:page_id)).each do |page|%>
+                <li class="addInitialScreen page-id-<%=page.id%>" data-page="<%= page.to_json(include: :page_type) %>"><%= page.name %></li>
               <% end %>
             </ul>
             <h4 class="new-screens">New screens</h4>
             <ul class="screens-list">
-              <% PageType.all.each do |page|%>
-              <li class="addInitialScreen"><%= page.name %></li>
+              <% PageType.all.each do |page_type|%>
+              <li class="addInitialScreen" data-page="<%= page_type.pages.new(name: page_type.name).to_json(include: :page_type)%>"><%= page_type.name %></li>
               <% end %>
             </ul>
           </div>
@@ -47,6 +49,7 @@
 
     <div id="tile-blueprint-action" class="tile top-level">
       <div class="screen-tile-container action">
+
         <div class="screen-tile-svg-clone">
           <div class="screen-type-text message">
             This is an action.
@@ -62,12 +65,14 @@
           <div class="screen-tile-right-hover">
             <div class="right-options screen-tile-right-top">
               <a href="javascript:void(0);" class="right-option-link more">
-                <%= image_tag("more.png") %>
+                <%= image_tag("more.png", class: 'grey') %>
+                <%= image_tag("more-pink.png", class: 'pink') %>
               </a>
             </div>
             <div class="right-options screen-tile-right-bottom">
               <a href="javascript:void(0);" class="right-option-link">
-                <%= image_tag("comments.png") %>
+                <%= image_tag("comments.png", class: 'grey') %>
+                <%= image_tag("comments-pink.png", class: 'pink') %>
               </a>
             </div>
           </div>
@@ -93,21 +98,25 @@
           <div class="option option-1 selectScreen">
             <a href="javascript:void(0);" class="option-link">
               <%= image_tag("option-1.png") %>
+              <span class="card-tooltip">Screen</span>
             </a>
           </div>
           <div class="option option-2 addDecision">
             <a href="javascript:void(0);" class="option-link">
               <%= image_tag("option-2.png") %>
+              <span class="card-tooltip">Decision Point</span>
             </a>
           </div>
           <div class="option option-3 addAction">
             <a href="javascript:void(0);" class="option-link">
               <%= image_tag("option-3.png") %>
+              <span class="card-tooltip">Action</span>
             </a>
           </div>
           <div class="option option-4">
             <a href="javascript:void(0);" class="option-link">
               <%= image_tag("option-4.png") %>
+              <span class="card-tooltip">Link</span>
             </a>
           </div>
           <div class="add-screen-dropdown hide">
@@ -116,45 +125,49 @@
               <div class="dropdowns">
                 <h4>Screens in the sitemap</h4>
                 <ul class="screens-list in-sitemap">
-                  <% @sitemap.pages.each do |page|%>
-                    <li class="addScreen" data-page="<%= page.to_json %>"><%=page.name %></li>
+                  <% @sitemap.pages.where.not(id: @userflow.screens.pluck(:page_id)).each do |page|%>
+                    <li class="addScreen page-id-<%=page.id%>" data-page="<%= page.to_json(include: :page_type) %>"><%=page.name %></li>
                   <% end %>
                 </ul>
                 <h4 class="new-screens">New screens</h4>
                 <ul class="screens-list">
-                  <% PageType.all.each do |page|%>
-                  <li class="addScreen"><%= page.name %></li>
+                  <% PageType.all.each do |page_type|%>
+                  <li class="addScreen" data-page="<%= page_type.pages.new(name: page_type.name).to_json(include: :page_type)%>"><%= page_type.name %></li>
                   <% end %>
                 </ul>
               </div>
             </form>
           </div>
+
         </div>
       </div>
     </div>
+
     <div id="tile-blueprint-page" class="tile top-level">
       <div class="screen-tile-container screen">
+
         <div class="screen-tile-svg-clone">
           <div class="screen-type-text message">
             This is a page with comment.
           </div>
           <div class="screen-tile-type">
-            <span class="screen-comment-indicator-"></span> <span class='uid'></span>
+            <span class="screen-comment-indicator-"></span> <span class='uid'>ID:xxx</span>
           </div>
           <div class="screen-tile-right">
-            <div class="screen-tile-right-icon">
-              <%= image_tag("option-1.png") %>
+            <div class="screen-tile-right-icon tile-right">
             </div>
           </div>
           <div class="screen-tile-right-hover">
             <div class="right-options screen-tile-right-top">
               <a href="javascript:void(0);" class="right-option-link more">
-                <%= image_tag("more.png") %>
+                <%= image_tag("more.png", class: 'grey') %>
+                <%= image_tag("more-pink.png", class: 'pink') %>
               </a>
             </div>
             <div class="right-options screen-tile-right-bottom">
               <a href="javascript:void(0);" class="right-option-link">
-                <%= image_tag("comments.png") %>
+                <%= image_tag("comments.png", class: 'grey') %>
+                <%= image_tag("comments-pink.png", class: 'pink') %>
               </a>
             </div>
           </div>
@@ -180,25 +193,30 @@
             </ul>
           </div>
         </div>
+
         <div class="screen-hover-options">
           <div class="option option-1 selectScreen">
             <a href="javascript:void(0);" class="option-link">
               <%= image_tag("option-1.png") %>
+              <span class="card-tooltip">Screen</span>
             </a>
           </div>
           <div class="option option-2 addDecision">
             <a href="javascript:void(0);" class="option-link">
               <%= image_tag("option-2.png") %>
+              <span class="card-tooltip">Decision Point</span>
             </a>
           </div>
           <div class="option option-3 addAction">
             <a href="javascript:void(0);" class="option-link">
               <%= image_tag("option-3.png") %>
+              <span class="card-tooltip">Action</span>
             </a>
           </div>
           <div class="option option-4">
             <a href="javascript:void(0);" class="option-link">
               <%= image_tag("option-4.png") %>
+              <span class="card-tooltip">Link</span>
             </a>
           </div>
           <div class="add-screen-dropdown hide">
@@ -207,22 +225,46 @@
               <div class="dropdowns">
                 <h4>Screens in the sitemap</h4>
                 <ul class="screens-list in-sitemap">
-                  <% @sitemap.pages.each do |page|%>
-                    <li class="addScreen" data-page="<%= page.to_json %>"><%=page.name %></li>
+                  <% @sitemap.pages.where.not(id: @userflow.screens.pluck(:page_id)).each do |page|%>
+                    <li class="addScreen page-id-<%=page.id%>" data-page="<%= page.to_json(include: :page_type) %>"><%=page.name %></li>
                   <% end %>
                 </ul>
                 <h4 class="new-screens">New screens</h4>
                 <ul class="screens-list">
-                  <% PageType.all.each do |page|%>
-                  <li class="addScreen"><%= page.name %></li>
+                  <% PageType.all.each do |page_type|%>
+                  <li class="addScreen" data-page="<%= page_type.pages.new(name: page_type.name).to_json(include: :page_type)%>"><%= page_type.name %></li>
                   <% end %>
                 </ul>
               </div>
             </form>
           </div>
         </div>
+
+        <div class="screen-tile-more">
+          <a href="javascript:void(0);" class="close-options"></a>
+          <ul class="more-options-list clearfix">
+            <li class="screen-comment-node">
+              <span class="node-icon"></span>
+              <span class="card-tooltip">Comments &amp; Notes</span>
+            </li>
+            <li class="screen-change-node">
+              <span class="node-icon"></span>
+              <span class="card-tooltip">Change Screen Type</span>
+            </li>
+            <li class="screen-new-node">
+              <span class="node-icon"></span>
+              <span class="card-tooltip">New User Flow</span>
+            </li>
+            <li class="screen-delete-node">
+              <span class="node-icon"></span>
+              <span class="card-tooltip">Delete</span>
+            </li>
+          </ul>
+        </div>
+
       </div>
     </div>
+
     <div id="tile-blueprint-decision" class="tile top-level">
 
       <div class="screen-tile-container decision">
@@ -238,12 +280,14 @@
           <div class="screen-tile-right-hover">
             <div class="right-options screen-tile-right-top">
               <a href="javascript:void(0);" class="right-option-link more">
-                <%= image_tag("more.png") %>
+                <%= image_tag("more.png", class: 'grey') %>
+                <%= image_tag("more-pink.png", class: 'pink') %>
               </a>
             </div>
             <div class="right-options screen-tile-right-bottom">
               <a href="javascript:void(0);" class="right-option-link">
-                <%= image_tag("comments.png") %>
+                <%= image_tag("comments.png", class: 'grey') %>
+                <%= image_tag("comments-pink.png", class: 'pink') %>
               </a>
             </div>
           </div>
@@ -280,21 +324,25 @@
             <div class="option option-1 selectScreen">
               <a href="javascript:void(0);" class="option-link">
                 <%= image_tag("option-1.png") %>
+                <span class="card-tooltip">Screen</span>
               </a>
             </div>
             <div class="option option-2 addDecision">
               <a href="javascript:void(0);" class="option-link">
                 <%= image_tag("option-2.png") %>
+                <span class="card-tooltip">Decision Point</span>
               </a>
             </div>
             <div class="option option-3 addAction">
               <a href="javascript:void(0);" class="option-link">
                 <%= image_tag("option-3.png") %>
+                <span class="card-tooltip">Action</span>
               </a>
             </div>
             <div class="option option-4">
               <a href="javascript:void(0);" class="option-link">
                 <%= image_tag("option-4.png") %>
+                <span class="card-tooltip">Link</span>
               </a>
             </div>
             <div class="add-screen-dropdown hide">
@@ -303,14 +351,14 @@
                 <div class="dropdowns">
                   <h4>Screens in the sitemap</h4>
                   <ul class="screens-list in-sitemap">
-                    <% @sitemap.pages.each do |page|%>
-                      <li class="addScreen" data-page="<%= page.to_json %>"><%=page.name %></li>
+                    <% @sitemap.pages.where.not(id: @userflow.screens.pluck(:page_id)).each do |page|%>
+                      <li class="addScreen page-id-<%=page.id%>" data-page="<%= page.to_json(include: :page_type) %>"><%=page.name %></li>
                     <% end %>
                   </ul>
                   <h4 class="new-screens">New screens</h4>
                   <ul class="screens-list">
-                    <% PageType.all.each do |page|%>
-                    <li class="addScreen"><%= page.name %></li>
+                    <% PageType.all.each do |page_type|%>
+                    <li class="addScreen" data-page="<%= page_type.pages.new(name: page_type.name).to_json(include: :page_type)%>"><%= page_type.name %></li>
                     <% end %>
                   </ul>
                 </div>
@@ -320,6 +368,7 @@
         </div>
       </div>
     </div>
+
     <section id="flow-chart">
       <div id="tile-container">
       </div>
