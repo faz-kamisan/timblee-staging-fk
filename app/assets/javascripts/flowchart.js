@@ -76,7 +76,7 @@ function bindEditMessage() {
     $(this).addClass('hide');
     updateNode(node.id, {name: $(this).val()});
     saveDbChanges();
-    $(this).closest('.tile').find('.message').removeClass('hide').html(node.name);
+    $(this).closest('.tile').find('.message').removeClass('hide').html(formatNodeMessage(node));
   })
 }
 
@@ -501,7 +501,7 @@ function initAddTiles(id, position, level, parentNodeId, path, node_type, bottom
 
   div = $(blueprintID).clone()
                             .css(cssProps);
-  if (name) { div.find('.message').html(name) };
+  if (name) { div.find('.message').html(formatNodeMessage(getNode(id))) };
   if (page) {
 
     if (page.uid && (page.uid + '').length < 3) {
@@ -549,7 +549,7 @@ function addTile(x, y, parentTile, level, path, blueprintID, page, name) {
                             .css(cssProps);
 
   div[0].id = tile.id() + "Tile";
-  if (name) { div.find('.message').html(name) };
+  if (name) { div.find('.message').html(formatNodeMessage(getNode(tile.id()))) };
   if (page) {
     div.find('.screen-tile-right-icon').addClass(page.page_type.icon_name)
     if (page.uid && (page.uid + '').length < 3) {
@@ -850,6 +850,14 @@ function getConnectingNodesEdge(edgeID) {
   return EDGES.filter(function(edge, idx){
     return edge.id == edgeID
   })[0]
+}
+
+function formatNodeMessage (node) {
+  if (node.type == 'conclusion') {
+    return node.name.length > 37 ? node.name.slice(0, 37) + '..' : node.name
+  } else{
+    return node.name.length > 50 ? node.name.slice(0, 50) + '..' : node.name
+  };
 }
 
 $(function(){

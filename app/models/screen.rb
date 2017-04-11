@@ -12,4 +12,11 @@ class Screen < ActiveRecord::Base
   validates :userflow, :node_type, :level, :position, :path, presence: true
   validates :node_type, inclusion: { in: TYPES }
 
+  after_update :update_page_name, if: [:message_changed?, :page_id?]
+
+  private
+
+    def update_page_name
+      page.update(name: message)
+    end
 end

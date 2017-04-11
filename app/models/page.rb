@@ -14,6 +14,7 @@ class Page < ActiveRecord::Base
 
   before_validation :set_uid, on: :create, unless: :uid
   before_update :archive_children_pages_and_delete_section, if: :state_changed?, unless: :skip_callback
+  after_update :update_screens_name, if: :name_changed?, unless: :skip_callback
 
   validates :name, :page_type, :sitemap, :uid, presence: true
   validates :section, presence: true, unless: :footer?
@@ -66,6 +67,10 @@ class Page < ActiveRecord::Base
   end
 
   private
+
+    def update_screens_name
+      screens.update_all(message: name)
+    end
 
     def archive_children_pages_and_delete_section
       if(state == 'archived')
