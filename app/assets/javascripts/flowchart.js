@@ -68,7 +68,7 @@ function bindOnClickMessage() {
   })
 }
 
-function bindEditMessage () {
+function bindEditMessage() {
   $(document).on('blur', '.edit-name-field', function() {
     var tileID = $(this).closest('.tile')[0].id.slice(0, -4);
     var tile = SVG.get(tileID);
@@ -523,7 +523,7 @@ function addTile(x, y, parentTile, level, path, blueprintID, page, name) {
   ID = ID + 1;
   var tile = canvas.rect(TILE_WIDTH,TILE_HEIGHT).move(x, y).style('fill', 'transparent').id('Tile' + (ID));
 
-  NODES.push({ id: tile.id(), uid: page && page.uid, pageId: page && page.id, pageTypeId: page && page.page_type_id, name: name, type: blueprintID.match(/.*-(.*)/)[1], updated: false, saved: false, topEdge: null, leftEdge: null, rightEdge: null, bottomEdge: null, bottomLeftEdge: null, bottomRightEdge: null, bottomNode: null, bottomLeftNode: null, bottomRightNode: null, parentNode: parentTile && parentTile.id(), level: level, position: getPosition(tile), path: path })
+  NODES.push({ id: tile.id(), uid: page && page.uid, pageId: page && page.id, pageTypeId: page && page.page_type_id, name: name || blueprintID.match(/.*-(.*)/)[1], type: blueprintID.match(/.*-(.*)/)[1], updated: false, saved: false, topEdge: null, leftEdge: null, rightEdge: null, bottomEdge: null, bottomLeftEdge: null, bottomRightEdge: null, bottomNode: null, bottomLeftNode: null, bottomRightNode: null, parentNode: parentTile && parentTile.id(), level: level, position: getPosition(tile), path: path })
   var group = canvas.group().attr({ id: tile.id() + "Group" })
 
   if (blueprintID == '#tile-blueprint-decision') {
