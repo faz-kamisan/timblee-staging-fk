@@ -44,7 +44,7 @@ class UserflowsController < ApplicationController
       nodes.each_with_index do |node, i|
         parent_screen = @userflow.screens.find_by(node_id: node[:parentNode]) if node[:parentNode]
         screen = @userflow.screens.find_by(node_id: node[:id])
-        @updated_ids << screen.node_id if screen.update(parent_id: parent_screen.try(:id), level: node[:level].to_i, position: node[:position].to_f, path: node[:path], node_type: node[:type])
+        @updated_ids << screen.node_id if screen.update(parent_id: parent_screen.try(:id), level: node[:level].to_i, position: node[:position].to_f, path: node[:path], node_type: node[:type], message: node[:name])
       end
     end
 

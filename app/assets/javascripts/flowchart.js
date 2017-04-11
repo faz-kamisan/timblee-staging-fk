@@ -74,6 +74,8 @@ function bindEditMessage() {
     var tile = SVG.get(tileID);
     var node = getNode(tileID);
     $(this).addClass('hide');
+    updateNode(node.id, {name: $(this).val()});
+    saveDbChanges();
     $(this).closest('.tile').find('.message').removeClass('hide').html(node.name);
   })
 }
@@ -815,7 +817,7 @@ function getNodeFromPosition(level, position, id) {
 }
 
 function updateNode(nodeID, props) {
-  if (containsAny(Object.keys(props), ['level', 'position', 'path', 'parentNode'])){
+  if (containsAny(Object.keys(props), ['level', 'position', 'path', 'parentNode', 'name'])){
     props.updated = true;
   }
   NODES = NODES.map(function(node, idx){
