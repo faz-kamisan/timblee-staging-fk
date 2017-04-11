@@ -102,11 +102,11 @@ h1 { text-align: center; margin: 0 0 20px 0; padding: 20px; border-bottom: solid
 .node-icon:hover + .card-tooltip { opacity: 1; visibility: visible; }
 .node-icon:hover + .card-tooltip { top: 33px; }
 .screen-change-node .card-tooltip { margin-left: -65px; background: #067AB4; }
-.screen-change-node .card-tooltip:before { border-color: transparent transparent #067AB4; transparent; }
+.screen-change-node .card-tooltip:before { border-color: transparent transparent #067AB4 transparent; }
 .screen-new-node .card-tooltip { margin-left: -50px; background: #2CA15F; }
-.screen-new-node .card-tooltip:before { border-color: transparent transparent #2CA15F; transparent; }
+.screen-new-node .card-tooltip:before { border-color: transparent transparent #2CA15F transparent; }
 .screen-delete-node .card-tooltip { margin-left: -28px; background: #E2232E; }
-.screen-delete-node .card-tooltip:before { border-color: transparent transparent #E2232E; transparent; }
+.screen-delete-node .card-tooltip:before { border-color: transparent transparent #E2232E transparent; }
 .action .screen-comment-node, .decision .screen-comment-node { margin-left: 42px; }
 /* Css For More Options */
 
