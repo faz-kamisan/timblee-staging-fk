@@ -1,5 +1,5 @@
 class Page < ActiveRecord::Base
-  STATES = ['active', 'archived', 'resolved']
+  STATES = ['active', 'archived', 'resolved', 'orphan']
 
   attr_accessor :skip_callback
 

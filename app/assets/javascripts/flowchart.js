@@ -54,6 +54,28 @@ function bindEvents() {
   bindDeleteScreenEvent();
   bindShowMoreOptions();
   bindHideMoreOptions();
+  bindOnClickMessage();
+  bindEditMessage();
+}
+
+function bindOnClickMessage() {
+  $(document).on('click', '.message', function() {
+    var tileID = $(this).closest('.tile')[0].id.slice(0, -4);
+    var tile = SVG.get(tileID);
+    var node = getNode(tileID);
+    $(this).addClass('hide');
+    $(this).closest('.tile').find('.edit-name-field').removeClass('hide').val(node.name).focus();
+  })
+}
+
+function bindEditMessage () {
+  $(document).on('blur', '.edit-name-field', function() {
+    var tileID = $(this).closest('.tile')[0].id.slice(0, -4);
+    var tile = SVG.get(tileID);
+    var node = getNode(tileID);
+    $(this).addClass('hide');
+    $(this).closest('.tile').find('.message').removeClass('hide').html(node.name);
+  })
 }
 
 function bindSelectInitialScreen () {
@@ -64,7 +86,7 @@ function bindSelectInitialScreen () {
   })
 }
 
-function bindSelectScreen () {
+function bindSelectScreen() {
   $(document).on('click', '.selectScreen', function () {
     $(this).closest('div.tile').find('.add-screen-dropdown').removeClass('hide');
   })
@@ -501,7 +523,7 @@ function addTile(x, y, parentTile, level, path, blueprintID, page, name) {
   ID = ID + 1;
   var tile = canvas.rect(TILE_WIDTH,TILE_HEIGHT).move(x, y).style('fill', 'transparent').id('Tile' + (ID));
 
-  NODES.push({ id: tile.id(), uid: page && page.uid, pageId: page && page.id, name: name, type: blueprintID.match(/.*-(.*)/)[1], updated: false, saved: false, topEdge: null, leftEdge: null, rightEdge: null, bottomEdge: null, bottomLeftEdge: null, bottomRightEdge: null, bottomNode: null, bottomLeftNode: null, bottomRightNode: null, parentNode: parentTile && parentTile.id(), level: level, position: getPosition(tile), path: path })
+  NODES.push({ id: tile.id(), uid: page && page.uid, pageId: page && page.id, pageTypeId: page && page.page_type_id, name: name, type: blueprintID.match(/.*-(.*)/)[1], updated: false, saved: false, topEdge: null, leftEdge: null, rightEdge: null, bottomEdge: null, bottomLeftEdge: null, bottomRightEdge: null, bottomNode: null, bottomLeftNode: null, bottomRightNode: null, parentNode: parentTile && parentTile.id(), level: level, position: getPosition(tile), path: path })
   var group = canvas.group().attr({ id: tile.id() + "Group" })
 
   if (blueprintID == '#tile-blueprint-decision') {
