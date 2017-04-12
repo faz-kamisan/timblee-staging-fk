@@ -50,9 +50,12 @@ h1 { text-align: center; margin: 0 0 20px 0; padding: 20px; border-bottom: solid
 .screen-tile-right-icon img { width: 25px; height: auto; }
 .screen-tile-type { position: absolute; bottom: 0; font-size: 8px; color: #9B9B9B; text-transform: uppercase; font-weight: 600; width: 128px; padding: 0 0 5px 10px; }
 .screen-comment-indicator { width: 4px; height: 4px; border-radius: 50%; -moz-border-radius: 50%; -webkit-border-radius: 50%; background: #62717F; display: inline-block; position: relative; bottom: 1px; margin-right: 1px; }
-.screen-type-text { word-wrap: break-word; position: absolute; left: 0; width: 128px; font-size: 12px; color: #545C64; font-weight: 600; line-height: 14px; padding: 17px 10px 0 10px; }
-.screen-tile-container-rounded { position: relative; display: table; width: 121px; height: 50px; border-radius: 59px; -moz-border-radius: 59px; -webkit-border-radius: 59px; background: #ffffff; box-shadow: 1px 1px 3px 0 rgba(106,113,127,.2); -moz-box-shadow: 1px 1px 3px 0 rgba(106,113,127,.2); -webkit-box-shadow: 1px 1px 3px 0 rgba(106,113,127,.2); text-align: center; margin: 20px auto; }
-.screen-tile-rounded-text { word-wrap: break-word; font-size: 12px; font-weight: 700; color: #545C64; line-height: 14px; display: table-cell; vertical-align: middle; max-width: 121px; padding: 0 10px; }
+.screen-tile-svg-clone textarea, .screen-type-text { position: absolute; left: 0; width: 128px; font-size: 12px; color: #545C64; font-weight: 600; line-height: 14px; padding: 17px 10px 0 10px; border: 0; }
+.screen-type-text { word-wrap: break-word; }
+.screen-tile-svg-clone textarea { height: 65px; resize: none; }
+.screen-tile-container-rounded { position: relative; display: table; width: 121px; height: 50px; border-radius: 59px; -moz-border-radius: 59px; -webkit-border-radius: 59px; background: #ffffff; box-shadow: 1px 1px 3px 0 rgba(106,113,127,.2); -moz-box-shadow: 1px 1px 3px 0 rgba(106,113,127,.2); -webkit-box-shadow: 1px 1px 3px 0 rgba(106,113,127,.2); text-align: center; margin: 20px auto; border: 0; }
+.screen-tile-container-rounded textarea { position: absolute; left: 0; top: 0; width: 100%; height: 100%; line-height: 47px!important; resize: none; text-align: center; border-radius: 59px; -moz-border-radius: 59px; -webkit-border-radius: 59px; border: 0; }
+.screen-tile-container-rounded textarea, .screen-tile-rounded-text { word-wrap: break-word; font-size: 12px; font-weight: 700; color: #545C64; line-height: 14px; display: table-cell; vertical-align: middle; text-transform: capitalize; }
 .screen-tile-container-rounded .screen-hover-options { top: 59px; left: 50%; margin-left: -127px; text-align: left; }
 .screen-tile-container-rounded:hover .screen-hover-options { top: 64px; visibility: visible; opacity: 1; }
 .screen-tile-rounded-container { text-align: center; }
@@ -70,16 +73,17 @@ h1 { text-align: center; margin: 0 0 20px 0; padding: 20px; border-bottom: solid
 .add-screen-dropdown { background: #ffffff; }
 .search-screen-input { height: 41px; width: 100%; margin: 0; border-top: solid 1px #D6D8DA; border-bottom: solid 1px #D6D8DA; line-height: 41px; padding: 0 28px; border-left: 0; border-right: 0; }
 .screens-list { padding: 0 28px; margin: 0; max-height: 258px; overflow-y: auto; }
+.screens-list li { cursor: pointer; }
 .new-screens { border-top: solid 1px #D6D8DA; padding-top: 12px; margin-top: 6px; }
 .dropdowns h4 { font-size: 13px; color: #414952; font-weight: normal; margin: 10px 0; padding-left: 28px; padding-right: 28px; font-weight: normal; }
-.dropdowns a { color: #62717F; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; width: 95%; }
-.dropdowns a:hover { color: #EC008C; }
+.dropdowns li { color: #62717F; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; width: 95%; }
+.dropdowns li:hover { color: #EC008C; }
 /* Css For Search Screen Dropdown */
 
 /* Css For More Options */
 .screen-tile-more { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: #ffffff; z-index: 3; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; padding: 20px 21px 18px 21px; visibility: hidden; opacity: 0; transition: .35s; -moz-transition: .35s; -webkit-transition: .35s; }
 .screen-tile-container.options-open .screen-tile-more { visibility: visible; opacity: 1; }
-.screen-tile-container.options-open .screen-hover-options { display: none; }
+.screen-tile-container.options-open .screen-hover-options { visibility: hidden; opacity: 0; top: 100px; }
 .more-options-list { margin: 0; padding: 0; position: absolute; left: 21px; bottom: 18px; width: 145px; z-index: 3; }
 .more-options-list li { width: 19px; float: left; text-align: left; position: relative; }
 .more-options-list .node-icon  { display: block; cursor: pointer; }
