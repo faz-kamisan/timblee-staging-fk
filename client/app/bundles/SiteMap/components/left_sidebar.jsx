@@ -31,12 +31,12 @@ class LeftSidebar extends React.Component {
   }
 
   componentDidMount() {
-    $('body').on('focus', '#page-type', function() {
+    /*$('body').on('focus', '#page-type', function() {
       $(this).prop('placeholder', 'Search page types')
-    })
+    });
     $('body').on('blur', '#page-type', function() {
       $(this).prop('placeholder', 'Page types')
-    })
+    });*/
     if(this.props.trial) {
       $('body').addClass('trial');
     }
@@ -95,21 +95,106 @@ class LeftSidebar extends React.Component {
                   Hide Sidebar
                 </span>
                 <span className="last-updated col-xs-7 p-r-0 text-right">
-                  {this.getPageCount(this.props.sections, this.props.footerPages)} {(this.getPageCount(this.props.sections, this.props.footerPages) == 1) ? 'Page' : 'Pages'} | Last updated {this.props.updatedAt}
+                  {/* this.getPageCount(this.props.sections, this.props.footerPages) */} {/* (this.getPageCount(this.props.sections, this.props.footerPages) == 1) ? 'Page' : 'Pages'} | Last updated {this.props.updatedAt */}
                 </span>
               </div>
             </div>
             <form className="search-page-type">
-              <input type="search" id="page-type" value={this.state.searchQuery} name="page-type" placeholder="Page types" className={(this.state.searchQuery.length > 0) ? ' search-active' : ''} onChange={this.handleSearch} />
+              <input type="search" id="page-type" value={this.state.searchQuery} name="page-type" placeholder="Search screens..." className={(this.state.searchQuery.length > 0) ? ' search-active' : ''} onChange={this.handleSearch} />
               <label htmlFor="page-type">
                 <i className="icon-search"></i>
               </label>
             </form>
+            <div className="left-bar-wrapper">
+              <div className="orphan-screens-details">
+                Orphan screens
+              </div>
+              <ul className={"page-type-list orphan-page-type-list clearfix" + ((filteredPageTypes.length == 0) ? ' hide' : '')}>
+              <li>
+                <div className="page-type-wrapper" draggable="true">
+                  <div className="page-type-outer general-1-icon">
+                    <div className="page-type-box">
+                      <aside className="page-type-details">
+                        <span className="dummy-number">xx</span>
+                        <h5>General 1</h5>
+                        <span className="dummy-id"><span className="dummy-state"></span>ID: xxx</span>
+                      </aside>
+                      <aside className="page-type-icon"></aside>
+                    </div>
+                    <h4>General 1</h4>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div className="page-type-wrapper" draggable="true">
+                  <div className="page-type-outer general-1-icon">
+                    <div className="page-type-box">
+                      <aside className="page-type-details">
+                        <span className="dummy-number">xx</span>
+                        <h5>General 1</h5>
+                        <span className="dummy-id"><span className="dummy-state"></span>ID: xxx</span>
+                      </aside>
+                      <aside className="page-type-icon"></aside>
+                    </div>
+                    <h4>General 1</h4>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div className="page-type-wrapper" draggable="true">
+                  <div className="page-type-outer general-1-icon">
+                    <div className="page-type-box">
+                      <aside className="page-type-details">
+                        <span className="dummy-number">xx</span>
+                        <h5>General 1</h5>
+                        <span className="dummy-id"><span className="dummy-state"></span>ID: xxx</span>
+                      </aside>
+                      <aside className="page-type-icon"></aside>
+                    </div>
+                    <h4>General 1</h4>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div className="page-type-wrapper" draggable="true">
+                  <div className="page-type-outer general-1-icon">
+                    <div className="page-type-box">
+                      <aside className="page-type-details">
+                        <span className="dummy-number">xx</span>
+                        <h5>General 1</h5>
+                        <span className="dummy-id"><span className="dummy-state"></span>ID: xxx</span>
+                      </aside>
+                      <aside className="page-type-icon"></aside>
+                    </div>
+                    <h4>General 1</h4>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div className="page-type-wrapper" draggable="true">
+                  <div className="page-type-outer general-1-icon">
+                    <div className="page-type-box">
+                      <aside className="page-type-details">
+                        <span className="dummy-number">xx</span>
+                        <h5>General 1</h5>
+                        <span className="dummy-id"><span className="dummy-state"></span>ID: xxx</span>
+                      </aside>
+                      <aside className="page-type-icon"></aside>
+                    </div>
+                    <h4>General 1</h4>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <div className="default-screens-details">
+              Default screens
+            </div>
             <ul className={"page-type-list clearfix" + ((filteredPageTypes.length == 0) ? ' hide' : '')}>
               {pageTypeComponents}
             </ul>
             <div className={'text-center no-match-text' + ((filteredPageTypes.length == 0) ? '' : ' hide')}>
               There are no page types that match '{this.state.searchQuery}'
+            </div>
             </div>
           </div>
           :
