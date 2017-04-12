@@ -62,7 +62,7 @@ class RightSidebar extends React.Component {
             <span className="page-id">ID: {page.uid}</span>
             <div className="clearfix">
               <span className="page-name truncate pull-left">{page.name}</span>
-              <div className={(page.state != 'archived') ? '': ' hide'}>
+              <div className={(page.state != 'archived' && page.state != 'orphan') ? '': ' hide'}>
                 <ConnectedMarkAsResolvedCheck page={page} />
               </div>
             </div>

@@ -10,21 +10,39 @@ const sitemapTarget = {
       return;
     }
     if(item.type == 'page') {
-      $.ajax({
-        url: '/pages/' + item.id,
-        method: 'put',
-        dataType: 'JSON',
-        data: { page: { parent_id: props.pageTree.parentId, position: (props.pageTree.position + 1) } },
-        error: (result) => {
-          document.setFlash(result.responseText)
-        },
-        complete: (result) => {
-          props.setSaving(true)
-          setTimeout(function() {
-            props.setSaving(false)
-          }, 2000)
-        }
-      });
+      if(item.pageTree.state == 'active') {
+        $.ajax({
+          url: '/pages/' + item.id,
+          method: 'put',
+          dataType: 'JSON',
+          data: { page: { parent_id: props.pageTree.parentId, position: (props.pageTree.position + 1) } },
+          error: (result) => {
+            document.setFlash(result.responseText)
+          },
+          complete: (result) => {
+            props.setSaving(true)
+            setTimeout(function() {
+              props.setSaving(false)
+            }, 2000)
+          }
+        });
+      }else{
+       $.ajax({
+          url: '/pages/' + item.id,
+          method: 'put',
+          dataType: 'JSON',
+          data: { page: { parent_id: props.pageTree.parentId, position: (props.pageTree.position + 1), section_id: props.activeSectionId, state: 'active' } },
+          error: (result) => {
+            document.setFlash(result.responseText)
+          },
+          complete: (result) => {
+            props.setSaving(true)
+            setTimeout(function() {
+              props.setSaving(false)
+            }, 2000)
+          }
+        });
+      }
       props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.parentId, props.pageTree.position);
     } else if(item.type == 'PageType') {
       var timeStamp = new Date();

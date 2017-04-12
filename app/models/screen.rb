@@ -8,6 +8,7 @@ class Screen < ActiveRecord::Base
   has_many :child_screens, class_name: 'Screen', foreign_key: :parent_id, primary_key: :id
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :page_comments, source: :comments, through: :page
+  after_destroy :archive_page, if: :page_id?
 
   validates :userflow, :node_type, :level, :position, :path, presence: true
   validates :node_type, inclusion: { in: TYPES }
@@ -18,5 +19,9 @@ class Screen < ActiveRecord::Base
 
     def update_page_name
       page.update(name: message)
+    end
+
+    def archive_page
+      page.update(state: 'archived') if page.orphan? && page.screens.count == 0
     end
 end

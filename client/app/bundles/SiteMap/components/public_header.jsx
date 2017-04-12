@@ -53,14 +53,14 @@ class PublicHeader extends React.Component {
     var pageCount = 0
     this.props.sections.forEach(function(section, index) {
       traverse(section.pageTree, function(page) {
-        if(page.state != 'archived') {
+        if(page.state != 'archived' && page.state != 'orphan') {
           pageCount ++
         }
       })
     })
 
     this.props.footerPages.forEach(function(page, index) {
-      if(page.state != 'archived') {
+      if(page.state != 'archived' && page.state != 'orphan') {
         pageCount ++
       }
     })

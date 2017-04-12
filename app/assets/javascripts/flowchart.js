@@ -56,6 +56,15 @@ function bindEvents() {
   bindHideMoreOptions();
   bindOnClickMessage();
   bindEditMessage();
+  // bindChangePageType();
+}
+
+function bindChangePageType() {
+  $(document).on('click', '.screen-change-node', function() {
+    var tileID = $(this).closest('.tile')[0].id.slice(0, -4);
+    var tile = SVG.get(tileID);
+    var node = getNode(tileID);
+  })
 }
 
 function bindOnClickMessage() {
@@ -74,8 +83,10 @@ function bindEditMessage() {
     var tile = SVG.get(tileID);
     var node = getNode(tileID);
     $(this).addClass('hide');
-    updateNode(node.id, {name: $(this).val()});
-    saveDbChanges();
+    if ($(this).val()) {
+      updateNode(node.id, {name: $(this).val()});
+      saveDbChanges();
+    };
     $(this).closest('.tile').find('.message').removeClass('hide').html(formatNodeMessage(node));
   })
 }
@@ -829,7 +840,7 @@ function updateNode(nodeID, props) {
   })
 }
 
-function containsAny(source,target){
+function containsAny(source, target){
     var result = source.filter(function(item){ return target.indexOf(item) > -1});
     return (result.length > 0);
 }

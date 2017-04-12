@@ -55,7 +55,7 @@ class DraggedPageContainer extends React.Component {
     const isDragging = this.props.isDragging;
     var _this = this;
     var children;
-    children = this.props.pageTree.children.filter(function(page) { return((page.state != 'archived') && ((page.section_id == _this.props.activeSectionId) || (page.alt_section_id == _this.props.activeSectionId))) }).map(function(pageTree, index) {
+    children = this.props.pageTree.children.filter(function(page) { return((page.state != 'archived' && page.state != 'orphan') && ((page.section_id == _this.props.activeSectionId) || (page.alt_section_id == _this.props.activeSectionId))) }).map(function(pageTree, index) {
       if(_this.props.level == 0) {
         var sitemapNumber = (index + 1).toString() + '.0';
       } else if(_this.props.level == 1) {

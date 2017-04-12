@@ -6,7 +6,7 @@ class Page < ActiveRecord::Base
   belongs_to :sitemap
   belongs_to :section, touch: true
   belongs_to :page_type
-  has_many :screens, dependent: :nullify
+  has_many :screens, dependent: :restrict_with_error
   has_many :child_pages, class_name: 'Page', foreign_key: :parent_id, primary_key: :id
   has_many :comments, as: :commentable, dependent: :destroy #if screen exist move comments from page to screen
   acts_as_tree order: :position
@@ -20,6 +20,10 @@ class Page < ActiveRecord::Base
   validates :section, presence: true, unless: :footer?
   validates :state, inclusion: { in: STATES }
   validates :uid, uniqueness: { scope: :sitemap_id }
+
+  scope :orphan, -> { where(state: 'orphan') }
+  scope :archived, -> { where(state: 'archived') }
+
 
   def duplicate(duplicate_section, duplicate_parent_id, duplicate_sitemap)
     if alt_section_id && !duplicate_section.default?
@@ -66,6 +70,10 @@ class Page < ActiveRecord::Base
     }
   end
 
+  def orphan?
+    state == 'orphan'
+  end
+
   private
 
     def update_screens_name
@@ -74,6 +82,7 @@ class Page < ActiveRecord::Base
 
     def archive_children_pages_and_delete_section
       if(state == 'archived')
+        self.state = 'orphan' if screens.present?
         children.each do |child|
           child.update(state: 'archived')
         end

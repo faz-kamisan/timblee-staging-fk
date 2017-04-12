@@ -69,7 +69,7 @@ class Footer extends React.Component {
 
   render() {
     const connectDropTarget = this.props.connectDropTarget
-    var usablePages = this.props.footerPages.filter(function(page) { return(page.state != 'archived') })
+    var usablePages = this.props.footerPages.filter(function(page) { return(page.state != 'archived' && page.state != 'orphan') })
     var width = ((usablePages.length * 200) + ((usablePages.length - 1) * 22) + 40).toString() + 'px'
     var renderedFooterPages = usablePages.map(function(footerPage, index) {
       return(
@@ -78,7 +78,7 @@ class Footer extends React.Component {
         </li>
       )
     })
-    return connectDropTarget(                             
+    return connectDropTarget(
       <div className={"scrollable-div-footer" + (this.props.leftSidebarExpanded ? '' : ' left-bar-contracted')}>
         <div className='sitemap-footer' style={{ width: width }}>
           { (usablePages.length > 0) &&
