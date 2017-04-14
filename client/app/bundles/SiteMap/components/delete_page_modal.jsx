@@ -23,7 +23,7 @@ class DeletePageModal extends React.Component {
       },
         success: (result) => {
           if (result.state == 'orphan') {
-            props.onPageOrphan(result)
+            _this.props.onPageOrphan(result, _this.props.pageTypes)
           };
         },
       complete: (result) => {

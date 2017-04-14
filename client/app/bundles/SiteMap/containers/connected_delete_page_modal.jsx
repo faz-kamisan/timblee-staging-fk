@@ -3,7 +3,7 @@ import { removePage, removeFooterPage, addOrphanPage, changeUpdatedAt, setSaving
 import DeletePageModal from '../components/delete_page_modal'
 
 const mapStateToProps = (state) => {
-  return { pageTree: state.selectedPage }
+  return { pageTree: state.selectedPage, pageTypes: state.pageTypes }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -15,8 +15,8 @@ const mapDispatchToProps = (dispatch) => {
         dispatch(removePage(pageTree.id, pageTree.section_id))
       }
     },
-    onPageOrphan: (page) => {
-      dispatch(addOrphanPage(page))
+    onPageOrphan: (page, pageTypes) => {
+      dispatch(addOrphanPage(page, pageTypes))
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));
