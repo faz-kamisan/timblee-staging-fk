@@ -161,6 +161,13 @@ class Header extends React.Component {
           </span>
         </div>
 
+        <div className="canvas-switch">
+          <ul>
+            <li className="active">Sitemap</li>
+            <li>User Flow <span className="beta-tag">Beta</span></li>
+          </ul>
+        </div>
+
         <div className="toggle-header pull-right" onClick={this.handleMainHeaderToggle}>
           <div className={"inner-toggle " + (this.state.showMainHeader ? 'caret-up' : '')}>
             <i className="icon-caret"></i>

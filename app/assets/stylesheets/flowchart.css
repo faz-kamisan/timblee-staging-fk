@@ -52,7 +52,7 @@ h1 { text-align: center; margin: 0 0 20px 0; padding: 20px; border-bottom: solid
 .screen-comment-indicator { width: 4px; height: 4px; border-radius: 50%; -moz-border-radius: 50%; -webkit-border-radius: 50%; background: #62717F; display: inline-block; position: relative; bottom: 1px; margin-right: 1px; }
 .screen-tile-svg-clone input, .screen-type-text { position: absolute; left: 0; width: 128px; font-size: 12px; color: #545C64; font-weight: 600; line-height: 14px; padding: 17px 10px 0 10px; border: 0; }
 .screen-type-text { word-wrap: break-word; }
-.screen-tile-svg-clone input { height: 65px; resize: none; }
+.screen-tile-svg-clone input {}
 .screen-tile-container-rounded { position: relative; display: table; width: 121px; height: 50px; border-radius: 59px; -moz-border-radius: 59px; -webkit-border-radius: 59px; background: #ffffff; box-shadow: 1px 1px 3px 0 rgba(106,113,127,.2); -moz-box-shadow: 1px 1px 3px 0 rgba(106,113,127,.2); -webkit-box-shadow: 1px 1px 3px 0 rgba(106,113,127,.2); text-align: center; margin: 20px auto; border: 0; }
 .screen-tile-container-rounded input { position: absolute; left: 0; top: 0; width: 100%; height: 100%; line-height: 47px!important; resize: none; text-align: center; border-radius: 59px; -moz-border-radius: 59px; -webkit-border-radius: 59px; border: 0; }
 .screen-tile-container-rounded input, .screen-tile-rounded-text { max-width: 121px; padding: 0 10px; word-wrap: break-word; font-size: 12px; font-weight: 700; color: #545C64; line-height: 14px; display: table-cell; vertical-align: middle; text-transform: capitalize; }
