@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react';
 import DraggablePageType from './draggable_page_type'
+import DraggableOrphanPage from './draggable_orphan_page'
 import { traverse } from '../helpers/tree_helper'
 
 class LeftSidebar extends React.Component {
   static propTypes = {
     pageTypes: PropTypes.array.isRequired,
+    orphanPages: PropTypes.array.isRequired,
     sections: PropTypes.array.isRequired,
     footerPages: PropTypes.array.isRequired,
     updatedAt: PropTypes.string.isRequired,
@@ -66,7 +68,8 @@ class LeftSidebar extends React.Component {
       (this.props.updatedAt != nextProps.updatedAt) ||
       (this.getPageCount(this.props.sections, this.props.footerPages) != this.getPageCount(nextProps.sections, nextProps.footerPages)) ||
       (this.props.footerPages.length != nextProps.footerPages.length) ||
-      (this.state.searchQuery != nextState.searchQuery)
+      (this.state.searchQuery != nextState.searchQuery) ||
+      (this.props.orphanPages.length != nextProps.orphanPages.length)
     )
   }
 
@@ -75,11 +78,17 @@ class LeftSidebar extends React.Component {
     if(this.state.searchQuery.length > 0) {
       var searchQueryRegExp = new RegExp(('\\b' + this.state.searchQuery), 'gi')
       var filteredPageTypes = this.props.pageTypes.filter(function(pageType) { return(pageType.name.match(searchQueryRegExp)) })
+      var filteredOrphanPages = this.props.orphanPages.filter(function(page) { return(page.name.match(searchQueryRegExp)) })
     } else {
       var filteredPageTypes = this.props.pageTypes
+      var filteredOrphanPages = this.props.orphanPages
     }
     var pageTypeComponents = filteredPageTypes.map(function(pageType, index) {
       return <li key={pageType.id}><DraggablePageType name={pageType.name} iconName={pageType.icon_name} id={pageType.id} /></li>
+    })
+    var orphanPageComponents = filteredOrphanPages.map(function(page, index) {
+      return <li key={page.id}><DraggableOrphanPage page={page} /></li>
+
     })
     return (
       <div className={'sitemap-left-sidebar' + (this.props.leftSidebarExpanded ? '' : ' expand-false') + (this.props.trial ? ' trial' : '')}>
@@ -109,83 +118,14 @@ class LeftSidebar extends React.Component {
               <div className="orphan-screens-details">
                 Orphan screens
               </div>
-              <ul className={"page-type-list orphan-page-type-list clearfix" + ((filteredPageTypes.length == 0) ? ' hide' : '')}>
-              <li>
-                <div className="page-type-wrapper" draggable="true">
-                  <div className="page-type-outer general-1-icon">
-                    <div className="page-type-box">
-                      <aside className="page-type-details">
-                        <span className="dummy-number">xx</span>
-                        <h5>General 1</h5>
-                        <span className="dummy-id"><span className="dummy-state"></span>ID: xxx</span>
-                      </aside>
-                      <aside className="page-type-icon"></aside>
-                    </div>
-                    <h4>General 1</h4>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div className="page-type-wrapper" draggable="true">
-                  <div className="page-type-outer general-1-icon">
-                    <div className="page-type-box">
-                      <aside className="page-type-details">
-                        <span className="dummy-number">xx</span>
-                        <h5>General 1</h5>
-                        <span className="dummy-id"><span className="dummy-state"></span>ID: xxx</span>
-                      </aside>
-                      <aside className="page-type-icon"></aside>
-                    </div>
-                    <h4>General 1</h4>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div className="page-type-wrapper" draggable="true">
-                  <div className="page-type-outer general-1-icon">
-                    <div className="page-type-box">
-                      <aside className="page-type-details">
-                        <span className="dummy-number">xx</span>
-                        <h5>General 1</h5>
-                        <span className="dummy-id"><span className="dummy-state"></span>ID: xxx</span>
-                      </aside>
-                      <aside className="page-type-icon"></aside>
-                    </div>
-                    <h4>General 1</h4>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div className="page-type-wrapper" draggable="true">
-                  <div className="page-type-outer general-1-icon">
-                    <div className="page-type-box">
-                      <aside className="page-type-details">
-                        <span className="dummy-number">xx</span>
-                        <h5>General 1</h5>
-                        <span className="dummy-id"><span className="dummy-state"></span>ID: xxx</span>
-                      </aside>
-                      <aside className="page-type-icon"></aside>
-                    </div>
-                    <h4>General 1</h4>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div className="page-type-wrapper" draggable="true">
-                  <div className="page-type-outer general-1-icon">
-                    <div className="page-type-box">
-                      <aside className="page-type-details">
-                        <span className="dummy-number">xx</span>
-                        <h5>General 1</h5>
-                        <span className="dummy-id"><span className="dummy-state"></span>ID: xxx</span>
-                      </aside>
-                      <aside className="page-type-icon"></aside>
-                    </div>
-                    <h4>General 1</h4>
-                  </div>
-                </div>
-              </li>
+              <ul className={"page-type-list orphan-page-type-list clearfix" + ((filteredOrphanPages.length == 0) ? ' hide' : '')}>
+              {orphanPageComponents}
             </ul>
+            <div className={'text-center no-match-text' + ((filteredOrphanPages.length == 0) ? '' : ' hide')}>
+              {
+               this.state.searchQuery ? 'There are no orphan pages that match ' + this.state.searchQuery : 'There are no orphan pages.'
+              }
+            </div>
             <div className="default-screens-details">
               Default screens
             </div>

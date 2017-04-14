@@ -10,22 +10,43 @@ const sitemapTarget = {
       return;
     }
     if(item.type == 'page') {
-      $.ajax({
-        url: '/pages/' + item.id,
-        method: 'put',
-        dataType: 'JSON',
-        data: { page: { parent_id: props.pageTree.id, position: 1 } },
-        error: (result) => {
-          document.setFlash(result.responseText)
-        },
-        complete: (result) => {
-          props.setSaving(true)
-          setTimeout(function() {
-            props.setSaving(false)
-          }, 2000)
-        }
-      });
-      props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.id, 'begining');
+
+      if(item.pageTree.state == 'active') {
+        $.ajax({
+          url: '/pages/' + item.id,
+          method: 'put',
+          dataType: 'JSON',
+          data: { page: { parent_id: props.pageTree.id, position: 1 } },
+          error: (result) => {
+            document.setFlash(result.responseText)
+          },
+          complete: (result) => {
+            props.setSaving(true)
+            setTimeout(function() {
+              props.setSaving(false)
+            }, 2000)
+          }
+        });
+        props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.id, 'begining');
+      }else{
+       $.ajax({
+          url: '/pages/' + item.id,
+          method: 'put',
+          dataType: 'JSON',
+          data: { page: { parent_id: props.pageTree.id, position: 1, section_id: props.activeSectionId, state: 'active' } },
+          error: (result) => {
+            document.setFlash(result.responseText)
+          },
+          complete: (result) => {
+            props.setSaving(true)
+            setTimeout(function() {
+              props.setSaving(false)
+            }, 2000)
+          }
+        });
+        props.onOrphanPageDrop(item.id, props.pageTree.section_id, props.pageTree.id, 'begining');
+      }
+
     } else if(item.type == 'PageType') {
       if(props.level < 12) {
         var timeStamp = new Date();
@@ -53,7 +74,7 @@ const sitemapTarget = {
   }
 };
 
-var DropTargetDecorator = DropTarget([ItemTypes.PAGE_CONTAINER, ItemTypes.PAGE_TYPE], sitemapTarget,
+var DropTargetDecorator = DropTarget([ItemTypes.PAGE_CONTAINER, ItemTypes.PAGE_TYPE, ItemTypes.ORPHAN_PAGE], sitemapTarget,
   function(connect, monitor) {
     return {
       connectDropTarget: connect.dropTarget(),

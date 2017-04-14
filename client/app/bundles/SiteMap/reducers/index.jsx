@@ -3,6 +3,7 @@ import name from './name'
 import id from './id'
 import sections from './sections'
 import pageTypes from './page_types'
+import orphanPages from './orphan_pages'
 import comments from './comments'
 import state from './state'
 import saving from './saving'
@@ -34,6 +35,7 @@ const sitemapAppReducer = combineReducers({
   updated_at,
   sections,
   pageTypes,
+  orphanPages,
   state,
   saving,
   comments,

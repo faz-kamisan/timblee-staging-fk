@@ -28,7 +28,7 @@ class UserflowsController < ApplicationController
       @saved_ids = []
       nodes.each_with_index do |node, i|
         parent_screen = @userflow.screens.find_by(node_id: node[:parentNode]) if node[:parentNode]
-        page = @sitemap.pages.create(name: node[:name], page_type_id: node[:pageTypeId], section: @sitemap.default_section, state: 'orphan') if node[:type] == 'page' && !node[:pageId].presence
+        page = @sitemap.pages.create(name: node[:name], page_type_id: node[:pageTypeId], section: @sitemap.default_section, parent_id: @sitemap.default_section.root_page.id, state: 'orphan') if node[:type] == 'page' && !node[:pageId].presence
         screen = @userflow.screens.create(node_id: node[:id], parent_id: parent_screen.try(:id), level: node[:level].to_i, position: node[:position].to_f, path: node[:path], node_type: node[:type], page_id: page.try(:id) || node[:pageId], message: node[:name])
         @saved_ids << screen.node_id if screen.id
       end

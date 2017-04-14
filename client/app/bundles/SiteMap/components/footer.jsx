@@ -32,11 +32,28 @@ const sitemapTarget = {
         }
       });
       props.onPageTypeDrop(item, timeStamp, props.maxPageUid);
+    }else if(item.type == 'page' && item.pageTree.state == 'orphan'){
+      $.ajax({
+        url: '/pages/' + item.id,
+        method: 'put',
+        dataType: 'JSON',
+        data: { page: { footer: true, state: 'active' } },
+        error: (result) => {
+          document.setFlash(result.responseText)
+        },
+        complete: (result) => {
+          props.setSaving(true)
+          setTimeout(function() {
+            props.setSaving(false)
+          }, 2000)
+        }
+      });
+      props.onOrphanPageDrop(item);
     }
   }
 };
 
-var DropTargetDecorator = DropTarget([ItemTypes.PAGE_CONTAINER, ItemTypes.PAGE_TYPE], sitemapTarget,
+var DropTargetDecorator = DropTarget([ItemTypes.PAGE_CONTAINER, ItemTypes.PAGE_TYPE, ItemTypes.ORPHAN_PAGE], sitemapTarget,
   function(connect, monitor) {
     return {
       connectDropTarget: connect.dropTarget(),

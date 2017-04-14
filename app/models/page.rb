@@ -13,6 +13,7 @@ class Page < ActiveRecord::Base
   acts_as_list scope: :parent
 
   before_validation :set_uid, on: :create, unless: :uid
+  before_update :update_parent_id, if: :footer_changed?, unless: :skip_callback
   before_update :archive_children_pages_and_delete_section, if: :state_changed?, unless: :skip_callback
   after_update :update_screens_name, if: :name_changed?, unless: :skip_callback
 
@@ -76,13 +77,17 @@ class Page < ActiveRecord::Base
 
   private
 
+    def update_parent_id
+      assign_attributes(parent_id: nil) if footer?
+    end
+
     def update_screens_name
       screens.update_all(message: name)
     end
 
     def archive_children_pages_and_delete_section
       if(state == 'archived')
-        self.state = 'orphan' if screens.present?
+        assign_attributes(state: 'orphan', footer: false, parent_id: sitemap.default_section.root_page.id) if screens.present?
         children.each do |child|
           child.update(state: 'archived')
         end

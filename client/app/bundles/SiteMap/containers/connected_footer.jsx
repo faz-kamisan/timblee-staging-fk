@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { addNewFooterPage, changeUpdatedAt, updateFooterPageId, setSaving, setMaxPageUid } from '../actions'
+import { addNewFooterPage, addOrphanPageToFooter, removeOrphanPage, changeUpdatedAt, updateFooterPageId, setSaving, setMaxPageUid } from '../actions'
 import DroppableFooter from '../components/footer'
 
 const mapStateToProps = (state) => {
@@ -11,6 +11,10 @@ const mapDispatchToProps = (dispatch) => {
     onPageTypeDrop: (pageType, timeStamp, maxPageUid) => {
       dispatch(addNewFooterPage(pageType, timeStamp, maxPageUid + 1));
       dispatch(setMaxPageUid(maxPageUid + 1))
+    },
+    onOrphanPageDrop: (page) => {
+      dispatch(addOrphanPageToFooter(page));
+      dispatch(removeOrphanPage(page.id));
     },
     onPageIdUpdate: (id, newId) => {
       dispatch(updateFooterPageId(id, newId));

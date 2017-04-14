@@ -61,6 +61,7 @@ function updatePagePosition(sections, id, sectionId, newParentId, position) {
       oldParentPage = getNodeById(treeCopy, page.parentId);
   oldParentPage.children.removeIf(function(elem, idx) { return elem.id == id });
   page.parentId = newParentPage.id;
+  page.state = 'active';
   //  Insert at begining.
   if(position == 'begining') {
     newParentPage.children.unshift(page)

@@ -36,6 +36,9 @@ export const CHANGE_FOOTER_PAGE_TYPE = 'CHANGE_FOOTER_PAGE_TYPE'
 export const CREATE_NEW_SECTION = 'CREATE_NEW_SECTION'
 export const UPDATE_PAGE_STATE = 'UPDATE_PAGE_STATE'
 export const UPDATE_FOOTER_PAGE_STATE = 'UPDATE_FOOTER_PAGE_STATE'
+export const REMOVE_ORPHAN_PAGE = 'REMOVE_ORPHAN_PAGE'
+export const ADD_ORPHAN_PAGE_TO_FOOTER = 'ADD_ORPHAN_PAGE_TO_FOOTER'
+export const ADD_ORPHAN_PAGE = 'ADD_ORPHAN_PAGE'
 export const ADD_NEW_FOOTER_PAGE = 'ADD_NEW_FOOTER_PAGE'
 export const UPDATE_FOOTER_PAGE_ID = 'UPDATE_FOOTER_PAGE_ID'
 export const SET_MAX_PAGE_UID = 'SET_MAX_PAGE_UID'
@@ -200,6 +203,18 @@ export function updateFooterPageState(pageId, state) {
 
 export function addNewFooterPage(pageType, timeStamp, uid) {
   return { type: ADD_NEW_FOOTER_PAGE, pageType, timeStamp, uid }
+}
+
+export function addOrphanPageToFooter(page) {
+  return { type: ADD_ORPHAN_PAGE_TO_FOOTER, page }
+}
+
+export function addOrphanPage(page, pageType) {
+  return { type: ADD_ORPHAN_PAGE, page, pageType }
+}
+
+export function removeOrphanPage(id) {
+  return { type: REMOVE_ORPHAN_PAGE, id }
 }
 
 export function updateFooterPageId(oldId, newId) {

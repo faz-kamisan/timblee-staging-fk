@@ -1,9 +1,16 @@
-import { ADD_NEW_FOOTER_PAGE, UPDATE_FOOTER_PAGE_ID, UPDATE_FOOTER_PAGE_NAME, UPDATE_FOOTER_PAGE_PERSISTENCE, CHANGE_FOOTER_PAGE_TYPE, UPDATE_FOOTER_PAGE_STATE, ADD_FOOTER_PAGE_COMMENT, UPDATE_FOOTER_PAGE_COMMENT_ID, DELETE_FOOTER_PAGE_COMMENT, UPDATE_FOOTER_PAGE_COMMENT, REMOVE_FOOTER_PAGE } from '../actions/index'
+import { ADD_NEW_FOOTER_PAGE, ADD_ORPHAN_PAGE_TO_FOOTER, UPDATE_FOOTER_PAGE_ID, UPDATE_FOOTER_PAGE_NAME, UPDATE_FOOTER_PAGE_PERSISTENCE, CHANGE_FOOTER_PAGE_TYPE, UPDATE_FOOTER_PAGE_STATE, ADD_FOOTER_PAGE_COMMENT, UPDATE_FOOTER_PAGE_COMMENT_ID, DELETE_FOOTER_PAGE_COMMENT, UPDATE_FOOTER_PAGE_COMMENT, REMOVE_FOOTER_PAGE } from '../actions/index'
 function addFooterPage(footerPages, pageType, tempId, uid) {
   var footerPagesCopy = Object.assign([], footerPages)
   var pageTypeCopy = Object.assign({}, pageType);
   pageTypeCopy.icon_name = pageTypeCopy.iconName
   var newFooterPage = { name: pageType.name, footer: true, pageType: pageTypeCopy, children: [], comments: [], collapsed: false, state: 'active', id: tempId, uid: uid, newRecord: true};
+  footerPagesCopy.push(newFooterPage)
+  return footerPagesCopy
+}
+
+function addOrphanPageInFooter(footerPages, page) {
+  var footerPagesCopy = Object.assign([], footerPages)
+  var newFooterPage = { name: page.pageTree.name, footer: true, pageType: page.pageTree.page_type, children: [], comments: [], collapsed: false, state: 'active', id: page.id, uid: page.pageTree.uid, newRecord: false};
   footerPagesCopy.push(newFooterPage)
   return footerPagesCopy
 }
@@ -85,6 +92,8 @@ const footerPages = (state = [], action) => {
   switch (action.type) {
     case ADD_NEW_FOOTER_PAGE:
       return addFooterPage(state, action.pageType, action.timeStamp, action.uid)
+    case ADD_ORPHAN_PAGE_TO_FOOTER:
+      return addOrphanPageInFooter(state, action.page)
     case UPDATE_FOOTER_PAGE_ID:
       return updateId(state, action.oldId, action.newId)
     case UPDATE_FOOTER_PAGE_NAME:

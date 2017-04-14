@@ -26,6 +26,7 @@ const sitemapTarget = {
             }, 2000)
           }
         });
+        props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.parentId, props.pageTree.position);
       }else{
        $.ajax({
           url: '/pages/' + item.id,
@@ -42,8 +43,8 @@ const sitemapTarget = {
             }, 2000)
           }
         });
+        props.onOrphanPageDrop(item.id, props.pageTree.section_id, props.pageTree.parentId, props.pageTree.position);
       }
-      props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.parentId, props.pageTree.position);
     } else if(item.type == 'PageType') {
       var timeStamp = new Date();
       $.ajax({
@@ -70,7 +71,7 @@ const sitemapTarget = {
 };
 
 
-var DropTargetDecorator = DropTarget([ItemTypes.PAGE_CONTAINER, ItemTypes.PAGE_TYPE], sitemapTarget,
+var DropTargetDecorator = DropTarget([ItemTypes.PAGE_CONTAINER, ItemTypes.PAGE_TYPE, ItemTypes.ORPHAN_PAGE], sitemapTarget,
   function(connect, monitor) {
     return {
       connectDropTarget: connect.dropTarget(),

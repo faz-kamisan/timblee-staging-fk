@@ -32,7 +32,7 @@
           <div class="dropdowns">
             <h4>Screens in the sitemap</h4>
             <ul class="screens-list in-sitemap">
-              <% @sitemap.pages.where.not(id: @userflow.screens.pluck(:page_id)).each do |page|%>
+              <% @sitemap.pages.where.not(id: @userflow.screens.pluck(:page_id), state: :archived).each do |page|%>
                 <li class="addInitialScreen page-id-<%=page.id%>" data-page="<%= page.to_json(include: :page_type) %>"><%= page.name %></li>
               <% end %>
             </ul>
@@ -128,7 +128,7 @@
               <div class="dropdowns">
                 <h4>Screens in the sitemap</h4>
                 <ul class="screens-list in-sitemap">
-                  <% @sitemap.pages.where.not(id: @userflow.screens.pluck(:page_id)).each do |page|%>
+                  <% @sitemap.pages.where.not(id: @userflow.screens.pluck(:page_id), state: :archived).each do |page|%>
                     <li class="addScreen page-id-<%=page.id%>" data-page="<%= page.to_json(include: :page_type) %>"><%=page.name %></li>
                   <% end %>
                 </ul>
@@ -230,7 +230,7 @@
               <div class="dropdowns">
                 <h4>Screens in the sitemap</h4>
                 <ul class="screens-list in-sitemap">
-                  <% @sitemap.pages.where.not(id: @userflow.screens.pluck(:page_id)).each do |page|%>
+                  <% @sitemap.pages.where.not(id: @userflow.screens.pluck(:page_id), state: :archived).each do |page|%>
                     <li class="addScreen page-id-<%=page.id%>" data-page="<%= page.to_json(include: :page_type) %>"><%=page.name %></li>
                   <% end %>
                 </ul>
@@ -340,7 +340,7 @@
                 <div class="dropdowns">
                   <h4>Screens in the sitemap</h4>
                   <ul class="screens-list in-sitemap">
-                    <% @sitemap.pages.where.not(id: @userflow.screens.pluck(:page_id)).each do |page|%>
+                    <% @sitemap.pages.where.not(id: @userflow.screens.pluck(:page_id), state: :archived).each do |page|%>
                       <li class="addScreen page-id-<%=page.id%>" data-page="<%= page.to_json(include: :page_type) %>"><%=page.name %></li>
                     <% end %>
                   </ul>

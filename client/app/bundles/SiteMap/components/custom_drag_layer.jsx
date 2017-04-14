@@ -3,6 +3,7 @@ import { ItemTypes } from '../dnd/constants';
 import { DragLayer } from 'react-dnd';
 import PageContainerPreview from './page_container_preview';
 import PageTypePreview from './page_type_preview';
+import OrphanPagePreview from './orphan_page_preview';
 
 const layerStyles = {
   position: 'fixed',
@@ -71,6 +72,10 @@ class CustomDragLayer extends Component {
     case ItemTypes.PAGE_TYPE:
       return (
         <PageTypePreview name={item.name} iconName={item.iconName} />
+      );
+    case ItemTypes.ORPHAN_PAGE:
+      return (
+        <OrphanPagePreview page={item.pageTree} />
       );
     default:
       return null;

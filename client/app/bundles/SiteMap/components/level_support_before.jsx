@@ -10,22 +10,41 @@ const sitemapTarget = {
       return;
     }
     if(item.type == 'page') {
-      $.ajax({
-        url: '/pages/' + item.id,
-        method: 'put',
-        dataType: 'JSON',
-        data: { page: { parent_id: props.pageTree.parentId, position: (props.pageTree.position) } },
-        error: (result) => {
-          document.setFlash(result.responseText)
-        },
-        complete: (result) => {
-          props.setSaving(true)
-          setTimeout(function() {
-            props.setSaving(false)
-          }, 2000)
-        }
-      });
-      props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.parentId, props.pageTree.position - 1);
+      if(item.pageTree.state == 'active') {
+        $.ajax({
+          url: '/pages/' + item.id,
+          method: 'put',
+          dataType: 'JSON',
+          data: { page: { parent_id: props.pageTree.parentId, position: (props.pageTree.position) } },
+          error: (result) => {
+            document.setFlash(result.responseText)
+          },
+          complete: (result) => {
+            props.setSaving(true)
+            setTimeout(function() {
+              props.setSaving(false)
+            }, 2000)
+          }
+        });
+        props.onPageDrop(item.id, props.pageTree.section_id, props.pageTree.parentId, props.pageTree.position - 1);
+      }else{
+       $.ajax({
+          url: '/pages/' + item.id,
+          method: 'put',
+          dataType: 'JSON',
+          data: { page: { parent_id: props.pageTree.parentId, position: (props.pageTree.position), section_id: props.activeSectionId, state: 'active' } },
+          error: (result) => {
+            document.setFlash(result.responseText)
+          },
+          complete: (result) => {
+            props.setSaving(true)
+            setTimeout(function() {
+              props.setSaving(false)
+            }, 2000)
+          }
+        });
+        props.onOrphanPageDrop(item.id, props.pageTree.section_id, props.pageTree.parentId, props.pageTree.position - 1);
+      }
     } else if(item.type == 'PageType') {
       var timeStamp = new Date();
       $.ajax({
@@ -52,7 +71,7 @@ const sitemapTarget = {
 };
 
 
-var DropTargetDecorator = DropTarget([ItemTypes.PAGE_CONTAINER, ItemTypes.PAGE_TYPE], sitemapTarget,
+var DropTargetDecorator = DropTarget([ItemTypes.PAGE_CONTAINER, ItemTypes.PAGE_TYPE, ItemTypes.ORPHAN_PAGE], sitemapTarget,
   function(connect, monitor) {
     return {
       connectDropTarget: connect.dropTarget(),

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { removePage, removeFooterPage, changeUpdatedAt, setSaving } from '../actions'
+import { removePage, removeFooterPage, addOrphanPage, changeUpdatedAt, setSaving } from '../actions'
 import DeletePageModal from '../components/delete_page_modal'
 
 const mapStateToProps = (state) => {
@@ -14,6 +14,9 @@ const mapDispatchToProps = (dispatch) => {
       } else {
         dispatch(removePage(pageTree.id, pageTree.section_id))
       }
+    },
+    onPageOrphan: (page) => {
+      dispatch(addOrphanPage(page))
     },
     setSaving: (saving) => {
       dispatch(setSaving(saving));

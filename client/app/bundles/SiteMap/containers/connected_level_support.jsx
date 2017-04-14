@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { updatePagePosition, changeUpdatedAt, addNewPage, setMaxPageUid, updateId, setSaving } from '../actions'
+import { updatePagePosition, removeOrphanPage, changeUpdatedAt, addNewPage, setMaxPageUid, updateId, setSaving } from '../actions'
 import DroppableLevelSupport from '../components/level_support'
 
 const mapStateToProps = (state) => {
@@ -9,7 +9,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onPageDrop: (id, sectionId, newParentId, position) => {
-      dispatch(updatePagePosition(id,sectionId,  newParentId, position));
+      dispatch(updatePagePosition(id, sectionId, newParentId, position));
+    },
+    onOrphanPageDrop: (id, sectionId, newParentId, position) => {
+      dispatch(updatePagePosition(id, sectionId, newParentId, position));
+      dispatch(removeOrphanPage(id));
     },
     onPageTypeDrop: (sectionId, pageType, parentId, position, timeStamp, maxPageUid) => {
       dispatch(addNewPage(sectionId, pageType, parentId, position, timeStamp, maxPageUid + 1));

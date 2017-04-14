@@ -87,6 +87,7 @@ class Sitemap < ActiveRecord::Base
       updated_at: self.updated_at.strftime('%d %b %Y'),
       createdAt: self.created_at.to_f * 1000,
       pageTypes: PageType.order_by_name,
+      orphanPages: JSON.parse(pages.orphan.to_json(include: :page_type)),
       footerPages: pages.where(footer: true).map(&:to_react_data),
       comments: self.comments.order_by_created_at.map(&:to_react_data),
       sections: sections.order(:created_at).map(&:to_react_data),

@@ -43,11 +43,37 @@ const sitemapTarget = {
       } else {
         props.onPageTypeDrop(props.activeSectionId, item, props.pageTree.id, 'begining', timeStamp, props.maxPageUid);
       }
+    }else if(item.type == 'page' && item.pageTree.state == 'orphan'){
+      if(props.pageTree.footer) {
+        var data = { page: { parent_id: null, position: null, section_id: null, footer: true, state: 'active' } }
+      } else {
+        var data = { page: { parent_id: props.pageTree.id, position: 1, section_id: props.activeSectionId, state: 'active' } }
+      }
+      $.ajax({
+        url: '/pages/' + item.id,
+        method: 'put',
+        dataType: 'JSON',
+        data: data,
+        error: (result) => {
+          document.setFlash(result.responseText)
+        },
+        complete: (result) => {
+          props.setSaving(true)
+          setTimeout(function() {
+            props.setSaving(false)
+          }, 2000)
+        }
+      });
+      if(props.pageTree.footer) {
+        props.onFooterOrphanPageDrop(item);
+      } else {
+        props.onOrphanPageDrop(item.id, props.pageTree.section_id, props.pageTree.id, 'begining');
+      }
     }
   }
 };
 
-var DropTargetDecorator = DropTarget([ItemTypes.PAGE_CONTAINER, ItemTypes.PAGE_TYPE], sitemapTarget,
+var DropTargetDecorator = DropTarget([ItemTypes.PAGE_CONTAINER, ItemTypes.PAGE_TYPE, ItemTypes.ORPHAN_PAGE], sitemapTarget,
   function(connect, monitor) {
     return {
       connectDropTarget: connect.dropTarget(),

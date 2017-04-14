@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { updatePagePosition, addNewPage, setMaxPageUid, changeUpdatedAt, updateId, changeActiveSectionId, setSaving } from '../actions'
+import { updatePagePosition, removeOrphanPage, addNewPage, setMaxPageUid, changeUpdatedAt, updateId, changeActiveSectionId, setSaving } from '../actions'
 import DroppablePageTileTop from '../components/page_tile_top'
 
 const mapStateToProps = (state) => {
@@ -9,7 +9,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onPageDrop: (id, sectionId, newParentId, position) => {
-      dispatch(updatePagePosition(id,sectionId,  newParentId, position));
+      dispatch(updatePagePosition(id, sectionId, newParentId, position));
+    },
+    onOrphanPageDrop: (id, sectionId, newParentId, position) => {
+      dispatch(updatePagePosition(id, sectionId, newParentId, position));
+      dispatch(removeOrphanPage(id));
     },
     onPageTypeDrop: (sectionId, pageType, parentId, position, timeStamp, maxPageUid) => {
       dispatch(addNewPage(sectionId, pageType, parentId, position, timeStamp, maxPageUid + 1));
