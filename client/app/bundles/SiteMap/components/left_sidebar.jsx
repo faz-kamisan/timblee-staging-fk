@@ -104,7 +104,7 @@ class LeftSidebar extends React.Component {
                   Hide Sidebar
                 </span>
                 <span className="last-updated col-xs-7 p-r-0 text-right">
-                  {/* this.getPageCount(this.props.sections, this.props.footerPages) */} {/* (this.getPageCount(this.props.sections, this.props.footerPages) == 1) ? 'Page' : 'Pages'} | Last updated {this.props.updatedAt */}
+                  {this.getPageCount(this.props.sections, this.props.footerPages)} {(this.getPageCount(this.props.sections, this.props.footerPages) == 1) ? 'Page' : 'Pages'} | Last updated {this.props.updatedAt}
                 </span>
               </div>
             </div>

@@ -10,7 +10,7 @@
   top: 68px;
   display: table;
   z-index: 25;
-  height: 80px;
+  height: 68px;
   left: 0;
   width: 100%;
   min-width: 1100px;
@@ -22,13 +22,56 @@
     margin-left: 25px;
     display: table;
     max-width: 400px;
-    height: 80px;
+    height: 68px;
   }
 
   .sitemap-name-div {
     display: table-cell;
     vertical-align: middle;
-    height: 80px;
+    height: 68px;
+  }
+
+  .canvas-switch {
+    display: table-cell;
+    vertical-align: middle;
+    height: 68px;
+    width: 208px;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    margin-left: -104px;
+    ul {
+      margin: 0;
+      padding: 24px 0 0 0;
+    }
+    .beta-tag {
+      width: 41px;
+      height: 14px;
+      line-height: 15px;
+      background: $primaryGrey;
+      color: #A3ACB5;
+      font-size: 9px;
+      display: inline-block;
+      border-radius: 20px;
+      text-transform: uppercase;
+      text-align: center;
+      margin-left: 2px;
+    }
+    li, a {
+      display: inline-block;
+      font-size: 14px;
+      color: $primaryGrey;
+      cursor: pointer;
+      text-decoration: none;
+      margin: 0 12px;
+      &.active {
+        color: $primaryWhite;
+        .beta-tag {
+          background: $primaryPink;
+          color: $primaryWhite;
+        }
+      }
+    }
   }
 
   .site-map-name {
@@ -55,7 +98,7 @@
 
   .toggle-header {
     width: 85px;
-    height: 80px;
+    height: 68px;
     border-left: solid 1px #171A1D;
     color: #414952;
     cursor: pointer;
@@ -80,7 +123,7 @@
     cursor: auto;
     width: 60px;
     display: table;
-    height: 80px;
+    height: 68px;
     color: $primaryGrey;
     i {
       color: $primaryPink;
@@ -99,7 +142,7 @@
     position: relative;
     width: 170px;
     display: table;
-    height: 80px;
+    height: 68px;
     h5 {
       color: $primaryGrey;
       margin: 0;
@@ -226,7 +269,7 @@
     display: table;
     width: 75px;
     margin-right: 50px;
-    height: 80px;
+    height: 68px;
     .toggle-comments {
       cursor: pointer;
       z-index: 1;
@@ -252,7 +295,7 @@
 
   .users-block {
     display: table;
-    height: 80px;
+    height: 68px;
     position: relative;
     margin-right: 50px;
     .inner-user-block {
@@ -343,7 +386,7 @@
   .share-sitemap-btn-div {
     display: table-cell;
     vertical-align: middle;
-    height: 80px;
+    height: 68px;
   }
 
   .btn-share {

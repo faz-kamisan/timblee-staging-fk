@@ -405,7 +405,7 @@
 
   &.level-0 {
     text-align: center;
-    padding: 155px 0 0 0;
+    padding: 143px 0 0 0;
     // transition: padding-left .35s;
     // -moz-transition: padding-left .35s;
     // -webkit-transition: padding-left .35s;
@@ -896,11 +896,11 @@
   position: fixed;
   width: 372px;
   background: #262b30;
-  height: calc(100% - 148px);
+  height: calc(100% - 136px);
   top: 0;
   left: 0;
   overflow: hidden;
-  top: 148px;
+  top: 136px;
   z-index: 15;
   transition: .35s;
   border-top: solid 1px #171a1d;
@@ -1620,7 +1620,7 @@
     background-size: 45px 41px;
     display: inline-block;
     height: 41px;
-    margin: 19px 0 0 30px;
+    margin: 14px 0 0 30px;
     vertical-align: middle;
     cursor: pointer;
     .go-back-link {
@@ -1653,12 +1653,12 @@
 
   .sitemap-left-sidebar,
   .sitemap-right-sidebar {
-    top: 80px;
-    height: calc(100% - 80px);
+    top: 68px;
+    height: calc(100% - 68px);
   }
 
   .comment-list {
-    top: 80px;
+    top: 68px;
   }
 
   .page-type-list {
@@ -1669,7 +1669,7 @@
   }
 
   .section-list {
-    top: 80px;
+    top: 68px;
   }
 }
 
@@ -1682,8 +1682,8 @@ body.trial {
   position: fixed;
   right: -435px;
   width: 420px;
-  top: 175px;
-  height: calc(100% - 175px);
+  top: 136px;
+  height: calc(100% - 136px);
   background: #262b30;
   z-index: 18;
   transition: .35s;
@@ -1769,7 +1769,7 @@ body.trial {
   width: 420px;
   border-top: solid 1px #171a1d;
   right: -435px;
-  top: 175px;
+  top: 136px;
   background: #262b30;
   z-index: 5;
   &.open {
@@ -2354,7 +2354,7 @@ body.trial {
   padding-left: 0;
   left: 372px;
   position: fixed;
-  top: 175px;
+  top: 136px;
   width: calc(100% - 372px);
   margin: 0;
   z-index: 22;
@@ -4376,6 +4376,6 @@ ul.ui-autocomplete {
 }
 
 .left-bar-wrapper {
-  height: calc(100vh - 248px);
+  height: calc(100vh - 236px);
   overflow-y: auto; 
 }
