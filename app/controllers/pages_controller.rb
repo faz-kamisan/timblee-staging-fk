@@ -31,7 +31,11 @@ class PagesController < ApplicationController
     def send_conditional_json_response(condition)
       if condition
         Notification.generate(kind: :resolve_comments, sitemap: @page.sitemap, actor: current_user, resource: @page) if page_resolved?
-        render json: @page.as_json, status: 200
+        if params[:action] == 'destroy'
+          render json: @page.get_tree(@page.sitemap.pages.includes(:page_type)).as_json, status: 200
+        else
+          render json: @page.as_json, status: 200
+        end
       else
         render json: t('.failure', scope: :flash) , status: 422
       end

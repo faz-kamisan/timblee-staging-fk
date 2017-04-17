@@ -209,8 +209,8 @@ export function addOrphanPageToFooter(page) {
   return { type: ADD_ORPHAN_PAGE_TO_FOOTER, page }
 }
 
-export function addOrphanPage(page, pageTypes) {
-  return { type: ADD_ORPHAN_PAGE, page, pageTypes }
+export function addOrphanPage(page) {
+  return { type: ADD_ORPHAN_PAGE, page }
 }
 
 export function removeOrphanPage(id) {

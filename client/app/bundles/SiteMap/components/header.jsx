@@ -164,7 +164,7 @@ class Header extends React.Component {
         <div className="canvas-switch">
           <ul>
             <li className="active">Sitemap</li>
-            <li>User Flow <span className="beta-tag">Beta</span></li>
+            <li><a href={location.href + '/userflows'} >User Flow <span className="beta-tag">Beta</span></a></li>
           </ul>
         </div>
 

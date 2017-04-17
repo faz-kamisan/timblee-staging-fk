@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 class OrphanPage extends React.Component {
   render() {
     return (
-      <div className={"page-type-outer " + this.props.page.page_type.icon_name}>
+      <div className={"page-type-outer " + this.props.page.pageType.icon_name}>
         <div className="page-type-box">
           <aside className="page-type-details">
             <span className="dummy-number">xx</span>

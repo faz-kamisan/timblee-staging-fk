@@ -22,9 +22,7 @@ class DeletePageModal extends React.Component {
         document.setFlash(result.responseText)
       },
         success: (result) => {
-          if (result.state == 'orphan') {
-            _this.props.onPageOrphan(result, _this.props.pageTypes)
-          };
+          _this.props.onPageOrphan(result)
         },
       complete: (result) => {
         _this.props.setSaving(true)

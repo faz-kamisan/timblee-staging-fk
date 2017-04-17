@@ -87,7 +87,8 @@ class Page < ActiveRecord::Base
 
     def archive_children_pages_and_delete_section
       if(state == 'archived')
-        assign_attributes(state: 'orphan', footer: false, parent_id: sitemap.default_section.root_page.id) if screens.present?
+        # adding page to sitemap with no parent generate error thatsy parent is set here for footer pages.
+        assign_attributes(state: 'orphan', footer: false, parent_id: parent_id || sitemap.default_section.root_page.id) if screens.present?
         children.each do |child|
           child.update(state: 'archived')
         end
