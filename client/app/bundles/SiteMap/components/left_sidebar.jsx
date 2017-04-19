@@ -116,7 +116,7 @@ class LeftSidebar extends React.Component {
             </form>
             <div className="left-bar-wrapper">
               <div className="orphan-screens-details">
-                Orphan screens  <span className='pull-right'>{filteredOrphanPages.length + (filteredOrphanPages.length == 1 ? ' Screen' : ' Screens')}</span>
+                Orphan screens  <span className='pull-right screens-count'>{filteredOrphanPages.length + (filteredOrphanPages.length == 1 ? ' Screen' : ' Screens')}</span>
               </div>
               <ul className={"page-type-list orphan-page-type-list clearfix" + ((filteredOrphanPages.length == 0) ? ' hide' : '')}>
               {orphanPageComponents}
@@ -127,7 +127,7 @@ class LeftSidebar extends React.Component {
               }
             </div>
             <div className="default-screens-details">
-              Default screens  <span className='pull-right'>{filteredPageTypes.length + (filteredPageTypes.length == 1 ? ' Screen' : ' Screens')}</span>
+              Default screens  <span className='pull-right screens-count'>{filteredPageTypes.length + (filteredPageTypes.length == 1 ? ' Screen' : ' Screens')}</span>
             </div>
             <ul className={"page-type-list clearfix" + ((filteredPageTypes.length == 0) ? ' hide' : '')}>
               {pageTypeComponents}

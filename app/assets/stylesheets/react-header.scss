@@ -25,6 +25,16 @@
     height: 68px;
   }
 
+  &.rails {
+    .btn-toggle-comments {
+      width: 78px;
+    }
+
+    .toggle-comments-outer .toggle-comments .icon-comment {
+      left: -2px;
+    }
+  }
+
   .sitemap-name-div {
     display: table-cell;
     vertical-align: middle;
@@ -57,20 +67,35 @@
       text-align: center;
       margin-left: 2px;
     }
-    li, a {
+    li {
       display: inline-block;
       font-size: 14px;
       color: $primaryGrey;
-      cursor: pointer;
-      text-decoration: none;
       margin: 0 12px;
       &.active {
-        color: $primaryWhite;
+        color: $primaryWhite;  
+        a {
+          color: $primaryWhite;  
+        }
         .beta-tag {
           background: $primaryPink;
           color: $primaryWhite;
         }
       }
+      &:hover:not(.active) {
+        a {
+          color: $primaryWhite;
+        }
+        .beta-tag {
+          background: $primaryPink;
+          color: $primaryWhite;
+        }
+      }
+    }
+    a {
+      font-size: 14px;
+      color: $primaryGrey;
+      text-decoration: none;
     }
   }
 

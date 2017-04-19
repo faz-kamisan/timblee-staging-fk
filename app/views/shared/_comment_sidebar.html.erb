@@ -1,10 +1,11 @@
 <div class='sitemap-right-sidebar open'>
   <div class='sitemap-comment-tabs comment-header'>
-    <ul class="comment-list clearfix open">
+    <ul class="comment-list clearfix">
       <% ['active', 'resolved', 'archived'].each do |comment_tab| %>
         <li class='comment-tab animated-tab state-<%= comment_tab %> <%= (comment_tab == 'active' ? 'active' : '') %>' ><%= comment_tab %></li>
-        <li class="animated-bar-react"></li>
+
       <% end %>
+      <li class="animated-bar-react"></li>
     </ul>
   </div>
   <div class="comment-inner-body">
@@ -21,6 +22,7 @@
 
     </p>
     <div class='general-comments' >
+
       <h2 class="comment-type-heading">
         General comments
       </h2>
