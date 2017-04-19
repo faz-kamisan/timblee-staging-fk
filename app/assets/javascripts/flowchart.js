@@ -73,6 +73,18 @@ Flowchart.prototype.bindAddCommentToScreen = function() {
     var tileID = $(this).closest('.tile')[0].id.slice(0, -4);
     var tile = SVG.get(tileID);
     var node = _this.getNode(tileID);
+    $('#page-comments-modal .page').html('')
+    if ($('.comments-page-' + node.pageId).html()) {
+      $('#page-comments-modal .page').html($('.comments-page-' + node.pageId).clone());
+    } else{
+      var $div = $('.blueprint-page-comments > div').clone();
+      $div.addClass('comments-page-' + node.pageId);
+      $div.find('.page-id').html('ID:' + node.uid);
+      $div.find('.page-name').html(node.name);
+      $div.find('.resolve-unresolve-pages').data('page-id', node.pageId);
+      $div.find('textarea').data('commentable-id', node.pageId);
+      $('#page-comments-modal .page').append($div);
+    };
     $('#page-comments-modal').modal('show');
 
   })
@@ -551,10 +563,8 @@ Flowchart.prototype.initAddTiles = function(id, position, level, parentNodeId, p
   if (name) { div.find('.message').html(_this.formatNodeMessage(_this.getNode(id))) };
   if (page) {
 
-    if (page.uid && (page.uid + '').length < 3) {
-      page.uid = ('000' + page.uid).slice(-3)
-    };
-    div.find('.uid').html("ID:" + (page.uid || 'xxx'))
+
+    div.find('.uid').html("ID:" + (_this.formatUID(page.uid) || 'xxx'))
     div.find('.screen-tile-right-icon').addClass(page.page_type.icon_name)
 
   };
@@ -600,10 +610,8 @@ Flowchart.prototype.addTile = function(x, y, parentTile, level, path, blueprintI
   if (name) { div.find('.message').html(_this.formatNodeMessage(_this.getNode(tile.id()))) };
   if (page) {
     div.find('.screen-tile-right-icon').addClass(page.page_type.icon_name)
-    if (page.uid && (page.uid + '').length < 3) {
-      page.uid = ('000' + page.uid).slice(-3)
-    };
-    div.find('.uid').html("ID:" + (page.uid || 'xxx'))
+
+    div.find('.uid').html("ID:" + (_this.formatUID(page.uid) || 'xxx'))
   };
   $('#tile-container').append(div)
   if (page && page.id) { $('li.page-id-' + page.id).remove()};
@@ -635,19 +643,24 @@ Flowchart.prototype.saveDbChanges = function() {
     data: {updated_nodes: _this.getUpdatedNodes(), new_nodes: _this.getNewNodes(), deleted_nodes: DELETED_NODE_IDS },
     dataType: 'json',
     success: function(result) {
-      if (result['updated_ids']) {
-        for (var i = 0; i < result['updated_ids'].length; i++) {
-          _this.updateNode(result['updated_ids'][i], {updated: false})
+      if (result['updated_screens']) {
+        for (var i = 0; i < result['updated_screens'].length; i++) {
+          _this.updateNode(result['updated_screens'][i].node_id, {updated: false})
         };
       };
-      if (result['saved_ids']) {
-        for (var i = 0; i < result['saved_ids'].length; i++) {
-          _this.updateNode(result['saved_ids'][i], {saved: true})
+      if (result['saved_screens']) {
+        for (var i = 0; i < result['saved_screens'].length; i++) {
+          _this.updateNode(result['saved_screens'][i].node_id, {saved: true})
+          if (result['saved_screens'][i].node_type == 'page') {
+            $('#' + result['saved_screens'][i].node_id + 'Tile').find('.uid').html("ID:" + _this.formatUID(result['saved_screens'][i].page.uid))
+            _this.updateNode(result['saved_screens'][i].node_id, {uid: result['saved_screens'][i].page.uid, pageId: result['saved_screens'][i].page.id})
+          };
         };
       }
     }
   });
 }
+
 Flowchart.prototype.reconnectBottomEdges = function(tile) {
   var _this = this;
   var node = _this.getNode(tile.id());
@@ -749,6 +762,12 @@ Flowchart.prototype.buildConnector = function(points, id) {
             .fill('none')
             .stroke({ width: 1, color: '#cccccc' })
 }
+
+Flowchart.prototype.formatUID = function(uid) {
+  if (uid && (uid + '').length < 3) {
+    return uid = ('000' + uid).slice(-3)
+  };
+};
 
 Flowchart.prototype.calculatePath = function(nodePath, path, addValue, action) {
   if(action == 'add'){
