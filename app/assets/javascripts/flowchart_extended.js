@@ -23,10 +23,10 @@ FlowchartExtended.prototype.bindResolveUnresolvePages = function() {
       method: 'put',
       dataType: 'JSON',
       data: { page: { state: state } },
-      error: (result) => {
+      error: function(result) {
         document.setFlash(result.responseText)
       },
-      success: (result) => {
+      success: function(result) {
         var $li = null;
         var $div = $('.comments-page-' + result.id);
         if (result.state == 'resolved') {
@@ -120,10 +120,10 @@ FlowchartExtended.prototype.bindAddGeneralComment = function() {
       method: 'post',
       dataType: 'JSON',
       data: { comment: { commentable_id: commentableId, commentable_type: commentableType, message: commentMessage } },
-      error: (result) => {
+      error: function(result) {
         document.setFlash(result.responseText)
       },
-      success: (result) => {
+      success: function(result) {
         $textarea.text('');
         $li = $('.blueprint-comment li').clone();
         $li.find('.comment-message').html(commentMessage)
@@ -143,10 +143,10 @@ FlowchartExtended.prototype.bindAddPageComment = function() {
       method: 'post',
       dataType: 'JSON',
       data: { comment: { commentable_id: commentableId, commentable_type: commentableType, message: commentMessage } },
-      error: (result) => {
+      error: function(result) {
         document.setFlash(result.responseText)
       },
-      success: (result) => {
+      success: function(result) {
         $textarea.text('');
         $li = $('.blueprint-comment li').clone();
         $li.find('.comment-message').html(commentMessage)
