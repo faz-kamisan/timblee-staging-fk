@@ -27,18 +27,20 @@ FlowchartExtended.prototype.bindResolveUnresolvePages = function() {
         document.setFlash(result.responseText)
       },
       success: (result) => {
-        var $li = $('li.comments-page-list-' + result.id).clone();
+        var $li = null;
         var $div = $('.comments-page-' + result.id);
         if (result.state == 'resolved') {
           $div.find('.resolve-unresolve-pages span').html('Unresolve')
           $div.find('.comment-holder').addClass('hide')
           $div.find('.resolve-unresolve-pages input').attr('checked', 'checked')
+          $li = $('li.comments-page-list-' + result.id).clone();
           $('li.comments-page-list-' + result.id).remove();
           $('.resolved-comments .resolved-list').append($li);
         } else{
           $div.find('.resolve-unresolve-pages span').html('Mark as resolved');
           $div.find('.comment-holder').removeClass('hide')
           $div.find('.resolve-unresolve-pages input').attr('checked', false)
+          $li = $('li.comments-page-list-' + result.id).clone();
           $('li.comments-page-list-' + result.id).remove();
           $('.general-comments .active-pages-list').append($li);
         };
