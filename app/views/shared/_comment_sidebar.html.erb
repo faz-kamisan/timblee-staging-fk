@@ -1,0 +1,56 @@
+<% currentTab = 'active' %>
+<div class='sitemap-right-sidebar open'>
+  <div class='sitemap-comment-tabs comment-header'>
+    <ul class="comment-list clearfix open">
+      <% ['active', 'resolved', 'archived'].each do |comment_tab| %>
+        <li class='comment-tab animated-tab state-<%= comment_tab %> <%= (comment_tab == currentTab ? 'active' : '') %>' ><%= comment_tab %></li>
+        <li class="animated-bar-react"></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="comment-inner-body">
+      <p class="comment-text state-active">
+          Anyone who has the share link can see active comments. Only <%= @sitemap.business.name %> team members can see resolved and deleted comments.
+      </p>
+
+      <p class="comment-text hide state-resolved">
+          Resolved conversations are only visible to logged in <%= @sitemap.business.name %> team members.
+      </p>
+
+      <p class="comment-text hide state-archived">
+          If a page with comments is deleted, the conversation is moved here. This is to ensure there is a record of all conversations. Archived conversations are only visible to logged in <%= @sitemap.business.name %> team members.
+
+      </p>
+    <div class='general-comments <%= currentTab == "active" ? '' : 'hide' %>'>
+      <h2 class="comment-type-heading">
+        General comments
+      </h2>
+      <ul class="comment-group">
+        <% @sitemap.comments.each do |comment| %>
+          <li><div class='comment-block'>
+            <img class="user-comment-image" src= '<%= comment.commenter.avatar.url %>' />
+            <h4>
+              <%= comment.commenter == current_user ? 'You' : comment.commenter.full_name %>
+            </h4>
+            <h6>
+              <%= comment.created_at_decorated %>
+            </h6>
+            <p class="comment-message">
+              <%= comment.message.html_safe %>
+            </p>
+          </div></li>
+        <% end %>
+      </ul>
+      <div class="comment-holder">
+        <textarea ref='newComment' id="temp" class="emoji-decorated comment-editor comment-input__input" data-emojiable="true" data-emoji-input="unicode"></textarea>
+        <div class="add-remove-comment">
+          <span class='cursor add'>Add my comment </span>
+          <span class="or">or</span>
+          <span class='cursor cancel'> cancel</span>
+        </div>
+      </div>
+    </div>
+    <ul>
+    </ul>
+  </div>
+</div>

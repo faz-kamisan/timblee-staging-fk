@@ -980,7 +980,7 @@
 .page-type-list, .page-type-preview {
   padding: 0;
   margin: 0;
-  height: calc(100vh - 572px); 
+  height: calc(100vh - 572px);
   overflow-y: auto;
   li {
     float: left;
@@ -4377,5 +4377,5 @@ ul.ui-autocomplete {
 
 .left-bar-wrapper {
   height: calc(100vh - 236px);
-  overflow-y: auto; 
+  overflow-y: auto;
 }

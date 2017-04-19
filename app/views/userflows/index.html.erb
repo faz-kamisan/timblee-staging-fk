@@ -1,6 +1,19 @@
+
+<%= render 'shared/userflow_header' %>
+<%= render 'shared/comment_sidebar' %>
+<%= render 'shared/userflow_comment_modal' %>
+<% unless @sitemap.trial? %>
+  <%= render 'users/sitemap_share_preview_modal' %>
+  <%= render 'sitemaps/sitemap_share_modal' %>
+  <%= render 'users/invite_error_modal'%>
+  <%= render 'users/invite_warning_modal'%>
+  <%= render 'users/invite_user_modal'%>
+  <%= javascript_include_tag('invitations', 'team', 'sitemaps') %>
+<% end %>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.4.0/svg.min.js" type="text/javascript"></script>
     <%= stylesheet_link_tag    'flowchart' %>
-    <%= javascript_include_tag 'flowchart' %>
+    <%= javascript_include_tag 'flowchart', 'flowchart_extended' %>
     <div id="nodes" class="hide" data-screens= '<%= @screens%>'></div>
 
     <div class="default-screen-hover-options basic hide">

@@ -8,7 +8,7 @@ class Page < ActiveRecord::Base
   belongs_to :page_type
   has_many :screens, dependent: :restrict_with_error
   has_many :child_pages, class_name: 'Page', foreign_key: :parent_id, primary_key: :id
-  has_many :comments, as: :commentable, dependent: :destroy #if screen exist move comments from page to screen
+  has_many :comments, as: :commentable, dependent: :destroy
   acts_as_tree order: :position
   acts_as_list scope: :parent
 

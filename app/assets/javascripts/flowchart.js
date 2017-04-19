@@ -8,7 +8,13 @@ EDGES = [];
 DELETED_NODE_IDS = [];
 STARTING_TILE = null;
 
-function init() {
+var Flowchart = function () {
+  this.init();
+  this.bindEvents();
+}
+
+Flowchart.prototype.init = function() {
+  var _this = this;
 
   var svg = SVG('flow-chart');
   SVG_CANVAS_ID = svg.id();
@@ -28,70 +34,86 @@ function init() {
     };
     if (screeenData[i].page) {screeenData[i].page.page_type = screeenData[i].page_type};
 
-    var tile = initAddTiles(screeenData[i].node_id, screeenData[i].position, screeenData[i].level, parentNodeId, screeenData[i].path, screeenData[i].node_type, bottomNode, bottomLeftNode, bottomRightNode, screeenData[i].message, screeenData[i].page)
+    var tile = _this.initAddTiles(screeenData[i].node_id, screeenData[i].position, screeenData[i].level, parentNodeId, screeenData[i].path, screeenData[i].node_type, bottomNode, bottomLeftNode, bottomRightNode, screeenData[i].message, screeenData[i].page)
 
     if (screeenData[i].level == 1) {STARTING_TILE = tile};
   };
   svg.group().attr({ id: "tempGroup" });
   if (STARTING_TILE) {
-    resetCanvasSize();
-    ID = calculateMaxId();
+    _this.resetCanvasSize();
+    ID = _this.calculateMaxId();
   }else{
     $('.default-screen-hover-options').removeClass('hide');
     $('.starter-text').removeClass('hide');
   }
 }
 
-function bindEvents() {
-  bindAddScreenEvent();
-  bindAddDecisionScreensEvent();
-  bindAddActionScreenEvent();
-  bindAddInitialScreenEvent();
-  bindAddInitialDecisionScreensEvent();
-  bindSelectInitialScreen();
-  bindSelectScreen();
-  bindAddInitialActionScreenEvent();
-  bindDeleteScreenEvent();
-  bindShowMoreOptions();
-  bindHideMoreOptions();
-  bindOnClickMessage();
-  bindEditMessage();
-  // bindChangePageType();
+Flowchart.prototype.bindEvents = function() {
+  var _this = this;
+  this.bindAddScreenEvent();
+  this.bindAddDecisionScreensEvent();
+  this.bindAddActionScreenEvent();
+  this.bindAddInitialScreenEvent();
+  this.bindAddInitialDecisionScreensEvent();
+  this.bindSelectInitialScreen();
+  this.bindSelectScreen();
+  this.bindAddInitialActionScreenEvent();
+  this.bindDeleteScreenEvent();
+  this.bindShowMoreOptions();
+  this.bindHideMoreOptions();
+  this.bindOnClickMessage();
+  this.bindEditMessage();
+  // this.bindChangePageType();
+  this.bindAddCommentToScreen();
 }
 
-function bindChangePageType() {
-  $(document).on('click', '.screen-change-node', function() {
+Flowchart.prototype.bindAddCommentToScreen = function() {
+  var _this = this;
+  $(document).on('click', '.screen .screen-comment-node', function() {
     var tileID = $(this).closest('.tile')[0].id.slice(0, -4);
     var tile = SVG.get(tileID);
-    var node = getNode(tileID);
+    var node = _this.getNode(tileID);
+    $('#page-comments-modal').modal('show');
+
   })
 }
 
-function bindOnClickMessage() {
+Flowchart.prototype.bindChangePageType = function() {
+  var _this = this;
+  $(document).on('click', '.screen-change-node', function() {
+    var tileID = $(this).closest('.tile')[0].id.slice(0, -4);
+    var tile = SVG.get(tileID);
+    var node = _this.getNode(tileID);
+  })
+}
+
+Flowchart.prototype.bindOnClickMessage = function() {
+  var _this = this;
   $(document).on('click', '.message', function() {
     var tileID = $(this).closest('.tile')[0].id.slice(0, -4);
     var tile = SVG.get(tileID);
-    var node = getNode(tileID);
+    var node = _this.getNode(tileID);
     $(this).addClass('hide');
     $(this).closest('.tile').find('.edit-name-field').removeClass('hide').val(node.name).focus();
   })
 }
 
-function bindEditMessage() {
+Flowchart.prototype.bindEditMessage = function() {
+  var _this = this;
   $(document).on('blur', '.edit-name-field', function() {
     var tileID = $(this).closest('.tile')[0].id.slice(0, -4);
     var tile = SVG.get(tileID);
-    var node = getNode(tileID);
+    var node = _this.getNode(tileID);
     $(this).addClass('hide');
     if ($(this).val()) {
-      updateNode(node.id, {name: $(this).val()});
-      saveDbChanges();
+      _this.updateNode(node.id, {name: $(this).val()});
+      _this.saveDbChanges();
     };
-    $(this).closest('.tile').find('.message').removeClass('hide').html(formatNodeMessage(node));
+    $(this).closest('.tile').find('.message').removeClass('hide').html(_this.formatNodeMessage(node));
   })
 }
 
-function bindSelectInitialScreen () {
+Flowchart.prototype.bindSelectInitialScreen = function () {
   $(document).on('click', '.initialScreenDropdown', function () {
     $(this).closest('.default-screen-hover-options').addClass('show-dropdown');
     $('.starter-text').addClass('hide');
@@ -99,60 +121,64 @@ function bindSelectInitialScreen () {
   })
 }
 
-function bindSelectScreen() {
+Flowchart.prototype.bindSelectScreen = function() {
   $(document).on('click', '.selectScreen', function () {
     $(this).closest('div.tile').find('.add-screen-dropdown').removeClass('hide');
   })
 }
-function bindShowMoreOptions() {
+Flowchart.prototype.bindShowMoreOptions = function() {
   $(document).on('click', '.more', function() {
     var svg = $(this).closest('.screen-tile-container');
     svg.addClass('options-open');
   });
 };
 
-function bindHideMoreOptions() {
+Flowchart.prototype.bindHideMoreOptions = function() {
   $(document).on('click', '.close-options', function() {
     var svg = $(this).closest('.screen-tile-container');
     svg.removeClass('options-open');
   });
 };
 
-function bindAddInitialScreenEvent () {
+Flowchart.prototype.bindAddInitialScreenEvent = function () {
+  var _this = this;
   $(document).on('click', '.addInitialScreen', function() {
     $('.default-screen-hover-options').addClass('hide');
-    STARTING_TILE = addTile(450, 135, null, 1, 'S', "#tile-blueprint-page", $(this).data('page'), $(this).html());
-    saveDbChanges();
+    STARTING_TILE = _this.addTile(450, 135, null, 1, 'S', "#tile-blueprint-page", $(this).data('page'), $(this).html());
+    _this.saveDbChanges();
   });
 }
 
-function bindAddInitialActionScreenEvent () {
+Flowchart.prototype.bindAddInitialActionScreenEvent = function () {
+  var _this = this;
   $(document).on('click', '.addInitialAction', function() {
     $('.default-screen-hover-options').addClass('hide');
-    STARTING_TILE = addTile(450, 135, null, 1, 'S', "#tile-blueprint-action", null);
-    saveDbChanges();
+    STARTING_TILE = _this.addTile(450, 135, null, 1, 'S', "#tile-blueprint-action", null);
+    _this.saveDbChanges();
   });
 }
 
-function bindAddInitialDecisionScreensEvent () {
+Flowchart.prototype.bindAddInitialDecisionScreensEvent = function () {
+  var _this = this;
   $(document).on('click', '.addInitialDecision', function() {
     $('.default-screen-hover-options').addClass('hide');
-    STARTING_TILE = addTile(450, 135, null, 1, 'S', "#tile-blueprint-decision", null);
-    var leftTile = addTile(300, 270, STARTING_TILE, 2, 'SL', "#tile-blueprint-conclusion", null, 'yes');
-    var rightTile = addTile(600, 270, STARTING_TILE, 2, 'SR', "#tile-blueprint-conclusion", null, 'no');
-    updateNode(STARTING_TILE.id(), {bottomLeftNode: leftTile.id(), bottomRightNode: rightTile.id()})
-    resetCanvasSize();
-    saveDbChanges();
+    STARTING_TILE = _this.addTile(450, 135, null, 1, 'S', "#tile-blueprint-decision", null);
+    var leftTile = _this.addTile(300, 270, STARTING_TILE, 2, 'SL', "#tile-blueprint-conclusion", null, 'yes');
+    var rightTile = _this.addTile(600, 270, STARTING_TILE, 2, 'SR', "#tile-blueprint-conclusion", null, 'no');
+    _this.updateNode(STARTING_TILE.id(), {bottomLeftNode: leftTile.id(), bottomRightNode: rightTile.id()})
+    _this.resetCanvasSize();
+    _this.saveDbChanges();
   });
 }
 
 
-function bindAddDecisionScreensEvent() {
+Flowchart.prototype.bindAddDecisionScreensEvent = function() {
+  var _this = this;
   $(document).on('click', '.addDecision', function() {
 
     var tileID = $(this).closest('.tile')[0].id.slice(0, -4)
     var tile = SVG.get(tileID);
-    var node = getNode(tileID),
+    var node = _this.getNode(tileID),
     nodeData = {bottomLeftNode: node.bottomLeftNode, bottomRightNode: node.bottomRightNode, bottomNode: node.bottomNode, bottomEdge: node.bottomEdge, bottomLeftEdge: node.bottomLeftEdge, bottomRightEdge: node.bottomRightEdge},
     newX = tile.x(),
     newY = tile.y() + TILE_HEIGHT + 50,
@@ -170,65 +196,66 @@ function bindAddDecisionScreensEvent() {
     })
 
     if(node.bottomNode){
-      updateNode(node.bottomNode, {parentNode: null});
+      _this.updateNode(node.bottomNode, {parentNode: null});
     }else if(node.bottomLeftNode){
-      updateNode(node.bottomLeftNode, {parentNode: null});
-      updateNode(node.bottomRightNode, {parentNode: null});
+      _this.updateNode(node.bottomLeftNode, {parentNode: null});
+      _this.updateNode(node.bottomRightNode, {parentNode: null});
     }
 
-    var topTile = addTile(newX, newY, tile, getNode(tile.id()).level + 1, newPath, "#tile-blueprint-decision", null),
+    var topTile = _this.addTile(newX, newY, tile, _this.getNode(tile.id()).level + 1, newPath, "#tile-blueprint-decision", null),
         newX1 = topTile.x() - 150,
         newX2 = topTile.x() + 150,
-        topNode = getNode(topTile.id());
+        topNode = _this.getNode(topTile.id());
 
-    var leftTile = addTile(newX1, newY12, topTile, getNode(tile.id()).level + 2, newPath1, "#tile-blueprint-conclusion", null, 'yes'),
+    var leftTile = _this.addTile(newX1, newY12, topTile, _this.getNode(tile.id()).level + 2, newPath1, "#tile-blueprint-conclusion", null, 'yes'),
     xShift = leftTile.x() - newX1,
-    rightTile = addTile(newX2 + xShift, newY12, topTile, getNode(tile.id()).level + 2, newPath2, "#tile-blueprint-conclusion", null, 'no'),
-    leftNode = getNode(leftTile.id()),
-    rightNode = getNode(rightTile.id());
+    rightTile = _this.addTile(newX2 + xShift, newY12, topTile, _this.getNode(tile.id()).level + 2, newPath2, "#tile-blueprint-conclusion", null, 'no'),
+    leftNode = _this.getNode(leftTile.id()),
+    rightNode = _this.getNode(rightTile.id());
     if(node.bottomNode || node.bottomLeftNode){
-      updateNode(leftNode.id, nodeData);
+      _this.updateNode(leftNode.id, nodeData);
 
       if(node.bottomNode){
-        updateNode(node.bottomNode, {parentNode: leftTile.id()});
+        _this.updateNode(node.bottomNode, {parentNode: leftTile.id()});
       }else{
-        updateNode(node.bottomLeftNode, {parentNode: leftTile.id()});
-        updateNode(node.bottomRightNode, {parentNode: leftTile.id()});
+        _this.updateNode(node.bottomLeftNode, {parentNode: leftTile.id()});
+        _this.updateNode(node.bottomRightNode, {parentNode: leftTile.id()});
       }
     }
-    updateNode(node.id, {bottomNode: topTile.id(), bottomLeftNode: null, bottomRightNode: null, bottomLeftEdge: null, bottomRightEdge: null});
-    updateNode(topNode.id, {bottomLeftNode: leftTile.id(), bottomRightNode: rightTile.id()});
+    _this.updateNode(node.id, {bottomNode: topTile.id(), bottomLeftNode: null, bottomRightNode: null, bottomLeftEdge: null, bottomRightEdge: null});
+    _this.updateNode(topNode.id, {bottomLeftNode: leftTile.id(), bottomRightNode: rightTile.id()});
 
     var newGroup = SVG.get(leftTile.id() + "Group");
     tempGroup.each(function(i, e){
       newGroup.add(this);
     })
-    moveGroup(leftTile, (xShift - 1), 2, 'DL', 'add', false, leftNode.path);
+    _this.moveGroup(leftTile, (xShift - 1), 2, 'DL', 'add', false, leftNode.path);
 
-    resetCanvasSize();
-    saveDbChanges();
+    _this.resetCanvasSize();
+    _this.saveDbChanges();
   })
 }
 
-function bindDeleteScreenEvent() {
+Flowchart.prototype.bindDeleteScreenEvent = function() {
+  var _this = this;
   $(document).on('click', '.screen-delete-node', function() {
     var tileID = $(this).closest('.tile')[0].id.slice(0, -4);
     var tile = SVG.get(tileID);
-    var node = getNode(tileID);
+    var node = _this.getNode(tileID);
     var bottomNode = null;
     if(node.parentNode && tile.classes().includes('decisionTile')){
-      var leftNode = getNode(node.bottomLeftNode);
-      var rightNode = getNode(node.bottomRightNode);
+      var leftNode = _this.getNode(node.bottomLeftNode);
+      var rightNode = _this.getNode(node.bottomRightNode);
       if (rightNode.bottomNode && leftNode.bottomNode) {
         alert('error');
       } else {
         if (leftNode.bottomNode){
-          var bottomNode = getNode(leftNode.bottomNode);
+          var bottomNode = _this.getNode(leftNode.bottomNode);
           var bottomTile = SVG.get(bottomNode.id);
           var position = node.position - leftNode.position;
           var RemovePathValue = 'DL';
         } else if(rightNode.bottomNode) {
-          var bottomNode = getNode(rightNode.bottomNode);
+          var bottomNode = _this.getNode(rightNode.bottomNode);
           var bottomTile = SVG.get(bottomNode.id);
           var position = rightNode.position - node.position;
           var RemovePathValue = 'DR';
@@ -241,79 +268,82 @@ function bindDeleteScreenEvent() {
         $("#" + tile.id() + "Tile").remove();
         $("#" + node.bottomRightNode + "Tile").remove();
         $("#" + node.bottomLeftNode + "Tile").remove();
-        removeNode(node.id);
-        removeNode(leftNode.id);
-        removeNode(rightNode.id);
+        _this.removeNode(node.id);
+        _this.removeNode(leftNode.id);
+        _this.removeNode(rightNode.id);
         if(node.parentNode){
-          parentNode = getNode(node.parentNode);
+          parentNode = _this.getNode(node.parentNode);
           if(bottomNode){
             SVG.get(bottomNode.topEdge).remove();
-            updateNode(bottomTile.id(), {topEdge: parentNode.bottomEdge});
-            updateNode(parentNode.id, {bottomNode: bottomTile.id(), bottomEdge: bottomNode.topEdge});
+            _this.updateNode(bottomTile.id(), {topEdge: parentNode.bottomEdge});
+            _this.updateNode(parentNode.id, {bottomNode: bottomTile.id(), bottomEdge: bottomNode.topEdge});
           }else{
             SVG.get(parentNode.bottomEdge).remove();
-            updateNode(parentNode.id, {bottomNode: null, bottomEdge: null});
+            _this.updateNode(parentNode.id, {bottomNode: null, bottomEdge: null});
           }
         }
         var group = SVG.get(tile.id() + "Group").removeClass('decisionGroup');
         var leftGroup = SVG.get(node.bottomRightNode + "Group");
         var rightGroup = SVG.get(node.bottomLeftNode + "Group");
         if(bottomNode){
-          updateNode(bottomTile.id(), {parentNode: node.parentNode});
-          moveTileWithGroup(bottomTile, position, -2, RemovePathValue, 'remove', false);
-          validatePositionOf(bottomTile);
+          _this.updateNode(bottomTile.id(), {parentNode: node.parentNode});
+          _this.moveTileWithGroup(bottomTile, position, -2, RemovePathValue, 'remove', false);
+          _this.validatePositionOf(bottomTile);
         }
       }
     }else if(node.parentNode){
 
       tile.remove();
-      removeNode(node.id);
+      _this.removeNode(node.id);
       $("#" + tile.id() + "Tile").remove();
       if(node.bottomNode){
-        var bottomNode = getNode(node.bottomNode);
+        var bottomNode = _this.getNode(node.bottomNode);
         var bottomTile = SVG.get(bottomNode.id);
       }
       if(node.parentNode){
-        parentNode = getNode(node.parentNode);
+        parentNode = _this.getNode(node.parentNode);
         if(bottomNode){
           SVG.get(bottomNode.topEdge).remove();
-          updateNode(bottomTile.id(), {topEdge: parentNode.bottomEdge});
-          updateNode(parentNode.id, {bottomNode: bottomTile.id()});
+          _this.updateNode(bottomTile.id(), {topEdge: parentNode.bottomEdge});
+          _this.updateNode(parentNode.id, {bottomNode: bottomTile.id()});
         }else{
           SVG.get(parentNode.bottomEdge).remove();
-          updateNode(parentNode.id, {bottomNode: null, bottomEdge: null});
+          _this.updateNode(parentNode.id, {bottomNode: null, bottomEdge: null});
         }
       }
       if(bottomNode){
-        updateNode(bottomTile.id(), {parentNode: node.parentNode});
-        moveTileWithGroup(bottomTile, 0, -1, 'D', 'remove', false);
+        _this.updateNode(bottomTile.id(), {parentNode: node.parentNode});
+        _this.moveTileWithGroup(bottomTile, 0, -1, 'D', 'remove', false);
 
-        validatePositionOf(bottomTile);
+        _this.validatePositionOf(bottomTile);
       }
     }
-    resetCanvasSize();
-    saveDbChanges();
+    _this.resetCanvasSize();
+    _this.saveDbChanges();
   });
 }
 
-function bindAddScreenEvent() {
+Flowchart.prototype.bindAddScreenEvent = function() {
+  var _this = this;
   $(document).on('click', '.addScreen', function() {
 
     $(this).closest('div.tile').find('.add-screen-dropdown').addClass('hide');
-    addScreenEvent(this, "#tile-blueprint-page");
+    _this.addScreenEvent(this, "#tile-blueprint-page");
   })
 }
 
-function bindAddActionScreenEvent() {
+Flowchart.prototype.bindAddActionScreenEvent = function() {
+  var _this = this;
   $(document).on('click', '.addAction', function() {
-    addScreenEvent(this, "#tile-blueprint-action");
+    _this.addScreenEvent(this, "#tile-blueprint-action");
   })
 }
 
-function addScreenEvent(target, tileSelector) {
+Flowchart.prototype.addScreenEvent = function(target, tileSelector) {
+  var _this = this;
   var tileID = $(target).closest('.tile')[0].id.slice(0, -4)
   var tile = SVG.get(tileID);
-  var node = getNode(tileID),
+  var node = _this.getNode(tileID),
   name = null,
   nodeData = {bottomLeftNode: node.bottomLeftNode, bottomRightNode: node.bottomRightNode, bottomNode: node.bottomNode, bottomEdge: node.bottomEdge, bottomLeftEdge: node.bottomLeftEdge, bottomRightEdge: node.bottomRightEdge},
 
@@ -329,26 +359,26 @@ function addScreenEvent(target, tileSelector) {
   })
 
   if(node.bottomNode){
-    updateNode(node.bottomNode, {parentNode: null});
+    _this.updateNode(node.bottomNode, {parentNode: null});
   }else if(node.bottomLeftNode){
-    updateNode(node.bottomLeftNode, {parentNode: null});
-    updateNode(node.bottomRightNode, {parentNode: null});
+    _this.updateNode(node.bottomLeftNode, {parentNode: null});
+    _this.updateNode(node.bottomRightNode, {parentNode: null});
   }
   if (tileSelector == '#tile-blueprint-page') { name = $(target).html(); };
-  var newTile = addTile(newX, newY, tile, getNode(tile.id()).level + 1, newPath, tileSelector, $(target).data('page'), name);
+  var newTile = _this.addTile(newX, newY, tile, _this.getNode(tile.id()).level + 1, newPath, tileSelector, $(target).data('page'), name);
 
-  bottomNode = getNode(newTile.id());
+  bottomNode = _this.getNode(newTile.id());
   if(node.bottomNode || node.bottomLeftNode){
-    updateNode(bottomNode.id, nodeData)
+    _this.updateNode(bottomNode.id, nodeData)
 
     if(node.bottomNode){
-      updateNode(node.bottomNode, {parentNode: newTile.id()})
+      _this.updateNode(node.bottomNode, {parentNode: newTile.id()})
     }else{
-      updateNode(node.bottomLeftNode, {parentNode: newTile.id()})
-      updateNode(node.bottomRightNode, {parentNode: newTile.id()})
+      _this.updateNode(node.bottomLeftNode, {parentNode: newTile.id()})
+      _this.updateNode(node.bottomRightNode, {parentNode: newTile.id()})
     }
   }
-  updateNode(node.id, {bottomNode: newTile.id(), bottomLeftEdge: null, bottomRightEdge: null, bottomRightNode: null, bottomLeftNode: null})
+  _this.updateNode(node.id, {bottomNode: newTile.id(), bottomLeftEdge: null, bottomRightEdge: null, bottomRightNode: null, bottomLeftNode: null})
 
 
   newGroup = SVG.get(newTile.id() + "Group")
@@ -356,27 +386,29 @@ function addScreenEvent(target, tileSelector) {
     newGroup.add(this)
   })
 
-  moveGroup(newTile, 0, 1, 'D', 'add', false, bottomNode.path)
+  _this.moveGroup(newTile, 0, 1, 'D', 'add', false, bottomNode.path)
 
-  resetCanvasSize();
-  saveDbChanges();
+  _this.resetCanvasSize();
+  _this.saveDbChanges();
 }
 
-function moveTile(tile, xShift, yShift, AddValueForPath, action) {
+Flowchart.prototype.moveTile = function(tile, xShift, yShift, AddValueForPath, action) {
+  var _this = this;
   var x = tile.x() + (150 * xShift),
       y = tile.y() + (50 + TILE_HEIGHT) * yShift,
-      node = getNode(tile.id());
+      node = _this.getNode(tile.id());
   $("#" + tile.id() + "Tile").css({ left:  x, top: y })
   tile.x(x).y(y);
-  currentNode = getNode(tile.id());
-  updateNode(tile.id(), { level: currentNode.level + yShift, position: getPosition(tile)});
-  if (AddValueForPath) {updateNode(tile.id(), {path: calculatePath(node.path, currentNode.path, AddValueForPath, action)})};
+  currentNode = _this.getNode(tile.id());
+  _this.updateNode(tile.id(), { level: currentNode.level + yShift, position: _this.getPosition(tile)});
+  if (AddValueForPath) {_this.updateNode(tile.id(), {path: _this.calculatePath(node.path, currentNode.path, AddValueForPath, action)})};
 }
 
-function moveGroup(tile, xShift, yShift, AddValueForPath, action, istopMostTile, nodePath) {
+Flowchart.prototype.moveGroup = function(tile, xShift, yShift, AddValueForPath, action, istopMostTile, nodePath) {
+  var _this = this;
   var moveX = 150 * xShift,
       moveY = (50 + TILE_HEIGHT) * yShift,
-      node = getNode(tile.id()),
+      node = _this.getNode(tile.id()),
       children = [];
 
   var tileGroup = SVG.get(node.id + 'Group');
@@ -387,60 +419,63 @@ function moveGroup(tile, xShift, yShift, AddValueForPath, action, istopMostTile,
       this.x(x).y(y);
       if(this.type == "rect") {
         $("#" + this.id() + "Tile").css({ top: y, left: x })
-        currentNode = getNode(this.id());
-        updateNode(this.id(), { level: currentNode.level + yShift, position: getPosition(this)})
-        if (AddValueForPath) {updateNode(this.id(), {path: calculatePath(nodePath, currentNode.path, AddValueForPath, action)})};
+        currentNode = _this.getNode(this.id());
+        _this.updateNode(this.id(), { level: currentNode.level + yShift, position: _this.getPosition(this)})
+        if (AddValueForPath) {_this.updateNode(this.id(), {path: _this.calculatePath(nodePath, currentNode.path, AddValueForPath, action)})};
         children.push(this);
       }
     }
   }, true);
 
   if(!istopMostTile){
-    repositionParentTileOf(tile);
+    _this.repositionParentTileOf(tile);
     for (var i = 0; i < children.length; i++) {
-      validatePositionOf(children[i])
+      _this.validatePositionOf(children[i])
     };
   }
 }
 
-function moveTileWithGroup(tile, xShift, yShift, AddValueForPath, action, istopMostTile) {
-  var nodePath = getNode(tile.id()).path;
-  moveTile(tile, xShift, yShift, AddValueForPath, action);
-  moveGroup(tile, xShift, yShift, AddValueForPath, action, istopMostTile, nodePath)
+Flowchart.prototype.moveTileWithGroup = function(tile, xShift, yShift, AddValueForPath, action, istopMostTile) {
+  var _this = this;
+  var nodePath = _this.getNode(tile.id()).path;
+  _this.moveTile(tile, xShift, yShift, AddValueForPath, action);
+  _this.moveGroup(tile, xShift, yShift, AddValueForPath, action, istopMostTile, nodePath)
 }
 
-function repositionParentTileOf(tile){
-  var node = getNode(tile.id());
+Flowchart.prototype.repositionParentTileOf = function(tile){
+  var _this = this;
+  var node = _this.getNode(tile.id());
   if (node.parentNode) {
     var parentTile = SVG.get(node.parentNode),
-        parentNode = getNode(node.parentNode);
+        parentNode = _this.getNode(node.parentNode);
     if (parentNode.bottomEdge) {
       if( parentNode.position != node.position){
-        moveTile(parentTile, node.position - parentNode.position, 0, null)
-        reconnectBottomEdges(parentTile)
-        updateNode(parentNode.id, {position: getPosition(parentTile)})
-        validatePositionOf(parentTile);
-        repositionParentTileOf(parentTile);
+        _this.moveTile(parentTile, node.position - parentNode.position, 0, null)
+        _this.reconnectBottomEdges(parentTile)
+        _this.updateNode(parentNode.id, {position: _this.getPosition(parentTile)})
+        _this.validatePositionOf(parentTile);
+        _this.repositionParentTileOf(parentTile);
       }
     }else if(parentNode.bottomRightNode && parentNode.bottomLeftNode){
       var rightTile = SVG.get(parentNode.bottomRightNode);
       var leftTile = SVG.get(parentNode.bottomLeftNode);
-      var rightNode = getNode(rightTile.id());
-      var leftNode = getNode(leftTile.id());
+      var rightNode = _this.getNode(rightTile.id());
+      var leftNode = _this.getNode(leftTile.id());
       var shift = ((rightNode.position - leftNode.position)/2) + leftNode.position  - parentNode.position
       if(shift != 0){
-        moveTile(parentTile, shift, 0, null);
-        reconnectBottomEdges(parentTile);
-        updateNode(parentNode.id, {position: getPosition(parentTile)})
-        validatePositionOf(parentTile);
-        repositionParentTileOf(parentTile);
+        _this.moveTile(parentTile, shift, 0, null);
+        _this.reconnectBottomEdges(parentTile);
+        _this.updateNode(parentNode.id, {position: _this.getPosition(parentTile)})
+        _this.validatePositionOf(parentTile);
+        _this.repositionParentTileOf(parentTile);
       }
     }
   };
 }
 
-function validatePositionOf(tile){
-  var node = getNode(tile.id()),
+Flowchart.prototype.validatePositionOf = function(tile){
+  var _this = this;
+  var node = _this.getNode(tile.id()),
       position = node.position,
       level = node.level,
       xShift = null;
@@ -448,12 +483,12 @@ function validatePositionOf(tile){
     var parentDecisionGroup = SVG.get(node.parentNode).parent('.decisionGroup');
   if(parentDecisionGroup){
       var parentDecisionTile = SVG.get(parentDecisionGroup.id().slice(0,-5))
-          parentDecisionNode = getNode(parentDecisionTile.id()),
-          parentDecisionNodePath = getNode(parentDecisionTile.id()).path,
+          parentDecisionNode = _this.getNode(parentDecisionTile.id()),
+          parentDecisionNodePath = _this.getNode(parentDecisionTile.id()).path,
           pos = null;
       if(node.path.slice(parentDecisionNodePath.length)[0] == 'L'){
         rightNodePath = parentDecisionNodePath + 'R';
-        pos = calculateLeftmostPos(rightNodePath, level);
+        pos = _this.calculateLeftmostPos(rightNodePath, level);
         if(pos && pos - position < 2){
           xShift =  2 + position - pos;
           var rightTile = SVG.get(parentDecisionNode.bottomRightNode);
@@ -461,7 +496,7 @@ function validatePositionOf(tile){
 
       }else{
         leftNodePath = parentDecisionNodePath + 'L';
-        pos = calculateRightmostPos(leftNodePath, level);
+        pos = _this.calculateRightmostPos(leftNodePath, level);
         if(pos && position - pos < 2){
           xShift = 2 + pos - position;
           var rightTile = SVG.get(parentDecisionNode.bottomRightNode);
@@ -469,23 +504,24 @@ function validatePositionOf(tile){
       }
     }
     if(xShift){
-      moveTileWithGroup(rightTile, xShift, 0, null, null, false);
-      validatePositionOf(rightTile);
+      _this.moveTileWithGroup(rightTile, xShift, 0, null, null, false);
+      _this.validatePositionOf(rightTile);
     }else{
-      var oldNode = getNodeFromPosition(level, position, tile.id());
+      var oldNode = _this.getNodeFromPosition(level, position, tile.id());
 
-      if(oldNode && oldNode.parentNode != null && getNode(oldNode.parentNode).parentNode != null){
+      if(oldNode && oldNode.parentNode != null && _this.getNode(oldNode.parentNode).parentNode != null){
         xShift = (2 - Math.abs(oldNode.position - node.position));
-        var commonParentDecisionNode = getNodeByPath(calculateCommonPath(node.path, oldNode.path));
+        var commonParentDecisionNode = _this.getNodeByPath(_this.calculateCommonPath(node.path, oldNode.path));
         var rightTile = SVG.get(commonParentDecisionNode.bottomRightNode);
-        moveTileWithGroup(rightTile, xShift, 0, null, null, false);
-        validatePositionOf(rightTile);
+        _this.moveTileWithGroup(rightTile, xShift, 0, null, null, false);
+        _this.validatePositionOf(rightTile);
       }
     }
   }
 }
 
-function initAddTiles(id, position, level, parentNodeId, path, node_type, bottomNode, bottomLeftNode, bottomRightNode, name, page) {
+Flowchart.prototype.initAddTiles = function(id, position, level, parentNodeId, path, node_type, bottomNode, bottomLeftNode, bottomRightNode, name, page) {
+  var _this = this;
   var canvas = SVG.get(SVG_CANVAS_ID)
   var x = position * 150;
   var y = level * 135
@@ -496,7 +532,7 @@ function initAddTiles(id, position, level, parentNodeId, path, node_type, bottom
 
   var group = canvas.group().attr({ id: tile.id() + "Group" })
   if(parentNodeId) {
-    var connector = connect(SVG.get(parentNodeId), tile)
+    var connector = _this.connect(SVG.get(parentNodeId), tile)
     SVG.get(parentNodeId + "Group")
        .add(tile)
        .add(group)
@@ -512,7 +548,7 @@ function initAddTiles(id, position, level, parentNodeId, path, node_type, bottom
 
   div = $(blueprintID).clone()
                             .css(cssProps);
-  if (name) { div.find('.message').html(formatNodeMessage(getNode(id))) };
+  if (name) { div.find('.message').html(_this.formatNodeMessage(_this.getNode(id))) };
   if (page) {
 
     if (page.uid && (page.uid + '').length < 3) {
@@ -529,14 +565,15 @@ function initAddTiles(id, position, level, parentNodeId, path, node_type, bottom
   return tile
 }
 
-function addTile(x, y, parentTile, level, path, blueprintID, page, name) {
+Flowchart.prototype.addTile = function(x, y, parentTile, level, path, blueprintID, page, name) {
+  var _this = this;
 
   var canvas = SVG.get(SVG_CANVAS_ID)
   var position = x/150;
   ID = ID + 1;
   var tile = canvas.rect(TILE_WIDTH,TILE_HEIGHT).move(x, y).style('fill', 'transparent').id('Tile' + (ID));
 
-  NODES.push({ id: tile.id(), uid: page && page.uid, pageId: page && page.id, pageTypeId: page && page.page_type_id, name: name || blueprintID.match(/.*-(.*)/)[1], type: blueprintID.match(/.*-(.*)/)[1], updated: false, saved: false, topEdge: null, leftEdge: null, rightEdge: null, bottomEdge: null, bottomLeftEdge: null, bottomRightEdge: null, bottomNode: null, bottomLeftNode: null, bottomRightNode: null, parentNode: parentTile && parentTile.id(), level: level, position: getPosition(tile), path: path })
+  NODES.push({ id: tile.id(), uid: page && page.uid, pageId: page && page.id, pageTypeId: page && page.page_type_id, name: name || blueprintID.match(/.*-(.*)/)[1], type: blueprintID.match(/.*-(.*)/)[1], updated: false, saved: false, topEdge: null, leftEdge: null, rightEdge: null, bottomEdge: null, bottomLeftEdge: null, bottomRightEdge: null, bottomNode: null, bottomLeftNode: null, bottomRightNode: null, parentNode: parentTile && parentTile.id(), level: level, position: _this.getPosition(tile), path: path })
   var group = canvas.group().attr({ id: tile.id() + "Group" })
 
   if (blueprintID == '#tile-blueprint-decision') {
@@ -544,7 +581,7 @@ function addTile(x, y, parentTile, level, path, blueprintID, page, name) {
     group.addClass('decisionGroup');
   };
   if(parentTile) {
-    var connector = connect(parentTile, tile)
+    var connector = _this.connect(parentTile, tile)
 
     SVG.get(parentTile.id() + "Group")
        .add(tile)
@@ -560,7 +597,7 @@ function addTile(x, y, parentTile, level, path, blueprintID, page, name) {
                             .css(cssProps);
 
   div[0].id = tile.id() + "Tile";
-  if (name) { div.find('.message').html(formatNodeMessage(getNode(tile.id()))) };
+  if (name) { div.find('.message').html(_this.formatNodeMessage(_this.getNode(tile.id()))) };
   if (page) {
     div.find('.screen-tile-right-icon').addClass(page.page_type.icon_name)
     if (page.uid && (page.uid + '').length < 3) {
@@ -571,124 +608,128 @@ function addTile(x, y, parentTile, level, path, blueprintID, page, name) {
   $('#tile-container').append(div)
   if (page && page.id) { $('li.page-id-' + page.id).remove()};
 
-  validatePositionOf(tile);
+  _this.validatePositionOf(tile);
   return tile
 }
 
-function resetCanvasSize() {
-  var maxPos = calculateMAxPosAndLevel()[0],
-      maxLevel = calculateMAxPosAndLevel()[1];
+Flowchart.prototype.resetCanvasSize = function() {
+  var _this = this;
+  var maxPos = _this.calculateMAxPosAndLevel()[0],
+      maxLevel = _this.calculateMAxPosAndLevel()[1];
   var width = ((maxPos + 2) * 150 + TILE_WIDTH) + 'px';
   var height = (maxLevel + 2) * (TILE_HEIGHT + 50) + 'px';
   SVG.get(SVG_CANVAS_ID).width(width).height(height);
-  var minPos = calculateMinPos();
+  var minPos = _this.calculateMinPos();
   if(minPos < 1){
-    moveTileWithGroup(STARTING_TILE, 1 - minPos, 0, null, null, true)
+    _this.moveTileWithGroup(STARTING_TILE, 1 - minPos, 0, null, null, true)
   }else if(minPos > 3){
-    moveTileWithGroup(STARTING_TILE, 3 - minPos, 0, null, null, true)
+    _this.moveTileWithGroup(STARTING_TILE, 3 - minPos, 0, null, null, true)
   }
 }
 
-function saveDbChanges() {
+Flowchart.prototype.saveDbChanges = function() {
+  var _this = this;
   $.ajax({
     type: 'post',
     url: location.href + '/crud_screens',
-    data: {updated_nodes: getUpdatedNodes(), new_nodes: getNewNodes(), deleted_nodes: DELETED_NODE_IDS },
+    data: {updated_nodes: _this.getUpdatedNodes(), new_nodes: _this.getNewNodes(), deleted_nodes: DELETED_NODE_IDS },
     dataType: 'json',
     success: function(result) {
       if (result['updated_ids']) {
         for (var i = 0; i < result['updated_ids'].length; i++) {
-          updateNode(result['updated_ids'][i], {updated: false})
+          _this.updateNode(result['updated_ids'][i], {updated: false})
         };
       };
       if (result['saved_ids']) {
         for (var i = 0; i < result['saved_ids'].length; i++) {
-          updateNode(result['saved_ids'][i], {saved: true})
+          _this.updateNode(result['saved_ids'][i], {saved: true})
         };
       }
     }
   });
 }
-function reconnectBottomEdges(tile) {
-  var node = getNode(tile.id());
+Flowchart.prototype.reconnectBottomEdges = function(tile) {
+  var _this = this;
+  var node = _this.getNode(tile.id());
   if (node.bottomEdge) {
     var bottomTile = SVG.get(node.bottomNode);
-    var bottomEdge = getEdge(node.bottomEdge);
+    var bottomEdge = _this.getEdge(node.bottomEdge);
     SVG.get(bottomEdge.id).remove();
-    var connector = connect(tile, bottomTile);
+    var connector = _this.connect(tile, bottomTile);
     SVG.get(tile.id() + "Group").add(connector);
   } else {
-    var bottomLeftEdge = getEdge(node.bottomLeftEdge);
-    var bottomRightEdge = getEdge(node.bottomRightEdge);
+    var bottomLeftEdge = _this.getEdge(node.bottomLeftEdge);
+    var bottomRightEdge = _this.getEdge(node.bottomRightEdge);
     var rightTile = SVG.get(node.bottomRightNode);
     var leftTile = SVG.get(node.bottomLeftNode);
     SVG.get(bottomLeftEdge.id).remove();
     SVG.get(bottomRightEdge.id).remove();
-    var connector1 = connect(tile, leftTile);
-    var connector2 = connect(tile, rightTile);
+    var connector1 = _this.connect(tile, leftTile);
+    var connector2 = _this.connect(tile, rightTile);
     SVG.get(tile.id() + "Group").add(connector1).add(connector2);
   };
 }
 
-function connect(source, target) {
+Flowchart.prototype.connect = function(source, target) {
+  var _this = this;
   if ((source.x() == target.x()) && (source.y() == target.y())) {
     return
   }
 
   if (source.x() == target.x()) {
     if(source.y() < target.y()) {
-      var s = tileBottomPin(source)
-      var t = tileTopPin(target)
+      var s = _this.tileBottomPin(source)
+      var t = _this.tileTopPin(target)
 
-      var edge = buildConnector([[s.x, s.y - 30], [t.x, t.y]], "Polyline" + source.id())
-      updateNode(target.id(), {topEdge: edge.id()})
-      updateNode(source.id(), {bottomEdge: edge.id()})
+      var edge = _this.buildConnector([[s.x, s.y - 30], [t.x, t.y]], "Polyline" + source.id())
+      _this.updateNode(target.id(), {topEdge: edge.id()})
+      _this.updateNode(source.id(), {bottomEdge: edge.id()})
     } else {
-      var s = tileBottomPin(target)
-      var t = tileTopPin(source)
+      var s = _this.tileBottomPin(target)
+      var t = _this.tileTopPin(source)
 
-      var edge = buildConnector([[s.x, s.y - 30], [t.x, t.y]], "Polyline" + source.id())
+      var edge = _this.buildConnector([[s.x, s.y - 30], [t.x, t.y]], "Polyline" + source.id())
 
-      updateNode(source.id(), {topEdge: edge.id()})
-      updateNode(target.id(), {bottomEdge: edge.id()})
+      _this.updateNode(source.id(), {topEdge: edge.id()})
+      _this.updateNode(target.id(), {bottomEdge: edge.id()})
     }
   } else if (source.y() == target.y()) {
     if(source.x() < target.x()) {
-      var s = tileRightPin(source)
-      var t = tileLeftPin(target)
+      var s = _this.tileRightPin(source)
+      var t = _this.tileLeftPin(target)
 
-      var edge = buildConnector([[s.x, s.y], [t.x, t.y]], "Polyline" + source.id())
+      var edge = _this.buildConnector([[s.x, s.y], [t.x, t.y]], "Polyline" + source.id())
 
-      updateNode(target.id(), {leftEdge: edge.id()})
-      updateNode(source.id(), {rightEdge: edge.id()})
+      _this.updateNode(target.id(), {leftEdge: edge.id()})
+      _this.updateNode(source.id(), {rightEdge: edge.id()})
     } else {
-      var s = tileRightPin(target)
-      var t = tileLeftPin(source)
+      var s = _this.tileRightPin(target)
+      var t = _this.tileLeftPin(source)
 
-      var edge = buildConnector([[s.x, s.y], [t.x, t.y]], "Polyline" + source.id())
+      var edge = _this.buildConnector([[s.x, s.y], [t.x, t.y]], "Polyline" + source.id())
 
-      updateNode(source.id(), {leftEdge: edge.id()})
-      updateNode(target.id(), {rightEdge: edge.id()})
+      _this.updateNode(source.id(), {leftEdge: edge.id()})
+      _this.updateNode(target.id(), {rightEdge: edge.id()})
     }
   } else {
     if(source.y() < target.y()) {
       var polyline_pos = source.x() > target.x() ? 'PolylineLeft' : 'PolylineRight'
-      var s = tileBottomPin(source)
-      var t = tileTopPin(target)
+      var s = _this.tileBottomPin(source)
+      var t = _this.tileTopPin(target)
 
-      var edge = buildConnector([[s.x, s.y], [s.x, s.y + 35], [t.x, s.y + 35], [t.x, t.y + 20]], polyline_pos + source.id())
+      var edge = _this.buildConnector([[s.x, s.y], [s.x, s.y + 35], [t.x, s.y + 35], [t.x, t.y + 20]], polyline_pos + source.id())
 
-      updateNode(target.id(), {topEdge: edge.id()})
-      source.x() > target.x() ? updateNode(source.id(), {bottomLeftEdge: edge.id()}) : updateNode(source.id(), {bottomRightEdge: edge.id()})
+      _this.updateNode(target.id(), {topEdge: edge.id()})
+      source.x() > target.x() ? _this.updateNode(source.id(), {bottomLeftEdge: edge.id()}) : _this.updateNode(source.id(), {bottomRightEdge: edge.id()})
     } else {
     var polyline_pos = target.x() > source.x() ? 'PolylineLeft' : 'PolylineRight'
-     var s = tileBottomPin(target)
-     var t = tileTopPin(source)
+     var s = _this.tileBottomPin(target)
+     var t = _this.tileTopPin(source)
 
-     var edge = buildConnector([[s.x, s.y], [s.x, s.y + 35], [t.x, s.y + 35], [t.x, t.y + 20]], polyline_pos + source.id())
+     var edge = _this.buildConnector([[s.x, s.y], [s.x, s.y + 35], [t.x, s.y + 35], [t.x, t.y + 20]], polyline_pos + source.id())
 
-     updateNode(source.id(), {topEdge: edge.id()})
-      target.x() > source.x() ? updateNode(target.id(), {bottomLeftEdge: edge.id()}) : updateNode(source.id(), {bottomRightEdge: edge.id()})
+     _this.updateNode(source.id(), {topEdge: edge.id()})
+      target.x() > source.x() ? _this.updateNode(target.id(), {bottomLeftEdge: edge.id()}) : _this.updateNode(source.id(), {bottomRightEdge: edge.id()})
     }
   }
 
@@ -701,14 +742,15 @@ function connect(source, target) {
   return edge
 }
 
-function buildConnector(points, id) {
+Flowchart.prototype.buildConnector = function(points, id) {
+  var _this = this;
   return SVG.get(SVG_CANVAS_ID)
             .polyline(points)
             .fill('none')
             .stroke({ width: 1, color: '#cccccc' })
 }
 
-function calculatePath(nodePath, path, addValue, action) {
+Flowchart.prototype.calculatePath = function(nodePath, path, addValue, action) {
   if(action == 'add'){
     return nodePath.slice(0,-addValue.length) + addValue + path.slice(nodePath.slice(0,-addValue.length).length)
   }else if(action == 'remove'){
@@ -718,17 +760,17 @@ function calculatePath(nodePath, path, addValue, action) {
   }
 }
 
-function calculateMAxPosAndLevel() {
+Flowchart.prototype.calculateMAxPosAndLevel = function() {
   var maxPos = Math.max.apply(this, NODES.map(function(o){return o.position;}))
   var maxLevel = Math.max.apply(this, NODES.map(function(o){return o.level;}))
   return [maxPos, maxLevel]
 }
 
-function calculateMinPos() {
+Flowchart.prototype.calculateMinPos = function() {
   return Math.min.apply(this, NODES.map(function(o){return o.position;}))
 }
 
-function calculateCommonPath (path1, path2) {
+Flowchart.prototype.calculateCommonPath = function (path1, path2) {
   char = 0;
   for (var i = 0; i < path1.length; i++) {
     if(path1[i] == path2[i]){
@@ -740,45 +782,45 @@ function calculateCommonPath (path1, path2) {
   return path1.slice(0, char);
 }
 
-function tileLeftPin(tile) {
+Flowchart.prototype.tileLeftPin = function(tile) {
   x = tile.x()
   y = (tile.y() + (TILE_HEIGHT / 2))
 
   return { x: x, y: y }
 }
 
-function tileRightPin(tile) {
+Flowchart.prototype.tileRightPin = function(tile) {
   x = (tile.x() + TILE_WIDTH)
   y = (tile.y() + (TILE_HEIGHT / 2))
 
   return { x: x, y: y }
 }
 
-function tileTopPin(tile) {
+Flowchart.prototype.tileTopPin = function(tile) {
   x = (tile.x() + (TILE_WIDTH / 2))
   y = tile.y()
 
   return { x: x, y: y }
 }
 
-function tileBottomPin(tile) {
+Flowchart.prototype.tileBottomPin = function(tile) {
   x = (tile.x() + (TILE_WIDTH / 2))
   y = (tile.y() + TILE_HEIGHT)
 
   return { x: x, y: y }
 }
 
-function getPosition (tile) {
+Flowchart.prototype.getPosition = function (tile) {
   return tile.x()/150;
 }
 
-function calculateMaxId() {
+Flowchart.prototype.calculateMaxId = function() {
   var regex = /\d+$/g;
   var ids = NODES.map(function(node) { return node.id.match(regex)[0] })
   return Math.max.apply(this, ids)
 }
 
-function calculateRightmostPos(leftNodePath, level) {
+Flowchart.prototype.calculateRightmostPos = function(leftNodePath, level) {
   var nodes = NODES.filter(function(node, idx){
     return node.level == level && node.path.startsWith(leftNodePath)
   })
@@ -787,7 +829,7 @@ function calculateRightmostPos(leftNodePath, level) {
   }
 }
 
-function calculateLeftmostPos(rightNodePath, level) {
+Flowchart.prototype.calculateLeftmostPos = function(rightNodePath, level) {
   var nodes = NODES.filter(function(node, idx){
     return node.level == level && node.path.startsWith(rightNodePath)
   })
@@ -796,39 +838,40 @@ function calculateLeftmostPos(rightNodePath, level) {
   }
 }
 
-function removeNode(nodeID) {
+Flowchart.prototype.removeNode = function(nodeID) {
   DELETED_NODE_IDS.push(nodeID)
   NODES = NODES.filter(function(node, idx){
     return node.id != nodeID
   })
 }
 
-function getNode(nodeID) {
+Flowchart.prototype.getNode = function(nodeID) {
   return NODES.filter(function(node, idx){
     return node.id == nodeID
   })[0]
 }
 
-function getNodeByPath(path) {
+Flowchart.prototype.getNodeByPath = function(path) {
   return NODES.filter(function(node, idx){
     return node.path == path
   })[0]
 }
 
-function getEdge(edgeID) {
+Flowchart.prototype.getEdge = function(edgeID) {
   return EDGES.filter(function(edge, idx){
     return edge.id == edgeID
   })[0]
 }
 
-function getNodeFromPosition(level, position, id) {
+Flowchart.prototype.getNodeFromPosition = function(level, position, id) {
   return NODES.filter(function(node, idx){
     return node.level == level && node.id != id && (Math.abs(node.position - position) < 2)
   })[0]
 }
 
-function updateNode(nodeID, props) {
-  if (containsAny(Object.keys(props), ['level', 'position', 'path', 'parentNode', 'name'])){
+Flowchart.prototype.updateNode = function(nodeID, props) {
+  var _this = this;
+  if (_this.containsAny(Object.keys(props), ['level', 'position', 'path', 'parentNode', 'name'])){
     props.updated = true;
   }
   NODES = NODES.map(function(node, idx){
@@ -840,30 +883,30 @@ function updateNode(nodeID, props) {
   })
 }
 
-function containsAny(source, target){
+Flowchart.prototype.containsAny = function(source, target){
     var result = source.filter(function(item){ return target.indexOf(item) > -1});
     return (result.length > 0);
 }
 
-function getUpdatedNodes() {
+Flowchart.prototype.getUpdatedNodes = function() {
   return NODES.filter(function(node, idx){
     return node.updated && node.saved
   })
 }
 
-function getNewNodes() {
+Flowchart.prototype.getNewNodes = function() {
   return NODES.filter(function(node, idx){
     return !node.saved
   })
 }
 
-function getConnectingNodesEdge(edgeID) {
+Flowchart.prototype.getConnectingNodesEdge = function(edgeID) {
   return EDGES.filter(function(edge, idx){
     return edge.id == edgeID
   })[0]
 }
 
-function formatNodeMessage (node) {
+Flowchart.prototype.formatNodeMessage = function (node) {
   if (node.type == 'conclusion') {
     return node.name.length > 37 ? node.name.slice(0, 37) + '..' : node.name
   } else{
@@ -872,6 +915,5 @@ function formatNodeMessage (node) {
 }
 
 $(function(){
-  init();
-  bindEvents();
+  new Flowchart();
 })

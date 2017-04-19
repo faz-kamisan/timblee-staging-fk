@@ -6,8 +6,8 @@ class Screen < ActiveRecord::Base
   belongs_to :page
   has_one :page_type, through: :page
   has_many :child_screens, class_name: 'Screen', foreign_key: :parent_id, primary_key: :id
-  has_many :comments, as: :commentable, dependent: :destroy
-  has_many :page_comments, source: :comments, through: :page
+  # has_many :comments, as: :commentable, dependent: :destroy
+  has_many :comments, through: :page
   after_destroy :archive_page, if: :page_id?
 
   validates :userflow, :node_type, :level, :position, :path, presence: true

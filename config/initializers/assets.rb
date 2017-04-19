@@ -47,6 +47,7 @@ Rails.application.config.assets.precompile += %w(
   banner.js
   editor.scss
   flowchart.js
+  flowchart_extended.js
   flowchart.css
   comment.js
 )

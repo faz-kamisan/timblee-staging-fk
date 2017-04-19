@@ -1,0 +1,104 @@
+<div class="react-header">
+  <div class="logo-dark relative pull-left sitemap-back-link">
+    <a href="/home">
+      <img src="/assets/go-back.svg" class="go-back-link"></img>
+    </a>
+  </div>
+
+  <div class="pull-left sitemap-name-div">
+    <div class="sitemap-name-div">
+      <input value = <%= @userflow.name %> class= "site-map-name site-map-name-input hide" />
+      <h3 class= "site-map-name truncate "><%= @sitemap.name %></h3>
+    </div>
+  </div>
+
+  <div class="state-status text-center pull-left">
+    <h5>
+      <span class=<%= @sitemap.state %>>
+        <%= @sitemap.state.tr('_', ' ').titleize %>
+        <i class="icon-caret hide"></i>
+      </span>
+      <ul class="state-drop-down hide">
+        <% ['In Progress', 'Review', 'Approved', 'On Hold'].each_with_index do |state, index| %>
+          <li class ='<%= (@sitemap.state == state.downcase.tr(' ', '_')) ? 'active' : '' %>'>
+            <i class ="icon-save-circle"></i>
+            <div class ='sitemap-state'>
+              <span class ="state-indicator <%= state %>" ></span>
+              <%= state %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </h5>
+  </div>
+
+  <div class="saved-status pull-left hide">
+    <span>
+      <div>
+        <i class="icon-save-circle"></i> Saved
+      </div>
+    </span>
+  </div>
+
+  <div class="canvas-switch">
+    <ul>
+      <li>Sitemap</li>
+      <li class="active">User Flow <span class="beta-tag">Beta</span></li>
+    </ul>
+  </div>
+
+  <div class="toggle-header pull-right" >
+    <div class= "inner-toggle caret-up")>
+      <i class="icon-caret"></i>
+        <div>hide</div>
+    </div>
+  </div>
+
+  <div class="toggle-comments-outer pull-right">
+    <div class="toggle-comments">
+      <a href="javascript:void(0)" class="btn-toggle-comments active" >
+        <span class="icon-comment"></span>
+        Comments
+        <span>click to toggle</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="pull-right users-block">
+    <div class="inner-user-block">
+      <span class="icon-invite-female user-invite cursor" data-remote= true>
+        <span class="path1"></span>
+        <span class="path2"></span>
+        <span class="path3"></span>
+        <span class="path4"></span>
+        <span class="path5"></span>
+      </span>
+      <ul class='users-list'>
+        <% @sitemap.business.users.first(2).each do |user|  %>
+          <li>
+            <img src=<%= user.avatar.url %> />
+          </li>
+        <% end %>
+      </ul>
+      <% if(@sitemap.business.users.count > 3) %>
+        <a class='other-users cursor'>
+          + <%=  @sitemap.business.users.count - 2  %> others
+        </a>
+      <% end %>
+      <% if(@sitemap.business.users.count == 3) %>
+        <a class='other-users'>
+          + 1 other
+        </a>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="pull-right share-sitemap-btn-div">
+    <div class="share-sitemap-btn-div">
+      <a href="javascript:void(0)"  class="btn btn-share action sitemap-share-modal-link" data-url=<%= @sitemap.public_share_url %> data-name=<%= @sitemap.name %> data-id=<%= @sitemap.id %> data-level-one-pages=<%= @sitemap.max_level_one_page_count %> data-shared-users=<%= @sitemap.sitemap_shared_users.pluck(:user_email).presence %>>
+       <span class="share-icon"></span> Share
+      </a>
+    </div>
+  </div>
+
+</div>
