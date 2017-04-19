@@ -77,7 +77,7 @@ Flowchart.prototype.bindAddCommentToScreen = function() {
     if ($('.comments-page-' + node.pageId).html()) {
       $('#page-comments-modal .page').html($('.comments-page-' + node.pageId).clone());
     } else{
-      var $div = $('.blueprint-page-comments > div').clone();
+      var $div = $('.blueprint-page-comments div.comments-').clone();
       $div.addClass('comments-page-' + node.pageId);
       $div.find('.page-id').html('ID:' + node.uid);
       $div.find('.page-name').html(node.name);
