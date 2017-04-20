@@ -71,10 +71,12 @@ Flowchart.prototype.bindEvents = function() {
 }
 
 Flowchart.prototype.bindFocusOutTileOptions = function() {
-  $(document).on('blur', '.screen-hover-options', function () {
-    $('.add-screen-dropdown').addClass('hide');
+  $(document).on('focusout', '.screen-hover-options', function (e) {
+    if($(this).css('visibility') == 'hidden' ){
+      $('.add-screen-dropdown').addClass('hide').removeClass('show-dropdown');
+    }
   })
-  $(document).on('blur', '.default-screen-hover-options', function () {
+  $(document).on('focusout', '.default-screen-hover-options', function () {
     $('.add-initial-screen-dropdown').addClass('hide');
     $(this).closest('.default-screen-hover-options').removeClass('show-dropdown');
   })
@@ -397,7 +399,7 @@ Flowchart.prototype.bindDeleteScreenEvent = function() {
 Flowchart.prototype.bindAddScreenEvent = function() {
   var _this = this;
   $(document).on('click', '.addScreen', function() {
-
+    $('.add-screen-dropdown').addClass('hide');
     _this.addScreenEvent(this, "#tile-blueprint-page");
   })
 }
