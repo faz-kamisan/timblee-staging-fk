@@ -81,8 +81,8 @@ Flowchart.prototype.bindAddCommentToScreen = function() {
       $div.addClass('comments-page-' + node.pageId);
       $div.find('.page-id').html('ID:' + node.uid);
       $div.find('.page-name').html(node.name);
-      $div.find('.resolve-unresolve-pages').data('page-id', node.pageId);
-      $div.find('textarea').data('commentable-id', node.pageId);
+      $div.find('.resolve-unresolve-pages').attr('data-page-id', node.pageId);
+      $div.find('textarea').attr('data-commentable-id', node.pageId);
       $('#page-comments-modal .page').append($div);
     };
     $('#page-comments-modal').modal('show');

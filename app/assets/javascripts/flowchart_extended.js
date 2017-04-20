@@ -128,6 +128,7 @@ FlowchartExtended.prototype.bindAddGeneralComment = function() {
         $li = $('.blueprint-comment li').clone();
         $li.find('.comment-message').html(commentMessage)
         $textarea.parent().siblings('.comment-group').append($li);
+        $()
       }
     });
   })
@@ -151,6 +152,11 @@ FlowchartExtended.prototype.bindAddPageComment = function() {
         $li = $('.blueprint-comment li').clone();
         $li.find('.comment-message').html(commentMessage)
         $('.comments-page-' + commentableId + ' .comment-group').append($li);
+        if (!($('.comments-page-list-'+ commentableId).html()) && $('#page-comments-modal .page .comments-page-' + commentableId).html()) {
+          $pageLi = '<li class="comments-page-list-'+ commentableId +'">' + $('#page-comments-modal .page').html() + '</li>'
+          $('.general-comments .active-pages-list').append($pageLi);
+        };
+
       }
     });
   })
