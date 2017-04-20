@@ -688,10 +688,12 @@ Flowchart.prototype.resetCanvasSize = function() {
   var height = (maxLevel + 2) * (TILE_HEIGHT + 50) + 'px';
   SVG.get(SVG_CANVAS_ID).width(width).height(height);
   var minPos = _this.calculateMinPos();
+  var midPos = $(window).width()/2 - TILE_WIDTH/2;
+
   if(minPos < 1){
     _this.moveTileWithGroup(STARTING_TILE, 1 - minPos, 0, null, null, true)
-  }else if(minPos > 3){
-    _this.moveTileWithGroup(STARTING_TILE, 3 - minPos, 0, null, null, true)
+  }else if(minPos > midPos){
+    _this.moveTileWithGroup(STARTING_TILE, midPos - minPos, 0, null, null, true)
   }
 }
 
