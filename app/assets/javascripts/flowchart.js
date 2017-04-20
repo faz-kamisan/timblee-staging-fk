@@ -64,10 +64,21 @@ Flowchart.prototype.bindEvents = function() {
   this.bindHideMoreOptions();
   this.bindOnClickMessage();
   this.bindEditMessage();
-  this.bindAddLink();
-  this.bindAddLinkTo();
+  // this.bindAddLink();
+  // this.bindAddLinkTo();
   this.bindAddCommentToScreen();
+  this.bindFocusOutTileOptions();
 }
+
+Flowchart.prototype.bindFocusOutTileOptions = function() {
+  $(document).on('blur', '.screen-hover-options', function () {
+    $('.add-screen-dropdown').addClass('hide');
+  })
+  $(document).on('blur', '.default-screen-hover-options', function () {
+    $('.add-initial-screen-dropdown').addClass('hide');
+    $(this).closest('.default-screen-hover-options').removeClass('show-dropdown');
+  })
+};
 
 Flowchart.prototype.bindAddCommentToScreen = function() {
   var _this = this;
@@ -179,6 +190,7 @@ Flowchart.prototype.bindSelectInitialScreen = function () {
 
 Flowchart.prototype.bindSelectScreen = function() {
   $(document).on('click', '.selectScreen', function () {
+    $(this).closest('.screen-hover-options').addClass('show-dropdown');
     $(this).closest('div.tile').find('.add-screen-dropdown').removeClass('hide');
   })
 }
@@ -201,7 +213,8 @@ Flowchart.prototype.bindAddInitialScreenEvent = function () {
   var _this = this;
   $(document).on('click', '.addInitialScreen', function() {
     $('.default-screen-hover-options').addClass('hide');
-    STARTING_TILE = _this.addTile(450, 135, null, 1, 'S', "#tile-blueprint-page", $(this).data('page'), $(this).html());
+    var midPos = $(window).width()/2 - TILE_WIDTH/2;
+    STARTING_TILE = _this.addTile(midPos, 135, null, 1, 'S', "#tile-blueprint-page", $(this).data('page'), $(this).html());
     _this.saveDbChanges();
   });
 }
@@ -210,7 +223,8 @@ Flowchart.prototype.bindAddInitialActionScreenEvent = function () {
   var _this = this;
   $(document).on('click', '.addInitialAction', function() {
     $('.default-screen-hover-options').addClass('hide');
-    STARTING_TILE = _this.addTile(450, 135, null, 1, 'S', "#tile-blueprint-action", null);
+    var midPos = $(window).width()/2 - TILE_WIDTH/2;
+    STARTING_TILE = _this.addTile(midPos, 135, null, 1, 'S', "#tile-blueprint-action", null);
     _this.saveDbChanges();
   });
 }
@@ -219,9 +233,10 @@ Flowchart.prototype.bindAddInitialDecisionScreensEvent = function () {
   var _this = this;
   $(document).on('click', '.addInitialDecision', function() {
     $('.default-screen-hover-options').addClass('hide');
-    STARTING_TILE = _this.addTile(450, 135, null, 1, 'S', "#tile-blueprint-decision", null);
-    var leftTile = _this.addTile(300, 270, STARTING_TILE, 2, 'SL', "#tile-blueprint-conclusion", null, 'yes');
-    var rightTile = _this.addTile(600, 270, STARTING_TILE, 2, 'SR', "#tile-blueprint-conclusion", null, 'no');
+    var midPos = $(window).width()/2 - TILE_WIDTH/2;
+    STARTING_TILE = _this.addTile(midPos, 135, null, 1, 'S', "#tile-blueprint-decision", null);
+    var leftTile = _this.addTile(midPos - 150, 270, STARTING_TILE, 2, 'SL', "#tile-blueprint-conclusion", null, 'yes');
+    var rightTile = _this.addTile(midPos + 150, 270, STARTING_TILE, 2, 'SR', "#tile-blueprint-conclusion", null, 'no');
     _this.updateNode(STARTING_TILE.id(), {bottomLeftNode: leftTile.id(), bottomRightNode: rightTile.id()})
     _this.resetCanvasSize();
     _this.saveDbChanges();
@@ -383,7 +398,6 @@ Flowchart.prototype.bindAddScreenEvent = function() {
   var _this = this;
   $(document).on('click', '.addScreen', function() {
 
-    $(this).closest('div.tile').find('.add-screen-dropdown').addClass('hide');
     _this.addScreenEvent(this, "#tile-blueprint-page");
   })
 }
