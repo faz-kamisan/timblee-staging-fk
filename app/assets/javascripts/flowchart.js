@@ -7,7 +7,8 @@ NODES = [];
 EDGES = [];
 DELETED_NODE_IDS = [];
 STARTING_TILE = null;
-
+LinkingTileId = null;
+LinkTileToId = null;
 var Flowchart = function () {
   this.init();
   this.bindEvents();
@@ -63,7 +64,8 @@ Flowchart.prototype.bindEvents = function() {
   this.bindHideMoreOptions();
   this.bindOnClickMessage();
   this.bindEditMessage();
-  // this.bindChangePageType();
+  this.bindAddLink();
+  this.bindAddLinkTo();
   this.bindAddCommentToScreen();
 }
 
@@ -90,23 +92,65 @@ Flowchart.prototype.bindAddCommentToScreen = function() {
   })
 }
 
-Flowchart.prototype.bindChangePageType = function() {
+Flowchart.prototype.bindAddLink = function() {
   var _this = this;
-  $(document).on('click', '.screen-change-node', function() {
+  $(document).on('click', '.addLink', function() {
     var tileID = $(this).closest('.tile')[0].id.slice(0, -4);
     var tile = SVG.get(tileID);
     var node = _this.getNode(tileID);
+    if (!(node.bottomLeftNode || node.bottomNode)) {
+      LinkingTileId = node.id;
+      $('body').addClass('link-stage-2');
+    }
   })
 }
+
+Flowchart.prototype.bindAddLinkTo = function() {
+  var _this = this;
+  $(document).on('click', '.link-stage-2 .linking-tile', function() {
+    var tileID = $(this).closest('.tile')[0].id.slice(0, -4);
+    var tile = SVG.get(tileID);
+    var node = _this.getNode(tileID);
+    LinkTileToId = node.id;
+    $('body').removeClass('link-stage-2');
+    _this.link(LinkingTileId, LinkTileToId)
+  })
+}
+
+Flowchart.prototype.link = function(node1_id, node2_id) {
+  var _this = this;
+  var node1 = _this.getNode(node1_id);
+  var node2 = _this.getNode(node2_id);
+  var source = SVG.get(node1_id);
+  var target = SVG.get(node2_id);
+  var s = _this.tileBottomPin(source)
+  if (!(node1.bottomLeftNode || node1.bottomNode)) {
+    if ((source.x() == target.x()) && (source.y() == target.y())) {
+      return
+    }
+    if(source.y() < target.y()) {
+
+      var t = _this.tileRightPin(target)
+      var edge = _this.buildConnector([[s.x, s.y - 30], [s.x, s.y + 20], [s.x + 150, s.y + 20], [s.x + 150, t.y], [t.x - 30, t.y]], "Polyline" + source.id())
+    } else {
+
+      var t = _this.tileRightPin(target)
+      var edge = _this.buildConnector([[s.x, s.y - 30], [s.x, s.y + 20], [s.x + 150, s.y + 20], [s.x + 150, t.y], [t.x - 30, t.y]], "Polyline" + source.id())
+    }
+  };
+
+};
 
 Flowchart.prototype.bindOnClickMessage = function() {
   var _this = this;
   $(document).on('click', '.message', function() {
-    var tileID = $(this).closest('.tile')[0].id.slice(0, -4);
-    var tile = SVG.get(tileID);
-    var node = _this.getNode(tileID);
-    $(this).addClass('hide');
-    $(this).closest('.tile').find('.edit-name-field').removeClass('hide').val(node.name).focus();
+    if (!$('body').hasClass('link-stage-2')) {
+      var tileID = $(this).closest('.tile')[0].id.slice(0, -4);
+      var tile = SVG.get(tileID);
+      var node = _this.getNode(tileID);
+      $(this).addClass('hide');
+      $(this).closest('.tile').find('.edit-name-field').removeClass('hide').val(node.name).focus();
+    };
   })
 }
 
@@ -138,6 +182,7 @@ Flowchart.prototype.bindSelectScreen = function() {
     $(this).closest('div.tile').find('.add-screen-dropdown').removeClass('hide');
   })
 }
+
 Flowchart.prototype.bindShowMoreOptions = function() {
   $(document).on('click', '.more', function() {
     var svg = $(this).closest('.screen-tile-container');
@@ -182,7 +227,6 @@ Flowchart.prototype.bindAddInitialDecisionScreensEvent = function () {
     _this.saveDbChanges();
   });
 }
-
 
 Flowchart.prototype.bindAddDecisionScreensEvent = function() {
   var _this = this;

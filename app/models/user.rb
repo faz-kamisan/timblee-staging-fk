@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   before_destroy :restrict_owner_destroy, unless: :forced?
   before_destroy :clear_email!
   before_restore :set_email!
-  after_destroy :update_business_subscription
+  after_destroy :update_business_subscription, unless: :forced?
   before_update :restrict_owner_role_update, if: :is_admin_changed?
   after_create :add_default_avatar
   after_create :track_user, unless: :created_by_invite?
