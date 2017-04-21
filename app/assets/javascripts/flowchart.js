@@ -9,9 +9,8 @@ DELETED_NODE_IDS = [];
 STARTING_TILE = null;
 LinkingTileId = null;
 LinkTileToId = null;
+LINKS = [];
 var Flowchart = function () {
-  this.init();
-  this.bindEvents();
 }
 
 Flowchart.prototype.init = function() {
@@ -35,17 +34,25 @@ Flowchart.prototype.init = function() {
     };
     if (screeenData[i].page) {screeenData[i].page.page_type = screeenData[i].page_type};
 
-    var tile = _this.initAddTiles(screeenData[i].node_id, screeenData[i].position, screeenData[i].level, parentNodeId, screeenData[i].path, screeenData[i].node_type, bottomNode, bottomLeftNode, bottomRightNode, screeenData[i].message, screeenData[i].page)
-
+    var tile = _this.initAddTile(screeenData[i].node_id, screeenData[i].position, screeenData[i].level, parentNodeId, screeenData[i].path, screeenData[i].node_type, bottomNode, bottomLeftNode, bottomRightNode, screeenData[i].message, screeenData[i].page)
     if (screeenData[i].level == 1) {STARTING_TILE = tile};
+
   };
   svg.group().attr({ id: "tempGroup" });
   if (STARTING_TILE) {
     _this.resetCanvasSize();
+    _this.saveDbChanges();
     ID = _this.calculateMaxId();
   }else{
     $('.default-screen-hover-options').removeClass('hide');
     $('.starter-text').removeClass('hide');
+  }
+  for (var i = 0; i < screeenData.length; i++) {
+    if (screeenData[i].linking_screen_id) {
+      var sourceNodeId = screeenData[i].node_id
+      var targetNodeId = screeenData.filter(function(node) {return node.id == screeenData[i].linking_screen_id })[0].node_id;
+      _this.link(sourceNodeId, targetNodeId)
+    };
   }
 }
 
@@ -64,8 +71,8 @@ Flowchart.prototype.bindEvents = function() {
   this.bindHideMoreOptions();
   this.bindOnClickMessage();
   this.bindEditMessage();
-  // this.bindAddLink();
-  // this.bindAddLinkTo();
+  this.bindAddLink();
+  this.bindAddLinkTo();
   this.bindAddCommentToScreen();
   this.bindFocusOutTileOptions();
 }
@@ -77,8 +84,10 @@ Flowchart.prototype.bindFocusOutTileOptions = function() {
     }
   })
   $(document).on('focusout', '.default-screen-hover-options', function () {
-    $('.add-initial-screen-dropdown').addClass('hide');
-    $(this).closest('.default-screen-hover-options').removeClass('show-dropdown');
+    if($(this).css('visibility') == 'hidden' ){
+      $('.add-initial-screen-dropdown').addClass('hide');
+      $(this).closest('.default-screen-hover-options').removeClass('show-dropdown');
+    }
   })
 };
 
@@ -111,9 +120,11 @@ Flowchart.prototype.bindAddLink = function() {
     var tileID = $(this).closest('.tile')[0].id.slice(0, -4);
     var tile = SVG.get(tileID);
     var node = _this.getNode(tileID);
-    if (!(node.bottomLeftNode || node.bottomNode)) {
+    if (!(node.bottomLeftNode || node.bottomNode || node.linkNode)) {
       LinkingTileId = node.id;
       $('body').addClass('link-stage-2');
+    }else{
+      document.setFlash('Not Allowed.')
     }
   })
 }
@@ -132,26 +143,67 @@ Flowchart.prototype.bindAddLinkTo = function() {
 
 Flowchart.prototype.link = function(node1_id, node2_id) {
   var _this = this;
-  var node1 = _this.getNode(node1_id);
-  var node2 = _this.getNode(node2_id);
   var source = SVG.get(node1_id);
   var target = SVG.get(node2_id);
-  var s = _this.tileBottomPin(source)
-  if (!(node1.bottomLeftNode || node1.bottomNode)) {
+  var sourceNode = _this.getNode(node1_id);
+  if (!(sourceNode.bottomLeftNode || sourceNode.bottomNode)) {
     if ((source.x() == target.x()) && (source.y() == target.y())) {
       return
     }
-    if(source.y() < target.y()) {
+    points = _this.getPoints(source, target)
+    var edge = _this.buildConnector(points, "Polyline" + source.id())
+    _this.updateNode(source.id(), {linkEdge: edge.id(), linkNode: target.id()})
+    _this.saveDbChanges();
 
-      var t = _this.tileRightPin(target)
-      var edge = _this.buildConnector([[s.x, s.y - 30], [s.x, s.y + 20], [s.x + 150, s.y + 20], [s.x + 150, t.y], [t.x - 30, t.y]], "Polyline" + source.id())
-    } else {
+    LINKS.push({
+      id: edge.id(),
+      source: source.id(),
+      target: target.id()
+    })
+  };
+};
 
-      var t = _this.tileRightPin(target)
-      var edge = _this.buildConnector([[s.x, s.y - 30], [s.x, s.y + 20], [s.x + 150, s.y + 20], [s.x + 150, t.y], [t.x - 30, t.y]], "Polyline" + source.id())
-    }
+Flowchart.prototype.reLinkAllLinks = function() {
+  var _this = this;
+  var OldLinks = LINKS;
+  LINKS = [];
+  for (var i = 0; i < OldLinks.length; i++) {
+    SVG.get(OldLinks[i].id).remove();
+    _this.link(OldLinks[i].source, OldLinks[i].target)
   };
 
+};
+
+Flowchart.prototype.getPoints = function(source, target) {
+  var _this = this;
+  var sourceNode = _this.getNode(source.id());
+  var targetNode = _this.getNode(target.id());
+  var s = this.tileBottomPin(source)
+  if (source.x() > target.x()) {
+    var t = this.tileRightPin(target)
+    if (s.x - t.x < 150) {
+      if ((sourceNode.path.slice(0, -sourceNode.path.match(/D*$/)[0].length) || sourceNode.path).substr(-1, 1) == 'R') {
+        return [[s.x, s.y - 30], [s.x, s.y + 25], [s.x + 120, s.y + 25], [s.x + 120, t.y], [t.x - 30, t.y]]
+      } else{
+        t = this.tileLeftPin(target)
+        return [[s.x, s.y - 30], [s.x, s.y + 25], [t.x - 25, s.y + 25], [t.x - 25, t.y], [t.x + 30, t.y]]
+      };
+    } else{
+      return [[s.x, s.y - 30], [s.x, s.y + 25], [t.x + 25, s.y + 25], [t.x + 25, t.y], [t.x - 30, t.y]]
+    };
+  } else{
+    var t = this.tileLeftPin(target)
+    if (t.x - s.x < 150) {
+      if ((sourceNode.path.slice(0, -sourceNode.path.match(/D*$/)[0].length) || sourceNode.path).substr(-1, 1) == 'R') {
+        t = this.tileRightPin(target);
+        return [[s.x, s.y - 30], [s.x, s.y + 25], [t.x + 25, s.y + 25], [t.x + 25, t.y], [t.x - 30, t.y]]
+      }else{
+        return [[s.x, s.y - 30], [s.x, s.y + 25], [s.x - 120, s.y + 25], [s.x - 120, t.y], [t.x + 30, t.y]]
+      }
+    } else{
+      return [[s.x, s.y - 30], [s.x, s.y + 25], [t.x - 25, s.y + 25], [t.x - 25, t.y], [t.x + 30, t.y]]
+    };
+  };
 };
 
 Flowchart.prototype.bindOnClickMessage = function() {
@@ -248,7 +300,6 @@ Flowchart.prototype.bindAddInitialDecisionScreensEvent = function () {
 Flowchart.prototype.bindAddDecisionScreensEvent = function() {
   var _this = this;
   $(document).on('click', '.addDecision', function() {
-
     var tileID = $(this).closest('.tile')[0].id.slice(0, -4)
     var tile = SVG.get(tileID);
     var node = _this.getNode(tileID),
@@ -281,8 +332,8 @@ Flowchart.prototype.bindAddDecisionScreensEvent = function() {
         topNode = _this.getNode(topTile.id());
 
     var leftTile = _this.addTile(newX1, newY12, topTile, _this.getNode(tile.id()).level + 2, newPath1, "#tile-blueprint-conclusion", null, 'yes'),
-    xShift = leftTile.x() - newX1,
-    rightTile = _this.addTile(newX2 + xShift, newY12, topTile, _this.getNode(tile.id()).level + 2, newPath2, "#tile-blueprint-conclusion", null, 'no'),
+    xShift = leftTile.x() - newX1;
+    var rightTile = _this.addTile(newX2 + xShift, newY12, topTile, _this.getNode(tile.id()).level + 2, newPath2, "#tile-blueprint-conclusion", null, 'no'),
     leftNode = _this.getNode(leftTile.id()),
     rightNode = _this.getNode(rightTile.id());
     if(node.bottomNode || node.bottomLeftNode){
@@ -320,7 +371,7 @@ Flowchart.prototype.bindDeleteScreenEvent = function() {
       var leftNode = _this.getNode(node.bottomLeftNode);
       var rightNode = _this.getNode(node.bottomRightNode);
       if (rightNode.bottomNode && leftNode.bottomNode) {
-        alert('error');
+        document.setFlash('To delete this decision point, delete all tiles under one path.' )
       } else {
         if (leftNode.bottomNode){
           var bottomNode = _this.getNode(leftNode.bottomNode);
@@ -429,7 +480,6 @@ Flowchart.prototype.addScreenEvent = function(target, tileSelector) {
   oldGroup.each(function(i, e){
     tempGroup.add(this);
   })
-
   if(node.bottomNode){
     _this.updateNode(node.bottomNode, {parentNode: null});
   }else if(node.bottomLeftNode){
@@ -592,7 +642,7 @@ Flowchart.prototype.validatePositionOf = function(tile){
   }
 }
 
-Flowchart.prototype.initAddTiles = function(id, position, level, parentNodeId, path, node_type, bottomNode, bottomLeftNode, bottomRightNode, name, page) {
+Flowchart.prototype.initAddTile = function(id, position, level, parentNodeId, path, node_type, bottomNode, bottomLeftNode, bottomRightNode, name, page) {
   var _this = this;
   var canvas = SVG.get(SVG_CANVAS_ID)
   var x = position * 150;
@@ -637,9 +687,8 @@ Flowchart.prototype.initAddTiles = function(id, position, level, parentNodeId, p
 
 Flowchart.prototype.addTile = function(x, y, parentTile, level, path, blueprintID, page, name) {
   var _this = this;
-
   var canvas = SVG.get(SVG_CANVAS_ID)
-  var position = x/150;
+  var position = _this.formatPosition(x/150);
   ID = ID + 1;
   var tile = canvas.rect(TILE_WIDTH,TILE_HEIGHT).move(x, y).style('fill', 'transparent').id('Tile' + (ID));
 
@@ -681,19 +730,20 @@ Flowchart.prototype.addTile = function(x, y, parentTile, level, path, blueprintI
 }
 
 Flowchart.prototype.resetCanvasSize = function() {
+
   var _this = this;
+  var startNodePos = this.getNode(STARTING_TILE.id()).position;
   var maxPos = _this.calculateMAxPosAndLevel()[0],
       maxLevel = _this.calculateMAxPosAndLevel()[1];
   var width = ((maxPos + 2) * 150 + TILE_WIDTH) + 'px';
   var height = (maxLevel + 2) * (TILE_HEIGHT + 50) + 'px';
   SVG.get(SVG_CANVAS_ID).width(width).height(height);
   var minPos = _this.calculateMinPos();
-  var midPos = $(window).width()/2 - TILE_WIDTH/2;
-
+  var midPos = _this.formatPosition(($(window).width()/2 - TILE_WIDTH/2)/150);
   if(minPos < 1){
     _this.moveTileWithGroup(STARTING_TILE, 1 - minPos, 0, null, null, true)
-  }else if(minPos > midPos){
-    _this.moveTileWithGroup(STARTING_TILE, midPos - minPos, 0, null, null, true)
+  }else if(startNodePos > midPos && startNodePos - midPos > 0.1){
+    _this.moveTileWithGroup(STARTING_TILE, -(Math.min.apply(this, [minPos - 1, startNodePos - midPos])), 0, null, null, true)
   }
 }
 
@@ -704,6 +754,9 @@ Flowchart.prototype.saveDbChanges = function() {
     url: location.href + '/crud_screens',
     data: {updated_nodes: _this.getUpdatedNodes(), new_nodes: _this.getNewNodes(), deleted_nodes: DELETED_NODE_IDS },
     dataType: 'json',
+    error: function(result) {
+      document.setFlash(result.responseText)
+    },
     success: function(result) {
       if (result['updated_screens']) {
         for (var i = 0; i < result['updated_screens'].length; i++) {
@@ -721,6 +774,7 @@ Flowchart.prototype.saveDbChanges = function() {
       }
     }
   });
+  _this.reLinkAllLinks();
 }
 
 Flowchart.prototype.reconnectBottomEdges = function(tile) {
@@ -892,7 +946,11 @@ Flowchart.prototype.tileBottomPin = function(tile) {
 }
 
 Flowchart.prototype.getPosition = function (tile) {
-  return tile.x()/150;
+  return parseFloat((tile.x()/150).toFixed(2));
+}
+
+Flowchart.prototype.formatPosition = function (pos) {
+  return parseFloat(pos.toFixed(2));
 }
 
 Flowchart.prototype.calculateMaxId = function() {
@@ -946,13 +1004,13 @@ Flowchart.prototype.getEdge = function(edgeID) {
 
 Flowchart.prototype.getNodeFromPosition = function(level, position, id) {
   return NODES.filter(function(node, idx){
-    return node.level == level && node.id != id && (Math.abs(node.position - position) < 2)
+    return node.level == level && node.id != id && (Math.abs(node.position - position) < 1.9)
   })[0]
 }
 
 Flowchart.prototype.updateNode = function(nodeID, props) {
   var _this = this;
-  if (_this.containsAny(Object.keys(props), ['level', 'position', 'path', 'parentNode', 'name'])){
+  if (_this.containsAny(Object.keys(props), ['level', 'position', 'path', 'parentNode', 'name', 'linkNode'])){
     props.updated = true;
   }
   NODES = NODES.map(function(node, idx){
@@ -996,5 +1054,7 @@ Flowchart.prototype.formatNodeMessage = function (node) {
 }
 
 $(function(){
-  new Flowchart();
+  var flowChart = new Flowchart();
+  flowChart.init();
+  flowChart.bindEvents();
 })
