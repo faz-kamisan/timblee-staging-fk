@@ -76,7 +76,7 @@
       <ul class='users-list'>
         <% @sitemap.business.users.first(2).each do |user|  %>
           <li>
-            <img src=<%= user.avatar.url %> />
+            <img src=<%= user.avatar_url %> />
           </li>
         <% end %>
       </ul>

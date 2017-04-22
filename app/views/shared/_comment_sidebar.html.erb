@@ -29,7 +29,7 @@
       <ul class="comment-group">
         <% @sitemap.comments.each do |comment| %>
           <li><div class='comment-block'>
-            <img class="user-comment-image" src= '<%= comment.commenter.avatar.url %>' />
+            <img class="user-comment-image" src= '<%= comment.commenter.avatar_url %>' />
             <h4>
               <%= comment.commenter == current_user ? 'You' : comment.commenter.full_name %>
             </h4>
@@ -70,7 +70,7 @@
                 <% page.comments.order(:created_at).each do |comment| %>
                   <li class="comment-<%= comment.id %>">
                     <div class='comment-block'>
-                      <img class="user-comment-image" src= '<%= comment.commenter.avatar.url %>' />
+                      <img class="user-comment-image" src= '<%= comment.commenter.avatar_url %>' />
                       <h4>
                         <%= comment.commenter == current_user ? 'You' : comment.commenter.full_name %>
                       </h4>
@@ -117,7 +117,7 @@
                 <% page.comments.order(:created_at).each do |comment| %>
                   <li class="comment-<%= comment.id %>">
                     <div class='comment-block'>
-                      <img class="user-comment-image" src= '<%= comment.commenter.avatar.url %>' />
+                      <img class="user-comment-image" src= '<%= comment.commenter.avatar_url %>' />
                       <h4>
                         <%= comment.commenter == current_user ? 'You' : comment.commenter.full_name %>
                       </h4>
@@ -160,7 +160,7 @@
                 <% page.comments.order(:created_at).each do |comment| %>
                   <li class="comment-<%= comment.id %>">
                     <div class='comment-block'>
-                      <img class="user-comment-image" src= '<%= comment.commenter.avatar.url %>' />
+                      <img class="user-comment-image" src= '<%= comment.commenter.avatar_url %>' />
                       <h4>
                         <%= comment.commenter == current_user ? 'You' : comment.commenter.full_name %>
                       </h4>
@@ -183,7 +183,7 @@
     <div class="hide blueprint-comment">
       <li>
         <div class='comment-block'>
-          <img class="user-comment-image" src= '<%= current_user.avatar.url %>' />
+          <img class="user-comment-image" src= '<%= current_user.avatar_url %>' />
           <h4>
             You
           </h4>
