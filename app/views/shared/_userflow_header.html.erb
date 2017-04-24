@@ -12,7 +12,7 @@
     </div>
   </div>
 
-  <div class="state-status text-center pull-left">
+  <div class="state-status text-center pull-left hide">
     <h5>
       <span class=<%= @sitemap.state %>>
         <%= @sitemap.state.tr('_', ' ').titleize %>
@@ -66,7 +66,8 @@
 
   <div class="pull-right users-block">
     <div class="inner-user-block">
-      <span class="icon-invite-female user-invite cursor" data-remote= true>
+      <% url = current_business.is_pro_plan? ? businesses_subscription_path : users_bulk_invitation_path %>
+      <span class="icon-invite-female user-invite cursor hide" data-url='<%= url %>'>
         <span class="path1"></span>
         <span class="path2"></span>
         <span class="path3"></span>
@@ -74,18 +75,18 @@
         <span class="path5"></span>
       </span>
       <ul class='users-list'>
-        <% @sitemap.business.users.first(2).each do |user|  %>
+        <% @sitemap.business.users.active.first(2).each do |user|  %>
           <li>
             <img src=<%= user.avatar_url %> />
           </li>
         <% end %>
       </ul>
-      <% if(@sitemap.business.users.count > 3) %>
+      <% if(@sitemap.business.users.active.count > 3) %>
         <a class='other-users cursor'>
-          + <%=  @sitemap.business.users.count - 2  %> others
+          + <%=  @sitemap.business.users.active.count - 2  %> others
         </a>
       <% end %>
-      <% if(@sitemap.business.users.count == 3) %>
+      <% if(@sitemap.business.users.active.count == 3) %>
         <a class='other-users'>
           + 1 other
         </a>
@@ -93,7 +94,7 @@
     </div>
   </div>
 
-  <div class="pull-right share-sitemap-btn-div">
+  <div class="pull-right share-sitemap-btn-div hide">
     <div class="share-sitemap-btn-div">
       <a href="javascript:void(0)"  class="btn btn-share action sitemap-share-modal-link" data-url=<%= @sitemap.public_share_url %> data-name=<%= @sitemap.name %> data-id=<%= @sitemap.id %> data-level-one-pages=<%= @sitemap.max_level_one_page_count %> data-shared-users=<%= @sitemap.sitemap_shared_users.pluck(:user_email).presence %>>
        <span class="share-icon"></span> Share
