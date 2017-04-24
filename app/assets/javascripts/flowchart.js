@@ -178,7 +178,7 @@ Flowchart.prototype.getPoints = function(source, target) {
   var s = this.tileBottomPin(source)
   if (source.x() > target.x()) {
     var t = this.tileRightPin(target)
-    if (s.x - t.x < 150) {
+    if (s.x - t.x < 300) {
       if ((sourceNode.path.slice(0, -sourceNode.path.match(/D*$/)[0].length) || sourceNode.path).substr(-1, 1) == 'R') {
         return [[s.x, s.y - 30], [s.x, s.y + 25], [s.x + 120, s.y + 25], [s.x + 120, t.y], [t.x - 30, t.y]]
       } else{
@@ -190,7 +190,7 @@ Flowchart.prototype.getPoints = function(source, target) {
     };
   } else{
     var t = this.tileLeftPin(target)
-    if (t.x - s.x < 150) {
+    if (t.x - s.x < 300) {
       if ((sourceNode.path.slice(0, -sourceNode.path.match(/D*$/)[0].length) || sourceNode.path).substr(-1, 1) == 'R') {
         t = this.tileRightPin(target);
         return [[s.x, s.y - 30], [s.x, s.y + 25], [t.x + 25, s.y + 25], [t.x + 25, t.y], [t.x - 30, t.y]]
@@ -643,7 +643,7 @@ Flowchart.prototype.initAddTile = function(id, position, level, parentNodeId, pa
   var _this = this;
   var canvas = SVG.get(SVG_CANVAS_ID)
   var x = position * 150;
-  var y = level * 175
+  var y = level * 135
   var blueprintID = "#tile-blueprint-" + node_type
   var tile = canvas.rect(TILE_WIDTH,TILE_HEIGHT).move(x, y).style('fill', 'transparent').id(id);
 
