@@ -15,7 +15,6 @@ var Flowchart = function () {
 
 Flowchart.prototype.init = function() {
   var _this = this;
-
   var svg = SVG('flow-chart');
   SVG_CANVAS_ID = svg.id();
   var screeenData = $('#nodes').data('screens') || [];
@@ -41,7 +40,6 @@ Flowchart.prototype.init = function() {
   svg.group().attr({ id: "tempGroup" });
   if (STARTING_TILE) {
     _this.resetCanvasSize();
-    _this.saveDbChanges();
     ID = _this.calculateMaxId();
   }else{
     $('.default-screen-hover-options').removeClass('hide');
@@ -138,6 +136,7 @@ Flowchart.prototype.bindAddLinkTo = function() {
     LinkTileToId = node.id;
     $('body').removeClass('link-stage-2');
     _this.link(LinkingTileId, LinkTileToId)
+    _this.saveDbChanges();
   })
 }
 
@@ -153,7 +152,6 @@ Flowchart.prototype.link = function(node1_id, node2_id) {
     points = _this.getPoints(source, target)
     var edge = _this.buildConnector(points, "Polyline" + source.id())
     _this.updateNode(source.id(), {linkEdge: edge.id(), linkNode: target.id()})
-    _this.saveDbChanges();
 
     LINKS.push({
       id: edge.id(),
@@ -171,7 +169,6 @@ Flowchart.prototype.reLinkAllLinks = function() {
     SVG.get(OldLinks[i].id).remove();
     _this.link(OldLinks[i].source, OldLinks[i].target)
   };
-
 };
 
 Flowchart.prototype.getPoints = function(source, target) {
@@ -332,7 +329,7 @@ Flowchart.prototype.bindAddDecisionScreensEvent = function() {
         topNode = _this.getNode(topTile.id());
 
     var leftTile = _this.addTile(newX1, newY12, topTile, _this.getNode(tile.id()).level + 2, newPath1, "#tile-blueprint-conclusion", null, 'yes'),
-    xShift = leftTile.x() - newX1;
+        xShift = leftTile.x() - newX1;
     var rightTile = _this.addTile(newX2 + xShift, newY12, topTile, _this.getNode(tile.id()).level + 2, newPath2, "#tile-blueprint-conclusion", null, 'no'),
     leftNode = _this.getNode(leftTile.id()),
     rightNode = _this.getNode(rightTile.id());
@@ -353,7 +350,7 @@ Flowchart.prototype.bindAddDecisionScreensEvent = function() {
     tempGroup.each(function(i, e){
       newGroup.add(this);
     })
-    _this.moveGroup(leftTile, (xShift - 1), 2, 'DL', 'add', false, leftNode.path);
+    _this.moveGroup(leftTile, (xShift/150 - 1), 2, 'DL', 'add', false, leftNode.path);
 
     _this.resetCanvasSize();
     _this.saveDbChanges();
