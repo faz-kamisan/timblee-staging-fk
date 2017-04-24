@@ -643,7 +643,7 @@ Flowchart.prototype.initAddTile = function(id, position, level, parentNodeId, pa
   var _this = this;
   var canvas = SVG.get(SVG_CANVAS_ID)
   var x = position * 150;
-  var y = level * 135
+  var y = level * 175
   var blueprintID = "#tile-blueprint-" + node_type
   var tile = canvas.rect(TILE_WIDTH,TILE_HEIGHT).move(x, y).style('fill', 'transparent').id(id);
 

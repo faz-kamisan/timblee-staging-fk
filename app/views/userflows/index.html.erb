@@ -16,6 +16,10 @@
     <%= javascript_include_tag 'flowchart', 'flowchart_extended' %>
     <div id="nodes" class="hide" data-screens= '<%= @screens%>'></div>
 
+    <div class="link-on-message">
+      Choose a screen, decision point or action to link the tiles.
+    </div>
+
     <div class="default-screen-hover-options basic hide">
       <div class="clearfix">
         <div class="option option-1 initialScreenDropdown"> <!-- addInitialScreen -->
@@ -109,6 +113,7 @@
               </li>
             </ul>
           </div>
+          <span class="link-to-this">Link to this</span>
         </div>
         <div class="screen-hover-options">
           <div class="option option-1 selectScreen">
@@ -210,6 +215,7 @@
               </li>
             </ul>
           </div>
+          <span class="link-to-this">Link to this</span>
         </div>
 
         <div class="screen-hover-options">
@@ -311,8 +317,10 @@
             Decision
           </div>
         </div>
+        <span class="link-to-this">Link to this</span>
       </div>
     </div>
+
     <div id="tile-blueprint-conclusion" class="linking-tile tile top-level">
       <div class="screen-tile-rounded-container">
         <div class="screen-tile-container-rounded decisionLeftRight">
@@ -367,6 +375,7 @@
               </form>
             </div>
           </div>
+          <span class="link-to-this">Link to this</span>
         </div>
       </div>
     </div>
