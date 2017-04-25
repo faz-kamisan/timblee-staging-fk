@@ -381,7 +381,8 @@
         </div>
       </div>
     </div>
-    <ul class="section-list clearfix left-bar-contracted">
+
+    <ul class="section-list clearfix flow-section">
       <% @sitemap.userflows.each do |userflow| %>
         <li class="sitemap-section-tab <%= @userflow == userflow ? 'active' : '' %>" style="width: <%= 94.0 / @sitemap.userflows.count %>%;">
           <span>
@@ -400,7 +401,7 @@
         </li>
 
       <%end%>
-      <li class="sitemap-section-tab" style="width: 4%;">
+      <li class="sitemap-section-tab new-userflow-btn">
         <%= link_to "+", sitemap_userflows_path(@sitemap), method: :post %>
       </li>
     </ul>
