@@ -371,6 +371,12 @@ Flowchart.prototype.bindDeleteScreenEvent = function() {
     var tile = SVG.get(tileID);
     var node = _this.getNode(tileID);
     var bottomNode = null;
+    connectedLinks = _this.getLinksByTarget(node.id);
+    for (var i = 0; i < connectedLinks.length; i++) {
+      _this.removeLink(connectedLinks[i].id);
+      _this.updateNode(connectedLinks[i].source, {linkNode: null, linkEdge: null})
+      SVG.get(connectedLinks[i].id).remove();
+    };
     if(node.parentNode && tile.classes().includes('decisionTile')){
       var leftNode = _this.getNode(node.bottomLeftNode);
       var rightNode = _this.getNode(node.bottomRightNode);
@@ -988,10 +994,22 @@ Flowchart.prototype.removeNode = function(nodeID) {
   })
 }
 
+Flowchart.prototype.removeLink = function(linkID) {
+  LINKS = LINKS.filter(function(link, idx){
+    return link.id != linkID
+  })
+}
+
 Flowchart.prototype.getLink = function(linkID) {
   return LINKS.filter(function(link, idx){
     return link.id == linkID
   })[0]
+}
+
+Flowchart.prototype.getLinksByTarget = function(targetNodeId) {
+  return LINKS.filter(function(link, idx){
+    return link.target == targetNodeId
+  })
 }
 
 Flowchart.prototype.getNode = function(nodeID) {
