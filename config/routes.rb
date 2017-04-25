@@ -41,6 +41,9 @@ Rails.application.routes.draw do
       collection do
         post 'crud_screens'
       end
+      member do
+        post 'crud_screens'
+      end
     end
     member do
       post :generate_pdf

@@ -4,7 +4,7 @@ h1 { text-align: center; margin: 0 0 20px 0; padding: 20px; border-bottom: solid
 .pl-100 { padding-left: 100px; }
 
 /* Flow Chart Section */
-#flow-chart { padding: 10px;}
+#flow-chart { padding: 10px; margin-top: 50px;}
 #tile-blueprint-action, #tile-blueprint-decision, #tile-blueprint-conclusion, #tile-blueprint-page { display: none; }
 #tile-container{ position: relative; }
 .screen-tile-container, .screen-tile-rounded-container { position: relative; width: 182px; height: 85px; display: inline-block; vertical-align: top; }

@@ -1,9 +1,13 @@
 class UserflowsController < ApplicationController
-  before_action :load_userflow, only: [:crud_screens, :index]
+  before_action :load_userflow, only: [:crud_screens, :index, :show]
+  before_action :load_screens, only: [:show, :index]
   around_action :wrap_in_transaction, only: :crud_screens
 
   def index
-    @screens = @userflow.screens.order(:level, :position).includes(page: :page_type).to_json(include: [:page, :page_type])
+  end
+
+  def show
+    render :index
   end
 
   def crud_screens
@@ -22,6 +26,10 @@ class UserflowsController < ApplicationController
       elsif @sitemap
         @userflow = @sitemap.userflows.order(:id).first.presence || @sitemap.userflows.create
       end
+    end
+
+    def load_screens
+      @screens = @userflow.screens.order(:level, :position).includes(page: :page_type).to_json(include: [:page, :page_type])
     end
 
     def create_screens(nodes)

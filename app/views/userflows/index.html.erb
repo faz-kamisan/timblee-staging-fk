@@ -379,7 +379,19 @@
         </div>
       </div>
     </div>
+    <ul class="section-list clearfix left-bar-contracted">
+      <% @sitemap.userflows.each do |userflow| %>
+        <li class="sitemap-section-tab <%= @userflow == userflow ? 'active' : '' %>" style="width: <%= 94.0 / @sitemap.userflows.count %>%;">
+          <span>
+            <span class="remove-section">×</span>
+            <span class="edit-section"></span>
+          </span>
+          <span class="truncate"><%= userflow.name%></span>
+        </li>
 
+      <%end%>
+      <li class="sitemap-section-tab" style="width: 4%;"><a class="" href="#">+</a></li>
+    </ul>
     <section id="flow-chart">
       <div id="tile-container">
       </div>

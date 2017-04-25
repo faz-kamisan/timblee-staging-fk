@@ -1,225 +1,227 @@
-<div class='sitemap-right-sidebar'>
-  <div class='sitemap-comment-tabs comment-header'>
-    <ul class="comment-list clearfix">
-      <% ['active', 'resolved', 'archived'].each do |comment_tab| %>
-        <li class='comment-tab animated-tab state-<%= comment_tab %> <%= (comment_tab == 'active' ? 'active' : '') %>' ><%= comment_tab %></li>
+<% unless @sitemap.trial? %>
+  <div class='sitemap-right-sidebar'>
+    <div class='sitemap-comment-tabs comment-header'>
+      <ul class="comment-list clearfix">
+        <% ['active', 'resolved', 'archived'].each do |comment_tab| %>
+          <li class='comment-tab animated-tab state-<%= comment_tab %> <%= (comment_tab == 'active' ? 'active' : '') %>' ><%= comment_tab %></li>
 
-      <% end %>
-      <li class="animated-bar-react"></li>
-    </ul>
-  </div>
-  <div class="comment-inner-body">
-    <p class="comment-text state-active">
-        Anyone who has the share link can see active comments. Only <%= @sitemap.business.name %> team members can see resolved and deleted comments.
-    </p>
-
-    <p class="comment-text hide state-resolved">
-        Resolved conversations are only visible to logged in <%= @sitemap.business.name %> team members.
-    </p>
-
-    <p class="comment-text hide state-archived">
-        If a page with comments is deleted, the conversation is moved here. This is to ensure there is a record of all conversations. Archived conversations are only visible to logged in <%= @sitemap.business.name %> team members.
-
-    </p>
-    <div class='general-comments' >
-
-      <h2 class="comment-type-heading">
-        General comments
-      </h2>
-      <ul class="comment-group">
-        <% @sitemap.comments.each do |comment| %>
-          <li><div class='comment-block'>
-            <img class="user-comment-image" src= '<%= comment.commenter.avatar_url %>' />
-            <h4>
-              <%= comment.commenter == current_user ? 'You' : comment.commenter.full_name %>
-            </h4>
-            <h6>
-              <%= comment.created_at_decorated %>
-            </h6>
-            <p class="comment-message">
-              <%= comment.message.html_safe %>
-            </p>
-          </div></li>
         <% end %>
+        <li class="animated-bar-react"></li>
       </ul>
-      <div class="comment-holder">
-        <textarea class="emoji-decorated comment-editor comment-input__input comment-textarea" data-emojiable="true" data-emoji-input="unicode" data-commentable-type="Sitemap" data-commentable-id="<%= @sitemap.id %>"></textarea>
-        <div class="add-remove-comment">
-          <span class='cursor add add-general-comment'>Add my comment </span>
-          <span class="or">or</span>
-          <span class='cursor cancel clear-textarea'> cancel</span>
+    </div>
+    <div class="comment-inner-body">
+      <p class="comment-text state-active">
+          Anyone who has the share link can see active comments. Only <%= @sitemap.business.name %> team members can see resolved and deleted comments.
+      </p>
+
+      <p class="comment-text hide state-resolved">
+          Resolved conversations are only visible to logged in <%= @sitemap.business.name %> team members.
+      </p>
+
+      <p class="comment-text hide state-archived">
+          If a page with comments is deleted, the conversation is moved here. This is to ensure there is a record of all conversations. Archived conversations are only visible to logged in <%= @sitemap.business.name %> team members.
+
+      </p>
+      <div class='general-comments' >
+
+        <h2 class="comment-type-heading">
+          General comments
+        </h2>
+        <ul class="comment-group">
+          <% @sitemap.comments.each do |comment| %>
+            <li><div class='comment-block'>
+              <img class="user-comment-image" src= '<%= comment.commenter.avatar_url %>' />
+              <h4>
+                <%= comment.commenter == current_user ? 'You' : comment.commenter.full_name %>
+              </h4>
+              <h6>
+                <%= comment.created_at_decorated %>
+              </h6>
+              <p class="comment-message">
+                <%= comment.message.html_safe %>
+              </p>
+            </div></li>
+          <% end %>
+        </ul>
+        <div class="comment-holder">
+          <textarea class="emoji-decorated comment-editor comment-input__input comment-textarea" data-emojiable="true" data-emoji-input="unicode" data-commentable-type="Sitemap" data-commentable-id="<%= @sitemap.id %>"></textarea>
+          <div class="add-remove-comment">
+            <span class='cursor add add-general-comment'>Add my comment </span>
+            <span class="or">or</span>
+            <span class='cursor cancel clear-textarea'> cancel</span>
+          </div>
         </div>
-      </div>
-      <ul class="active-pages-list">
-        <% Page.where(id: @sitemap.page_comments.map(&:commentable_id).uniq).order(:uid).where(state: [:active, :orphan]).each do |page|  %>
-          <li class="comments-page-list-<%= page.id%>">
-            <div class="comments-page-<%= page.id%>">
-              <div class="page-comment-details">
-                <span class="page-id">ID: <%= page.uid %></span>
-                <div class="clearfix">
-                  <span class="page-name truncate pull-left"><%= page.name %></span>
-                  <div class=<%= (page.state != 'archived') ? '': ' hide'%>>
-                    <label class="pull-right resolve-unresolve-pages" htmlFor="mark-resolve" data-page-id="<%= page.id %>">
-                      <span> Mark as resolved</span>
-                      <input type="checkbox" id="mark-resolve">
-                    </label>
+        <ul class="active-pages-list">
+          <% Page.where(id: @sitemap.page_comments.map(&:commentable_id).uniq).order(:uid).where(state: [:active, :orphan]).each do |page|  %>
+            <li class="comments-page-list-<%= page.id%>">
+              <div class="comments-page-<%= page.id%>">
+                <div class="page-comment-details">
+                  <span class="page-id">ID: <%= page.uid %></span>
+                  <div class="clearfix">
+                    <span class="page-name truncate pull-left"><%= page.name %></span>
+                    <div class=<%= (page.state != 'archived') ? '': ' hide'%>>
+                      <label class="pull-right resolve-unresolve-pages" htmlFor="mark-resolve" data-page-id="<%= page.id %>">
+                        <span> Mark as resolved</span>
+                        <input type="checkbox" id="mark-resolve">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <ul class="comment-group">
+                  <% page.comments.order(:created_at).each do |comment| %>
+                    <li class="comment-<%= comment.id %>">
+                      <div class='comment-block'>
+                        <img class="user-comment-image" src= '<%= comment.commenter.avatar_url %>' />
+                        <h4>
+                          <%= comment.commenter == current_user ? 'You' : comment.commenter.full_name %>
+                        </h4>
+                        <h6>
+                          <%= comment.created_at_decorated %>
+                        </h6>
+                        <p class="comment-message">
+                          <%= comment.message.html_safe %>
+                        </p>
+                      </div>
+                    </li>
+                  <% end %>
+                </ul>
+                <div class="comment-holder">
+                  <textarea class="emoji-decorated comment-editor comment-input__input comment-textarea" data-emojiable="true" data-emoji-input="unicode" data-commentable-type="Page" data-commentable-id="<%= page.id %>"></textarea>
+                  <div class="add-remove-comment">
+                    <span class='cursor add add-page-comment'>Add my comment </span>
+                    <span class="or">or</span>
+                    <span class='cursor cancel clear-textarea'> cancel</span>
                   </div>
                 </div>
               </div>
-              <ul class="comment-group">
-                <% page.comments.order(:created_at).each do |comment| %>
-                  <li class="comment-<%= comment.id %>">
-                    <div class='comment-block'>
-                      <img class="user-comment-image" src= '<%= comment.commenter.avatar_url %>' />
-                      <h4>
-                        <%= comment.commenter == current_user ? 'You' : comment.commenter.full_name %>
-                      </h4>
-                      <h6>
-                        <%= comment.created_at_decorated %>
-                      </h6>
-                      <p class="comment-message">
-                        <%= comment.message.html_safe %>
-                      </p>
-                    </div>
-                  </li>
-                <% end %>
-              </ul>
-              <div class="comment-holder">
-                <textarea class="emoji-decorated comment-editor comment-input__input comment-textarea" data-emojiable="true" data-emoji-input="unicode" data-commentable-type="Page" data-commentable-id="<%= page.id %>"></textarea>
-                <div class="add-remove-comment">
-                  <span class='cursor add add-page-comment'>Add my comment </span>
-                  <span class="or">or</span>
-                  <span class='cursor cancel clear-textarea'> cancel</span>
-                </div>
-              </div>
-            </div>
-          </li>
+            </li>
 
-        <% end %>
-      </ul>
-    </div>
-    <div class="resolved-comments hide">
-      <ul class="resolved-list">
-        <% Page.where(id: @sitemap.page_comments.map(&:commentable_id).uniq).order(:uid).where(state: :resolved).each do |page|  %>
-          <li class="comments-page-list-<%= page.id%>">
-            <div class="comments-page-<%= page.id%>">
-              <div class="page-comment-details">
-                <span class="page-id">ID: <%= page.uid %></span>
-                <div class="clearfix">
-                  <span class="page-name truncate pull-left"><%= page.name %></span>
-                  <label class="pull-right resolve-unresolve-pages" htmlFor="mark-unresolve" data-page-id="<%= page.id %>">
-                    <span>Unresolve</span>
-                    <input type="checkbox" id="mark-unresolve" checked="checked">
-                  </label>
+          <% end %>
+        </ul>
+      </div>
+      <div class="resolved-comments hide">
+        <ul class="resolved-list">
+          <% Page.where(id: @sitemap.page_comments.map(&:commentable_id).uniq).order(:uid).where(state: :resolved).each do |page|  %>
+            <li class="comments-page-list-<%= page.id%>">
+              <div class="comments-page-<%= page.id%>">
+                <div class="page-comment-details">
+                  <span class="page-id">ID: <%= page.uid %></span>
+                  <div class="clearfix">
+                    <span class="page-name truncate pull-left"><%= page.name %></span>
+                    <label class="pull-right resolve-unresolve-pages" htmlFor="mark-unresolve" data-page-id="<%= page.id %>">
+                      <span>Unresolve</span>
+                      <input type="checkbox" id="mark-unresolve" checked="checked">
+                    </label>
+                  </div>
+                </div>
+                <ul class="comment-group">
+                  <% page.comments.order(:created_at).each do |comment| %>
+                    <li class="comment-<%= comment.id %>">
+                      <div class='comment-block'>
+                        <img class="user-comment-image" src= '<%= comment.commenter.avatar_url %>' />
+                        <h4>
+                          <%= comment.commenter == current_user ? 'You' : comment.commenter.full_name %>
+                        </h4>
+                        <h6>
+                          <%= comment.created_at_decorated %>
+                        </h6>
+                        <p class="comment-message">
+                          <%= comment.message.html_safe %>
+                        </p>
+                      </div>
+                    </li>
+                  <% end %>
+                </ul>
+                <div class="comment-holder hide">
+                  <textarea class="emoji-decorated comment-editor comment-input__input comment-textarea" data-emojiable="true" data-emoji-input="unicode" data-commentable-type="Page" data-commentable-id="<%= page.id %>"></textarea>
+                  <div class="add-remove-comment">
+                    <span class='cursor add add-page-comment'>Add my comment </span>
+                    <span class="or">or</span>
+                    <span class='cursor cancel clear-textarea'> cancel</span>
+                  </div>
                 </div>
               </div>
-              <ul class="comment-group">
-                <% page.comments.order(:created_at).each do |comment| %>
-                  <li class="comment-<%= comment.id %>">
-                    <div class='comment-block'>
-                      <img class="user-comment-image" src= '<%= comment.commenter.avatar_url %>' />
-                      <h4>
-                        <%= comment.commenter == current_user ? 'You' : comment.commenter.full_name %>
-                      </h4>
-                      <h6>
-                        <%= comment.created_at_decorated %>
-                      </h6>
-                      <p class="comment-message">
-                        <%= comment.message.html_safe %>
-                      </p>
-                    </div>
-                  </li>
-                <% end %>
-              </ul>
-              <div class="comment-holder hide">
-                <textarea class="emoji-decorated comment-editor comment-input__input comment-textarea" data-emojiable="true" data-emoji-input="unicode" data-commentable-type="Page" data-commentable-id="<%= page.id %>"></textarea>
-                <div class="add-remove-comment">
-                  <span class='cursor add add-page-comment'>Add my comment </span>
-                  <span class="or">or</span>
-                  <span class='cursor cancel clear-textarea'> cancel</span>
-                </div>
-              </div>
-            </div>
-          </li>
+            </li>
 
-        <% end %>
-      </ul>
-    </div>
-    <div class="archived-comments hide">
-      <ul>
-        <% Page.where(id: @sitemap.page_comments.map(&:commentable_id).uniq).order(:uid).where(state: :archived).each do |page|  %>
-          <li>
-            <div class="comments-page-<%= page.id%>">
-              <div class="page-comment-details">
-                <span class="page-id">ID: <%= page.uid %></span>
-                <div class="clearfix">
-                  <span class="page-name truncate pull-left"><%= page.name %></span>
+          <% end %>
+        </ul>
+      </div>
+      <div class="archived-comments hide">
+        <ul>
+          <% Page.where(id: @sitemap.page_comments.map(&:commentable_id).uniq).order(:uid).where(state: :archived).each do |page|  %>
+            <li>
+              <div class="comments-page-<%= page.id%>">
+                <div class="page-comment-details">
+                  <span class="page-id">ID: <%= page.uid %></span>
+                  <div class="clearfix">
+                    <span class="page-name truncate pull-left"><%= page.name %></span>
+                  </div>
                 </div>
+                <ul class="comment-group">
+                  <% page.comments.order(:created_at).each do |comment| %>
+                    <li class="comment-<%= comment.id %>">
+                      <div class='comment-block'>
+                        <img class="user-comment-image" src= '<%= comment.commenter.avatar_url %>' />
+                        <h4>
+                          <%= comment.commenter == current_user ? 'You' : comment.commenter.full_name %>
+                        </h4>
+                        <h6>
+                          <%= comment.created_at_decorated %>
+                        </h6>
+                        <p class="comment-message">
+                          <%= comment.message.html_safe %>
+                        </p>
+                      </div>
+                    </li>
+                  <% end %>
+                </ul>
               </div>
-              <ul class="comment-group">
-                <% page.comments.order(:created_at).each do |comment| %>
-                  <li class="comment-<%= comment.id %>">
-                    <div class='comment-block'>
-                      <img class="user-comment-image" src= '<%= comment.commenter.avatar_url %>' />
-                      <h4>
-                        <%= comment.commenter == current_user ? 'You' : comment.commenter.full_name %>
-                      </h4>
-                      <h6>
-                        <%= comment.created_at_decorated %>
-                      </h6>
-                      <p class="comment-message">
-                        <%= comment.message.html_safe %>
-                      </p>
-                    </div>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
-          </li>
+            </li>
 
-        <% end %>
-      </ul>
-    </div>
-    <div class="hide blueprint-comment">
-      <li>
-        <div class='comment-block'>
-          <img class="user-comment-image" src= '<%= current_user.avatar_url %>' />
-          <h4>
-            You
-          </h4>
-          <h6>
-            Just now
-          </h6>
-          <p class="comment-message">
-          </p>
-        </div>
-      </li>
-    </div>
-    <div class="hide blueprint-page-comments">
-      <div class="comments-">
-        <div class='page-comments'>
-          <div class="page-comment-details">
-            <span class="page-id"></span>
-            <div class="clearfix">
-              <span class="page-name truncate pull-left"></span>
-              <label class="pull-right resolve-unresolve-pages" htmlFor="mark-resolve" data-page-id="">
-                <span> Mark as resolved</span>
-                <input type="checkbox" id="mark-resolve" />
-              </label>
-            </div>
+          <% end %>
+        </ul>
+      </div>
+      <div class="hide blueprint-comment">
+        <li>
+          <div class='comment-block'>
+            <img class="user-comment-image" src= '<%= current_user.avatar_url %>' />
+            <h4>
+              You
+            </h4>
+            <h6>
+              Just now
+            </h6>
+            <p class="comment-message">
+            </p>
           </div>
-          <ul class="comment-group">
-          </ul>
-          <div class="comment-holder">
-            <textarea ref='newComment' id="temp" class="emoji-decorated comment-editor comment-textarea comment-input__input" data-emojiable="true" data-emoji-input="unicode" data-commentable-type="Page" data-commentable-id="" ></textarea>
-            <div class="add-remove-comment">
-              <span class='cursor add add-page-comment'>Add my comment </span>
-              <span class="or">or</span>
-              <span class='cursor cancel clear-textarea'> cancel</span>
+        </li>
+      </div>
+      <div class="hide blueprint-page-comments">
+        <div class="comments-">
+          <div class='page-comments'>
+            <div class="page-comment-details">
+              <span class="page-id"></span>
+              <div class="clearfix">
+                <span class="page-name truncate pull-left"></span>
+                <label class="pull-right resolve-unresolve-pages" htmlFor="mark-resolve" data-page-id="">
+                  <span> Mark as resolved</span>
+                  <input type="checkbox" id="mark-resolve" />
+                </label>
+              </div>
+            </div>
+            <ul class="comment-group">
+            </ul>
+            <div class="comment-holder">
+              <textarea ref='newComment' id="temp" class="emoji-decorated comment-editor comment-textarea comment-input__input" data-emojiable="true" data-emoji-input="unicode" data-commentable-type="Page" data-commentable-id="" ></textarea>
+              <div class="add-remove-comment">
+                <span class='cursor add add-page-comment'>Add my comment </span>
+                <span class="or">or</span>
+                <span class='cursor cancel clear-textarea'> cancel</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>
