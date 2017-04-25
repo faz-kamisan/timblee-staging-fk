@@ -152,19 +152,18 @@ Flowchart.prototype.link = function(node1_id, node2_id) {
     points = _this.getPoints(source, target)
     var edge = _this.buildConnector(points, "Polyline" + source.id())
     var sourceNode = _this.getNode(node1_id);
-    if (sourceNode.linkNode) {
-    _this.updateLink(sourceNode.linkEdge, {id: edge.id(), target: target.id()})
-    SVG.get(sourceNode.linkEdge) && SVG.get(sourceNode.linkEdge).remove();
-    _this.updateNode(source.id(), {linkEdge: edge.id(), linkNode: target.id()})
+    if (sourceNode.linkEdge && SVG.get(sourceNode.linkEdge)) {
+      _this.updateLink(sourceNode.linkEdge, {id: edge.id(), target: target.id()})
+      SVG.get(sourceNode.linkEdge).remove();
+      _this.updateNode(source.id(), {linkEdge: edge.id(), linkNode: target.id()})
 
     } else{
-    _this.updateNode(source.id(), {linkEdge: edge.id(), linkNode: target.id()})
-
-    LINKS.push({
-      id: edge.id(),
-      source: source.id(),
-      target: target.id()
-    })
+      _this.updateNode(source.id(), {linkEdge: edge.id(), linkNode: target.id()})
+      LINKS.push({
+        id: edge.id(),
+        source: source.id(),
+        target: target.id()
+      })
     };
   };
 };
