@@ -17,24 +17,24 @@ en:
         success: ''
         failure: Couldn't create guest
     sitemaps:
-      not_found: Can't find sitemap
+      not_found: Can't find project
       create:
         success: ''
-        failure: Couldn't create sitemap
+        failure: Couldn't create project
       update:
         success: Sitemap updated successfully
-        failure: Couldn't update sitemap
+        failure: Couldn't update project
         folder : "%{sitemap_name} successfully moved to %{folder_name} folder"
       destroy:
         success: Sitemap deleted permanently :(
-        failure: Couldn't delete sitemap
+        failure: Couldn't delete project
       rename:
         success: Sitemap renamed successfully
-        failure: Whoops! Looks like you have another sitemap with the same name so we couldn't rename the sitemap. Try another name.
+        failure: Whoops! Looks like you have another project with the same name so we couldn't rename the project. Try another name.
         blank:   Sitename can't be blank
       duplicate:
         success: Duplicate Sitemap created successfully
-        failure: Couldn't duplicate sitemap
+        failure: Couldn't duplicate project
       generate_pdf:
         failure: Something went wrong.
       generate_png:
@@ -56,16 +56,16 @@ en:
         success: Comment destroyed successfully
         failure: Couldn't delete comment
     pages:
-      not_found: Can't find page
+      not_found: Can't find screen
       create:
         success: Page created successfully
-        failure: Couldn't create page
+        failure: Couldn't create screen
       update:
         success: Page updated successfully
-        failure: Couldn't update page
+        failure: Couldn't update screen
       destroy:
         success: Page destroyed successfully
-        failure: Couldn't delete page
+        failure: Couldn't delete screen
     sections:
       not_found: Can't find section
       create:

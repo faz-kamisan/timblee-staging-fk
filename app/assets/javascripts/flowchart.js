@@ -118,7 +118,7 @@ Flowchart.prototype.bindAddLink = function() {
     var tileID = $(this).closest('.tile')[0].id.slice(0, -4);
     var tile = SVG.get(tileID);
     var node = _this.getNode(tileID);
-    if (!(node.bottomLeftNode || node.bottomNode || node.linkNode)) {
+    if (!(node.bottomLeftNode || node.bottomNode)) {
       LinkingTileId = node.id;
       $('body').addClass('link-stage-2');
     }else{
@@ -151,6 +151,13 @@ Flowchart.prototype.link = function(node1_id, node2_id) {
     }
     points = _this.getPoints(source, target)
     var edge = _this.buildConnector(points, "Polyline" + source.id())
+    var sourceNode = _this.getNode(node1_id);
+    if (sourceNode.linkNode) {
+    _this.updateLink(sourceNode.linkEdge, {id: edge.id(), target: target.id()})
+    SVG.get(sourceNode.linkEdge) && SVG.get(sourceNode.linkEdge).remove();
+    _this.updateNode(source.id(), {linkEdge: edge.id(), linkNode: target.id()})
+
+    } else{
     _this.updateNode(source.id(), {linkEdge: edge.id(), linkNode: target.id()})
 
     LINKS.push({
@@ -158,6 +165,7 @@ Flowchart.prototype.link = function(node1_id, node2_id) {
       source: source.id(),
       target: target.id()
     })
+    };
   };
 };
 
@@ -178,7 +186,7 @@ Flowchart.prototype.getPoints = function(source, target) {
   var s = this.tileBottomPin(source)
   if (source.x() > target.x()) {
     var t = this.tileRightPin(target)
-    if (s.x - t.x < 300) {
+    if (s.x - t.x < 200) {
       if ((sourceNode.path.slice(0, -sourceNode.path.match(/D*$/)[0].length) || sourceNode.path).substr(-1, 1) == 'R') {
         return [[s.x, s.y - 30], [s.x, s.y + 25], [s.x + 120, s.y + 25], [s.x + 120, t.y], [t.x - 30, t.y]]
       } else{
@@ -190,7 +198,7 @@ Flowchart.prototype.getPoints = function(source, target) {
     };
   } else{
     var t = this.tileLeftPin(target)
-    if (t.x - s.x < 300) {
+    if (t.x - s.x < 200) {
       if ((sourceNode.path.slice(0, -sourceNode.path.match(/D*$/)[0].length) || sourceNode.path).substr(-1, 1) == 'R') {
         t = this.tileRightPin(target);
         return [[s.x, s.y - 30], [s.x, s.y + 25], [t.x + 25, s.y + 25], [t.x + 25, t.y], [t.x - 30, t.y]]
@@ -981,6 +989,12 @@ Flowchart.prototype.removeNode = function(nodeID) {
   })
 }
 
+Flowchart.prototype.getLink = function(linkID) {
+  return LINKS.filter(function(link, idx){
+    return link.id == linkID
+  })[0]
+}
+
 Flowchart.prototype.getNode = function(nodeID) {
   return NODES.filter(function(node, idx){
     return node.id == nodeID
@@ -1015,6 +1029,17 @@ Flowchart.prototype.updateNode = function(nodeID, props) {
       return Object.assign(node, props)
     } else {
       return node
+    }
+  })
+}
+
+Flowchart.prototype.updateLink = function(linkID, props) {
+  var _this = this;
+  LINKS = LINKS.map(function(link, idx){
+    if (link.id == linkID) {
+      return Object.assign(link, props)
+    } else {
+      return link
     }
   })
 }

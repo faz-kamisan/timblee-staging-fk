@@ -1,6 +1,6 @@
 class UserflowsController < ApplicationController
-  before_action :load_sitemap, only: [:crud_screens, :index, :show, :create]
-  before_action :load_userflow, only: [:crud_screens, :index, :show]
+  before_action :load_sitemap, only: [:crud_screens, :index, :show, :create, :destroy]
+  before_action :load_userflow, only: [:crud_screens, :index, :show, :destroy]
   before_action :load_screens, only: [:show, :index]
   around_action :wrap_in_transaction, only: :crud_screens
 
@@ -15,6 +15,15 @@ class UserflowsController < ApplicationController
     @userflow = @sitemap.userflows.build
     if @userflow.save
       redirect_to sitemap_userflow_path(@sitemap, @userflow)
+    else
+      flash[:error] = 'Some Error Occured.'
+      redirect_to home_dashboard_path
+    end
+  end
+
+  def destroy
+    if @userflow.destroy
+      redirect_to sitemap_userflows_path
     else
       flash[:error] = 'Some Error Occured.'
       redirect_to home_dashboard_path

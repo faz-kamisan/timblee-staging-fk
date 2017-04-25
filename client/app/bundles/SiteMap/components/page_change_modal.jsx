@@ -64,12 +64,12 @@ class PageChangeModal extends React.Component {
                   <img src='/assets/close-modal.svg' className='close-modal hide-delete-modal'></img>
                 </span>
               </button>
-              <h4 className="modal-title">Change the page type</h4>
+              <h4 className="modal-title">Change the screen type</h4>
             </div>
             <div className="modal-body">
               <div className="clearfix">
                 <div className='current-page-type pull-left'>
-                  <span>Current page type:</span>
+                  <span>Current screen type:</span>
                   { this.props.pageTree.pageType &&
                     <PageType name={this.props.pageTree.pageType.name} iconName={this.props.pageTree.pageType.icon_name} id={this.props.pageTree.pageType.id} />
                   }
@@ -79,7 +79,7 @@ class PageChangeModal extends React.Component {
                     <label htmlFor="page-type">
                       <i className="icon-search"></i>
                     </label>
-                    <input type="search" id="page-type" name="page-type" placeholder="Find your page type" onChange={this.handleSearch} />
+                    <input type="search" id="page-type" name="page-type" placeholder="Find your screen type" onChange={this.handleSearch} />
                   </form>
                   <ul className="page-type-list clearfix">
                     {pageTypeComponents}

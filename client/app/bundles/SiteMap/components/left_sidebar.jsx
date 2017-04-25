@@ -34,10 +34,10 @@ class LeftSidebar extends React.Component {
 
   componentDidMount() {
     /*$('body').on('focus', '#page-type', function() {
-      $(this).prop('placeholder', 'Search page types')
+      $(this).prop('placeholder', 'Search screen types')
     });
     $('body').on('blur', '#page-type', function() {
-      $(this).prop('placeholder', 'Page types')
+      $(this).prop('placeholder', 'Screen types')
     });*/
     if(this.props.trial) {
       $('body').addClass('trial');
@@ -115,17 +115,16 @@ class LeftSidebar extends React.Component {
               </label>
             </form>
             <div className="left-bar-wrapper">
-              <div className="orphan-screens-details">
-                Orphan screens  <span className='pull-right screens-count'>{filteredOrphanPages.length + (filteredOrphanPages.length == 1 ? ' Screen' : ' Screens')}</span>
-              </div>
-              <ul className={"page-type-list orphan-page-type-list clearfix" + ((filteredOrphanPages.length == 0) ? ' hide' : '')}>
-              {orphanPageComponents}
-            </ul>
-            <div className={'text-center no-match-text' + ((filteredOrphanPages.length == 0) ? '' : ' hide')}>
-              {
-               this.state.searchQuery ? 'There are no orphan pages that match ' + this.state.searchQuery : 'There are no orphan pages.'
+            { filteredOrphanPages.length > 0 &&
+              <span>
+                  <div className="orphan-screens-details">
+                    Orphan screens  <span className='pull-right screens-count'>{filteredOrphanPages.length + (filteredOrphanPages.length == 1 ? ' Screen' : ' Screens')}</span>
+                  </div>
+                  <ul className={"page-type-list orphan-page-type-list clearfix" + ((filteredOrphanPages.length == 0) ? ' hide' : '')}>
+                    {orphanPageComponents}
+                  </ul>
+                </span>
               }
-            </div>
             <div className="default-screens-details">
               Default screens  <span className='pull-right screens-count'>{filteredPageTypes.length + (filteredPageTypes.length == 1 ? ' Screen' : ' Screens')}</span>
             </div>
@@ -133,7 +132,7 @@ class LeftSidebar extends React.Component {
               {pageTypeComponents}
             </ul>
             <div className={'text-center no-match-text' + ((filteredPageTypes.length == 0) ? '' : ' hide')}>
-              There are no page types that match '{this.state.searchQuery}'
+              There are no default screens that match '{this.state.searchQuery}'
             </div>
             </div>
           </div>

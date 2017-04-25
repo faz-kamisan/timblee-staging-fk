@@ -267,7 +267,7 @@
       </div>
     </div>
 
-    <div id="tile-blueprint-decision" class=" tile top-level">
+    <div id="tile-blueprint-decision" class="linking-tile tile top-level">
 
       <div class="screen-tile-container decision">
         <div class="screen-tile-svg-clone">
@@ -313,6 +313,8 @@
               </li>
             </ul>
           </div>
+          <span class="link-to-this">Link to this</span>
+
           <div class="screen-tile-type">
             Decision
           </div>
@@ -383,11 +385,17 @@
       <% @sitemap.userflows.each do |userflow| %>
         <li class="sitemap-section-tab <%= @userflow == userflow ? 'active' : '' %>" style="width: <%= 94.0 / @sitemap.userflows.count %>%;">
           <span>
-            <span class="remove-section">×</span>
-            <span class="edit-section"></span>
+            <%= link_to sitemap_userflow_path(@sitemap, userflow), method: :delete do%>
+              <span class="remove-section">×</span>
+            <% end %>
+              <span class="hide edit-section edit-userflow-name" data-userflow-id="<%= userflow.id %>" data-update-userflow-url="<%= sitemap_userflow_path(@sitemap, userflow) %>">
+              </span>
           </span>
           <a class="" href="<%= sitemap_userflow_path(@sitemap, userflow)%>">
-            <span class="truncate"><%= userflow.name%></span>
+            <span class="truncate">
+              <input type="text" class="edit-field hide">
+              <span class=''><%= userflow.name %></span>
+            </span>
           </a>
         </li>
 

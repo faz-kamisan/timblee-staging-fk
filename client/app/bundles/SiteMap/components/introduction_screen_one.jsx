@@ -42,7 +42,7 @@ class IntroductionScreensOne extends React.Component {
           <figure>
             <img alt=" " src="/assets/share-intro-1.jpg"></img>
           </figure>
-          <p>Click on an individual page to add comments to that page</p>
+          <p>Click on an individual screen to add comments to that screen</p>
           <a href="javascript:void(0);" onClick={this.hideFirstScreenHandle}>Got it</a>
         </div>
       </div>

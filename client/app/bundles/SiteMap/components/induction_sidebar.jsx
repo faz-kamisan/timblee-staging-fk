@@ -13,7 +13,7 @@ class InductionSidebar extends React.Component {
           </h2>
           <ul>
             <li>
-              <p>Click on an individual page to add comments to that <br /> page</p>
+              <p>Click on an individual screen to add comments to that <br /> screen</p>
               <figure>
                 <img alt=" " src="/assets/share-intro-1.jpg"></img>
               </figure>

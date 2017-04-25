@@ -3,7 +3,7 @@
     Progress
   </h1>
   <p class="page-text">
-    See where each sitemap is via the progress boards. Just drag and drop <br> sitemap cards to change their status.
+    See where each project is via the progress boards. Just drag and drop <br> project cards to change their status.
   </p>
 
   <div class="progress-cards">
@@ -11,7 +11,7 @@
     <div class="drag-me drop_container" id="on-hold" data-state='on_hold'>
       <div class="drag-header text-center">
         <h1>On Hold</h1>
-        <p class="sitemap-count" data-count=<%= @sitemaps_by_state[:on_hold].length %>><%= pluralize(@sitemaps_by_state[:on_hold].length, 'Sitemap') %></p>
+        <p class="sitemap-count" data-count=<%= @sitemaps_by_state[:on_hold].length %>><%= pluralize(@sitemaps_by_state[:on_hold].length, 'Project') %></p>
       </div>
       <div id="on-hold-holder" class="drag-div sitemap_container">
         <div class='empty-sitemap-holder <%= 'hidden' if @sitemaps_by_state[:on_hold].present? %>'>
@@ -38,7 +38,7 @@
     <div class="drag-me drop_container" id="in-progress" data-state='in_progress'>
       <div class="drag-header text-center">
         <h1>In Progress</h1>
-        <p class="sitemap-count" data-count=<%= @sitemaps_by_state[:in_progress].length %>><%= pluralize(@sitemaps_by_state[:in_progress].length, 'Sitemap') %></p>
+        <p class="sitemap-count" data-count=<%= @sitemaps_by_state[:in_progress].length %>><%= pluralize(@sitemaps_by_state[:in_progress].length, 'Project') %></p>
       </div>
       <div id="in-progress-holder" class="drag-div sitemap_container">
         <div class='empty-sitemap-holder <%= 'hidden' if @sitemaps_by_state[:in_progress].present? %>'>
@@ -65,7 +65,7 @@
     <div class="drag-me drop_container" id="review" data-state='review'>
       <div class="drag-header text-center">
         <h1>Review</h1>
-        <p class="sitemap-count" data-count=<%= @sitemaps_by_state[:review].length %>><%= pluralize(@sitemaps_by_state[:review].length, 'Sitemap') %></p>
+        <p class="sitemap-count" data-count=<%= @sitemaps_by_state[:review].length %>><%= pluralize(@sitemaps_by_state[:review].length, 'Project') %></p>
       </div>
       <div id="review-holder" class="drag-div sitemap_container">
         <div class='empty-sitemap-holder <%= 'hidden' if @sitemaps_by_state[:review].present? %>'>
@@ -92,7 +92,7 @@
     <div class="drag-me drop_container" id="approved" data-state='approved'>
       <div class="drag-header text-center">
         <h1>Approved</h1>
-        <p class="sitemap-count" data-count=<%= @sitemaps_by_state[:approved].length %>><%= pluralize(@sitemaps_by_state[:approved].length, 'Sitemap') %></p>
+        <p class="sitemap-count" data-count=<%= @sitemaps_by_state[:approved].length %>><%= pluralize(@sitemaps_by_state[:approved].length, 'Project') %></p>
       </div>
       <div id="approved-holder" class="drag-div sitemap_container">
         <div class='empty-sitemap-holder <%= 'hidden' if @sitemaps_by_state[:approved].present? %>'>

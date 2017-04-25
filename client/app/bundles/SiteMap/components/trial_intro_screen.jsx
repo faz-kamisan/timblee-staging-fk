@@ -45,7 +45,7 @@ class TrialIntroScreen extends React.Component {
             <figure>
               <img alt=" " src="/assets/Intro1.png"></img>
             </figure>
-            <p>Drag and drop page tiles to build your sitemap fast.</p>
+            <p>Drag and drop screen tiles to build your sitemap fast.</p>
             <a href="javascript:void(0);" onClick={this.hideDemo}>Got it</a>
           </div>
         }

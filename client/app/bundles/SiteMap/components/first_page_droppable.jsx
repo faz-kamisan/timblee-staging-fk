@@ -146,12 +146,12 @@ class FirstPageDroppable extends React.Component {
         }
         { !this.props.pageTree.footer &&
           <div className={'first-page-droppable' + (this.props.leftSidebarExpanded ? '' : ' left-sidebar-contracted')}>
-            <span>Drag and drop page tiles here <br/> to start building your sitemap</span>
+            <span>Drag and drop screen tiles here <br/> to start building your sitemap</span>
           </div>
         }
         { this.props.pageTree.footer &&
           <div className={'first-page-droppable' + (this.props.leftSidebarExpanded ? '' : ' left-sidebar-contracted')}>
-            <span>Drag and drop page tiles here <br/> to add them into the footer</span>
+            <span>Drag and drop screen tiles here <br/> to add them into the footer</span>
           </div>
         }
       </div>
