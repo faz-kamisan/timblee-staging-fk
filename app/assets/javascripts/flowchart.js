@@ -371,15 +371,19 @@ Flowchart.prototype.bindDeleteScreenEvent = function() {
     var tile = SVG.get(tileID);
     var node = _this.getNode(tileID);
     var bottomNode = null;
-    connectedLinks = _this.getLinksByTarget(node.id);
-    for (var i = 0; i < connectedLinks.length; i++) {
-      _this.removeLink(connectedLinks[i].id);
-      _this.updateNode(connectedLinks[i].source, {linkNode: null, linkEdge: null})
-      SVG.get(connectedLinks[i].id).remove();
-    };
+
     if(node.parentNode && tile.classes().includes('decisionTile')){
+
       var leftNode = _this.getNode(node.bottomLeftNode);
       var rightNode = _this.getNode(node.bottomRightNode);
+      var connectedLinks = _this.getLinksByTarget(node.id).concat(_this.getLinksByTarget(leftNode.id)).concat(_this.getLinksByTarget(rightNode.id))
+
+      for (var i = 0; i < connectedLinks.length; i++) {
+        _this.removeLink(connectedLinks[i].id);
+        _this.updateNode(connectedLinks[i].source, {linkNode: null, linkEdge: null})
+        SVG.get(connectedLinks[i].id).remove();
+      };
+
       if (rightNode.bottomNode && leftNode.bottomNode) {
         document.setFlash('To delete this decision point, delete all tiles under one path.' )
       } else {
@@ -426,7 +430,12 @@ Flowchart.prototype.bindDeleteScreenEvent = function() {
         }
       }
     }else if(node.parentNode){
-
+    connectedLinks = _this.getLinksByTarget(node.id);
+    for (var i = 0; i < connectedLinks.length; i++) {
+      _this.removeLink(connectedLinks[i].id);
+      _this.updateNode(connectedLinks[i].source, {linkNode: null, linkEdge: null})
+      SVG.get(connectedLinks[i].id).remove();
+    };
       tile.remove();
       _this.removeNode(node.id);
       $("#" + tile.id() + "Tile").remove();
