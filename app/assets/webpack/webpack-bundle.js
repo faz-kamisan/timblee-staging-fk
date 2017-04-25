@@ -8432,7 +8432,7 @@ webpackJsonp([0],{
 	              _react2.default.createElement(
 	                'p',
 	                { className: 'modal-message' },
-	                "You're about to delete the " + this.props.pageTree.name + " page and any sub pages underneath it. Any comments linked to deleted pages will be archived and available via the comments sidebar."
+	                "You're about to delete the " + this.props.pageTree.name + " screen and any sub screens underneath it. Any comments linked to deleted screens will be archived and available via the comments sidebar."
 	              )
 	            ),
 	            _react2.default.createElement(
