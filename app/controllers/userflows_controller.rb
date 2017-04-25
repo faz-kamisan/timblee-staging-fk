@@ -1,4 +1,5 @@
 class UserflowsController < ApplicationController
+  before_action :load_sitemap, only: [:crud_screens, :index, :show, :create]
   before_action :load_userflow, only: [:crud_screens, :index, :show]
   before_action :load_screens, only: [:show, :index]
   around_action :wrap_in_transaction, only: :crud_screens
@@ -10,6 +11,16 @@ class UserflowsController < ApplicationController
     render :index
   end
 
+  def create
+    @userflow = @sitemap.userflows.build
+    if @userflow.save
+      redirect_to sitemap_userflow_path(@sitemap, @userflow)
+    else
+      flash[:error] = 'Some Error Occured.'
+      redirect_to home_dashboard_path
+    end
+  end
+
   def crud_screens
     create_screens(params[:new_nodes].map{|node| node[1]}) if params[:new_nodes]
     update_screens(params[:updated_nodes].map{|node| node[1]})if params[:updated_nodes]
@@ -19,10 +30,17 @@ class UserflowsController < ApplicationController
 
   private
 
-    def load_userflow
+
+    def load_sitemap
       @sitemap = Sitemap.find_by(id: params[:sitemap_id])
-      if @sitemap && params[:userflow_id]
-        @userflow = Userflow.find_by(id: params[:userflow_id])
+      unless @sitemap
+        redirect_to home_dashboard_path
+      end
+    end
+
+    def load_userflow
+      if @sitemap && params[:id]
+        @userflow = Userflow.find_by(id: params[:id])
       elsif @sitemap
         @userflow = @sitemap.userflows.order(:id).first.presence || @sitemap.userflows.create
       end
