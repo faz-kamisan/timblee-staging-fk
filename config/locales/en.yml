@@ -22,18 +22,18 @@ en:
         success: ''
         failure: Couldn't create project
       update:
-        success: Sitemap updated successfully
+        success: Project updated successfully
         failure: Couldn't update project
         folder : "%{sitemap_name} successfully moved to %{folder_name} folder"
       destroy:
-        success: Sitemap deleted permanently :(
+        success: Project deleted permanently :(
         failure: Couldn't delete project
       rename:
-        success: Sitemap renamed successfully
+        success: Project renamed successfully
         failure: Whoops! Looks like you have another project with the same name so we couldn't rename the project. Try another name.
         blank:   Sitename can't be blank
       duplicate:
-        success: Duplicate Sitemap created successfully
+        success: Duplicate Project created successfully
         failure: Couldn't duplicate project
       generate_pdf:
         failure: Something went wrong.

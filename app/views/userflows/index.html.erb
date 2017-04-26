@@ -386,11 +386,11 @@
       <% @sitemap.userflows.each do |userflow| %>
         <li class="sitemap-section-tab <%= @userflow == userflow ? 'active' : '' %>" style="width: <%= 94.0 / @sitemap.userflows.count %>%;">
           <span>
-            <%= link_to sitemap_userflow_path(@sitemap, userflow), method: :delete do%>
+            <a data-toggle="modal" data-dismiss="modal" class="delete-userflow-modal-link" data-delete-userflow-path="<%= sitemap_userflow_path(@sitemap, userflow) %>" data-userflow-name="<%= userflow.name %>">
               <span class="remove-section">×</span>
-            <% end %>
-              <span class="edit-section edit-userflow-name" data-userflow-id="<%= userflow.id %>" data-update-userflow-url="<%= sitemap_userflow_path(@sitemap, userflow) %>">
-              </span>
+            </a>
+            <span class="edit-section edit-userflow-name" data-userflow-id="<%= userflow.id %>" data-update-userflow-url="<%= sitemap_userflow_path(@sitemap, userflow) %>">
+            </span>
           </span>
           <a class="" href="<%= sitemap_userflow_path(@sitemap, userflow)%>">
             <span class="truncate">
@@ -412,3 +412,4 @@
 
   </body>
 </html>
+<%= render 'userflows/delete_userflow_modal'%>

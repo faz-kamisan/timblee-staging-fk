@@ -94,9 +94,9 @@ Progress.prototype.calculateAndSetSitemapCount = function(container, method) {
   sitemapCountContainer.data('count', newCount);
   sitemapCountContainer.attr('data-count', newCount);
   if(newCount == 1) {
-    sitemapCountContainer.html(newCount + ' Sitemap');
+    sitemapCountContainer.html(newCount + ' Project');
   } else {
-    sitemapCountContainer.html(newCount + ' Sitemaps');
+    sitemapCountContainer.html(newCount + ' Projects');
   }
 }
 

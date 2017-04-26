@@ -23,6 +23,11 @@ FlowchartExtended.prototype.bindEvents = function() {
   $(document).on('submit', '.search-screen-form', function (e) {
     e.preventDefault();
   })
+  $(document).on('click', '.delete-userflow-modal-link', function () {
+    $('#delete-userflow-modal').modal('show');
+    $('#delete-userflow-modal').find('.delete-modal-userflow-name').html($(this).data('userflow-name'))
+    $('#delete-userflow-modal').find('#confirm-delete-userflow-btn').attr('href', $(this).data('delete-userflow-path'))
+  })
 };
 
 FlowchartExtended.prototype.bindSearchScreen = function() {
