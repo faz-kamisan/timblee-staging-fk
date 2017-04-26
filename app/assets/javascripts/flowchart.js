@@ -276,7 +276,7 @@ Flowchart.prototype.bindAddInitialScreenEvent = function () {
   $(document).on('click', '.addInitialScreen', function() {
     $('.default-screen-hover-options').addClass('hide');
     var midPos = $(window).width()/2 - TILE_WIDTH/2;
-    STARTING_TILE = _this.addTile(midPos, 135, null, 1, 'S', "#tile-blueprint-page", $(this).data('page'), $(this).html());
+    STARTING_TILE = _this.addTile(midPos, 135, null, 1, 'S', "#tile-blueprint-page", $(this).data('page'), $(this).text());
     _this.saveDbChanges();
   });
 }
@@ -509,7 +509,9 @@ Flowchart.prototype.addScreenEvent = function(target, tileSelector) {
     _this.updateNode(node.bottomLeftNode, {parentNode: null});
     _this.updateNode(node.bottomRightNode, {parentNode: null});
   }
-  if (tileSelector == '#tile-blueprint-page') { name = $(target).html(); };
+  if (tileSelector == '#tile-blueprint-page') {
+    name = $(target).text();
+  };
   var newTile = _this.addTile(newX, newY, tile, _this.getNode(tile.id()).level + 1, newPath, tileSelector, $(target).data('page'), name);
 
   bottomNode = _this.getNode(newTile.id());
