@@ -7,6 +7,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     build_resource(sign_up_params)
     resource.trial_days = params[:trial_days]
+    resource.skip_confirmation_notification!
     resource.save
     yield resource if block_given?
     if resource.persisted?
