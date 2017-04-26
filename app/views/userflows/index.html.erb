@@ -389,7 +389,7 @@
             <%= link_to sitemap_userflow_path(@sitemap, userflow), method: :delete do%>
               <span class="remove-section">×</span>
             <% end %>
-              <span class="hide edit-section edit-userflow-name" data-userflow-id="<%= userflow.id %>" data-update-userflow-url="<%= sitemap_userflow_path(@sitemap, userflow) %>">
+              <span class="edit-section edit-userflow-name" data-userflow-id="<%= userflow.id %>" data-update-userflow-url="<%= sitemap_userflow_path(@sitemap, userflow) %>">
               </span>
           </span>
           <a class="" href="<%= sitemap_userflow_path(@sitemap, userflow)%>">

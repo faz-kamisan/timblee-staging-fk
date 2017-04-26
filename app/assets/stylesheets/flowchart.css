@@ -1,5 +1,5 @@
 * { box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
-body { margin: 0; padding: 0; font-family: "proxima-nova",sans-serif; background: #f8f9fc; }
+body { margin: 0; padding: 0; font-family: "proxima-nova",sans-serif; background: #f8f9fc; min-height: 500px; }
 h1 { text-align: center; margin: 0 0 20px 0; padding: 20px; border-bottom: solid 1px #ececec; color: #EC008C; }
 .pl-100 { padding-left: 100px; }
 

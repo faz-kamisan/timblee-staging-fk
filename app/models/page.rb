@@ -39,7 +39,7 @@ class Page < ActiveRecord::Base
 
       duplicate.save
     end
-    child_pages.order(:position).each { |page| page.duplicate(duplicate_section, duplicate.id, duplicate_sitemap)} unless (alt_section_id && duplicate_section.default?)
+    child_pages.where.not(state: 'orphan').order(:position).each { |page| page.duplicate(duplicate_section, duplicate.id, duplicate_sitemap)} unless (alt_section_id && duplicate_section.default?)
   end
 
   def get_tree(collection, level = 0)

@@ -9,6 +9,34 @@ FlowchartExtended.prototype.bindEvents = function() {
   this.bindAddPageComment();
   this.bindClearComment();
   this.bindResolveUnresolvePages();
+  this.bindSearchScreen();
+
+  $(document).click(function (event) {
+    if($(event.target).closest('.default-screen-hover-options').length == 0) {
+      $('.default-screen-hover-options').removeClass('show-dropdown');
+      $('.add-initial-screen-dropdown').addClass('hide');
+    }
+    if($(event.target).closest('.tile').length == 0) {
+      $('body').removeClass('link-stage-2');
+    }
+  })
+  $(document).on('submit', '.search-screen-form', function (e) {
+    e.preventDefault();
+  })
+};
+
+FlowchartExtended.prototype.bindSearchScreen = function() {
+  $(document).on('input', '.search-screen-input', function (e) {
+    var $this = $(this);
+    var list = $this.parent('.search-screen-form').find('ul.screens-list li')
+    for (var i = 0; i < list.length; i++) {
+      if($(list[i]).html().toLowerCase().includes($this.val().toLowerCase())){
+        $(list[i]).removeClass('hide')
+      }else{
+        $(list[i]).addClass('hide')
+      }
+    };
+  })
 };
 
 FlowchartExtended.prototype.bindResolveUnresolvePages = function() {

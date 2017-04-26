@@ -243,6 +243,8 @@ Flowchart.prototype.bindSelectInitialScreen = function () {
     $(this).closest('.default-screen-hover-options').addClass('show-dropdown');
     $('.starter-text').addClass('hide');
     $('.add-initial-screen-dropdown').removeClass('hide');
+    $('.add-initial-screen-dropdown .search-screen-form ul.screens-list li').removeClass('hide');
+    $('.add-initial-screen-dropdown .search-screen-form input.search-screen-input').val('').focus();
   })
 }
 
@@ -250,6 +252,8 @@ Flowchart.prototype.bindSelectScreen = function() {
   $(document).on('click', '.selectScreen', function () {
     $(this).closest('.screen-hover-options').addClass('show-dropdown');
     $(this).closest('div.tile').find('.add-screen-dropdown').removeClass('hide');
+    $(this).closest('div.tile').find('.add-screen-dropdown .search-screen-form ul.screens-list li').removeClass('hide');
+    $(this).closest('div.tile').find('.add-screen-dropdown .search-screen-form input.search-screen-input').val('').focus();
   })
 }
 
