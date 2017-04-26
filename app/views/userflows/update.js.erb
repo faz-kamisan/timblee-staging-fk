@@ -1,0 +1,8 @@
+$("div.flash-message").html("<%==j render partial: 'shared/flash_message' %>");
+
+<% if !flash[:error].present? %>
+  $('#update-userflow-name-modal').modal('hide');
+  $('.sitemap-section-tab.userflow-<%= @userflow.id %>').find('.userflow-name').html('<%= @userflow.name %>');
+  $('.sitemap-section-tab.userflow-<%= @userflow.id %>').find('.delete-userflow-modal-link').data('userflow-name', '<%= @userflow.name %>');
+  $('.sitemap-section-tab.userflow-<%= @userflow.id %>').find('.edit-userflow-name-modal-link').data('userflow-name', '<%= @userflow.name %>');
+<% end %>

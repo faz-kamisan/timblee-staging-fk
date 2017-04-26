@@ -9,12 +9,17 @@
           </span>
         </button>
         <div class="create-userflow-heading">Give this userflow a new name</div>
-        <div><input type="text" class="form-control" id="userflow-name-new" name="userflow-name-new"></div>
+        <%= form_for Userflow.new, url: '#', html: { method: :patch, remote: true, class: 'update-userflow-form'} do |f| %>
+        <div>
+
+          <%= f.text_field :name, class: 'form-control userflow-name-input' %>
+        </div>
 
         <div class="modal-button">
-          <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-red">Update name</a>
+          <%= f.submit 'Update name', class: 'btn btn-red update-userflow-name' %>
           <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-grey btn-last">Cancel</a>
         </div>
+        <% end %>
       </div>
     </div>
   </div>

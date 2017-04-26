@@ -1,7 +1,7 @@
 class UserflowsController < ApplicationController
-  before_action :load_sitemap, only: [:crud_screens, :index, :show, :create, :destroy]
-  before_action :load_userflow, only: [:crud_screens, :index, :show, :destroy]
-  before_action :load_screens, only: [:show, :index]
+  before_action :load_sitemap, only: [:crud_screens, :index, :show, :create, :destroy, :update]
+  before_action :load_userflow, only: [:crud_screens, :index, :show, :destroy, :update]
+  before_action :load_screens, only: [:show, :index, :update]
   around_action :wrap_in_transaction, only: :crud_screens
 
   def index
@@ -9,6 +9,12 @@ class UserflowsController < ApplicationController
 
   def show
     render :index
+  end
+
+  def update
+    unless @userflow.update(update_params)
+      flash.now[:error] = 'Something went wrong.'
+    end
   end
 
   def create
@@ -38,6 +44,10 @@ class UserflowsController < ApplicationController
   end
 
   private
+
+    def update_params
+      params.require(:userflow).permit(:name)
+    end
 
 
     def load_sitemap

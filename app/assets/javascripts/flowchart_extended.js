@@ -20,6 +20,7 @@ FlowchartExtended.prototype.bindEvents = function() {
       $('body').removeClass('link-stage-2');
     }
   })
+
   $(document).on('submit', '.search-screen-form', function (e) {
     e.preventDefault();
   })
@@ -37,8 +38,8 @@ FlowchartExtended.prototype.bindEvents = function() {
 
   $(document).on('click', '.edit-userflow-name-modal-link', function () {
     $('#update-userflow-name-modal').modal('show');
-    $('#update-userflow-name-modal').find('.update-modal-userflow-name').html($(this).data('userflow-name'))
-    $('#update-userflow-name-modal').find('#confirm-update-userflow-btn').attr('href', $(this).data('update-userflow-path'))
+    $('#update-userflow-name-modal').find('.update-userflow-form .userflow-name-input').val($(this).data('userflow-name')).focus();
+    $('#update-userflow-name-modal').find('.update-userflow-form').attr('action', $(this).data('update-userflow-path'))
   })
 };
 
