@@ -28,6 +28,11 @@ FlowchartExtended.prototype.bindEvents = function() {
     $('#delete-userflow-modal').find('.delete-modal-userflow-name').html($(this).data('userflow-name'))
     $('#delete-userflow-modal').find('#confirm-delete-userflow-btn').attr('href', $(this).data('delete-userflow-path'))
   })
+  $(document).on('click', '.edit-userflow-name-modal-link', function () {
+    $('#update-userflow-name-modal').modal('show');
+    $('#update-userflow-name-modal').find('.update-modal-userflow-name').html($(this).data('userflow-name'))
+    $('#update-userflow-name-modal').find('#confirm-update-userflow-btn').attr('href', $(this).data('update-userflow-path'))
+  })
 };
 
 FlowchartExtended.prototype.bindSearchScreen = function() {

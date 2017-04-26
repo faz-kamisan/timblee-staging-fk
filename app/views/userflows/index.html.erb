@@ -49,13 +49,13 @@
           <div class="dropdowns">
             <h4>Screens in the sitemap</h4>
             <ul class="screens-list in-sitemap">
-              <% @sitemap.pages.where.not(id: @userflow.screens.pluck(:page_id), state: :archived).each do |page|%>
+              <% @sitemap_screens.each do |page|%>
                 <li class="addInitialScreen page-id-<%=page.id%>" data-page="<%= page.to_json(include: :page_type) %>"><%= page.name %></li>
               <% end %>
             </ul>
             <h4 class="new-screens">New screens</h4>
             <ul class="screens-list">
-              <% PageType.all.each do |page_type|%>
+              <% @page_types.each do |page_type|%>
               <li class="addInitialScreen" data-page="<%= page_type.pages.new(name: page_type.name).to_json(include: :page_type)%>"><%= page_type.name %></li>
               <% end %>
             </ul>
@@ -146,13 +146,13 @@
               <div class="dropdowns">
                 <h4>Screens in the sitemap</h4>
                 <ul class="screens-list in-sitemap">
-                  <% @sitemap.pages.where.not(id: @userflow.screens.pluck(:page_id), state: :archived).each do |page|%>
-                    <li class="addScreen page-id-<%=page.id%>" data-page="<%= page.to_json(include: :page_type) %>"><%=page.name %></li>
+                  <% @sitemap_screens.each do |page|%>
+                    <li class="addScreen page-id-<%=page.id%>" data-page="<%= page.to_json(include: :page_type) %>"><%= page.name %></li>
                   <% end %>
                 </ul>
                 <h4 class="new-screens">New screens</h4>
                 <ul class="screens-list">
-                  <% PageType.all.each do |page_type|%>
+                  <% @page_types.each do |page_type|%>
                   <li class="addScreen" data-page="<%= page_type.pages.new(name: page_type.name).to_json(include: :page_type)%>"><%= page_type.name %></li>
                   <% end %>
                 </ul>
@@ -249,13 +249,13 @@
               <div class="dropdowns">
                 <h4>Screens in the sitemap</h4>
                 <ul class="screens-list in-sitemap">
-                  <% @sitemap.pages.where.not(id: @userflow.screens.pluck(:page_id), state: :archived).each do |page|%>
-                    <li class="addScreen page-id-<%=page.id%>" data-page="<%= page.to_json(include: :page_type) %>"><%=page.name %></li>
+                  <% @sitemap_screens.each do |page|%>
+                    <li class="addScreen page-id-<%=page.id%>" data-page="<%= page.to_json(include: :page_type) %>"><%= page.name %></li>
                   <% end %>
                 </ul>
                 <h4 class="new-screens">New screens</h4>
                 <ul class="screens-list">
-                  <% PageType.all.each do |page_type|%>
+                  <% @page_types.each do |page_type|%>
                   <li class="addScreen" data-page="<%= page_type.pages.new(name: page_type.name).to_json(include: :page_type)%>"><%= page_type.name %></li>
                   <% end %>
                 </ul>
@@ -363,13 +363,13 @@
                 <div class="dropdowns">
                   <h4>Screens in the sitemap</h4>
                   <ul class="screens-list in-sitemap">
-                    <% @sitemap.pages.where.not(id: @userflow.screens.pluck(:page_id), state: :archived).each do |page|%>
-                      <li class="addScreen page-id-<%=page.id%>" data-page="<%= page.to_json(include: :page_type) %>"><%=page.name %></li>
+                    <% @sitemap_screens.each do |page|%>
+                      <li class="addScreen page-id-<%=page.id%>" data-page="<%= page.to_json(include: :page_type) %>"><%= page.name %></li>
                     <% end %>
                   </ul>
                   <h4 class="new-screens">New screens</h4>
                   <ul class="screens-list">
-                    <% PageType.all.each do |page_type|%>
+                    <% @page_types.each do |page_type|%>
                     <li class="addScreen" data-page="<%= page_type.pages.new(name: page_type.name).to_json(include: :page_type)%>"><%= page_type.name %></li>
                     <% end %>
                   </ul>
@@ -389,8 +389,10 @@
             <a data-toggle="modal" data-dismiss="modal" class="delete-userflow-modal-link" data-delete-userflow-path="<%= sitemap_userflow_path(@sitemap, userflow) %>" data-userflow-name="<%= userflow.name %>">
               <span class="remove-section">×</span>
             </a>
+            <a data-toggle="modal" data-dismiss="modal" class="edit-userflow-name-modal-link" data-update-userflow-path="<%= sitemap_userflow_path(@sitemap, userflow) %>" data-userflow-name="<%= userflow.name %>">
             <span class="edit-section edit-userflow-name" data-userflow-id="<%= userflow.id %>" data-update-userflow-url="<%= sitemap_userflow_path(@sitemap, userflow) %>">
             </span>
+            </a>
           </span>
           <a class="" href="<%= sitemap_userflow_path(@sitemap, userflow)%>">
             <span class="truncate">
@@ -413,3 +415,4 @@
   </body>
 </html>
 <%= render 'userflows/delete_userflow_modal'%>
+<%= render 'userflows/edit_userflow_name_modal'%>

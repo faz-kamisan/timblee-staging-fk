@@ -43,6 +43,7 @@ class UserflowsController < ApplicationController
     def load_sitemap
       @sitemap = Sitemap.find_by(id: params[:sitemap_id])
       unless @sitemap
+        flash[:error] = 'Project not found.'
         redirect_to home_dashboard_path
       end
     end
@@ -50,6 +51,10 @@ class UserflowsController < ApplicationController
     def load_userflow
       if @sitemap && params[:id]
         @userflow = Userflow.find_by(id: params[:id])
+        unless @userflow
+        flash[:error] = 'Userflow not found.'
+          redirect_to home_dashboard_path
+        end
       elsif @sitemap
         @userflow = @sitemap.userflows.order(:id).first.presence || @sitemap.userflows.create
       end
@@ -57,6 +62,8 @@ class UserflowsController < ApplicationController
 
     def load_screens
       @screens = @userflow.screens.order(:level, :position).includes(page: :page_type).to_json(include: [:page, :page_type])
+      @page_types = PageType.all
+      @sitemap_screens = @sitemap.pages.where.not(id: @userflow.screens.pluck(:page_id), state: :archived)
     end
 
     def create_screens(nodes)
