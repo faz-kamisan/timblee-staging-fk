@@ -17,15 +17,17 @@ $(function() {
     flashDiv: $('.flash-message'),
     closeBtn : $('.close')
   },
+  flashTimer = $('.flash-message').text().length > 40 ? 8000 : 5000,
   flash = new Flash(options);
   $('body').on('DOMNodeInserted', '.flash', function () {
-    var $this = $(this)
+    var $this = $(this);
+    var flashTimer = $('.flash-message').text().length > 40 ? 8000 : 5000;
     window.setTimeout(function() {
       $this.remove();
-    }, 5000)
+    }, flashTimer)
   });
   window.setTimeout(function() {
     $('.flash').remove();
-  }, 5000)
+  }, flashTimer)
   flash.closeMessage();
 });

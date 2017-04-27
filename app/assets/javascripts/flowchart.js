@@ -122,7 +122,7 @@ Flowchart.prototype.bindAddLink = function() {
       LinkingTileId = node.id;
       $('body').addClass('link-stage-2');
     }else{
-      document.setFlash('Not Allowed.')
+      document.setFlash('You can only have one outgoing link from one tile.')
     }
   })
 }

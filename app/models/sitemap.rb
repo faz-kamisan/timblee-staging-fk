@@ -4,7 +4,7 @@ class Sitemap < ActiveRecord::Base
   attr_accessor :skip_callback
 
   LENGTH_TO_TRUNCATE = 44
-  DEFAULT_NAME_PREFIX = 'New Sitemap '
+  DEFAULT_NAME_PREFIX = 'New Project '
   DEFAULT_SECTION_NAME = 'Main sitemap'
   GENERAL_PAGE_TYPE_NAME = 'General 1'
   TRIAL_SITEMAP_TTL = 24.hours
