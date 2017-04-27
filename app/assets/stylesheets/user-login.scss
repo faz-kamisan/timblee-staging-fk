@@ -312,6 +312,12 @@
   }
 }
 
+#delete-userflow-modal {
+  .modal-dialog {
+    @include alignCenter(-310px, -128px);
+  } 
+}
+
 #revoke-invite-modal {
   .modal-dialog {
     @include alignCenter(-310px, -180px);
@@ -330,7 +336,7 @@
   }
 }
 
-#new-section-modal, #update-section-name-modal {
+#new-section-modal, #update-section-name-modal, #update-userflow-name-modal {
   .modal-dialog {
     @include alignCenter(-310px, -118px);
   }
