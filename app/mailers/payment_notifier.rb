@@ -52,6 +52,7 @@ class PaymentNotifier < ActionMailer::Base
   def failure(user, event)
     @event = event
     @user = user
+    @business = user.try(:business)
     if Rails.env.production?
       smart_email_id = CampaignMonitor::SMART_EMAIL_IDS[:payment_failure]
       tx_smart_mailer = CreateSend::Transactional::SmartEmail.new(CampaignMonitor::AUTH, smart_email_id)
