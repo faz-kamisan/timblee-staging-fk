@@ -1021,6 +1021,8 @@
     margin: 0;
     color: #535c63;
     font-weight: 600;
+    max-height: 23px;
+    overflow: hidden;
   }
 
   .dummy-id {
@@ -1039,6 +1041,7 @@
     font-weight: 500;
     margin-top: 10px;
     text-transform: uppercase;
+    max-width: 100%;
   }
 
   .page-type-details {
@@ -1685,7 +1688,7 @@ body.trial {
   top: 136px;
   height: calc(100% - 136px);
   background: #262b30;
-  z-index: 18;
+  z-index: 23;
   transition: .35s;
   box-shadow: 0px 0px 20px 7px rgba(147, 147, 147, 1);
   overflow-y: auto;
@@ -2405,7 +2408,8 @@ body.trial {
   }
 }
 
-#new-section-modal {
+#new-section-modal,
+#update-userflow-name-modal {
   .modal-body {
     @include border-radius(6px);
     padding: 41px 80px 35px 80px;
@@ -2425,7 +2429,8 @@ body.trial {
       background: #158c4c;
     }
   }
-  .create-section-heading {
+  .create-section-heading,
+  .create-userflow-heading {
     @extend .font-14;
     color: #62717f;
     margin-bottom: 16px;

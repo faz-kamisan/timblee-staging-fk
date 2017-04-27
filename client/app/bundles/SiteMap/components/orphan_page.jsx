@@ -14,7 +14,7 @@ class OrphanPage extends React.Component {
           </aside>
           <aside className="page-type-icon"></aside>
         </div>
-        { !(this.props.isDragPrview) && <h4>{this.props.page.name}</h4> }
+        { !(this.props.isDragPrview) && <h4 className="truncate">{this.props.page.name}</h4> }
       </div>
     );
   }
